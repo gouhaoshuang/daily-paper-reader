@@ -25,3 +25,46 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: eca
+      description: 端云协同的AI Agent论文
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: Collaboration
+          keyword_cn: ''
+          query: Collaboration
+        - keyword: Edge-Cloud
+          keyword_cn: ''
+          query: e
+        - keyword: mobile agent
+          keyword_cn: 移动代理
+          query: mobile AI agent
+      intent_queries:
+        - query: edge cloud collaborative AI agent system
+          query_cn: 端云协同AI代理系统
+          enabled: true
+          source: generated
+          note: ''
+        - query: distributed edge cloud agent architecture
+          query_cn: 分布式边缘云代理架构
+          enabled: true
+          source: generated
+          note: ''
+      updated_at: '2026-06-08T01:41:52.564Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
