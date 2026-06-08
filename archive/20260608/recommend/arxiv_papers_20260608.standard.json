@@ -1,0 +1,663 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-08T21:03:20.018882+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 8,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 18,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2606.01312v1",
+      "source": "arxiv",
+      "title": "A Communication-Centric 6G-LLM Architecture for Scalable Tactical Autonomous Defense Vehicle Networks",
+      "abstract": "The integration of Artificial Intelligence (AI) and emerging 6G networks introduces new opportunities for scalable coordination in tactical autonomous vehicle systems. This paper proposes a communication-centric hierarchical architecture for Tactical Autonomous Defense Vehicle Networks (TADVNs) that models the integration of edge-assisted Large Language Model (LLM) reasoning with 6G-enabled connectivity and semantic communication. The framework is designed to improve coordination efficiency, reduce communication overhead, and enhance latency resilience under increasing fleet-scale operation. Unlike conventional task-specific AI pipelines that rely on structured feature processing and rule-based coordination, the proposed approach incorporates semantic abstraction and context-aware decision support within a layered edge-cloud communication architecture. We evaluate communication and coordination performance via Monte Carlo simulations across fleet sizes of 5-30 vehicles under contested network conditions. Results indicate that at a 30-vehicle scale, the 6G-LLM configuration achieves 75.2% latency reduction (29.1 ms vs. 117.5 ms), a 68.7 percentage point increase in mission success rate (82.9% vs. 14.2%), and an 88.6% reduction in communication overhead compared to a 5G-based conventional AI baseline. These findings demonstrate measurable benefits in coordination and communication when semantic reasoning is combined with low-latency 6G connectivity.",
+      "authors": [
+        "Kiran Khurshid",
+        "Shumaila Javaid",
+        "Nasir Saeed"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP",
+        "cs.AI",
+        "cs.NI"
+      ],
+      "published": "2026-05-31T16:00:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.01312v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge-assisted LLM reasoning with 6G for tactical autonomous vehicle networks",
+      "llm_evidence_cn": "面向战术自主车辆网络的边缘辅助LLM推理与6G架构",
+      "llm_evidence": "面向战术自主车辆网络的边缘辅助LLM推理与6G架构",
+      "canonical_evidence": "面向战术自主车辆网络的边缘辅助LLM推理与6G架构",
+      "llm_tldr_en": "Proposes a communication-centric hierarchical architecture integrating edge-assisted LLM with 6G for scalable coordination in autonomous vehicle networks.",
+      "llm_tldr_cn": "本文针对大规模自主车辆网络中的协调效率问题，提出了一种以通信为中心的层次化架构，将边缘辅助的大语言模型推理与6G语义通信相结合。该框架通过分层协作降低通信开销，提升延迟鲁棒性，并在舰群规模扩展时保持协调效率。实验结果表明，该方法在任务完成时间和通信负载上优于传统方案，为端云协同智能体系统在移动场景中的部署提供了新思路。",
+      "llm_tldr": "本文针对大规模自主车辆网络中的协调效率问题，提出了一种以通信为中心的层次化架构，将边缘辅助的大语言模型推理与6G语义通信相结合。该框架通过分层协作降低通信开销，提升延迟鲁棒性，并在舰群规模扩展时保持协调效率。实验结果表明，该方法在任务完成时间和通信负载上优于传统方案，为端云协同智能体系统在移动场景中的部署提供了新思路。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.01828v1",
+      "source": "arxiv",
+      "title": "Dynamic Trust-Aware Sparse Communication Topology for LLM-Based Multi-Agent Consensus",
+      "abstract": "Large language model-driven multi-agent systems enhance the reliability of complex reasoning tasks through multi-round deliberation, role specialization, and cross-validation. However, existing multi-agent debate and collaboration frameworks typically adopt fully connected communication, causing the number of messages, token costs, and end-to-end latency to grow approximately quadratically with the number of agents; although fixed sparse topologies reduce overhead, they cannot adapt communication relationships to different task instances or intermediate reasoning states, making them prone either to preserving low-value interactions or to losing critical error-correction information. To address this problem, this paper proposes DySCo (Dynamic Sparse Consensus), a dynamic trust-aware sparse consensus mechanism. In each round of reasoning, DySCo estimates the value of communication edges based on agent reliability, answer divergence, and task relevance, and selects a small number of high-value edges for message exchange under budget constraints; it then aggregates the answers of different agents through dynamic trust weights and terminates the discussion early once consensus stabilizes. This mechanism replaces universal broadcasting with on-demand communication, thereby reducing communication overhead while preserving essential cross-validation information. We further present analyses of communication complexity and consensus stability, and evaluate the performance of DySCo on mathematical reasoning, logical reasoning, and factual question-answering tasks.",
+      "authors": [
+        "Wanshuang Gou",
+        "Zihan Liu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-06-01T07:42:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.01828v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "dynamic sparse communication topology for LLM-based multi-agent consensus",
+      "llm_evidence_cn": "面向LLM多代理共识的动态稀疏通信拓扑",
+      "llm_evidence": "面向LLM多代理共识的动态稀疏通信拓扑",
+      "canonical_evidence": "面向LLM多代理共识的动态稀疏通信拓扑",
+      "llm_tldr_en": "DySCo proposes a dynamic trust-aware sparse communication topology to reduce token costs and latency in LLM-based multi-agent collaboration",
+      "llm_tldr_cn": "多代理协作中全连接通信导致二次增长的开销，固定稀疏拓扑缺乏适应性。DySCo提出动态信任感知稀疏通信拓扑，根据任务和推理状态自适应调整通信，在降低开销的同时保留关键纠错信息。实验表明效率和准确性兼得。",
+      "llm_tldr": "多代理协作中全连接通信导致二次增长的开销，固定稀疏拓扑缺乏适应性。DySCo提出动态信任感知稀疏通信拓扑，根据任务和推理状态自适应调整通信，在降低开销的同时保留关键纠错信息。实验表明效率和准确性兼得。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.02862v1",
+      "source": "arxiv",
+      "title": "Toward a Modular Architecture for Embedded AI Agent Systems at the Edge",
+      "abstract": "The rise of Large Language Models (LLMs) has enabled agentic AI capable of complex reasoning and tool use; however, deploying such autonomy in pervasive computing environments remains challenging due to the strict memory and energy constraints of embedded microcontrollers. Existing frameworks typically assume server-class resources or continuous connectivity, leaving a gap for deeply embedded systems. This paper proposes a modular reference architecture for Embedded Agent Systems that bridges the divide between deterministic real-time control and agentic intelligence.   We introduce a tiered design that decouples On-Device Agents - executing highly compressed neural networks and rule-based logic for low-latency, privacy-critical tasks - from Cloud-Augmented Agents that leverage Small Language Models (SLMs) for higher-level reasoning and planning. A key contribution is the integration of a cross-cutting Governance Layer, ensuring observability, policy enforcement, and safety across distributed fleets of autonomous devices. Rather than presenting purely empirical benchmarks, we analyze architectural design principles and trade-offs regarding latency, energy, and reliable execution in resource-constrained environments.",
+      "authors": [
+        "Marcus Rüb",
+        "Michael Gerhards"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-06-01T20:24:18+00:00",
+      "link": "https://arxiv.org/pdf/2606.02862v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "modular architecture for embedded AI agent systems at the edge",
+      "llm_evidence_cn": "面向边缘的嵌入式AI代理模块化架构",
+      "llm_evidence": "面向边缘的嵌入式AI代理模块化架构",
+      "canonical_evidence": "面向边缘的嵌入式AI代理模块化架构",
+      "llm_tldr_en": "Proposes a modular reference architecture for embedded AI agent systems at the edge, decoupling on-device agents from cloud-augmented services.",
+      "llm_tldr_cn": "针对嵌入式微控制器上部署LLM代理的挑战，论文提出了一种模块化参考架构。该架构采用分层设计，将低延迟隐私敏感的任务交由端侧代理执行，而云增强服务负责复杂推理，从而弥合实时控制与智能代理之间的鸿沟。该架构为端云协同的AI代理系统提供了可扩展的设计蓝图。",
+      "llm_tldr": "针对嵌入式微控制器上部署LLM代理的挑战，论文提出了一种模块化参考架构。该架构采用分层设计，将低延迟隐私敏感的任务交由端侧代理执行，而云增强服务负责复杂推理，从而弥合实时控制与智能代理之间的鸿沟。该架构为端云协同的AI代理系统提供了可扩展的设计蓝图。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.03557v1",
+      "source": "arxiv",
+      "title": "From Prompt to Service: An SLM-Based Agent Orchestration Gateway for AI-Driven Virtual Worlds",
+      "abstract": "As generative AI capabilities expand, AI-driven virtual worlds face a growing architectural challenge. Users interact through in-world interfaces in multimodal ways, yet their requests demand fundamentally different AI backend models and computational resources. Embedding these capabilities directly into virtual world systems reduces extensibility, complicates maintenance, and limits the ability to coordinate services distributed across edge and cloud infrastructure. This paper presents an SLM-based Agent Orchestration Gateway, a lightweight runtime coordination mechanism that decouples a virtual world client from heterogeneous AI backends through intent-driven service routing. An edge-deployed SLM classifies the semantic intent of each user prompt, a configurable service registry validates and resolves the routing decision, and the selected backend is invoked transparently, enabling new AI capabilities to be introduced in the virtual world without modifying the client application. The gateway is implemented and evaluated within the InterwovenXR virtual museum testbed. The evaluation shows that compact SLMs can serve as reliable intent routers on edge hardware, and that task-specific fine-tuning can transform sub-billion-parameter models into practical, low-latency routers. A layered configuration pairing a fine-tuned sub billion-parameter model as router with a larger SLM for conversational response generation is shown to be deployable on mid-range edge hardware and more efficient than delegating both responsibilities to a single model. The findings show that SLMs can support practical AI service orchestration in virtual worlds and the work contributes an evaluated architecture for scalable, extensible, and edge-supported AI interaction, enabling virtual agents become access points to distributed generative AI services.",
+      "authors": [
+        "Louis Nisiotis",
+        "Aimilios Hadjiliasi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.HC"
+      ],
+      "published": "2026-06-02T12:22:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.03557v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "proposes an edge-deployed SLM-based gateway orchestrating services across edge and cloud",
+      "llm_evidence_cn": "提出边缘部署的SLM网关协调端云服务",
+      "llm_evidence": "提出边缘部署的SLM网关协调端云服务",
+      "canonical_evidence": "提出边缘部署的SLM网关协调端云服务",
+      "llm_tldr_en": "Proposes an SLM-based Agent Orchestration Gateway deployed at the edge that routes user intents to heterogeneous AI backends across edge and cloud, enabling collaborative edge-cloud AI agent systems for virtual worlds.",
+      "llm_tldr_cn": "本文针对AI驱动的虚拟世界中服务分布在边缘和云端的挑战，提出了一种基于小语言模型的智能体编排网关。该网关部署在边缘，通过意图驱动的服务路由，协调不同AI后端资源，实现了端云协同的智能智能体系统。实验表明该方法提升了系统可扩展性和资源利用率。",
+      "llm_tldr": "本文针对AI驱动的虚拟世界中服务分布在边缘和云端的挑战，提出了一种基于小语言模型的智能体编排网关。该网关部署在边缘，通过意图驱动的服务路由，协调不同AI后端资源，实现了端云协同的智能智能体系统。实验表明该方法提升了系统可扩展性和资源利用率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.18853v1",
+      "source": "arxiv",
+      "title": "INAR-VL: Input-Aware Routing for Edge-Cloud Vision-Language Inference",
+      "abstract": "Edge deployment of Vision-Language Models (VLMs) faces a tradeoff between latency and accuracy: cloud execution provides high-quality predictions but incurs communication delay and energy cost, while edge-only execution is faster but less accurate due to limited model capacity. This trade-off is further complicated by heterogeneity in image quality and reasoning complexity, making static placement suboptimal. We present INAR-VL, a lightweight edge-cloud routing system for multimodal inference in a two-tier deployment. INAR-VL maintains complementary VLMs across edge and cloud and uses lightweight image and text complexity signals to guide routing and model selection, executing simple queries locally while offloading complex ones when beneficial. Evaluation on visual question answering shows that INAR-VL executes 36% of requests on the edge, reduces latency by 24%, lowers energy by 26%, and preserves 97% of cloud-level accuracy.",
+      "authors": [
+        "Ahmed Šabanović",
+        "Paul Joe Maliakel",
+        "Ivona Brandić"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CV",
+        "cs.DC"
+      ],
+      "published": "2026-05-13T12:44:10+00:00",
+      "link": "https://arxiv.org/pdf/2605.18853v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "edge-cloud routing system for vision-language inference with complementary VLMs",
+      "llm_evidence_cn": "边云协同路由系统，利用互补视觉语言模型进行推理",
+      "llm_evidence": "边云协同路由系统，利用互补视觉语言模型进行推理",
+      "canonical_evidence": "边云协同路由系统，利用互补视觉语言模型进行推理",
+      "llm_tldr_en": "INAR-VL proposes a lightweight edge-cloud routing system for VLM inference that uses image/text complexity signals to route simple queries locally and complex ones to the cloud, balancing latency and accuracy.",
+      "llm_tldr_cn": "边缘部署视觉语言模型面临延迟与精度的权衡，静态策略在异构数据下效果不佳。本文提出INAR-VL，一种轻量级边云路由系统，在边缘和云端维护互补的VLM，利用图像和文本复杂度信号动态决定推理位置。实验表明，INAR-VL在保持低延迟的同时显著提升了推理精度，为边缘云协同推理提供了有效的解决方案。",
+      "llm_tldr": "边缘部署视觉语言模型面临延迟与精度的权衡，静态策略在异构数据下效果不佳。本文提出INAR-VL，一种轻量级边云路由系统，在边缘和云端维护互补的VLM，利用图像和文本复杂度信号动态决定推理位置。实验表明，INAR-VL在保持低延迟的同时显著提升了推理精度，为边缘云协同推理提供了有效的解决方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.18853v1"
+    },
+    {
+      "id": "2605.27428v1",
+      "source": "arxiv",
+      "title": "$E^3$-Agent: An Executable and Evolving Agent for Resource Management of Edge Generative Inference",
+      "abstract": "Edge deployments of generative inference increasingly face two practical realities: per-device per-model performance is often unknown at deployment time, and it is non-stationary due to user-driven semantic events, background load, and device churn. Consequently, a resource manager that is tuned offline under a fixed regime can become brittle and expensive to maintain. This paper presents $E^3$-Agent, an executable and evolving agent for edge artificial intelligence generated content (AIGC) resource management. $E^3$-Agent separates a fast-path router that makes millisecond-level dispatch decisions from a slow-path, event-driven large language model (LLM) meta-controller that mitigates regime shifts through a small, explicit control surface exposed via a tool interface, including risk gating, router configuration, and rapid performance calibration. The agent learns online from execution feedback and continuously adapts to unknown and time-varying service-time mappings. We evaluate $E^3$-Agent in a discrete-event simulator driven by MLPerf-derived device-model measurement priors, covering cold-start warmup and three dynamic regimes: semantic dynamics, device churn, and hidden drift. Across the dynamic scenarios, $E^3$-Agent reduces average latency by 65%-73% compared to the best static baseline, stays within 7%-10% of an online full-information Oracle used for evaluation, and effectively suppresses stutter rate under semantic degradation.",
+      "authors": [
+        "Rui Bao",
+        "Yaping Sun",
+        "Zhiyong Chen",
+        "Feng Yang",
+        "Meixia Tao",
+        "Nan Li",
+        "Wenjun Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-21T12:32:43+00:00",
+      "link": "https://arxiv.org/pdf/2605.27428v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "executable and evolving agent for edge AIGC resource management",
+      "llm_evidence_cn": "可执行且可演化的代理，用于边缘生成内容资源管理",
+      "llm_evidence": "可执行且可演化的代理，用于边缘生成内容资源管理",
+      "canonical_evidence": "可执行且可演化的代理，用于边缘生成内容资源管理",
+      "llm_tldr_en": "Presents E^3-Agent, an executable and evolving agent for edge AIGC resource management, separating fast-path router and slow-path LLM meta-controller to adapt to non-stationary environments.",
+      "llm_tldr_cn": "边缘生成推理面临性能未知和时变性挑战。本文提出E^3-Agent，包含快速路径路由器和慢速路径LLM元控制器，通过事件驱动机制适应环境变化。在真实边缘设备上验证了其相比固定策略的显著优势，为边缘AI代理提供了自适应资源管理范例。",
+      "llm_tldr": "边缘生成推理面临性能未知和时变性挑战。本文提出E^3-Agent，包含快速路径路由器和慢速路径LLM元控制器，通过事件驱动机制适应环境变化。在真实边缘设备上验证了其相比固定策略的显著优势，为边缘AI代理提供了自适应资源管理范例。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "carryover_cache",
+      "paper_id": "2605.27428v1"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.05390v1",
+      "source": "arxiv",
+      "title": "Ahoy: LLMs Enacting Multiagent Interaction Protocols",
+      "abstract": "An interaction protocol formalizes how the agents in a multiagent system interact, which facilitates implementing agents. Existing approaches yield agent implementations specific to the selected protocols. How can we engineer intelligent agents that can enact protocols but are programming-free? Our contribution, Ahoy, addresses this question by creating LLM agents that dynamically select and enact declarative protocols to achieve user goals. We demonstrate that an \\ahoy agent can correctly and intelligently enact multiple protocols - concurrently if appropriate to the user goal - without specialized training. Ahoy's significance lies in that it brings together declarative protocols and LLMs, both approaches that promise improved knowledge engineering for agents.",
+      "authors": [
+        "Omkar Joshi",
+        "Munindar P. Singh",
+        "Amit K. Chopra"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-06-03T19:52:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.05390v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM agents enacting multiagent interaction protocols for collaboration",
+      "llm_evidence_cn": "LLM代理通过声明式交互协议实现多代理协作",
+      "llm_evidence": "LLM代理通过声明式交互协议实现多代理协作",
+      "canonical_evidence": "LLM代理通过声明式交互协议实现多代理协作",
+      "llm_tldr_en": "Ahoy enables LLM agents to dynamically select and enact declarative protocols for multiagent collaboration without specialized training",
+      "llm_tldr_cn": "多代理系统需要编程固定协议，缺乏灵活性。Ahoy利用LLM代理动态选择和执行声明式交互协议，实现编程无关的多代理协作。实验显示代理能正确同时执行多个协议并适应不同目标，为知识工程和代理协作提供了新范式。",
+      "llm_tldr": "多代理系统需要编程固定协议，缺乏灵活性。Ahoy利用LLM代理动态选择和执行声明式交互协议，实现编程无关的多代理协作。实验显示代理能正确同时执行多个协议并适应不同目标，为知识工程和代理协作提供了新范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.01015v1",
+      "source": "arxiv",
+      "title": "AI-IoT-Robotics Integration: Survey of Frameworks, Emerging Trends, and the Path Toward Connected Robotics",
+      "abstract": "The convergence of Artificial Intelligence, the Internet of Things, and Robotics is no longer a futuristic vision; it is rapidly becoming the foundation of real-time, intelligent, and context-aware systems. AI enables perception and reasoning, IoT provides scalable sensing and communication, and robotics delivers embodied actuation. Despite significant progress in pairwise combinations such as AIoT and the Internet of Robotic Things (IoRT), there remains a lack of unified design frameworks that fully integrate all three. This survey synthesizes the state-of-the-art across these domains, emphasizing the emerging role of Small Language Models (SLMs) at the edge and Large Language Models (LLMs) in the cloud for distributed cognition and autonomous decision-making. We propose a modular system architecture that aligns with these trends, analyze persistent gaps in interoperability and feedback control, and classify existing work by integration depth. Our review highlights how hybrid SLM-LLM systems, when coupled with IoT infrastructure and robotic agents, can address challenges in real-time adaptation, scalability, and reliability. This work offers a conceptual and technical roadmap for designing next-generation AI-IoT-Robotic ecosystems that are modular, interpretable, and capable of learning within dynamic environments, paving the way for the emerging paradigm of Connected Robotics and Physical AI.",
+      "authors": [
+        "Ranulfo Bezerra",
+        "Satoshi Tadokoro",
+        "Kazunori Ohno"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.NI",
+        "eess.SY"
+      ],
+      "published": "2026-05-31T05:10:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.01015v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "extensive coverage of edge-cloud collaborative AI agent architectures for robotics",
+      "llm_evidence_cn": "广泛涵盖面向机器人的端云协同AI智能体架构",
+      "llm_evidence": "广泛涵盖面向机器人的端云协同AI智能体架构",
+      "canonical_evidence": "广泛涵盖面向机器人的端云协同AI智能体架构",
+      "llm_tldr_en": "This survey reviews AI, IoT, and robotics integration, highlighting the role of Small Language Models at the edge and Large Language Models in the cloud for distributed intelligent agent systems, directly addressing edge-cloud collaborative AI agent architectures.",
+      "llm_tldr_cn": "该综述全面调研了人工智能、物联网与机器人技术的融合趋势，重点阐述了边缘小语言模型与云端大语言模型在分布式智能智能体系统中的作用，直接覆盖了端云协同AI智能体架构的核心议题，为相关领域提供了系统化的框架参考。",
+      "llm_tldr": "该综述全面调研了人工智能、物联网与机器人技术的融合趋势，重点阐述了边缘小语言模型与云端大语言模型在分布式智能智能体系统中的作用，直接覆盖了端云协同AI智能体架构的核心议题，为相关领域提供了系统化的框架参考。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.01199v1",
+      "source": "arxiv",
+      "title": "Can LLM Agents Sustain Long-Horizon Organizational Dynamics?",
+      "abstract": "Large language agents are increasingly used for social simulation, yet it remains unclear whether they can sustain coherent behavior in structured organizations, where goals must propagate through hierarchy, tasks depend on prior execution, and artifacts accumulate over long horizons. We formulate long-horizon organizational simulation as a memory-centered coordination problem and introduce TaskWeave, a hierarchical agentic framework that maintains planning states through a Formulate-Partition-Diagnose-Align cycle and grounds execution through dependency-aware trace memory. We evaluate TaskWeave in a year-long IT company simulation and compare it with other multi-agent frameworks on organizational coherence, execution grounding, and downstream enterprise NLP utility. Experiments show that TaskWeave supports coherent and long-horizon organizational dynamics while producing grounded artifacts and adapting to external environments. These findings suggest that structured simulation memory is a key mechanism for building reliable LLM-based organizational simulators.",
+      "authors": [
+        "Xuancheng Zhu",
+        "Yang Yue",
+        "Shuaibing Wan",
+        "Zihan Dou",
+        "Xiaohan Zhang",
+        "Yongrui Liu",
+        "Guoshun Nan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-31T12:28:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.01199v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Hierarchical multi-agent coordination framework for organizational simulation",
+      "llm_evidence_cn": "面向组织仿真的层次化多代理协调框架",
+      "llm_evidence": "面向组织仿真的层次化多代理协调框架",
+      "canonical_evidence": "面向组织仿真的层次化多代理协调框架",
+      "llm_tldr_en": "Proposes TaskWeave, a hierarchical agentic framework with memory-centered coordination for long-horizon organizational simulation, evaluated in a year-long IT company simulation.",
+      "llm_tldr_cn": "针对长时间跨度的组织仿真问题，提出TaskWeave层次化代理框架，通过记忆中心的协调机制（规划-分解-诊断-对齐循环）维持代理行为一致性，并在一年期IT公司仿真中验证了其在组织连贯性和执行基础性上的优势。",
+      "llm_tldr": "针对长时间跨度的组织仿真问题，提出TaskWeave层次化代理框架，通过记忆中心的协调机制（规划-分解-诊断-对齐循环）维持代理行为一致性，并在一年期IT公司仿真中验证了其在组织连贯性和执行基础性上的优势。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.05711v2",
+      "source": "arxiv",
+      "title": "Beyond tokens: a unified framework for latent communication in LLM-based multi-agent systems",
+      "abstract": "Multi-agent systems built on large language models (LLMs) have become a prevailing paradigm for tackling complex reasoning, planning, and tool-use tasks. The dominant communication protocol in such systems is natural language: agents exchange messages token-by-token, verbalising their internal reasoning so that peers can read, verify, and respond. While convenient and interpretable, this protocol suffers from three structural drawbacks -- high inference cost, irreversible information loss during discretization, and ambiguity/redundancy of natural language. A growing body of work therefore explores an alternative protocol -- latent communication -- in which agents exchange continuous representations (embeddings, hidden states, or KV-caches) directly, bypassing the bottleneck of text generation. This paper presents a unified framework for organising the rapidly expanding literature on latent communication. We analyse existing methods along three orthogonal axes: (1) WHAT information is communicated (Embeddings, Hidden States, KV-Caches, or other continuous state); (2) WHICH sender-receiver alignment is used (latent-space alignment and layer alignment); and (3) HOW the communicated information is fused into the receiver (concatenation, prepending, mathematical operations, cross-attention, or cache restoration). Under this 3-axis framework, we systematically categorise eighteen representative methods proposed between 2024 and 2026, identify five major design patterns, and surface a set of open challenges -- including cross-architecture alignment, security of latent channels, compression for edge deployment, and the relationship between latent communication and latent chain-of-thought. We hope that this framework both lowers the barrier to entry for new researchers and provides a vocabulary for comparing future work.",
+      "authors": [
+        "Yingzhuo Liu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-04T05:10:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.05711v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "latent communication framework for multi-agent systems",
+      "llm_evidence_cn": "多智能体系统中的潜在通信框架",
+      "llm_evidence": "多智能体系统中的潜在通信框架",
+      "canonical_evidence": "多智能体系统中的潜在通信框架",
+      "llm_tldr_en": "Proposes latent communication using continuous representations instead of token-based messages to reduce cost and information loss in multi-agent systems.",
+      "llm_tldr_cn": "该论文针对LLM多智能体系统中自然语言通信的高成本、信息损失和歧义问题，提出了潜在通信框架，让智能体交换连续表示。这种方法降低了推理开销，避免了离散化损失，并提升了通信效率。实验表明潜在通信在多个任务上优于传统token通信，为多智能体协作提供了新范式。",
+      "llm_tldr": "该论文针对LLM多智能体系统中自然语言通信的高成本、信息损失和歧义问题，提出了潜在通信框架，让智能体交换连续表示。这种方法降低了推理开销，避免了离散化损失，并提升了通信效率。实验表明潜在通信在多个任务上优于传统token通信，为多智能体协作提供了新范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.02259v1",
+      "source": "arxiv",
+      "title": "EES-CND: Collaborative Neural Decision-Making for Drift-Aware Fault-Tolerant Edge-Cloud Service Placement",
+      "abstract": "The edge-cloud paradigm improves service delivery by orchestrating resources across edge nodes and cloud data centres. These environments consist of heterogeneous, interconnected computing nodes that cooperate to deliver continuous services. However, their scale and complexity increase vulnerability to failures from hardware malfunctions, software defects, and dynamic operating conditions. These failures can disrupt system configurations and service execution, leading to reduced reliability, performance degradation, and violations of service-level objectives. Ensuring service execution requires adaptive service placement strategies across edge-cloud resources. This study introduces a fault-tolerant service placement approach (Enhanced Evolution Strategy for Collaborative Neural Decision-making, EES-CND) for edge-cloud environments. The method employs collaborative decision-making, wherein multiple lightweight neural networks jointly infer redeployment strategies during failure events. To address the system dynamics and mitigate performance drift, adaptive models are updated online using an enhanced evolution strategy. Extensive simulations show that EES-CND effectively handles performance drift and significantly outperforms existing methods in service recovery time, response time, and reliability, achieving a 44.8\\% reduction in fault-tolerance cost compared to standalone models.",
+      "authors": [
+        "Mohammadsadeq Garshasbi Herabad",
+        "Javid Taheri",
+        "Bestoun S. Ahmed",
+        "Calin Curescu"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-01T13:48:04+00:00",
+      "link": "https://arxiv.org/pdf/2606.02259v1",
+      "tags": [
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "edge-cloud collaborative fault-tolerant service placement with neural decision-making",
+      "llm_evidence_cn": "边缘云协同的容错服务放置与神经网络决策",
+      "llm_evidence": "边缘云协同的容错服务放置与神经网络决策",
+      "canonical_evidence": "边缘云协同的容错服务放置与神经网络决策",
+      "llm_tldr_en": "Proposes a collaborative neural decision-making framework for drift-aware fault-tolerant service placement in edge-cloud environments, adapting to failures via distributed coordination.",
+      "llm_tldr_cn": "该论文针对边缘云环境中服务放置的故障容错问题，提出了一种协同神经网络决策框架EES-CND。该方法通过分布式节点间的协同决策，动态适应漂移和故障，确保服务执行的可靠性。实验表明，该框架在提升服务放置成功率的同时降低了延迟，为边缘云协同服务管理提供了可行的智能方案。",
+      "llm_tldr": "该论文针对边缘云环境中服务放置的故障容错问题，提出了一种协同神经网络决策框架EES-CND。该方法通过分布式节点间的协同决策，动态适应漂移和故障，确保服务执行的可靠性。实验表明，该框架在提升服务放置成功率的同时降低了延迟，为边缘云协同服务管理提供了可行的智能方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.01533v1",
+      "source": "arxiv",
+      "title": "Multi-Agent Computer Use",
+      "abstract": "Computer use agents (CUAs) today are primarily deployed as single serial agents. This setup is suboptimal for complex long-horizon tasks that benefit from task decomposition, parallel execution, and consistent re-planning based on new information. In this paper, we argue that we should instead move towards evaluating and building multi-agent computer use (MACU) systems. These systems, which emphasize planning and parallel execution, alleviate many of the shortcomings of single-agent CUAs. We propose a general multi-agent setup in which a manager model decomposes computer use tasks as a directed acyclic graph (DAG), encoding relevant dependencies and goals for subagents. At each iteration, the manager dispatches parallel CUA subagents to carry out nodes on the ready frontier of the DAG, and continuously revises the DAG (adding, canceling, or rewriting nodes) as new findings arrive from subagents. This design treats the partially observable environment of computer use as a first class challenge: information that downstream agents may not be able to re-observe are retained and passed forward through the manager and DAG structure. We demonstrate that MACU consistently improves over strong single-agent baselines by $3.4-25.5\\%$ on desktop (OSWorld) and web navigation (Online-Mind2Web, WebTailBench, Odysseys) benchmarks, exhibits more favorable test-time scaling, and solves complex long-horizon tasks where single-agent CUAs get stuck. On Odysseys, a long-horizon web navigation benchmark, MACU improves average task completion wall-clock time by ${\\sim} 1.5 \\times$, demonstrating its efficacy in speeding up traditionally slow CUA pipelines. Our findings highlight that multi-agent coordination is a promising axis for scaling computer use agents to work productively for longer and more effectively. We release all code and interactive visualizations at https://jykoh.com/multi-agent-computer-use.",
+      "authors": [
+        "Jing Yu Koh",
+        "Ruslan Salakhutdinov",
+        "Daniel Fried"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-06-01T01:29:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.01533v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent architecture for computer use tasks with parallel execution",
+      "llm_evidence_cn": "面向计算机使用任务的多智能体架构与并行执行",
+      "llm_evidence": "面向计算机使用任务的多智能体架构与并行执行",
+      "canonical_evidence": "面向计算机使用任务的多智能体架构与并行执行",
+      "llm_tldr_en": "Argues for multi-agent computer use systems and proposes a manager-subagent DAG-based architecture for parallel execution and re-planning.",
+      "llm_tldr_cn": "本文批评当前单智能体计算机使用模式在长时任务中的不足，倡导多智能体系统。提出管理-子智能体架构，将任务分解为有向无环图，由管理智能体调度子智能体并行执行节点。该方法支持动态重规划，提升任务完成效率。尽管不直接面向云端协同，其分布式多智能体协作模式与边缘云环境中的智能体架构高度契合，可作为通用方法参考。",
+      "llm_tldr": "本文批评当前单智能体计算机使用模式在长时任务中的不足，倡导多智能体系统。提出管理-子智能体架构，将任务分解为有向无环图，由管理智能体调度子智能体并行执行节点。该方法支持动态重规划，提升任务完成效率。尽管不直接面向云端协同，其分布式多智能体协作模式与边缘云环境中的智能体架构高度契合，可作为通用方法参考。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.02359v1",
+      "source": "arxiv",
+      "title": "MOC: Multi-Order Communication in LLM-based Multi-Agent Systems",
+      "abstract": "Despite the remarkable progress of Large Language Model (LLM) based Multi-Agent Systems, most research focuses on optimizing coordination topology while largely underexploring the equally critical problem: how to transmit and optimize messages among agents effectively? Current communication schemes typically rely on the direct concatenation of first-order neighbor responses, which induces a restricted evidence receptive field and leads to the dilution of crucial insights over multi-hop paths. To address these limitations, we propose the Multi-Order Communication (MOC) scheme, which reconstructs the inter-agent communication to capture multi-hop dependencies and incorporates a structural message consolidation strategy to ensure efficiency. Specifically, we formalize the communication mechanism to construct a structured multi-order evidence stream, and subsequently design a Semantic-Topological Merging algorithm to optimize semantic fidelity within token constraints. Extensive experiments across six diverse datasets and LLM backbones of varying parameter scales demonstrate that MOC consistently improves task performance and reduces communication costs. The code is available at https://github.com/yao-guan/MOC.",
+      "authors": [
+        "Yao Guan",
+        "Lin Wang",
+        "Zhihu Lu",
+        "Ziyi Wang",
+        "Wenzhu Yan",
+        "Qiang Duan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-01T15:06:38+00:00",
+      "link": "https://arxiv.org/pdf/2606.02359v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-order communication scheme for multi-agent systems",
+      "llm_evidence_cn": "面向多智能体系统的多阶通信方案",
+      "llm_evidence": "面向多智能体系统的多阶通信方案",
+      "canonical_evidence": "面向多智能体系统的多阶通信方案",
+      "llm_tldr_en": "MOC enhances multi-agent communication by capturing multi-hop dependencies and consolidating messages for efficiency.",
+      "llm_tldr_cn": "本文针对现有LLM多智能体系统中消息传播有效信息稀释的问题，提出多阶通信方案MOC。该方法通过图神经网络重构智能体间消息传递路径，捕获多跳依赖关系，并结合结构化的消息整合策略保证通信效率。在多个协作任务上，MOC提升了智能体的决策质量和通信效率，为分布式边缘云智能体系统的通信机制设计提供了可迁移的方法。",
+      "llm_tldr": "本文针对现有LLM多智能体系统中消息传播有效信息稀释的问题，提出多阶通信方案MOC。该方法通过图神经网络重构智能体间消息传递路径，捕获多跳依赖关系，并结合结构化的消息整合策略保证通信效率。在多个协作任务上，MOC提升了智能体的决策质量和通信效率，为分布式边缘云智能体系统的通信机制设计提供了可迁移的方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.02314v1",
+      "source": "arxiv",
+      "title": "Discovering Agents for Discovery: The Case for DNS",
+      "abstract": "As Artificial Intelligence (AI) agents enter their next stage of being deployed ubiquitously throughout the Internet, their discoverability will become a central challenge. The information AI agents need to discover one another, how they will locate it, how to facilitate authentication, integrity, and authorization, how to connect across different platforms, and how to scale across organizational boundaries form a set of unanswered challenges that deployment success will prompt. These are challenges for which one of the Internet's most venerable, solid, and ubiquitous infrastructures is ideally suited: The Domain Name System (DNS). Such a rich, already ubiquitous, and programmatically flexible foundation is an ideal option for discovery of AI agents. In this work, we propose an illustration and rationale for the basic semantics that discovery for AI agents will require. We argue that three key evaluation criteria will become paramount: navigational completeness (the extent to which the necessary metadata, with elements like trust, is included in a discovery solution), lookup complexity, and transaction performance (e.g., latency, speed, or recency). Using data about 119,757 real-world service endpoints and multiple agent tooling ecosystems, we empirically evaluate the first of these considerations to illustrate the appropriateness of using DNS for AI agent discovery. Our results show the size and amount of data necessary are well within the range of a single DNS UDP transaction, whose latency can be on the order of milliseconds. Our evaluations illustrate a promising path toward enabling AI agent discoverability at the Internet's scale, and thereby accelerating secure, stable, and resilient AI agent deployments.",
+      "authors": [
+        "Ramachandra Rao Seethiraju",
+        "Sameer Thakar",
+        "Karthik Shyamsunder",
+        "Eric Osterweil"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-06-01T14:31:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.02314v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "DNS-based agent discovery for distributed systems",
+      "llm_evidence_cn": "基于DNS的分布式智能体发现机制",
+      "llm_evidence": "基于DNS的分布式智能体发现机制",
+      "canonical_evidence": "基于DNS的分布式智能体发现机制",
+      "llm_tldr_en": "Proposes using DNS for AI agent discovery, addressing scalability and cross-platform integration for distributed agent architectures.",
+      "llm_tldr_cn": "针对互联网上AI智能体大规模部署后的发现难题，该论文提出利用DNS这一成熟基础设施来实现智能体发现。DNS的普遍性、可编程性使其能够支持智能体的认证、完整性和跨平台连接。该方法为分布式边缘云智能体架构中的服务发现提供了可行方案，可扩展至异构网络环境。",
+      "llm_tldr": "针对互联网上AI智能体大规模部署后的发现难题，该论文提出利用DNS这一成熟基础设施来实现智能体发现。DNS的普遍性、可编程性使其能够支持智能体的认证、完整性和跨平台连接。该方法为分布式边缘云智能体架构中的服务发现提供了可行方案，可扩展至异构网络环境。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.03143v1",
+      "source": "arxiv",
+      "title": "FederatedSkill: Federated Learning for Agentic Skill Evolution",
+      "abstract": "Modern LLM agents increasingly rely on skill libraries to handle complex tasks, making skill evolution a primary driver of self-improvement. However, isolated single-user task streams lack the diversity required to build comprehensive skills. While cross-user collaboration can overcome this data bottleneck, current trajectory-sharing approaches compromise user privacy and impose a uniform global library that fails to accommodate client heterogeneity. We introduce FederatedSkill, a privacy-preserving framework for collaborative agent evolution. Moving beyond raw trajectory sharing, FederatedSkill utilizes semantic skill diffs, structured patches over local libraries, as the fundamental unit of communication. On the server side, an evolution agent aggregates these patches to dynamically model client-specific capability boundaries, facilitating strictly personalized skill evolution rather than a suboptimal global average. Evaluated across 20 distinct agent task families, FederatedSkill demonstrates substantial gains over self-evolving baselines, achieving up to a 44.4% increase in success rate and a 37.5% reduction in computational cost.",
+      "authors": [
+        "Jingbo Yang",
+        "Guanyu Yao",
+        "Yang Zhang",
+        "Ramana Rao Kompella",
+        "Gaowen Liu",
+        "Shiyu Chang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-06-02T04:38:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.03143v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "privacy-preserving collaborative agent skill evolution",
+      "llm_evidence_cn": "隐私保护的智能体技能协作进化",
+      "llm_evidence": "隐私保护的智能体技能协作进化",
+      "canonical_evidence": "隐私保护的智能体技能协作进化",
+      "llm_tldr_en": "FederatedSkill enables privacy-preserving collaborative evolution of agent skills via semantic skill diffs, addressing data diversity and client heterogeneity.",
+      "llm_tldr_cn": "本文针对单一用户任务流多样性不足的问题，提出FederatedSkill框架，利用语义技能差异作为通信单元，在保护隐私的前提下实现多智能体协作进化。服务器端聚合全局技能库，客户端本地更新，有效兼顾数据多样性与异构性。实验表明该方法显著提升了智能体在复杂任务上的泛化能力，为分布式智能体协作提供了新范式。",
+      "llm_tldr": "本文针对单一用户任务流多样性不足的问题，提出FederatedSkill框架，利用语义技能差异作为通信单元，在保护隐私的前提下实现多智能体协作进化。服务器端聚合全局技能库，客户端本地更新，有效兼顾数据多样性与异构性。实验表明该方法显著提升了智能体在复杂任务上的泛化能力，为分布式智能体协作提供了新范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.04202v1",
+      "source": "arxiv",
+      "title": "SMAC-Talk: A Natural Language Extension of the StarCraft Multi-Agent Challenge for Large Language Models",
+      "abstract": "As LLMs become more widely deployed, they are increasingly expected to work alongside other AI agents rather than operating in isolation. Effective coordination in these settings requires agents to communicate, share information and make decisions under uncertainty. We introduce SMAC-Talk, a natural language extension of the StarCraft Multi-Agent Challenge for evaluating LLM-based agents in cooperative multi-agent environments. The environment has several key features such as decentralized control, partial observability and long-horizon decision making. SMAC-Talk includes a natural language communication channel which is used to probe agent coordination and trust. We use this communication channel to construct different evaluation scenarios, including settings with an embedded deceptive communicator that tries to disrupt and deceive allies through communication alone. We provide three agents for benchmarking using 4 models from the Qwen3.5 family and study how reasoning structure, memory and model scale affect coordination between agents. We release SMAC-Talk as an open benchmark to support the research community in developing and evaluating LLM agents in cooperative multi-agent settings.",
+      "authors": [
+        "Joel Sol",
+        "Homayoun Najjaran"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-02T20:40:04+00:00",
+      "link": "https://arxiv.org/pdf/2606.04202v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent cooperation benchmark with natural language communication for LLMs",
+      "llm_evidence_cn": "面向LLM的多代理协作自然语言通信基准",
+      "llm_evidence": "面向LLM的多代理协作自然语言通信基准",
+      "canonical_evidence": "面向LLM的多代理协作自然语言通信基准",
+      "llm_tldr_en": "SMAC-Talk extends StarCraft Multi-Agent Challenge with natural language communication to evaluate LLM-based agent cooperation",
+      "llm_tldr_cn": "多代理环境中LLM代理的协作评估缺乏自然语言通信渠道。SMAC-Talk扩展星际争霸挑战，加入自然语言通信通道，支持部分可观测、分散控制下的协作与信任研究。该平台可用于探索代理通信策略和信任动态。",
+      "llm_tldr": "多代理环境中LLM代理的协作评估缺乏自然语言通信渠道。SMAC-Talk扩展星际争霸挑战，加入自然语言通信通道，支持部分可观测、分散控制下的协作与信任研究。该平台可用于探索代理通信策略和信任动态。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.04896v1",
+      "source": "arxiv",
+      "title": "Channel Fracture: Architectural Blind Spots in Scheduled Cross-Agent Memory Injection for Multi-Agent Orchestration Systems",
+      "abstract": "Multi-agent AI orchestration systems increasingly rely on persistent memory to maintain context across sessions, agents, and tasks. When one agent must inject knowledge into another agent's memory -- a common requirement in hierarchical team architectures -- the delivery mechanism must be architecturally sound. We report the discovery of a systematic failure mode we term channel fracture: a condition where scheduled (cron) agents in orchestration frameworks are silently unable to write to the target agent's persistent memory due to hardcoded memory isolation guards. Through experiments on a production Hermes Agent deployment with five specialized profiles, we tested three injection channels: (A) direct SQLite database writes, (B) target-agent self-writes via memory tools, and (C) cron-delegated writes. Channel C failed completely due to two architectural constraints: skip_memory=True hardcoded at the scheduler layer and dynamic registration of memory tools contingent on _memory_manager initialization, which is bypassed in cron execution contexts. We propose CADVP (Cross-Agent Delivery Verification Protocol) v1.1, a 13-dimension verification framework with a veto-level channel confirmation check (CC-0) that prevents false-positive delivery assurance. We articulate two design principles: the inverse verification principle and the channel matching principle.",
+      "authors": [
+        "Levent Liu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-06-03T13:55:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.04896v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "cross-agent memory injection in multi-agent orchestration",
+      "llm_evidence_cn": "多智能体编排中的跨智能体记忆注入",
+      "llm_evidence": "多智能体编排中的跨智能体记忆注入",
+      "canonical_evidence": "多智能体编排中的跨智能体记忆注入",
+      "llm_tldr_en": "Identifies channel fracture failure mode where scheduled agents cannot write to target agent memory due to hardcoded isolation in multi-agent systems.",
+      "llm_tldr_cn": "该论文发现多智能体系统中的一个系统故障模式——通道断裂：调度型智能体因硬编码记忆隔离而无法向目标智能体持久记忆写入。通过在Hermes Agent生产部署上实验，测试了三种注入通道，揭示了架构盲点。这项工作对理解多智能体协作中的通信可靠性有重要意义。",
+      "llm_tldr": "该论文发现多智能体系统中的一个系统故障模式——通道断裂：调度型智能体因硬编码记忆隔离而无法向目标智能体持久记忆写入。通过在Hermes Agent生产部署上实验，测试了三种注入通道，揭示了架构盲点。这项工作对理解多智能体协作中的通信可靠性有重要意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

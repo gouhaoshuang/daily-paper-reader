@@ -6,77 +6,71 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-10 ~ 2026-06-08
-- 运行时间：2026-06-08 02:04:53 UTC
+- 最新运行日期：2026-06-08
+- 运行时间：2026-06-08 21:13:19 UTC
 - 运行状态：成功
-- 本次总论文数：19
-- 精读区：8
+- 本次总论文数：17
+- 精读区：6
 - 速读区：11
 
 ### 今日简报（AI）
-本报告期（2026-05-10至06-08）精读8篇速读11篇，重点聚焦设备-云协同与隐私记忆管理。最值得关注的是满分论文《Hera》提出的长周期协调方案与《MemPrivacy》的隐私保护个性化记忆机制。建议读者优先精读这两篇，把握边缘-云协作与隐私保护的核心权衡。
-- 详情：[/20260510-20260608/README](/20260510-20260608/README)
+今日共收录17篇论文，精读6篇、速读11篇，重点聚焦6G-LLM架构与边缘-云推理路由优化。最值得关注的是《A Communication-Centric 6G-LLM Architecture》提出的战术网络可扩展方案，以及《INAR-VL》中面向视觉语言推理的输入感知路由机制。建议优先阅读精读列表中的两篇高分论文，并速读《Ahoy》和《Beyond tokens》以理解LLM多智能体通信的新范式。
+- 详情：[/202606/08/README](/202606/08/README)
 
 ### 精读区论文标签
-1. [Hera: Learning Long-Horizon Coordination for Device-Cloud Collaborative LLM Agents](/20260510-20260608/2605.24598v1-hera-learning-long-horizon-coordination-for-device-cloud-collaborative-llm-agents)  
-   标签：评分：10.0/10、query:eca
-   evidence：端云协同LLM智能体协调
-2. [MemPrivacy: Privacy-Preserving Personalized Memory Management for Edge-Cloud Agents](/20260510-20260608/2605.09530v1-memprivacy-privacy-preserving-personalized-memory-management-for-edge-cloud-agents)  
+1. [A Communication-Centric 6G-LLM Architecture for Scalable Tactical Autonomous Defense Vehicle Networks](/202606/08/2606.01312v1-a-communication-centric-6g-llm-architecture-for-scalable-tactical-autonomous-defense-vehicle-networks)  
    标签：评分：9.0/10、query:eca
-   evidence：端云智能体、个性化记忆、隐私保护
-3. [MemPrivacy: Privacy-Preserving Personalized Memory Management for Edge-Cloud Agents](/20260510-20260608/2605.09530v3-memprivacy-privacy-preserving-personalized-memory-management-for-edge-cloud-agents)  
-   标签：评分：9.0/10、query:eca
-   evidence：边缘云代理的隐私保护内存管理
-4. [An Agentic AI Framework with Large Language Models and Chain-of-Thought for UAV-Assisted Logistics Scheduling with Mobile Edge Computing](/20260510-20260608/2605.13221v1-an-agentic-ai-framework-with-large-language-models-and-chain-of-thought-for-uav-assisted-logistics-scheduling-with-mobile-edge-computing)  
-   标签：评分：9.0/10、query:eca
-   evidence：无人机辅助物流与移动边缘计算结合LLM智能体
-5. [Joint Communication and Computation Design for Mobile Embodied AI Network (MEAN)](/20260510-20260608/2605.14300v1-joint-communication-and-computation-design-for-mobile-embodied-ai-network-mean)  
-   标签：评分：9.0/10、query:eca
-   evidence：移动具身人工智能网络，具有协作策略和基站辅助
-6. [PPAI: Enabling Personalized LLM Agent Interoperability for Collaborative Edge Intelligence](/20260510-20260608/2605.18067v1-ppai-enabling-personalized-llm-agent-interoperability-for-collaborative-edge-intelligence)  
-   标签：评分：9.0/10、query:eca
-   evidence：边缘设备部署和点对点协作实现协同边缘智能
-7. [When Cloud Agents Meet Device Agents: Lessons from Hybrid Multi-Agent Systems](/20260510-20260608/2605.30102v1-when-cloud-agents-meet-device-agents-lessons-from-hybrid-multi-agent-systems)  
-   标签：评分：9.0/10、query:eca
-   evidence：混合多智能体系统中云端与设备智能体结合的经验
-8. [CoMIC: Collaborative Memory and Insights Circulation for Long-Horizon LLM Agents in Cloud-Edge Systems](/20260510-20260608/2606.00756v1-comic-collaborative-memory-and-insights-circulation-for-long-horizon-llm-agents-in-cloud-edge-systems)  
-   标签：评分：9.0/10、query:eca
-   evidence：云边协作的记忆循环机制，核心符合端云协同主题
+   evidence：面向战术自主车辆网络的边缘辅助LLM推理与6G架构
+2. [INAR-VL: Input-Aware Routing for Edge-Cloud Vision-Language Inference](/202606/08/2605.18853v1-inar-vl-input-aware-routing-for-edge-cloud-vision-language-inference)  
+   标签：评分：8.0/10、query:eca
+   evidence：边云协同路由系统，利用互补视觉语言模型进行推理
+3. [$E^3$-Agent: An Executable and Evolving Agent for Resource Management of Edge Generative Inference](/202606/08/2605.27428v1-e3-agent-an-executable-and-evolving-agent-for-resource-management-of-edge-generative-inference)  
+   标签：评分：8.0/10、query:eca
+   evidence：可执行且可演化的代理，用于边缘生成内容资源管理
+4. [Dynamic Trust-Aware Sparse Communication Topology for LLM-Based Multi-Agent Consensus](/202606/08/2606.01828v1-dynamic-trust-aware-sparse-communication-topology-for-llm-based-multi-agent-consensus)  
+   标签：评分：8.0/10、query:eca
+   evidence：面向LLM多代理共识的动态稀疏通信拓扑
+5. [Toward a Modular Architecture for Embedded AI Agent Systems at the Edge](/202606/08/2606.02862v1-toward-a-modular-architecture-for-embedded-ai-agent-systems-at-the-edge)  
+   标签：评分：8.0/10、query:eca
+   evidence：面向边缘的嵌入式AI代理模块化架构
+6. [From Prompt to Service: An SLM-Based Agent Orchestration Gateway for AI-Driven Virtual Worlds](/202606/08/2606.03557v1-from-prompt-to-service-an-slm-based-agent-orchestration-gateway-for-ai-driven-virtual-worlds)  
+   标签：评分：8.0/10、query:eca
+   evidence：提出边缘部署的SLM网关协调端云服务
 
 ### 速读区论文标签
-1. [MemPrivacy: Privacy-Preserving Personalized Memory Management for Edge-Cloud Agents](/20260510-20260608/2605.09530v2-memprivacy-privacy-preserving-personalized-memory-management-for-edge-cloud-agents)  
+1. [Ahoy: LLMs Enacting Multiagent Interaction Protocols](/202606/08/2606.05390v1-ahoy-llms-enacting-multiagent-interaction-protocols)  
    标签：评分：8.0/10、query:eca
-   evidence：端云代理的隐私保护记忆管理
-2. [Agentic Performance at the Edge: Insights from Benchmarking](/20260510-20260608/2605.10384v1-agentic-performance-at-the-edge-insights-from-benchmarking)  
+   evidence：LLM代理通过声明式交互协议实现多代理协作
+2. [Beyond tokens: a unified framework for latent communication in LLM-based multi-agent systems](/202606/08/2606.05711v2-beyond-tokens-a-unified-framework-for-latent-communication-in-llm-based-multi-agent-systems)  
    标签：评分：8.0/10、query:eca
-   evidence：边缘代理AI性能基准测试
-3. [Trade-offs in Decentralized Agentic AI Discovery Across the Compute Continuum](/20260510-20260608/2605.11839v1-trade-offs-in-decentralized-agentic-ai-discovery-across-the-compute-continuum)  
-   标签：评分：8.0/10、query:eca
-   evidence：跨云、边缘和间歇连接域的分布式代理发现权衡分析
-4. [TopoClaw: A Human-Centric and Topology-Aware Agent Operating System](/20260510-20260608/2605.15556v1-topoclaw-a-human-centric-and-topology-aware-agent-operating-system)  
-   标签：评分：8.0/10、query:eca
-   evidence：拓扑感知的智能体操作系统支持分布式设备协作
-5. [AgentFugue: Agent Scaling for Long-Horizon Tasks through Collective Reasoning](/20260510-20260608/2605.24486v1-agentfugue-agent-scaling-for-long-horizon-tasks-through-collective-reasoning)  
+   evidence：多智能体系统中的潜在通信框架
+3. [AI-IoT-Robotics Integration: Survey of Frameworks, Emerging Trends, and the Path Toward Connected Robotics](/202606/08/2606.01015v1-ai-iot-robotics-integration-survey-of-frameworks-emerging-trends-and-the-path-toward-connected-robotics)  
    标签：评分：7.0/10、query:eca
-   evidence：多同行代理通过共享推理中心协作处理长周期任务的框架
-6. [Neural Router: Semantic Content Matching for Agentic AI](/20260510-20260608/2605.25701v1-neural-router-semantic-content-matching-for-agentic-ai)  
+   evidence：广泛涵盖面向机器人的端云协同AI智能体架构
+4. [EES-CND: Collaborative Neural Decision-Making for Drift-Aware Fault-Tolerant Edge-Cloud Service Placement](/202606/08/2606.02259v1-ees-cnd-collaborative-neural-decision-making-for-drift-aware-fault-tolerant-edge-cloud-service-placement)  
    标签：评分：7.0/10、query:eca
-   evidence：边缘云连续体上的代理AI语义匹配
-7. [Availability-Aware and Efficiency-Driven AI Service Chain Provisioning in Multi-Domain Edge Intelligence Cloud](/20260510-20260608/2606.05637v1-availability-aware-and-efficiency-driven-ai-service-chain-provisioning-in-multi-domain-edge-intelligence-cloud)  
+   evidence：边缘云协同的容错服务放置与神经网络决策
+5. [MOC: Multi-Order Communication in LLM-based Multi-Agent Systems](/202606/08/2606.02359v1-moc-multi-order-communication-in-llm-based-multi-agent-systems)  
    标签：评分：7.0/10、query:eca
-   evidence：边缘智能云中的多代理AI服务链供应
-8. [CollabSim: A CSCW-Grounded Methodology for Investigating Collaborative Competence of LLM Agents through Controlled Multi-Agent Experiments](/20260510-20260608/2606.06399v1-collabsim-a-cscw-grounded-methodology-for-investigating-collaborative-competence-of-llm-agents-through-controlled-multi-agent-experiments)  
+   evidence：面向多智能体系统的多阶通信方案
+6. [FederatedSkill: Federated Learning for Agentic Skill Evolution](/202606/08/2606.03143v1-federatedskill-federated-learning-for-agentic-skill-evolution)  
    标签：评分：7.0/10、query:eca
-   evidence：通过受控实验研究LLM代理协作能力的CSCW方法论
-9. [Adaptive DNN Partitioning and Offloading in Heterogeneous Edge-Cloud Continuum](/20260510-20260608/2605.09623v1-adaptive-dnn-partitioning-and-offloading-in-heterogeneous-edge-cloud-continuum)  
+   evidence：隐私保护的智能体技能协作进化
+7. [SMAC-Talk: A Natural Language Extension of the StarCraft Multi-Agent Challenge for Large Language Models](/202606/08/2606.04202v1-smac-talk-a-natural-language-extension-of-the-starcraft-multi-agent-challenge-for-large-language-models)  
+   标签：评分：7.0/10、query:eca
+   evidence：面向LLM的多代理协作自然语言通信基准
+8. [Channel Fracture: Architectural Blind Spots in Scheduled Cross-Agent Memory Injection for Multi-Agent Orchestration Systems](/202606/08/2606.04896v1-channel-fracture-architectural-blind-spots-in-scheduled-cross-agent-memory-injection-for-multi-agent-orchestration-systems)  
+   标签：评分：7.0/10、query:eca
+   evidence：多智能体编排中的跨智能体记忆注入
+9. [Can LLM Agents Sustain Long-Horizon Organizational Dynamics?](/202606/08/2606.01199v1-can-llm-agents-sustain-long-horizon-organizational-dynamics)  
    标签：评分：6.0/10、query:eca
-   evidence：在异构边缘云连续体上动态分割DNN层
-10. [Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems](/20260510-20260608/2605.14892v1-beyond-individual-intelligence-surveying-collaboration-failure-attribution-and-self-evolution-in-llm-based-multi-agent-systems)  
+   evidence：面向组织仿真的层次化多代理协调框架
+10. [Multi-Agent Computer Use](/202606/08/2606.01533v1-multi-agent-computer-use)  
    标签：评分：6.0/10、query:eca
-   evidence：多代理系统中协作、故障归因与自我演化的综述
-11. [APWA: A Distributed Architecture for Parallelizable Agentic Workflows](/20260510-20260608/2605.15132v1-apwa-a-distributed-architecture-for-parallelizable-agentic-workflows)  
+   evidence：面向计算机使用任务的多智能体架构与并行执行
+11. [Discovering Agents for Discovery: The Case for DNS](/202606/08/2606.02314v1-discovering-agents-for-discovery-the-case-for-dns)  
    标签：评分：6.0/10、query:eca
-   evidence：分布式多智能体系统架构，支持可并行化的代理工作负载
+   evidence：基于DNS的分布式智能体发现机制
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,391 @@
+Title: INAR-VL: Input-Aware Routing for Edge-Cloud Vision-Language Inference
+
+URL Source: https://arxiv.org/pdf/2605.18853v1
+
+Published Time: Wed, 20 May 2026 00:06:39 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# INAR-VL: Input-Aware Routing for Edge–Cloud Vision–Language Inference 
+
+# Ahmed Šabanović 
+
+ahmed.sabanovic@tuwien.ac.at TU Wien Vienna, Austria 
+
+# Paul Joe Maliakel 
+
+paul.maliakel@tuwien.ac.at TU Wien Vienna, Austria 
+
+# Ivona Brandić 
+
+ivona.brandic@tuwien.ac.at TU Wien Vienna, Austria 
+
+Abstract 
+
+Edge deployment of Vision–Language Models (VLMs) faces a tradeoff between latency and accuracy: cloud execution provides high-quality predictions but incurs communication delay and energy cost, while edge-only execution is faster but less accurate due to limited model capacity. This trade-off is further complicated by heterogeneity in image quality and reasoning complexity, making static placement subopti-mal. We present INAR-VL, a lightweight edge–cloud routing system for multimodal inference in a two-tier deployment. INAR-VL maintains complementary VLMs across edge and cloud and uses lightweight image and text complexity sig-nals to guide routing and model selection, executing simple queries locally while offloading complex ones when bene-ficial. Evaluation on visual question answering shows that INAR-VL executes 36% of requests on the edge, reduces la-tency by 24%, lowers energy by 26%, and preserves 97% of cloud-level accuracy. 
+
+Keywords 
+
+Multimodal large language models, Edge computing, Input-aware inference routing, Energy-efficient inference, Edge– cloud placement 
+
+1 INTRODUCTION 
+
+VLMs are increasingly deployed in edge environments such as mobile devices, robots, and embedded cameras, where inference must operate under strict constraints in latency, energy, memory, and bandwidth [ 1, 13 , 18 ]. Consider a field technician using smart glasses to query equipment labels and maintenance instructions while moving through a factory floor with patchy Wi-Fi. In such scenarios, sending every re-quest to the cloud introduces unpredictable communication delays, while relying solely on a small on-device model risks incorrect answers on visually degraded inputs or complex reasoning queries. Serving VLMs efficiently in such environ-ments remains challenging [ 12 ]. Unlike text-only workloads, multimodal inputs exhibit high variability in image quality (e.g., blur, lighting, compression artifacts) and text complex-ity, which strongly affects both model accuracy and inference cost [15]. Existing approaches largely ignore this heterogeneity. Sys-tems such as MoA-Off and recent routing approaches in-spired by RouteLLM-style difficulty estimation rely on static deployment choices or primarily text-based signals, which are insufficient for multimodal workloads [ 6, 17 , 19 ]. While effective for text-only LLMs [ 6 ], they fail to capture visual degradation effects, where, for example, increasing resolu-tion helps fine-grained images but not blurred ones [ 15 ]. Our measurements highlight this trade-off: edge-only inference is faster and more energy-efficient but less accurate than cloud-only execution. To make this trade-off explicit, our baselines show that edge-only execution achieves 66.5% accuracy at 824 ms and 7.5 J per sample, while cloud-only reaches 74.4% accuracy at 2408 ms and 26.0 J. This gap motivates input-aware routing instead of static placement. However, designing such a router for edge environments introduces several challenges. First, different VLM archi-tectures exhibit complementary strengths: some models are better at perception-heavy tasks such as OCR or fine-grained visual recognition, while others perform better on language-intensive reasoning queries[ 2 ]. Second, routing decisions must be made before expensive inference, requiring light-weight request characterization rather than additional model evaluations. Third, routing must respect practical deploy-ment constraints including limited edge GPU memory, de-vice energy budgets, network variability, and strict overhead limits for pre-inference analysis. To address these challenges, we present INAR-VL, a prac-tical routing system for adaptive edge–cloud VLM infer-ence. Unlike prior approaches that rely on a single model or static offloading decisions, INAR-VL maintains a hetero-geneous pool of complementary vision–language models distributed across edge and cloud resources. A key nov-elty of our approach is the use of lightweight multimodal signals—capturing both image quality and text complex-ity—extracted prior to inference to guide routing decisions without invoking expensive VLM computation. These signals drive a routing policy that jointly optimizes three dimensions: model architecture, input resolution, and execution place-ment. This joint optimization across model, resolution, and 
+
+> 1
+> arXiv:2605.18853v1 [cs.LG] 13 May 2026 Ahmed Šabanović, Paul Joe Maliakel, and Ivona Brandić
+
+placement has not been explicitly addressed in prior VLM routing systems. 
+
+Contributions. We design INAR-VL, a routing system that uses lightweight multimodal signals for pre-inference request characterization, enabling model and placement deci-sions without additional VLM cost. The policy is deployment-aware, jointly optimizing model choice, resolution, and edge/ cloud placement under practical constraints such as memory, energy, and network variability. We further provide an end-to-end evaluation on an 8 GB edge GPU and cloud setup across three VQA benchmarks, demonstrating improved latency–accuracy trade-offs over static baselines. 
+
+2 BACKGROUND & MOTIVATION 
+
+Designing an effective routing policy requires understanding both the hardware constraints of edge deployments and the variability in model capabilities across different VLM archi-tectures. In this section, we briefly review these two aspects and highlight why static edge or cloud placement performs poorly for heterogeneous multimodal workloads. 
+
+2.1 Edge Resource Constraints 
+
+Modern VLMs combine language backbones, visual encoders, and multimodal projection layers, resulting in substantial memory and compute requirements. For example, a 7B model executed in FP16 typically requires roughly 14–16 GB of GPU memory for weights alone, excluding activations and decod-ing caches [ 1 , 18 ]. These requirements exceed the capacity of many edge platforms operating under strict power and thermal limits. As a result, executing large VLMs entirely on edge hardware is often impractical, while sending every request to the cloud introduces additional network latency and bandwidth overhead. Hybrid edge–cloud deployments therefore represent a practical compromise. 
+
+2.2 Heterogeneity Across Vision–Language Models 
+
+VLM architectures show complementary strengths. Qwen-VL achieves 79.5% VQAv2, 59.3% GQA, 63.8% TextVQA ,excelling at OCR and visually grounded language tasks [ 3 ], whereas LLaVA-1.5 scores 78.5% VQAv2, 62.0% GQA, 58.2% TextVQA , favoring reasoning-oriented VQA [ 4 ]. Other stud-ies confirm that LLaVA-OneVision-1.5 is stronger on reason-ing benchmarks, while Qwen-VL outperforms on OCR tasks [ 2]. No single model dominates across all inputs, motivating adaptive per-request selection. 
+
+3 INAR-VL 
+
+INAR-VL is an input-aware routing system for edge–cloud VLM inference. In the deployment studied here, the router chooses among four complementary models: two compact 
+
+Table 1: Model pool used by INAR-VL.                     
+
+> Model Params Deploy Prec. Vision Encoder
+> Qwen3-VL-2B 2B Edge INT8 Qwen + DeepStack SmolVLM-2B 2B Edge INT8 SigLIP LLaVA-OV-8B 8B Cloud FP16 RICE-ViT Qwen3-VL-8B 8B Cloud FP16 Qwen + DeepStack
+
+edge VLMs that fit within an 8 GB device budget and two larger cloud VLMs that provide stronger visual and reason-ing capability. Given an (image , question ) request, INAR-VL constructs a per-request Pareto frontier over a configuration space spanning model architecture, numeric precision, input resolution, and compute placement. The router enumerates valid configurations, scores each on predicted answer quality and estimated cost, and then selects among Pareto-optimal candidates using a calibrated edge-preference rule. 
+
+3.1 System Overview 
+
+Figure 1 shows the INAR-VL architecture used in our evalu-ation, and Table 1 summarizes the model pool used by the router. We follow the pipeline from left to right. (1) Input ingestion: the request is provided as an (image , question )
+
+pair. (2) Feature extraction: the image branch computes blur, exposure, artifact, and detail signals. The text branch computes six complexity signals (length, entity/numeric den-sity, question type, vocabulary complexity, reasoning mark-ers, and context-dependency markers). (3) Feature analy-sis and fusion: both branches are normalized and merged into a 10-dimensional request descriptor r. (4) Router: the router jointly selects model and placement by optimizing predicted accuracy against latency and energy, approximat-ing the Pareto frontier over edge and cloud candidates. (5) 
+
+Decision: the system prioritizes edge execution when the predicted quality is sufficient, and otherwise offloads to the cloud only if the expected quality gain justifies the additional cost. (6) Execution: the selected candidate is dispatched to either an edge model (INT8) or a cloud model (FP16). (7) 
+
+Response: the model answer is returned to the client. The system comprises an edge device (NVIDIA RTX 4060, 8 GB VRAM) and a cloud GPU (NVIDIA RTX PRO 6000, 98 GB VRAM), and the full routing pipeline adds 10–30 ms of CPU-side overhead. Each model carries three normalized strength descriptors in [0, 1] (blur robustness, detail/OCR capability, and reason-ing ability), which are used by the router’s quality predictor to penalize model–input mismatches. These descriptors are fixed offline (not learned online during routing): we initial-ize them from architecture-informed priors (encoder fam-ily, model scale, and known OCR/reasoning characteristics) and verify their relative ordering using single-model pilot 
+
+> 2
+
+INAR-VL: Input-Aware Routing Image input       
+
+> What is the
+> picture of the
+> cat shown on?
+> Input
+> Text prompt
+> Visual
+> Features
+> Textual
+> Features
+> (Complexity,
+> Length, Semantics,
+> etc.)
+> (Quality, Blur,
+> Noise, etc.)
+> Feature Analysis
+> Visual
+> Quality
+> Language
+> Complexity
+> Task
+> Difficulty
+> Router
+> Optimize
+> Model & Placement
+> Selection
+> Score
+> Cost
+> Accuracy ↑
+> Latency ↓
+> Energy ↓
+> Edge Processing
+> Edge Models:
+> (Low latency,
+> low energy)
+> Cloud Processing
+> Cloud Models:
+> (High accuracy,
+> high cost)
+> Decision Logic
+> Edge Adequate?
+> Yes: Execute on
+> Edge
+> No: Offload to
+> Cloud
+> Final Answer
+
+Figure 1: INAR-VL architecture. A multimodal request is routed via a Pareto-based optimizer that selects the model and execution location (edge or cloud) to balance accuracy, latency, and energy. 
+
+measurements on the same calibration protocol used for 𝑎 𝑚 .Values are then frozen for all experiments. Numerically, “blur robustness” denotes the model’s nor-malized tolerance to blur demand, as reflected in the gap term. 𝑔 blur = max (0, need blur − strength 𝑚, blur ). A model with strength 0.7 incurs no blur-gap penalty until the request’s blur need exceeds 0.7, while a model with strength 0.4 is penalized earlier on the same input. We use these three axes because they capture the dominant and separable failure modes observed in our model pool: degraded visual percep-tion (blur), fine-grained visual extraction (detail/OCR), and language-side reasoning load. 
+
+4 METHODOLOGY AND CALIBRATION 4.1 Request Feature Extraction 
+
+Before invoking any model, INAR-VL extracts a 10-dimensional feature vector r ∈ [ 0, 1]10 , comprising four image-quality axes and six text-complexity axes. We select 10 features as a coverage–efficiency trade-off: this set captures the dominant multimodal variance (visual degradations and language-side reasoning load) while keeping routing overhead within the 10–30 ms CPU budget. A smaller feature set reduces rout-ing accuracy and under-represents key failure modes (e.g., OCR/detail stress and reasoning-heavy prompts), whereas a larger one increases preprocessing and calibration complex-ity with diminishing returns, making 10 a practical balance for real-time deployment. 
+
+Image quality proxies. The image analyzer produces four normalized scores—blur, exposure, JPEG artifacts, and de-tail—summarized as: 
+
+𝑠 img = 14 (𝑠 blur + 𝑠 exp + 𝑠 art + 𝑠 detail )
+
+where each 𝑠 · ∈ [ 0, 1] and 𝑠 img is their mean. 
+
+Text complexity. The text analyzer computes six normal-ized axes 𝐶 𝑖 ∈ [ 0, 1], combined linearly: 
+
+𝑐 text =
+
+> 6
+
+∑︁ 
+
+> 𝑖 =1
+
+𝛽 𝑖 𝐶 𝑖 
+
+with fixed weights 𝛽 𝑖 from offline calibration. The joint query complexity is then 
+
+𝑑 = 𝑤 img (1 − 𝑠 img ) + 𝑤 txt 𝑐 text 
+
+where 𝑤 img = 𝑤 txt = 0.5 by default. Here, (1 − 𝑠 img ) repre-sents image-side complexity and 𝑑 ∈ [ 0, 1] denotes overall query complexity; lower 𝑑 = lower complexity, higher 𝑑 =higher complexity. In analyses, we report quintiles Q1 (low-est)–Q5 (highest). 
+
+4.2 Pareto Configuration Router 
+
+Each request evaluates configurations 𝑐 = (𝑚, 𝑝, 𝑟, ℓ ) (model, precision, resolution, placement). In the evaluated deploy-ment, precision is fixed by tier, so the active routing choices are model, placement, and edge resolution. The predicted quality of a candidate is 
+
+ˆ𝑞 (𝑐, r) = 𝑎 𝑚 + 𝛿 prec + 0.07   log 2 𝑟 − log 2 𝑟 cal 
+
+
+
+− 𝜅 ∑︁  
+
+> 𝑖 ∈ { blur ,detail ,reasoning }
+
+𝑔 2 
+
+> 𝑖
+
+− 𝑑 (1 − 𝑎 𝑚 ) + Δdetail-res 
+
+(1) where 𝑔 𝑖 = max (0, need 𝑖 −strength 𝑚,𝑖 ) , so strength 𝑚,𝑖 acts as a capability threshold on axis 𝑖 : penalties appear only when the request’s need exceeds the model’s normalized capabil-ity on that axis. and Δdetail-res ≤ 0 penalizes low-resolution settings on high-detail images. Cost estimation combines latency, energy, and network terms: 
+
+ˆ𝑐 = 𝐵 𝑚 𝑓 prec 
+
+ 𝑟 
+
+336 
+
+2
+
++ 0.3 𝑒 (𝑚, 𝑝, ℓ ) + 𝑛 (ℓ, 𝑏𝑤, 𝑟 ) (2) To avoid ambiguity, we define all terms used above: 
+
+• 𝑎 𝑚 : calibrated accuracy of model 𝑚 measured on a held-out calibration split. 
+
+3Ahmed Šabanović, Paul Joe Maliakel, and Ivona Brandić 
+
+• 𝑟 cal : calibration resolution used for 𝑎 𝑚 (model-specific maximum supported resolution). 
+
+• 𝛿 prec : precision adjustment relative to the calibration precision (inactive in our reported deployment, since precision is fixed by tier). 
+
+• 𝜅 : coefficient for mismatch penalty; we use 𝜅 =1.0.
+
+• 𝐵 𝑚 : base latency factor for model 𝑚 (proportional to model size in billions of parameters). 
+
+• 𝑓 prec : precision latency multiplier ( 1.0 for FP16, 0.65 
+
+for INT8). 
+
+• 𝑒 (𝑚, 𝑝, ℓ ): energy proxy; on edge, 𝑒 =params 𝑚 × 𝑓 prec ,and on cloud, 𝑒 =0.1 (small fixed edge-perspective cost). 
+
+• 𝑛 (ℓ, 𝑏𝑤, 𝑟 ): network term; 𝑛 =0 for edge and 𝑛 =0.5
+
+  𝑟 
+
+> 336
+
+2 100 max (𝑏𝑤, 10 ) for cloud. Parameter calibration follows a one-time offline proce-dure. We first calibrate 𝑎 𝑚 on a fixed held-out set (seeded split, same protocol across all models), then fit the remaining coefficients under monotonic constraints (higher resolution should not reduce quality; larger need-strength gaps should not improve quality; higher-complexity queries should hurt weaker models more). The final coefficients ( 0.07 , 𝜅 =1.0,detail-resolution penalty scale, and cost weights) are then frozen and reused for all datasets and all sweeps. For all experiments, calibration is performed once per deployment using a held-out set of 1,000 samples per bench-mark. The full calibration procedure takes approximately 45 minutes on the edge device and is only required when hard-ware or model configurations change. This ensures that the routing policy is tailored to the specific deployment environ-ment without incurring runtime overhead during inference. The router sorts candidates by estimated cost, retains only configurations with strictly increasing predicted quality, and forms a per-request Pareto frontier. It then compares the best edge and best cloud Pareto candidates. Offloading occurs only when the best edge option falls below its calibrated operating point and the best cloud option improves predicted quality by more than 𝛿 min = 0.03 . This makes the edge preference explicit rather than hiding it in a tie-break rule. 
+
+5 EVALUATION 
+
+We evaluate INAR-VL on three VQA benchmarks and six routing strategies, including three ablations, using the same 2,000-sample subsets. Results report means ± standard devi-ations and are compared to the oracle. 
+
+5.1 Experimental Setup 
+
+Hardware. Edge: NVIDIA RTX 4060 (8 GB VRAM). Cloud: NVIDIA RTX PRO 6000 Blackwell (98 GB VRAM), accessed via SSH tunnel. End-to-end cloud inference latency is ap-proximately 2,300 ms, of which about 2,000 ms comes from tunnel and network overhead; the server GPU itself com-pletes 8B FP16 inference in 210–323 ms (see Table 6 in the Appendix). We report this split to make it clear that, in our setup, the dominant cloud cost is communication rather than GPU execution. 
+
+Deployment-transfer scope. While reported quantitative gains are specific to our edge–cloud benchmark, the INAR-VL framework is hardware-agnostic. Routing depends on request features and calibrated cost/ quality profiles, not on a fixed device type. In our codebase, the same pipeline supports CPU-only edge execution and alternative GPU edge profiles through configuration changes and recalibration of latency/energy priors. 
+
+Deployment Configuration. Edge models run in INT8 (to fit two models in 8 GB VRAM) and cloud models in FP16. INAR-VL supports model, precision, resolution, and place-ment choices, but in our two-tier setup, precision and cloud resolution are fixed, leaving model selection, placement, and edge resolution as routing options. We evaluate six strate-gies: Edge-Only and Cloud-Only route all requests to one tier; INAR-VL uses 10 features across 4 models; Text-Only and Image-Only use only text or image features; Static routes Qwen-2B to edge and Qwen-8B to cloud. 
+
+Energy Measurement. Energy is measured via NVIDIA NVML power readings sampled every 50 ms. Dynamic en-ergy is 𝐸 = ∫ max (0, 𝑃 (𝑡 ) − 𝑃 idle ) 𝑑𝑡 , where 𝑃 (𝑡 ) is instan-taneous GPU power and 𝑃 idle is average idle power. The 
+
+max (0, ·) term prevents negative contributions from noise. For cloud execution, GPU energy is measured on the server and returned with the response. 
+
+Datasets. We evaluate on three visual question answering benchmarks: VQAv2 (val2014, 40.5K samples) [8], TextVQA [16 ], and GQA [ 10 ]. We use the official releases and sample 2,000 instances per dataset using seeded reservoir sampling. 
+
+Metrics. Accuracy is measured using the standard VQA soft score min (1, matches /3) for VQAv2 and TextVQA, and exact match for GQA. We also report routing split (edge vs. cloud), average latency per request (ms), and average energy per request (J), measured via NVML on both tiers. 
+
+Fair-comparison controls. All baseline comparisons use the same sampled requests, scoring protocol, and edge/cloud infrastructure. Results reported from prior work are included only as contextual references, as they are obtained under different hardware and software setups and are not strictly comparable. 
+
+Strategies compared. For context, we compare against an unachievable upper-bound baseline, Oracle (Best-of-4), which selects the per-sample best answer from all four models. 
+
+> 4INAR-VL: Input-Aware Routing
+
+Table 2: Routing-strategy accuracy ( 𝑛 =2,000 per dataset). MoA-Off reports VQAv2 only.                                             
+
+> Strategy VQA2 TextVQA GQA Mean Edge-Only 73.7 69.0 56.8 66.5 Cloud-Only 80.6 81.9 60.6 74.4
+> INAR-VL 79.1 77.4 59.9 72.1
+> Text-Only 78.8 76.5 59.0 71.4 Image-Only 75.1 72.4 58.0 68.6 Static routing 76.9 77.4 59.2 71.2 MoA-Off 77.5 –––
+> Oracle 97.4 97.0 77.5 90.6 Easy Med-Easy Medium Med-Hard Hard
+> Difficulty
+> 0%
+> 25%
+> 50%
+> 75%
+> 100%
+> Fraction of Requests
+> 100%
+> 63%
+> 37%
+> 44%
+> 56%
+> 18%
+> 82%
+> 13%
+> 87%
+> (a) Routing Decisions by Difficulty
+> Edge
+> Cloud
+> Easy Med-Easy Medium Med-Hard Hard
+> Difficulty
+> 65
+> 70
+> 75
+> 80
+> VQA Accuracy (%)
+> (b) Accuracy & Latency by Difficulty
+> INAR-VL
+> Edge-Only
+> Cloud-Only
+> Latency
+> 0
+> 500
+> 1000
+> 1500
+> 2000
+> Mean Latency (ms)
+
+Figure 2: INAR-VL complexity-aware routing. 
+
+5.2 Routing Comparison (Main Results) 
+
+Table 2 summarizes accuracy across all strategies and datasets, while Table 4 reports the corresponding latency, energy, and edge-routing fractions. 
+
+Key findings. 
+
+(1) INAR-VL provides the strongest mean accuracy among the evaluated routing variants. As shown in Table 2, the INAR-VL router reaches 72.1% mean accuracy, recovering 71% of the edge-to-cloud accuracy gap (5.6 of 7.9 pp). Table 4 shows that it does so while still serving 36% of requests on the edge. Figure 2 explains this aggregate result at the per-request level: the router keeps 100% of Q1 and 63% of Q2 (lower-complexity) requests on the edge, then shifts a larger share of higher-complexity requests to the cloud, preserving edge efficiency on simpler inputs while narrowing the accuracy gap to cloud-only on more complex ones. INAR-VL achieves the highest mean accuracy among rout-ing variants (72.1%), recovering 71% of the edge-to-cloud ac-curacy gap (Table 2). As shown in Table 4, it still executes 36% of requests on the edge. Figure 2 shows that low-complexity                                   
+
+> Ablation Signal Acc. ΔEdge% INAR-VL Img+Txt 72.1 ±1.6 —36 Text-Only Text 71.4 ±1.7 -0.7 24 Image-Only Image 68.6 ±1.7 -3.5 78 Static Img+Txt 71.2 ±1.6 -0.9 31 Edge Base None 66.5 ±1.8 -5.6 100
+
+Table 3: Ablation of routing signals.                                                                 
+
+> Strategy Lat (ms) Energy (J) Acc. Edge% Edge 824 ±15 7.4 ±0.6 66.5 ±1.8 100 Cloud 2408 ±125 26.0 ±1.5 74.4 ±1.6 0
+> INAR-VL 1826 ±157 19.2 ±1.2 72.1 ±1.6 36
+> Text 2102 ±150 21.1 ±1.2 71.4 ±1.7 24 Image 1181 ±106 12.0 ±1.1 68.6 ±1.7 78 Static 1954 ±156 20.7 ±1.2 71.2 ±1.6 31
+
+Table 4: Latency, energy, and accuracy. Edge% indicates edge execution share. 
+
+queries (Q1–Q2) are routed mostly to the edge, while higher-complexity inputs are offloaded to the cloud, preserving edge efficiency while narrowing the accuracy gap. 
+
+(2) Text features dominate routing signal. Table 3 shows that the text-only router (71.4%) matches the full heuristic within 0.7 pp, whereas image-only (68.6%) barely exceeds always-edge. 
+
+(3) Multi-model diversity modestly improves the trade-off surface. Restricting the pool to Qwen architectures only (Static routing, 71.2%) reduces mean accuracy by 0.9 pp rela-tive to the full four-model INAR-VL (72.1%) while shifting the edge fraction from 36% to 31% in Table 4. This result suggests that architectural diversity improves workload coverage. 
+
+(4) The oracle gap remains important context. Table 2 shows that the oracle (best-of-4) achieves 90.6% mean accuracy, 18.5 pp above INAR-VL. This gap exists because the oracle exploits perfect hindsight to select the best model for each sample, while INAR-VL relies on lightweight, pre-inference features and cannot access ground-truth answers or run all models at runtime. As a result, rare or subtle failure modes may go undetected, and the system cannot fully match oracle performance, but aims to recover as much diversity benefit as practical. Taken together, Tables 2, 3, 4, along with Figures 2 and 3, support the main systems claim of the paper: INAR-VL recovers much of the accuracy gap to cloud-only while re-ducing latency and energy relative to cloud-only execution, with routing overhead small enough not to erase the benefit. 
+
+5.3 Network Robustness 
+
+We evaluate robustness by sweeping bandwidth from 10 Mbps (constrained cellular) to 1,000 Mbps (fast LAN) over 6,000     
+
+> 5Ahmed Šabanović, Paul Joe Maliakel, and Ivona Brandić 10 30 100 300 1000
+> Bandwidth (Mbps)
+> 400
+> 600
+> 800
+> 1000
+> Mean Latency (ms)
+> Effective Latency vs Bandwidth
+> VQAV2
+> TEXTVQA
+> GQA
+> Mean
+
+Figure 3: Impact of bandwidth on latency. 
+
+samples. For cloud-routed requests, we add an image-transfer overhead of 250 KB /bandwidth to latency. The router en-forces a bandwidth guard at 𝑏 min = 15 Mbps , below which all requests are processed on the edge. Above this threshold, cloud offloading is allowed, with higher costs at lower band-width. Accuracy remains stable across bandwidth settings once the guard is satisfied, while latency increases mainly at low bandwidth due to transfer overhead (e.g., +133 ms at 15 Mbps vs. +7 ms at 300 Mbps). Figure 3 shows latency improving from 499,ms at 20,Mbps to 416,ms at 1,000,Mbps, a 17% reduction. This indicates that transfer overhead is secondary to inference and fixed com-munication costs. Below the 15,Mbps guard, the system op-erates in edge-only mode; once exceeded, latency decreases smoothly with increasing bandwidth. 
+
+6 RELATED WORK 
+
+Edge–cloud collaboration for VLM inference has been ex-plored in systems such as MoA-Off [ 19 ], which dynamically offloads multimodal workloads based on modality complex-ity, and CE-CoLLM [ 11 ], which combines quantization and early-exit techniques to enable collaborative edge–cloud in-ference. Other systems study task scheduling across hetero-geneous deployments. HybridFlow [ 7] decomposes queries into sub-tasks and routes them to edge or cloud models based on resource availability and expected utility. A related line of work focuses on routing across multiple LLMs to optimize cost–quality trade-offs. Systems such as Frugal-GPT [ 5 ], Smoothie [ 9 ], and RouteLLM [ 14 ] learn routers that select between weaker and stronger models based on prompt difficulty. Similarly, Efficient Routing of Inference Requests across LLM Instances in Cloud-Edge Computing [ 20 ] formulates routing as a multi-objective optimization problem balancing latency, cost, and response quality, while GreenServ [ 21 ] introduces context-aware routing to improve energy efficiency. Table 5 summarizes key differences. In con-trast to prior work that typically optimizes a single objective or modality, INAR-VL jointly routes across heterogeneous VLMs and placements using both image and text signals, explicitly mapping routing decisions to measured latency and energy outcomes. 
+
+Method Multimodal Multi-VLM Cost RouteLLM ✗ ✗ ✗
+
+MoA-Off ✓ ✗ ✗
+
+CE-CoLLM ✓ ✗ ✗
+
+HybridFlow ✗ ✗ ✓
+
+GreenServ ✗ ✗ ✓
+
+INAR-VL (ours) ✓ ✓ ✓
+
+Table 5: Method-level differentiation. 
+
+7 CONCLUSION 
+
+We presented INAR-VL, a practical edge–cloud routing sys-tem for multimodal inference that combines cheap request characterization with an edge-preferring Pareto decision rule. In a real two-tier deployment, the system recovers most of the accuracy advantage of cloud-only execution while improving the deployment trade-off relative to static place-ments. The additional analyses show why: INAR-VL keeps low-complexity requests local, reserves cloud offloading for complex requests, and maintains nearly the same routing behavior once bandwidth is high enough to make cloud ex-ecution feasible. Although our evaluation uses a specific model pool and hardware configuration, the approach gener-alizes to other settings: new hardware tiers or models can be incorporated by recalibrating the routing thresholds, without changing the core method. Future work includes extending INAR-VL to more diverse model pools and uncertainty-aware escalation policies that can better exploit the remaining oracle gap. 
+
+Acknowledgments 
+
+This research was funded in part by the Austrian Science Fund (FWF) through the following projects: Transprecise Edge Computing (Triton) , Grant ID: 10.55776/P36870, Trust-worthy and Sustainable Code Offloading (Themis) , Grant ID: 10.55776/PAT1668223, and by the Vienna Science and Tech-nology Fund (WWTF) through the project AI-supported Holo-graphic Environmental Water Monitoring (HoloWaterAI) , Grant ID: ESR24-053. 
+
+References          
+
+> [1] Sarat Ahmad, Maryam Hafeez, and Syed Ali Raza Zaidi. 2026. Vision-Language Models on the Edge for Real-Time Robotic Perception. CoRR
+> abs/2601.14921 (2026). arXiv:2601.14921 doi:10.48550/ARXIV.2601. 14921 [2] Xiang An, Yin Xie, Kaicheng Yang, Wenkang Zhang, Xiuwei Zhao, Zheng Cheng, Yirui Wang, Songcen Xu, Changrui Chen, Chunsheng Wu, Huajie Tan, Chunyuan Li, Jing Yang, Jie Yu, Xiyao Wang, Bin Qin, Yumeng Wang, Zizhen Yan, Ziyong Feng, Ziwei Liu, Bo Li, and Jiankang Deng. 2025. LLaVA-OneVision-1.5: Fully Open Framework for Democratized Multimodal Training. CoRR abs/2509.23661 (2025). arXiv:2509.23661 doi:10.48550/ARXIV.2509.23661 [3] Jinze Bai, Shuai Bai, Shusheng Yang, Shijie Wang, Sinan Tan, Peng Wang, Junyang Lin, Chang Zhou, and Jingren Zhou. 2023. Qwen-VL: A Frontier Large Vision-Language Model with Versatile Abilities.
+> CoRR abs/2308.12966 (2023). arXiv:2308.12966 doi:10.48550/ARXIV. 2308.12966 6
+
+INAR-VL: Input-Aware Routing 
+
+[4] Yuxuan Cai, Jiangning Zhang, Haoyang He, Xinwei He, Ao Tong, Zhenye Gan, Chengjie Wang, and Xiang Bai. 2024. LLaVA-KD: A Framework of Distilling Multimodal Large Language Models. CoRR 
+
+abs/2410.16236 (2024). arXiv:2410.16236 doi:10.48550/ARXIV.2410. 16236 [5] Lingjiao Chen, Matei Zaharia, and James Zou. 2024. FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance. Trans. Mach. Learn. Res. 2024 (2024). https://openreview. net/forum?id=cSimKw5p6R [6] Dujian Ding, Ankur Mallick, Chi Wang, Robert Sim, Subhabrata Mukherjee, Victor Rühle, Laks V. S. Lakshmanan, and Ahmed Has-san Awadallah. 2024. Hybrid LLM: Cost-Efficient and Quality-Aware Query Routing. In The Twelfth International Conference on Learning Representations, ICLR 2024, Vienna, Austria, May 7-11, 2024 . OpenRe-view.net. https://openreview.net/forum?id=02f3mUtqnM [7] Jiangwen Dong, Jiayu Li, and Wanyu Lin. 2025. HybridFlow: Adaptive Task Scheduling for Fast and Token-Efficient LLM Inference in Edge-Cloud Collaboration. CoRR abs/2512.22137 (2025). arXiv:2512.22137 doi:10.48550/ARXIV.2512.22137 [8] Yash Goyal, Tejas Khot, Aishwarya Agrawal, Douglas Summers-Stay, Dhruv Batra, and Devi Parikh. 2019. Making the V in VQA Matter: Elevating the Role of Image Understanding in Visual Question An-swering. Int. J. Comput. Vis. 127, 4 (2019), 398–414. doi:10.1007/S11263-018-1116-0 [9] Neel Guha, Mayee F. Chen, Trevor Chow, Ishan S. Khare, and Christopher Ré. 2024. Smoothie: Label Free Language Model Routing. In Advances in Neural Information Processing Systems 38: Annual Conference on Neural Information Process-ing Systems 2024, NeurIPS 2024, Vancouver, BC, Canada, Decem-ber 10 - 15, 2024 , Amir Globersons, Lester Mackey, Danielle Bel-grave, Angela Fan, Ulrich Paquet, Jakub M. Tomczak, and Cheng Zhang (Eds.). http://papers.nips.cc/paper_files/paper/2024/hash/ e6b57a990462df5afa58d64ce2709db9-Abstract-Conference.html [10] Drew A. Hudson and Christopher D. Manning. 2019. GQA: A New Dataset for Real-World Visual Reasoning and Compositional Question Answering. In IEEE Conference on Computer Vision and Pattern Recog-nition, CVPR 2019, Long Beach, CA, USA, June 16-20, 2019 . Computer Vision Foundation / IEEE, 6700–6709. doi:10.1109/CVPR.2019.00686 [11] Hongpeng Jin and Yanzhao Wu. 2025. CE-CoLLM: Efficient and Adap-tive Large Language Models Through Cloud-Edge Collaboration. In 
+
+IEEE International Conference on Web Services, ICWS 2025, Helsinki, Finland, July 7-12, 2025 , Rong N. Chang, Carl K. Chang, Jingwei Yang, Nimanthi Atukorala, Dan Chen, Sumi Helal, Sasu Tarkoma, Qiang He, Tevfik Kosar, Claudio A. Ardagna, Amin Beheshti, Bo Cheng, and Walid Gaaloul (Eds.). IEEE, 316–323. doi:10.1109/ICWS67624.2025. 00046 [12] Yizhang Jin, Jian Li, Yexin Liu, Tianjun Gu, Kai Wu, Zhengkai Jiang, Muyang He, Bo Zhao, Xin Tan, Zhenye Gan, Yabiao Wang, Chengjie Wang, and Lizhuang Ma. 2024. Efficient Multimodal Large Language Models: A Survey. CoRR abs/2405.10739 (2024). arXiv:2405.10739 doi:10.48550/ARXIV.2405.10739 [13] Jing Yu Koh, Daniel Fried, and Russ Salakhutdinov. 2023. Gen-erating Images with Multimodal Language Models. In Advances in Neural Information Processing Systems 36: Annual Conference on Neural Information Processing Systems 2023, NeurIPS 2023, New Or-leans, LA, USA, December 10 - 16, 2023 , Alice Oh, Tristan Nau-mann, Amir Globerson, Kate Saenko, Moritz Hardt, and Sergey Levine (Eds.). http://papers.nips.cc/paper_files/paper/2023/hash/ 43a69d143273bd8215578bde887bb552-Abstract-Conference.html [14] Isaac Ong, Amjad Almahairi, Vincent Wu, Wei-Lin Chiang, Tianhao Wu, Joseph E. Gonzalez, M. Waleed Kadous, and Ion Stoica. 2024. RouteLLM: Learning to Route LLMs with Preference Data. CoRR 
+
+abs/2406.18665 (2024). arXiv:2406.18665 doi:10.48550/ARXIV.2406. 18665 [15] Purushoth and Alireza. 2025. Evaluating Robustness of Vision-Language Models Under Noisy Conditions. CoRR abs/2509.12492 (2025). arXiv:2509.12492 doi:10.48550/ARXIV.2509.12492 [16] Amanpreet Singh, Vivek Natarajan, Meet Shah, Yu Jiang, Xinlei Chen, Dhruv Batra, Devi Parikh, and Marcus Rohrbach. 2019. Towards VQA Models That Can Read. In IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2019, Long Beach, CA, USA, June 16-20, 2019 .Computer Vision Foundation / IEEE, 8317–8326. doi:10.1109/CVPR. 2019.00851 [17] Guanqun Wang, Jiaming Liu, Chenxuan Li, Yuan Zhang, Junpeng Ma, Xinyu Wei, Kevin Zhang, Maurice Chong, Renrui Zhang, Yijiang Liu, and Shanghang Zhang. 2024. Cloud-Device Collaborative Learning for Multimodal Large Language Models. In IEEE/CVF Conference on Computer Vision and Pattern Recognition, CVPR 2024, Seattle, WA, USA, June 16-22, 2024 . IEEE, 12646–12655. doi:10.1109/CVPR52733.2024. 01202 [18] Rui Wang, Zhiyong Gao, Liuyang Zhang, Shuaibing Yue, and Ziyi Gao. 2025. Empowering large language models to edge intelligence: A survey of edge efficient LLMs and techniques. Comput. Sci. Rev. 57 (2025), 100755. doi:10.1016/J.COSREV.2025.100755 [19] Zheming Yang, Qi Guo, Yunqing Hu, Chang Zhao, Chang Zhang, Jian Zhao, and Wen Ji. 2025. MoA-Off: Adaptive Heterogeneous Modality-Aware Offloading with Edge-Cloud Collaboration for Efficient Multi-modal LLM Inference. CoRR abs/2509.16995 (2025). arXiv:2509.16995 doi:10.48550/ARXIV.2509.16995 [20] Shibo Yu, Mohammad Goudarzi, and Adel Nadjaran Toosi. 2025. Effi-cient Routing of Inference Requests across LLM Instances in Cloud-Edge Computing. CoRR abs/2507.15553 (2025). arXiv:2507.15553 doi:10.48550/ARXIV.2507.15553 [21] Thomas Ziller, Shashikant Ilager, Alessandro Tundo, Ezio Bartocci, Leonardo Mariani, and Ivona Brandic. 2026. GreenServ: Energy-Efficient Context-Aware Dynamic Routing for Multi-Model LLM In-ference. CoRR abs/2601.17551 (2026). arXiv:2601.17551 doi:10.48550/ ARXIV.2601.17551 
+
+A Additional Results and Details 
+
+Table 6: Per-model GPU latency (ms). Cloud measure-ments exclude network overhead. 
+
+Model Deployment Mean (ms) P95 (ms) 
+
+Qwen3-VL-2B Edge 682 990 SmolVLM-2B Edge 1468 1846 LLaVA-OV-8B Cloud 281 371 Qwen3-VL-8B Cloud 222 282 7Ahmed Šabanović, Paul Joe Maliakel, and Ivona Brandić 
+
+Table 7: Routing strategies evaluated in our experi-ments. 
+
+Strategy Description 
+
+Edge-Only All requests are processed on edge devices. Cloud-Only All requests are routed to cloud-based models. INAR-VL Pareto-based routing using 10 features across 4 models. Text-Only INAR-VL variant using only text features ( 𝑤 img =
+
+0). Image-Only INAR-VL variant using only image features ( 𝑤 txt =
+
+0). Static Fixed routing using Qwen-2B (edge) and Qwen-8B (cloud). 8

@@ -1,0 +1,346 @@
+Title: E^3-Agent: An Executable and Evolving Agent for Resource Management of Edge Generative Inference
+
+URL Source: https://arxiv.org/pdf/2605.27428v1
+
+Published Time: Thu, 28 May 2026 00:02:17 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+# E3-Agent: An Executable and Evolving Agent for Resource Management of Edge Generative Inference 
+
+Rui Bao 1, Yaping Sun 2, Zhiyong Chen 1* , Feng Yang 1, Meixia Tao 1* , Nan Li 3 & Wenjun Zhang 1       
+
+> 1Cooperative Medianet Innovation Center, Shanghai Jiao Tong University, Shanghai 200240, China
+> 2Department of Broadband Communication, Pengcheng Laboratory, Shenzhen 518000, China
+> 3China Mobile Research Institute, Beijing 100053, China
+> Abstract Edge deployments of generative inference increasingly face two practical realities: per-device per-model performance is often unknown at deployment time, and it is non-stationary due to user-driven semantic events, background load, and device churn. Consequently, a resource manager that is tuned offline under a fixed regime can become brittle and expensive to maintain. This paper presents E 3-Agent, an executable and evolving agent for edge artificial intelligence generated content (AIGC) resource management. E3-Agent separates a fast-path router that makes millisecond-level dispatch decisions from a slow-path, event-driven large language model (LLM) meta-controller that mitigates regime shifts through a small, explicit control surface exposed via a tool interface, including risk gating, router configuration, and rapid performance calibration. The agent learns online from execution feedback and continuously adapts to unknown and time-varying service-time mappings. We evaluate E 3-Agent in a discrete-event simulator driven by MLPerf-derived device–model measurement priors, covering cold-start warmup and three dynamic regimes: semantic dynamics, device churn, and hidden drift. Across the dynamic scenarios, E 3-Agent reduces average latency by 65%–73% compared to the best static baseline, stays within 7%–10% of an online full-information Oracle used for evaluation, and effectively suppresses stutter rate under semantic degradation.
+> Keywords agentic edge computing; LLM agentic system; online learning; resource management; performance drift
+
+1 Introduction 
+
+Edge deployments of generative inference are increasingly shaped by heterogeneous device pools and rapidly evolv-ing model families. Compared to earlier mobile AI workloads, modern large language models (LLMs) and diffusion models (DMs) impose substantially higher compute and memory pressure and exhibit longer, more variable run-times under interactive request patterns. Measurements of production LLM services report pronounced burstiness and wide variation in concurrency and response lengths, making it difficult to assume a single stationary oper-ating regime [1]. At the same time, advances in serving stacks and memory systems continue to shift practical bottlenecks and operating points [2]. As a result, edge resource management must cope with per-device, per-model service times that are unknown at deployment time and non-stationary under changing workload and device con-ditions. Latency-sensitive immersive applications further tighten the operational constraints of edge systems and expose stronger coupling across communication and computing resources [3]. Recent studies on multi-user interac-tive virtual reality highlight how motion-to-photon constraints amplify the need for responsive edge control under dynamic wireless and device conditions [4]. This need is consistent with recent 6G visions that identify AI-native communication, sustainable intelligent networking, and wireless-native big AI models as central research directions for future networks [5–7]. A broad literature has studied task offloading and resource management in edge–cloud systems using heuristics and deep reinforcement learning [8]. While learning-based approaches can approach optimality under well-specified models and sufficient interaction data, deployments often face a different challenge: sustaining performance under distribution shift. In realistic edge settings, task mixes, arrival intensities, and request sizes evolve over time, while underlying system conditions drift with device availability, contention, thermal throttling, and software upgrades. Recent mobile edge computing (MEC) studies explicitly observe that policies trained under a single approximately stationary regime may require substantial redesign and retraining when confronted with non-stationary streams or unfamiliar devices and tasks [9]. The associated operational burden, including instrumentation, safety validation, and repeated redeployment, becomes a practical bottleneck for edge generative services, where models and workloads can change at a rapid cadence. Edge AIGC further amplifies these challenges in three ways. First, interactive LLM applications increasingly appear as multi-step agentic workflows, in which application structure influences end-to-end latency and complicates per-request scheduling and placement decisions [10]. Second, diffusion-based generation remains compute-intensive, 
+
+> * Corresponding author (email: zhiyongchen@sjtu.edu.cn, mxtao@sjtu.edu.cn)
+> arXiv:2605.27428v1 [cs.LG] 21 May 2026 2
+
+motivating edge–cloud collaboration to balance latency and cost, but also increasing sensitivity to inaccurate service-time assumptions [11]. Third, device heterogeneity at the edge spans embedded modules, consumer SoCs, and accelerator-equipped gateways, each subject to distinct power, thermal, and contention dynamics. Consequently, static routing or offloading rules tuned for a particular device mix or workload regime can degrade sharply as the device pool and request characteristics evolve. This paper argues for a resource manager that is explicitly designed as an executable closed loop. The key capability is to couple information acquisition, strategy adaptation, and online validation within the running system so that the policy remains effective as conditions change. This framing is motivated by two practical constraints in edge generative inference. First, service-time mappings are unknown at deployment and can shift under contention, thermal dynamics, and software evolution, so a one-time profiling pass cannot be assumed sufficient. Second, the control plane must remain auditable and safe under uncertainty, which calls for explicit control knobs, bounded intervention frequency, and measurable post-action validation. An executable closed loop makes these requirements first-class by enforcing that every adaptation is grounded in observed feedback and can be reverted or overridden when risk signals arise. Recent progress in agentic AI suggests a viable implementation path: tool-using LLM agents can orchestrate telemetry, profiling, and configuration interfaces to automate operational workflows. In telecom, foundation-model-driven designs have been discussed as a unifying substrate for operational automation across heterogeneous interfaces and modalities [12]. In parallel, surveys of LLM-based network management emphasize intent interpretation and tool coordination, while also highlighting reliability and domain adaptation as key barriers to safe deployment [13]. Practical intent-based networking prototypes further show how an LLM agent can translate intent into executable control actions grounded by controller context and verified outcomes [14]. Beyond terrestrial networks, SCNOC-Agentic demonstrates an explicit closed-loop decomposition with intent refinement, workflow orchestration, and grounded retrieval and memory for realistic operation and control tasks [15]. Multi-agent LLM situation awareness has also been explored for zero-trust space-air-ground integrated networks, demonstrating the potential of LLM agents for sensing and reasoning in complex 6G environments [16]. In O-RAN settings, recent work stresses that multi-tool agency must be paired with safety mechanisms and anomaly-aware control to avoid operational insta-bility [17]. Complementary wireless studies compare RL, rule-based, and generative-AI policies for Wi-Fi slicing, and show that prompt-driven policies can remain competitive while offering operational adjustability under traffic changes [18]. More recent proposals further model each access point as an LLM agent that negotiates coordina-tion strategies through dialogue grounded in memory and tool use under dynamic interference and topology [19]. Tutorials on agentic AI for future communications summarize planners, tool interfaces, and memory modules as reusable building blocks for adaptive systems [20]. More generally, ReAct formalizes a tool-mediated agent pattern that interleaves reasoning with action execution, enabling closed-loop decision making with external interfaces [21]. SWE-agent further demonstrates that agent-computer interface design materially affects end-to-end performance on complex, multi-step tasks and encourages explicit, auditable tool use [22]. Outside networking, recent work on LLM-augmented hierarchical control shows a practical timescale separation where the LLM provides high-level guidance at a reduced frequency while a fast module handles frequent actions [23]. Compared with these prior systems, E 3-Agent addresses a narrower but operationally distinct problem: online resource management for edge generative inference when per-device service-time mappings are initially unknown and later become non-stationary. Existing LLM network-management agents mainly focus on intent translation, situation awareness, or network-operation workflow automation; LLM serving systems primarily optimize cluster-side serving under known infrastructure; and MEC offloading studies often assume a specified model or train policies under relatively fixed regimes. In contrast, E 3-Agent couples online performance estimation, event-driven meta-control, and a constrained executable tool interface so that adaptation is driven only by causal execution feedback and can be audited after each intervention. Building on this insight, we present E3-Agent , an executable and evolving agentic framework for edge generative inference. E3-Agent is deployed on the edge server at the base station (BS) and positions the LLM as an event-driven meta-controller that adjusts a small, explicit control surface while leaving per-task dispatch to a lightweight fast-path router. The system learns online from execution feedback to estimate device–task service-time mappings, reacts to semantic and performance anomalies via risk gating, and rapidly recalibrates after regime shifts. This separation enables near-oracle performance with bounded control-plane overhead. The main contributions of this paper are summarized as follows: 
+
+• Executable closed-loop agentic framework. We propose E 3-Agent, an end-to-end executable framework for edge generative inference resource management that couples information acquisition, strategy adaptation, and online validation in a running system. A key design choice is a principled separation between a millisecond-level fast path for per-task dispatch and an event-driven LLM meta-controller that operates over an explicit, auditable 3 
+
+> Figure 1 System model of E 3-Agent. A central controller routes a mixed stream of LLM and SDXL tasks to a heterogeneous device pool with FIFO queues and closes the loop using execution feedback, including latency and stutter under semantic events.
+
+control surface. 
+
+• Online learning and non-stationary adaptation. We introduce an online learning loop that operates under initial uncertainty regarding device–task performance mappings and continuously updates an agent-side performance model from execution feedback. The same loop supports rapid mitigation under non-stationarity, including semantic events, device churn, and hidden performance drift, while enforcing safety-relevant routing constraints and keeping control-plane overhead bounded through event-driven triggering. 
+
+• Evaluation with real-measurement priors. Using MLPerf-derived device–model measurement priors as realistic profiles [24], we evaluate E 3-Agent in a discrete-event simulator under cold-start warmup and three dynamic regimes. Across the dynamic scenarios, E 3-Agent reduces average latency by about 65%–73% compared to the best static baseline while remaining within 7%–10% of an online full-information Oracle. The remainder of this paper is organized as follows. Section 2 formalizes the edge generative inference setting and formulates the resource management problem. Section 3 presents the architecture and design of E 3-Agent, including its tool layer, state, and event-driven meta-control loop. Section 4 evaluates E 3-Agent under heterogeneous device pools and non-stationary task regimes, and analyzes the impact of closed-loop adaptation. Section 5 concludes the paper and discusses future directions. 
+
+2 System Model and Problem Formulation 
+
+As shown in Fig. 1, we consider an edge computing environment where a central controller, implemented as E 3-Agent at a base station, manages a stream of generative AI inference tasks for N user devices via wireless networks. The system handles a heterogeneous arrival stream consisting of LLM tasks, characterized by input and output token counts Nin and Nout , and Stable Diffusion tasks based on SDXL with fixed configurations. These tasks are dispatched to a pool of N heterogeneous and dynamic devices D = {d1, . . . , d N }, ranging from high-performance workstations with discrete GPUs to mobile devices with integrated NPUs. Each device di
+
+maintains a local FIFO queue for task execution. To achieve closed-loop control, E 3-Agent continuously monitors the execution status and receives feedback, including latency and stutter metrics. Crucially, the system must adapt to semantic events, such as background gaming and low battery, which cause non-stationary fluctuations in resource availability. These semantic events represent user-driven environmental shifts that are not directly observable but can significantly impact end-to-end performance. 
+
+Deployment and wireless-scope assumption. The controller is placed at the BS-side edge server and makes dispatch decisions after a task request has entered the edge service domain. In the present simulator, we do not separately model PHY/MAC scheduling, channel fading, or radio retransmissions. Instead, the measured service profile represents the device–model inference component used by the resource manager, while communication latency is treated as an exogenous component that is either common across compared policies or can be incorporated into deployment telemetry. Therefore, the conclusions of this paper concern closed-loop compute-side resource management under a given access condition, rather than joint wireless-channel and computing-resource optimization. 4                    
+
+> Table 1 Information and timing model used by E 3-Agent. The agent and baselines use only causal observations; simulator ground truth is reserved for the Oracle evaluator. Category Available information Timing and access rule Decision-time observ-ables Task type and task features, current available de-vice set, queue states, active risk overrides, OPM estimates, sample counts, and event annotations al-ready exposed to the controller Available before dispatch of task k
+> Hidden variables True time-varying service parameters θd(t), hid-den degradation state zd(t), degradation magni-tude, future arrivals, and future completions Not accessible to E 3-Agent or baselines Delayed feedback Completion latency, service-time component, LLM token lengths, stutter indicator in semantic dynam-ics, and residual statistics derived from completed tasks Appended only after task completion and consumed causally by OPM Oracle-only informa-tion Current ground-truth θd(t) and zd(t) for the feasi-ble devices Used only to form an online upper-bound baseline; it does not see future arrivals
+
+2.1 Workload and Unknown Mapping 
+
+The workload consists of two primary generative task types: large language models, denoted LLMs, and diffusion models. The true service time T ∗ of a task on device d is governed by device-specific parameters that are initially unknown to the resource manager. This is because edge deployments face heterogeneous and evolving device pools, including newly joined devices, and reliable per-device per-model service-time profiles are often unavailable or outdated due to model and serving-stack evolution as well as limited profiling coverage. The mapping must therefore be learned online from execution feedback. 
+
+LLM Tasks: LLM tasks are characterized by input token length Nin and output token length Nout . We model the service time using a standard TTFT/TPOT decomposition [25]: 
+
+T ∗
+
+> llm
+
+(d) = αd(t)Nin + βd(t)Nout , (1) where t denotes the current online decision epoch, i.e., the index of the task-arrival and dispatch event. The coefficients αd(t) and βd(t) have units of milliseconds per token and represent the time-to-first-token sensitivity and time-per-output-token, respectively. This is an empirical linear approximation commonly used to decompose LLM latency into a prefill-dominated component and a decode-dominated component. Intuitively, TTFT is largely incurred by prefill, and under fixed model and device conditions it is approximately linear in input length. TPOT captures the average per-token time in the decode stage, so the total decode time is approximately βN out . In our edge setting, αd(t) and βd(t) are time-varying because the effective device condition changes over time, including semantic events, dynamic background load, thermal or power throttling, and device join or leave. We therefore estimate them online using recent execution feedback. 
+
+Diffusion Tasks: Modeled as a fixed-complexity task for a given configuration. We use Stable Diffusion XL, denoted SDXL, at 1024 × 1024 resolution [26]. The service time is: 
+
+T ∗
+
+> sd
+
+(d) = γd(t). (2) Crucially, the coefficients θd(t) = {αd, β d, γ d} are time-varying and hidden because device conditions change over time, including background user activities, contention, thermal or power throttling, and device join or leave. This leads to non-stationary service times even for the same device–task pair, so the system must estimate them online as ˆθd.
+
+2.2 Semantic Events and Hidden Degradation 
+
+We introduce a semantic event-driven degradation mechanism. The performance state of device d, denoted by zd(t), transitions between two regimes, Z = {Stable , Degraded }, triggered by semantic events Et such as user gaming and low battery. The causal chain is as follows. A semantic onset may be exposed to the controller as a coarse event or telemetry hint, but the actual degradation state and its magnitude remain hidden. When a device enters a degraded state, for example due to GPU resource contention caused by gaming, its effective service-time parameters can shift abruptly and nonlinearly. The router therefore cannot read the true degradation magnitude directly and must infer the performance impact from subsequent execution feedback. In addition to latency, such states can cause perceptible Quality-of-Experience (QoE) impairment if heavy generative tasks are dispatched to 5
+
+the affected device. We model this QoE risk using a binary stutter signal Sk ∈ { 0, 1} for task k dispatched to device 
+
+d:
+
+Sk = I(zd(t) = Degraded) . (3) This formulation treats stutter as an observable post-dispatch QoE indicator in semantic dynamics. In a deployment, the same signal can be obtained from application telemetry or device-side runtime logs; in our simulator it is recorded as an event annotation after the affected task is dispatched. The signal enables risk-aware routing and mitigation without introducing an additional hard constraint into the optimization objective. 
+
+2.3 Problem Statement: Latency Minimization and Oracle Gap 
+
+The goal is to design a policy π that maps the current system state st, such as queue lengths, task features, and event history, to an assignment at ∈ D . Our objective is to minimize the average end-to-end latency over a horizon 
+
+H:min 
+
+> π
+
+1
+
+H
+
+> H
+
+X
+
+> k=1
+
+Lk(π), (4) where Lk(π) denotes the end-to-end latency of task k under policy π, including queueing delay. We also define an online full-information Oracle, which makes routing decisions using the ground-truth, time-varying parameters θd(t)and hidden device states zd(t) at the current time, and does not use future arrivals. This access is intentionally stronger than that of E 3-Agent and all practical baselines; the Oracle is not an implementable policy in our information model. We use this Oracle only as an upper-bound baseline to quantify how quickly an adaptive agent converges under unknown and non-stationary environments. We report performance using the Oracle gap: 1
+
+H
+
+> H
+
+X
+
+> k=1
+
+(Lk(π) − Lk(Oracle)) . (5) In addition to latency, we report stutter defined in Eq. 3 as a QoE risk signal in semantic dynamics. The agent should keep this signal low via risk-aware routing and event-driven mitigation, and reduce the Oracle gap quickly after each regime shift. 
+
+3 E3-Agent Architecture 
+
+3.1 Design Rationale 
+
+E3-Agent is built around a simple principle: separate millisecond-level routing from slow, semantic adaptation. Per-task dispatch must be fast and stable, operating at high frequency with low overhead, while the system still needs the ability to explore unknown mappings, detect regime shifts, and react to semantic events at a lower frequency with higher-level reasoning. Therefore, we position the LLM as a meta-controller that orchestrates a small set of executable control actions, rather than issuing per-task routing decisions directly. This design is motivated by three constraints that arise in edge generative inference. First, the system must respect timescale separation: routing decisions occur at task arrival and should be executed deterministically with bounded overhead, whereas semantic interpretation, such as detecting the onset of gaming, and drift reasoning can be event-driven. Second, the control surface must remain minimal and explicit so that the system is implementable and auditable; the LLM is restricted to a small set of high-impact control parameters that map directly to executable system actions, including risk overrides and calibration intensity. Third, the system must satisfy a non-leakage and reproducibility contract: the agent must not access simulator ground truth, and all learning and adaptation are driven only by past execution feedback under a deterministic experimental configuration. 
+
+3.2 Architecture Overview 
+
+Fig. 2 illustrates the architecture of the proposed E 3-Agent. The architecture consists of two coupled loops: a fast data loop that schedules each task using a lightweight router, and a slow control loop that is triggered by events or anomalies and adjusts a small set of control knobs. 
+
+Fast data loop. A task stream arrives online with two generative task types: LLM and SDXL. For each incoming task, the router selects a device based on the current queue states, the agent-side online performance estimates, and a risk mask. Each device is modeled as a FIFO queue with a single server. After execution, the system captures 6      
+
+> Figure 2 E3-Agent architecture. The policy plane runs a fast-path router for per-task dispatch using queue states, OPM-predicted service times, and a risk mask. The meta-control plane is slow-path and event-driven: it maintains context as LLM memory and uses a small tool interface for sensing, diagnosis, and actuation. Sensing and diagnosis query system status and recent observations and quantify model–reality mismatch, including drift and residual patterns, to decide when and how to actuate. Actuation updates the OPM, risk overrides, and router configuration, and the policy plane consumes these updates to shape subsequent dispatch decisions as execution feedback closes the loop.
+
+task-level feedback, including end-to-end latency and the service-time component excluding queueing delay, as well as semantic stutter indicators in Eq. 3 when applicable. 
+
+Slow control loop. Fig. 2 organizes this two-loop design into two interacting planes. The policy plane runs a fast-path router on every task arrival. The meta-control plane is slow-path and event-driven. The Online Performance Model, OPM, together with device profiles, historical observations, and an event log, provides shared state consumed by both planes. When triggers fire, the LLM meta-controller queries recent telemetry for sensing and diagnosis, then updates risk overrides, calibration settings, and router configuration via tools. The policy plane consumes these updates immediately in subsequent routing decisions as new execution feedback arrives. 
+
+3.3 Policy Plane: Fast-path Routing 
+
+As shown in Fig. 2, the policy plane runs for every arriving task and must remain lightweight. Conceptually, it can be any executable router, whether heuristic or learned, that maps the current observable system state to a device assignment. In E 3-Agent, the router is driven by three classes of signals: queue and backlog information, predicted service time from the OPM, and a risk signal that encodes safety and QoE constraints. To keep the discussion concrete, we describe a generic Shortest Expected Completion Time (SECT)-style scoring form that captures the essential ingredients. SECT estimates each device’s expected completion time as the sum of queueing delay and the predicted service time, and selects the device with the smallest estimate: 
+
+d∗ = arg min 
+
+> d
+
+
+
+Qd(t) + ˆTd(k) − cu d(k) + Md(t)
+
+
+
+, (6) where Qd(t) summarizes the current backlog at device d, ˆTd(k) is the predicted service time, ud(k) is epistemic uncertainty, and Md(t) is a risk penalty. The key is not the exact functional form but the division of responsibilities: ˆT and u come from the OPM and its profile cache, while M comes from risk gating configured by the meta-control plane. This allows the fast-path to remain simple while still adapting to unknown mappings and regime shifts. The feasible action set contains only devices that are currently available. When a risk override is active, E 3-Agent applies hard avoidance if at least one non-risky device remains. If all available devices are risky, the router does not deadlock; it retains the available devices and selects the least-bad assignment according to the same SECT 7
+
+score with risk penalties. This fallback represents a route-anyway policy under degraded service availability, leaving admission control or task dropping to an outer service-level policy. 
+
+3.4 Model and Memory: Online Performance Model 
+
+The OPM maintains per-device performance estimates without accessing simulator ground truth. This design constraint ensures that the agent learns the system mapping exclusively from execution feedback. To achieve this, the OPM utilizes the measured service time of completed tasks, defined as the total execution duration minus queuing delay, to isolate inherent device–model performance from transient noise. Each execution record captures the device ID, task type, end-to-end latency, and the service-time component. For LLM tasks, the system further logs the input and output token lengths Nin and Nout . For semantic dynamics, it records the stutter indicator in Eq. 3. The OPM operates on a causal basis, consuming only records available at or before the current timestamp. Feedback is therefore asynchronous at the task-completion granularity: an unfinished task cannot update the OPM, and delayed or missing feedback simply leaves the current estimate and uncertainty state unchanged until a valid record arrives. For LLM tasks, we fit Eq. (1) on a recent observation window using least squares for each device d:min  
+
+> ˆαd,ˆβd
+
+X
+
+> i∈Wd
+
+
+
+T (i) − (ˆ αdN (i) 
+
+> in
+
++ ˆβdN (i)
+
+> out
+
+)
+
+2
+
+, (7) and clip coefficients to be non-negative. This estimator is intentionally simple: it is data-efficient under short horizons and stable under small windows. The fitted coefficients ˆ αd and ˆβd are stored in the agent-side profile cache and updated online during warmup and after detected drift. In our experiments, token lengths are drawn from discrete bins described in Section 4, which provides controlled diversity while still requiring the agent to learn a non-trivial mapping. For diffusion tasks, specifically SDXL, we treat each task as fixed complexity and calibrate a scalar ˆ γd based on recent observed service times. At initialization, the OPM is seeded with MLPerf-derived profiling priors; these priors are treated as imperfect and are progressively corrected by online observations. To guide exploration and detect shifts, the OPM maintains a lightweight notion of epistemic uncertainty based on recent residual statistics, such as the variance of T (i) − ˆT (i) within a sliding window, and on sample scarcity reflected by small window sizes. Elevated uncertainty indicates either cold start due to insufficient observations or a recent regime shift due to model mismatch, motivating exploration in the policy plane or rapid recalibration in the meta-control plane. The linear TTFT/TPOT model is intentionally simple and may be mismatched under batching effects, thermal transitions, or software-stack changes. Such mismatch affects routing through biased ˆT
+
+values, but it also produces residual growth that triggers recalibration; severe or persistent mismatch is therefore handled as a drift signal rather than as a hidden assumption that the router can ignore. 
+
+3.5 Meta-control Plane: Event-driven LLM Controller 
+
+The meta-control plane is invoked only when necessary. This is essential for both cost and stability: calling the LLM at a fixed interval can lead to unnecessary overhead and noisy actuation. We adopt an event-driven triggering design aligned with our problem definition of non-stationarity. In our experiments, LLM calls are triggered by three classes of signals: semantic or drift events, where a device enters or leaves an abnormal state; residual alarms induced by sustained OPM mismatch; and a small number of warmup intervention points that accelerate convergence in unknown environments. Repeated triggers are suppressed by a signature-based cooldown, and non-event invocations obey a minimum task-count gap, so the meta-controller behaves as an exception handler rather than a periodic controller. The concrete default values are summarized in Table 4. Given the current system status and recent observations, the meta-controller acts over a limited control surface. In particular, it may apply or clear a risk override with a task-count time-to-live, TTL, to enforce strict stutter avoidance, and it may request rapid calibration by reducing the minimum samples required for an OPM update during warmup or after a detected regime shift. To keep actuation executable and auditable, we expose a small tool interface that maps directly to system actions for sensing, diagnosis, and actuation. Sensing retrieves recent outcomes and queue states, diagnosis quantifies model–reality mismatch from historical observations, and actuation updates risk gating, calibration intensity, and router configuration. Importantly, these tools do not reveal ground-truth service times; they only expose telemetry and historical observations that would be available in a deployed system. 8                                           
+
+> Table 2 Executable tool interface and constrained meta-controller action space. The LLM can only act through these tools and cannot directly dispatch individual tasks or inspect simulator ground truth. Tool Inputs Output and effect Constraint and audit record
+> get system status none Queue length, utilization, current time, and exposed semantic state Sensing only; logs query time
+> pull observations Window length and result limit Recent completed-task summaries and stutter count Uses completed observa-tions only
+> compute drift Device ID or name, model, window length Observed-to-predicted latency ra-tio and sample count No ground-truth service time is returned
+> update calibration Device, model, calibration factor Updates the OPM profile calibra-tion factor Logs old and new factors
+> switch router Router in {sect ,explore risk }Changes the fast-path scoring pol-icy Router choices are enu-merated
+> set router params Exploration weight and risk penalty Updates scoring parameters in milliseconds Bounded scalar control surface
+> trigger online profile update
+> Window length and minimum samples Refits OPM from recent observa-tions Causal fitting from com-pleted tasks
+> set device risky and
+> clear device risky
+> Device ID and optional TTL Applies or clears risk override Time-bounded; consumed by fast-path risk mask
+
+Event-driven control is particularly important in edge settings where both workload and system conditions are bursty. Periodic LLM calls can waste budget during stable periods, amplify actuation noise by reacting to short-term variance, and introduce non-negligible control-plane latency. In contrast, event-driven triggers align control effort with regime shifts; in semantic dynamics, reacting promptly to semantic onset is essential to prevent repeated QoE impairments, while subsequent LLM invocations refine TTL choice and calibration intensity when necessary. 
+
+3.6 Executable Closed-loop 
+
+E3-Agent implements an executable closed-loop by tightly coupling monitoring, diagnosis, actuation, and online model updates. Rather than relying on implicit “prompt-only” reasoning, each step maps to an explicit system state and an executable action. The loop operates as follows. The system continuously collects task-level execution feedback, including service times and residuals, together with event annotations such as semantic state changes, join or leave, and drift indicators. The OPM computes uncertainty and drift statistics from recent observations; in semantic dynamics, semantic onset is exposed as an event signal, while the magnitude of degradation is inferred from subsequent feedback. When a trigger fires, the meta-controller selects from a small action set, primarily risk overrides with a TTL and calibration-intensity adjustments. The fast-path router then schedules every arriving task using the updated OPM estimates and the current risk mask, ensuring stable, low-overhead behavior even when the meta-controller is idle. Finally, new observations are appended to memory and the OPM updates its parameters, reducing uncertainty over time and improving routing decisions across repeated regimes. In this paper, auditable means that the system records the inputs used for sensing, tool calls and arguments, tool return values, profile and calibration changes, risk-mask updates, and subsequent validation metrics such as residuals, latency, and stutter. The intended guarantee is not formal verification of optimality or safety, but a reproducible and bounded control surface: each adaptation can be traced to causal telemetry, checked against post-action outcomes, and rate-limited or cleared when the corresponding event disappears. 
+
+3.7 Instantiation in Our Prototype 
+
+The above architecture is intentionally modular; our experiments instantiate it in a minimal yet fully executable form. On the fast path, we use a SECT-style router augmented with an exploration signal and a risk gate: it routes tasks using queue and backlog information and OPM-predicted service times, while avoiding devices deemed risky under semantic events. On the slow path, the OPM is updated online from recent execution feedback. For LLM tasks, it fits the token-to-latency relationship on a recent window, and for SDXL it calibrates a scalar service-time estimate. The meta-controller is event-driven: semantic onsets and offsets and drift alarms trigger risk gating and rapid recalibration, while stable periods incur no additional control-plane overhead. These choices match the implementation evaluated in Section 4. The instantiated loop enforces safety and bounded overhead by construction. When any safe device exists, tasks are never dispatched to devices under an active risk override, implementing hard avoidance that prevents repeated QoE violations even if the OPM is temporarily inaccurate. Risk overrides are time-bounded via TTL and are cleared on semantic offset, allowing the system to re-admit recovered devices without manual intervention. Device churn dynamics are handled by state hygiene rules: unavailable devices are removed from the feasible action set, their stale queue state is not used for routing while offline, and their residual and profile statistics are refreshed 9 
+
+> Table 3 MLPerf-derived workload configuration and deterministic device pool.
+
+Workload 
+
+LLM llama3.1-8b-edge Token bins: Nin ∈ {256 , 512 , 1024 },
+
+Nout ∈ { 32 , 64 , 128 }
+
+SDXL stable-diffusion-xl Config: 1024 × 1024, 20 steps 
+
+Device Pool 
+
+LLM#0 NVIDIA Jetson Thor SingleStream; fp4 LLM#1 Intel Arc Pro B60 SingleStream; UINT4 SD#0 ThinkEdge SE100 SingleStream; fp8 SD#1 NVIDIA Jetson Orin SingleStream; fp8                                        
+
+> Table 4 Operational defaults used in the reported experiments. These values are fixed unless the corresponding ablation explicitly varies them. Item Default value Role and rationale Task horizon and arrival 300 tasks, λ= 0 .5 tasks per second, fixed inter-arrival interval Reproducible convergence and dynamic adaptation analysis Task mixture Alternating LLM and SDXL; LLM bins {256 ,512 ,1024 } × { 32 ,64 ,128 }
+> Controlled diversity for online service-time fitting Warmup budgets 0, 30, 100 tasks Measures cold-start exploration and calibration ef-fect Warmup LLM intervention points
+> {min(10 , W ), W }for warmup bud-get W
+> Bounded early meta-control during unknown map-ping OPM update during warmup Every 5 tasks; recent-window fitting with minimum sample count 1 Converts exploration samples into usable estimates quickly Trigger suppression Minimum non-event LLM gap 20 tasks; anomaly cooldown 20 tasks Suppresses repeated triggers and oscillation LLM tool rounds At most 2 tool-use rounds per invo-cation Bounds meta-control latency and cost Risk gate defaults risk penalty ms =60000; risk TTL tool default 50 tasks Enforces strong but time-bounded avoidance Exploration default explore weight ms =2000 Encourages sampling under sparse observations Drift defaults Drift threshold 1.3, window 60 s, calibration smoothing 0.3 Detects sustained residual mismatch and updates calibration
+
+from new observations after return before they are treated as high-confidence estimates. Triggers are rate-limited by cooldowns and minimum call gaps to prevent oscillations. From a systems standpoint, the fast-path router runs in O(|D| ) per task by scoring each available device; OPM updates are performed over a bounded recent window; and the meta-controller is invoked only on triggers, so control-plane cost scales with regime shifts rather than the total task count. These design choices align with our evaluation: warmup isolates exploration and rapid calibration under unknown mappings, while the three dynamic regimes stress semantic risk control, robustness under device churn, and residual-driven recalibration under hidden drift. 
+
+4 Experiments 
+
+4.1 Experimental Setup Simulator and queueing model. We implement a discrete-event simulator following Section 2. Each device is modeled as a single-server queue without concurrency or micro-batching. Tasks are dispatched online and executed in FIFO order on each device. The simulator returns per-task completion latency and event annotations for semantic dynamics. 
+
+Dataset construction from MLPerf. To ensure realism, we construct a profiling dataset from standardized MLPerf Inference submissions rather than hand-tuned synthetic service times. Specifically, we use a curated JSONL file, edge mobile generative.jsonl , that filters MLPerf results to two generative benchmarks: llama3.1-8b-edge 
+
+for LLM tasks and stable-diffusion-xl for diffusion tasks. Since edge generative services are latency-sensitive and interactive, we primarily use SingleStream measurements. For LLM profiles, we extract ttft ms p99 and 10 
+
+tpot ms p99 and convert them into the linear prior in Eq. (1). We set α = ttft p99 /1024 and interpret it in milliseconds per token, and we set β = tpot p99 , also in milliseconds per token. For diffusion profiles, we use 
+
+latency ms p99 for SDXL at a fixed configuration with image size =1024 and steps =20. 
+
+Workload generation. We consider a two-task mixture that reflects modern edge generative inference. The first is LLM inference, parameterized by input and output token lengths Nin and Nout . The second is diffusion inference with SDXL at fixed complexity. For LLM tasks, token lengths are sampled from discrete bins to enable repeatable convergence analysis under controlled diversity. Concretely, we sample discrete bins with a fixed mapping in the simulator: input bins map to {256 , 512 , 1024 } tokens and output bins map to {32 , 64 , 128 } tokens. Tasks arrive at a fixed interval of 1 /λ with λ = 0 .5 tasks per second and alternate between LLM and SDXL unless otherwise stated. This deterministic stream is used to make convergence and non-stationary adaptation directly reproducible; the controller itself does not depend on a Poisson or i.i.d. arrival assumption. 
+
+Device pool. The device pool is derived from MLPerf Inference results filtered for edge and mobile generative models. These benchmark-derived measurements provide offline priors about device–model performance, which E3-Agent treats as imperfect and continuously calibrates online. To avoid randomness in the evaluation setup, we use a deterministic heterogeneous device set shown in Table 3, selected from edge mobile generative.jsonl . The LLM-capable devices use 4-bit weights, fp4 or uint4 depending on the MLPerf submission, while SDXL devices follow the MLPerf SDXL configuration. 
+
+Execution feedback. For each executed task, the system records the realized latency. For LLM tasks, it also records the realized input and output token lengths, Nin and Nout , enabling online fitting of the linear service-time model in Eq. (1). For semantic dynamics, the system additionally records a binary stutter indicator in Eq. 3 if a task is assigned to a device in a user-interactive or degraded state. 
+
+Dynamic regimes. We evaluate both cold-start learning, referred to as warmup, and non-stationary adaptation. In warmup, the system starts with an unknown device–task service-time mapping; we vary the warmup budget among 0, 30, and 100 tasks, during which E 3-Agent is encouraged to explore and quickly calibrate its online performance model before entering a steady routing regime. For dynamic environments, we use deterministic event plans over a 300-task horizon. Semantic dynamics contains five semantic windows, game, video call, low battery, system update, and overheating, which induce hidden slowdowns and stutter risk. Device churn changes the feasible device set through repeated device departures and returns. Hidden drift applies a step slowdown to one LLM device–model pair and later restores it, without exposing the drift factor to the agent. 
+
+Methods and baselines. We compare E 3-Agent against Fixed-Heuristic, a static SECT-style heuristic driven only by offline priors without online calibration or semantic risk control, and RoundRobin, a topology-agnostic baseline that cycles through available devices. We also report an online full-information Oracle that uses the ground-truth time-varying service times and hidden states at the current time, without using future arrivals, as a performance upper bound for latency. 
+
+Metrics. We report average end-to-end latency, measured in milliseconds, and the relative gap to Oracle, com-puted as (avg /oracle − 1) × 100% for each scenario. In semantic dynamics, we additionally report the stutter rate, defined as the fraction of tasks that trigger the stutter indicator in Eq. 3, reflecting QoE risk under user-interactive degradation. For trajectory plots, we show sparsely sampled raw values every 5 tasks and a moving-average trend line, MA20, computed over a 20-task window. 
+
+4.2 Results Summary of results. Table 5 summarizes Exp-1 Warmup and Exp-2 Dynamic. We report average end-to-end latency and the relative gap to the online full-information Oracle. Warmup isolates the cold-start phase where device–task mappings are initially unknown and must be learned from feedback. Dynamic regimes stress adaptation under semantic degradation, device churn, and hidden drift, where the agent must maintain low latency while tracking time-varying performance conditions. 11  
+
+> Table 5 Overall results for Exp-1 Warmup and Exp-2 Dynamic. Lower is better. vs oracle in percent is computed as (( avg/oracle )−1) ×100%. The Oracle column serves as the baseline with 0.00%.
+
+Fixed-Heuristic RoundRobin E3-Agent Oracle Block Setting avg latency vs oracle avg latency vs oracle avg latency vs oracle avg latency ms % ms % ms % ms Warmup warmup=0 19475.24 +288.04% 18500.67 +268.62% 14363.78 +186.19% 5018.93 warmup=30 19475.24 +288.04% 18500.67 +268.62% 8052.86 +60.45% 5018.93 warmup=100 19475.24 +288.04% 18500.67 +268.62% 6935.98 +38.20% 5018.93 Dynamic semantic 19331.74 +292.01% 19314.10 +291.65% 5277.10 +7.01% 4931.43 churn 16232.12 +216.22% 17323.07 +237.47% 5652.99 +10.13% 5133.23 drift 16602.12 +244.23% 18285.96 +279.14% 5255.70 +8.97% 4823.00                         
+
+> Table 6 QoE and meta-control overhead from the reported dynamic runs. LLM calls and tool calls are counted only for E 3-Agent. Scenario E3stutter Best static stutter LLM calls Tool calls Semantic 0.00% 10.00% 11 33 Device churn 0.00% 0.00% 26Hidden drift 0.00% 0.00% 416 020 40 60 80 100
+> warmup_tasks
+> 6000
+> 8000
+> 10000
+> 12000
+> 14000
+> 16000
+> 18000
+> 20000
+> Average Latency (ms)
+> Fixed-Heuristic
+> RoundRobin
+> E3-Agent
+> Oracle
+> Figure 3 Warmup ablation: average latency curves under different warmup budgets using raw samples every 5 tasks with MA20 smoothing. MA20 is a 20-task moving average.
+
+Warmup in unknown environments. This experiment evaluates whether E 3-Agent can reduce cold-start cost and converge toward Oracle when the device–task service-time mapping is initially unknown, as is common when deploying to a new device pool or after a model or stack update. We vary the warmup budget among 0, 30, and 100 tasks. During warmup, E 3-Agent prioritizes information acquisition and fast online calibration of Eq. (1) so that the fast-path router becomes reliable in steady operation. Fig. 3 shows a clear warmup-to-convergence trend: the gap to Oracle decreases from +186.19% at warmup=0 to +60.45% at warmup=30, and further to +38.20% at warmup=100. These results indicate that early exploration combined with rapid online calibration materially accelerates convergence under unknown mappings, converting an initially uncertain environment into an effectively controllable regime for low-overhead routing. Table 5 further shows that the improvement is driven by a sharp reduction in average latency for E 3-Agent as warmup increases, from 14363.78 ms at warmup=0 to 8052.86 ms at warmup=30 and 6935.98 ms at warmup=100. In contrast, Fixed-Heuristic and RoundRobin remain near 19 s across warmup budgets because they lack a mechanism to learn the mapping and therefore cannot correct mismatched priors. The remaining gap at warmup=100 reflects the finite-horizon nature of warmup in a heterogeneous pool, where limited samples per device and token bin constrain the precision of online estimates. 12 0 50 100 150 200 250 300 
+
+> task_idx
+> 0
+> 10000
+> 20000
+> 30000
+> 40000
+> 50000
+> 60000
+> 70000
+> Average Latency (ms)
+> Fixed-Heuristic
+> RoundRobin
+> E3-Agent
+> Oracle
+
+(a) Semantic dynamics (latency) 0 50 100 150 200 250 300  
+
+> task_idx
+> 0
+> 5000
+> 10000
+> 15000
+> 20000
+> 25000
+> 30000
+> Average Latency (ms)
+> Fixed-Heuristic
+> RoundRobin
+> E3-Agent
+> Oracle
+
+(b) Device churn dynamics (latency) 0 50 100 150 200 250 300 
+
+> task_idx
+> 0
+> 5000
+> 10000
+> 15000
+> 20000
+> 25000
+> 30000
+> Average Latency (ms)
+> Fixed-Heuristic
+> RoundRobin
+> E3-Agent
+> Oracle
+
+(c) Hidden drift (latency) 0 50 100 150 200 250 300  
+
+> task_idx
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Stutter rate
+> Fixed-Heuristic
+> RoundRobin
+> E3-Agent
+
+(d) Semantic dynamics (stutter timeline) 
+
+Figure 4 Dynamic environments: per-task latency trajectories and semantic QoE signal (raw samples every 5 tasks + MA20 for latency curves). MA20 is a 20-task moving average. 
+
+Dynamic environments. This experiment tests non-stationary adaptation beyond cold start. We evaluate three dynamic regimes, semantic dynamics, device churn dynamics, and hidden drift, each preceded by a short initial warmup period; for this reason, the plotted task index may start after the warmup prefix, for example from k = 50. Fig. 4(a)–(c) shows that E 3-Agent remains consistently close to Oracle across all regimes, with gaps of only +7.01% in semantic dynamics, +10.13% in device churn dynamics, and +8.97% in hidden drift, as summarized in Table 5. In contrast, Fixed-Heuristic and RoundRobin incur gaps exceeding 200%, highlighting that fixed strategies degrade sharply under hidden and time-varying performance conditions. In absolute terms, Table 5 shows that E 3-Agent reduces average latency from 16–19 s under the static baselines to about 5.3–5.7 s across all three regimes, while tracking the Oracle at about 4.8–5.1 s. This improvement is consistent across distinct sources of non-stationarity. Under device churn dynamics, the feasible device set changes online and queue states reshuffle as devices appear or disappear. Under hidden drift, the service-time mapping shifts without explicit disclosure and must be inferred from residual patterns. The small Oracle gaps indicate that the fast-path router remains effective when driven by continuously updated OPM estimates and risk-aware signals, while the slow-path controller updates calibration and risk overrides only when triggers indicate a regime shift. Semantic dynamics additionally introduces QoE risk that is not captured by average latency alone. Fig. 4(d) reports the stutter timeline under semantic events, and Table 6 gives the corresponding aggregate stutter and meta-control overhead. E 3-Agent reduces stutter to 0.00% in the semantic scenario, while the best static baseline among Fixed-Heuristic and RoundRobin still incurs a 10.00% stutter rate. This suppression is achieved with 11 LLM invocations and 33 tool calls over 300 tasks, illustrating a practically executable QoE-aware control loop whose control-plane activity is tied to events rather than to every request. 
+
+5 Conclusion and Future Work 
+
+Edge generative inference resource management must increasingly operate under two practical realities: per-device per-model service times are often unknown at deployment time, and they are non-stationary due to semantic events, background load, and device churn. This paper presented E 3-Agent, an executable and evolving agentic framework that separates a fast-path router from an event-driven LLM meta-controller, enabling online exploration, rapid calibration, and risk-aware mitigation under regime shifts. 13 
+
+We validated E 3-Agent in a discrete-event simulator driven by MLPerf-derived measurement priors, covering warmup in unknown environments and three dynamic regimes: semantic dynamics, device churn, and hidden drift. E3-Agent achieves consistent improvements over static baselines, reduces average latency by about 65%–73% in dynamic scenarios while remaining within 7%–10% of an online full-information Oracle, and effectively suppresses stutter risk under semantic degradation. Several limitations point to promising future work. First, deploying E 3-Agent on real edge devices with production telemetry and actuation interfaces will enable end-to-end validation beyond simulation and reveal additional systems constraints, including monitoring fidelity, delayed or missing feedback, control latency, and safety governance. Second, the current evaluation focuses on compute-side adaptation and does not separately model PHY/MAC channel variability; extending the framework to joint communication-computing control under explicit wireless dynamics is an important next step. Third, expanding workload coverage to more generative tasks and stronger heterogeneity, including text-to-video and multimodal long-sequence generation, larger device pools, and more frequent join or leave, can further stress-test generalization under evolving environments. Finally, incorporating additional system signals and more principled uncertainty estimation, while preserving safety invariants and bounded control-plane overhead, remains an important direction for practical agentic resource management. 
+
+References 
+
+1 Wang Y, Chen Y, Li Z, et al. Burstgpt: A real-world workload dataset to optimize llm serving systems. In: Proceedings of Proceedings of the 31st ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2, New York, NY, USA: Association for Computing Machinery, 2025. 5831–5841 2 Kwon W, Li Z, Zhuang S, et al. Efficient memory management for large language model serving with pagedattention. In: Proceedings of Proceedings of the 29th Symposium on Operating Systems Principles, New York, NY, USA: Association for Computing Machinery, 2023. 611–626 3 Sun Y, Chen Z, Tao M, et al. Communications, caching, and computing for mobile virtual reality: Modeling and tradeoff. IEEE Transactions on Communications, 2019, 67: 7573–7586 4 Xu C, Chen Z, Tao M, et al. Wireless multi-user interactive virtual reality in metaverse with edge-device collaborative computing. IEEE Transactions on Wireless Communications, 2025 5 Cui Q, You X, Wei N, et al. Overview of ai and communication for 6g network: fundamentals, challenges, and future research opportunities. Science China Information Sciences, 2025, 68: 171301 6 You X, Huang Y, Zhang C, et al. When ai meets sustainable 6g. Science China Information Sciences, 2025, 68: 110301 7 Chen Z, Zhang Z, Liu C, et al. Towards wireless native big ai model: the mission and approach differ from large language model. Science China Information Sciences, 2025, 68: 170303 8 Hortelano D, de Miguel I, Barroso R J D, et al. A comprehensive survey on reinforcement-learning-based computation offloading techniques in edge computing systems. Journal of Network and Computer Applications, 2023, 216: 103669. URL https://www.sciencedirect.com/ science/article/pii/S1084804523000887 9 Khoshvaght P, Haider A, Rahmani A M, et al. A self-supervised deep reinforcement learning for zero-shot task scheduling in mo-bile edge computing environments. Ad Hoc Networks, 2025, 178: 103977. URL https://www.sciencedirect.com/science/article/pii/ S1570870525002252 10 Lin C, Han Z, Zhang C, et al. Parrot: Efficient serving of LLM-based applications with semantic variable. In: Proceedings of 18th USENIX Symposium on Operating Systems Design and Implementation (OSDI 24), Santa Clara, CA: USENIX Association, 2024. 929–945 11 Yan C, Liu S, Liu H, et al. Hybrid sd: Edge-cloud collaborative inference for stable diffusion models, 2024 12 Zanouda T, Masoudi M, Gebre F G, et al. Telecom foundation models: Applications, challenges, and future trends, 2024 13 Hong J, Tu N, Hong J K. A comprehensive survey on llm-based network management and operations. International Journal of Network Management, 2025, 35: e70029. URL https://onlinelibrary.wiley.com/doi/abs/10.1002/nem.70029, e70029 NEM-25-0670 14 Adanza D, Gifre L, Alemany P, et al. Leveraging generative ai for intent-based networking operations in network slices. Computer Networks, 2025, 272: 111647. URL https://www.sciencedirect.com/science/article/pii/S1389128625006140 15 Sun W, Sun C, Zhang Y, et al. Scnoc-agentic: A network operation and control agentic for satellite communication systems. Electronics, 2025, 14: 3320 16 Cao X, Nan G, Guo H, et al. Exploring llm-based multi-agent situation awareness for zero-trust space-air-ground integrated network. IEEE Journal on Selected Areas in Communications, 2025, 43: 2230–2247 17 Salama A, Nezami Z, Qazzaz M M H, et al. Edge agentic ai framework for autonomous network optimisation in o-ran, 2025 18 Rosales R, Cavalcanti D. Reinforcement learning, rule-based, or generative ai: a comparison of model-free wi-fi slicing approaches. Frontiers in Signal Processing, 2025, Volume 5 - 2025. URL https://www.frontiersin.org/journals/signal-processing/articles/10.3389/frsip. 2025.1608347 19 Fan Y, Liang L, Liu P, et al. Learning multi-access point coordination in agentic ai wi-fi with large language models, 2025 20 Jiang F, Pan C, Dong L, et al. From large ai models to agentic ai: A tutorial on future intelligent communications, 2025 21 Yao S, Zhao J, Yu D, et al. React: Synergizing reasoning and acting in language models. In: Proceedings of The Eleventh International Conference on Learning Representations, 2023 22 Yang J, Jimenez C E, Wettig A, et al. Swe-agent: Agent-computer interfaces enable automated software engineering. In: Proceedings of Globerson A, Mackey L, Belgrave D, et al., editors, Advances in Neural Information Processing Systems. Curran Associates, Inc., 2024. 50528–50652 23 Li L, Tan R, Fang J, et al. Llm-augmented hierarchical reinforcement learning for human-like decision-making of autonomous driving. Expert Systems with Applications, 2025, 294: 128736 24 Reddi V J, Cheng C, Kanter D, et al. Mlperf inference benchmark. In: Proceedings of 2020 ACM/IEEE 47th Annual International Symposium on Computer Architecture (ISCA), 2020. 446-459 25 Zhong Y, Liu S, Chen J, et al. {DistServe }: Disaggregating prefill and decoding for goodput-optimized large language model serving. In: Proceedings of 18th USENIX Symposium on Operating Systems Design and Implementation (OSDI 24), 2024. 193–210 26 Podell D, English Z, Lacey K, et al. SDXL: Improving latent diffusion models for high-resolution image synthesis. In: Proceedings of The Twelfth International Conference on Learning Representations, 2024
