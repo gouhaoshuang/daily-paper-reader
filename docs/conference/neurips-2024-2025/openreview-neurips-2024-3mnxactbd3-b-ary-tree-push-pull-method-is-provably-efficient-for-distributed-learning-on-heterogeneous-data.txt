@@ -1,0 +1,5960 @@
+Title: 9113_B_ary_Tree_Push_Pull_Meth.pdf
+
+URL Source: https://openreview.net/pdf?id=3MnXAcTBD3
+
+Number of Pages: 39
+
+Markdown Content:
+# B-ary Tree Push-Pull Method is Provably Efficient for Distributed Learning on Heterogeneous Data 
+
+Runze You 1 Shi Pu 1∗
+
+> 1
+
+The Chinese University of Hong Kong, Shenzhen 
+
+runzeyou@link.cuhk.edu.cn, pushi@cuhk.edu.cn 
+
+## Abstract 
+
+This paper considers the distributed learning problem where a group of agents cooperatively minimizes the summation of their local cost functions based on peer-to-peer communication. Particularly, we propose a highly efficient algorithm, termed “B-ary Tree Push-Pull” (BTPP), that employs two B-ary spanning trees for distributing the information related to the parameters and stochastic gradients across the network. The simple method is efficient in communication since each agent interacts with at most (B + 1) neighbors per iteration. More importantly, BTPP achieves linear speedup for smooth nonconvex and strongly convex objective functions with only ˜O(n) and ˜O(1) transient iterations, respectively, significantly outperforming the state-of-the-art results to the best of our knowledge. Our code is available at https://github.com/ryou98/BTPP. 
+
+## 1 Introduction 
+
+In this paper, we consider a group of agents, labeled as N := {1, 2, . . . , n }, in which each agent i
+
+holds its own local cost function fi : Rp → R and communicates only within its direct neighborhood. We investigate how the agents collaborate to locate x ∈ Rp that minimizes the average of all the cost functions: 
+
+min  
+
+> x∈Rp
+
+f (x) = 1
+
+n
+
+> n
+
+X
+
+> i=1
+
+fi(x)
+
+!
+
+, (1) where fi(x) := Eξi∼D i [Fi(x; ξi)] . Here ξi denotes the local data of agent i that follows the local distribution Di. Data heterogeneity exists if {D i}ni=1 are not identical. To solve problem (1) , we assume each agent i queries a stochastic oracle ( SO ) to obtain noisy gradient samples. Stochastic gradients appear in many areas including online distributed learning [23 , 3 ], reinforcement learning [ 17 , 15 ], generative modeling [ 5 , 6 ], and parameter estimation [ 2, 27 ]. Assumption 1.1 ensures that the gradient estimator gi(x; ξi) remains unbiased with a bounded variance for any given x, while independent samples ξi are gathered continuously over time. In addition, the assumption is critical in simulation-based optimization as gradient estimation often encounters noise from multiple sources, such as modeling and discretization errors, or limitations due to finite sample sizes in Monte-Carlo methods [7]. Modern optimization and machine learning typically involve tremendous data samples and model parameters. The scale of these problems calls for efficient distributed algorithms across multiple computing nodes. Recently, distributed algorithms dealing with problem (1) have been studied extensively in the literature; see, e.g., [ 19 , 14 , 4, 34 ]. Traditional distributed learning approaches typically follow a centralized master-worker setup, where each worker node communicates with a (virtual) central server [ 12 ]. However, such a communication pattern incurs significant communication overheads and long latency, especially when the training requires a large number of computing nodes. 
+
+> ∗
+
+Corresponding Author 38th Conference on Neural Information Processing Systems (NeurIPS 2024). Decentralized learning is an emerging paradigm to save communication costs, where the computing nodes are connected through a certain network topology (e.g., ring, grid, hypercube). Decentralized algorithms do not rely on central servers: the agents maintain the similarity among their copies of model parameters through peer-to-peer messages passing by communicating locally with immediate neighbors in the network. Such a setup allows each node to communicate with only a few peers and hence incurs much lower communication overhead [ 1 ]. Moreover, it offers strong promise for new applications, allowing agents to collaboratively train a model while respecting the data locality and privacy of each contributor. Specifically, in decentralized stochastic gradient methods, the agents share their local stochastic gradient updates through gossip communication [ 32 ]. At every iteration, the local updates are sent to the neighbors of each agent who iteratively propagate the information through the network. Typically, the agents employ iterative gossip averaging of their neighbors’ models with their own, where the averaging weights are chosen to ensure asymptotic uniform distribution of each update across the network. However, local averaging is less effective in “mixing” information which makes decentralized algorithms converge slower than their centralized counterparts. Generally speaking, the network topology determines both the number of per-iteration communications and the convergence rates of decentralized algorithms, leading to a trade-off. For example, a densely-connected graph enables decentralized methods to converge faster but results in less efficient communication since each node needs to communicate with more neighbors. By contrast, a sparsely-connected topology results in a slower convergence rate but also reduces the per-iteration communication cost [ 19 , 21 , 35 ]. In particular, for smooth and non-convex objective functions, it has been shown that decentralized stochastic gradient methods (with arbitrary topology) can achieve the same convergence rate as the centralized SGD method, but only after an initial period of iterations has passed [ 14 , 34 , 20 ]. The number of transient iterations (transient time) heavily depends on the network topology, and thus a practical decentralized stochastic gradient algorithm should aim to minimize the transient time while keeping the number of per-iteration communications small (e.g., over a a sparsely-connected topology). Such an observation has motivated several recent works, which consider network topologies with Θ(1) per-iteration communications (or degree) for each node; see, e.g., [34, 26]. This work considers an alternative mechanism to gossip averaging, called “B-ary Tree Push-Pull” (BTPP), inherited from the Push-Pull method in [ 22 , 33 ]. Rather than relaying the messages over one graph at every iteration, BTPP uses two B-ary trees ( GR and GC ) to spread the information about the parameters and the stochastic gradients, respectively. Each agent assigned in the B-ary tree acts as a worker on an assembly line. The model parameters are transmitted through the graph GR from the parent nodes to the child nodes. Meanwhile, the stochastic gradients are computed under the current model parameters and accumulated through the inverse graph of GR denoted as GC . BTPP can be viewed as a semi-(de)centralized approach given the critical role of node 1. Notably, the corresponding mixing matrices of GR and GC only consist of 0’s and 1’s, which together with the B-ary Tree topology design, results in high algorithmic efficiency. We show BTPP achieves an ˜O(n)
+
+transient time under smooth nonconvex objective functions with Θ(1) per-iteration communications for each agent. By comparison, the state-of-the-art transient time is O(n3) (see Table 1). 
+
+1.1 Related Works Decentralized Learning Decentralized Stochastic Gradient Descent (DSGD) type algorithms are increasingly popular for accelerating the training of large-scale machine learning models [ 14 , 34 , 10 ]. These algorithms have been adapted under a range of practical settings, including those discussed in [ 1, 16 ]. However, DSGD suffers from data heterogeneity [ 9 ], which triggers more advanced techniques such as EXTRA [ 25 ], Exact-Diffusion/ D2 [ 13 ], and gradient tracking [ 19 ]. The Push-Pull method [ 22 , 33 ] which enjoys broad topological requirements was introduced for deterministic decentralized optimization under strongly convex objectives. This work particularly takes advantage of the flexibility in the network design of Push-Pull, utilizing the B-ary tree family, while considering stochastic gradients for minimizing smooth nonconvex objectives. 
+
+Topology Design Decentralized stochastic gradient algorithms often rely on gossip averaging over various topologies such as rings, grids, and tori [ 18 ]. The hypercube graph [ 30 ] strikes a balance between the communication efficiency and the consensus rate, but the network size is constrained to be the power of two. The work in [ 34 ] re-examined the static exponential graph with Θ(ln( n)) 
+
+2ALGORITHM PER -ITER COMM . SIZE n BASED GRAPH TRANS . I TER .
+
+D2 (R ING ) [29] Θ(1) ARBITRARY 1 O(n11 )
+
+DSGD (R ING ) [18] Θ(1) ARBITRARY 1 O(n7)
+
+HYPERCUBE [30] Θ(ln( n)) POWER OF 2 1 ˜O(n3)
+
+STATIC EXP . [34] Θ(ln( n)) ARBITRARY 1 ˜O(n3)
+
+O.-P. E XP . [34] 1 POWER OF 2 Θ(ln( n)) ˜O(n3)
+
+RELAY SGD [31] Θ(1) ARBITRARY 1 O(n3)
+
+OD(OU)-E QUI DYN [26] 1 ARBITRARY Θ( n) O(n3)
+
+DSGD-CECA [4] Θ(1) ARBITRARY Θ(ln( n)) ˜O(n3)
+
+BASE -( k + 1 ) [28] Θ(1) ARBITRARY Θ(ln( n)) ˜O(n3)
+
+BTPP (O URS ) Θ(1) ARBITRARY 2 ˜O(n)
+
+Table 1: Comparison of different algorithms for distributed stochastic optimization under smooth nonconvex objectives. “Per-iter Comm.” denotes the number of per-iteration communications or neighbors (degree) for each agent. “Based Graph” represents the number of required graph topologies during the entire training procedure. “Trans. Iter.” represents the number of transient iterations. The notation ˜O(·) hides all the polylogarithmic factors. 
+
+ALGORITHM PER -ITER COMM . SIZE n BASED GRAPH TRANS . I TER .DSGD (R ING ) [18] Θ(1) ARBITRARY 1 ˜O(n5)
+
+STATIC EXP . [34] Θ(ln( n)) ARBITRARY 1 ˜O(n)
+
+O.-P. E XP . [34] 1 POWER OF 2 Θ(ln( n)) ˜O(n)
+
+RELAY SGD [31] Θ(1) ARBITRARY 1 ˜O(n)
+
+OD(OU)-E QUI DYN [26] 1 ARBITRARY Θ( n) ˜O(n)
+
+BTPP (O URS ) Θ(1) ARBITRARY 2 ˜O(1) 
+
+Table 2: Comparison of different algorithms for distributed stochastic optimization under smooth strongly convex objectives. The notation ˜O(·) hides all the polylogarithmic factors inheriting from [26, 9]. degree and introduced a one-peer exponential graph with Θ(1) degree while preserving the consensus properties under the specific requirement of n. The paper [ 28 ] proposed a base-( k + 1 ) graph as an enhancement that achieves similar convergence rate as in [ 34 ] under arbitrary network size by sequentially employing multiple graph topologies (splitting an all-connected graph into Θ(ln( n)) 
+
+different subgraphs). DSGD-CECA [ 4] requires roughly ⌈log 2(n)⌉ rounds of message passing for global averaging with Θ( n) network topologies. OD(OU)-EquiDyn [ 26 ] introduces algorithms that employ various topologies to achieve network-size independent consensus rates. RelaySGD [ 31 ] offers a relay-based algorithm that ensures Θ(1) per-iteration communication across different topologies. The above-mentioned methods all enjoy comparable convergence rates with centralized SGD (and thus achieves linear speedup) when the number of iterations T is large enough. The transient times are generally in the order of ˜O(n3) under smooth nonconvex objectives (see Table 1) and ˜O(n) under smooth strongly convex objectives (see Table 2). Note that the above works and this paper generally consider training machine learning modes within high-performance data-center clusters, in which the network topology can be fully controlled: any two nodes can directly communicate over the network when necessary. By comparison, in some other scenarios, the underlying network topology is fixed, and the communication between two nodes is constrained (e.g., in wireless sensor networks, internet of vehicles, etc). 
+
+1.2 Main Contribution 
+
+This paper introduces a novel distributed stochastic gradient algorithm, termed “B-ary Tree Push-Pull” (BTPP), which is provably efficient for solving the distributed learning problem (1) under arbitrary network size. The main contribution is summarized as follows: 3• BTPP incurs a Θ(1) communication overhead per-iteration for each agent. Specifically, any agent in the network communicates with at most (B + 1) neighbors, where B can be freely chosen to fit different settings. Generally speaking, larger B increases the per-iteration communication cost but reduces the transient time at the same time. • We show BTPP enjoys an ˜O(n) transient time or iteration complexity under smooth non-convex objectives and an ˜O(1) transient time or iteration complexity under smooth strongly convex objectives. Such results outperform the baselines: see Table 1 and Table 2. The im-provement is significant since the transient time greatly impacts the algorithmic performance, especially under large n.• The convergence analysis for BTPP is non-trivial, partly due to the fact that the algorithm admits two different network topologies for communicating the model parameters and the (stochastic) gradient trackers respectively. Instead of constructing the induced matrix norms 
+
+∥ · ∥ R and ∥ · ∥ C as in [ 22 ], the analysis is performed under ∥·∥ 2 and ∥·∥ F only by carefully treating the matrix products and related terms. 
+
+1.3 Notation and Preliminaries 
+
+Throughout the paper, vectors default to columns if not otherwise specified. Let each agent i hold a local copy xi ∈ Rp of the decision variable and an auxiliary variable yi ∈ Rp. Their values at iteration k are denoted by x(k) 
+
+> i
+
+and y(k) 
+
+> i
+
+, respectively. We let X = [ x1, x 2, · · · , x n]⊤ ∈ Rn×p, Y =[y1, y 2, · · · , y n]⊤ ∈ Rn×p, and 1 denotes the column vector with all entries equal to 1. We also define the aggregated gradients at the local variables as ∇F (X) := [ ∇f1(x1), ∇f2(x2), · · · , ∇fn(xn)] ⊤ ∈
+
+Rn×p, where F (X) := Pni=1 fi(xi). In addition, denote ξ := [ ξ1, ξ 2, · · · , ξ n]⊤, G(X, ξ) := [g1(x1, ξ 1), g 2(x2, ξ 2), · · · , g n(xn, ξ n)] ⊤ ∈ Rn×p. For the conciseness of presentation, we also use 
+
+G(t) to represent G(X(t), ξ(t)). The term ⟨a, b ⟩ stands for the inner product of two vectors a, b ∈ Rp.For matrices, ∥·∥ 2 and ∥·∥ F represent the spectral norm and the Frobenius norm respectively, which degenerate to the Euclidean norm for vectors. For simplicity, any square matrix with power 0 is the unit matrix I with the same dimension if not otherwise specified. We assume each agent i is able to obtain noisy gradient samples of the form gi(x, ξ i) that satisfies the following assumption. 
+
+Assumption 1.1. For all i ∈ N and x ∈ Rp, each random vector ξi is independent and 
+
+Eξi∼D i [gi(x, ξ i)|x] = ∇fi(x), Eξi∼D i
+
+h
+
+∥gi(x, ξ i) − ∇ fi(x)∥2 |x
+
+i
+
+≤ σ2
+
+for some σ2 > 0.Regarding the individual objective functions fi, we make the following standard assumption. 
+
+Assumption 1.2. Each fi(x) : Rp → R is lower bounded with L-Lipschitz continuous gradients, i.e., for any x, x ′ ∈ Rp,
+
+∥∇ fi(x) − ∇ fi(x′)∥ ≤ L ∥x − x′∥ .
+
+We also consider the following standard assumption regarding strongly convexity. 
+
+Assumption 1.3. For any x, y ∈ Rp,
+
+f (y) ≥ f (x) + ⟨∇ f (x), y − x⟩ + μ
+
+2 ∥y − x∥2 .
+
+Denote f ∗ := min x∈Rp f (x). Let x∗ = arg min x f (x) if Assumption 1.3 holds. A directed graph G(N , E) consists of a set of n nodes N and a set of directed edges E ⊆ N × N ,where an edge (j, i ) ∈ E indicates that node j can directly send information to node i. To facilitate the local averaging procedure, each graph can be associated with a non-negative weight matrix 
+
+W = [ wij ] ∈ Rn×n, whose element wij is non-zero only if (j, i ) ∈ E . Similarly, a non-negative weight matrix W corresponds to a directed graph denoted by GW. For a given graph GW, the in-neighborhood and out-neighborhood of node i ∈ N are given by N in  
+
+> W,i
+
+:= {j ∈ N : ( j, i ) ∈ E} and 
+
+N out  
+
+> W,i
+
+:= {j ∈ N : ( i, j ) ∈ E} , respectively. The degree of node i is the number of its in-neighbors or out-neighbors. For example, in a one-peer graph, the degree of each node is at most 1.41.4 Organization of the Paper 
+
+The rest of this paper is organized as follows. In Section 2, we introduce the B-ary Tree Push-Pull algorithm and present its main convergence results. The sketch of analysis is presented in Section 3, and numerical experiments are provided in Section 4. We conclude the paper in Section 5. 
+
+## 2 B-ary Tree Push-Pull Method 
+
+2.1 Communication Graphs 
+
+The proposed B-ary Tree Push-Pull method makes use of two spanning trees as communication graphs: GR and GC , which correspond to two mixing matrices R and C, respectively. Specifically, we consider B-ary tree graphs with arbitrary number of nodes n and depth d. The root node is labeled as 
+
+1 for convenience, and we index the nodes layer-by-layer. The additional nodes are placed at the last layer if the tree is not full. Figure 1 illustrates the assignment of 10 nodes when B = 2 . In the Pull Tree GR (the left ones), each node has 1 parent node and B child nodes (except the ones in the last layer). The root node 1 has no parent node. In the Push Tree GC (the right ones), each node has 1
+
+child node and B parent nodes (except the ones in the last layer). It can be seen that the tree GC is identical to GR with all the edges reversing directions. Note that only node 1 has a self-loop. 
+
+Figure 1: Two spanning trees with 10 nodes when B = 2 . On the left is GR, and the right one is GC .
+
+2.2 Algorithm 
+
+We consider the following distributed stochastic gradient method (Algorithm 1) for solving problem (1) . At every iteration t, each agent i pulls the state information from its in-neighborhood N in 
+
+> R,i
+
+,pushes its (stochastic) gradient tracker yi to the out-neighborhood N out  
+
+> C,i
+
+, and updates its local variables xi and yi based on the received information. The agents aim to find the ϵ-stationary point jointly by performing local computation and exchanging information through two spanning trees. More specifically, in the pull tree GR, each node i pulls the updated model from its parent node along the tree. Note that N in  
+
+> R,i
+
+consists of only one node, the parent node. The Push Tree GC is the inverse of the Pull Tree, in which each node collects and aggregates the gradient trackers from its parent nodes. Due to the tree structure, only yt 
+
+> 1
+
+aggregates and tracks the stochastic gradients across the entire network, which will be made clear from the analysis. The implementation of the algorithm is rather simple. Taking node 2 in Figure 1 as an example, we have x(t+1) 2 = x(t)1 − γy (t)1
+
+and y(t+1) 2 = y(t)4 + y(t)5 + g2(x(t+1) 2 ; ξ(t+1) 2 ) − g2(x(t)2 ; ξ(t)2 ).We can write Algorithm 1 in the following compact form: 
+
+X(t+1) = R
+
+
+
+X(t) − γY(t)
+
+Y(t+1) = CY(t) + G(X(t+1) , ξ(t+1) ) − G(X(t), ξ(t))
+
+(2) where Y(0) = G(X(0) , ξ(0) ), and R, C ∈ Rn×n are non-negative matrices whose elements are given by 
+
+[R]i,j =
+
+1 if i ∈ { Bj + 1 − B + [ B]} ∩ [n] or i = j = 1 0 otherwise and C = R⊤ which corresponds to GC , the inverse tree of GR. It can be seen that R is a row-stochastic matrix that only consists of 0’s and 1’s, and C is column stochastic. For example, the mixing matrices corresponding to the graphs in Figure 1 are given by 5Algorithm 1 B-ary Tree Push-Pull Method (BTPP) 
+
+1: Each agent i initializes with any arbitrary but identical x(0)  
+
+> i
+
+= x(0) ∈ Rp, y(0)  
+
+> i
+
+= gi(x(0)  
+
+> i
+
+, ξ (0)  
+
+> i
+
+) ∈
+
+Rp after drawing a random sample ξ(0)  
+
+> i
+
+, stepsize γ > 0 and number of iterations T .
+
+2: for iteration t = 0 , 1, 2, . . . , T − 1 do 
+
+3: for agent i in parallel do 
+
+4: Pull x(t) 
+
+> j
+
+− γy (t) 
+
+> j
+
+from each j ∈ N in 
+
+> R,i
+
+5: Push y(t) 
+
+> i
+
+to each j ∈ N out 
+
+> C,i
+
+6: Independently draw a random sample ξ(t+1) 
+
+> i
+
+7: Update parameters through 
+
+x(t+1)  
+
+> i
+
+= X 
+
+> j∈N in
+> R,i
+
+
+
+x(t) 
+
+> j
+
+− γy (t)
+
+> j
+
+
+
+y(t+1)  
+
+> i
+
+= X 
+
+> j∈N in
+> C,i
+
+y(t) 
+
+> j
+
++ gi(x(t+1)  
+
+> i
+
+; ξ(t+1)  
+
+> i
+
+) − gi(x(t) 
+
+> i
+
+; ξ(t) 
+
+> i
+
+)
+
+8: end for 
+
+9: end for 
+
+10: Output x(T )1 .
+
+R =
+
+
+
+1111111111
+
+
+
+, C =
+
+
+
+1 1 11 11 11 11
+
+
+
+,
+
+where the unspecified elements are zeros. 
+
+2.3 Main Results 
+
+The main convergence properties of BTPP are summarized in the following two theorems, where the second result assumes strongly convexity on f .
+
+Theorem 2.1. For the BTPP algorithm outlined in Algorithm 1 implemented on B-ary tree graphs GR and GC , assume Assumption 1.1 and Assumption 1.2 hold. Let γ =min {
+
+ ∆f 
+
+> 3σ2Ln (T+1)
+
+ 12
+
+,
+
+ ∆f 
+
+> 1500 n2d6σ2L2(T+1)
+
+ 13
+
+, 1100 nd 3L }. The following convergence result holds: 
+
+1
+
+T + 1 
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
+≤ 32 p∆f σ2L
+
+pn(T + 1) +240 d2
+
+
+
+σ2L2∆2
+
+> f
+
+ 13
+
+(√n(T + 1)) 23
+
++ 800 d3L∆f
+
+T + 1 + ∇F(X(0) ) 2
+
+> F
+
+n(T + 1) ,
+
+(3) 
+
+where ∆f := f (x(0) 1 ) − f ∗ and d = ⌊log B (n)⌋ represents the diameter of the graphs. Remark 2.2 . Based on the convergence rate in (3) of BTPP, we can derive that when T =Θ( n log 12 (n)) , the term O( 1√nT ) dominates the remaining terms up to a constant scalar. This implies that BTPP achieves linear speedup after O  n log 12 (n) transient iterations. 
+
+Remark 2.3 . The convergence rate in (3) is related to the branch size B. For larger B, the diameter 
+
+d = ⌊log B (n)⌋ becomes smaller, which results in more efficient transmission of information and fewer transient iterations. However, the per-iteration communication cost is relatively larger. When 
+
+B is smaller, the communication burden for each agent at every iteration is lighter, but the transient time is larger. Therefore, in practice, the communication cost and convergence rate can be balanced by considering a proper B.6Theorem 2.4. For the BTPP algorithm outlined in Algorithm 1 implemented on B-ary tree graphs GR and GC , assume Assumption 1.1, Assumption 1.2 and Assumption 1.3 hold. Let 
+
+γ = min 
+
+n 1100 nd 2κL , 16 log( n(T +1) 2) 
+
+> n(T+1) μ
+
+o
+
+and T ≥ 2d. The following convergence result holds: 
+
+E x(T )1 − x∗ 2
+
+≤ 2240 σ2 log( n(T + 1) 2)
+
+n (T + 1) μ2 + 26880000 d6κ2σ2  log( n(T + 1) 2)2
+
+n (T + 1) 2 μ2
+
++ max 
+
+(
+
+exp( − T
+
+800 d2κ2 ), 40 
+
+n (T + 1) 2
+
+) 
+
+x(0) 1 − x∗ 2
+
++ 1
+
+nL 2 ∇F(X(0) ) 2
+
+> F
+
+
+
+.
+
+(4) 
+
+Remark 2.5 . The convergence rate in (4) implies that E x(T )1 − x∗ 2
+
+≤
+
+˜O   1 
+
+> nT
+
++ 1  
+
+> nT 2
+
++ exp ( −T ) , where ˜O hides the constants and polylogarithmic factors. The transient time is thus ˜O(1) , i.e., the number of iterations before the term O( 1 
+
+> nT
+
+) dominates the remaining terms. Such a transient time also outperforms the state-of-the-art results. 
+
+## 3 Analysis of B-ary Tree Push-Pull 
+
+In this section, we study the convergence of BTPP and prove Theorem 2.1 by analyzing the properties of the weight matrices R and C, the evolution of the aggregated consensus error PTt=0 E ΠuX(t) 2 
+
+> F
+
+,and the expected inner products of the stochastic gradients between different layers. The approach is different from those employed in [ 22 , 19 , 26 ], where the analysis considers two special matrix norms related to R and C, respectively. Such a distinction is because BTPP works with two B-ary trees and iterates in a layer-wise manner, while most other works consider connected graphs. Our analysis starts with characterizing the weight matrices R and C, as delineated in the following lemmas. It is important to note that for any given n and a specific integer B, we can determine an integer d satisfying Bd−1 
+
+> B−1
+
+< n ≤ Bd+1 −1 
+
+> B−1
+
+which is the diameter of the graphs. Notice that R has a unique non-negative left eigenvector u⊤ (w.r.t. eigenvalue 1) with u⊤1 =
+
+n. More specifically, u = [ n, 0, · · · , 0] ⊤, which is also the unique right eigenvector of C (w.r.t. eigenvalue 1), denoted by v for the clarity of presentation. Following the above observations, it is revealed in Lemma 3.1 that the 2-norm of the matrix R − 1 
+
+> n
+
+1u ⊤ with exponent k remains bounded by √n and equals zero when k exceeds d − 1.
+
+Lemma 3.1. Given a positive integer k, the 2-norm of the matrix Rk − 1 
+
+> n
+
+1u ⊤ satisfies 
+
+∥R k − 1
+
+n 1u ⊤∥2
+
+≤ √n k ≤ d − 1= 0 k ≥ d
+
+Similar result applies to the matrix Ck − 1 
+
+> n
+
+v1 ⊤. Consequently, we introduce the mixing matrices 
+
+Πu, Πv based on the eigenvectors u, v, which play a crucial role in the follow-up analysis. 
+
+Πu := I − 1
+
+n 1u ⊤, Πv := I − 1
+
+n v1 ⊤.
+
+The following lemmas delineate the critical elements for constraining the average expected norms of the objective function as formulated in (1) , i.e., 1 
+
+> T+1
+
+PTt=0 E ∇f (x(t)1 ) 22
+
+. Lemma 3.2 and Lemma 3.3 provide bounds on the expressions PTt=0 E∥ ¯X(t+1) − ¯X(t)∥2 
+
+> F
+
+and PTt=0 ΠuX(t) 2 
+
+> F
+
+,where ¯X(t) := 1 
+
+> n
+
+1u ⊤X(t).
+
+Lemma 3.2. Suppose Assumption 1.1 holds and γ ≤ 110 ndL , we have the following inequality: 
+
+> T
+
+X
+
+> t=0
+
+E∥ ¯X(t+1) − ¯X(t)∥2 
+
+> F
+
+≤ 6γ2n2σ2(T + 1) + 50 γ2n2d2L2
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
++ 6 γ2n2d ∇F(X(0) ) 2
+
+> F
+
++ 15 γ2n3
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
+.
+
+7Lemma 3.3. Suppose Assumption 1.1 holds and γ ≤ 140 nd 2L , we have for d ≥ 2 that 
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
+≤ 300 γ2n2d4(T + 1) σ2 + 20 γ2n3d2
+
+> T
+
+X
+
+> t=0
+
+E∥∇ f (x(t)1 )∥22
+
++ 6 nd ΠuX(0) 2
+
+> F
+
++ 40 γ2n2d3 ∇F(X(0) ) 2
+
+> F
+
+.
+
+From the design of BTPP, there is an inherent delay in the transmission of information from layer k
+
+to layer 1. As information traverses through the B-ary trees, the delay becomes evident. Specifically, for nodes at layer k, their information requires an additional k iterations to successfully reach and impact node 1, as demonstrated in Lemma 3.4. 
+
+Lemma 3.4. For any integer t > 1, we have 
+
+> min {t,d }
+
+X
+
+> m=1
+
+E
+
+
+
+∇f (x(t)1 ),
+
+ u⊤
+
+n − 1⊤
+
+
+
+Am
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
+
+
+= 0 ,
+
+where Am = Cm − C m−1 and A1 = C − I.
+
+Building on the preceding lemmas, we are in a position to establish the main convergence result for the BTPP algorithm. This involves upper bounding the expected norm for the gradient of the objective function evaluated at x(t)1 . To show the result, we integrate the findings from Lemma 3.2, Lemma 3.3, and Lemma 3.4, as detailed in Lemma 3.5. 
+
+Lemma 3.5. Suppose Assumption 1.1 and Assumption 1.2 hold and γ ≤ 1100 nd 3L , we have 
+
+1
+
+T + 1 
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
+≤ 8∆ f
+
+γn (T + 1) + 24 γσ 2L + 20000 γ2nd 6σ2L2
+
++ 400 d3L2 ΠuX(0) 2
+
+> F
+
+T + 1 + 56 γd 3L ∇F(X(0) ) 2
+
+> F
+
+T + 1 .
+
+Remark 3.6 . Lemma 3.5 implies that the transient time of BTPP under Assumption 1.2 is influenced by the fourth term in the upper bound: 400 d3L2∥ΠuX(0) ∥2  
+
+> F
+> T+1
+
+which is related to the initial consensus error. Therefore, we initialize all the agents with the same solution x(0) .Under strong convexity of f , we have the following key lemma. 
+
+Lemma 3.7. Suppose Assumption 1.1, Assumption 1.2 and Assumption 1.3 hold, and γ ≤ 1100 nd 2κL ,we have 
+
+E x(T )1 − x∗ 2
+
+≤
+
+
+
+1 − nγμ 
+
+4
+
+T
+
+x(0) 1 − x∗ 2
+
++ 7 γ2nσ 2 (T + 1) + 21000 γ3n2d6κLσ 2 (T + 1) + 80 γ2nd 3 
+
+1 − nγμ 
+
+4
+
+T −d
+
+∇F(X(0) ) + 420 γ3n2d3κL ΠuX(0) 2
+
+> F
+
+,
+
+where κ := L/μ is the conditional number. 
+
+## 4 Numerical Results 
+
+This section presents experimental results to compare the B-ary Tree Push-Pull method with other popular algorithms on logistic regression with synthetic data and deep learning tasks with real data. 
+
+4.1 Logistic Regression 
+
+We compare the performance of BTPP against other algorithms listed in Table 1 for logistic regression with non-convex regularization [26]. The objective functions fi : Rp → R are given by 
+
+fi(x) := 1
+
+J
+
+> J
+
+X
+
+> j=1
+
+ln  1 + exp( −yi,j h⊤ 
+
+> i,j
+
+x) + R
+
+> p
+
+X
+
+> k=1
+
+x2[k]
+
+1 + x2[k]
+
+,
+
+8where x[k] is the k-th element of x, and {(hi,j , y i,j )}Jj=1 represent the local data kept by node i.To control the data heterogeneity across the nodes, we first let each node i be associated with a local logistic regression model with parameter ˜xi generated by ˜xi = ˜ x + vi, where ˜x ∼ N (0 , Ip)
+
+is a common random vector, and vi ∼ N (0 , σ 2
+
+> h
+
+Ip) are random vectors generated independently. Therefore, {vi} decide the dissimilarities between ˜xi, and larger σh generally amplifies the difference. After fixing {˜xi}, local data samples are generated that follow distinct distributions. For node i, the feature vectors are generated as hi,j ∼ N (0 , Ip), and zi,j ∼ U (0 , 1) . Then, the labels yi,j ∈ {− 1, 1}
+
+are set to satisfy zi,j ≤ 1 + exp( −yi,j h⊤ 
+
+> i,j
+
+˜xi).In the simulations, the parameters are set as follows: n = 100 , p = 500 , J = 1000 , R = 0 .01 , and 
+
+σh = 0 .8. All the algorithms initialize with the same stepsize γ = 0 .3, except BTPP, which employs a modified stepsize γ/n . Such an adjustment is due to BTPP’s update mechanism, which incorporates a tracking estimator that effectively accumulates n times the averaged stochastic gradients as the number of iterations increases. This can also be seen from the stepsize choice in Theorem 2.1. 2
+
+Additionally, we implement a stepsize decay of 60% every 100 iterations to facilitate convergence. In Figure 2, the gradient norm is used as a metric to gauge the algorithmic performance of each algorithm. The left panel of Figure 2 illustrates the comparative performance of various algorithms, highlighting that BTPP (in red) achieves faster convergence than the other algorithms with Θ(1) 
+
+degree and closely approximates the performance of the centralized SGD algorithm (i.e., DSGD-FullyConnected). The right panel of Figure 2 demonstrates the behavior of BTPP when increasing the branch size B. It is observed that with larger B, the convergence trajectory of BTPP more closely aligns with that of centralized SGD, corroborating the prediction of the theoretical analysis. 
+
+Figure 2: Left: performance of algorithms for logistic regression with nonconvex regularization, where the dotted lines correspond to algorithms whose degrees are not Θ(1) . We let the branch size 
+
+B = 2 in BTPP, η = 0 .5 in OD-EquiDyn, k = 2 in Base-( k + 1 ), and perform RelaySGD on a binary tree graph for fairness. Right: performance of BTPP with different branch size B.
+
+4.2 Deep Learning 
+
+We apply BTPP and the other algorithms to solve the image classification task with CNN over 
+
+MNIST dataset [ 11 ]. We run all experiments on a server with eight Nvidia RTX 3090 GPUs. The network contains two convolutional layers with max pooling and ReLu and two feed-forward layers. In particular, we consider a heterogeneous data setting, where data samples are sorted based on their labels and partitioned among the agents. The local batch size is set to 8 with 24 agents in total. The learning rate is 0.01 for all the algorithms except BTPP (which employs a modified stepsize γ/n )for fairness. Additionally, the starting model is enhanced by pre-training using the SGD optimizer on the entire MNIST dataset for several iterations. Figure 3 illustrates the training loss and the test accuracy curves. Comparing the performance of different algorithms, it can be seen that BTPP (in red) and DSGT with ODEquiDyn (based on Θ( n) graphs) achieve faster convergence than the  
+
+> 2Note that this particular configuration results in slower convergence for BTPP during the initial O(d)
+> iterations, which can be improved by using larger initial stepsizes.
+
+9other algorithms with Θ(1) degree and closely approximate the performance of centralized SGD(i.e., DSGD-FullyConnected). 
+
+Figure 3: Train loss and test accuracy of different algorithms for training CNN on MNIST, where the dotted lines correspond to the algorithms whose degrees are not Θ(1) . We perform BTPP with 
+
+B = 2 , ODEquiDyn with η = 0 .5, Base-( k + 1 ) with k = 2 , and RelaySGD on a binary tree graph for fairness. 
+
+Remark 4.1 . Higher accuracy can be achieved for BTPP and other methods when using the momentum technique, or when the data heterogeneity is removed, meaning that samples are randomly assigned to each agent. Additional experiments demonstrating the performance of various algorithms across different tasks and scenarios are provided in Appendix B. 
+
+## 5 Conclusions 
+
+This paper proposes a novel algorithm for distributed learning over heterogeneous data, named BTPP. The convergence is theoretically analyzed for smooth non-convex stochastic optimization. The results demonstrate that, at the minimal communication cost per iteration, BTPP achieves linear speedup in the number of nodes n, and the transient times behaves as ˜O(n) and ˜O(1) respectively for smooth nonconvex and strongly convex objectives, outperforming the state-of-the-art results. Numerical experiments further validate the efficiency of BTPP. 10 References 
+
+[1] M. A SSRAN , N. L OIZOU , N. B ALLAS , AND M. R ABBAT , Stochastic gradient push for distributed deep learning , in International Conference on Machine Learning, PMLR, 2019, pp. 344–353. [2] L. B OTTOU , Stochastic gradient descent tricks , in Neural Networks: Tricks of the Trade: Second Edition, Springer, 2012, pp. 421–436. [3] J. D EAN , G. C ORRADO , R. M ONGA , K. C HEN , M. D EVIN , M. M AO , M. R ANZATO ,A. S ENIOR , P. T UCKER , K. Y ANG , ET AL ., Large scale distributed deep networks , Advances in neural information processing systems, 25 (2012). [4] L. D ING , K. J IN , B. Y ING , K. Y UAN , AND W. Y IN , Dsgd-ceca: Decentralized sgd with communication-optimal exact consensus algorithm , arXiv preprint arXiv:2306.00256, (2023). [5] I. G OODFELLOW , J. P OUGET -A BADIE , M. M IRZA , B. X U, D. W ARDE -F ARLEY , S. O ZAIR ,A. C OURVILLE , AND Y. B ENGIO , Generative adversarial nets , Advances in neural information processing systems, 27 (2014). [6] D. P. K INGMA , M. W ELLING , ET AL ., An introduction to variational autoencoders , Founda-tions and Trends® in Machine Learning, 12 (2019), pp. 307–392. [7] J. P. K LEIJNEN , Design and analysis of simulation experiments , Springer, 2018. [8] A. K OLOSKOVA , T. L IN , AND S. U. S TICH , An improved analysis of gradient tracking for decentralized machine learning , Advances in Neural Information Processing Systems, 34 (2021), pp. 11422–11435. [9] A. K OLOSKOVA , N. L OIZOU , S. B OREIRI , M. J AGGI , AND S. S TICH , A unified theory of decentralized sgd with changing topology and local updates , in International Conference on Machine Learning, PMLR, 2020, pp. 5381–5393. [10] A. K OLOSKOVA , S. S TICH , AND M. J AGGI , Decentralized stochastic optimization and gossip algorithms with compressed communication , in International Conference on Machine Learning, PMLR, 2019, pp. 3478–3487. [11] Y. L ECUN , C. C ORTES , C. B URGES , ET AL ., Mnist handwritten digit database , 2010. [12] M. L I, D. G. A NDERSEN , J. W. P ARK , A. J. S MOLA , A. A HMED , V. J OSIFOVSKI , J. L ONG ,E. J. S HEKITA , AND B.-Y. S U, Scaling distributed machine learning with the parameter server ,in 11th USENIX Symposium on operating systems design and implementation (OSDI 14), 2014, pp. 583–598. [13] Z. L I, W. S HI , AND M. Y AN , A decentralized proximal-gradient method with network indepen-dent step-sizes and separated convergence rates , IEEE Transactions on Signal Processing, 67 (2019), pp. 4494–4506. [14] X. L IAN , C. Z HANG , H. Z HANG , C.-J. H SIEH , W. Z HANG , AND J. L IU , Can decentralized algorithms outperform centralized algorithms? a case study for decentralized parallel stochastic gradient descent , Advances in neural information processing systems, 30 (2017). [15] T. P. L ILLICRAP , J. J. H UNT , A. P RITZEL , N. H EESS , T. E REZ , Y. T ASSA , D. S ILVER , 
+
+> AND
+
+D. W IERSTRA , Continuous control with deep reinforcement learning , arXiv preprint arXiv:1509.02971, (2015). [16] T. L IN , S. P. K ARIMIREDDY , S. U. S TICH , AND M. J AGGI , Quasi-global momentum: Accel-erating decentralized deep learning on heterogeneous data , arXiv preprint arXiv:2102.04761, (2021). [17] V. M NIH , K. K AVUKCUOGLU , D. S ILVER , A. G RAVES , I. A NTONOGLOU , D. W IER -
+
+> STRA
+
+, AND M. R IEDMILLER , Playing atari with deep reinforcement learning , arXiv preprint arXiv:1312.5602, (2013). 11 [18] A. N EDI ´ C, A. O LSHEVSKY , AND M. G. R ABBAT , Network topology and communication-computation tradeoffs in decentralized optimization , Proceedings of the IEEE, 106 (2018), pp. 953–976. [19] S. P U AND A. N EDI ´ C, Distributed stochastic gradient tracking methods , Mathematical Pro-gramming, 187 (2021), pp. 409–457. [20] S. P U, A. O LSHEVSKY , AND I. C. P ASCHALIDIS , Asymptotic network independence in distributed stochastic optimization for machine learning: Examining distributed and centralized stochastic gradient descent , IEEE signal processing magazine, 37 (2020), pp. 114–122. [21] S. P U, A. O LSHEVSKY , AND I. C. P ASCHALIDIS , A sharp estimate on the transient time of distributed stochastic gradient descent , IEEE Transactions on Automatic Control, 67 (2021), pp. 5900–5915. [22] S. P U, W. S HI , J. X U, AND A. N EDI ´ C, Push–pull gradient methods for distributed optimization in networks , IEEE Transactions on Automatic Control, 66 (2020), pp. 1–16. [23] B. R ECHT , C. R E, S. W RIGHT , AND F. N IU , Hogwild!: A lock-free approach to parallelizing stochastic gradient descent , Advances in neural information processing systems, 24 (2011). [24] S. R ESNICK , A probability path , Springer, 2019. [25] W. S HI , Q. L ING , G. W U, AND W. Y IN , Extra: An exact first-order algorithm for decentralized consensus optimization , SIAM Journal on Optimization, 25 (2015), pp. 944–966. [26] Z. S ONG , W. L I, K. J IN , L. S HI , M. Y AN , W. Y IN , AND K. Y UAN , Communication-efficient topologies for decentralized learning with o(1) consensus rate , Advances in Neural Information Processing Systems, 35 (2022), pp. 1073–1085. [27] N. S RIVASTAVA , G. H INTON , A. K RIZHEVSKY , I. S UTSKEVER , AND R. S ALAKHUTDINOV ,
+
+Dropout: a simple way to prevent neural networks from overfitting , The journal of machine learning research, 15 (2014), pp. 1929–1958. [28] Y. T AKEZAWA , R. S ATO , H. B AO , K. N IWA , AND M. Y AMADA , Beyond exponential graph: Communication-efficient topologies for decentralized learning via finite-time convergence , arXiv preprint arXiv:2305.11420, (2023). [29] H. T ANG , X. L IAN , M. Y AN , C. Z HANG , AND J. L IU , dΘ2: Decentralized training over decentralized data , in International Conference on Machine Learning, PMLR, 2018, pp. 4848– 4856. [30] L. T REVISAN , Lecture notes on graph partitioning, expanders and spectral methods , University of California, Berkeley, https://people. eecs. berkeley. edu/luca/books/expanders-2016. pdf, (2017). [31] T. V OGELS , L. H E, A. K OLOSKOVA , S. P. K ARIMIREDDY , T. L IN , S. U. S TICH , AND 
+
+M. J AGGI , Relaysum for decentralized deep learning on heterogeneous data , Advances in Neural Information Processing Systems, 34 (2021), pp. 28004–28015. [32] L. X IAO AND S. B OYD , Fast linear iterations for distributed averaging , Systems & Control Letters, 53 (2004), pp. 65–78. [33] R. X IN AND U. A. K HAN , A linear algorithm for optimization over directed graphs with geometric convergence , IEEE Control Systems Letters, 2 (2018), pp. 315–320. [34] B. Y ING , K. Y UAN , Y. C HEN , H. H U, P. P AN , AND W. Y IN , Exponential graph is provably efficient for decentralized deep training , Advances in Neural Information Processing Systems, 34 (2021), pp. 13975–13987. [35] K. Y UAN , S. A. A LGHUNAIM , AND X. H UANG , Removing data heterogeneity influence enhances network topology dependence of decentralized sgd , Journal of Machine Learning Research, 24 (2023), pp. 1–53. 12 A Convergence Analysis of BTPP 
+
+In this section, we aim to demonstrate the convergence results of BTPP through a three-step process. First, we explore the key properties of matrices R and C, acquainting readers with several operations that will be frequently utilized in the subsequent parts. Then, we introduce various technical tools essential for the analysis. Finally, we delve into proving the convergence results supported by a series of pertinent lemmas. 
+
+A.1 Properties of the Weight Matrices 
+
+In this part, we first demonstrate that R ∈ Rn×n possesses a set of properties ( the matrix C = R⊤
+
+shares similar properties). Then, we utilize the established tools to prove the crucial result presented in Lemma 3.1. Lastly, we provide clarifications on certain matrix operations that will be frequently employed in deriving the convergence results. It is important to note that for any given n and specific integer B, the diameter of the corresponding B-ary tree graph d (the distance from the last layer node to node 1) satisfies Bd−1 
+
+> B−1
+
+< n ≤ Bd+1 −1 
+
+> B−1
+
+.To investigate the properties of R and C, we will introduce the column vector eI ∈ Rn, where each element of eI is equal to 1 for indices i ∈ I and 0 otherwise. Define the index sets 
+
+I1,k =
+
+
+
+1 : Bk+1 − 1
+
+B − 1
+
+
+
+,
+
+Ii,k =
+
+ Bk+1 − 1
+
+B − 1 + ( i − 2) Bk + 1 
+
+
+
+:
+
+ Bk+1 − 1
+
+B − 1 + ( i − 1) Bk
+
+ 
+
+,
+
+where k1 : k2 is the arithmetic progression from k1 to k2 with difference 1. We can then define the matrix Zk ∈ Rn×n as a composite of several column vectors arranged in the following format: 
+
+Zk = eI1,k , eI2,k , · · · , eIn,k 
+
+ .
+
+This closed-form expression of R with any power k is shown in Lemma A.1 which aids in developing further properties. 
+
+Lemma A.1. For the pull matrix R corresponding to the B-ary tree GR, given any positive index k,we have 
+
+Rk = Zk.
+
+Proof. We prove the lemma by induction. First, it is obvious that R = Z1 by the definition of R:
+
+Rij = 1 
+
+iff i ∈ { Bj + 1 − B + [ B]} ∩ [n] or i = j = 1 
+
+iff B(j − 1) + 2 ≤ i ≤ Bj + 1 , i ∈ [n] or i = j = 1 
+
+iff [Z1]ij = 1 .
+
+Now assume the statement is true for k = j. Then, for k = j + 1 , we have 
+
+Rj+1 = Rj ∗ R = Zj Z1.
+
+Denote [Zj · Z1]i as the i-th column of Zj · Z1. To establish the result, we only need to demonstrate that the two matrices, Rk+1 and Zk+1 , have the same column entries. For i = 1 ,
+
+[Zj Z1]1 = Zj [Z1]1 =
+
+> B+1
+
+X
+
+> i=1
+
+[Zj ]i =
+
+> B+1
+
+X
+
+> i=1
+
+eIi,j = e∪B+1   
+
+> i=1 Ii,j
+
+= eI1,j +1 .
+
+For i > 1, we have 
+
+[Zj Z1]i = Zj [Z1]i = X
+
+> m∈I i, 1
+
+[Zj ]m =
+
+> iB +1
+
+X
+
+> m=( i−1) B+2
+
+[Zj ]m
+
+=
+
+> iB −1
+
+X
+
+> m=( i−1) B
+
+eIm,j = e∪iB −1  
+
+> m=( i−1) BIm,j
+
+= eIi,j +1 .
+
+Thus, we conclude that Rk+1 = Zk+1 .13 Corollary A.2 below reveals that when the power k exceeds d, Rk transforms into a matrix where the first column is entirely composed of ones, while all the other columns consist of zeros. 
+
+Corollary A.2. For k = d, we have 
+
+Rk − 1
+
+n 1u ⊤ = 0
+
+where 0 is the matrix with all entries equal 0. Proof. From Lemma A.1, we have for the i-th column of Rk − 1 
+
+> n
+
+1u ⊤ that 
+
+
+
+Rk − 1
+
+n 1u ⊤
+
+
+
+> i
+
+=
+
+(−e Bk+1 −1  
+
+> B−1+1: n
+
+i = 1 
+
+eIi,k i > 1
+
+For k = d, the first n elements of all the columns remain 0, which implies the desired result. Now, we are ready to prove Lemma 3.1: 
+
+Proof of Lemma 3.1. For any integer k ≤ d − 1, define 
+
+n0 := 
+
+$ n − Bk+1 −1
+
+> B−1
+
+Bk
+
+%
+
+.
+
+This ensures that Bk+1 −1 
+
+> B−1
+
++ n0Bk ≤ n and Bk+1 −1 
+
+> B−1
+
++ ( n0 + 1) Bk > n , so that only the first 
+
+(n0 + 2) -th columns of Rk consist of non-zero elements. Note that 
+
+max 
+
+> ∥x∥2=1
+
+
+
+∥
+
+
+
+Rk − 1
+
+n 1u ⊤
+
+
+
+x∥22
+
+
+
+= max 
+
+> x
+
+( ∥  Rk − 1 
+
+> n
+
+1u ⊤ x∥22
+
+∥x∥22
+
+)
+
+.
+
+Then, we focus on the non-zero elements of the matrix Rk − 1 
+
+> n
+
+1u ⊤.
+
+∥  Rk − 1 
+
+> n
+
+1u ⊤ x∥22
+
+∥x∥22
+
+= 1
+
+∥x∥22
+
+
+
+> n0+1
+
+X
+
+> j=2
+
+Bk(xj − x1)2 +
+
+
+
+n − Bk+1 − 1
+
+B − 1 − Bkn0
+
+
+
+(xn0+2 − x1)2
+
+
+
+:= ˜x⊤Σ˜ x
+
+∥x∥2 ,
+
+where ˜x = ( x1, · · · , x n0+2 ) is the truncated x, and 
+
+Σ = 
+
+
+
+n − Bk+1 −1 
+
+> B−1
+
+−Bk · · · −
+
+h
+
+n − Bk+1 −1 
+
+> B−1
+
+− Bkn0
+
+i
+
+−Bk Bk
+
+... . . .
+
+−
+
+h
+
+n − Bk+1 −1 
+
+> B−1
+
+− Bkn0
+
+i h
+
+n − Bk+1 −1 
+
+> B−1
+
+− Bkn0
+
+i
+
+,
+
+where the unspecified elements are all zeros. Since Σ is symmetric, all the eigenvalues are real. We show by contradiction that any eigenvalue λ of Σ is upper bounded by n. Otherwise, if there exists 
+
+λ > n , we denote x as the corresponding eigenvector of λ. Then, we have from Σx = λx that 
+
+λx 1 =
+
+
+
+n − Bk+1 − 1
+
+B − 1
+
+
+
+x1 − Bkx2 − · · · − 
+
+
+
+n − Bk+1 − 1
+
+B − 1 − Bkn0
+
+
+
+xn0+2 
+
+λx 2 = −Bkx1 + Bkx2
+
+λx 3 = −Bkx1 + Bkx3
+
+· · · 
+
+λx n0+2 = −
+
+
+
+n − Bk+1 − 1
+
+B − 1 − Bkn0
+
+
+
+x1 +
+
+
+
+n − Bk+1 − 1
+
+B − 1 − Bkn0
+
+
+
+xn0+2 .
+
+14 Without loss of generality, assume x1̸ = 0 . Then, by substituting the other relations into the first one, we have 
+
+λ = n − Bk+1 − 1
+
+B − 1 +
+
+> n0
+
+X
+
+> i=1
+
+B2k
+
+λ − Bk +
+
+h
+
+n − Bk+1 −1 
+
+> B−1
+
+− Bkn0
+
+i2
+
+λ −
+
+h
+
+n − Bk+1 −1 
+
+> B−1
+
+− Bkn0
+
+i .
+
+With the fact that λ > n , there holds 
+
+λ ≤n − Bk+1 − 1
+
+B − 1 + n0B2k
+
+n − Bk +
+
+h
+
+n − Bk+1 −1 
+
+> B−1
+
+− Bkn0
+
+i2
+
+n −
+
+h
+
+n − Bk+1 −1 
+
+> B−1
+
+− Bkn0
+
+i
+
+=n − Bk+1 − 1
+
+B − 1 + n0B2k
+
+n − Bk + n2 
+
+> Bk+1 −1
+> B−1
+
++ Bkn0
+
+− 2n + Bk+1 − 1
+
+B − 1 + Bkn0
+
+= nB kn0
+
+n − Bk +
+
+n
+
+
+
+n − Bk+1 −1 
+
+> B−1
+
+− Bkn0
+
+ 
+
+> Bk+1 −1
+> B−1
+
++ Bkn0
+
+≤ nB kn0
+
+n − Bk + nn − Bk
+
+
+
+n − Bk+1 − 1
+
+B − 1 − Bkn0
+
+
+
+=n n − Bk+1 −1
+
+> B−1
+
+n − Bk < n, 
+
+which is a contradiction. Thus, we have λ ≤ n. It follows that 
+
+˜x⊤Σ˜ x
+
+∥x∥2 ≤ ˜x⊤Σ˜ x
+
+∥˜x∥2 ≤ λmax (Σ) ≤ n. 
+
+From the fact that the square root function is monotonically increasing on [0 , ∞), we have 
+
+∥R k − 1
+
+n 1u ⊤∥22 = max 
+
+> ∥x∥2=1
+
+
+
+∥
+
+
+
+Rk − 1
+
+n 1u ⊤
+
+
+
+x∥22
+
+
+
+≤ n, 
+
+which implies that ∥R k − 1 
+
+> n
+
+1u ⊤∥2 ≤ √n for k ≤ d − 1 and ∥R k − 1 
+
+> n
+
+1u ⊤∥2 = 0 otherwise by Corollary A.2. The transformations described in Corollary A.3 below are straightforward. 
+
+Corollary A.3. For any integer m > 0, we have 
+
+ΠuR = Πu
+
+
+
+R − 1
+
+n 1u ⊤
+
+
+
+=
+
+
+
+R − 1
+
+n 1u ⊤
+
+
+
+Πu,
+
+ΠuRm = Πu
+
+
+
+Rm − 1
+
+n 1u ⊤
+
+
+
+= Πu
+
+
+
+R − 1
+
+n 1u ⊤
+
+m
+
+=
+
+
+
+R − 1
+
+n 1u ⊤
+
+m
+
+Πu.
+
+To simplify the convergence analysis, we introduce the matrix Ai defined as follows: 
+
+Ai = Ci − C i−1
+
+for i = 1 , 2, · · · , d . Specifically, A1 = C − I. Consequently, Corollary A.4 below can be directly deduced from Lemma A.1 and Corollary A.3. 
+
+Corollary A.4. For i = 1 , · · · , d , we have 
+
+ u⊤
+
+n − 1⊤
+
+
+
+Ai =
+
+
+
+e⊤  
+
+> Bi−1
+> B−1+1: Bi+1 −1
+> B−1
+
+i ≤ d − 1
+
+e⊤  
+
+> Bd−1
+> B−1+1: n
+
+i = d
+
+Intuitively, Corollary A.4 illustrates that 
+
+ u⊤ 
+
+> n
+
+− 1⊤
+
+
+
+Ai serves as an indicator vector representing the (i + 1) -th layer of the graph. 15 A.2 Supporting Inequalities and Lemmas 
+
+Lemma A.5 and Lemma A.6 below are frequently employed for bounding the norms of matrix summations and multiplications. Their proofs rely on the Cauchy-Schwartz inequality and the definitions of matrix norms ∥ · ∥ 2 and ∥ · ∥ F .
+
+Lemma A.5. For an arbitrary set of m matrices {Ai}mi=1 with the same size, we have 
+
+> m
+
+X
+
+> i=1
+
+Ai
+
+> 2
+> F
+
+≤ m
+
+> m
+
+X
+
+> i=1
+
+∥Ai∥2 
+
+> F
+
+.
+
+Proof. By the definition of Frobenius norm, we have 
+
+> m
+
+X
+
+> i=1
+
+Ai
+
+> F
+
+≤
+
+> m
+
+X
+
+> i=1
+
+∥Ai∥F .
+
+Taking squares on both sides and invoking the Cauchy-Schwarz inequality, we have 
+
+> m
+
+X
+
+> i=1
+
+Ai
+
+> 2
+> F
+
+≤
+
+> m
+
+X
+
+> i=1
+
+∥Ai∥F
+
+!2
+
+≤ m
+
+> m
+
+X
+
+> i=1
+
+∥Ai∥2 
+
+> F
+
+.
+
+Lemma A.6. Let A, B be two real matrices whose sizes match. Then, 
+
+∥AB ∥F ≤ ∥ A∥2 ∥B∥F .
+
+Proof. Let A = UΣVH be the singular value decomposition of A, with the largest singular value 
+
+σmax and hence ∥A∥2 = σmax . Then, we have 
+
+∥AB ∥2 
+
+> F
+
+= UΣVH B 2 
+
+> F
+
+= trace 
+
+ UΣVH BH  UΣVH B
+
+= trace 
+
+ ΣVH BH  ΣVH B
+
+= ΣVH B 2
+
+> F
+
+≤ σ2max ∥VH B∥2 
+
+> F
+
+= σ2max trace  B⊤VV H B
+
+= σ2max trace  B⊤B = σ2max ∥B∥2
+
+> F
+
+= ∥A∥22 ∥B∥2 
+
+> F
+
+,
+
+which implies the desired result. Lemma A.7 below will be used in the last step for deriving the convergence rate of BTPP. 
+
+Lemma A.7. Let A, B, C and α be positive constants and T be a positive integer. Define function 
+
+g(γ) = Aγ(T + 1) + Bγ + Cγ 2.
+
+Then, 
+
+inf   
+
+> γ∈(0 ,1
+> α]
+
+g(γ) ≤ 2
+
+ AB T + 1 
+
+ 12
+
++ 2 C 13
+
+ AT + 1 
+
+ 23
+
++ αA T + 1 ,
+
+where the upper bound can be achieved by choosing γ = min 
+
+ AB(T +1) 
+
+ 12
+
+,
+
+ AC(T +1) 
+
+ 13
+
+, 1
+
+> α
+
+
+
+.Proof. See Lemma 26 in [8] for a reference. Lemma A.8 is a technical result related to random variables. 
+
+Lemma A.8. Consider three random variables X, Y , and Z. Assume that Z is independent with 
+
+(X, Y ). Let h and g be functions such that the conditional expectation E[g(Y, Z ) | Y ] = 0 . We have 
+
+E (h(X)g(Y, Z )) = 0 .
+
+16 Proof. It implies by the condition Z ⊥⊥ (X, Y ) that σ(Z) ⊥⊥ σ(X, Y ). Then, 
+
+E [h(X)g(Y, Z )|Y ] = E {E [h(X)g(Y, Z )|X, Y ] |Y }
+
+= E {h(X)E [g(Y, Z )|X, Y ] |Y } .
+
+It suffices to show 
+
+E [g(Y, Z )|X, Y ] = E [g(Y, Z )|Y ] (= 0) .
+
+Let fg (y) = E (g(y, Z )) . Since σ(Z) ⊥⊥ σ(X, Y ), we have σ(Z) ⊥⊥ σ(Y ). Then, 
+
+fg (Y ) = E (g(Y, Z )|Y ) = E [g(Y, Z )|X, Y ] ,
+
+which follows directly from (10.17) in [ 24 ]. Thus, by the Tower Rule, we reach the statement as follows: 
+
+E (h(X)g(Y, Z )) = E {E (h(X)g(Y, Z )|Y )} = 0 .
+
+A.3 Proofs of Key Lemmas 
+
+In this section, we prove several key lemmas for proving the main convergence result of BTPP. 
+
+A.3.1 Preparation 
+
+Algorithm 1, as encapsulated by the equations in (2) , can be succinctly expressed in the following matrix form: 
+
+ X(t+1) 
+
+Y(t+1) 
+
+
+
+=
+
+ R −γR
+
+0 C
+
+  X(t)
+
+Y(t)
+
+
+
++
+
+ 0G(t+1) − G(t)
+
+
+
+. (5) By repeatedly applying equation (5) starting from time step t and going back to time step 0, we arrive at the following relation: 
+
+ X(t)
+
+Y(t)
+
+
+
+=
+
+ R −γR
+
+0 C
+
+t  X(0) 
+
+Y(0) 
+
+
+
++
+
+> t−1
+
+X
+
+> m=0
+
+ R −γR
+
+0 C
+
+t−m−1  0G(m+1) − G(m)
+
+
+
+.
+
+For the sake of clarity, we start with introducing some simple definitions. Any matrix raised to the power of 0 is defined as the identity matrix I, which matches the original matrix in dimension. The only exceptions are  R − 1 
+
+> n
+
+1u ⊤0 := Πu and  C − 1 
+
+> n
+
+v1 ⊤0 := Πv for convenience. Furthermore, we introduce the following terms: 
+
+¯X(t) := 1
+
+n 1u ⊤X(t), ¯Y(t) := 1
+
+n v1 ⊤Y(t).
+
+Note that, for any given integer m > 0,
+
+ R −γR
+
+0 C
+
+m
+
+=
+
+ Rm −γ Pmj=1 Rj Cm−j
+
+0 Cm
+
+
+
+.
+
+As a result, given the initial condition Y(0) = G(0) , we can deduce the outcomes of X(t) and Y(t)
+
+as follows. 
+
+X(t) = RtX(0) − γ
+
+> t−2
+
+X
+
+> m=0
+> t−m−1
+
+X
+
+> j=1
+
+Rj Ct−m−1−j h
+
+G(m+1) − G(m)i
+
+− γ
+
+> t
+
+X
+
+> j=1
+
+Rj Ct−j G(0) , (6) 
+
+Y(t) =
+
+> t−1
+
+X
+
+> m=0
+
+Ct−m−1 h
+
+G(m+1) − G(m)i
+
++ CtG(0) . (7) 17 Then, after multiplying Πu and Πv to equation (6) and equation (7) respectively, and invoking Corollary A.3, we have 
+
+ΠuX(t) =
+
+
+
+R − 1
+
+n 1u ⊤
+
+t
+
+X(0) − γ
+
+> min {d−1,t }
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j
+
+Ct−j G(0) 
+
+− γ
+
+> t−2
+
+X
+
+> m=0 min {t−m−1,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j
+
+Ct−m−1−j h
+
+G(m+1) − G(m)i
+
+,
+
+(8) 
+
+ΠvY(t) =
+
+> t−1
+
+X
+
+> m=max {0,t −d}
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−m−1 h
+
+G(m+1) − G(m)i
+
++
+
+
+
+C − 1
+
+n v1 ⊤
+
+t
+
+G(0) 
+
+=
+
+> min {t,d }− 1
+
+X
+
+> m=0
+
+
+
+C − 1
+
+n v1 ⊤
+
+m 
+
+G(t−m) − G(t−m−1) 
+
++
+
+
+
+C − 1
+
+n v1 ⊤
+
+t
+
+G(0) 
+
+=
+
+> min {t,d }
+
+X
+
+> m=1
+
+AmG(t−m) + ΠvG(t).
+
+(9) 
+
+A.3.2 Analysis of the Variance 
+
+Denote by Ft the σ-algebra generated by {ξ0, · · · , ξt−1}, and define E [·|F t] as the conditional expectation given Ft. Lemma A.9 provides an estimate for the variance of the gradient estimator 
+
+G(X(t), ξ(t)).
+
+Lemma A.9. Under Assumption 1.1, for any given power k ≤ d − 1, we have for all t ≥ 0 that 
+
+E
+
+
+
+C − 1
+
+n v1 ⊤
+
+k 
+
+G(X(t), ξ(t)) − ∇ F(X(t))
+
+ 2
+
+> F
+
+| F t
+
+ ≤ 2nσ 2.
+
+Proof. For any given t and i̸ = j, due to the independently drawn sample ξ(t) 
+
+> i
+
+, we have that ξ(t)
+
+> i
+
+is independent of (Ft, ξ (t) 
+
+> j
+
+), and thus ξ(t) 
+
+> i
+
+is independent of σ(x(t) 
+
+> i
+
+, x (t) 
+
+> j
+
+, ξ (t) 
+
+> j
+
+). Hence, invoking Lemma A.8 and Assumption 1.1 yields 
+
+E
+
+
+
+∇F (x(t) 
+
+> i
+
+; ξ(t) 
+
+> i
+
+) − ∇ fi(x(t) 
+
+> i
+
+) x(t)
+
+> i
+
+
+
+= E
+
+
+
+∇F (x(t) 
+
+> i
+
+; ξ(t) 
+
+> i
+
+) − ∇ fi(x(t) 
+
+> i
+
+) Ft
+
+
+
+= 0 ,
+
+E
+
+D
+
+∇F (x(t) 
+
+> i
+
+; ξ(t) 
+
+> i
+
+) − ∇ fi(x(t) 
+
+> i
+
+), ∇F (x(t) 
+
+> j
+
+; ξ(t) 
+
+> j
+
+) − ∇ fj (x(t) 
+
+> j
+
+)
+
+E
+
+= 0 .
+
+Then, for any index set I ⊆ { 1, 2, · · · , n }, we have E∥e⊤I
+
+ G(t) − ∇ F(X(t)) ∥22 ≤ |I| σ2.Notice that 
+
+
+
+C − 1
+
+n v1 ⊤
+
+k 
+
+G(t) − ∇ F(X(t))
+
+ 2
+
+> F
+
+= e Bk+1 −1 
+
+> B−1+1: n
+
+
+
+G(t) − ∇ F(X(t))
+
+ 22
+
++
+
+> n
+
+X
+
+> i=2
+
+eIi,k 
+
+
+
+G(t) − ∇ F(X(t))
+
+ 22
+
+.
+
+Thus, we obtain the desired result by invoking Lemma A.1 and Corollary A.2 after taking expectation on both sides of the above relation: 
+
+E
+
+
+
+C − 1
+
+n v1 ⊤
+
+j 
+
+G(t) − ∇ F(X(t))
+
+ 2
+
+> F
+
+≤ 2
+
+
+
+n − Bk+1 − 1
+
+B − 1
+
+
+
+σ2 ≤ 2nσ 2.
+
+18 Under Assumption 1.1 and the randomly selected samples, Lemma A.9 and Corollary A.10 below provide an initial estimation for the variance terms. The proof of Corollary A.10 is directly from the analysis in Appendix A.3.2 and Corollary A.4. 
+
+Corollary A.10. Under Assumption 1.1, we have for all t ≥ 0 that 
+
+> d
+
+X
+
+> k=1
+
+E∥
+
+ u⊤
+
+n − 1⊤
+
+
+
+Ak
+
+
+
+G(X(t), ξ(t)) − ∇ F(X(t))
+
+
+
+∥22 ≤ (n − 1) σ2.
+
+A.3.3 Proof of Lemma 3.2 
+
+Proof. Notice that 
+
+¯X(t+1) − ¯X(t) = −γ 1
+
+n 1u ⊤Y(t) = −γ 1
+
+n 1u ⊤
+
+
+
+ΠvY(t) + 1
+
+n v1 ⊤Y(t)
+
+
+
+= −γ 1
+
+n 1u ⊤ΠvY(t) − γ11 ⊤Y(t) = −γ1
+
+ u⊤
+
+n − 1⊤
+
+
+
+ΠvY(t) − γ11 ⊤Y(t).
+
+Multiplying 1⊤ on both sides of equation (7) , we have 1⊤Y(t) = 1⊤G(t) for any integer t. Thus, in light of equation (9), we have 
+
+¯X(t+1) − ¯X(t) = −γ1
+
+ u⊤
+
+n − 1⊤
+
+
+
+ΠvY(t) − γ11 ⊤G(t)
+
+= −γ1
+
+ u⊤
+
+n − 1⊤
+
+ min {t,d }
+
+X
+
+> m=1
+
+AmG(t−m) − γ1
+
+ u⊤
+
+n − 1⊤
+
+
+
+G(t) − γ11 ⊤G(t)
+
+= −γ1
+
+ u⊤
+
+n − 1⊤
+
+ min {t,d }
+
+X
+
+> m=1
+
+Am
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
+
+
+− γ1
+
+ u⊤
+
+n − 1⊤
+
+ min {t,d }
+
+X
+
+> m=1
+
+Am∇F(X(t−m)) − γ1 u⊤
+
+n G(t)
+
+= −γ1
+
+ u⊤
+
+n − 1⊤
+
+ min {t,d }
+
+X
+
+> m=1
+
+Am
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
+
+
+− γ1
+
+ u⊤
+
+n − 1⊤
+
+ t−1X
+
+> m=max {0,t −d}
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−m−1 h
+
+∇F(X(m+1) ) − ∇ F(X(m))
+
+i
+
+− γ1
+
+ u⊤
+
+n − 1⊤
+
+  
+
+C − 1
+
+n v1 ⊤
+
+t
+
+∇F(X(0) ) + γ1
+
+ u⊤
+
+n − 1⊤
+
+
+
+∇F(X(t)) − γ1 u⊤
+
+n G(t).
+
+Hence, taking the F-norm and expectation on both sides, we have from Lemma A.5 that 
+
+E∥ ¯X(t+1) − ¯X(t)∥2 
+
+> F
+
+≤ 5γ2nE
+
+> min {t,d }
+
+X
+
+> m=1
+
+ u⊤
+
+n − 1⊤
+
+
+
+Am
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
+ 2
+
+> F
+
++ 5 γ2nE
+
+ u⊤
+
+n − 1⊤
+
+ t−1X
+
+> m=max {0,t −d}
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−m−1 h
+
+∇F(X(m+1) ) − ∇ F(X(m))
+
+i 2
+
+> F
+
++ 5 γ2nE
+
+ u⊤
+
+n − 1⊤
+
+  
+
+C − 1
+
+n v1 ⊤
+
+t
+
+∇F(X(0) )
+
+> 2
+> F
+
++ 5 γ2nE u⊤
+
+n
+
+
+
+∇F(X(t)) − G(t) 2
+
+> F
+
++ 5 γ2nE 1⊤F(X(t)) 2
+
+> F
+
+.
+
+(10) 19 Note that, invoking Lemma A.9 and Corollary A.10 yields 
+
+E
+
+> min {t,d }
+
+X
+
+> m=1
+
+ u⊤
+
+n − 1⊤
+
+
+
+Am
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
+ 2
+
+> F
+
+=
+
+> min {t,d }
+
+X
+
+> m=1
+
+E
+
+ u⊤
+
+n − 1⊤
+
+
+
+Am
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
+ 2
+
+> F
+
+≤(n − 1) σ2.
+
+From Assumption 1.2, Lemma A.6 and Lemma A.5, we have 
+
+E
+
+ u⊤
+
+n − 1⊤
+
+ t−1X
+
+> m=max {0,t −d}
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−m−1 h
+
+∇F(X(m+1) ) − ∇ F(X(m))
+
+i 2
+
+> F
+
+≤d
+
+> t−1
+
+X
+
+> m=max {0,t −d}
+
+E
+
+ u⊤
+
+n − 1⊤
+
+  
+
+C − 1
+
+n v1 ⊤
+
+t−m−1 h
+
+∇F(X(m+1) ) − ∇ F(X(m))
+
+i 2
+
+> F
+
+≤d
+
+> t−1
+
+X
+
+> m=max {0,t −d}
+
+E
+
+ u⊤
+
+n − 1⊤
+
+  
+
+C − 1
+
+n v1 ⊤
+
+t−m−1 22
+
+∇F(X(m+1) ) − ∇ F(X(m)) 2
+
+> F
+
+≤ndL 2
+
+> t−1
+
+X
+
+> m=max {0,t −d}
+
+E X(m+1) − X(m) 2
+
+> F
+
+≤ndL 2
+
+> t−1
+
+X
+
+> m=max {0,t −d}
+
+3
+
+
+
+E X(m+1) − ¯X(m+1) 2
+
+> F
+
++ E X(m) − ¯X(m) 2
+
+> F
+
++ E ¯X(m+1) − ¯X(m) 2
+
+> F
+
+
+
+.
+
+Thus, summing over t in (10) from 0 to T , combining all the inequalities above, and invoking Assumption 1.1 and Assumption 1.2, we have 
+
+> T
+
+X
+
+> t=0
+
+E∥ ¯X(t+1) − ¯X(t)∥2 
+
+> F
+
+≤ 5γ2n(n − 1) σ2(T + 1) + 30 γ2n2d2L2
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
++ 15 γ2n2d2L2
+
+> T
+
+X
+
+> t=0
+
+E ¯X(t+1) − ¯X(t) 2
+
+> F
+
++ 5 γ2n2min {t,d −1}
+
+X
+
+> t=0
+
+E ∇F(X(0) ) 2
+
+> F
+
++ 5 γ2nσ 2(T + 1) + 5 γ2n
+
+> T
+
+X
+
+> t=0
+
+2E 1⊤∇F(X(t)) − 1⊤∇F( ¯X(t)) 22
+
++ 2 n2E 1
+
+n 1⊤∇F( ¯X(t))
+
+> 22
+
+!
+
+≤ 5γ2n2σ2(T + 1) + 40 γ2n2d2L2
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
++ 15 γ2n2d2L2
+
+> T
+
+X
+
+> t=0
+
+E ¯X(t+1) − ¯X(t) 2
+
+> F
+
++ 5 γ2n2d ∇F(X(0) ) 2
+
+> F
+
++ 10 γ2n3
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
+.
+
+(11) Since γ ≤ 110 ndL , we have 15 γ2n2d2L2 ≤ 16 , and the desired result follows. 
+
+A.3.4 Proof of Lemma 3.3 
+
+Proof. We show the upper bound for E ΠuX(t) 2 
+
+> F
+
+by studying equation (8) and bound the F-norm of each term respectively. From Corollary A.2, we can change the power of R − 1 
+
+> n
+
+1u ⊤ to at most 20 d − 2:
+
+ΠuX(t) =( Rt − 1
+
+n 1u ⊤)X(0) − γ
+
+> t−2
+
+X
+
+> m=0 min {t−m−1,d −1}
+
+X
+
+> j=1
+
+(R − 1
+
+n 1u ⊤)j Ct−m−1−j h
+
+G(m+1) − G(m)i
+
+− γ
+
+> min {t,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j
+
+Ct−j G(0) .
+
+(12) Then, we derive the following decomposition by pairing the gradients with each of the stochastic gradients in order to use Assumption 1.1. 
+
+ΠuX(t) =( R⊤ − 1
+
+n 1u ⊤)X(0) − γ
+
+> min {t,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 
+
+C − 1
+
+n v1 ⊤
+
+t−j 
+
+G(0) − ∇ F(X(0) )
+
+
+
+− γ
+
+> min {t,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 1
+
+n v1 ⊤ 
+
+G(0) − ∇ F(X(0) )
+
+
+
+− γ
+
+> min {t,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 
+
+C − 1
+
+n v1 ⊤
+
+t−j
+
+∇F(X(0) )
+
+− γ
+
+> min {t,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 1
+
+n v1 ⊤∇F(X(0) )
+
+− γ
+
+> t−2
+
+X
+
+> m=0 min {t−m−1,d −1}
+
+X
+
+> j=max {1,t −m−d}
+
+(R − 1
+
+n 1u ⊤)j
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−m−1−j
+
+h
+
+G(m+1) − ∇ F(X(m+1) ) + ∇F(X(m)) − G(m)i
+
+− γ
+
+> t−2
+
+X
+
+> m=0 min {t−m−1,d −1}
+
+X
+
+> j=max {1,t −m−d}
+
+(R − 1
+
+n 1u ⊤)j
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−m−1−j h
+
+∇F(X(m+1) ) − ∇ F(X(m))
+
+i
+
+− γ
+
+> t−2
+
+X
+
+> m=0 min {t−m−1,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j v1 ⊤
+
+n
+
+h
+
+G(m+1) − ∇ F(X(m+1) ) + ∇F(X(m)) − G(m)i
+
+− γ
+
+> t−2
+
+X
+
+> m=0 min {t−m−1,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j v1 ⊤
+
+n
+
+h
+
+∇F(X(m+1) ) − ∇ F(X(m))
+
+i
+
+:= 
+
+
+
+R − 1
+
+n 1u ⊤
+
+t
+
+X(0) − γQ0,t, 1 − γQ0,t, 2 − γQ0,t, 3 − γQ0,t, 4
+
+− γQ1,t − γQ2,t − γQ3,t − γQ4,t ,
+
+(13) where the terms from Q0,t, 1 to Q0,t, 4 and from Q1,t to Q4,t correspond to each term following 
+
+ R − 1 
+
+> n
+
+1u ⊤⊤ X(0) one-by-one. We assume that d ≥ 2, since d = 1 makes the summation illegal (summing over j from a positive number to a non-positive number), in which case ΠuX(t) degenerates to (Rt − 1 
+
+> n
+
+1u ⊤)X(0) and hence by Corollary A.2, there is no consensus error, i.e. 
+
+> T
+
+X
+
+> t=0
+
+ΠuX(t) 2
+
+> F
+
+= 0 .
+
+For d ≥ 2, Lemma A.11 - Lemma A.13 below introduce the upper bounds for the F-norms of Q1,t ,
+
+Q2,t and Q3,t + Q0,t, 2, summing from t = 0 to T . Lemma A.14 establishes a similar upper bound for the F-norm of Q0,t, 1 + Q0,t, 3. Furthermore, Lemma A.15 provides the upper bound for the F-norm of Q0,t, 4 + Q4,t .21 Lemma A.11. For any iteration number T , we have 
+
+> T
+
+X
+
+> t=0
+
+E∥Q1,t ∥2 
+
+> F
+
+≤ 32 n2d4(T + 1) σ2.
+
+Proof. To make the summation legal given d ≥ 2, we need d − 1 ≥ t − m − d, which implies that 
+
+m ≥ t + 1 − 2d. Then, 
+
+Q1,t =
+
+> t−2
+
+X
+
+> m=0 min {t−m−1,d −1}
+
+X
+
+> j=max {1,t −m−d}
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 
+
+C − 1
+
+n v1 ⊤
+
+t−m−1−j
+
+h
+
+G(m+1) − ∇ F(X(m+1) ) + ∇F(X(m)) − G(m)i
+
+=
+
+> t−2
+
+X
+
+> m=max {t+1 −2d, 0}
+> min {t−m−1,d −1}
+
+X
+
+> j=max {1,t −m−d}
+
+
+
+R − 1
+
+n 1u ⊤
+
+j
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−m−1−j h
+
+G(m+1) − ∇ F(X(m+1) ) + ∇F(X(m)) − G(m)i
+
+.
+
+Invoking Lemma A.5, Lemma 3.1 and Lemma A.9, we have 
+
+E∥Q1,t ∥2 
+
+> F
+
+≤ 2( d − 1) 2
+
+> t−2
+
+X
+
+> m=max {t+1 −2d, 0}
+> min {t−m−1,d −1}
+
+X
+
+> j=max {1,t −m−d}
+
+E
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 22
+
+·
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−m−1−j h
+
+G(m+1) − ∇ F(X(m+1) ) + ∇F(X(m)) − G(m)i 2
+
+> F
+
+≤ 2n(d − 1) 2
+
+> t−1
+
+X
+
+> m=max {t+1 −2d, 0}
+> min {t−m−1,d −1}
+
+X
+
+> j=max {1,t −m−d}
+
+8nσ 2
+
+≤ 32 n2d4σ2.
+
+Summing over t from 0 to T , we get the desired result. 
+
+Lemma A.12. For any γ ≤ 120 ndL , we have 
+
+> T
+
+X
+
+> t=0
+
+E∥Q2,t ∥2 
+
+> F
+
+≤ 52 n2d4L2
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2 
+
+> F
+
++ 144 γ2n4d4(T + 1) L2σ2
+
++ 360 γ2n5d4L2
+
+> T
+
+X
+
+> t=0
+
+E 1
+
+n ∇F( ¯X(t))
+
+> 22
+
++ 360 γ2n4d5L2 ∇F(X(0) ) 2
+
+> F
+
+.
+
+Proof. Similar to the proof of Lemma A.11, we have 
+
+Q2,t =
+
+> t−1
+
+X
+
+> m=max {t+1 −2d, 0}
+> min {t−m−1,d −1}
+
+X
+
+> j=max {1,t −m−d}
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 
+
+C − 1
+
+n v1 ⊤
+
+t−m−1−j h
+
+∇F(X(m+1) ) − ∇ F(X(m))
+
+i
+
+.
+
+Invoking Lemma A.5 and Assumption 1.2, we obtain 
+
+E∥Q2,t ∥2 
+
+> F
+
+≤ 4n2d3
+
+> t−1
+
+X
+
+> m=max {t+1 −2d, 0}
+
+E
+
+h
+
+∥∇ F(X(m+1) ) − ∇ F(X(m))∥2
+
+> F
+
+i
+
+≤ 4n2d3L2
+
+> t−1
+
+X
+
+> m=max {t+1 −2d, 0}
+
+E X(m+1) − ¯X(m+1) + ¯X(m) − X(m) + ¯X(m+1) − ¯X(m) 2
+
+> F
+
+≤ 24 n2d3L2
+
+> t
+
+X
+
+> m=max {t+1 −2d, 0}
+
+E ΠuX(t) 2
+
+> F
+
++ 12 n2d3L2
+
+> t−1
+
+X
+
+> m=max {t+1 −2d, 0}
+
+E ¯X(m+1) − ¯X(m) 2
+
+> F
+
+.
+
+22 It follows by summing over t from 0 to T and applying Lemma 3.2 that 
+
+> T
+
+X
+
+> t=0
+
+E∥Q2,t ∥2 
+
+> F
+
+≤ 48 n2d4L2
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
++ 24 n2d4L2
+
+> T
+
+X
+
+> t=0
+
+E ¯X(t+1) − ¯X(t) 2
+
+> F
+
+≤  48 n2d4L2 + 1200 γ2n4d6L4 TX
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
++ 144 γ2n4d4(T + 1) L2σ2
+
++ 360 γ2n5d4L2
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
++ 144 γ2n4d5L2 ∇F(X(0) ) 2
+
+> F
+
+.
+
+Hence, under the condition that γ ≤ 120 ndL , there holds 1200 γ2n4(d − 1) 6L4 ≤ 4n2(d − 1) 4L2,which implies the desired result. 
+
+Lemma A.13. For any T , we have 
+
+> T
+
+X
+
+> t=0
+
+E∥Q3,t + Q0,t, 2∥2 
+
+> F
+
+≤ d2n2(T + 1) σ2.
+
+Proof. By definition, we have 
+
+Q3,t + Q0,t, 2 =
+
+> min {t,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 1
+
+n v1 ⊤ 
+
+G(0) − ∇ F(X(0) )
+
+
+
++
+
+> t−2
+
+X
+
+> m=0 min {t−m−1,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j v1 ⊤
+
+n
+
+h
+
+G(m+1) − ∇ F(X(m+1) ) + ∇F(X(m)) − G(m)i
+
+=
+
+> t−1
+
+X
+
+> m=max {t−d, 0}
+
+
+
+R − 1
+
+n 1u ⊤
+
+t−m v1 ⊤
+
+n
+
+h
+
+G(m) − ∇ F(X(m))
+
+i
+
+.
+
+Thus, invoking Lemma A.5 and Lemma 3.1, we have 
+
+E∥Q3,t ∥2 
+
+> F
+
+≤ nd 
+
+> t−1
+
+X
+
+> m=max {t−d, 0}
+
+E∥ v
+
+n ∥22 · ∥ 1⊤ 
+
+G(m+1) − ∇ F(X(m+1) )
+
+
+
+∥2 
+
+> F
+
+≤ d2n2σ2.
+
+After summing over t from 0 to T , we get the desired result. 
+
+Lemma A.14. For any T , we have 
+
+> T
+
+X
+
+> t=0
+
+E ∥Q0,t, 1 + Q0,t, 3∥2 
+
+> F
+
+≤ 4n2d3σ2 + 4 n2d3 ∇F(X(0) ) 2
+
+> F
+
+.
+
+Proof. Note that 
+
+∥Q0,t, 1 + Q0,t, 3∥2 
+
+> F
+
+≤ 2 ∥Q0,t, 1∥2 
+
+> F
+
++ 2 ∥Q0,t, 3∥2 
+
+> F
+
+.
+
+We show the upper bounds for PTt=0 ∥Q0,t,i ∥2 
+
+> F
+
+, where i = 1 , 3 respectively. Based on Corollary A.2, Lemma A.5 and Lemma A.9, we have the following result: 
+
+∥Q0,t, 1∥2 
+
+> F
+
+=
+
+> min {t,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 
+
+C − 1
+
+n v1 ⊤
+
+t−j 
+
+G(0) − ∇ F(X(0) )
+
+ 2
+
+> F
+
+=
+
+> min {t,d −1}
+
+X
+
+> j=max {1,t −d+1 }
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 
+
+C − 1
+
+n v1 ⊤
+
+t−j 
+
+G(0) − ∇ F(X(0) )
+
+ 2
+
+> F
+
+≤ nd 
+
+> min {t,d −1}
+
+X
+
+> j=max {1,t −d+1 }
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−j 
+
+G(0) − ∇ F(X(0) )
+
+ 2
+
+> F
+
+.
+
+23 Then, recall that the summation is legal only when t ≤ 2( d − 2) . We have 
+
+> T
+
+X
+
+> t=0
+
+E ∥Q0,t, 1∥2 
+
+> F
+
+≤
+
+> min {T, 2( d−2) }
+
+X
+
+> t=0
+
+nd 
+
+> min {t,d −1}
+
+X
+
+> j=max {1,t −d+1 }
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−j 
+
+G(0) − ∇ F(X(0) )
+
+ 2
+
+> F
+
+≤ 2n2d3σ2.
+
+Similarly, 
+
+> ⊤
+
+X
+
+> t=0
+
+E ∥Q0,t, 3∥2
+
+> F
+
+≤
+
+> min {T, 2( d−1) }
+
+X
+
+> t=0
+
+d
+
+> min {t,d −1}
+
+X
+
+> j=max {1,t −d+1 }
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 22
+
+
+
+C − 1
+
+n v1 ⊤
+
+t−j 22
+
+∇F(X(0) ) 2
+
+> F
+
+≤ 2n2d3 ∇F(X(0) ) 2
+
+> F
+
+.
+
+Combining the above upper bounds leads to the final result. 
+
+Lemma A.15. For any T , we have 
+
+> T
+
+X
+
+> t=0
+
+E ∥Q0,t, 4 + Q4,t ∥2 
+
+> F
+
+≤ 2n2d2L2
+
+> T
+
+X
+
+> t=0
+
+E∥ΠuX(t)∥2 
+
+> F
+
++ 2 n3d2
+
+> T
+
+X
+
+> t=0
+
+E∥f (x(m)1 )∥22.
+
+Proof. Note that 
+
+Q0,t, 4 + Q4,t =
+
+> t−2
+
+X
+
+> m=0 min {t−m−1,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j v1 ⊤
+
+n
+
+h
+
+∇F(X(m+1) ) − ∇ F(X(m))
+
+i
+
++
+
+> min {t,d −1}
+
+X
+
+> j=1
+
+
+
+R − 1
+
+n 1u ⊤
+
+j 1
+
+n v1 ⊤∇F(X(0) )=
+
+> t−1
+
+X
+
+> m=max {t−d, 0}
+
+
+
+R − 1
+
+n 1u ⊤
+
+t−m v1 ⊤
+
+n ∇F(X(m)),
+
+where the last equality comes from extending the summation in the first line and telescoping the summation. Consequently, we have 
+
+Q0,t, 4 + Q4,t =
+
+> t−1
+
+X
+
+> m=max {t−d, 0}
+
+
+
+R − 1
+
+n 1u ⊤
+
+t−m v1 ⊤
+
+n
+
+
+
+∇F(X(m)) − ∇ F( ¯X(m)) + ∇F( ¯X(m))
+
+
+
+.
+
+Then, taking the F-norm on both sides and invoking Lemma A.6, Lemma A.5 and Lemma 3.2 as before, we have 
+
+∥Q0,t, 4 + Q4,t ∥2 
+
+> F
+
+≤ dn 
+
+> t−1
+
+X
+
+> m=max {t−d, 0}
+
+
+
+2∥ v1 ⊤
+
+n
+
+h
+
+∇F(X(m)) − ∇ F( ¯X(m))
+
+i
+
+∥2 
+
+> F
+
++ 2 ∥ v1 ⊤
+
+n ∇F( ¯X(m))∥2
+
+> F
+
+
+
+≤ 2dn 2L2
+
+> t−1
+
+X
+
+> m=max {t−d, 0}
+
+∥ΠuX(m)∥2 
+
+> F
+
++ 2 dn 3
+
+> t−1
+
+X
+
+> m=max {t−d, 0}
+
+∥∇ f (x(m)1 )∥22.
+
+Taking expectation on both sides and summing over t from 0 to T , we get 
+
+> T
+
+X
+
+> t=0
+
+E ∥Q0,t, 4 + Q4,t ∥2 
+
+> F
+
+≤ 2n2d2L2
+
+> T
+
+X
+
+> t=0
+
+E∥ΠuX(t)∥2 
+
+> F
+
++ 2 n3d2
+
+> T
+
+X
+
+> t=0
+
+E∥∇ f (x(m)1 )∥22.
+
+24 Back to equation (13), note that 
+
+ΠuX(t) 2
+
+> F
+
+≤ 6 (R⊤ − 1
+
+n 1u ⊤)tX(0) 
+
+> 2
+> F
+
++ 6 γ2 ∥Q0,t, 1 + Q0,t, 3∥2
+
+> F
+
++ 6 γ2 ∥Q1,t ∥2 
+
+> F
+
++ 6 γ2 ∥Q2,t ∥2 
+
+> F
+
++ 6 γ2 ∥Q3,t + Q0,t, 2∥2 
+
+> F
+
++ 6 γ2 ∥Q0,t, 4 + Q4,t ∥2 
+
+> F
+
+.
+
+Taking full expectation on both sides, summing over t from 0 to T and combining Lemma A.11 to Lemma A.14, we have 
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
+≤ 6
+
+> min {T,d −1}
+
+X
+
+> t=0
+
+E
+
+
+
+R⊤ − 1
+
+n 1u ⊤
+
+t
+
+X(0) 
+
+> 2
+> F
+
++ 6 γ2
+
+> T
+
+X
+
+> t=0
+
+E ∥Q1,t ∥2 
+
+> F
+
++ 6 γ2
+
+> T
+
+X
+
+> t=0
+
+E ∥Q2,t ∥2
+
+> F
+
++ 6 γ2
+
+> T
+
+X
+
+> t=0
+
+E ∥Q3,t + Q0,t, 2∥2 
+
+> F
+
++ 6 γ2
+
+> T
+
+X
+
+> t=0
+
+E ∥Q0,t, 4 + Q4,t ∥2 
+
+> F
+
++ 6 γ2
+
+> T
+
+X
+
+> t=0
+
+E ∥Q0,t, 1 + Q0,t, 3∥2
+
+> F
+
+≤ 6nd ΠuX(0) 2
+
+> F
+
++ 192 γ2n2d4(T + 1) σ2 + 312 γ2n2d4L2
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
++ 1000 γ4n4d4(T + 1) L2σ2 + 2160 γ4n5d4L2
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
++ 2160 γ4n4d5L2 ∇F(X(0) ) 2
+
+> F
+
++ 6 γ2n2d2(T + 1) σ2 + 24 γ2n2d3σ2
+
++ 24 γ2n2d3 ∇F(X(0) ) 2
+
+> F
+
++ 12 γ2n2d2L2
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
++ 12 γ2n3d2
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
+.
+
+(14) For γ ≤ 140 nd 2L , which implies that 312 γ2n2d4L2 + 12 γ2n2d2L2 ≤ 14 , we can simplify equation (14) as follows: 
+
+> T
+
+X
+
+> t=0
+
+ΠuX(t) 2 
+
+> F
+
+≤ 300 γ2n2d4(T + 1) σ2 + 20 γ2n3d2
+
+> T
+
+X
+
+> t=0
+
+E∥∇ f (x(t)1 )∥22
+
++ 6 nd ΠuX(0) 2 
+
+> F
+
++ 40 γ2n2d3 ∇F(X(0) ) 2 
+
+> F
+
+,
+
+which implies the desired result. 
+
+A.3.5 Proof of Lemma 3.4 
+
+Proof. Notice that 
+
+x(t)1 = x(t−1) 1 − γy (t−1) 1 = x(t−1) 1 − γ X
+
+> i∈I 1,1
+
+y(t−2) 1 − γg 1(x(t−1) 1 , ξ (t−1) 1 ) + γg 1(x(t−2) 1 , ξ (t−2) 1 ).
+
+Therefore, x(t)1 does not depend on ξt−1 
+
+> i
+
+for i̸ = 1 . We iterate the above procedure to get 
+
+x(t)1 =x(t−1) 1 − γg 1(x(t−1) 1 , ξ (t−1) 1 ) + γg 1(x(t−2) 1 , ξ (t−2) 1 )
+
+− γ X
+
+> i∈I 1,2
+
+y(t−3)  
+
+> i
+
+− γ X
+
+> i∈I 1,1
+
+gi(x(t−2) 1 , ξ (t−2) 1 ) + γ X
+
+> i∈I 1,1
+
+gi(x(t−3) 1 , ξ (t−3) 1 ).
+
+Similar to x(t)1 , we know that x(t−1) 1 does not depend on ξ(t−2)  
+
+> i
+
+, i̸ = 1 . Hence x(t)1 is independent with ξ(t−2)  
+
+> i
+
+for i / ∈ I 1,1. By iterating the procedure, we conclude that x(t)1 is independent with ξ(t−k)
+
+> i
+
+for i / ∈ I 1,k .Consequently, by choosing Z = {ξ(t−k) 
+
+> i
+
+, i ∈ I 1,k , i / ∈ I 1,k −1}, X = x(t)1 , Y = {x(t−k) 
+
+> i
+
+, i ∈ [n]} in Lemma A.8, Z is independent with (X, Y ), we get 
+
+E
+
+D
+
+∇f (x(t)1 ), eI1,k /I1,k −1
+
+
+
+G(t−k) − ∇ F(X(t−k))
+
+E 
+
+= 0 .
+
+25 Then, invoking Corollary A.4, we have 
+
+> min {t,d }
+
+X
+
+> m=1
+
+E
+
+
+
+∇f (x(t)1 ),
+
+ u⊤
+
+n − 1⊤
+
+
+
+Am
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
+
+
+=
+
+> min {t,d }
+
+X
+
+> m=1
+
+E
+
+D
+
+∇f (x(t)1 ), eI1,m /I1,m −1
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
+E 
+
+= 0 .
+
+A.3.6 Proof of Lemma 3.5 
+
+Proof. By Assumption 1.2, the function f := 1
+
+> n
+
+Pni=1 fi is L-smooth. Then, 
+
+Ef (x(t+1) 1 ) ≤ Ef (x(t)1 ) + E⟨∇ f (x(t)1 ), x (t+1) 1 − x(t)1 ⟩ + L
+
+2 E∥x(t+1) 1 − x(t)1 ∥22. (15) For the last term, we have 
+
+E∥x(t+1) 1 − x(t)1 ∥22 = E∥ 1
+
+n u⊤ 
+
+X(t+1) − X(t)
+
+∥22
+
+= 1
+
+n E∥ 1
+
+n 1u ⊤ 
+
+X(t+1) − X(t)
+
+∥2 
+
+> F
+
+= 1
+
+n E∥ ¯X(t+1) − ¯X(t)∥2 
+
+> F
+
+.
+
+For the second last term, we have 
+
+E⟨∇ f (x(t)1 ), x (t+1) 1 − x(t)1 ⟩ = E⟨∇ f (x(t)1 ), u⊤
+
+n
+
+
+
+X(t+1) − X(t)
+
+⟩ = E⟨∇ f (x(t)1 ), −γ u⊤
+
+n Y(t)⟩
+
+=E⟨∇ f (x(t)1 ), −γ
+
+ u⊤
+
+n − 1⊤
+
+
+
+Y(t)⟩ + E⟨∇ f (x(t)1 ), −γ1⊤Y(t)⟩.
+
+(16) We now bound the two terms in the above equation. Firstly, 
+
+E⟨∇ f (x(t)1 ), −γ
+
+ u⊤
+
+n − 1⊤
+
+
+
+Y(t)⟩ = γE⟨∇ f (x(t)1 ), −
+
+ u⊤
+
+n − 1⊤
+
+
+
+ΠvY(t)⟩.
+
+Recall that by equation (9), 
+
+γE⟨∇ f (x(t)1 ), −
+
+ u⊤
+
+n − 1⊤
+
+
+
+ΠvY(t)⟩
+
+=γE
+
+*
+
+∇f (x(t)1 ), −
+
+ u⊤
+
+n − 1⊤
+
+ min {t,d }
+
+X
+
+> m=1
+
+AmG(t−m) −
+
+ u⊤
+
+n − 1⊤
+
+
+
+G(t)
+
++
+
+= − γE
+
+
+
+∇f (x(t)1 ),
+
+ u⊤
+
+n − 1⊤
+
+ 
+
+G(t) − ∇ F(X(t))
+
+
+
+− γE
+
+*
+
+∇f (x(t)1 ),
+
+ u⊤
+
+n − 1⊤
+
+ min {t,d }
+
+X
+
+> m=1
+
+Am
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
++
+
+− γE
+
+
+
+∇f (x(t)1 ),
+
+ u⊤
+
+n − 1⊤
+
+
+
+∇F(X(t))
+
+
+
+− γE
+
+*
+
+∇f (x(t)1 ),
+
+ u⊤
+
+n − 1⊤
+
+ min {t,d }
+
+X
+
+> m=1
+
+Am∇F(X(t−m))
+
++
+
+.
+
+(17) We bound the four terms above one by one. For the first term, 
+
+E⟨∇ f (x(t)1 ), −
+
+ u⊤
+
+n − 1⊤
+
+ 
+
+G(t) − ∇ F(X(t))
+
+
+
+⟩ = 0 .
+
+26 For the second one, invoking Lemma 3.4, we have 
+
+E
+
+*
+
+∇f (x(t)1 ),
+
+ u⊤
+
+n − 1⊤
+
+ min {t,d }
+
+X
+
+> m=1
+
+Am
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
++
+
+=
+
+> min {t,d }
+
+X
+
+> m=1
+
+E
+
+
+
+∇f (x(t)1 ),
+
+ u⊤
+
+n − 1⊤
+
+
+
+Am
+
+
+
+G(t−m) − ∇ F(X(t−m))
+
+
+
+= 0 .
+
+For the last two terms in (17), we have as: 
+
+− E
+
+
+
+∇f (x(t)1 ),
+
+ u⊤
+
+n − 1⊤
+
+
+
+∇F(X(t))
+
+
+
+− E
+
+*
+
+∇f (x(t)1 ),
+
+ u⊤
+
+n − 1⊤
+
+ min {t,d }
+
+X
+
+> m=1
+
+Am∇F(X(t−m))
+
++
+
+=
+
+> min {t,d }
+
+X
+
+> m=1
+
+E
+
+*
+
+∇f (x(t)1 ), −
+
+ u⊤
+
+n − 1⊤
+
+  
+
+C − 1
+
+n v1 ⊤
+
+m−1 
+
+∇F(X(t−m+1) ) − ∇ F(X(t−m))
+
++
+
+.
+
+By the Cauchy-Schwartz inequality, we have 
+
+> min {t,d }
+
+X
+
+> m=1
+
+E
+
+*
+
+∇f (x(t)1 ), −
+
+ u⊤
+
+n − 1⊤
+
+  
+
+C − 1
+
+n v1 ⊤
+
+m−1 
+
+∇F(X(t−m+1) ) − ∇ F(X(t−m))
+
++
+
+≤
+
+> min {t,d }
+
+X
+
+> m=1
+
+
+
+n
+
+2d E ∇f (x(t)1 ) 22
+
++ d
+
+2n E
+
+ u⊤
+
+n − 1⊤
+
+  
+
+C − 1
+
+n v1 ⊤
+
+m−1 22
+
+∇F(X(t−m+1) ) − ∇ F(X(t−m)) 2
+
+> F
+
+
+
+≤ n
+
+2 E ∇f (x(t)1 ) 22
+
++ dL 2
+
+2
+
+> min {t,d }
+
+X
+
+> m=1
+
+E X(t−m+1) − X(t−m) 2
+
+> F
+
+≤ n
+
+2 E ∇f (x(t)1 ) 22
+
++ 3dL 2
+
+2
+
+> min {t,d }
+
+X
+
+> m=1
+
+E
+
+
+
+ΠuX(t−m+1) 2
+
+> F
+
++ ΠuX(t−m) 2
+
+> F
+
++ ¯X(t−m+1) − ¯X(t−m) 2
+
+> F
+
+
+
+.
+
+Thus, combining the above inequalities together yields 
+
+> T
+
+X
+
+> t=0
+
+γE⟨∇ f (x(t)1 ), −
+
+ u⊤
+
+n − 1⊤
+
+
+
+ΠvY(t)⟩ ≤ nγ 
+
+2
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
++ 3 γd 2L2
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
++ 3 γd 2L2
+
+> T
+
+X
+
+> t=0
+
+E ¯X(t+1) − ¯X(t) 2
+
+> F
+
+.
+
+Secondly, for the second term in (16), 
+
+E⟨∇ f (x(t)1 ), −γ1⊤Y(t)⟩ = E⟨∇ f (x(t)1 ), −γ1⊤G(t)⟩ = E⟨∇ f (x(t)1 ), −γ1⊤∇F(X(t))⟩
+
+= − nγ E∥∇ f (x(t)1 )∥22 − nγ E⟨∇ f (x(t)1 ), 1
+
+n 1⊤∇F(X(t)) − 1
+
+n 1⊤∇F( ¯X(t))⟩≤ − nγ E∥∇ f (x(t)1 )∥22 + γ n
+
+4 E∥∇ f (x(t)1 )∥22 + 2 γE∥∇ F(X(t)) − ∇ F( ¯X(t))∥2
+
+> F
+
+≤ − nγ E∥∇ f (x(t)1 )∥22 + γ n
+
+4 E∥∇ f (x(t)1 )∥22 + 2 γL 2E∥ΠuX(t)∥2 
+
+> F
+
+.
+
+Summing over t from 0 to T , we have 
+
+> T
+
+X
+
+> t=0
+
+E⟨∇ f (x(t)1 ), −γ1⊤Y(t)⟩ ≤ − 3nγ 
+
+4
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
++ 2 γL 2
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
+.
+
+It yields by summing over t from 0 to T on both sides of equation (15) that 
+
+Ef (x(T +1) 1 ) − Ef (x01) ≤
+
+> T
+
+X
+
+> t=0
+
+E⟨∇ f (x(t)1 ), x (t+1) 1 − x(t)1 ⟩ + L
+
+2n
+
+> T
+
+X
+
+> t=0
+
+E∥ ¯X(t+1) − ¯X(t)∥2
+
+> F
+
+≤
+
+> T
+
+X
+
+> t=0
+
+E⟨∇ f (x(t)1 ), −γ1⊤Y(t)⟩ +
+
+> T
+
+X
+
+> t=0
+
+γE⟨∇ f (x(t)1 ), −
+
+ u⊤
+
+n − 1⊤
+
+
+
+ΠvY(t)⟩ + L
+
+2n
+
+> T
+
+X
+
+> t=0
+
+E∥ ¯X(t+1) − ¯X(t)∥2 
+
+> F
+
+.
+
+27 With the results above, given ∆f = f (x0) − f ∗, we have 
+
+−∆f ≤ − nγ 
+
+4
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
++ L
+
+2n
+
+> T
+
+X
+
+> t=0
+
+E∥ ¯X(t+1) − ¯X(t)∥2
+
+> F
+
++ 5 γd 2L2
+
+> T
+
+X
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
++ 3 γd 2L2
+
+> T
+
+X
+
+> t=0
+
+E ¯X(t+1) − ¯X(t) 2
+
+> F
+
+.
+
+Invoking Lemma 3.2, we have for γ ≤ 1100 nd 3L (≤ 110 ndL ) that 
+
+−∆f ≤ nγ 
+
+
+
+45 γ2n2d2L2 + 8 γnL − 14
+
+ TX
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
++  150 γ3n2d4L4 + 25 γ2nd 2L3 + 5 γd 2L2 TX
+
+> t=0
+
+E ΠuX(t) 2
+
+> F
+
++ 3 γ2n(T + 1) Lσ 2 + 18 γ3n2d2L2(T + 1) σ2
+
++  18 γ3n2d3L2 + 3 γ2nL  ∇F(X(0) ) 2
+
+> F
+
+,
+
+where it holds that 150 γ3n2d4L4 + 25 γ2nd 2L3 + 5 γd 2L2 ≤ 6γd 2L2.Invoking Lemma 3.3, we have for γ ≤ 1100 nd 3L (≤ 140 nd 2L ) that 
+
+−∆f ≤ nγ 
+
+
+
+120 γ2n2d4L2 + 45 γ2n2d2L2 + 8 γnL − 14
+
+ TX
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
++ 3 γ2n(T + 1) Lσ 2 + 18 γ3n2d2L2(T + 1) σ2 + 1800 γ3n2d6(T + 1) σ2L2
+
++  240 γ3n2d5L2 + 18 γ3n2d3L2 + 3 γ2nL  ∇F(X(0) ) 2
+
+> F
+
++ 36 γnd 3L2 ΠuX(0) 2
+
+> F
+
+.
+
+Thus, for γ ≤ 1100 nd 3L , we have 
+
+120 γ2n2d4L2 + 45 γ2n2d2L2 + 8 γnL − 14 ≤ − 18
+
+γn  240 γ2nd 5L2 + 18 γ2nd 3L2 + 3 γL  ≤ 7γ2nd 2L. 
+
+After re-arranging the terms, we conclude that 
+
+1
+
+T + 1 
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22 ≤ 8∆ f
+
+γn (T + 1) + 24 γσ 2L + 20000 γ2nd 6σ2L2
+
++ 400 d3L2 ΠuX(0) 2
+
+> F
+
+T + 1 + 56 γd 3L ∇F(X(0) ) 2
+
+> F
+
+T + 1 .
+
+A.3.7 Proof of Lemma 3.7 
+
+Let x∗ = arg min x f (x). We start with analyzing the behavior of ∥x(t)1 − x∗∥2 after obtaining Lemma 3.4. It holds that 
+
+x(t+1) 1 − x∗ 2
+
+= x(t)1 − x∗ 2
+
++ 2 
+
+D
+
+x(t)1 − x∗, x (t+1) 1 − x(t)1
+
+E
+
++ x(t+1) 1 − x(t)1
+
+> 2
+
+. (18) To deal with the critical inner product, similar to the decomposition in Equation (16) , we have, by replacing ∇f (x(t)1 ) with x(t)1 − x∗ in Equation (17) , and invoking Lemma 3.4 as we have done in Lemma 3.5, that D
+
+x(t)1 − x∗, x (t+1) 1 − x(t)1
+
+E
+
+= −
+
+
+
+x(t)1 − x∗, γ 
+
+ u⊤
+
+n − 1⊤
+
+
+
+ΠvY(t)
+
+
+
+−
+
+D
+
+x(t)1 − x∗, γ 1⊤Y(t)E
+
+.
+
+(19) 28 and 
+
+− E
+
+
+
+x(t)1 − x∗, γ 
+
+ u⊤
+
+n − 1⊤
+
+
+
+ΠvY(t)
+
+
+
+= − γE
+
+
+
+x(t)1 − x∗,
+
+ u⊤
+
+n − 1⊤
+
+
+
+∇F(X(t))
+
+
+
+− γE
+
+*
+
+x(t)1 − x∗,
+
+ u⊤
+
+n − 1⊤
+
+ min {t,d }
+
+X
+
+> m=1
+
+Am∇F(X(t))
+
++
+
+≤ nγμ 
+
+4 E x(t)1 − x∗ 2
+
++ 3dL 2
+
+μ γ
+
+> min {t,d }
+
+X
+
+> m=1
+
+E
+
+
+
+ΠuXt−m+1 2 + ΠuXt−m 2 + ¯Xt−m+1 − ¯Xt−m 2
+
+.
+
+(20) Notice that, first by strong convexity of f (Assumption 1.3) and then by L-smoothness (Assump-tion 1.2), there holds 
+
+−
+
+D
+
+x(t)1 − x∗, ∇f (x(t)1 )
+
+E
+
+≤ f (x∗) − f (x(t)1 ) − μ
+
+2 x(t)1 − x∗ 2
+
+≤ − 12L ∇f (x(t)1 ) 2
+
+− μ
+
+2 x(t)1 − x∗ 2
+
+.
+
+(21) Then, 
+
+− γE
+
+D
+
+x(t)1 − x∗, 1⊤Y(t)E
+
+= −γE
+
+D
+
+x(t)1 − x∗, 1⊤∇F(X(t))
+
+E
+
+= − nγ E
+
+D
+
+x(t)1 − x∗, ∇f (x(t)1 )
+
+E
+
+− γE
+
+D
+
+x(t)1 − x∗, 1⊤∇F(X(t)) − 1⊤∇F( ¯X(t))
+
+E
+
+≤ − nγμ 
+
+2 E x(t)1 − x∗ 2
+
+− nγ 
+
+2L ∇f (x(t)1 ) 2
+
++ nγμ 
+
+8 E x(t)1 − x∗ 2
+
++ 2L2γμ E ΠuX(t) 2
+
+.
+
+(22) Thus, plugging the above results into Equation (18) , with κ := L/μ as the conditional number, it holds that 
+
+E x(t+1) 1 − x∗ 2
+
+≤
+
+
+
+1 − nγμ 
+
+4
+
+
+
+E x(t)1 − x∗ 2
+
+− nγ L E ∇f (x(t)1 ) 2
+
++ 1
+
+n E ¯X(t+1) − ¯X(t) 2
+
+> F
+
++ 6 dκLγ 
+
+> min {t,d }
+
+X
+
+> m=1
+
+E ¯X(t−m+1) − ¯X(t−m) 2
+
+> F
+
++ 20 dκLγ 
+
+> min {t,d }+1
+
+X
+
+> m=0
+
+E ΠuXt−m 2 
+
+> F
+
+.
+
+(23) We derive the convergence result by several standard steps as follows. 
+
+Step 1 . Unwinding the above recursion, it follows by 12 ≤ 1 − nγμ  
+
+> 4
+
+≤ 1 for γ ≤ 110 nd 2κL that 
+
+E x(T )1 − x∗ 2
+
+≤
+
+
+
+1 − nγμ 
+
+4
+
+T
+
+x(0) 1 − x∗ 2
+
+− nγ 
+
+2L
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 2
+
++
+
+ 1
+
+n + 6 d2κLγ 
+
+ TX
+
+> t=0
+
+
+
+1 − nγμ 
+
+4
+
+T −t
+
+E ¯X(t+1) − ¯X(t) 2
+
+> F
+
++ 60 d2κLγ 
+
+> T
+
+X
+
+> t=0
+
+
+
+1 − nγμ 
+
+4
+
+T −t
+
+E ΠuXt 2 
+
+> F
+
+.
+
+(24) 
+
+Step 2 . To refine Lemma 3.2, we start with Equation (11) multiplied by the coefficient  1 − nγμ 
+
+> 4
+
+T −t
+
+before summing over t in Equation (10) from 0 to T . Then, we have, for γ ≤ 110 nd 2κL ( 12 ≤
+
+1 − nγμ  
+
+> 4
+
+≤ 1 for γ ≤ 110 nd 2κL ), that 
+
+> T
+
+X
+
+> t=0
+
+
+
+1 − nγμ 
+
+4
+
+T −t
+
+E∥ ¯X(t+1) − ¯X(t)∥2 
+
+> F
+
+≤ 6γ2n2σ2(T + 1) + 50 γ2n2d2L2
+
+> T
+
+X
+
+> t=0
+
+
+
+1 − nγμ 
+
+4
+
+T −t
+
+E ΠuX(t) 2
+
+> F
+
++ 6 γ2n2
+
+> d
+
+X
+
+> t=0
+
+
+
+1 − nγμ 
+
+4
+
+T −t
+
+∇F(X(0) ) 2
+
+> F
+
++ 15 γ2n3
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
+.
+
+(25) 29 where we get the result which only modifies the coefficient of the term ∇F(X(0) ) 2 
+
+> F
+
+.Implementing the above result, we have, for γ ≤ 110 nd 2κL 
+
+ ≤ 110 ndL 
+
+,
+
+E x(T )1 − x∗ 2
+
+≤
+
+
+
+1 − nγμ 
+
+4
+
+T
+
+x(0) 1 − x∗ 2
+
++
+
+
+
+− nγ 
+
+2L + 15 γ2n2 + 90 γ3n3d2κL 
+
+ TX
+
+> t=0
+
+E ∇f (x(t)1 ) 2
+
++ 6 γ2nσ 2 (T + 1) + 36 γ3n2d2κLσ 2 (T + 1) +  60 γd 2κL + 50 γ2nd 2L2 + 300 γ3n2d4κL 3 TX
+
+> t=0
+
+
+
+1 − nγμ 
+
+4
+
+T −t
+
+E ΠuXt 2
+
+> F
+
++  6γ2nd + 36 γ3n2d3κL  
+
+1 − nγμ 
+
+4
+
+T −d
+
+∇F(X(0) ) .
+
+Step 3 . Similarly, we refine Lemma 3.3 as follows. By multiplying  1 − nγμ 
+
+> 4
+
+T −t before summing over t in Equation (14), we have 
+
+> T
+
+X
+
+> t=0
+
+
+
+1 − nγμ 
+
+4
+
+T −t
+
+ΠuX(t) 2
+
+> F
+
+≤ 300 γ2n2d4(T + 1) σ2 + 20 γ2n3d2
+
+> T
+
+X
+
+> t=0
+
+E∥∇ f (x(t)1 )∥22
+
++ 6 nd ΠuX(0) 2 
+
+> F
+
++ 40 γ2n2d3 
+
+1 − nγμ 
+
+4
+
+T −d
+
+∇F(X(0) ) 2
+
+> F
+
+,
+
+Implementing the above result, we have for γ ≤ 140 nd 2κL that 
+
+60 γd 2κL + 50 γ2nd 2L2 + 300 γ3n2d4κL 3 ≤ 70 γd 2κL, 
+
+and 
+
+E x(T )1 − x∗ 2
+
+≤
+
+
+
+1 − nγμ 
+
+4
+
+T
+
+x(0) 1 − x∗ 2
+
++
+
+
+
+− nγ 
+
+2L + 15 γ2n2 + 90 γ3n3d2κL + 1400 γ3n3d4κL 
+
+ TX
+
+> t=0
+
+E ∇f (x(t)1 ) 2
+
++ 6 γ2nσ 2 (T + 1) + 36 γ3n2d2κLσ 2 (T + 1) + 21000 γ3n2d6κLσ 2 (T + 1) +  6γ2nd + 36 γ3n2d3κL + 2800 γ3n2d5κL  
+
+1 − nγμ 
+
+4
+
+T −d
+
+∇F(X(0) ) + 420 γ3n2d3κL ΠuX(0) 2
+
+> F
+
+.
+
+Step 4 . Note that the coefficient of the term PTt=0 ∇f (x(t)1 ) 2
+
+is smaller than 0 for γ ≤ 1100 nd 2κL ,derived as follows: 
+
+− nγ 
+
+2L + 15 γ2n2 + 90 γ3n3d2κL + 1400 γ3n3d4κL 
+
+= nγ 
+
+2L
+
+ −1 + 30 γnL + 180 γ2n2d2κL 2 + 2800 γ2nd 4κL 
+
+≤ nγ 
+
+2L
+
+
+
+−1 + 30 100 + 180 10 4 + 2800 10 4
+
+
+
+≤ − γn 
+
+20 L < 0.
+
+Thus, it holds that 
+
+E x(T )1 − x∗ 2
+
+≤
+
+
+
+1 − nγμ 
+
+4
+
+T
+
+x(0) 1 − x∗ 2
+
++ 7 γ2nσ 2 (T + 1) + 21000 γ3n2d6κLσ 2 (T + 1) + 80 γ2nd 3 
+
+1 − nγμ 
+
+4
+
+T −d
+
+∇F(X(0) ) + 420 γ3n2d3κL ΠuX(0) 2
+
+> F
+
+.
+
+30 A.4 Proof of the Convergence Results A.4.1 Proof of Theorem 2.1 
+
+Invoking Lemma 3.5, with identical initial values x(0)  
+
+> i
+
+that implies ΠuX(0) 2 
+
+> F
+
+= 0 , we have 
+
+1
+
+T + 1 
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22
+
+≤ 8∆ f
+
+γn (T + 1) + 24 γσ 2L + 2 · 10 4γ2nd 6σ2L2 + 56 γd 3L ∇F(X(0) ) 2
+
+> F
+
+T + 1 .
+
+Referring to Lemma 26 in [8 ], as stated in Lemma A.7, by taking A = 8∆ f 
+
+> n
+
+,
+
+B = 24 σ2L, C = 20000 nd 6σ2L2 and α = 100 nd 3L, when considering γ =min {
+
+ ∆f 
+
+> 3σ2Ln (T+1)
+
+ 12
+
+,
+
+ ∆f 
+
+> 1500 n2d6σ2L2(T+1)
+
+ 13
+
+, 1100 nd 3L }, we have 
+
+1
+
+T + 1 
+
+> T
+
+X
+
+> t=0
+
+E ∇f (x(t)1 ) 22 ≤ 32 p∆f σ2L
+
+pn(T + 1) +240 d2
+
+
+
+σ2L2∆2
+
+> f
+
+ 13
+
+(√n(T + 1)) 23
+
++ 800 d3L∆f
+
+T + 1 + ∇F(X(0) ) 2
+
+> F
+
+n(T + 1) .
+
+A.4.2 Proof of Theorem 2.4 
+
+Invoking Lemma 3.7, with identical values x(0)  
+
+> i
+
+that implies ΠuX(0) 2 
+
+> F
+
+= 0 , we have 
+
+E x(T )1 − x∗ 2
+
+≤
+
+
+
+1 − nγμ 
+
+4
+
+T
+
+x(0) 1 − x∗ 2
+
++ 7 γ2nσ 2 (T + 1) + 21000 γ3n2d6κLσ 2 (T + 1) + 80 γ2nd 3 
+
+1 − nγμ 
+
+4
+
+T −d
+
+∇F(X(0) ) .
+
+Considering γ = min 
+
+n 1100 nd 2κL , 16 log( n(T +1) 2) 
+
+> n(T+1) μ
+
+o
+
+, for T ≥ 2d we get that 
+
+
+
+1 − nμγ 
+
+4
+
+T
+
+≤ max 
+
+
+
+1 − 1400 d2κ2
+
+T
+
+, 1 − 4 log( n (T + 1) 2)
+
+T + 1 
+
+!T 
+
+≤ max 
+
+(
+
+exp( − T
+
+400 d2κ2 ), 40 
+
+n (T + 1) 2
+
+)
+
+,
+
+and 
+
+
+
+1 − nμγ 
+
+4
+
+T −d
+
+≤ max 
+
+
+
+1 − 1400 d2κ2
+
+T / 2
+
+, 1 − 4 log( n (T + 1) 2)
+
+T + 1 
+
+!T / 2
+
+≤ max 
+
+(
+
+exp( − T
+
+800 d2κ2 ), 10 
+
+n (T + 1) 2
+
+)
+
+,
+
+where we use the fact (1 − 1 
+
+> x
+
+)x ≤ e−1 and 1 − x ≤ exp( −x) for any x ∈ R+. Then, 
+
+E x(T )1 − x∗ 2
+
+≤ 2240 σ2 log( n(T + 1) 2)
+
+n (T + 1) μ2 + 26880000 d6κ2σ2  log( n(T + 1) 2)2
+
+n (T + 1) 2 μ2
+
++ max 
+
+(
+
+exp( − T
+
+800 d2κ2 ), 40 
+
+n (T + 1) 2
+
+) 
+
+x(0) 1 − x∗ 2
+
++ 1
+
+nL 2 ∇F(X(0) ) 2
+
+> F
+
+
+
+.
+
+## B Additional Experiments 
+
+For the problem of training a CNN on the MNIST dataset, we have further compared the real-time performance of BTPP with other representative methods. The experiments are conducted on a server equipped with eight Nvidia RTX 3090 GPUs and two Intel Xeon Gold 4310 CPUs, where the 31 Figure 4: Real-time performance of BTPP (with different branch size B) compared with related methods when training CNN over MNIST. communication between GPUs follows the topology requirement of each algorithm. We measure the running time including GPU computation and communication for 13,000 iterations. The experimental settings are consistent with those described in Section 4.2. From Figure 4, BTPP outperforms the other algorithms concerning the running time. Additionally, we evaluate BTPP with various branch sizes B, concluding that for relatively small values of n, a branch size of B = 2 is most effective. Furthermore, we consider training VGG13 on the CIFAR10 dataset, with n = 8 and a batch size of 16. The learning rate and topology configurations are consistent with those described in Section 4.2. Additionally, the case of BTPP with B = 8 is equivalent to DSGD in a fully connected setting, meaning that they produce identical outputs when using the same random seed. Figure 5 and Figure 6 illustrate that BTPP beats competing algorithms in terms of the convergence rate (against iteration number) and running time. Moreover, a branch size of B = 2 is optimal. 
+
+Figure 5: Performance of BTPP (with different branch size B) compared with related methods for training VGG13 over CIFAR10. We further demonstrate that the performance of BTPP can be improved by incorporating a momentum term (with momentum parameter set to 0.9) when data heterogeneity exists or by removing the data heterogeneity, which involves randomly assigning samples to each agent; see Figure 7 and Figure 8. 32 Figure 6: Real-time performance of BTPP (with different branch size B) compared with related methods when training VGG13 over CIFAR10. 
+
+Figure 7: Performance of BTPP with branch size B = 2 under various configurations when training CNN over MNIST. 
+
+Figure 8: Performance of BTPP with branch size B = 2 under various configurations when training VGG13 over CIFAR10. 
+
+## NeurIPS Paper Checklist 
+
+1. Claims 
+
+Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? Answer: [Yes] Justification: Our paper meticulously delineates its primary contributions in both the abstract (lines 8-9) and the introduction (subsection 1.2, lines 105-121). Guidelines: • The answer NA means that the abstract and introduction do not include the claims made in the paper. 33 • The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers. • The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings. • It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. 2. Limitations 
+
+Question: Does the paper discuss the limitations of the work performed by the authors? Answer: [Yes] Justification: At the end of section 1.1, lines 100-104. Guidelines: • The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper. • The authors are encouraged to create a separate "Limitations" section in their paper. • The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be. • The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated. • The authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon. • The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size. • If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness. • While the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an impor-tant role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations. 3. Theory Assumptions and Proofs 
+
+Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? Answer: [Yes] Justification: The assumptions are in subsection 1.3, lines 129-132. The proofs of all theoretical results are in the Appendix and subsection 2.1. Guidelines: • The answer NA means that the paper does not include theoretical results. • All the theorems, formulas, and proofs in the paper should be numbered and cross-referenced. • All assumptions should be clearly stated or referenced in the statement of any theorems. • The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition. 34 • Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material. • Theorems and Lemmas that the proof relies upon should be properly referenced. 4. Experimental Result Reproducibility 
+
+Question: Does the paper fully disclose all the information needed to reproduce the main ex-perimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? Answer: [Yes] Justification: We present the experiment details in section 4 and upload our code in the link shown in the abstract. Guidelines: • The answer NA means that the paper does not include experiments. • If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not. • If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable. • Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed. • While NeurIPS does not require releasing code, the conference does require all submis-sions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm. (b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully. (c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset). (d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results. 5. Open access to data and code 
+
+Question: Does the paper provide open access to the data and code, with sufficient instruc-tions to faithfully reproduce the main experimental results, as described in supplemental material? Answer: [Yes] Justification: We provide our code with the link shown in lines 10-11. Guidelines: • The answer NA means that paper does not include experiments requiring code. • Please see the NeurIPS code and data submission guidelines ( https://nips.cc/ public/guides/CodeSubmissionPolicy ) for more details. 35 • While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark). • The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines ( https: //nips.cc/public/guides/CodeSubmissionPolicy ) for more details. • The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc. • The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why. • At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable). • Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted. 6. Experimental Setting/Details 
+
+Question: Does the paper specify all the training and test details (e.g., data splits, hyper-parameters, how they were chosen, type of optimizer, etc.) necessary to understand the results? Answer: [Yes] Justification: We provide all the experimental details and settings in Section 4 and our code link. Guidelines: • The answer NA means that the paper does not include experiments. • The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them. • The full details can be provided either with the code, in appendix, or as supplemental material. 7. Experiment Statistical Significance 
+
+Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? Answer: [No] Justification: We have repeated some experiments with different seeds and reported the averaged performance. See Section 4 for details. Guidelines: • The answer NA means that the paper does not include experiments. • The authors should answer "Yes" if the results are accompanied by error bars, confi-dence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper. • The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions). • The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.) • The assumptions made should be given (e.g., Normally distributed errors). • It should be clear whether the error bar is the standard deviation or the standard error of the mean. • It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a 96% CI, if the hypothesis of Normality of errors is not verified. 36 • For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates). • If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text. 8. Experiments Compute Resources 
+
+Question: For each experiment, does the paper provide sufficient information on the com-puter resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? Answer: [Yes] Justification: See line 255 for reference. Guidelines: • The answer NA means that the paper does not include experiments. • The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage. • The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute. • The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper). 9. Code Of Ethics 
+
+Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines ?Answer: [Yes] Justification: The research conducted in the paper conforms, in every respect, with the NeurIPS Code of Ethics. Guidelines: • The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics. • If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics. • The authors should make sure to preserve anonymity (e.g., if there is a special consid-eration due to laws or regulations in their jurisdiction). 10. Broader Impacts 
+
+Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? Answer: [NA] Justification: There is no societal impact of the work performed. Guidelines: • The answer NA means that there is no societal impact of the work performed. • If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact. • Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations. • The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster. 37 • The authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology. • If there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML). 11. Safeguards 
+
+Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)? Answer: [NA] Justification: The paper poses no such risks. Guidelines: • The answer NA means that the paper poses no such risks. • Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters. • Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images. • We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort. 12. Licenses for existing assets 
+
+Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? Answer: [Yes] Justification: We have cited the original paper that produced the code package or dataset. Guidelines: • The answer NA means that the paper does not use existing assets. • The authors should cite the original paper that produced the code package or dataset. • The authors should state which version of the asset is used and, if possible, include a URL. • The name of the license (e.g., CC-BY 4.0) should be included for each asset. • For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided. • If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/datasets 
+
+has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset. • For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided. • If this information is not available online, the authors are encouraged to reach out to the asset’s creators. 13. New Assets 
+
+Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? Answer:[NA] Justification: The paper does not release new assets. 38 Guidelines: • The answer NA means that the paper does not release new assets. • Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc. • The paper should discuss whether and how consent was obtained from people whose asset is used. • At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file. 14. Crowdsourcing and Research with Human Subjects 
+
+Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? Answer: [NA] Justification: The paper does not involve crowdsourcing nor research with human subjects. Guidelines: • The answer NA means that the paper does not involve crowdsourcing nor research with human subjects. • Including this information in the supplemental material is fine, but if the main contribu-tion of the paper involves human subjects, then as much detail as possible should be included in the main paper. • According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. 15. Institutional Review Board (IRB) Approvals or Equivalent for Research with Human Subjects 
+
+Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? Answer: [NA] Justification: The paper does not involve crowdsourcing nor research with human subjects. Guidelines: • The answer NA means that the paper does not involve crowdsourcing nor research with human subjects. • Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper. • We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution. • For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review. 39
