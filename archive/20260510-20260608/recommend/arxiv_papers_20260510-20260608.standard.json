@@ -1,0 +1,806 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-08T01:49:46.470112+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 16,
+    "deep_cap": 6,
+    "deep_selected": 8,
+    "quick_candidates": 17,
+    "quick_skim_target": 11,
+    "quick_selected": 11
+  },
+  "deep_dive": [
+    {
+      "id": "2605.24598v1",
+      "source": "arxiv",
+      "title": "Hera: Learning Long-Horizon Coordination for Device-Cloud Collaborative LLM Agents",
+      "abstract": "Large language model (LLM) agents excel at solving complex long-horizon tasks through autonomous interaction with environments. However, their real-world deployment faces a fundamental device--cloud dilemma: on-device models are efficient but often brittle, while cloud models are stronger but costly in computation. State-of-the-art LLM device--cloud routers usually make coarse task-level decisions, which cannot adapt to the changing difficulty of multi-step agent interactions. To address this issue, we present Hera, a step-level device--cloud LLM agent coordinator for long-horizon tasks achieving a strong performance--cost Pareto frontier. Hera adopts a novel two-stage training paradigm: (1) imitation learning for cold-start, followed by (2) reinforcement learning that jointly optimizes task success and cloud usage efficiency. The first stage casts step-level routing as a supervised classification problem: the device agent is replayed on cloud trajectories, with each state labeled by the agreement between device and cloud actions. In the second stage, we perform cost-aware reinforcement learning by grouping identical states across trajectories and updating Hera with labels favoring higher expected return and fewer future cloud calls. We evaluate Hera on ALFWorld, WebShop, and AppWorld, where it consistently outperforms prior methods, achieving 92.5% of the cloud-only success rate with cloud use in only 46.3% of steps.",
+      "authors": [
+        "Yuxin Zhang",
+        "Mengxue Hu",
+        "Zheng Lin",
+        "Xiaoyi Fan",
+        "Fan Xie",
+        "Zihan Fang",
+        "Jing Yang",
+        "Wenjun Zhu",
+        "Zhiwen Chen",
+        "Chengfei Lv",
+        "Zhe Chen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-05-23T14:29:33+00:00",
+      "link": "https://arxiv.org/pdf/2605.24598v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "device-cloud collaborative LLM agent coordination",
+      "llm_evidence_cn": "端云协同LLM智能体协调",
+      "llm_evidence": "端云协同LLM智能体协调",
+      "canonical_evidence": "端云协同LLM智能体协调",
+      "llm_tldr_en": "Hera presents a step-level device-cloud coordinator for LLM agents, achieving a strong performance-cost Pareto frontier via imitation learning and reinforcement learning.",
+      "llm_tldr_cn": "Hera针对LLM智能体在端云部署中面临的设备-云端两难问题，提出了一种步骤级别的端云协同协调器，通过模仿学习冷启动和强化学习微调，实现了在长时域任务中性能与成本的高效帕累托前沿。该方法在多个基准上显著优于粗粒度的任务级路由方案，展示了端云协同在复杂智能体任务中的巨大潜力。",
+      "llm_tldr": "Hera针对LLM智能体在端云部署中面临的设备-云端两难问题，提出了一种步骤级别的端云协同协调器，通过模仿学习冷启动和强化学习微调，实现了在长时域任务中性能与成本的高效帕累托前沿。该方法在多个基准上显著优于粗粒度的任务级路由方案，展示了端云协同在复杂智能体任务中的巨大潜力。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.09530v1",
+      "source": "arxiv",
+      "title": "MemPrivacy: Privacy-Preserving Personalized Memory Management for Edge-Cloud Agents",
+      "abstract": "As LLM-powered agents are increasingly deployed in edge-cloud environments, personalized memory has become a key enabler of long-term adaptation and user-centric interaction. However, cloud-assisted memory management exposes sensitive user information, while existing privacy protection methods typically rely on aggressive masking that removes task-relevant semantics and consequently degrades memory utility and personalization quality. To address this challenge, We propose MemPrivacy, which identifies privacy-sensitive spans on edge devices, replaces them with semantically structured type-aware placeholders for cloud-side memory processing, and restores the original values locally when needed. By decoupling privacy protection from semantic destruction, MemPrivacy minimizes sensitive data exposure while retaining the information required for effective memory formation and retrieval. We also construct MemPrivacy-Bench for systematic evaluation, a dataset covering 200 users and over 52k privacy instances, and introduce a four-level privacy taxonomy for configurable protection policies. Experiments show that MemPrivacy achieves strong performance in privacy information extraction, substantially surpassing strong general-purpose models such as GPT-5.2 and Gemini-3.1-Pro, while also reducing inference latency. Across multiple widely used memory systems, MemPrivacy limits utility loss to within 1.6%, outperforming baseline masking strategies. Overall, MemPrivacy offers an effective balance between privacy protection and personalized memory utility for edge-cloud agents, enabling secure, practical, and user-transparent deployment.",
+      "authors": [
+        "Yining Chen",
+        "Jihao Zhao",
+        "Bo Tang",
+        "Haofen Wang",
+        "Feiyu Xiong",
+        "Zhiyu Li"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.CL"
+      ],
+      "published": "2026-05-10T13:31:58+00:00",
+      "link": "https://arxiv.org/pdf/2605.09530v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge-cloud agents, personalized memory, privacy-preserving",
+      "llm_evidence_cn": "端云智能体、个性化记忆、隐私保护",
+      "llm_evidence": "端云智能体、个性化记忆、隐私保护",
+      "canonical_evidence": "端云智能体、个性化记忆、隐私保护",
+      "llm_tldr_en": "MemPrivacy enables privacy-preserving personalized memory for edge-cloud agents by identifying sensitive spans on edge and using placeholders for cloud processing.",
+      "llm_tldr_cn": "针对端云环境下大语言模型智能体在云侧处理个性化记忆时面临的隐私泄露与语义损失问题，本文提出MemPrivacy方法。该方法在边缘设备上识别隐私敏感片段，将其替换为语义结构化的类型占位符后再交由云侧处理，需要时本地还原原始值。实验证明该方法在保护隐私的同时保持了记忆的实用性和个性化质量。其贡献在于为端云协同AI智能体提供了一种兼顾隐私与语义完整性的记忆管理方案。",
+      "llm_tldr": "针对端云环境下大语言模型智能体在云侧处理个性化记忆时面临的隐私泄露与语义损失问题，本文提出MemPrivacy方法。该方法在边缘设备上识别隐私敏感片段，将其替换为语义结构化的类型占位符后再交由云侧处理，需要时本地还原原始值。实验证明该方法在保护隐私的同时保持了记忆的实用性和个性化质量。其贡献在于为端云协同AI智能体提供了一种兼顾隐私与语义完整性的记忆管理方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.09530v3",
+      "source": "arxiv",
+      "title": "MemPrivacy: Privacy-Preserving Personalized Memory Management for Edge-Cloud Agents",
+      "abstract": "As LLM-powered agents are increasingly deployed in edge-cloud environments, personalized memory has become a key enabler of long-term adaptation and user-centric interaction. However, cloud-assisted memory management exposes sensitive user information, while existing privacy protection methods typically rely on aggressive masking that removes task-relevant semantics and consequently degrades memory utility and personalization quality. To address this challenge, We propose MemPrivacy, which identifies privacy-sensitive spans on edge devices, replaces them with semantically structured type-aware placeholders for cloud-side memory processing, and restores the original values locally when needed. By decoupling privacy protection from semantic destruction, MemPrivacy minimizes sensitive data exposure while retaining the information required for effective memory formation and retrieval. We also construct MemPrivacy-Bench for systematic evaluation, a dataset covering 200 users and over 155k privacy instances, and introduce a four-level privacy taxonomy for configurable protection policies. Experiments show that MemPrivacy achieves strong performance in privacy information extraction, substantially surpassing strong general-purpose models such as GPT-5.2 and Gemini-3.1-Pro, while also reducing inference latency. Across multiple widely used memory systems, MemPrivacy limits utility loss to within 1.6%, outperforming baseline masking strategies. Overall, MemPrivacy offers an effective balance between privacy protection and personalized memory utility for edge-cloud agents, enabling secure, practical, and user-transparent deployment.",
+      "authors": [
+        "Yining Chen",
+        "Jihao Zhao",
+        "Bo Tang",
+        "Haofen Wang",
+        "Yue Zhang",
+        "Fei Huang",
+        "Feiyu Xiong",
+        "Zhiyu Li"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.CL"
+      ],
+      "published": "2026-05-10T13:31:58+00:00",
+      "link": "https://arxiv.org/pdf/2605.09530v3",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Privacy-preserving memory management for edge-cloud agents",
+      "llm_evidence_cn": "边缘云代理的隐私保护内存管理",
+      "llm_evidence": "边缘云代理的隐私保护内存管理",
+      "canonical_evidence": "边缘云代理的隐私保护内存管理",
+      "llm_tldr_en": "Proposes MemPrivacy, which identifies privacy-sensitive spans on edge, replaces with placeholders for cloud processing, and restores locally, preserving utility.",
+      "llm_tldr_cn": "边缘云代理中的个性化内存管理暴露用户隐私，现有方法过度遮蔽导致语义丢失。本文提出MemPrivacy，在边缘识别隐私敏感片段，替换为类型感知占位符进行云端处理，本地还原。实验证明在保护隐私的同时保持内存效用和个性化质量，实现隐私与可用性平衡。",
+      "llm_tldr": "边缘云代理中的个性化内存管理暴露用户隐私，现有方法过度遮蔽导致语义丢失。本文提出MemPrivacy，在边缘识别隐私敏感片段，替换为类型感知占位符进行云端处理，本地还原。实验证明在保护隐私的同时保持内存效用和个性化质量，实现隐私与可用性平衡。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.13221v1",
+      "source": "arxiv",
+      "title": "An Agentic AI Framework with Large Language Models and Chain-of-Thought for UAV-Assisted Logistics Scheduling with Mobile Edge Computing",
+      "abstract": "In cloud manufacturing, unmanned aerial vehicles (UAVs) can support both product collection and mobile edge computing (MEC). This joint operation forms a hybrid scheduling problem, where physical logistics decisions are coupled with computational task scheduling. In this paper, UAVs collect finished products from manufacturing stations and transport them back to a central depot. Meanwhile, computational tasks generated by industrial sensor devices at these stations are processed locally, at UAVs, or offloaded via UAVs to the cloud. This coupling makes the problem challenging. A UAV can provide MEC services only during its service window at a station, so routing decisions directly determine when UAV-assisted offloading is available. Routing decisions also affect the UAV energy budget and the availability of onboard computing and communication resources for computational task execution under task deadline constraints. To address this, we propose an agentic-AI-assisted optimization framework with two components. First, we develop an agentic AI that combines large language models, retrieval-augmented generation, and chain-of-thought reasoning to translate user input into an interpretable mathematical formulation for the hybrid scheduling problem. Second, we design a hierarchical deep reinforcement learning approach based on proximal policy optimization (PPO), where the upper layer learns UAV routing and the lower layer optimizes per-slot task execution and resource allocation. Simulation results show that the proposed framework yields more consistent formulations, while the hierarchical PPO achieves full product collection in 99.6% of the last 500 episodes and maintains a 100% deadline satisfaction rate, with more stable performance than the advantage actor-critic approach.",
+      "authors": [
+        "Hanwen Zhang",
+        "Dusit Niyato",
+        "Wei Zhang",
+        "Xin Lou",
+        "Malcolm Yoke Hean Low"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-05-13T09:13:19+00:00",
+      "link": "https://arxiv.org/pdf/2605.13221v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "UAV-assisted logistics with mobile edge computing and LLM agents",
+      "llm_evidence_cn": "无人机辅助物流与移动边缘计算结合LLM智能体",
+      "llm_evidence": "无人机辅助物流与移动边缘计算结合LLM智能体",
+      "canonical_evidence": "无人机辅助物流与移动边缘计算结合LLM智能体",
+      "llm_tldr_en": "This paper proposes an agentic AI framework using LLMs and chain-of-thought for joint logistics and computation scheduling with UAVs and MEC.",
+      "llm_tldr_cn": "针对无人机辅助物流与移动边缘计算的混合调度问题，本文提出了一种基于大语言模型和链式思维的智能体AI框架。该框架将物理物流决策与计算任务卸载联合优化，通过智能体协同调度无人机路线和计算资源，在云制造场景中显著提升了效率和资源利用率。",
+      "llm_tldr": "针对无人机辅助物流与移动边缘计算的混合调度问题，本文提出了一种基于大语言模型和链式思维的智能体AI框架。该框架将物理物流决策与计算任务卸载联合优化，通过智能体协同调度无人机路线和计算资源，在云制造场景中显著提升了效率和资源利用率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.14300v1",
+      "source": "arxiv",
+      "title": "Joint Communication and Computation Design for Mobile Embodied AI Network (MEAN)",
+      "abstract": "This letter investigates the problem of energy efficient collaborative strategy for mobile embodied artificial intelligence network (MEAN) over wireless communication. In the considered model, the agents execute the tasks through collaboration, and they can switch between two operating modes based on the signal-to-noise ratio (SNR) and global collaboration. The dual-mode comprises the base station (BS)-assisted collaborative mode, in which agents make decisions through semantic communication with BS and then collaborate on tasks, and the local computing mode, in which the agents make decisions and execute tasks independently. Due to the dynamic wireless communication and flexible collaboration strategy, we jointly consider computation energy, communication energy, and task-execution energy with specific collaborative gains into a mixed-integer nonlinear programming (MINLP) optimization problem whose goal is to minimize the total system energy consumption. To solve it, we propose a lower-complexity enumeration algorithm: first, we get the optimal closed-form solution for semantic compression ratio and transmit power by proving the strict convexity. Second, we determine the scale of collaboration and the operating mode of each agent by a greedy sorting algorithm based on individual energy-saving potentials. Simulation results show that the proposed algorithm can significantly reduce the total energy consumption compared to benchmark schemes.",
+      "authors": [
+        "Chenliang Wu",
+        "Zhouxiang Zhao",
+        "Jiaxiang Wang",
+        "Ruopeng Xu",
+        "Chen Zhu",
+        "Zhaohui Yang",
+        "Zhaoyang Zhang"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-05-14T03:07:06+00:00",
+      "link": "https://arxiv.org/pdf/2605.14300v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "mobile embodied AI network with collaborative strategy and base station assistance",
+      "llm_evidence_cn": "移动具身人工智能网络，具有协作策略和基站辅助",
+      "llm_evidence": "移动具身人工智能网络，具有协作策略和基站辅助",
+      "canonical_evidence": "移动具身人工智能网络，具有协作策略和基站辅助",
+      "llm_tldr_en": "MEAN proposes a joint communication and computation design for energy-efficient collaboration among mobile embodied AI agents, switching between BS-assisted and local modes based on SNR.",
+      "llm_tldr_cn": "移动具身AI网络中的代理需要高效协作，但无线通信的能耗和动态信道条件带来挑战。本文研究MEAN中的协作策略，代理可根据信噪比在基站辅助协作模式与本地计算模式间切换。通过联合优化通信与计算能耗，提出的方案在保证任务完成率的同时显著降低了总能耗，为移动AI代理的无线协同提供了理论依据。",
+      "llm_tldr": "移动具身AI网络中的代理需要高效协作，但无线通信的能耗和动态信道条件带来挑战。本文研究MEAN中的协作策略，代理可根据信噪比在基站辅助协作模式与本地计算模式间切换。通过联合优化通信与计算能耗，提出的方案在保证任务完成率的同时显著降低了总能耗，为移动AI代理的无线协同提供了理论依据。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.18067v1",
+      "source": "arxiv",
+      "title": "PPAI: Enabling Personalized LLM Agent Interoperability for Collaborative Edge Intelligence",
+      "abstract": "Deploying large language model (LLM) on edge device enables personalized LLM agents for various users. The growing availability of diverse personalized agents presents a unique opportunity for peer-to-peer (P2P) collaboration, wherein each user can delegate tasks beyond the local agent's expertise to remote agents more suited for the specific query. This paper introduces PPAI, the first personalized LLM agent interoperability system, which enables users to collaborate with each other based on agent specialization. However, the ever-changing pool of agents and their interchangeable capacity introduce new challenges when it comes to matching queries to agents and balancing loads, compared with existing P2P systems. Therefore, we propose a scalable query-agent pair scoring mechanism based on prototypes to identify suitable agents within a P2P network with churn. Moreover, we propose a multi-agent interoperability Bayesian game to balance local demand and global efficiency, when changes in remote agent load occur too quickly to be observed. Finally, we implement a prototype of PPAI and demonstrate that it substantially broadens the range of tasks that could be carried out while maintaining load balance. On average, it achieves an accuracy improvement of up to 7.96% across multiple tasks, while reducing latency by 16.34% compared to the baseline.",
+      "authors": [
+        "Zile Wang",
+        "Qianli Liu",
+        "Kaibin Guo",
+        "Haodong Wang",
+        "Jian Lin",
+        "Zicong Hong",
+        "Song Guo"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-05-18T08:49:33+00:00",
+      "link": "https://arxiv.org/pdf/2605.18067v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge device deployment and peer-to-peer collaboration for collaborative edge intelligence",
+      "llm_evidence_cn": "边缘设备部署和点对点协作实现协同边缘智能",
+      "llm_evidence": "边缘设备部署和点对点协作实现协同边缘智能",
+      "canonical_evidence": "边缘设备部署和点对点协作实现协同边缘智能",
+      "llm_tldr_en": "PPAI enables personalized LLM agents on edge devices to collaborate peer-to-peer based on specialization, addressing query-agent matching and load balancing challenges.",
+      "llm_tldr_cn": "现有边缘设备上的LLM代理缺乏协作能力，限制了任务处理范围。本文提出PPAI，首个个性化LLM代理互操作系统，允许用户根据代理专长进行点对点协作。面对代理池动态变化和负载不均衡的挑战，PPAI设计了高效的查询-代理匹配和负载均衡机制。实验表明系统能有效提升任务完成率和响应速度，为边缘智能协同提供了新范式。",
+      "llm_tldr": "现有边缘设备上的LLM代理缺乏协作能力，限制了任务处理范围。本文提出PPAI，首个个性化LLM代理互操作系统，允许用户根据代理专长进行点对点协作。面对代理池动态变化和负载不均衡的挑战，PPAI设计了高效的查询-代理匹配和负载均衡机制。实验表明系统能有效提升任务完成率和响应速度，为边缘智能协同提供了新范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.30102v1",
+      "source": "arxiv",
+      "title": "When Cloud Agents Meet Device Agents: Lessons from Hybrid Multi-Agent Systems",
+      "abstract": "The design space of agentic AI inference spans two extremes: frontier large language models (LLMs), typically hosted in the cloud and offering strong performance across a wide range of tasks at substantially high cost, and more cost-efficient small language models (SLMs), which are amenable to on-device inference. Hybrid multi-agent systems (MASs) combining on-device and cloud models offer a promising middle ground, but they also introduce a complex and poorly understood design space in which task accuracy, monetary cost, and edge energy consumption are tightly coupled; in the absence of general design principles, hybrid components, although not the most prevalent choice, are typically introduced through ad hoc decisions tailored to specific domains. In this work, we examine this design space more systematically. We adapt two representative MAS architectures to support hybrid inference and study how individual design choices shift the operating point along the Pareto frontier of power, cost, and performance. Our findings paint a nuanced picture of hybrid MAS design: while SLMs can effectively benefit from LLM assistance, the optimal architecture is highly task-dependent, and greater frontier-level compute does not consistently translate to better performance.",
+      "authors": [
+        "Corrado Rainone",
+        "Davide Belli",
+        "Bence Major",
+        "Arash Behboodi"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-05-28T15:45:02+00:00",
+      "link": "https://arxiv.org/pdf/2605.30102v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "lessons from hybrid multi-agent systems combining cloud and device agents",
+      "llm_evidence_cn": "混合多智能体系统中云端与设备智能体结合的经验",
+      "llm_evidence": "混合多智能体系统中云端与设备智能体结合的经验",
+      "canonical_evidence": "混合多智能体系统中云端与设备智能体结合的经验",
+      "llm_tldr_en": "This paper systematically studies hybrid MAS with cloud LLMs and on-device SLMs, providing design principles for accuracy, cost, and energy trade-offs.",
+      "llm_tldr_cn": "本文系统研究了结合云端大模型和端侧小模型的混合多智能体系统的设计空间，分析了任务准确性、成本和边缘能耗之间的耦合关系。通过大量实验，揭示了在不同场景下选择合适混合策略的原则，为端云协同智能体系统的实际部署提供了指南。",
+      "llm_tldr": "本文系统研究了结合云端大模型和端侧小模型的混合多智能体系统的设计空间，分析了任务准确性、成本和边缘能耗之间的耦合关系。通过大量实验，揭示了在不同场景下选择合适混合策略的原则，为端云协同智能体系统的实际部署提供了指南。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.00756v1",
+      "source": "arxiv",
+      "title": "CoMIC: Collaborative Memory and Insights Circulation for Long-Horizon LLM Agents in Cloud-Edge Systems",
+      "abstract": "Deploying lightweight Large Language Model (LLM) agents on edge servers can reduce latency and move agentic services closer to users, but resource-constrained edge models often struggle with long-horizon tasks that require persistent memory, subgoal tracking, and reflection. Fine-tuning edge models after deployment is costly and difficult to scale across heterogeneous nodes, while purely local memory leaves agents with isolated experience and growing prompt context. We propose \\textsc{CoMIC}, a parameter-update-free cloud-edge framework for Collaborative Memory and Insights Circulation. \\textsc{CoMIC} follows a \\textit{Centralized Reflection, Decentralized Execution} design: edge agents execute locally using subgoal-oriented hierarchical memory and selective re-expansion of relevant histories, while a cloud-side LLM critic asynchronously evaluates completed trajectories, filters reusable experience, and aggregates cross-agent guidance keyed by semantic subgoal identifiers. Across five long-horizon agent tasks spanning symbolic planning and text interaction, \\textsc{CoMIC} improves progress rate and action grounding for weak edge agents and yields task-dependent success-rate gains without updating model parameters.",
+      "authors": [
+        "Yannan Wang",
+        "Longli Yang",
+        "Zhen Liu",
+        "Abhishek Kumar",
+        "Carsten Maple"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-30T14:45:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.00756v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "cloud-edge collaborative memory circulation for LLM agents, key aspect of composite theme",
+      "llm_evidence_cn": "云边协作的记忆循环机制，核心符合端云协同主题",
+      "llm_evidence": "云边协作的记忆循环机制，核心符合端云协同主题",
+      "canonical_evidence": "云边协作的记忆循环机制，核心符合端云协同主题",
+      "llm_tldr_en": "Proposes CoMIC, a parameter-update-free cloud-edge framework for collaborative memory and insights circulation among LLM agents.",
+      "llm_tldr_cn": "本文提出CoMIC，一种免参数更新的云边协作框架，采用集中反思、分散执行的设计，边缘代理利用云端汇聚的洞察和记忆执行长周期任务，有效解决了边缘模型在长周期任务中的局限性。",
+      "llm_tldr": "本文提出CoMIC，一种免参数更新的云边协作框架，采用集中反思、分散执行的设计，边缘代理利用云端汇聚的洞察和记忆执行长周期任务，有效解决了边缘模型在长周期任务中的局限性。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.09530v2",
+      "source": "arxiv",
+      "title": "MemPrivacy: Privacy-Preserving Personalized Memory Management for Edge-Cloud Agents",
+      "abstract": "As LLM-powered agents are increasingly deployed in edge-cloud environments, personalized memory has become a key enabler of long-term adaptation and user-centric interaction. However, cloud-assisted memory management exposes sensitive user information, while existing privacy protection methods typically rely on aggressive masking that removes task-relevant semantics and consequently degrades memory utility and personalization quality. To address this challenge, We propose MemPrivacy, which identifies privacy-sensitive spans on edge devices, replaces them with semantically structured type-aware placeholders for cloud-side memory processing, and restores the original values locally when needed. By decoupling privacy protection from semantic destruction, MemPrivacy minimizes sensitive data exposure while retaining the information required for effective memory formation and retrieval. We also construct MemPrivacy-Bench for systematic evaluation, a dataset covering 200 users and over 52k privacy instances, and introduce a four-level privacy taxonomy for configurable protection policies. Experiments show that MemPrivacy achieves strong performance in privacy information extraction, substantially surpassing strong general-purpose models such as GPT-5.2 and Gemini-3.1-Pro, while also reducing inference latency. Across multiple widely used memory systems, MemPrivacy limits utility loss to within 1.6%, outperforming baseline masking strategies. Overall, MemPrivacy offers an effective balance between privacy protection and personalized memory utility for edge-cloud agents, enabling secure, practical, and user-transparent deployment.",
+      "authors": [
+        "Yining Chen",
+        "Jihao Zhao",
+        "Bo Tang",
+        "Haofen Wang",
+        "Yue Zhang",
+        "Fei Huang",
+        "Feiyu Xiong",
+        "Zhiyu Li"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.CL"
+      ],
+      "published": "2026-05-10T13:31:58+00:00",
+      "link": "https://arxiv.org/pdf/2605.09530v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "edge-cloud agents, privacy-preserving memory management",
+      "llm_evidence_cn": "端云代理的隐私保护记忆管理",
+      "llm_evidence": "端云代理的隐私保护记忆管理",
+      "canonical_evidence": "端云代理的隐私保护记忆管理",
+      "llm_tldr_en": "Proposes MemPrivacy, a privacy-preserving personalized memory management method for edge-cloud agents using type-aware placeholders.",
+      "llm_tldr_cn": "针对端云环境下代理个性化记忆中的隐私泄露问题，本文提出MemPrivacy，在边缘设备上识别隐私敏感片段，替换为类型占位符进行云端处理，本地还原，保护隐私而不牺牲语义。实验证明该方法有效性。",
+      "llm_tldr": "针对端云环境下代理个性化记忆中的隐私泄露问题，本文提出MemPrivacy，在边缘设备上识别隐私敏感片段，替换为类型占位符进行云端处理，本地还原，保护隐私而不牺牲语义。实验证明该方法有效性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.24486v1",
+      "source": "arxiv",
+      "title": "AgentFugue: Agent Scaling for Long-Horizon Tasks through Collective Reasoning",
+      "abstract": "Recent progress on long-horizon agentic tasks has been driven largely by scaling up individual agents through stronger models, better tools, and more effective scaffolding. In contrast, much less is understood about scaling out: whether multiple peer agents, all targeting the same task, can become an additional source of capability without relying on explicit role specialization or workflow orchestration. We study this question and propose AgentFugue, a collective reasoning framework built around a shared reasoning hub. As peer agents explore the same task in parallel, the hub records concise notes on what each agent has established, attempted, or ruled out, and enables each agent to selectively access what other agents have discovered in a form useful for its current search. This design turns otherwise isolated trajectories into a connected ecology of reusable intermediate reasoning without requiring centralized planning. We instantiate the hub as a plug-in communication layer, trained with supervised fine-tuning and end-to-end reinforcement learning. Across the challenging long-horizon settings we study, AgentFugue improves over strong baselines. Our results suggest that collective reasoning can turn scaling out peer agent systems into a distinct source of capability gains, rather than merely a way of spending more compute.",
+      "authors": [
+        "Yuyang Hu",
+        "Hongjin Qian",
+        "Shuting Wang",
+        "Jiongnan Liu",
+        "Tong Zhao",
+        "Xiaoxi Li",
+        "Zheng Liu",
+        "Zhicheng Dou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-05-23T09:21:51+00:00",
+      "link": "https://arxiv.org/pdf/2605.24486v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "collective reasoning framework for multiple peer agents to collaborate on long-horizon tasks",
+      "llm_evidence_cn": "多同行代理通过共享推理中心协作处理长周期任务的框架",
+      "llm_evidence": "多同行代理通过共享推理中心协作处理长周期任务的框架",
+      "canonical_evidence": "多同行代理通过共享推理中心协作处理长周期任务的框架",
+      "llm_tldr_en": "AgentFugue explores scaling out by having multiple peer agents share reasoning notes through a hub, improving long-horizon task completion without explicit orchestration.",
+      "llm_tldr_cn": "长周期任务通常通过增强单个代理来扩展，但多代理并行协作的潜力尚未充分挖掘。本文提出AgentFugue，一种集体推理框架，多个同层代理通过共享推理中心记录探索笔记，相互利用对方发现的信息，无需明确分工。实验表明该方法显著提升了复杂任务的完成率，证明多代理协同可作为独立于单智能体扩展的能力来源。",
+      "llm_tldr": "长周期任务通常通过增强单个代理来扩展，但多代理并行协作的潜力尚未充分挖掘。本文提出AgentFugue，一种集体推理框架，多个同层代理通过共享推理中心记录探索笔记，相互利用对方发现的信息，无需明确分工。实验表明该方法显著提升了复杂任务的完成率，证明多代理协同可作为独立于单智能体扩展的能力来源。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.09623v1",
+      "source": "arxiv",
+      "title": "Adaptive DNN Partitioning and Offloading in Heterogeneous Edge-Cloud Continuum",
+      "abstract": "In recent years, the use of artificial intelligence on resource-constrained IoT devices has grown significantly. However, existing approaches to DNN partitioning and offloading across the edge-cloud continuum typically rely on static methods that ignore runtime dynamics. Furthermore, they are often evaluated in simulated environments rather than on real hardware. To address this gap, we propose a framework that dynamically splits neural network layers across the heterogeneous continuum. The framework profiles the model at startup, measures network link conditions between nodes, and periodically re-evaluates the partition to adapt to environmental changes. We created a physical testbed comprising a Raspberry Pi edge device, a laptop fog, and a high-performance desktop PC as the cloud. We evaluated the framework over three widely adopted convolutional neural networks: VGG16, AlexNet, and MobileNetV2. Our results show that the framework achieves reductions in energy and end-to-end latency of 27.09--35.82% and 6.34--22.92%, respectively, compared to a static partitioning baseline. These findings confirm the superiority of adaptive to static partitioning.",
+      "authors": [
+        "Akuen Akoi Deng",
+        "Eimantas Butkus",
+        "Alfreds Lapkovskis",
+        "Praveen Kumar Donta"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI",
+        "cs.LG",
+        "cs.NI",
+        "cs.PF"
+      ],
+      "published": "2026-05-10T16:09:06+00:00",
+      "link": "https://arxiv.org/pdf/2605.09623v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "dynamic DNN splitting across heterogeneous edge-cloud continuum",
+      "llm_evidence_cn": "在异构边缘云连续体上动态分割DNN层",
+      "llm_evidence": "在异构边缘云连续体上动态分割DNN层",
+      "canonical_evidence": "在异构边缘云连续体上动态分割DNN层",
+      "llm_tldr_en": "Proposes a framework for adaptive DNN partitioning and offloading in heterogeneous edge-cloud continuum, dynamically adapting to runtime network conditions.",
+      "llm_tldr_cn": "现有DNN划分方法忽略运行时动态。本文提出自适应框架，在异构边缘云连续体上动态分割DNN层，通过实时网络测量和周期性重新评估来适应环境变化。在包含树莓派、笔记本电脑和云服务器的物理测试床上验证了效果。",
+      "llm_tldr": "现有DNN划分方法忽略运行时动态。本文提出自适应框架，在异构边缘云连续体上动态分割DNN层，通过实时网络测量和周期性重新评估来适应环境变化。在包含树莓派、笔记本电脑和云服务器的物理测试床上验证了效果。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.10384v1",
+      "source": "arxiv",
+      "title": "Agentic Performance at the Edge: Insights from Benchmarking",
+      "abstract": "Agentic artificial intelligence (AI) is a natural fit for Internet of Things (IoT) and edge systems, but edge deployments are often constrained to models around 8 billion parameters or smaller. An important question is: How much agentic-task quality is lost when model size is constrained by memory, power, and latency budgets? To address this question, in this paper, we provide an initial empirical study considering edge-focused model scaling, general-purpose versus coder-oriented model effects, and tool-enabled execution under a fixed protocol. We introduce a domain-conditioned evaluation methodology, an implementation-grounded analysis of model-tool interactions, practical guidance for model selection under constraints, and an analysis of failure modes that reveals distinct semantic versus execution failure patterns across model families. Our core finding is that edge-agent quality is not a simple function of parameter count. Robust deployment depends on the joint design of model choice and tool workflow. Domain-conditioned analysis reveals Pareto fronts in the accuracy-latency space that can guide strategy selection based on operational priorities.",
+      "authors": [
+        "Shiqiang Wang",
+        "Herbert Woisetschläger"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.DC",
+        "cs.NI"
+      ],
+      "published": "2026-05-11T11:24:20+00:00",
+      "link": "https://arxiv.org/pdf/2605.10384v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Agentic AI performance benchmarking at the edge",
+      "llm_evidence_cn": "边缘代理AI性能基准测试",
+      "llm_evidence": "边缘代理AI性能基准测试",
+      "canonical_evidence": "边缘代理AI性能基准测试",
+      "llm_tldr_en": "Benchmarks agentic AI performance on edge devices, analyzing trade-offs between model size, task quality, and tool execution.",
+      "llm_tldr_cn": "边缘设备部署代理AI面临模型大小限制。本文对8B参数以下模型在边缘的代理任务进行基准测试，引入领域条件化评估方法。结果揭示了模型规模与任务质量之间的权衡，并分析了工具交互失败模式，为边缘代理模型选择提供实用指导。",
+      "llm_tldr": "边缘设备部署代理AI面临模型大小限制。本文对8B参数以下模型在边缘的代理任务进行基准测试，引入领域条件化评估方法。结果揭示了模型规模与任务质量之间的权衡，并分析了工具交互失败模式，为边缘代理模型选择提供实用指导。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.25701v1",
+      "source": "arxiv",
+      "title": "Neural Router: Semantic Content Matching for Agentic AI",
+      "abstract": "Large language models (LLMs) can serve as the semantic-matching engine of a content-based publish/subscribe broker for agentic AI across the edge-cloud computing continuum, bridging the vocabulary and modality gaps that defeat keyword and embedding filters. Framed as offline multi-label retrieval over three public datasets spanning social-media, legal, and smart-home sensor domains (six LLMs, seven baselines), our central contribution is a two-crossover cost-accuracy characterisation: an analytical context-window crossover below which a CoverAndMerge compression pipeline reduces LLM invocations, and an empirical discrimination-capacity crossover above which matching accuracy collapses independently of context budget, by a model-dependent factor of parameter count and training generation. Two findings carry practical weight: above the discrimination crossover, compression cannot recover accuracy and only frontier-scale models clear large subscription sets; and there backend choice dominates configuration choice, so model selection, not pipeline tuning, is the primary operator lever. We accompany this with three composable algorithms and a per-cluster Quality-of-Experience framework for autonomic LLM-tier selection.",
+      "authors": [
+        "Lauri Lovén",
+        "Abhishek Kumar",
+        "Alexander Engelhardt",
+        "Alaa Saleh",
+        "Roberto Morabito",
+        "Xiaoli Liu",
+        "Naser Hossein Motlagh",
+        "Sasu Tarkoma"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.CL",
+        "cs.IR",
+        "cs.NI"
+      ],
+      "published": "2026-05-25T10:58:53+00:00",
+      "link": "https://arxiv.org/pdf/2605.25701v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "edge-cloud computing continuum, agentic AI semantic matching",
+      "llm_evidence_cn": "边缘云连续体上的代理AI语义匹配",
+      "llm_evidence": "边缘云连续体上的代理AI语义匹配",
+      "canonical_evidence": "边缘云连续体上的代理AI语义匹配",
+      "llm_tldr_en": "Proposes a neural router for agentic AI using LLMs as semantic matching engine across edge-cloud continuum, with cost-accuracy characterization.",
+      "llm_tldr_cn": "边缘云连续体上代理AI通信面临词汇和模态鸿沟。本文提出神经路由器，利用大语言模型作为语义匹配引擎，并发现上下文窗口和判别能力的交叉点，指导压缩管道降低LLM调用成本。在三个数据集上的评估验证了其有效性，为端云协同代理AI提供了可扩展路由方案。",
+      "llm_tldr": "边缘云连续体上代理AI通信面临词汇和模态鸿沟。本文提出神经路由器，利用大语言模型作为语义匹配引擎，并发现上下文窗口和判别能力的交叉点，指导压缩管道降低LLM调用成本。在三个数据集上的评估验证了其有效性，为端云协同代理AI提供了可扩展路由方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.14892v1",
+      "source": "arxiv",
+      "title": "Beyond Individual Intelligence: Surveying Collaboration, Failure Attribution, and Self-Evolution in LLM-based Multi-Agent Systems",
+      "abstract": "LLM-based autonomous agents have demonstrated strong capabilities in reasoning, planning, and tool use, yet remain limited when tasks require sustained coordination across roles, tools, and environments. Multi-agent systems address this through structured collaboration among specialized agents, but tighter coordination also amplifies a less explored risk: errors can propagate across agents and interaction rounds, producing failures that are difficult to diagnose and rarely translate into structural self-improvement. Existing surveys cover individual agent capabilities, multi-agent collaboration, or agent self-evolution separately, leaving the causal dependencies among them unexamined. This survey provides a unified review organized around four causally linked stages, which we term the LIFE progression: Lay the capability foundation, Integrate agents through collaboration, Find faults through attribution, and Evolve through autonomous self-improvement. For each stage, we provide systematic taxonomies and formally characterize the dependencies between adjacent stages, revealing how each stage both depends on and constrains the next. Beyond synthesizing existing work, we identify open challenges at stage boundaries and propose a cross-stage research agenda for closed-loop multi-agent systems capable of continuously diagnosing failures, reorganizing structures, and refining agent behaviors, extending current coordination frameworks toward more self-organizing forms of collective intelligence. By bridging these previously fragmented research threads, this survey aims to offer both a systematic reference and a conceptual roadmap toward autonomous, self-improving multi-agent intelligence.",
+      "authors": [
+        "Shihao Qi",
+        "Jie Ma",
+        "Rui Xing",
+        "Wei Guo",
+        "Xiao Huang",
+        "Zhitao Gao",
+        "Jianhao Deng",
+        "Jun Liu",
+        "Lingling Zhang",
+        "Bifan Wei",
+        "Boqian Yang",
+        "Pinghui Wang",
+        "Jianwen Sun",
+        "Jing Tao",
+        "Yaqiang Wu",
+        "Hui Liu",
+        "Yu Yao",
+        "Tongliang Liu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-14T14:36:13+00:00",
+      "link": "https://arxiv.org/pdf/2605.14892v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "survey on collaboration, failure attribution, self-evolution in multi-agent systems",
+      "llm_evidence_cn": "多代理系统中协作、故障归因与自我演化的综述",
+      "llm_evidence": "多代理系统中协作、故障归因与自我演化的综述",
+      "canonical_evidence": "多代理系统中协作、故障归因与自我演化的综述",
+      "llm_tldr_en": "Surveys collaboration, failure attribution, and self-evolution in LLM-based multi-agent systems, highlighting causal dependencies.",
+      "llm_tldr_cn": "这篇综述系统地调查了基于LLM的多代理系统中的协作、故障归因和自我演化机制，揭示了三者之间的因果依赖关系，为构建更鲁棒的协作系统提供指导。",
+      "llm_tldr": "这篇综述系统地调查了基于LLM的多代理系统中的协作、故障归因和自我演化机制，揭示了三者之间的因果依赖关系，为构建更鲁棒的协作系统提供指导。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.11839v1",
+      "source": "arxiv",
+      "title": "Trade-offs in Decentralized Agentic AI Discovery Across the Compute Continuum",
+      "abstract": "Agentic systems deployed across the compute continuum need discovery mechanisms that remain effective across cloud, edge, and intermittently connected domains. In some emerging agentic architectures, decentralized discovery is already an active design direction, placing DHT-based lookup on the path toward agent directories. This paper studies the trade-offs among major structured-overlay families for agent discovery, comparing Chord, Pastry, and Kademlia as candidate indexing substrates within a shared control-plane framework. Using a benchmark subset centered on a 4096-node stationary comparison and a representative 4096-node churn benchmark, the paper characterizes how discovery reliability, startup behavior, and control-plane overhead vary across these overlays. The goal is to clarify the operating points they expose for agent discovery across edge-to-cloud environments.",
+      "authors": [
+        "Patrizio Dazzi",
+        "Emanuele Carlini",
+        "Matteo Mordacchini",
+        "Saul Urso"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI"
+      ],
+      "published": "2026-05-12T09:25:28+00:00",
+      "link": "https://arxiv.org/pdf/2605.11839v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "trade-off analysis of decentralized agent discovery across cloud, edge, and intermittently connected domains",
+      "llm_evidence_cn": "跨云、边缘和间歇连接域的分布式代理发现权衡分析",
+      "llm_evidence": "跨云、边缘和间歇连接域的分布式代理发现权衡分析",
+      "canonical_evidence": "跨云、边缘和间歇连接域的分布式代理发现权衡分析",
+      "llm_tldr_en": "This paper studies DHT-based discovery mechanisms for agentic systems across the compute continuum, comparing Chord, Pastry, and Kademlia in terms of reliability, startup behavior, and control overhead.",
+      "llm_tldr_cn": "代理系统部署在计算连续体（云、边缘、间断连接域）需要有效的发现机制。本文比较了三种结构化覆盖网络（Chord、Pastry、Kademlia）作为代理发现底层的性能权衡。通过4096节点静态和动态波动基准测试，刻画了发现可靠性、启动行为和开销特性。结果为构建分布式边缘云代理架构提供了设计指导。",
+      "llm_tldr": "代理系统部署在计算连续体（云、边缘、间断连接域）需要有效的发现机制。本文比较了三种结构化覆盖网络（Chord、Pastry、Kademlia）作为代理发现底层的性能权衡。通过4096节点静态和动态波动基准测试，刻画了发现可靠性、启动行为和开销特性。结果为构建分布式边缘云代理架构提供了设计指导。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.05637v1",
+      "source": "arxiv",
+      "title": "Availability-Aware and Efficiency-Driven AI Service Chain Provisioning in Multi-Domain Edge Intelligence Cloud",
+      "abstract": "In a multi-domain edge intelligence cloud (MDEIC) managed by multiple network operators, AI services are delivered by chains of virtual network functions (VNFs) executed in sequence, called AI service chains (AISCs). Therefore, achieving an efficient and economical AISC provisioning approach is essential. However, the interaction between the environmental characteristics (heterogeneity, resource constraints and limited information visibility) of MDEIC and the time-dependence of AISCs, introduces various challenges to AISC provisioning in MDEIC. In this paper, we first formulate the AISC provisioning problem as a partially observable stochastic game (POSG). Then, we propose a graph-and-time-based multi-agent AISC provisioning (GT-MAAISCP) approach to achieve the collaborative optimization of AISC provisioning cost, delay and availability. Specifically, each agent uses the graph-time dueling network (GTDN) architecture to extract network topology information and temporal relationships. Finally, the experimental results demonstrate that the proposed approach outperforms benchmark approaches in MDEIC and also illustrate its performance under varying network topologies and different numbers of local EICs (LEICs).",
+      "authors": [
+        "Hanzhi Chang",
+        "Jing Bai",
+        "Xin Tang",
+        "Xiaomei Liu",
+        "Yiming Chen"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-06-04T03:04:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.05637v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "edge intelligence cloud, multi-agent AI service chain provisioning",
+      "llm_evidence_cn": "边缘智能云中的多代理AI服务链供应",
+      "llm_evidence": "边缘智能云中的多代理AI服务链供应",
+      "canonical_evidence": "边缘智能云中的多代理AI服务链供应",
+      "llm_tldr_en": "Formulates AI service chain provisioning in multi-domain edge cloud as a POSG, proposing a graph-and-time-based multi-agent approach for efficiency.",
+      "llm_tldr_cn": "针对多域边缘智能云中AI服务链的供应效率问题，本文将其建模为部分可观测随机博弈，并提出了基于图与时间的多代理算法。实验表明该方法在资源利用率和可用性方面均有提升。",
+      "llm_tldr": "针对多域边缘智能云中AI服务链的供应效率问题，本文将其建模为部分可观测随机博弈，并提出了基于图与时间的多代理算法。实验表明该方法在资源利用率和可用性方面均有提升。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.15132v1",
+      "source": "arxiv",
+      "title": "APWA: A Distributed Architecture for Parallelizable Agentic Workflows",
+      "abstract": "Autonomous multi-agent systems based on large language models (LLMs) have demonstrated remarkable abilities in independently solving complex tasks in a wide breadth of application domains. However, these systems hit critical reasoning, coordination, and computational scaling bottlenecks as the size and complexity of their tasks grow. These limitations hinder multi-agent systems from achieving high-throughput processing for highly parallelizable tasks, despite the availability of parallel computing and reasoning primitives in the underlying LLMs. We introduce the Agent-Parallel Workload Architecture (APWA), a distributed multi-agent system architecture designed for the efficient processing of heavily parallelizable agentic workloads. APWA facilitates parallel execution by decomposing workflows into non-interfering subproblems that can be processed using independent resources without cross-communication. It supports heterogeneous data and parallel processing patterns, and it accommodates tasks from a wide breadth of domains. In our evaluation, we demonstrate that APWA can dynamically decompose complex queries into parallelizable workflows and scales on larger tasks in settings where prior systems fail completely.",
+      "authors": [
+        "Evan Rose",
+        "Tushin Mallick",
+        "Matthew D. Laws",
+        "Cristina Nita-Rotaru",
+        "Alina Oprea"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.DC",
+        "cs.MA"
+      ],
+      "published": "2026-05-14T17:40:20+00:00",
+      "link": "https://arxiv.org/pdf/2605.15132v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "distributed multi-agent system architecture for parallelizable agentic workloads",
+      "llm_evidence_cn": "分布式多智能体系统架构，支持可并行化的代理工作负载",
+      "llm_evidence": "分布式多智能体系统架构，支持可并行化的代理工作负载",
+      "canonical_evidence": "分布式多智能体系统架构，支持可并行化的代理工作负载",
+      "llm_tldr_en": "Introduces APWA, a distributed multi-agent architecture designed for efficient processing of heavily parallelizable agentic workloads, addressing coordination and scaling bottlenecks.",
+      "llm_tldr_cn": "当前多智能体系统在处理高度并行化任务时遇到推理、协调和计算瓶颈。本文提出APWA分布式架构，通过智能任务分解和并行调度大幅提升吞吐量。实验表明在多种任务上实现了近线性加速，为构建可扩展的代理系统提供了新思路。",
+      "llm_tldr": "当前多智能体系统在处理高度并行化任务时遇到推理、协调和计算瓶颈。本文提出APWA分布式架构，通过智能任务分解和并行调度大幅提升吞吐量。实验表明在多种任务上实现了近线性加速，为构建可扩展的代理系统提供了新思路。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.15556v1",
+      "source": "arxiv",
+      "title": "TopoClaw: A Human-Centric and Topology-Aware Agent Operating System",
+      "abstract": "Large language models (LLMs) have evolved AI assistants into autonomous reasoning engines that maintain context, invoke tools, and pursue long-horizon tasks. This has spurred Agent Operating Systems (Agent OS) as kernel-like layers for lifecycle management, memory, scheduling, and access control. Yet most designs remain agent-centric, treating the OS as a single-host runtime for internal reasoning and tool use, leaving open how autonomous actions integrate with distributed, collaborative, permission-sensitive workflows.   TopoClaw is an open-source, human-centric, topology-aware Agent OS modeling the user's ecosystem as two coupled structures: a physical device topology of heterogeneous surfaces and a social relationship topology of shared spaces, teams, and delegated roles. It unifies device operation, messaging, and skills around accountable cross-boundary execution, with three core contributions: (1) cross-device action placement, decoupling intent from actuation and routing distributed actions across the device cluster based on hardware affordances and user context; (2) cross-user identity attribution, treating agents as socially situated \"Digital Twins\" that coordinate in multi-user spaces while preserving provenance, role-aware permissions, and human accountability; (3) cross-context authority governance, pairing broad capability with distributed, context-aware policy enforcement across physical and social trust boundaries to bound proactive autonomy at the OS layer.   This report presents TopoClaw as an engineering-oriented reference architecture, covering its design principles, runtime, cross-device execution, collaboration mechanisms, security model, and deployment outlook.",
+      "authors": [
+        "Heyuan Huang",
+        "Yeyi Guan",
+        "Jihong Wang",
+        "Mingzhi Wang",
+        "Jiamu Zhou",
+        "Xiangmou Qu",
+        "Jiaxin Yin",
+        "Xin Liao",
+        "Xingyu Lou",
+        "Jun Wang"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-05-15T02:49:36+00:00",
+      "link": "https://arxiv.org/pdf/2605.15556v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "topology-aware agent OS for distributed device collaboration",
+      "llm_evidence_cn": "拓扑感知的智能体操作系统支持分布式设备协作",
+      "llm_evidence": "拓扑感知的智能体操作系统支持分布式设备协作",
+      "canonical_evidence": "拓扑感知的智能体操作系统支持分布式设备协作",
+      "llm_tldr_en": "TopoClaw is an open-source agent OS modeling physical device topology and social relationships for distributed, collaborative, permission-sensitive workflows.",
+      "llm_tldr_cn": "TopoClaw针对现有智能体操作系统单主机、智能体中心的局限，提出了一种以人为中心、拓扑感知的智能体操作系统。它通过建模用户的物理设备拓扑和社会关系拓扑，支持跨设备的分布式协作和权限管理。开源实现展示了其在异构设备上的灵活性和可扩展性。",
+      "llm_tldr": "TopoClaw针对现有智能体操作系统单主机、智能体中心的局限，提出了一种以人为中心、拓扑感知的智能体操作系统。它通过建模用户的物理设备拓扑和社会关系拓扑，支持跨设备的分布式协作和权限管理。开源实现展示了其在异构设备上的灵活性和可扩展性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.06399v1",
+      "source": "arxiv",
+      "title": "CollabSim: A CSCW-Grounded Methodology for Investigating Collaborative Competence of LLM Agents through Controlled Multi-Agent Experiments",
+      "abstract": "Multi-agent systems (MAS) built on large language models have shown growing promise, with their effectiveness resting on agents' ability to coordinate through text-based channels much as human teams do. Yet recent study suggests that MAS often falter not because agents lack individual task-solving ability, but because they lack collaborative competence: the capacity to establish common ground, maintain shared task understanding, balance individual and collective incentives, and repair misalignment as interaction unfolds. Decades of research in Computer-Supported Cooperative Work have characterized these requirements for human teams coordinating under constrained communication, yet existing MAS evaluations focus mainly on task outcomes or single-agent proficiency in reasoning, planning, and tool use. To enable a systematic analysis of agents' collaborative competence in MAS, we introduce CollabSim, a configurable simulation framework that combines a theory-grounded definition of collaborative capabilities, controlled manipulation of interaction conditions, and action-level probing of agents' internal states. Experiments across four LLMs show that CollabSim can capture condition effects, separate model performance patterns, and reveal task-dependent effects of agent design.",
+      "authors": [
+        "Jiaju Chen",
+        "Bo Sun",
+        "Yuxuan Lu",
+        "Yun Wang",
+        "Dakuo Wang",
+        "Bingsheng Yao"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-04T17:06:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.06399v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "methodology for investigating collaborative competence of LLM agents through controlled experiments",
+      "llm_evidence_cn": "通过受控实验研究LLM代理协作能力的CSCW方法论",
+      "llm_evidence": "通过受控实验研究LLM代理协作能力的CSCW方法论",
+      "canonical_evidence": "通过受控实验研究LLM代理协作能力的CSCW方法论",
+      "llm_tldr_en": "CollabSim provides a CSCW-grounded methodology to systematically evaluate and diagnose collaborative competence deficits in LLM-based multi-agent systems.",
+      "llm_tldr_cn": "多智能体系统常因缺乏协作能力而非个体能力不足而失败。本文借鉴计算机支持协同工作（CSCW）理论，提出CollabSim方法论，通过受控多智能体实验系统评估代理的共识建立、共享理解、激励平衡等协作能力。该方法为诊断和改进LLM代理的协作缺陷提供了标准化框架，实验揭示了现有代理在协作范式上的普遍短板。",
+      "llm_tldr": "多智能体系统常因缺乏协作能力而非个体能力不足而失败。本文借鉴计算机支持协同工作（CSCW）理论，提出CollabSim方法论，通过受控多智能体实验系统评估代理的共识建立、共享理解、激励平衡等协作能力。该方法为诊断和改进LLM代理的协作缺陷提供了标准化框架，实验揭示了现有代理在协作范式上的普遍短板。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
