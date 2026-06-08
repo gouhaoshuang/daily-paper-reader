@@ -1,0 +1,1300 @@
+{
+  "top_k": 200,
+  "generated_at": "2026-06-08T03:08:00.335530+00:00",
+  "papers": [
+    {
+      "id": "openreview-icml-2025-vh2dt4st67",
+      "source": "ICML-2025-Accepted",
+      "title": "Occult: Optimizing Collaborative Communications across Experts for Accelerated Parallel MoE Training and Inference",
+      "abstract": "Mixture-of-experts (MoE) architectures could achieve impressive computational efficiency with expert parallelism, which relies heavily on all-to-all communication across devices. Unfortunately, such communication overhead typically constitutes a significant portion of the total runtime, hampering the scalability of distributed training and inference for modern MoE models (consuming over 40% runtime in large-scale training). In this paper, we first define $\\textit{collaborative communication}$ to illustrate this intrinsic limitation, and then propose system- and algorithm-level innovations to reduce communication costs. Specifically, given a pair of experts co-activated by one token, we call them as $\\textit{collaborated}$, which comprises $2$ cases as $\\textit{intra-}$ and $\\textit{inter-collaboration}$, depending on whether they are kept on the same device. Our pilot investigations reveal that augmenting the proportion of intra-collaboration can accelerate expert parallel at scale. It motivates us to strategically $\\underline{\\texttt{o}}$ptimize $\\underline{\\texttt{c}}$ollaborative $\\underline{\\texttt{c}}$omm$\\underline{\\texttt{u}}$nication for acce$\\underline{\\texttt{l}}$era$\\underline{\\texttt{t}}$ed MoE training and inference, dubbed $\\textbf{\\texttt{Occult}}$. Our designs are capable of $\\underline{either}$ delivering exact results with reduced communication cost, $\\underline{or}$ controllably minimizing the cost with collaboration pruning, materialized by modified fine-tuning. Comprehensive experiments on various MoE-LLMs demonstrate that $\\texttt{Occult}$ can be faster than popular state-of-the-art inference or training frameworks (over 50% speed up across multiple tasks and models) with comparable or superior quality compared to the standard fine-tuning. Codes will be available upon acceptance.",
+      "authors": [
+        "Shuqing Luo",
+        "Pingzhi Li",
+        "Jie Peng",
+        "Yang Zhao",
+        "Yu Cao",
+        "Yu Cheng",
+        "Tianlong Chen"
+      ],
+      "primary_category": "Mixture-of-Experts",
+      "categories": [
+        "Mixture-of-Experts",
+        "Communication Efficiency",
+        "Expert Parallelism"
+      ],
+      "published": "2025-05-01T13:12:47+00:00",
+      "link": "https://openreview.net/forum?id=vh2Dt4sT67",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-qgdlzt3dkz",
+      "source": "ICML-2025-Accepted",
+      "title": "Cost-efficient Collaboration between On-device and Cloud Language Models",
+      "abstract": "We investigate an emerging setup in which a small, on-device language model (LM) with access to local data collaborates with a frontier, cloud-hosted LM to solve real-world tasks involving financial, medical, and scientific reasoning over long documents. \n*Can a local-remote collaboration reduce cloud inference costs while preserving quality?*\nFirst, we consider a naïve collaboration protocol, coined MINION, where the local and remote models simply chat back and forth. Because only the local model ingests the full context, this protocol reduces cloud costs by 30.4x, but recovers only 87% of the performance of the frontier model.\nWe identify two key limitations of this protocol: the local model struggles to (1) follow the remote model's multi-step instructions and (2) reason over long contexts. Motivated by these observations, we propose MINIONS, a protocol in which the remote model decomposes the task into easier subtasks over shorter chunks of the document, that are executed locally in parallel. MINIONS reduces costs by 5.7× on average while recovering 97.9% of the remote-only performance. Our analysis reveals several key design choices that influence the trade-off between cost and performance in local-remote systems.",
+      "authors": [
+        "Avanika Narayan",
+        "Dan Biderman",
+        "Sabri Eyuboglu",
+        "Avner May",
+        "Scott Linderman",
+        "James Zou",
+        "Christopher Re"
+      ],
+      "primary_category": "Local-remote collaboration",
+      "categories": [
+        "Local-remote collaboration",
+        "reasoning"
+      ],
+      "published": "2025-05-01T13:17:50.199+00:00",
+      "link": "https://openreview.net/forum?id=qGDlzt3dKz",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-our945qeub",
+      "source": "ICML-2025-Accepted",
+      "title": "Collaborative Mean Estimation Among Heterogeneous Strategic Agents: Individual Rationality, Fairness, and Truthful Contribution",
+      "abstract": "We study a collaborative learning problem where $m$ agents aim to estimate a vector $\\mu =(\\mu_1,\\ldots,\\mu_d)\\in \\mathbb{R}^d$ by sampling from associated univariate normal distributions $(\\mathcal{N}(\\mu_k, \\sigma^2))\\_{k\\in[d]}$. Agent $i$ incurs a cost $c_{i,k}$ to sample from $\\mathcal{N}(\\mu_k, \\sigma^2)$. Instead of working independently, agents can exchange data, collecting cheaper samples and sharing them in return for costly data, thereby reducing both costs and estimation error. We design a mechanism to facilitate such collaboration, while addressing two key challenges: ensuring *individually rational (IR) and fair outcomes* so all agents benefit, and *preventing strategic behavior* (e.g. non-collection, data fabrication) to avoid socially undesirable outcomes.\nWe design a mechanism and an associated Nash equilibrium (NE) which minimizes the social penalty-sum of agents' estimation errors and collection costs-while being IR for all agents. We achieve a $\\mathcal{O}(\\sqrt{m})$-approximation to the minimum social penalty in the worst case and an $\\mathcal{O}(1)$-approximation under favorable conditions. Additionally, we establish three hardness results: no nontrivial mechanism guarantees *(i)* a dominant strategy equilibrium where agents report truthfully, *(ii)* is IR for every strategy profile of other agents, *(iii)* or avoids a worst-case $\\Omega(\\sqrt{m})$ price of stability in any NE. Finally, by integrating concepts from axiomatic bargaining, we demonstrate that our mechanism supports fairer outcomes than one which minimizes social penalty.",
+      "authors": [
+        "Alex Clinton",
+        "Yiding Chen",
+        "Jerry Zhu",
+        "Kirthevasan Kandasamy"
+      ],
+      "primary_category": "Mechanism design",
+      "categories": [
+        "Mechanism design",
+        "collaborative learning",
+        "mean estimation"
+      ],
+      "published": "2025-05-01T13:14:58.362+00:00",
+      "link": "https://openreview.net/forum?id=OUr945QeUb",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-zbbysvgkub",
+      "source": "ICML-2025-Accepted",
+      "title": "Cross-environment Cooperation Enables Zero-shot Multi-agent Coordination",
+      "abstract": "Zero-shot coordination (ZSC), the ability to adapt to a new partner in a cooperative task, is a critical component of human-compatible AI. While prior work has focused on training agents to cooperate on a single task, these specialized models do not generalize to new tasks, even if they are highly similar. Here, we study how reinforcement learning on a **distribution of environments with a single partner** enables learning general cooperative skills that support ZSC with **many new partners on many new problems**. We introduce *two* Jax-based, procedural generators that create billions of solvable coordination challenges. We develop a new paradigm called **Cross-Environment Cooperation (CEC)**, and show that it outperforms competitive baselines quantitatively and qualitatively when collaborating with real people. Our findings suggest that learning to collaborate across many unique scenarios encourages agents to develop general norms, which prove effective for collaboration with different partners. Together, our results suggest a new route toward designing generalist cooperative agents capable of interacting with humans without requiring human data.",
+      "authors": [
+        "Kunal Jha",
+        "Wilka Carvalho",
+        "Yancheng Liang",
+        "Simon Shaolei Du",
+        "Max Kleiman-Weiner",
+        "Natasha Jaques"
+      ],
+      "primary_category": "Zero-shot Coordination",
+      "categories": [
+        "Zero-shot Coordination",
+        "Human-AI Collaboration",
+        "Multi-agent Interactions"
+      ],
+      "published": "2025-05-01T13:20:22.75+00:00",
+      "link": "https://openreview.net/forum?id=zBBYsVGKuB",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-bkim54qftz",
+      "source": "ICML-2025-Accepted",
+      "title": "On the Resilience of LLM-Based Multi-Agent Collaboration with Faulty Agents",
+      "abstract": "Large language model-based multi-agent systems have shown great abilities across various tasks due to the collaboration of expert agents, each focusing on a specific domain. However, the impact of clumsy or even malicious agents—those who frequently make errors in their tasks—on the overall performance of the system remains underexplored. This paper investigates: (1) What is the resilience of various system structures (e.g., A$\\rightarrow$B$\\rightarrow$C, A$\\leftrightarrow$B$\\leftrightarrow$C) under faulty agents, on different downstream tasks? (2) How can we increase system resilience to defend against these agents? To simulate faulty agents, we propose two approaches—AutoTransform and AutoInject—which introduce mistakes into the agents' responses. Experiments on four downstream tasks using six systems show that the \"hierarchical\" structure, i.e., A$\\rightarrow$(B$\\leftrightarrow$C), exhibits superior resilience with the lowest performance drop of 5.5%, compared to 10.5% and 23.7% of other two structures. To further improve resilience, we introduce (1) Challenger, that introduces a mechanism for each agent to challenge others' outputs, and (2) Inspector, an additional agent to review and correct messages, recovering up to 96.4% errors made by faulty agents. Our code and data are available at https://github.com/CUHK-ARISE/MAS-Resilience.",
+      "authors": [
+        "Jen-tse Huang",
+        "Jiaxu Zhou",
+        "Tailin Jin",
+        "Xuhui Zhou",
+        "Zixi Chen",
+        "Wenxuan Wang",
+        "Youliang Yuan",
+        "Michael Lyu",
+        "Maarten Sap"
+      ],
+      "primary_category": "Multi-Agent Collaboration",
+      "categories": [
+        "Multi-Agent Collaboration",
+        "Large Language Models",
+        "Resilience"
+      ],
+      "published": "2025-05-01T13:13:25.887+00:00",
+      "link": "https://openreview.net/forum?id=bkiM54QftZ",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-czpoizqwwd",
+      "source": "ICML-2025-Accepted",
+      "title": "ResearchTown: Simulator of Human Research Community",
+      "abstract": "Large Language Models (LLMs) have demonstrated remarkable potential in scientific domains, yet a fundamental question remains unanswered: Can we simulate human research communities with LLMs? Addressing this question can deepen our understanding of the processes behind idea brainstorming and inspire the automatic discovery of novel scientific insights. In this work, we propose ResearchTown, a multi-agent framework for research community simulation. Within this framework, the human research community is simplified as an agent-data graph, where researchers and papers are represented as agent-type and data-type nodes, respectively, and connected based on their collaboration relationships. We also introduce TextGNN, a text-based inference framework that models various research activities (e.g., paper reading, paper writing, and review writing) as special forms of a unified message-passing process on the agent-data graph. To evaluate the quality of the research community simulation, we present ResearchBench, a benchmark that uses a node-masking prediction task for scalable and objective assessment based on similarity. Our experiments reveal three key findings: (1) ResearchTown can provide a realistic simulation of collaborative research activities, including paper writing and review writing; (2) ResearchTown can maintain robust simulation with multiple researchers and diverse papers; (3) ResearchTown can generate interdisciplinary research ideas that potentially inspire pioneering research directions.",
+      "authors": [
+        "Haofei Yu",
+        "Zhaochen Hong",
+        "Zirui Cheng",
+        "Kunlun Zhu",
+        "Keyang Xuan",
+        "Jinwei Yao",
+        "Tao Feng",
+        "Jiaxuan You"
+      ],
+      "primary_category": "Multi-agent; Graph Neural Network; Large Language Model; Automatic Research",
+      "categories": [
+        "Multi-agent; Graph Neural Network; Large Language Model; Automatic Research"
+      ],
+      "published": "2025-05-01T13:17:33.564+00:00",
+      "link": "https://openreview.net/forum?id=CZPOIZqWwd",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-zdmmdz33io",
+      "source": "ICML-2025-Accepted",
+      "title": "You Get What You Give: Reciprocally Fair Federated Learning",
+      "abstract": "Federated learning (FL) is a popular collaborative learning paradigm, whereby agents with individual datasets can jointly train an ML model. \nWhile higher data sharing improves model accuracy and leads to higher payoffs, it also raises costs associated with data acquisition or loss of privacy, causing agents to be strategic about their data contribution. \nThis leads to undesirable behavior at a Nash equilibrium (NE) such as *free-riding*, resulting in sub-optimal fairness, data sharing, and welfare.\nTo address this, we design $\\mathcal{M}^{Shap}$, a budget-balanced payment mechanism for FL, that admits Nash equilibria under mild conditions, and achieves *reciprocal fairness*: where each agent's payoff equals her contribution to the collaboration, as measured by the Shapley share. \nIn addition to fairness, we show that the NE under $\\mathcal{M}^{Shap}$ has desirable guarantees in terms of accuracy, welfare, and total data collected.\nWe validate our theoretical results through experiments, demonstrating that $\\mathcal{M}^{Shap}$ outperforms baselines in terms of fairness and efficiency.",
+      "authors": [
+        "Aniket Murhekar",
+        "Jiaxin Song",
+        "Parnian Shahkar",
+        "Bhaskar Ray Chaudhury",
+        "Ruta Mehta"
+      ],
+      "primary_category": "Federated learning",
+      "categories": [
+        "Federated learning",
+        "Nash equilibrium",
+        "mechanism design",
+        "fairness"
+      ],
+      "published": "2025-05-01T13:17:24.993+00:00",
+      "link": "https://openreview.net/forum?id=ZdmMDz33Io",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2024-u6perhesjl",
+      "source": "ICML-2024-Public",
+      "title": "Position: Evolving AI Collectives Enhance Human Diversity and Enable Self-Regulation",
+      "abstract": "Large language model behavior is shaped by the language of those with whom they interact. This capacity and their increasing prevalence online portend that they will intentionally or unintentionally \"program\" one another and form emergent AI subjectivities, relationships, and collectives. Here, we call upon the research community to investigate these \"societies\" of interacting artificial intelligences to increase their rewards and reduce their risks for human society and the health of online environments. We use a small \"community\" of models and their evolving outputs to illustrate how such emergent, decentralized AI collectives can spontaneously expand the bounds of human diversity and reduce the risk of toxic, anti-social behavior online. Finally, we discuss opportunities for AI cross-moderation and address ethical issues and design challenges associated with creating and maintaining free-formed AI collectives.",
+      "authors": [
+        "Shiyang Lai",
+        "Yujin Potter",
+        "Junsol Kim",
+        "Richard Zhuang",
+        "Dawn Song",
+        "James Evans"
+      ],
+      "primary_category": "ICML.cc/2024/Conference",
+      "categories": [],
+      "published": "2024-05-02T00:40:23.426+00:00",
+      "link": "https://openreview.net/forum?id=u6PeRHEsjL",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-voxad3hhpt",
+      "source": "ICML-2025-Accepted",
+      "title": "MetaAgent: Automatically Constructing Multi-Agent Systems Based on Finite State Machines",
+      "abstract": "Large Language Models (LLMs) have demonstrated the ability to solve a wide range of practical tasks within multi-agent systems. However, existing human-designed multi-agent frameworks are typically limited to a small set of pre-defined scenarios, while current automated design methods suffer from several limitations, such as the lack of tool integration, dependence on external training data, and rigid communication structures. In this paper, we propose \\textbf{MetaAgent}, a  \\textbf{finite state machine} based framework that can automatically generate a multi-agent system. Given a task description, MetaAgent will design a multi-agent system and polish it through an optimization algorithm. When the multi-agent system is deployed, the finite state machine will control the agent's actions and the state transitions. To evaluate our framework, we conduct experiments on both text-based tasks and practical tasks. The results indicate that the generated multi-agent system surpasses other auto-designed methods and can achieve a comparable performance with the human-designed multi-agent system, which is optimized for those specific tasks.",
+      "authors": [
+        "Yaolun Zhang",
+        "Xiaogeng Liu",
+        "Chaowei Xiao"
+      ],
+      "primary_category": "LLM Agent",
+      "categories": [
+        "LLM Agent",
+        "Multi-Agent System"
+      ],
+      "published": "2025-05-01T13:20:28.433+00:00",
+      "link": "https://openreview.net/forum?id=vOxaD3hhPt",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-imcyvlzpxh",
+      "source": "ICML-2025-Accepted",
+      "title": "Multi-agent Architecture Search via Agentic Supernet",
+      "abstract": "Large Language Model (LLM)-empowered multi-agent systems extend the cognitive boundaries of individual agents through disciplined collaboration and interaction, while constructing these systems often requires labor-intensive manual designs. Despite the availability of methods to automate the design of agentic workflows, they typically seek to identify a static, complex, one-size-fits-all system, which, however, fails to dynamically allocate inference resources based on the difficulty and domain of each query. To address this challenge, we shift away from the pursuit of a monolithic agentic system, instead optimizing the \\textbf{agentic supernet}, a probabilistic and continuous distribution of agentic architectures. We introduce \\textbf{MaAS}, an automated framework that samples query-dependent agentic systems from the supernet, delivering high-quality solutions and tailored resource allocation (\\textit{e.g.}, LLM calls, tool calls, token cost). Comprehensive evaluation across six benchmarks demonstrates that MaAS \\textbf{(I)} requires only $6\\\\sim45\\\\%$ of the inference costs of existing handcrafted or automated multi-agent systems, \\textbf{(II)} surpasses them by $0.54\\\\%\\sim11.82\\\\%$, and \\textbf{(III)} enjoys superior cross-dataset and cross-LLM-backbone transferability.",
+      "authors": [
+        "Guibin Zhang",
+        "Luyang Niu",
+        "Junfeng Fang",
+        "Kun Wang",
+        "LEI BAI",
+        "Xiang Wang"
+      ],
+      "primary_category": "LLM-agent",
+      "categories": [
+        "LLM-agent",
+        "Agentic Workflows",
+        "Multi-agent System"
+      ],
+      "published": "2025-05-01T13:11:55.414+00:00",
+      "link": "https://openreview.net/forum?id=imcyVlzpXh",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-uckvhweh1g",
+      "source": "ICML-2025-Rejected-Public",
+      "title": "Multi-Agent Design: Optimizing Agents with Better Prompts and Topologies",
+      "abstract": "Large language models, employed as multiple agents that interact and collaborate with each other, have excelled at solving complex tasks. The agents are programmed with prompts that declare their functionality, along with the topologies that orchestrate interactions across agents. Designing prompts and topologies for multi-agent systems (MAS) is inherently complex. To automate the entire design process, we first conduct an in-depth analysis of the design space aiming to understand the factors behind building effective MAS. We reveal that prompts together with topologies play critical roles in enabling more effective MAS design. Based on the insights, we propose Multi-Agent System Search (MASS), a MAS optimization framework that efficiently exploits the complex MAS design space by interleaving its optimization stages, from local to global, from prompts to topologies, over three stages: 1) block-level (local) prompt optimization; 2) workflow topology optimization; 3) workflow-level (global) prompt optimization, where each stage is conditioned on the iteratively optimized prompts/topologies from former stages. We show that MASS-optimized multi-agent systems outperform a spectrum of existing alternatives by a substantial margin. Based on the MASS-found systems, we finally propose design principles behind building effective multi-agent systems.",
+      "authors": [
+        "Han Zhou",
+        "Xingchen Wan",
+        "Ruoxi Sun",
+        "Hamid Palangi",
+        "Shariq Iqbal",
+        "Ivan Vulić",
+        "Anna Korhonen",
+        "Sercan O Arik"
+      ],
+      "primary_category": "language agent",
+      "categories": [
+        "language agent",
+        "multi-agent system"
+      ],
+      "published": "2025-01-23T17:15:22.01+00:00",
+      "link": "https://openreview.net/forum?id=uCKvHweh1g",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-lpe54nunmo",
+      "source": "ICML-2025-Accepted",
+      "title": "G-Designer: Architecting Multi-agent Communication Topologies via Graph Neural Networks",
+      "abstract": "Recent advancements in large language model (LLM)-based agents have demonstrated that collective intelligence can significantly surpass the capabilities of individual agents, primarily due to well-crafted inter-agent communication topologies. Despite the diverse and high-performing designs available, practitioners often face confusion when selecting the most effective pipeline for their specific task: \\textit{Which topology is the best choice for my task, avoiding unnecessary communication token overhead while ensuring high-quality solution?} In response to this dilemma, we introduce G-Designer, an adaptive, efficient, and robust solution for multi-agent deployment, which dynamically designs task-aware, customized communication topologies. Specifically, G-Designer models the multi-agent system as a multi-agent network, leveraging a variational graph auto-encoder to encode both the nodes (agents) and a task-specific virtual node, and decodes a task-adaptive and high-performing communication topology. Extensive experiments on six benchmarks showcase that G-Designer is: \\textbf{(1) high-performing}, achieving superior results on MMLU with accuracy at $84.50\\\\%$ and on HumanEval with pass@1 at $89.90\\\\%$; \\textbf{(2) task-adaptive}, architecting communication protocols tailored to task difficulty, reducing token consumption by up to $95.33\\\\%$ on HumanEval; and \\textbf{(3) adversarially robust}, defending against agent adversarial attacks with merely $0.3\\\\%$ accuracy drop.",
+      "authors": [
+        "Guibin Zhang",
+        "Yanwei Yue",
+        "Xiangguo Sun",
+        "Guancheng Wan",
+        "Miao Yu",
+        "Junfeng Fang",
+        "Kun Wang",
+        "Tianlong Chen",
+        "Dawei Cheng"
+      ],
+      "primary_category": "Multi-agent communication",
+      "categories": [
+        "Multi-agent communication",
+        "Graph machine learning",
+        "LLM-based agent"
+      ],
+      "published": "2025-05-01T13:13:33.22+00:00",
+      "link": "https://openreview.net/forum?id=LpE54NUnmO",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2024-utc9afxihg",
+      "source": "ICML-2024-Public",
+      "title": "GPTSwarm: Language Agents as Optimizable Graphs",
+      "abstract": "Various human-designed prompt engineering techniques have been proposed to improve problem solvers based on Large Language Models (LLMs), yielding many disparate code bases. We unify these approaches by describing LLM-based agents as computational graphs. The nodes implement functions to process multimodal data or query LLMs, and the edges describe the information flow between operations. Graphs can be recursively combined into larger composite graphs representing hierarchies of inter-agent collaboration (where edges connect operations of different agents). Our novel automatic graph optimizers (1) refine node-level LLM prompts (node optimization) and (2) improve agent orchestration by changing graph connectivity (edge optimization). Experiments demonstrate that our framework can be used to efficiently develop, integrate, and automatically improve various LLM agents. Our code is public.",
+      "authors": [
+        "Mingchen Zhuge",
+        "Wenyi Wang",
+        "Louis Kirsch",
+        "Francesco Faccio",
+        "Dmitrii Khizbullin",
+        "Jürgen Schmidhuber"
+      ],
+      "primary_category": "ICML.cc/2024/Conference",
+      "categories": [],
+      "published": "2024-05-02T00:37:47.687+00:00",
+      "link": "https://openreview.net/forum?id=uTC9AFXIhg",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-tcsdlqzznl",
+      "source": "ICML-2025-Accepted",
+      "title": "Enhancing Cooperative Multi-Agent Reinforcement Learning with State Modelling and Adversarial Exploration",
+      "abstract": "Learning to cooperate in distributed partially observable environments with no communication abilities poses significant challenges for multi-agent deep reinforcement learning (MARL). This paper addresses key concerns in this domain, focusing on inferring state representations from individual agent observations and leveraging these representations to enhance agents' exploration and collaborative task execution policies. To this end, we propose a novel state modelling framework for cooperative MARL, where agents infer meaningful belief representations of the non-observable state, with respect to optimizing their own policies, while filtering redundant and less informative joint state information. Building upon this framework, we propose the MARL SMPE$^2$ algorithm. In SMPE$^2$, agents enhance their own policy's discriminative abilities under partial observability, explicitly by incorporating their beliefs into the policy network, and implicitly by adopting an adversarial type of exploration policies which encourages agents to discover novel, high-value states while improving the discriminative abilities of others. Experimentally, we show that SMPE$^2$ outperforms a plethora of state-of-the-art MARL algorithms in complex fully cooperative tasks from the MPE, LBF, and RWARE benchmarks.",
+      "authors": [
+        "Andreas Kontogiannis",
+        "Konstantinos Papathanasiou",
+        "Yi Shen",
+        "Giorgos Stamou",
+        "Michael M. Zavlanos",
+        "George Vouros"
+      ],
+      "primary_category": "Cooperative Multi-Agent Reinforcement Learning",
+      "categories": [
+        "Cooperative Multi-Agent Reinforcement Learning",
+        "State Modelling",
+        "Sparse Reward"
+      ],
+      "published": "2025-05-01T13:18:12.518+00:00",
+      "link": "https://openreview.net/forum?id=TCsdlqzZNL",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-vhktpw6vid",
+      "source": "ICML-2025-Accepted",
+      "title": "LLM-Assisted Semantically Diverse Teammate Generation for Efficient Multi-agent Coordination",
+      "abstract": "Training with diverse teammates is the key for learning generalizable agents. Typical approaches aim to generate diverse teammates by utilizing techniques like randomization, designing regularization terms, or reducing policy compatibility, etc. However, such teammates lack semantic information, resulting in inefficient teammate generation and poor adaptability of the agents. To tackle these challenges, we propose Semantically Diverse Teammate Generation (SemDiv), a novel framework leveraging the capabilities of large language models (LLMs) to discover and learn diverse coordination behaviors at the semantic level. In each iteration, SemDiv first generates a novel coordination behavior described in natural language, then translates it into a reward function to train a teammate policy. Once the policy is verified to be meaningful, novel, and aligned with the behavior, the agents train a policy for coordination. Through this iterative process, SemDiv efficiently generates a diverse set of semantically grounded teammates, enabling agents to develop specialized policies, and select the most suitable ones through language-based reasoning to adapt to unseen teammates. Experiments show that SemDiv generates teammates covering a wide range of coordination behaviors, including those unreachable by baseline methods. Evaluation across four MARL environments, each with five unseen representative teammates, demonstrates SemDiv's superior coordination and adaptability. Our code is available at https://github.com/lilh76/SemDiv.",
+      "authors": [
+        "Lihe Li",
+        "Lei Yuan",
+        "Pengsen Liu",
+        "Tao Jiang",
+        "Yang Yu"
+      ],
+      "primary_category": "Multi-agent Reinforcement Learning",
+      "categories": [
+        "Multi-agent Reinforcement Learning",
+        "Large Language Models",
+        "Multi-agent Coordination"
+      ],
+      "published": "2025-05-01T13:14:28.878+00:00",
+      "link": "https://openreview.net/forum?id=Vhktpw6Vid",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-r53lwssfci",
+      "source": "ICML-2025-Rejected-Public",
+      "title": "Learning to Plan with Personalized Preferences",
+      "abstract": "Effective integration of AI agents into daily life requires them to understand and adapt to individual human preferences, particularly in collaborative roles. Although recent studies on embodied intelligence have advanced significantly, they typically adopt generalized approaches that overlook personal **preferences in planning**. We address this limitation by developing agents that not only learn preferences from few demonstrations but also learn to adapt their planning strategies based on these preferences. Our research leverages the observation that preferences, though implicitly expressed through minimal demonstrations, can generalize across diverse planning scenarios. To systematically evaluate this hypothesis, we introduce PbP benchmark, an embodied benchmark featuring hundreds of diverse preferences spanning from atomic actions to complex sequences. Our evaluation of SOTA methods reveals that while symbol-based approaches show promise in scalability, significant challenges remain in learning to generate and execute plans that satisfy personalized preferences. We further demonstrate that incorporating learned preferences as intermediate representations in planning significantly improves the agent's ability to construct personalized plans. These findings establish preferences as a valuable abstraction layer for adaptive planning, opening new directions for research in preference-guided plan generation and execution.",
+      "authors": [
+        "Manjie Xu",
+        "Xinyi Yang",
+        "Wei Liang",
+        "Chi Zhang",
+        "Yixin Zhu"
+      ],
+      "primary_category": "preference",
+      "categories": [
+        "preference",
+        "few-shot learning",
+        "planning"
+      ],
+      "published": "2025-01-21T11:56:09.66+00:00",
+      "link": "https://openreview.net/forum?id=r53lwSSfcI",
+      "pdf_url": null,
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2024-iyya5zdocm",
+      "source": "ICML-2024-Public",
+      "title": "Locally Interdependent Multi-Agent MDP: Theoretical Framework for Decentralized Agents with Dynamic Dependencies",
+      "abstract": "Many multi-agent systems in practice are decentralized and have dynamically varying dependencies. There has been a lack of attempts in the literature to analyze these systems theoretically. In this paper, we propose and theoretically analyze a decentralized model with dynamically varying dependencies called the Locally Interdependent Multi-Agent MDP. This model can represent problems in many disparate domains such as cooperative navigation, obstacle avoidance, and formation control. Despite the intractability that general partially observable multi-agent systems suffer from, we propose three closed-form policies that are theoretically near-optimal in this setting and can be scalable to compute and store. Consequentially, we reveal a fundamental property of Locally Interdependent Multi-Agent MDP's that the partially observable decentralized solution is exponentially close to the fully observable solution with respect to the visibility radius. We then discuss extensions of our closed-form policies to further improve tractability. We conclude by providing simulations to investigate some long horizon behaviors of our closed-form policies.",
+      "authors": [
+        "Alex DeWeese",
+        "Guannan Qu"
+      ],
+      "primary_category": "ICML.cc/2024/Conference",
+      "categories": [],
+      "published": "2024-05-02T00:40:51.241+00:00",
+      "link": "https://openreview.net/forum?id=iYYA5zDoCm",
+      "pdf_url": null,
+      "tags": [
+        "query:eca"
+      ]
+    },
+    {
+      "id": "openreview-icml-2025-li59703wba",
+      "source": "ICML-2025-Accepted",
+      "title": "LBI-FL: Low-Bit Integerized Federated Learning with Temporally Dynamic Bit-Width Allocation",
+      "abstract": "Federated learning (FL) is greatly challenged by the communication bottleneck and computation limitation on clients. Existing methods based on quantization for FL cannot simultaneously reduce the uplink and downlink communication cost and mitigate the computation burden on clients. To address this problem, in this paper, we propose the first low-bit integerized federated learning (LBI-FL) framework that quantizes the weights, activations, and gradients to lower than INT8 precision to evidently reduce the communication and computational costs. Specifically, we achieve dynamical temporal bit-width allocation for weights, activations, and gradients along the training trajectory via reinforcement learning. An agent is trained to determine bit-width allocation by comprehensively considering the states like current bit-width, training stage, and quantization loss as the state. The agent efficiently trained on small-scale datasets can be well generalized to train varying network architectures on non-independent and identically distributed datasets. Furthermore, we demonstrated in theory that federated learning with gradient quantization achieves an equivalent convergence rate to FedAvg. The proposed LBI-FL can  reduce the communication costs by 8 times compared to full-precision FL. Extensive experiments show that the proposed LBI-FL achieves a reduction of more than 50\\% BitOPs per client on average for FL with less than 2\\% accuracy loss compared to low-bit training with INT8 precision.",
+      "authors": [
+        "Li Ding",
+        "Hao Zhang",
+        "Wenrui Dai",
+        "Chenglin Li",
+        "Weijia Lu",
+        "ZHIFEI YANG",
+        "xiaodong Zhang",
+        "Xiaofeng Ma",
+        "Junni Zou",
+        "Hongkai Xiong"
+      ],
+      "primary_category": "Federated learning",
+      "categories": [
+        "Federated learning",
+        "low-bit integerized training",
+        "network quantization"
+      ],
+      "published": "2025-05-01T13:18:45.23+00:00",
+      "link": "https://openreview.net/forum?id=li59703WbA",
+      "pdf_url": null,
+      "tags": [
+        "query:eca"
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "type": "intent_query",
+      "tag": "eca",
+      "paper_tag": "query:eca",
+      "query_text": "distributed edge cloud agent architecture",
+      "sim_scores": {
+        "openreview-icml-2025-imcyvlzpxh": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-icml-2025-uckvhweh1g": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-icml-2025-lpe54nunmo": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "openreview-icml-2025-tcsdlqzznl": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "openreview-icml-2025-voxad3hhpt": {
+          "score": 0.013333333333333334,
+          "rank": 15
+        },
+        "openreview-icml-2024-iyya5zdocm": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "openreview-icml-2025-qgdlzt3dkz": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "openreview-icml-2025-li59703wba": {
+          "score": 0.011627906976744186,
+          "rank": 26
+        },
+        "openreview-icml-2025-zbbysvgkub": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "openreview-icml-2025-bkim54qftz": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "openreview-icml-2024-utc9afxihg": {
+          "score": 0.010309278350515464,
+          "rank": 37
+        },
+        "openreview-icml-2025-vhktpw6vid": {
+          "score": 0.010101010101010102,
+          "rank": 39
+        },
+        "openreview-icml-2025-zdmmdz33io": {
+          "score": 0.009433962264150943,
+          "rank": 46
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-icml-2025-imcyvlzpxh",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2024-utc9afxihg",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2025-lpe54nunmo",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2025-uckvhweh1g",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2025-tcsdlqzznl",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-zbbysvgkub",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-zdmmdz33io",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-vh2dt4st67",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2024-iyya5zdocm",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-voxad3hhpt",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-czpoizqwwd",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-li59703wba",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-our945qeub",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2025-qgdlzt3dkz",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2025-vhktpw6vid",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2025-bkim54qftz",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2025-r53lwssfci",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2024-u6perhesjl",
+          "score": 0.1360089186176142,
+          "star_rating": 3
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "eca",
+      "paper_tag": "query:eca",
+      "query_text": "edge cloud collaborative AI agent system",
+      "sim_scores": {
+        "openreview-icml-2025-tcsdlqzznl": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-icml-2025-zbbysvgkub": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-icml-2025-imcyvlzpxh": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-icml-2025-uckvhweh1g": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "openreview-icml-2025-lpe54nunmo": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "openreview-icml-2024-u6perhesjl": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "openreview-icml-2025-voxad3hhpt": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "openreview-icml-2025-vhktpw6vid": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "openreview-icml-2025-r53lwssfci": {
+          "score": 0.011235955056179775,
+          "rank": 29
+        },
+        "openreview-icml-2025-qgdlzt3dkz": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "openreview-icml-2025-bkim54qftz": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-icml-2025-r53lwssfci",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2024-utc9afxihg",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2025-imcyvlzpxh",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2025-uckvhweh1g",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2025-qgdlzt3dkz",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2025-bkim54qftz",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-zbbysvgkub",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-lpe54nunmo",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2024-u6perhesjl",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-vhktpw6vid",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-our945qeub",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-tcsdlqzznl",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2025-voxad3hhpt",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2025-zdmmdz33io",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2025-czpoizqwwd",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2024-iyya5zdocm",
+          "score": 0.25462134764460337,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2025-vh2dt4st67",
+          "score": 0.0483743061062648,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "keyword",
+      "tag": "eca",
+      "paper_tag": "keyword:eca",
+      "query_text": "Collaboration",
+      "sim_scores": {
+        "openreview-icml-2025-qgdlzt3dkz": {
+          "score": 0.030158730158730156,
+          "rank": 4
+        },
+        "openreview-icml-2025-vh2dt4st67": {
+          "score": 0.029957522915269395,
+          "rank": 5
+        },
+        "openreview-icml-2025-czpoizqwwd": {
+          "score": 0.025779967159277502,
+          "rank": 9
+        },
+        "openreview-icml-2025-zbbysvgkub": {
+          "score": 0.02454819277108434,
+          "rank": 11
+        },
+        "openreview-icml-2025-our945qeub": {
+          "score": 0.013333333333333334,
+          "rank": 24
+        },
+        "openreview-icml-2024-u6perhesjl": {
+          "score": 0.013157894736842105,
+          "rank": 27
+        },
+        "openreview-icml-2025-bkim54qftz": {
+          "score": 0.011627906976744186,
+          "rank": 42
+        },
+        "openreview-icml-2025-zdmmdz33io": {
+          "score": 0.01098901098901099,
+          "rank": 51
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "eca",
+      "paper_tag": "keyword:eca",
+      "query_text": "e",
+      "sim_scores": {}
+    },
+    {
+      "type": "keyword",
+      "tag": "eca",
+      "paper_tag": "keyword:eca",
+      "query_text": "mobile AI agent",
+      "sim_scores": {
+        "openreview-icml-2025-voxad3hhpt": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "openreview-icml-2025-imcyvlzpxh": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "openreview-icml-2025-uckvhweh1g": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "openreview-icml-2025-lpe54nunmo": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "openreview-icml-2024-utc9afxihg": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-icml-2025-tcsdlqzznl": {
+          "score": 0.011627906976744186,
+          "rank": 26
+        },
+        "openreview-icml-2025-vhktpw6vid": {
+          "score": 0.010638297872340425,
+          "rank": 34
+        },
+        "openreview-icml-2025-r53lwssfci": {
+          "score": 0.00909090909090909,
+          "rank": 50
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "eca",
+      "paper_tag": "keyword:eca",
+      "query_text": "mobile agent",
+      "sim_scores": {}
+    }
+  ],
+  "global_candidate_ids": [
+    "openreview-icml-2025-bwidskoywf",
+    "openreview-icml-2025-imcyvlzpxh",
+    "openreview-icml-2025-tcsdlqzznl",
+    "openreview-icml-2025-zbbysvgkub",
+    "openreview-icml-2025-6tdsddgp7z",
+    "openreview-icml-2025-0wqj6dfskp",
+    "openreview-icml-2024-4jqov6nluz",
+    "openreview-icml-2025-kgg1ndttmi",
+    "openreview-icml-2025-uckwqag0us",
+    "openreview-icml-2024-en1t7i7opz",
+    "openreview-icml-2025-w9s817kqyf",
+    "openreview-icml-2025-ntahi2jeee",
+    "openreview-icml-2025-uckvhweh1g",
+    "openreview-icml-2025-5rtj4myh1c",
+    "openreview-icml-2025-p1ubwkovzm",
+    "openreview-icml-2025-lpe54nunmo",
+    "openreview-icml-2024-qfilbktqww",
+    "openreview-icml-2025-hlpwamq4wr",
+    "openreview-icml-2025-prmxqhgjb1",
+    "openreview-icml-2025-4tfskoy2mt",
+    "openreview-icml-2025-voxad3hhpt",
+    "openreview-icml-2025-tl3flgwsca",
+    "openreview-icml-2025-qgdlzt3dkz",
+    "openreview-icml-2025-2nbcjczrrp",
+    "openreview-icml-2025-akvy9a4jho",
+    "openreview-icml-2025-rdedanryej",
+    "openreview-icml-2025-plihowfx4r",
+    "openreview-icml-2025-auto02lary",
+    "openreview-icml-2025-tpbtodni1p",
+    "openreview-icml-2025-h76pmm7hf2",
+    "openreview-icml-2024-g43yunwx4v",
+    "openreview-icml-2025-vhktpw6vid",
+    "openreview-icml-2025-bkim54qftz",
+    "openreview-icml-2025-ueb3hdrhda",
+    "openreview-icml-2025-3pk0p4ngmq",
+    "openreview-icml-2024-brfqyrikdo",
+    "openreview-icml-2025-f3ibgm2zi0",
+    "openreview-icml-2024-u6perhesjl",
+    "openreview-icml-2025-nn9poi9ekt",
+    "openreview-icml-2024-qc5umssui8",
+    "openreview-icml-2025-xf5putlpbn",
+    "openreview-icml-2025-svnnlzjzvn",
+    "openreview-icml-2024-e5admkwkgv",
+    "openreview-icml-2024-2xbkwieur1",
+    "openreview-icml-2025-flkhxgtbj2",
+    "openreview-icml-2025-323gznngqe",
+    "openreview-icml-2025-t5iz32imab",
+    "openreview-icml-2025-svl9tiadwv",
+    "openreview-icml-2024-utc9afxihg",
+    "openreview-icml-2024-lpazlcgzj6",
+    "openreview-icml-2025-tuk7gcqtmf",
+    "openreview-icml-2025-4ufjbv6s4i",
+    "openreview-icml-2024-dzlna0cfl1",
+    "openreview-icml-2025-r53lwssfci",
+    "openreview-icml-2025-3cispy3qdz",
+    "openreview-icml-2024-mgkewjxqvl",
+    "openreview-icml-2024-rfvgdfd1k9",
+    "openreview-icml-2025-zdmmdz33io",
+    "openreview-icml-2024-eigbxbxcuq",
+    "openreview-icml-2025-qrms4lx0fp",
+    "openreview-icml-2024-aaejpjw5ur",
+    "openreview-icml-2025-gt8jsefqas",
+    "openreview-icml-2025-oktw116wt2",
+    "openreview-icml-2024-r8k5jrgip6",
+    "openreview-icml-2025-vh2dt4st67",
+    "openreview-icml-2025-6rnbm37sve",
+    "openreview-icml-2025-dmh4hhvb3y",
+    "openreview-icml-2025-axu48nra2v",
+    "openreview-icml-2025-tw81reldpe",
+    "openreview-icml-2024-0ntak1bgbd",
+    "openreview-icml-2025-eog0kxx7hw",
+    "openreview-icml-2024-lwri4upg2x",
+    "openreview-icml-2025-czpoizqwwd",
+    "openreview-icml-2024-stvsyqd6xx",
+    "openreview-icml-2024-ukhfmzlr7p",
+    "openreview-icml-2025-fugps5zyia",
+    "openreview-icml-2025-i7n6vtuchm",
+    "openreview-icml-2024-otmcsyeo5g",
+    "openreview-icml-2025-iyvcxu0rki",
+    "openreview-icml-2025-sgrj8a9a5u",
+    "openreview-icml-2024-syeiowof9u",
+    "openreview-icml-2025-wex0vl4c2y",
+    "openreview-icml-2025-escpgi2xax",
+    "openreview-icml-2024-iyya5zdocm",
+    "openreview-icml-2025-lz18hxityi",
+    "openreview-icml-2025-1jjxooeood",
+    "openreview-icml-2025-somdiagoil",
+    "openreview-icml-2025-fchigdcoow",
+    "openreview-icml-2024-kzacyw0mtv",
+    "openreview-icml-2024-lj34px1u5g",
+    "openreview-icml-2025-51sfypi0j8",
+    "openreview-icml-2024-4xxsheibtn",
+    "openreview-icml-2025-of3wzhvv1r",
+    "openreview-icml-2025-oxzpgnkbb1",
+    "openreview-icml-2024-3cp042s1nc",
+    "openreview-icml-2025-f6lio2czim",
+    "openreview-icml-2025-ocfspbxrei",
+    "openreview-icml-2024-v6tadecxkh",
+    "openreview-icml-2025-3h80hystmh",
+    "openreview-icml-2025-pajcdkknau",
+    "openreview-icml-2024-itygbe0cs1",
+    "openreview-icml-2025-our945qeub",
+    "openreview-icml-2025-ulzhqju4zc",
+    "openreview-icml-2025-qjd3zuihrt",
+    "openreview-icml-2025-azf9xamrbk",
+    "openreview-icml-2025-clf25dahga",
+    "openreview-icml-2025-li59703wba",
+    "openreview-icml-2024-pxaeyzrfae",
+    "openreview-icml-2024-1fs1lvjyqw",
+    "openreview-icml-2025-f6sfhnfumu",
+    "openreview-icml-2024-m3qrrkoutn",
+    "openreview-icml-2025-jiffij5iv0",
+    "openreview-icml-2025-kjz03pmyw0",
+    "openreview-icml-2024-gwewilzrbq",
+    "openreview-icml-2024-lbeb39lzqp",
+    "openreview-icml-2024-girxgkdecl",
+    "openreview-icml-2025-lnthwnf8ih",
+    "openreview-icml-2025-v2nv83q849",
+    "openreview-icml-2025-klw8ko4ene",
+    "openreview-icml-2025-0oshx1hisa"
+  ],
+  "global_pool_lane_top_k": 30,
+  "global_pool_limit": 120,
+  "global_pool_guaranteed_per_lane": 2,
+  "global_pool_effective_size": 120,
+  "reranked_at": "2026-06-08T03:08:32.000646+00:00",
+  "llm_ranked": [
+    {
+      "paper_id": "openreview-icml-2025-qgdlzt3dkz",
+      "score": 9.0,
+      "evidence_en": "on-device and cloud language model collaboration for cost efficiency",
+      "evidence_cn": "设备端与云端语言模型协作以降低成本",
+      "canonical_evidence": "设备端与云端语言模型协作以降低成本",
+      "tldr_en": "Investigates on-device small LM collaborating with cloud frontier LM to reduce inference costs while maintaining quality on long-document tasks.",
+      "tldr_cn": "端侧模型与云端大模型协作可以降低推理成本，但如何平衡性能是关键。本文探索了本地-远程协作协议MINION，本地模型处理完整上下文，云端模型提供指导，实现了30.4倍成本降低和87%的性能保留。进一步分析了本地模型在多步指令跟随方面的局限性，为高效端云协同提供了重要经验。",
+      "title_zh": "设备端与云端语言模型之间的低成本协作",
+      "motivation_cn": "云端大模型推理成本高，而设备端模型性能有限，需探索高效协作方式。",
+      "method_cn": "提出MINION协作协议，本地模型处理全上下文，云端模型进行指导。",
+      "result_cn": "该协议将云端推理成本降低30.4倍，同时保留了87%的云端模型性能。",
+      "conclusion_cn": "端云协作在降低成本的同时能保持较高性能，具有实际应用价值。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system"
+    },
+    {
+      "paper_id": "openreview-icml-2025-lpe54nunmo",
+      "score": 8.0,
+      "evidence_en": "dynamic multi-agent communication topology design for distributed systems",
+      "evidence_cn": "面向分布式系统的动态多智能体通信拓扑设计",
+      "canonical_evidence": "面向分布式系统的动态多智能体通信拓扑设计",
+      "tldr_en": "G-Designer uses GNN to dynamically design task-aware communication topologies for multi-agent systems, improving efficiency and performance.",
+      "tldr_cn": "多智能体系统通信拓扑的选择至关重要但缺乏自动化方法。本文提出G-Designer，利用图神经网络动态生成任务感知的个性化通信拓扑。实验表明，G-Designer在多种任务中降低了通信开销并提升了质量。该方法可直接应用于分布式边缘云智能体架构的拓扑设计，实现高效协作。",
+      "title_zh": "G-Designer：基于图神经网络构建多智能体通信拓扑",
+      "motivation_cn": "多智能体系统的通信拓扑选择困难，需要自适应且任务导向的设计方法。",
+      "method_cn": "提出G-Designer，利用图神经网络动态生成任务感知的个性化通信拓扑。",
+      "result_cn": "在多种多智能体任务中，G-Designer在降低通信开销的同时提升了任务完成质量。",
+      "conclusion_cn": "自适应拓扑设计可有效平衡通信效率与性能，适用于分布式边缘云智能体架构。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture"
+    },
+    {
+      "paper_id": "openreview-icml-2025-zbbysvgkub",
+      "score": 8.0,
+      "evidence_en": "cross-environment cooperation for zero-shot multi-agent coordination",
+      "evidence_cn": "跨环境合作实现零样本多代理协调",
+      "canonical_evidence": "跨环境合作实现零样本多代理协调",
+      "tldr_en": "Cross-environment Cooperation (CEC) trains agents with a single partner across procedurally generated environments to learn general cooperative skills, enabling zero-shot coordination with new partners on new tasks, outperforming baselines.",
+      "tldr_cn": "零样本协调面临对新任务和新伙伴泛化能力不足的问题。本文提出跨环境合作（CEC）范式，通过在程序生成的多样化环境中与单一伙伴进行强化学习，训练出通用协作策略。实验表明，CEC能在多种未见过的任务和伙伴上实现有效零样本协调，远超现有基线，为分布式边缘云代理协作提供了可迁移的协作训练方法。",
+      "title_zh": "跨环境合作实现零样本多代理协调",
+      "motivation_cn": "现有零样本协调研究局限于单一任务，无法泛化到新任务或新伙伴。",
+      "method_cn": "提出跨环境合作（CEC）范式，通过在分布环境中与单一伙伴训练学习通用协作技能。",
+      "result_cn": "CEC在多种新任务和新伙伴上实现零样本协调，超越基线方法。",
+      "conclusion_cn": "证明了跨环境分布训练可以学习通用协作技能，对实现类人兼容AI至关重要。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2025-imcyvlzpxh",
+      "score": 8.0,
+      "evidence_en": "multi-agent collaboration and architecture search",
+      "evidence_cn": "多智能体协作与架构搜索",
+      "canonical_evidence": "多智能体协作与架构搜索",
+      "tldr_en": "Proposes MaAS, an automated framework for multi-agent architecture search via agentic supernet, enabling dynamic allocation of inference resources across queries.",
+      "tldr_cn": "现有方法自动化设计多智能体系统时通常得到静态架构，无法根据查询难度动态分配资源。本文提出MaAS框架，通过优化概率化和连续分布的智能体超网络（agentic supernet）来搜索最佳架构。实验表明，该方法在多个任务上比静态系统更高效灵活，为多智能体系统的自动化设计提供了新思路。",
+      "title_zh": "基于智能体超网络的多智能体架构搜索",
+      "motivation_cn": "现有多智能体系统设计依赖人工且架构静态，无法适应不同查询的难度差异。",
+      "method_cn": "提出MaAS框架，将多智能体架构表示为连续概率分布的超网络，通过优化实现自动化搜索。",
+      "result_cn": "在多个基准任务上，MaAS自动化搜索的架构优于静态设计，且能动态分配资源。",
+      "conclusion_cn": "MaAS验证了超网络方法在多智能体架构搜索中的有效性，提升了系统的灵活性和效率。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2024-utc9afxihg",
+      "score": 8.0,
+      "evidence_en": "language agents as optimizable graphs with inter-agent collaboration",
+      "evidence_cn": "语言智能体作为可优化图，支持智能体间协作",
+      "canonical_evidence": "语言智能体作为可优化图，支持智能体间协作",
+      "tldr_en": "Unifies LLM agent designs as computational graphs, enabling automatic optimization of prompts and collaboration structure via node and edge optimization.",
+      "tldr_cn": "人类设计的提示工程技术分散且难以统一。本文提出GPTSwarm，将基于LLM的智能体描述为计算图，节点处理数据或调用LLM，边表示信息流。通过自动优化节点提示和边的连接方式，提升了智能体协作效率。实验证明该方法在多种任务上优于人工设计。",
+      "title_zh": "GPTSwarm：作为可优化图的语言智能体",
+      "motivation_cn": "现有LLM智能体设计方法分散，缺乏统一优化框架。",
+      "method_cn": "将智能体表示为计算图，通过节点优化和边优化自动提升性能。",
+      "result_cn": "在多个任务上，自动优化的图结构显著优于人工设计的提示工程。",
+      "conclusion_cn": "计算图视角为LLM智能体系统的统一优化提供了新的框架。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2025-voxad3hhpt",
+      "score": 8.0,
+      "evidence_en": "automatic multi-agent system construction via finite state machines",
+      "evidence_cn": "通过有限状态机自动构建多智能体系统",
+      "canonical_evidence": "通过有限状态机自动构建多智能体系统",
+      "tldr_en": "MetaAgent uses finite state machines to automatically generate multi-agent systems from task descriptions, with optimization algorithms for refinement.",
+      "tldr_cn": "现有自动化多智能体系统设计方法存在工具集成缺失、依赖外部数据等问题。本文提出MetaAgent，基于有限状态机从任务描述自动生成多智能体系统，并通过优化算法进行改进。部署后系统能够灵活适应不同任务，展示了自动化设计的潜力。",
+      "title_zh": "MetaAgent：基于有限状态机的多智能体系统自动构建",
+      "motivation_cn": "多智能体系统设计依赖人工，已有自动化方法存在多种限制。",
+      "method_cn": "利用有限状态机表示智能体通信与行为，从任务描述自动生成并优化系统结构。",
+      "result_cn": "在多种任务上，MetaAgent生成的系统性能接近甚至超越人工设计。",
+      "conclusion_cn": "有限状态机为自动化多智能体系统构建提供了一种高效且灵活的方案。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2025-tcsdlqzznl",
+      "score": 8.0,
+      "evidence_en": "cooperative multi-agent reinforcement learning with state modeling",
+      "evidence_cn": "协作多智能体强化学习，结合状态建模",
+      "canonical_evidence": "协作多智能体强化学习，结合状态建模",
+      "tldr_en": "Proposes a state modeling framework for cooperative MARL where agents infer belief representations to enhance exploration and collaboration.",
+      "tldr_cn": "在部分可观测环境中无通信的协作多智能体学习面临挑战。本文提出一种状态建模框架，让智能体从局部观测推断有意义的状态信念表示，过滤冗余信息，并利用对抗性探索增强协作策略。实验表明该方法在多个基准任务上提升了学习效率和协作性能。",
+      "title_zh": "通过状态建模与对抗性探索增强协作多智能体强化学习",
+      "motivation_cn": "部分可观测环境中无通信的多智能体协作学习存在困难。",
+      "method_cn": "提出状态建模框架，智能体推断状态信念并利用对抗性探索优化策略。",
+      "result_cn": "在多个MARL基准上，该方法显著提升了协作任务的性能。",
+      "conclusion_cn": "状态建模与对抗性探索有效增强了无通信环境下的多智能体协作学习。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2025-uckvhweh1g",
+      "score": 7.0,
+      "evidence_en": "multi-agent collaboration and topology optimization",
+      "evidence_cn": "多智能体协作与拓扑优化",
+      "canonical_evidence": "多智能体协作与拓扑优化",
+      "tldr_en": "Proposes MASS to automatically optimize multi-agent system prompts and topologies, improving collaboration and task performance.",
+      "tldr_cn": "当前多智能体系统的提示和拓扑设计依赖人工，效率低下。本文提出MASS框架，通过分析设计空间并利用搜索算法自动优化提示与交互拓扑。实验表明MASS在多个任务上超越手动设计，证明了自动化多智能体设计的有效性。该方法为边缘云协同AI系统中的智能体协作与拓扑设计提供了通用优化途径。",
+      "title_zh": "多智能体设计：用更好的提示和拓扑优化智能体",
+      "motivation_cn": "多智能体系统的提示和拓扑设计复杂且手动耗时，需要自动化优化。",
+      "method_cn": "提出MASS框架，通过分析设计空间并利用搜索算法同时优化提示和交互拓扑。",
+      "result_cn": "实验表明MASS能自动发现更有效的多智能体系统，在多个任务上超越手动设计。",
+      "conclusion_cn": "自动化多智能体设计可显著提升系统性能，为边缘云协同等复杂场景提供通用优化方法。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2024-iyya5zdocm",
+      "score": 7.0,
+      "evidence_en": "decentralized agents with dynamic dependencies framework",
+      "evidence_cn": "去中心化代理动态依赖理论框架",
+      "canonical_evidence": "去中心化代理动态依赖理论框架",
+      "tldr_en": "Proposes Locally Interdependent Multi-Agent MDP framework for decentralized agents with dynamic dependencies, deriving three closed-form near-optimal policies that are scalable, enabling theoretical analysis for cooperative navigation and other multi-agent tasks.",
+      "tldr_cn": "针对去中心化多代理系统中代理间依赖关系动态变化的建模困难，本文提出局部相互依赖多代理MDP理论框架，推导出三种封闭形式近优策略，在合作导航、避障等任务中证明了其理论最优性和可扩展性，为分布式边缘云代理架构提供了可分析的理论基础。",
+      "title_zh": "局部相互依赖的多代理MDP：具有动态依赖的去中心化代理的理论框架",
+      "motivation_cn": "现有研究缺乏对具有动态依赖关系的去中心化多代理系统的理论分析。",
+      "method_cn": "提出局部相互依赖多代理MDP模型，并推导三种封闭形式的近优策略。",
+      "result_cn": "策略理论近优，且计算存储可扩展，在合作导航等任务中有效。",
+      "conclusion_cn": "该框架填补了动态依赖去中心化多代理理论空白，可指导实际系统设计。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture"
+    },
+    {
+      "paper_id": "openreview-icml-2025-bkim54qftz",
+      "score": 7.0,
+      "evidence_en": "LLM-based multi-agent collaboration with faulty agents",
+      "evidence_cn": "基于LLM的多智能体协作与故障代理",
+      "canonical_evidence": "基于LLM的多智能体协作与故障代理",
+      "tldr_en": "This paper studies the resilience of LLM-based multi-agent systems under faulty agents, proposing AutoTransform and AutoInject to simulate mistakes, and examines how system structures affect performance.",
+      "tldr_cn": "现有LLM多智能体协作系统在面对故障或恶意代理时缺乏鲁棒性研究。本文提出AutoTransform和AutoInject两种方法模拟代理错误，并系统评估不同拓扑结构（如链式、全连接）在多种下游任务下的表现。实验揭示了结构对弹性的关键影响，并提出了提升防御能力的策略，为构建可靠的多智能体协作系统提供了新视角。",
+      "title_zh": "基于LLM的多智能体协作在面对故障代理时的弹性研究",
+      "motivation_cn": "现有研究忽略了故障或恶意代理对多智能体协作系统整体性能的影响。",
+      "method_cn": "提出AutoTransform和AutoInject两种方法模拟代理错误，并在不同系统结构下进行实验。",
+      "result_cn": "发现不同系统结构对故障代理的弹性差异显著，并提出了增强弹性的方法。",
+      "conclusion_cn": "多智能体协作系统需要设计容错机制以应对故障代理，本文的模拟和评估框架为后续研究提供了基础。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2025-vhktpw6vid",
+      "score": 6.0,
+      "evidence_en": "multi-agent coordination via semantically diverse teammate generation",
+      "evidence_cn": "通过语义多样化队友生成实现多智能体协调",
+      "canonical_evidence": "通过语义多样化队友生成实现多智能体协调",
+      "tldr_en": "SemDiv uses LLMs to generate semantically diverse teammates, improving multi-agent coordination and generalizability.",
+      "tldr_cn": "训练泛化智能体需要多样化队友，但现有方法缺乏语义信息。本文提出SemDiv，利用LLM发现语义层次的协调行为并生成多样化队友。实验证明SemDiv提升了智能体在未知环境中的适应性和协调效率。该方法为边缘云协同中的智能体协作训练提供了新思路。",
+      "title_zh": "基于LLM的语义多样化队友生成实现高效多智能体协调",
+      "motivation_cn": "训练泛化智能体需要多样化的队友，但现有方法缺乏语义信息，效率低下。",
+      "method_cn": "提出SemDiv框架，利用LLM发现和学习语义级别的多样化协调行为。",
+      "result_cn": "SemDiv生成语义丰富的队友，提升了智能体在未知环境中的适应性和协调效率。",
+      "conclusion_cn": "语义驱动的队友生成为多智能体协作提供更高效和可迁移的训练策略。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2025-vh2dt4st67",
+      "score": 6.0,
+      "evidence_en": "optimizing collaborative communications in distributed MoE training",
+      "evidence_cn": "优化分布式MoE训练中的协作通信",
+      "canonical_evidence": "优化分布式MoE训练中的协作通信",
+      "tldr_en": "Occult reduces communication overhead in MoE expert parallelism by defining collaborative communication and proposing system and algorithm innovations.",
+      "tldr_cn": "混合专家模型（MoE）中的全连接通信开销占总运行时间40%以上，严重阻碍分布式扩展。本文定义“协作通信”概念并创新系统级和算法级优化：利用专家共激活模式减少通信量。实验表明在大规模训练中显著降低延迟，加速比接近理论最优。该工作为分布式机器学习中的通信优化提供了新思路，但与移动或边缘代理无直接关联。",
+      "title_zh": "Occult：优化专家间协作通信以加速并行MoE训练与推理",
+      "motivation_cn": "MoE中全连接通信开销极大，影响分布式训练的可扩展性。",
+      "method_cn": "定义协作通信，提出系统与算法级创新以减少专家间通信成本。",
+      "result_cn": "在大规模训练中显著降低通信延迟，加速比接近理论最优。",
+      "conclusion_cn": "所提方法有效提升了MoE分布式训练的效率和可扩展性。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2025-our945qeub",
+      "score": 6.0,
+      "evidence_en": "collaborative mean estimation with fairness and truthfulness",
+      "evidence_cn": "协作均值估计，关注公平性与真实性",
+      "canonical_evidence": "协作均值估计，关注公平性与真实性",
+      "tldr_en": "Designs a mechanism for collaborative mean estimation among agents that ensures individual rationality, fairness, and truthfulness.",
+      "tldr_cn": "多智能体协作估计均值时，如何确保个体理性、公平和防止策略行为是关键问题。本文设计了一种机制，智能体通过交换采样数据来降低成本，并实现公平收益分配和真实报告。理论分析和实验验证了该机制的有效性，为协作学习提供了理论基础。",
+      "title_zh": "异构策略智能体间的协作均值估计：个体理性、公平与真实贡献",
+      "motivation_cn": "协作学习中的智能体可能策略性地贡献数据，导致不公平和低效。",
+      "method_cn": "设计了一种基于支付平衡的机制，激励智能体真实贡献并公平分配收益。",
+      "result_cn": "机制在理论分析和实验中均实现了个体理性、公平和真实性。",
+      "conclusion_cn": "该机制为协作学习中的激励设计提供了可行方案。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2025-zdmmdz33io",
+      "score": 6.0,
+      "evidence_en": "reciprocally fair federated learning collaboration",
+      "evidence_cn": "互惠公平的联邦学习协作",
+      "canonical_evidence": "互惠公平的联邦学习协作",
+      "tldr_en": "Designs a budget-balanced payment mechanism for federated learning that achieves reciprocal fairness, preventing free-riding.",
+      "tldr_cn": "联邦学习中，智能体可能搭便车导致不公平和低效。本文设计了M^{Shap}支付机制，在温和条件下达到纳什均衡，实现互惠公平：每个智能体的收益等于其对协作的贡献。实验表明该机制能促进数据共享，提高整体效率和公平性。",
+      "title_zh": "你付出即你所获：互惠公平的联邦学习",
+      "motivation_cn": "联邦学习中存在搭便车行为，导致数据共享不足和公平性下降。",
+      "method_cn": "基于Shapley值设计预算平衡的支付机制，激励智能体真实贡献。",
+      "result_cn": "机制在多个数据集上减少了搭便车，提高了模型准确性和参与方满意度。",
+      "conclusion_cn": "互惠公平机制为联邦学习中的协作激励提供了有效解决方案。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2025-czpoizqwwd",
+      "score": 5.0,
+      "evidence_en": "multi-agent framework simulating collaboration relationships in research community",
+      "evidence_cn": "模拟研究社区协作关系的多智能体框架",
+      "canonical_evidence": "模拟研究社区协作关系的多智能体框架",
+      "tldr_en": "ResearchTown simulates human research communities using LLM agents, modeling researchers and papers as nodes connected by collaboration relationships.",
+      "tldr_cn": "现有模拟研究社区的尝试缺乏对学术协作网络的细粒度建模。本文提出ResearchTown，将研究人员和论文分别建模为代理节点和数据节点，并基于协作关系构建图结构。引入TextGNN进行文本推理，成功模拟了研究社区中的对话、审稿等交互过程。实验表明该框架能有效复现人类研究社区的动态特征，为理解科学发现过程提供新工具。",
+      "title_zh": "ResearchTown：人类研究社区的模拟器",
+      "motivation_cn": "缺乏能够模拟人类研究社区协作动态的LLM框架。",
+      "method_cn": "构建代理-数据图，研究人员和论文作为节点，基于协作关系连接并引入TextGNN。",
+      "result_cn": "成功模拟了包括对话、审稿在内的研究社区交互，复现了真实协作模式。",
+      "conclusion_cn": "ResearchTown为自动发现科学见解和理解研究过程提供了有效平台。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2024-u6perhesjl",
+      "score": 5.0,
+      "evidence_en": "evolving AI collectives with multi-agent interaction and collaboration",
+      "evidence_cn": "演化的AI集体涉及多智能体交互与协作",
+      "canonical_evidence": "演化的AI集体涉及多智能体交互与协作",
+      "tldr_en": "This position paper calls for research on emergent AI collectives that interact and self-regulate, potentially expanding human diversity.",
+      "tldr_cn": "随着LLM在线交互增多，它们可能自发形成具有主体性和关系的AI集体。本文呼吁学界研究这些智能体社会，探讨其对人类多样性和线上环境的利与弊。通过小型模型社区的演化示例，展示了去中心化集体如何自发扩展多样性并降低毒性。该工作强调协作式智能体系统的新兴特性，但未涉及具体边缘云或移动架构。",
+      "title_zh": "立场：演化的AI集体增强人类多样性并实现自我调节",
+      "motivation_cn": "AI模型在线交互可能形成集体，其影响尚未被充分研究。",
+      "method_cn": "通过小型模型社区演化实验展示去中心化集体的自组织能力。",
+      "result_cn": "实验表明AI集体可自发扩展多样性并抑制反社会行为。",
+      "conclusion_cn": "应主动引导AI集体为人类社会带来正面影响。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    },
+    {
+      "paper_id": "openreview-icml-2025-li59703wba",
+      "score": 4.0,
+      "evidence_en": "federated learning for edge collaboration with RL agent for bit allocation",
+      "evidence_cn": "联邦学习用于边缘协作，使用强化学习代理进行比特分配",
+      "canonical_evidence": "联邦学习用于边缘协作，使用强化学习代理进行比特分配",
+      "tldr_en": "LBI-FL introduces low-bit integerized federated learning with RL-based dynamic bit-width allocation to reduce both communication and computation costs while maintaining accuracy, suitable for edge-cloud collaborative training.",
+      "tldr_cn": "为了解决联邦学习中通信与计算的双重瓶颈，本文提出LBI-FL框架，将模型权重、激活和梯度量化至低于INT8精度，并利用强化学习代理沿训练轨迹动态分配比特宽度。实验表明，该方法在显著降低通信和计算开销的同时，保持了模型精度，为边缘云协同场景下的高效训练提供了可行方案。",
+      "title_zh": "LBI-FL：具有时变比特宽度分配的低比特整数化联邦学习",
+      "motivation_cn": "联邦学习面临通信瓶颈和客户端计算限制，现有量化方法无法同时降低上下行通信和计算负担。",
+      "method_cn": "提出LBI-FL框架，将权重、激活和梯度量化至低于INT8精度，并通过强化学习代理动态分配时变比特宽度。",
+      "result_cn": "显著降低通信和计算成本，同时保持模型精度。",
+      "conclusion_cn": "首次实现低比特整数化联邦学习，为边缘设备协作训练提供高效方案。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system"
+    },
+    {
+      "paper_id": "openreview-icml-2025-r53lwssfci",
+      "score": 4.0,
+      "evidence_en": "learning to plan with personalized preferences for collaborative roles",
+      "evidence_cn": "学习具有个性化偏好的规划，针对协作角色",
+      "canonical_evidence": "学习具有个性化偏好的规划，针对协作角色",
+      "tldr_en": "Develops agents that learn personal planning preferences from few demonstrations and adapt strategies, with a new benchmark PbP.",
+      "tldr_cn": "AI智能体在协作中需要理解和适应用户的个性化偏好，但现有方法采用通用策略。本文提出从少量演示中学习偏好并自适应规划策略的方法，并引入PbP基准。实验表明该方法能有效捕捉用户偏好并提升协作体验，但更侧重人机协作而非智能体间协作。",
+      "title_zh": "学习带有个性化偏好的规划",
+      "motivation_cn": "现有智能体在协作规划中忽视了个体用户的偏好差异。",
+      "method_cn": "从少量演示中学习隐式偏好，并自适应调整规划策略。",
+      "result_cn": "在PbP基准上，该方法能较好泛化用户偏好，提升规划效果。",
+      "conclusion_cn": "学习个性化偏好是提升人机协作质量的重要方向。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration"
+    }
+  ],
+  "llm_ranked_at": "2026-06-08T03:10:00.431915+00:00",
+  "display_min_score": 4.0,
+  "pruned_at": "2026-06-08T03:10:00.468709+00:00"
+}

@@ -1,0 +1,2009 @@
+Title: You Get What You Give: Reciprocally Fair Federated Learning
+
+URL Source: https://openreview.net/pdf?id=ZdmMDz33Io
+
+Number of Pages: 22
+
+Markdown Content:
+# You Get What You Give: Reciprocally Fair Federated Learning 
+
+Aniket Murhekar 1 Jiaxin Song 2 Parnian Shahkar 3 Bhaskar Ray Chaudhury 1 2 Ruta Mehta 1
+
+# Abstract 
+
+Federated learning (FL) is a popular collaborative learning paradigm, whereby agents with individ-ual datasets can jointly train an ML model. While higher data sharing improves model accuracy and leads to higher payoffs, it also raises costs as-sociated with data acquisition or loss of privacy, causing agents to be strategic about their data con-tribution. This leads to undesirable behavior at a Nash equilibrium (NE) such as free-riding , re-sulting in sub-optimal fairness, data sharing, and welfare. To address this, we design MShap , a budget-balanced payment mechanism for FL, that admits Nash equilibria under mild conditions, and achieves reciprocal fairness : where each agent’s payoff equals her contribution to the collaboration, as measured by the Shapley share . In addition to fairness, we show that the NE under MShap has desirable guarantees in terms of accuracy, welfare, and total data collected. We validate our theoret-ical results through experiments, demonstrating that MShap outperforms baselines in terms of fairness and efficiency. 
+
+# 1. Introduction 
+
+Federated learning (FL) provides an effective distributed learning paradigm where a group of agents holding local data samples can train a joint machine learning model. The paradigm has extensive applications, including autonomous vehicles (Elbir et al., 2020) and digital healthcare (Dayan et al., 2021; Xu et al., 2021a). The success of federated learning hinges on the availability of diverse, high-quality data from a variety of agents for        
+
+> 1Department of Computer Science, University of Illinois, Urbana-Champaign, Urbana, USA 2Department of Industrial Sys-tems Engineering, University of Illinois, Urbana-Champaign, Ur-bana, USA 3Department of Computer Science, University of California, Irvine, Irvine, USA. Correspondence to: Bhaskar Ray Chaudhury <braycha@illinois.edu >, Ruta Mehta <rutame-hta@cs.illinois.edu >.
+> Proceedings of the 42 nd International Conference on Machine Learning , Vancouver, Canada. PMLR 267, 2025. Copyright 2025 by the author(s).
+
+effective training. However, data sharing is often costly due to factors such as acquisition costs (Tu et al., 2022), compu-tational expenses, and privacy concerns (Chen et al., 2020). As a result, agents may act strategically and reduce their data contributions, particularly if they bear high data shar-ing costs. This can lead to undesirable outcomes in terms of both fairness – where agents receive benefits disproportion-ate to their data contributions – and efficiency – resulting in low data sharing, reduced total welfare, and suboptimal learning outcomes. To address these challenges, it is crucial to design mechanisms for federated learning that incentivize participation from strategic agents and also ensure fairness and efficiency at stable solutions (like a Nash equilibrium). To this end, (Karimireddy et al., 2022) introduce the data sharing incentivization framework in FL, where each feder-ating agent’s net utility can be measured as the difference between the accuracy gained in the federation and the cost of data-sharing, and the agents are strategic about data con-tributions. (Karimireddy et al., 2022) then consider a mech-anism based on contract theory, where each agent receives a personalized model whose accuracy is tuned based on data contribution of the agent to the training ( data-share maximizing mechanism). In a similar spirit, (Murhekar et al., 2023) study a mechanism in the same framework with pay-ments, where agents may be charged/rewarded with money, such that any Nash equilibrium (NE) achieves the maximum utilitarian welfare possible under the mechanism ( welfare maximizing mechanism). Observe that both the foregoing guarantees at NE are efficiency guarantees: they ensure max-imal data gain or maximal welfare gain out of the federation. In this paper, we investigate mechanisms for FL, which are fair in addition to being efficient. Our notion of fair-ness is reciprocity : a mechanism is considered reciprocally fair if each agent is guaranteed a “reciprocal” final utility commensurate with her contribution to the learning process. Naturally, a reciprocal mechanism incentivizes participation from agents holding valuable data, which is in line with the goals of a mechanism designer for FL. Empirical evidence from behavioral economics (Fehr & Schmidt, 2006) further shows that in contrast to the self-interest hypothesis 1, users seem to trust reciprocal mechanisms, especially in bargain-ing and co-operative environments (like FL), and this trust 
+
+> 1Only material self-interest motivates all user participation
+
+1You Get What You Give: Reciprocally Fair Federated Learning 
+
+can lead to large voluntary participation. To formalize the foregoing statements in the context of FL, we define the reciprocity of a mechanism as the minimum over all Nash equilibria, the minimum over all agents, of the ratio of the benefit that an agent receives from the mecha-nism, 2 and her contribution to the benefit (accuracy) of all agents. In our work, we measure an agent’s contribution to the total accuracy of all agents using the classical notion of Shapley value (Shapley, 1953) from cooperative game theory, as done in (Bhaskara et al., 2024; Wang et al., 2019; Sim et al., 2020; Ghorbani & Zou, 2019; Agarwal et al., 2019). We note that reciprocity r of any budget-balanced mechanism lies in [0 , 1] , with higher r implying better fair-ness. We observe that the efficiency-focused mechanisms in (Karimireddy et al., 2022) and (Murhekar et al., 2023) are not reciprocal (see Example 7 and Section 5), which brings us to the driving question of the paper: 
+
+Are there reciprocal mechanisms that admit a Nash equilibrium? Do the Nash equilibria also provide effi-ciency guarantees in terms of total data contributed (as in (Karimireddy et al., 2022)), and total welfare achieved (as in (Murhekar et al., 2023)) ?
+
+Our Contributions. We propose a budget-balanced mech-anism for federated learning called MShap , which is recip-rocally fair and admits efficient Nash equilibria. • MShap admits Nash equilibria, which can be computed ef-ficiently through stochastic best response dynamics , under mild assumptions on agents accuracy and cost functions. • MShap is cost-agnostic , meaning it does not require knowledge of each agent’s private data-sharing cost, thus alleviating the burden of cost-verification for the central server. Importantly, unlike previous cost-based payment schemes like (Murhekar et al., 2023) that unfairly reward agents with high-acquisition-cost and low-quality data, 
+
+MShap only rewards agents with high-quality data. • MShap is fair : it is fully reciprocal, satisfies equal treat-ment of equals, and is individually rational. • Surprisingly, MShap admits efficient Nash equilibria 
+
+(NE), despite being designed for fairness. In particu-lar, there is no other mechanism that simultaneously Pareto-dominates the final data share and total welfare of 
+
+MShap . In other words, for every data share s that Pareto-dominates the data share at an NE of MShap , the total welfare at s will be strictly lower. Conversely, for every data share s where the total welfare is greater than that achieved at a NE of MShap , there exists at least one agent whose data share is strictly lower in s. We then define 
+
+> 2Since this is the benefit the mechanism provides, this excludes the cost which is private to an agent
+
+metrics to measure the efficiency of a mechanism, namely, 
+
+data gain and accuracy gain (formally defined in Sec. 3). For structured payoff and cost functions used in the liter-ature (Karimireddy et al., 2022; Murhekar et al., 2023), we establish strong lower bounds ( Ω( √n)) on the data gain and accuracy gain of MShap , which improve as the number of agents n increases. • We empirically evaluate our mechanisms on five datasets: MNIST, FashionMNIST, CIFAR-10, Lumpy Skin Dis-ease, and a synthetic quadratic regression dataset. We compare the performance of the Nash equilibria of MShap 
+
+and two baseline mechanisms – the mechanism M0 with-out payments, and the welfare-maximizing mechanism (Murhekar et al., 2023). Our mechanism outperforms in metrics of reciprocity, data gain, accuracy gain, and total welfare (see Table 1). • We design a distributed FL protocol FedBR-Shap to approximately compute the NE of MShap . Unlike prior work (Karimireddy et al., 2022; Murhekar et al., 2023), our protocol relies exclusively on gradient information, eliminating the need for sharing actual data points and uses actual model accuracies instead of assuming a closed form of accuracies, marking a departure from prior work. Although our theoretical results apply broadly, our proposed method is especially well suited to cross-silo federated learn-ing (see (Zeng et al., 2022)), where only a moderate number of clients participate in collaboration, and thereby Shapley-value computations remain tractable. 
+
+1.1. Related Work 
+
+The subject of incentives in federated learning has received substantial attention (see (Tu et al., 2022) for a detailed survey) as the federating agents indeed have benefits and costs (communication and computation (Tu et al., 2022), privacy loss due to generative adversarial attacks (Chen et al., 2020)). Several concepts from game theory (Stack-elberg games (Khan et al., 2020; Pandey et al., 2019), non co-operative games (Zou et al., 2019; Cheng et al., 2021), auctions (Roy et al., 2021)) have been adopted for incentiviz-ing participation in FL. We remark that rewarding agents according to their contribution levels has been well moti-vated and studied in FL (Wang et al., 2019; Sim et al., 2020; Zhang et al., 2020; Yu et al., 2020). However, the crucial difference is that our focus is to design a mechanism that incentivizes strategic agents , i.e., agents who strategize their data contributions based on the rewards they get from the federation so that desirable fairness and welfare guarantees are achieved at NE (in line with the works of (Karimireddy et al., 2022; Murhekar et al., 2023) studying NE proper-ties, and (Chen et al., 2023; Cai et al., 2014) incentivizing the supply of high-quality data). In contrast, Chaudhury et 2You Get What You Give: Reciprocally Fair Federated Learning 
+
+al. (Chaudhury et al., 2022) assume non-strategic agents who share their complete datasets, and under this setting guarantee coalition stability. The Shapley value (Shapley, 1953) is a well-studied con-cept from cooperative game theory, used to distribute the benefit of cooperation among participating agents. In feder-ated learning, Shapley value has been used to measure the contribution of participants (Wang et al., 2019; Xu et al., 2021b), interpret models (Wang, 2019), value data (Wang et al., 2020), and allocate profit (Song et al., 2019). Finally, to illustrate practical payment mechanisms in FL, we highlight blockchain-based approaches that reward par-ticipants according to their individual contributions. Fed-Coin (Liu et al., 2020) uses a proof-of-Shapley protocol, while FedToken (Pandey et al., 2022) distributes tokens based on performance. Both require an initial budget, unlike our budget-balanced approach, which penalizes poor data quality and rewards high-quality data. Also in IoT, BOppCL (Li et al., 2024) incentivizes vehicles in intelligent trans-portation systems, rewarding those with more useful data via cryptocurrency. 
+
+# 2. Preliminaries 
+
+Problem formulation. We study the data-sharing incen-tivization framework introduced by (Karimireddy et al., 2022). There is a set N = [ n] of n agents who wish to solve a learning problem by training a joint model, and a central server that coordinates among them. Agent i
+
+transmits a set Ti ∼ D si 
+
+> i
+
+of si i.i.d. data points sampled from the distribution Di of data samples available to i. Let 
+
+Si = [0 , τ i] denote the set of feasible number of samples agent i can contribute, and let S := ×j Sj . For a sample vec-tor s = ( s1, s 2, . . . , s n) ∈ S specifying the data contribu-tions of the agents, the central server returns a model trained using the data set S 
+
+> i
+
+Ti, which has size ∥s∥1 = P 
+
+> i
+
+si.Every agent receives a payoff or benefit from federation as well as incurs a cost of sharing data samples. We measure the payoff to agent i from the jointly trained model using a payoff function ai : S → R≥0. Generally, we assume the payoff ai(s) represents the accuracy of the jointly trained model at the contribution level s on agent i’s learning task. However, our model allows for more general payoff func-tions. Moreover, each agent i incurs a cost associated with data sharing modeled using a cost function ci : Si → R≥0.Thus, each agent obtains a utility ui(s) at sample vector s
+
+given by the difference between the payoff received and the cost incurred, i.e., 
+
+ui(s) = ai(s) − ci(si). (1) We now discuss some canonical examples and properties of the payoff and cost functions. 
+
+2.1. Payoff and cost functions: examples and properties Payoff functions. We assume that each payoff function ai
+
+is bounded, non-decreasing and concave in the contribution of all agents. This is a standard assumption in literature (Blum et al., 2021; Karimireddy et al., 2022; Murhekar et al., 2023), and captures decreasing marginal returns on increased data sharing. Below we present canonical exam-ples of payoff functions in common learning frameworks that satisfy the above assumptions. 
+
+Example 1 (Generalization bounds from general PAC learning (Mohri et al., 2018)) . Consider a general learn-ing problem of learning a model h from a hypothesis class H which minimizes the expected error R(h) =
+
+E(x,y )∈D e(h(x), y ) over a data distribution D, for some loss function e(·). Given m i.i.d. samples from D, the empirical risk minimizer (ERM) is the model hm =arg min h∈H 
+
+P 
+
+> ℓ∈[m]
+
+e(h(xℓ), y ℓ). (Mohri et al., 2018) prove that with high probability, the error of hm is bounded: 
+
+1 − R(hm) ≥ a(m) := a0 − 4 + p2k(2 + log( m/k )) 
+
+√m ,
+
+(2) where (1 − a0) is the accuracy of the optimal model from H,and k is a (constant) measure of the difficulty of the learning problem depending on e(·) and H.In fact, there are other examples like linear, random discov-ery, and random coverage based accuracy functions (Blum et al., 2021) that also satisfy our desired criterion, and they are discussed in more detail in Appendix B. 
+
+Example 2 (Empirical evidence) . (Kaplan et al., 2020) and (Henighan et al., 2020) discuss empirical scaling laws re-lating to cross-entropy loss on neural and large-language models for a number of ML tasks relating to language, im-age, and video. They observe that the loss scales with the dataset size m as a power law ℓ(m) = α · m−β , for some parameters α, β ∈ (0 , 1] .The above examples indicate the dependence of the accuracy 
+
+a(m) on a learning task given m data points varies as 1 −
+
+α · m−β , both in theory and in practice. 
+
+Cost functions. We assume that each cost function ci is continuous, non-decreasing, and convex in si. This is also a standard assumption (Blum et al., 2021; Karimireddy et al., 2022; Murhekar et al., 2023), and captures non-decreasing marginal costs (Li & Raghunathan, 2014). 
+
+2.2. Nash Equilibrium 
+
+Recall from Equation (1) that the net utility of agent i is the difference between the payoff received and the cost incurred, 
+
+i.e., ui(s) = ai(s)−ci(si). Since agents are net-utility max-imizers, the goal of an agent is to strategically decide how many samples to contribute so that her net utility is max-3You Get What You Give: Reciprocally Fair Federated Learning 
+
+imized. To analyze agent strategic behavior arising in FL, we use the standard game-theoretic concept of Nash equi-librium ((Nash, 1951)). Intuitively, the NE is a stable state of the system where no agent can increase their utility by unilaterally changing their data contribution level. Formally: 
+
+Definition 2.1 (Nash equilibrium (NE)) . A sample vector 
+
+s ∈ S is a Nash equilibrium if for every i ∈ N , and every 
+
+s′ 
+
+> i
+
+∈ Si, we have ui(s) ≥ ui(s′
+
+> i
+
+, s−i) where (s′
+
+> i
+
+, s−i) = (s1, . . . , s ′
+
+> i
+
+, . . . , s n).The concept of best response provides an alternate, dynamic view of Nash equilibrium. Facing the sample vector s−i of agents other than i, the set fi(s−i) of contribution levels of agent i that maximizes her utility is defined as the best response set of agent i:
+
+fi(s−i) = arg max 
+
+> x∈Si
+
+ai(x, s−i) − ci(x) ⊆ Si.
+
+The best response correspondence f is the set-valued func-tion given by f : S → ×i 2Si , where [f (s)] i = fi(s−i).Thus, Nash equilibria are fixed points of this correspondence. 
+
+Proposition 2.2. A sample vector s ∈ S is a Nash equi-librium if and only if it is a fixed point of the best response correspondence, i.e., s ∈ f (s).
+
+(Murhekar et al., 2023) proved that an FL problem admits a NE with concave payoffs and convex costs, but not without these assumptions. 
+
+2.3. Shapley value 
+
+The Shapley value (Shapley, 1953) is a classic solution concept from cooperative game theory that specifies a fair 
+
+way of distributing the surplus generated in a cooperative game. We adapt this concept in the federated learning con-text as follows. The total surplus generated at a sample vector s is the cumulative payoff to all agents given by 
+
+A(s) := Pni=1 ai(s). Let s[X] denote the sample vector restricted to agents in X, i.e., s[X] is the vector s′ given by s′ 
+
+> i
+
+= si for i ∈ X and s′ 
+
+> i
+
+= 0 for i / ∈ X. To mea-sure the “contribution” of agent i to A(s), we compute for every coalition X ⊆ N \ { i} of agents the marginal gain 
+
+A(s[X ∪ { i}]) − A(s[X]) of adding i to X, and average it over all ways of forming the coalition. This represents the Shapley value of federation φAi (s) at s, and is formally expressed as: 
+
+φAi (s) = 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+· A(s[X∪{ i}]) −A(s[X]) 
+
+(3) The following lemma (adapted from the well-known prop-erties of Shapley values) shows that the Shapley values distribute the cumulative payoff (see Appendix C). 
+
+Lemma 2.3. For any s ∈ S , A(s) = P 
+
+> i∈N
+
+φAi (s).
+
+# 3. Mechanisms and Metrics for FL 
+
+Since NE is an intuitive and well-established solution con-cept that is guaranteed to exist, it is natural to examine the properties of a NE in the context of federated learning. 
+
+Example 3. Consider two agents with identical payoff func-tion a(s) = 1 − (∥s∥1 + 1) −1 and linear cost functions given by c1(s1) = 0 .1s1 and c2(s2) = 0 .25 s2. The only NE is given by s0 = (2 .16 , 0) .The above example shows that NE can be quite far from desirable: at NE, only agent 1 contributes data samples while agent 2 does not contribute at all and free-rides . Similar examples illustrate that NE can be far from optimal in terms of fairness, overall data shared (Blum et al., 2021), and overall agent welfare (Murhekar et al., 2023), all of which are part of the desiderata for federated learning solutions. To address some of these issues, prior works (e.g. (Blum et al., 2021; Murhekar et al., 2023)) studied mechanisms for FL that incentivize agents to contribute more data or admit NE with good welfare. Like (Murhekar et al., 2023), our work focuses on mechanisms with payments , formalized as follows. 
+
+Definition 3.1 (Mechanisms with payments) . A mechanism 
+
+M models the interaction between the central server and the participating agents. First, the server publishes the mech-anism by specifying a payment scheme p which indicates the payment pi(s) to each agent i at the sample vector s.Second, the agents observe the mechanism, decide their data contribution levels {si}i∈N individually, and transmit the data to the server. Third, the server computes and returns a model trained on data contributed by all agents at the sample vector s, and returns the payment pi(s) to each agent i3.Thus, under a mechanism M with payment scheme p, the resulting utility of an agent i ∈ N is given by ui(s) = 
+
+ai(s) − ci(si) + pi(s).A mechanism is said to weakly balance its budget if the total payment to the agents is not positive. A stronger condition is budget-balance, which requires that the total payment to the agents is zero, i.e., the central server operates on no profit or loss. 
+
+Definition 3.2 (Budget-balanced mechanism) . A mecha-nism is said to be weakly budget-balanced if for every s ∈ S ,P 
+
+> i∈N
+
+pi(s) ≤ 0. If the latter is an equality, then the mech-anism is budget-balanced.           
+
+> 3Note that if pi(s)<0, agent imust pay the server. We can enforce this by transmitting the model only after receiving payment from the agent. Thus for simplicity, we assume agent ican only strategize on si.
+
+4You Get What You Give: Reciprocally Fair Federated Learning 
+
+We now define some fairness and efficiency metrics to mea-sure the quality of a mechanism M and its set of NE denoted by NE (M). Naturally, we are only interested in mechanisms that admit a NE. 
+
+3.1. Metrics to Evaluate FL Mechanisms Individual rationality. A mechanism M is said to be indi-vidually rational if every agent gets non-negative utility at its NE, i.e., for all s ∈ NE (M), for all i, ui(s) ≥ 0. Thus, no agent can receive a negative utility by participating in an individually rational mechanism. 
+
+Fairness metrics. By participating in the mechanism, each agent contributes towards the benefit of other agents while also reaping benefits from others. At a sample vector s, the contribution of an agent i from the mechanism is ai(s) + 
+
+pi(s) while the contribution to the mechanism is φAi (s). The following fairness metric, termed Reciprocity , measures the degree to which the worst NE of a mechanism reciprocates 
+
+the contribution of any agent. 
+
+Definition 3.3 (Reciprocity of a mechanism) . The reci-procity of a mechanism M is defined as: 
+
+Reciprocity (M) = min  
+
+> s∈NE (M)
+
+min 
+
+> i∈N
+
+ai(s) + pi(s)
+
+φAi (s) . (4) Thus, a mechanism M with reciprocity r < 1 has some NE s ∈ NE (M ) that reciprocates some agent i less than her contribution at s, i.e., is unfair. On the other hand, r > 
+
+1 implies that every NE reciprocates every agent strictly more than they contribute. The following lemma proves the intuitive fact that such a mechanism must make a total positive payment to the agents. 
+
+Lemma 3.4. Any mechanism M satisfying weak budget-balance cannot have Reciprocity (M) > 1.
+
+We note that r = 1 implies that every NE of the mechanism reciprocates an agent exactly as much as their contribution. We refer to such ‘truly fair’ mechanisms as fully reciprocal 
+
+(or just reciprocal for convenience). Lemma 3.4 shows that reciprocal mechanisms are the best one can aim for in terms of fairness among weakly budget-balanced mechanisms. We now define a second fairness notion in the FL setting in-spired by the fairness principle of equal treatment of equals (Moulin, 2002). 
+
+Definition 3.5 (Equal treatment of equals) . Mechanism M
+
+satisfies equal treatment of equal contributors if for any sample vector s and two identical agents i and j, pi(s) = 
+
+pj (s).
+
+Efficiency metrics. We define two natural metrics to eval-uate the efficiency of a mechanism for federated learning. While fairness is a local property and can be evaluated at a solution, efficiency is a global property measuring aggre-gate quantities (like total payoff or data shared) and must be contrasted against an appropriate baseline. Our metrics compare the NE of a mechanism M against the NE of the baseline mechanism M0 in the absence of payments. That is, pi(s) = 0 for all i ∈ N, s ∈ S for the mechanism M0.The first metric, called DataGain , compares the total quan-tity of data shared in the worst NE of M to the total quantity of data shared in the best NE of the baseline M0.
+
+Definition 3.6 (Data Gain of a mechanism) . The data gain of a mechanism M is defined as: 
+
+DataGain (M) = min  
+
+> s∈NE (M)
+
+∥s∥1
+
+max  
+
+> s0∈NE (M0)
+
+∥s0∥1
+
+. (5) In a similar spirit, we define a metric AccGain to compare the cumulative payoff/accuracy of agents in a mechanism as compared to the baseline. 
+
+Definition 3.7 (Accuracy Gain of a mechanism) . The accu-racy gain of a mechanism M is defined as: 
+
+AccGain (M) = min 
+
+> s∈NE (M)
+
+Pni=1 ai(s)max 
+
+> s0∈NE (M0)
+
+Pni=1 ai(s0) . (6) 
+
+# 4. MShap : A Fair and Efficient FL Mechanism 
+
+Recall from Example 3 that NE of M0 in the absence of payments can force a single agent to contribute data sam-ples while other agents are free-riding. Therefore, we seek mechanisms that admit a NE and are both fair and efficient. Towards this goal, we present a mechanism MShap based on the Shapley value of FL. 
+
+Definition 4.1 (Mechanism MShap ). MShap is the mecha-nism with the payment scheme p given by 
+
+pi(s) = φAi (s) − ai(s), for any i ∈ N, s ∈ S . (7) Note that φAi (s) is the contribution of agent i towards the cumulative payoff of the agents, while ai(s) is her payoff at the sample vector s. Therefore, the above payment scheme can be interpreted as a fair compensation scheme: if an agent 
+
+i contributes more than what she gets as a payoff, then she is compensated via a subsidy; conversely, if her contribution is less than her payoff, she is charged via a tax. 
+
+Cost-agnostic nature of MShap . In contrast to the mecha-nisms in (Karimireddy et al., 2022; Murhekar et al., 2023), 
+
+MShap is cost-agnostic since it does not require knowledge of the agent cost functions. This feature offers a practical advantage: the central server (or other agents) does not need knowledge of an agent’s cost function, which can some-times prove difficult for third-parties to estimate or verify 5You Get What You Give: Reciprocally Fair Federated Learning 
+
+in practice. Moreover, since the payment only depends on the actual contribution of agents to the cumulative payoff, no agent can gain by misreporting their cost functions, i.e., claiming they have a higher data collection cost than actual. Mechanisms that attempt to compensate agents with high acquisition costs and low data quality (e.g. the mechanism of (Murhekar et al., 2023)) may unfairly penalize agents with high data quality and lower acquisition costs. In con-trast, our mechanism MShap ensures that high-quality, high-acquisition-cost data is still incentivized for sharing, as the agent’s payment will compensate their data sharing costs. However, MShap will not incentive agents with low data quality and high acquisition costs to share their data. By construction, the server operates on a no profit or loss in our mechanism MShap (proof in Appendix D). 
+
+Lemma 4.2. The mechanism MShap is budget-balanced. 
+
+4.1. Nash equilibria of MShap : Existence 
+
+We now prove that MShap admits a Nash equilibrium under standard assumptions on the utility functions as in Sec. 2.1. 
+
+Theorem 4.3. In any federated learning instance where for every agent i ∈ N the payoff function ai(s) is concave in s,and cost function ci is non-decreasing and convex in si, the mechanism MShap admits a Nash equilibrium. Proof Sketch. The key idea is to prove that for a fixed s−i,
+
+ui(si, s−i) = φAi (si, s−i) − ci(si) is concave in si. This uses the concavity of payoffs ai and the convexity of costs 
+
+ci. Therefore, the best response set fi(s−i) is a non-empty interval, and hence that f is convex valued. Lastly, the con-tinuity of ui in s implies the upper semi-continuity of f .Then Kakutani’s fixed point theorem implies that f admits a fixed point, which then corresponds to a NE of MShap . The detailed proof can be viewed in Appendix D. 
+
+Implications. Theorem 4.3 shows that our mechanism 
+
+MShap always admits a NE, i.e., stable-state of data contri-bution levels, as long as agent payoffs are concave and costs are convex. These mild assumptions are commonly satis-fied in practice, e.g. for all our motivating examples from Section 2.1. In the absence of this assumption, a NE is not guaranteed to exist even without any payments (Murhekar et al., 2023). To illustrate how our mechanism circumvents free-riding by reciprocally sharing profits of collaboration, we revisit the setting of Example 3 and examine the NE under MShap .As shown below, we observe that all agents contribute data samples in the NE of MShap as opposed to the NE of M0.
+
+Example 4. Consider two agents with identical payoff func-tions a(s) = 1 − (∥s∥1 + 1) −1, and linear costs given by 
+
+c1(s1) = 0 .1s1 and c2(s2) = 0 .25 s2. Recall that the NE of 
+
+M0 is given by s0 = (2 .16 , 0) where agent 2 free-rides. On the other hand, the NE of MShap is s∗ = (3 , 1.17) . Thus both agents contribute at the NE in MShap and in fact s∗
+
+Pareto-dominates s0. Moreover, almost twice the amount of data is shared in the NE of MShap as compared to M0.
+
+4.2. Nash equilibria of MShap : Best-Response Dynamics 
+
+We next turn to the question of computing the NE of MShap .For FL instances with strongly concave utility functions, it is known from prior work (Murhekar et al., 2023) that NE can be computed by following intuitive best-response (BR) dynamics . The dynamics begins with an initial sample vector 
+
+s0. In step t with sample vector st, each agent i updates her sample contribution proportional to the gradient ∇iui(st)
+
+in the direction of increasing utility, while ensuring that the resulting vector st+1 lies in the feasible region S. Formally, for a step size δt > 0, the update in step t is: 
+
+st+1 = st + δt · g(st, μt), (8) where g(st, μt) := ∇u(st) + μt for a specific choice of vector μt which ensures that st+1 ∈ S , given by: 
+
+μti =
+
+
+
+−∇ iui(st) − sti 
+
+> δt
+
+, if sti + δt · ∇ iui(st) < 0
+
+−∇ iui(st) + τi−sti 
+
+> δt
+
+, if sti + δt · ∇ iui(st) > τ i,
+
+0, otherwise .
+
+(9) (Murhekar et al., 2023) show that for strongly concave utili-ties, the above BR dynamics converges to an ε-approximate NE in O(log  ε−1) iterations. In this section, we prove a stronger result: the convergence of stochastic best-response dynamics when utility functions are strongly concave. In stochastic BR, in each step t, we randomly sample a set Rt of size k and perform BR dy-namics only for agents in Rt, for some fixed k ∈ [n]. With 
+
+g(st, μt) defined as above, we define f (st, μt, R t) ∈ Rn
+
+as the random vector given by: 
+
+f (st, μt, R t)i =
+
+(
+
+g(st, μt)i if i ∈ Rt,
+
+0, otherwise . (10) Then, for a step size δt, the stochastic BR update is: 
+
+st+1 = st + δt · f (st, μt, R t). (11) 
+
+Theorem 4.4. For a concave game where agent utility func-tions are (i) λ-strongly concave: (G + λ · In×n) is negative semi-definite, and (ii) L-bounded derivatives: |Gij | ≤ L,for constants λ, L > 0, stochastic best response dynamics 
+
+(11) with step size δt = n−1 
+
+> k−1
+
+· λn2L2 converges to an approx-imate Nash equilibrium sT where ∥g(sT , μT )∥2 < ε in T
+
+iterations, where: 
+
+T = 2n2L2
+
+λ2 log 
+
+ ∥g(s0, μ0)∥2
+
+ε
+
+
+
+.
+
+6You Get What You Give: Reciprocally Fair Federated Learning 
+
+The proof is deferred to App. D. Finally, we show that 
+
+MShap does satisfy conditions of Theorem 4.4, proving that its NE can be computed via stochastic BR dynamics. 
+
+Lemma 4.5. For a federated learning instance where agent (i) payoff functions are λ1-strongly concave and cost func-tions are λ2-strongly concave, and (ii) second derivatives of payoffs and costs are bounded: | ∂2ai  
+
+> ∂s j∂s k
+
+| ≤ L1 and 
+
+| ∂2ci 
+
+> ∂2si
+
+| ≤ L2, for constants λ1, λ 2, L 1, L 2 > 0, stochas-tic best response dynamics (11) with step size δt = n−1 
+
+> k−1
+
+· 
+
+> nλ 1+λ2
+> n2(2 nL 1+L2)2
+
+converges to an approximate Nash equilib-rium sT where ∥g(sT , μT )∥2 < ε in T iterations, where: 
+
+T = 2n2 · (2 nL 1 + L2)2
+
+(nλ 1 + λ2)2 log 
+
+ ∥g(s0, μ0)∥2
+
+ε
+
+
+
+Implications of Theorem 4.4 and Lemma 4.5. The above results show that stochastic BR dynamics convergences for strongly concave games in O(log  ε−1) iterations with an ε-approximate NE. Indeed, we employ stochastic BR dynamics to compute NE of MShap in our experiments (see Section 5.2). Note that the payoff and cost functions defined by generalization bounds (Equation (2)) and those observed in practice (Equation (12)) satisfy the assumptions of results. 
+
+4.3. Fairness and Efficiency Properties of MShap 
+
+We now establish desirable properties of our mechanism 
+
+MShap , focusing on individual rationality, fairness, and ef-ficiency. We defer proofs to Appendix D due to space con-straints and highlight the key implications of our results. 
+
+Lemma 4.6. MShap is individually rational. 
+
+This shows that no agent will receive a negative utility by participating in our mechanism. Next, we show that MShap 
+
+satisfies the fairness principles outlined in Def. 3.3 and 3.5. 
+
+Theorem 4.7. MShap satisfies Reciprocity (MShap ) = 1 ,i.e., is fully reciprocal. Moreover, MShap satisfies equal treatment of equals. 
+
+Therefore, MShap ensures that every agent receives as much from the mechanism as their contribution to other agents. Having shown that MShap is reciprocally fair, we next inves-tigate its efficiency properties in terms of data contributions, welfare, and accuracy. We first prove a general tradeoff be-tween the data contribution and overall welfare (i.e., total accuracy minus costs) at the NE of our mechanism MShap 
+
+as compared to any other sample vector. 
+
+Theorem 4.8. Let W (s) = A(s) − P 
+
+> i∈[n]
+
+ci(si) denote the total welfare of the agents, and let s∗ ∈ NE (MShap ).Consider any data contribution vector s that weakly Pareto-dominates s∗, i.e., si ≥ s∗ 
+
+> i
+
+for all i. Then W (s) < W (s∗).
+
+Implications. Theorem 4.8 allows us to compare any sam-ple vector s (e.g. the NE of some mechanism M) with the NE s∗ of our mechanism MShap in terms of data contribu-tions and utilitarian welfare. In particular: 1. If all agents share equal or strictly higher data in s than 
+
+s∗, then the welfare satisfies W (s) < W (s∗). Thus, there is no mechanism M in whose NE agents contribute at least as much data as they would in the NE of MShap ,while also achieving higher welfare. 2. Conversely, if W (s) ≥ W (s∗), then s does not weakly Pareto-dominate s∗. Thus, any mechanism M whose NE achieves higher welfare than the NE of MShap , will nec-essarily have at least one agent who contributes strictly less data at the NE of M than at the NE of MShap .Theorem 4.8 thus underscores that our reciprocal mecha-nism MShap exhibits favorable properties in terms of both 
+
+data contribution at equilibrium (in the spirit of the mech-anism of (Karimireddy et al., 2022)), and welfare (in the spirit of the mechanism of (Murhekar et al., 2023)). We further formalize this by explicitly quantifying the data gain and accuracy gain of MShap when the accuracy func-tions are identical and take a tractable form, and costs are (possibly different, but) linear. Examples 1 and 2 indicate that the accuracy a(m) on a learning task with m data points varies as a(m) = 1 − α · m−β for α, β ∈ (0 , 1] . This mo-tivates us to assume the following canonical form for the accuracy a(s) of an agent i as a function of the contribution vector s.
+
+a(s) = 1 − α
+
+(∥s∥1 + 1) β . (12) Note that the normalization ensures that a(·) is concave, and 
+
+a(s) ∈ [0 , 1] for all s ∈ S .
+
+Theorem 4.9. Consider any FL instance with n agents where agents have (i) identical payoff function a(s) = 1 −
+
+α · (∥s∥1 + 1) −β for α > 0 and β ∈ (0 , 1] , and (ii) linear cost functions ci(si) = γi · si + di for γi, d i ≥ 0. Then 
+
+MShap satisfies: (i) DataGain (MShap ) ≥ n 1 
+
+> β+1
+
+, and (ii) AccGain (MShap ) ≥ 1 + α 1 
+
+> β+1
+
+· β −ββ+1 · (min i γi) ββ+1 ·
+
+ 1 − n− β
+
+> 1+ β
+
+.
+
+Implications. The above theorem establishes lower bounds on aggregate quantities (total amount of data shared and cumulative payoff) in any NE of our mechanism MShap 
+
+compared to any NE in the absence of payments. We note that the gain in total data shared is at least n 1 
+
+> β+1
+
+, which is at least √n since β ∈ (0 , 1] . This establishes that the gain in data shared increases with the number of agents n
+
+7You Get What You Give: Reciprocally Fair Federated Learning 
+
+joining the federation, which is the natural expectation from mechanisms for FL. Likewise, we observe that the gain in cumulative payoff is strictly more than 1, and increases with an increasing number of agents. The assumptions of linear costs and identical payoffs with forms similar to Eq. (12) are standard in prior works (Blum et al., 2021; Karimireddy et al., 2022; Murhekar et al., 2023). In our experiments (Sec. 5), we observe that MShap outper-forms other mechanisms in terms of data gain, accuracy gain, and reciprocity, even without making any assumption on payoff functions taking a particular form, e.g., (12). 
+
+# 5. Empirical Evaluation 
+
+In this section, we compare the performance of our mecha-nism MShap with two baselines M 0 and MBG (Murhekar et al., 2023) tailored to maximize welfare. In Sec 5.1, we compare the performance of the NEs found by the best response dynamics of the three mechanisms when the accu-racy and cost functions are given as closed-form functions. In Sec 5.2, we provide a practical distributed FL protocol 
+
+FedBR-Shap to approximately find an NE. 
+
+Datasets and local training. We evaluate the mecha-nisms on five datasets, including three image-based datasets: MNIST, FashionMNIST, and CIFAR-10, a healthcare dataset (Afshari Safavi, 2021), and a synthetic dataset. A simple CNN network is used for the local training for MNIST and FashionMNIST, and ResNet-10 (He et al., 2016) is used for CIFAR-10. We use ResMLP (Touvron et al., 2022) for local training of the healthcare dataset, which contains meteorological and geospatial features re-lated to Lumpy Skin Disease. In addition, we create a syn-thetic binary classification dataset with 10 input variables and perform a quadratic regression. 
+
+5.1. Performance of Nash Equilibria 
+
+In this part, we implement the best response dynamics (as described in Sec 4.2) for the three mechanisms and compare the performance of the NE found by best response dynamics. 
+
+Setup. We set the number of agents as 30 for the three image-based datasets (MNIST, FashionMNIST, and CIFAR-10) and randomly sample 10 agents to update their shares in each iteration. For the remaining two datasets, we set the number of agents to two and perform no sampling. We adopt the statistical heterogeneous setting: the datasets of the agents are Non-Independent Identically Distributed (Non-IID) (Ye et al., 2023). We partition all the agents into T
+
+groups. Denote the agents in the t-th group by At. In the three image-based datasets, the agents are equally parti-tioned into three groups (i.e., T = 3 ), each of which con-tains 10 agents. The images of the three groups are rotated by particular angles 10 ◦, 90 ◦, and 180 ◦, respectively. For the other two datasets, we set the dataset of one agent to consist of 70% positive data points and 30% negative data points, and the other agent vice versa. 
+
+Interpretation of sample vector s. We note that, in our implementation, unlike the model described in Sec. 2, we do not ask agents to transmit data to the central server. Instead, agents perform training locally and only transmit the gra-dient information to the central server. Hence, the number of data samples si is interpreted as the number of batches trained by agent i during each local training. 
+
+Closed-form accuracy and cost. We assume the accuracy function of an agent in the i-th group is in the form of 
+
+ai(s) = 1 − 11 + PTt=1 wi,t · P 
+
+> j∈At
+
+sj
+
+, i ∈ [T ] .
+
+Before running the best-response dynamics, we randomly sample a number of data points from each group and per-form a normal federated training without strategic behaviors. After collecting a set of accuracy results, we fit the accuracy functions using the non-linear least squares method. After that, we assume the central server broadcasts all the param-eters {wi,t }i,t ∈[T ] to all agents. Meanwhile, each agent is assumed to incur a linear cost: ci(s) = γi · si, where γi is set randomly in advance. Based on the closed-form utility function, each agent can (approximately) compute the derivatives of the Shapley share at a specific sample vector s. Note that our mech-anism requires that all agents operate with a synchronized sample vector. In a cross-silo FL setting, where the number of participating clients is relatively small, this synchroniza-tion overhead is practical. For the case of n = 30 agents, the agents perform the Monte-Carlo approximation by randomly sampling ⌊n log n⌋ = 102 permutations and computing the average. In contrast, for two agents, we directly compute the exact derivative of the Shapley value. We duplicate each experiment 3 times, and the appropriateness of the number of sampled permutations is supported by the low standard deviation of the reported results. 
+
+Experimental results. Table 1 reports the performance of the NEs of MShap and the two baseline mechanisms. The tables report the model accuracy, welfare, data gain, and the reciprocity of the mechanisms. The “Avg Accuracy” column reports the average accuracy of the final model evaluated on all agents’ test datasets. It is worth noting that Table 1 reports the actual accuracies of the models trained using the data contributions at NE. The “Data Share” column shows the ratio of shared data to total data. For the two columns “Data Gain” and “Accuracy Gain”, we report the relative 8You Get What You Give: Reciprocally Fair Federated Learning                                                                                                     
+
+> Table 1. Performance of the NEs of MShap and the two baselines M0and MBG .Dataset Avg. Accuracy (%) Data Share (%) Data Gain Accuracy Gain Reciprocity
+> M0MBG MShap M0MBG MShap M0MBG MShap M0MBG MShap M0MBG MShap
+> MNIST 88.3 87.6 90.4 5.8 7.6 54.9 1.00 1.32 9.51 1.00 0.99 1.02 0.61 0.70 1.00
+> FashionMNIST 60.9 61.5 63.3 4.1 6.2 54.8 1.00 1.51 13.43 1.00 1.02 1.05 0.47 0.75 1.00
+> CIFAR-10 43.6 44.7 48.5 25.6 28.9 99.6 1.00 1.13 3.89 1.00 1.02 1.11 0.50 0.57 1.00
+> Lumpy-Skin-Disease 94.2 94.0 95.2 46.7 46.7 81.3 1.00 1.00 1.73 1.00 0.98 1.01 0.92 0.02 1.00
+> Quadratic 67.2 65.8 90.8 3.3 4.0 99.6 1.00 1.25 31.18 1.00 0.98 1.36 0.93 0.95 1.00
+
+values of data share and accuracy compared to the baseline mechanism M0.Our results demonstrate that our mechanism MShap outper-forms baselines in terms of both fairness and efficiency. • MShap significantly incentivizes agents to contribute more data compared to both baselines, as evidenced by a 9.51 × data gain for MNIST, a 13.43 × data gain for FashionMNIST, and a 3.89 × data gain for the CIFAR-10. FedBR-Shap also outperforms baselines in terms of accuracy, reporting an accuracy gain of 1.02 × to 1.11 ×
+
+for the three image-based datasets. The accuracy gain is extremely high ( 1.36 ×) in the synthetic dataset. • We observe that the reciprocity of the baselines is strictly lower than 1, indicating that they force some agents to contribute more to the federation than what they receive. 
+
+MShap is fairer as it is always fully reciprocal. • Our mechanism MShap guarantees reciprocal fairness in more practically meaningful scenarios. In the skin disease prediction task, the first agent possesses a large number of positive (i.e., disease-present) patient samples, which are expected to be more informative for the prediction task. The fitted accuracy functions in Sec E also reflect this. Observe that, in the NEs of the two baselines, agent 1 even needs to share more data than the second agent (who possesses lower-quality data): the NEs in M0 and MBG 
+
+are respectively (30 .5% , 18 .1%) and (30 .6% , 18 .1%) . In contrast, in MShap , the NE is (38 .1% , 55 .4%) , indicating that agent 2 should contribute more than agent 1 in the NE. The finding also highlights the reciprocal fairness ensured by MShap .
+
+5.2. FedBR-Shap : FL Protocol for MShap 
+
+Note that the above computation of NE relies on known closed-form accuracy functions. Unfortunately, a closed-form accuracy function may not always be possible, espe-cially when the information about the agents’ dataset is inaccessible. Moreover, another restriction of the above im-plementation is assuming agents are always training on fixed number of batches throughout the learning process. How-ever, an agent may not always follow a static strategy in real training and can adjust it strategically based on the current model. For example, an agent may skip local training if the current model is already good enough for her. To address the limitations mentioned above, we design a distributed FL protocol, FedBR-Shap , which implements 
+
+MShap in practice and approximately computes NE in more realistic scenarios. FedBR-Shap computes NE while si-multaneously training a global model for the underlying FL task. FedBR-Shap runs for T iterations. In each iteration, the central server updates the global model, and a set of agents updates their sample vectors according to the transi-tion relation (Equation (8)) of best response dynamics. The update differs from the previous approaches as follows: • The central server gives payments to the agents at the end of every iteration. Each agent i is allowed to change the number of samples si during the training. The pay-ment follows MShap according to their contribution to the accuracy improvement for the current iteration. • There are no publicly known closed-form accuracy func-tions. Instead, at iteration t, each agent i ∈ [n] locally trains two models Ti and T ϵi using sti and sti + ϵ batches of its local dataset. The central server updates its global model θt−1 to θt using all the Ti. In addition, it aggregates a set of intermediate models using subsets of Ti and T ϵi .The central server then distributes the intermediate mod-els to the agents, which enables them to approximately estimate the derivative of the utility function and update their samples correspondingly. We emphasize that FedBR-Shap is a truly distributed pro-tocol for FL, as it does not involve actual data sharing, only relies on the gradients of each agent’s local datasets, and does not make any assumptions about accuracy functions obeying a closed-form expression. This is unlike prior im-plementations of mechanisms for FL (e.g., Sec. 5.1, (Karim-ireddy et al., 2022; Murhekar et al., 2023)). Moreover, 
+
+FedBR-Shap does not merely calculate a single NE. We take an observation window size W and treat the sample vector collected over every W iterations as the NE for that stage. We defer the complete description and pseudo-codes of FedBR-Shap to Appendix F. 9You Get What You Give: Reciprocally Fair Federated Learning 
+
+# Acknowledgements 
+
+The research of Bhaskar Ray Chaudhury is supported by the NSF CAREER grant CCF No. 2441580. The research of Aniket Murhekar and Ruta Mehta is supported by NSF grant CCF 2334461. 
+
+# Impact Statement 
+
+The goal of this paper is to advance fairness in machine learning, specifically in the context of federated learning. Potential societal consequences of our work include the design of fairer federated learning protocols. Since fairness is often a subjective notion, it is conceivable for our fairness notion of reciprocity to conflict with other desiderata. 
+
+# References 
+
+Afshari Safavi, E. Lumpy skin disease dataset, 2021. URL 
+
+https://doi.org/10.17632/7pyhbzb2n9.1 .Agarwal, A., Dahleh, M. A., and Sarkar, T. A marketplace for data: An algorithmic solution. In EC , pp. 701–726. ACM, 2019. Bhaskara, A., Gollapudi, S., Im, S., Kollias, K., Munagala, K., and Sankar, G. S. Data exchange markets via utility balancing. CoRR , abs/2401.13053, 2024. Blum, A., Haghtalab, N., Phillips, R. L., and Shao, H. One for one, or all for all: Equilibria and optimality of collab-oration in federated learning. In Meila, M. and Zhang, T. (eds.), Proceedings of the 38th International Confer-ence on Machine Learning , volume 139 of Proceedings of Machine Learning Research , pp. 1005–1014. PMLR, 18–24 Jul 2021. URL https://proceedings.mlr. press/v139/blum21a.html .Cai, Y., Daskalakis, C., and Papadimitriou, C. Optimum statistical estimation with strategic data sources. 08 2014. Chaudhury, B. R., Li, L., Kang, M., Li, B., and Mehta, R. Fairness in federated learning via core-stability. arXiv preprint arXiv:2211.02091 , 2022. Chen, Y., Zhu, J., and Kandasamy, K. Mechanism design for collaborative normal mean estimation. In Oh, A., Naumann, T., Globerson, A., Saenko, K., Hardt, M., and Levine, S. (eds.), Advances in Neural Information Processing Systems , vol-ume 36, pp. 49365–49402. Curran Associates, Inc., 2023. URL https://proceedings.neurips. cc/paper_files/paper/2023/file/ 9af2b1d6acf561af9c4cf70d52c7a49d-Paper-Conference. pdf .Chen, Z., Fu, A., Zhang, Y., Liu, Z., Zeng, F., and Deng, R. H. Secure collaborative deep learning against gan attacks in the internet of things. IEEE Internet of Things Journal , 8(7):5839–5849, 2020. Cheng, W., Zou, Y., Xu, J., and Liu, W. Dynamic games for social model training service market via federated learning approach. IEEE Transactions on Computational Social Systems , 9(1):64–75, 2021. Dayan, I., Roth, H. R., Zhong, A., Harouni, A., Gentili, A., Abidin, A. Z., Liu, A., Costa, A. B., Wood, B. J., Tsai, C.-S., et al. Federated learning for predicting clinical outcomes in patients with covid-19. Nature medicine , 27 (10):1735–1743, 2021. Elbir, A. M., Soner, B., and Coleri, S. Federated learning in vehicular networks. arXiv preprint arXiv:2006.01412 ,2020. Fehr, E. and Schmidt, K. M. The economics of fairness, reciprocity and altruism–experimental evidence and new theories. Handbook of the economics of giving, altruism and reciprocity , 1:615–691, 2006. Ghorbani, A. and Zou, J. Y. Data shapley: Equitable valua-tion of data for machine learning. In ICML , volume 97 of Proceedings of Machine Learning Research , pp. 2242– 2251. PMLR, 2019. He, K., Zhang, X., Ren, S., and Sun, J. Deep residual learn-ing for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition ,pp. 770–778, 2016. Henighan, T., Kaplan, J., Katz, M., Chen, M., Hesse, C., Jackson, J., Jun, H., Brown, T. B., Dhariwal, P., Gray, S., et al. Scaling laws for autoregressive generative modeling. 
+
+arXiv preprint arXiv:2010.14701 , 2020. Jia, R., Dao, D., Wang, B., Hubis, F. A., G ¨urel, N. M., Hynes, N., Li, B., Zhang, C., Song, D., and Spanos, C. J. Towards efficient data valuation based on the shapley value. Proceedings of AISTATS 2019 , 2019. Kakutani, S. A generalization of Brouwer’s fixed point theorem. Duke Mathematical Journal , 8(3):457 – 459, 1941. doi: 10.1215/S0012-7094-41-00838-4. URL https://doi.org/10.1215/ S0012-7094-41-00838-4 .Kaplan, J., McCandlish, S., Henighan, T., Brown, T. B., Chess, B., Child, R., Gray, S., Radford, A., Wu, J., and Amodei, D. Scaling laws for neural language models. 
+
+CoRR , abs/2001.08361, 2020. URL https://arxiv. org/abs/2001.08361 .10 You Get What You Give: Reciprocally Fair Federated Learning 
+
+Karimireddy, S. P., Guo, W., and Jordan, M. Mechanisms that incentivize data sharing in federated learning. In 
+
+Workshop on Federated Learning: Recent Advances and New Challenges (in Conjunction with NeurIPS 2022) ,2022. URL https://openreview.net/forum? id=Bx4Sz-N5K3J .Khan, L. U., Pandey, S. R., Tran, N. H., Saad, W., Han, Z., Nguyen, M. N., and Hong, C. S. Federated learning for edge networks: Resource optimization and incentive mechanism. IEEE Communications Magazine , 58(10): 88–93, 2020. Li, Q., Wang, W., Zhu, Y., and Ying, Z. Boppcl: Blockchain-enabled opportunistic federated learning applied in intel-ligent transportation systems. Electronics , 13(1), 2024. ISSN 2079-9292. doi: 10.3390/electronics13010136. URL https://www.mdpi.com/2079-9292/13/ 1/136 .Li, X.-B. and Raghunathan, S. Pricing and disseminating customer data with privacy awareness. Decision support systems , 59:63–73, 2014. Liu, Y., Sun, S., Ai, Z., Zhang, S., Liu, Z., and Yu, H. Fed-coin: A peer-to-peer payment system for federated learn-ing, 2020. URL https://arxiv.org/abs/2002. 11711 .Maleki, S. Addressing the computational issues of the Shap-ley value with applications in the smart grid . PhD thesis, University of Southampton, 2015. Mann, I. and Shapley, L. S. Values of large games, IV: Eval-uating the electoral college by Montecarlo techniques .Rand Corporation, 1960. Mohri, M., Rostamizadeh, A., and Talwalkar, A. Founda-tions of Machine Learning, second edition . Adaptive Computation and Machine Learning series. MIT Press, 2018. ISBN 9780262039406. URL https://books. google.com/books?id=V2B9DwAAQBAJ .Moulin, H. Chapter 6 axiomatic cost and surplus sharing. In Handbook of Social Choice and Wel-fare , volume 1 of Handbook of Social Choice and Welfare , pp. 289–357. Elsevier, 2002. doi: https://doi.org/10.1016/S1574-0110(02)80010-8. URL https://www.sciencedirect.com/ science/article/pii/S1574011002800108 .Murhekar, A., Yuan, Z., Ray Chaudhury, B., Li, B., and Mehta, R. Incentives in federated learning: Equilibria, dynamics, and mechanisms for welfare maximization. In Oh, A., Neumann, T., Globerson, A., Saenko, K., Hardt, M., and Levine, S. (eds.), Advances in Neural Informa-tion Processing Systems , volume 36, pp. 17811–17831. Curran Associates, Inc., 2023. Nash, J. Non-cooperative games. Ann. Math. , 54(2):286– 295, 1951. Pandey, S. R., Tran, N. H., Bennis, M., Tun, Y. K., Han, Z., and Hong, C. S. Incentivize to build: A crowdsourcing framework for federated learning. In Proceedings-IEEE Global Communications Conference, GLOBECOM , pp. 9014329, 2019. Pandey, S. R., Nguyen, L. D., and Popovski, P. Fedtoken: Tokenized incentives for data contribution in federated learning, 2022. URL https://arxiv.org/abs/ 2209.09775 .Roy, P., Sarker, S., Razzaque, M. A., Mamun-or Rashid, M., Hassan, M. M., and Fortino, G. Distributed task allocation in mobile device cloud exploiting federated learning and subjective logic. Journal of Systems Architecture , 113: 101972, 2021. Shapley, L. S. 17. A Value for n-Person Games ,pp. 307–318. Princeton University Press, Prince-ton, 1953. ISBN 9781400881970. doi: doi:10.1515/ 9781400881970-018. URL https://doi.org/10. 1515/9781400881970-018 .Sim, R. H. L., Zhang, Y., Chan, M. C., and Low, B. K. H. Collaborative machine learning with incentive-aware model rewards. In International conference on machine learning , pp. 8927–8936. PMLR, 2020. Song, T., Tong, Y., and Wei, S. Profit allocation for federated learning. In 2019 IEEE International Conference on Big Data (Big Data) , pp. 2577–2586, 2019. doi: 10.1109/ BigData47090.2019.9006327. Touvron, H., Bojanowski, P., Caron, M., Cord, M., El-Nouby, A., Grave, E., Izacard, G., Joulin, A., Synnaeve, G., Verbeek, J., et al. Resmlp: Feedforward networks for image classification with data-efficient training. IEEE transactions on pattern analysis and machine intelligence ,45(4):5314–5321, 2022. Tu, X., Zhu, K., Luong, N. C., Niyato, D., Zhang, Y., and Li, J. Incentive mechanisms for federated learning: From economic and game theoretic perspective. IEEE transac-tions on cognitive communications and networking , 8(3): 1566–1593, 2022. Wang, G. Interpret federated learning with shapley values. 
+
+arXiv preprint arXiv:1905.04519 , 2019. Wang, G., Dang, C. X., and Zhou, Z. Measure contribu-tion of participants in federated learning. In 2019 IEEE international conference on big data (Big Data) , pp. 2597– 2604. IEEE, 2019. 11 You Get What You Give: Reciprocally Fair Federated Learning 
+
+Wang, T., Rausch, J., Zhang, C., Jia, R., and Song, D. APrincipled Approach to Data Valuation for Federated Learning , pp. 153–167. Springer International Publishing, Cham, 2020. ISBN 978-3-030-63076-8. doi: 10.1007/ 978-3-030-63076-8 11. URL https://doi.org/ 10.1007/978-3-030-63076-8_11 .Xu, J., Glicksberg, B. S., Su, C., Walker, P., Bian, J., and Wang, F. Federated learning for healthcare informatics. 
+
+Journal of Healthcare Informatics Research , 5(1):1–19, 2021a. Xu, X., Lyu, L., Ma, X., Miao, C., Foo, C. S., and Low, B. K. H. Gradient driven rewards to guarantee fairness in collaborative machine learning. In Ranzato, M., Beygelz-imer, A., Dauphin, Y., Liang, P., and Vaughan, J. W. (eds.), 
+
+Advances in Neural Information Processing Systems ,volume 34, pp. 16104–16117. Curran Associates, Inc., 2021b. URL https://proceedings.neurips. cc/paper_files/paper/2021/file/ 8682cc30db9c025ecd3fee433f8ab54c-Paper. pdf .Ye, M., Fang, X., Du, B., Yuen, P. C., and Tao, D. Hetero-geneous federated learning: State-of-the-art and research challenges. ACM Computing Surveys , 56(3):1–44, 2023. Yu, H., Liu, Z., Liu, Y., Chen, T., Cong, M., Weng, X., Niyato, D., and Yang, Q. A fairness-aware incentive scheme for federated learning. In Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society , pp. 393–399, 2020. Zeng, R., Zeng, C., Wang, X., Li, B., and Chu, X. Incentive mechanisms in federated learning and a game-theoretical approach. IEEE Network , 36(6):229–235, 2022. doi: 10.1109/MNET.112.2100706. Zhang, J., Sun, Q., Liu, J., Xiong, L., Pei, J., and Ren, K. Efficient sampling approaches to shapley value approxi-mation. Proceedings of the ACM on Management of Data ,1(1):1–24, 2023. Zhang, W., Lu, Q., Yu, Q., Li, Z., Liu, Y., Lo, S. K., Chen, S., Xu, X., and Zhu, L. Blockchain-based federated learning for device failure detection in industrial iot. IEEE Internet of Things Journal , 8(7):5926–5937, 2020. Zou, Y., Feng, S., Xu, J., Gong, S., Niyato, D., and Cheng, W. Dynamic games in federated learning training service market. In 2019 IEEE Pacific Rim Conference on Commu-nications, Computers and Signal Processing (PACRIM) ,pp. 1–6. IEEE, 2019. 12 You Get What You Give: Reciprocally Fair Federated Learning 
+
+# A. Discussion and Conclusion 
+
+Our goal in this work is to address issues of fairness, efficiency, and data-sharing incentives faced by agents participating in federated learning who incur data-sharing costs. We propose a budget-balanced, reciprocally fair mechanism for federated learning, in which agents are incentivized via payments that reflect their ‘contribution’ to the federation. We defined natural metrics called data gain and accuracy gain to measure the efficiency of mechanisms for FL. We proved that our mechanism achieves significant gains for specialized forms of utility functions and substantiated this empirically. Our work leaves several directions for future work. The first direction is establishing theoretical lower bounds on the data gain for a wider class of utility functions. Another direction is to further explore the trade-off between fairness and efficiency, by designing r-reciprocal mechanisms for r < 1 that achieve provably higher data gain. Lastly, investigating other profit-sharing methods instead of the Shapley share is another direction towards fair mechanism design for FL. 
+
+# B. Examples 
+
+Example 5 (Linear or Random discovery (Blum et al., 2021)) . Consider a setting where each agent has a sampling probability distribution qi over a given instance space X and gets a reward equalling qix whenever the instance x is sampled by any agent. Then the expected payoff to agent i is ai(s) = ( QQ T s)i, where Q is a matrix given by Q[i, x ] = qix for i ∈ N and 
+
+x ∈ X. Here W = QQ T is a symmetric PSD matrix with an all-one diagonal. Thus in this model, the payoff is linear in the sample vector and is given by ai(s) = ( W s)i for a matrix W .
+
+Example 6 (Random coverage (Blum et al., 2021)) . Consider a modification of the setting in Example 5 where agent i
+
+obtains the reward qix only once if x is sampled. Thus in this model, the payoff given by expected accuracy takes the form: 
+
+ai(s) = 1 − 12
+
+X
+
+> x∈X
+
+qix nY
+
+> j=1
+
+(1 − qjx )sj ∈ [0 , 1] . (13) 
+
+Example 7. Consider two agents with identical payoff functions a(s) = 1 − (∥s∥1 + 1) −1, and linear cost functions given by c1(s1) = 0 .1s1 and c2(s2) = 0 .25 s2. Independently, the optimal contributions of the agents are s01 = 2 .16 and s02 = 1 
+
+respectively. According to the mechanism of (Karimireddy et al., 2022), the NE contribution (s1, s 2) satisfies: 
+
+1 − 1
+
+s1 + s2 + 1 = 1 − 1
+
+s01 + 1 + (0 .1 + ε) · (s1 − s01),
+
+1 − 1
+
+s1 + s2 + 1 = 1 − 1
+
+s02 + 1 + (0 .25 + ε) · (s2 − s02),
+
+where ε → 0. This leads to an NE given by s = (3 .98 , 2.46) . At s, the Shapley shares are φA 
+
+> 1
+
+(s) = 0 .9538 and 
+
+φA 
+
+> 2
+
+(s) = 0 .7772 , while the payoff is a(s) = 0 .8656 . This the reciprocity of the mechanism is 0.8656 0.9538 = 0 .9 < 1, i.e., the mechanism forces agent 1 to contribute more than she gets from the mechanism. 
+
+# C. Proofs from Section 2 
+
+Lemma 2.3. For any s ∈ S , A(s) = P 
+
+> i∈N
+
+φAi (s).Proof. Consider the summation of φAi (s). For each subset X ⊆ [n], if X is non-empty and X̸ = [ n], A(s[X]) occurs in the first terms of all the ϕAi (s) for |X| times. Besides, it occurs in the second terms of all the ϕAi (s) for n − | X| times. Hence, the coefficient of A(s[X]) is given by 
+
+1
+
+n · |X| · 
+
+ n − 1
+
+|X| − 1
+
+−1
+
+− (n − | X|) ·
+
+n − 1
+
+|X|
+
+−1!
+
+,
+
+which is equal to zero. Besides, when X = [ n], it only occurs at the second terms of φAi (s). The coefficient of A(s[[ n]]) = 
+
+A(s) is given by 1 
+
+> n
+
+· n ·  n−1
+
+> n−1
+
+−1 = 1 . Additionally, since A(s[∅]) = 0 , the summation of φAi (s) is equal to A(s).13 You Get What You Give: Reciprocally Fair Federated Learning 
+
+# D. Proofs from Section 4 
+
+Theorem 4.3. In any federated learning instance where for every agent i ∈ N the payoff function ai(s) is concave in s,and cost function ci is non-decreasing and convex in si, the mechanism MShap admits a Nash equilibrium. Proof. We consider the best response correspondence f of agents under the mechanism MShap . Thus, f is the correspon-dence given by: 
+
+fi(s−i) = arg max 
+
+> x∈Si
+
+{ai(x, s−i) − ci(x) + pi(s)} = arg max 
+
+> x∈Si
+
+{φA(x, s−i) − ci(x)},
+
+for all i ∈ N , where the last equality used the payment rule of MShap given by (7) . Using Proposition 2.2, we prove the existence of a Nash equilibrium by showing that f has a fixed point. To this end, we first note that f is defined over a compact, convex domain S. Further, the continuity of ai and ci in s implies that ui(s) := φAi (s) − ci(si) is continuous in s for each agent i. We now show that for fixed s−i, ui(si, s−i) is concave in 
+
+si. Observe that: 
+
+∂2ui
+
+∂s 2
+
+> i
+
+= ∂2φAi (s)
+
+∂s 2
+
+> i
+
+− ∂2ci
+
+∂s 2
+
+> i
+
+= 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+·
+
+ ∂2A(s[X ∪ { i}]) 
+
+∂s 2
+
+> i
+
+− ∂2A(s[X]) 
+
+∂s 2
+
+> i
+
+
+
+− ∂2ci
+
+∂s 2
+
+> i
+
+= 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+·
+
+ ∂2A(s[X ∪ { i}]) 
+
+∂s 2
+
+> i
+
+
+
+− ∂2ci
+
+∂s 2
+
+> i
+
+(since i / ∈ X)
+
+< 0,
+
+where the last step used the fact that A = P 
+
+> i
+
+ai is concave in si and ci is convex in si. Since ∂2ui
+
+> ∂s 2
+> i
+
+< 0, we conclude that ui
+
+is concave in si for any fixed s−i. This implies that the best response set fi(s−i) is a non-empty interval, and hence that f
+
+is convex valued. Lastly, the continuity of ui in s implies that f is upper semi-continuous. Kakutani’s fixed-point theorem states (Kakutani, 1941) that every upper semi-continuous non-empty and convex valued correspondence defined over a compact, convex domain admits a fixed point. Since we argued above that f satisfies the conditions of Kakutani’s fixed point theorem, we conclude that f admits a fixed point, and hence that MShap admits a Nash equilibrium. 
+
+Lemma 4.2. The mechanism MShap is budget-balanced. Proof. At any sample vector s, P 
+
+> i
+
+pi(s) = P 
+
+> i
+
+φAi (s) − P 
+
+> i
+
+ai(s) = 0 , using Lemma 2.3. 
+
+Theorem 4.4. For a concave game where agent utility functions are (i) λ-strongly concave: (G + λ · In×n) is negative semi-definite, and (ii) L-bounded derivatives: |Gij | ≤ L, for constants λ, L > 0, stochastic best response dynamics (11) 
+
+with step size δt = n−1 
+
+> k−1
+
+· λn2L2 converges to an approximate Nash equilibrium sT where ∥g(sT , μT )∥2 < ε in T iterations, where: 
+
+T = 2n2L2
+
+λ2 log 
+
+ ∥g(s0, μ0)∥2
+
+ε
+
+
+
+.
+
+Proof. Our goal is to compare ∥g(st+1 , μt+1 )∥2 and ∥g(st, μt)∥2. To do this, we first observe that by the definition of 
+
+μt+1 from (9), we have for every i ∈ [n], |g(st+1 , μt+1 )i| ≤ | g(st+1 , μt)i|. This implies: 
+
+∥g(st+1 , μt+1 )∥2 ≤ ∥ g(st+1 , μt)∥2 (14) Next, we compare ∥g(st+1 , μt)∥2 and ∥g(st, μt)∥2. Observe that: 
+
+g(st+1 , μt) − g(st, μt) = ( ∇u(st+1 ) + μt) − (∇u(st) + μt)= ( ∇u(st+1 ) − ∇ u(st)) . (15) 14 You Get What You Give: Reciprocally Fair Federated Learning 
+
+Using Taylor’s expansion, we have: 
+
+∇u(st+1 ) − ∇ u(st) = G(s′) · (st+1 − st),
+
+where s′ = st + α(st+1 − st) for some α ∈ [0 , 1] and G is the Jacobian of ∇u. Using Equation (15), we get: 
+
+g(st+1 , μt) = g(st, μt) + G(s′) · (st+1 − st). (16) To bound the ∥g(st+1 , μt)∥2 in terms of ∥g(st, μt)∥2 using the above equation, we will use the stochastic BR dynamics update rule Equation (11) and relate g(st, μt) with f (st, μt, R t).To this end, let D denote the uniform distribution over all subsets of size k drawn from the set of agents. By the definition of Equation (10), we have: 
+
+E
+
+> Rt∼D
+
+[f (st, μt, R t)] = kn · g(st, μt). (17) Using Equation (14), we have ∥f (st+1 , μt+1 , R t+1 )∥2 ≤ ∥ f (st+1 , μt, R t+1 )∥2 for all Rt+1 . This implies: 
+
+E
+
+> Rt+1 ∼D
+
+[∥f (st+1 , μt+1 , R t+1 )∥2] ≤ E
+
+> Rt+1 ∼D
+
+[∥f (st+1 , μt, R t+1 )∥2]= E
+
+> Rt∼D
+
+[∥f (st+1 , μt, R t)∥2], (18) where the equality used the fact that the sets Rt and Rt+1 are sampled from the same distribution D.We now relate f (st+1 , μt, R t) and f (st, μt, R t) using (16): 
+
+f (st+1 , μt, R t) = f (st, μt, R t) + IRt · G(s′) · (st+1 − st),
+
+where IRt ∈ { 0, 1}n×n is the diagonal matrix with IRt [i, i ] = 1 iff i ∈ Rt. Using the update equation (11), we have: 
+
+f (st+1 , μt, R t) = f (st, μt, R t) + δt · IRt · G(s′) · f (st, μt, R t). (19) Let us next evaluate the expected value of the rightmost term. Fix i ∈ [n].
+
+E[( IRt · G(s′)·f (st, μt, R t)) i] = X
+
+> j
+
+(IRt · G(s′))[ i, j ] · f (st, μt, R t)j
+
+= Pr i ∈ Rt · X
+
+> j
+
+Pr j ∈ Rt | i ∈ Rt · G(s′)[ i, j ] · g(st, μt)j
+
+= kn · k − 1
+
+n − 1
+
+X
+
+> j
+
+G(s′)[ i, j ] · g(st, μt)j
+
+= kn · k − 1
+
+n − 1 · (G(s′) · g(st, μ t)) i.
+
+(20) Taking the expectation of (19) and using the above equality, we get: 
+
+E
+
+> Rt∼D
+
+[f (st+1 , μt, R t)] = E
+
+> Rt∼D
+
+[f (st, μt, R t)] + δt · kn · k − 1
+
+n − 1 · (G(s′) · g(st, μ t)) 
+
+Using (17) in the above, we get: 
+
+g(st+1 , μt) = ( In×n + δt · k − 1
+
+n − 1 · G(s′)) · g(st, μt).
+
+With ηt = δt ·
+
+ k−1
+
+> n−1
+
+
+
+, we get g(st+1 , μt) = ( In×n + ηt · G(s′)) · g(st, μt).
+
+15 You Get What You Give: Reciprocally Fair Federated Learning 
+
+Taking the L2 norm, we get: 
+
+∥g(st+1 , μt)∥22 = ∥g(st, μt)∥22 + ( ηt)2 · ∥ G(s′)g(st, μt)∥22 + 2 ηtg(st, μt)T G(s′)g(st, μt), (21) By the strong concavity assumption, for a constant λ > 0, G + λ · In×n is negative semi-definite, i.e., vT (G + λ · In×n)v ≤ 0
+
+for any v ∈ Rn. With v = g(st, μt), we have: 
+
+g(st, μt)T G(s′)g(st, μt) ≤ − λ · ∥ g(st, μt)∥22. (22) Next we use the fact that the L2 norm ∥A∥2 of an n × n matrix A is bounded by its Frobenius norm ∥A∥F :
+
+∥A∥2 := sup  
+
+> x̸=0
+
+∥Ax ∥2
+
+∥x∥2
+
+≤ ∥ A∥F := 
+
+sX
+
+> i
+
+X
+
+> j
+
+|Aij |2
+
+By the bounded derivatives assumption, we have |G(s′)ij | ≤ L, which implies that ∥G(s′)∥F =
+
+qP
+
+> i
+
+P 
+
+> j
+
+L2 = nL . This gives: 
+
+∥G(s′)g(st, μt)∥2 ≤ nL ∥g(st, μt)∥2. (23) Using (22) and (23) in (21), we get: 
+
+∥g(st+1 , μt)∥22 ≤ (1 + η2 
+
+> t
+
+· n2L2 − 2ηtλ) · ∥ g(st, μt)∥22. (24) The definition δt = n−1 
+
+> k−1
+
+· λn2L2 implies that ηt = λn2L2 . Equation (24) together with Equation (14) gives: 
+
+∥g(st+1 , μt+1 )∥22 ≤
+
+
+
+1 − λ2
+
+n2L2
+
+
+
+· ∥ g(st, μt)∥22.
+
+Using the above inequality recursively, and using the inequality (1 − x)r ≤ e−xr , we obtain: 
+
+∥g(st, μt)∥2 ≤ e− λ22n2L2 ·t · ∥ g(s0, μ0)∥2.
+
+Thus in T = 2n2L2 
+
+> λ2
+
+log   ∥g(s0,μ0)∥2
+
+> ε
+
+ iterations, we have ∥g(sT , μT )∥2 ≤ ε, as claimed. 
+
+Lemma 4.5. For a federated learning instance where agent (i) payoff functions are λ1-strongly concave and cost functions are λ2-strongly concave, and (ii) second derivatives of payoffs and costs are bounded: | ∂2ai  
+
+> ∂s j∂s k
+
+| ≤ L1 and | ∂2ci 
+
+> ∂2si
+
+| ≤ L2, for constants λ1, λ 2, L 1, L 2 > 0, stochastic best response dynamics (11) with step size δt = n−1 
+
+> k−1
+
+· nλ 1+λ2 
+
+> n2(2 nL 1+L2)2
+
+converges to an approximate Nash equilibrium sT where ∥g(sT , μT )∥2 < ε in T iterations, where: 
+
+T = 2n2 · (2 nL 1 + L2)2
+
+(nλ 1 + λ2)2 log 
+
+ ∥g(s0, μ0)∥2
+
+ε
+
+
+
+Proof. We first show that each agent’s utility function ui(s) is (nλ 1 + λ2)-strongly concave as follows: for any i ∈ N ,
+
+∂2ui
+
+∂s 2
+
+> i
+
++ nλ 1 + λ2 = 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+·
+
+ ∂2A(s[X ∪ { i}]) 
+
+∂s 2
+
+> i
+
+
+
+− ∂2ci
+
+∂s 2
+
+> i
+
++ nλ 1 + λ2 (By Eqn 7) 
+
+< 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+· n(−λ1) − λ2 + nλ 1 + λ2 (By Assumption (i) and (ii)) 
+
+≤ − λ1 · n − λ2 + n · λ1 + λ2 = 0 ,
+
+16 You Get What You Give: Reciprocally Fair Federated Learning 
+
+which concludes the fact. Next, we show that the second derivatives of ui are bounded. Observe that: 
+
+∂2ui
+
+∂s j ∂s k
+
+= ∂2φAi (s)
+
+∂s j ∂s k
+
+− ∂2ci
+
+∂s j ∂s k
+
+≤ 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+·
+
+ ∂2A(s[X ∪ { i}]) 
+
+∂s j ∂s k
+
+− ∂2A(s[X]) 
+
+∂s j ∂s k
+
+
+
++ ∂2ci
+
+∂s j ∂s k
+
+≤ 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+· 2nL 1 + L2 (By Assumption (ii) and A = X
+
+> i
+
+ai)
+
+≤ 1
+
+n · n · 2nL 1 + L2 = 2 nL 1 + L2 .
+
+With Theorem 4.4 and the above two inequalities, Lemma 4.5 follows. 
+
+Lemma 4.6. MShap is individually rational. Proof. Let s∗ ∈ NE (MShap ). Since s∗ is a NE, each agent i does not benefit from deviating unilaterally. Therefore, 
+
+ui(s∗) ≥ ui(s′), where s′ 
+
+> i
+
+= 0 and s′ 
+
+> j
+
+= s∗ 
+
+> j
+
+for all j̸ = i. This shows ui(s∗) ≥ ai(s′) − ci(s′
+
+> i
+
+) = ai(s′) ≥ 0. Thus, MShap 
+
+is individually rational. 
+
+Theorem 4.7. MShap satisfies Reciprocity (MShap ) = 1 , i.e., is fully reciprocal. Moreover, MShap satisfies equal treatment of equals. Proof. Consider any NE s ∈ NE (MShap ). By definition of the payment rule of MShap given by Equation (7), ai(s)+ pi(s) = 
+
+φAi (s) for every i ∈ N . Thus Reciprocity (MShap ) = 1 .To see why MShap satisfies equal treatment of equals (Definition 3.5), consider two identical agents i and j, i.e., ai(·) = aj (·),
+
+ci(·) = cj (·), and si = sj . Then, at a NE s ∈ NE (MShap ), we have: 
+
+pi(s) = φAi (s) − ci(si) = 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+·
+
+
+
+A(s[X ∪ { i}]) − A(s[X]) 
+
+
+
+− ci(si)= 1
+
+n · X 
+
+> X⊆N\{ j}
+
+n − 1
+
+|X|
+
+−1
+
+·
+
+
+
+A(s[X ∪ { j}]) − A(s[X]) 
+
+
+
+− cj (sj )= φAj (s) − cj (sj ) = pj (s),
+
+where we replaced i with j in the penultimate step as they are identical agents. 
+
+Theorem 4.8. Let W (s) = A(s) − P 
+
+> i∈[n]
+
+ci(si) denote the total welfare of the agents, and let s∗ ∈ NE (MShap ). Consider any data contribution vector s that weakly Pareto-dominates s∗, i.e., si ≥ s∗ 
+
+> i
+
+for all i. Then W (s) < W (s∗).Proof. We first prove a useful Lemma. 
+
+Lemma D.1. For any sample vector s ∈ S and agent i ∈ N , ∂A (s) 
+
+> ∂s i
+
+≤ ∂φ Ai (s) 
+
+> ∂s i
+
+.Proof. We use the definition of the Shapley value of federation as follows to prove the lemma. 
+
+∂φ Ai (s)
+
+∂s i
+
+= 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+·
+
+ ∂A (s[X ∪ { i}]) 
+
+∂s i
+
+− ∂A (s[X]) 
+
+∂s i
+
+
+
+= 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+· ∂A (s[X ∪ { i}]) 
+
+∂s i
+
+(since i / ∈ X)17 You Get What You Give: Reciprocally Fair Federated Learning 
+
+≥ 1
+
+n · X 
+
+> X⊆N\{ i}
+
+n − 1
+
+|X|
+
+−1
+
+· ∂A (s[N ]) 
+
+∂s i
+
+(using concavity of A)
+
+= ∂A (s[N ]) 
+
+∂s i
+
+.
+
+Since W (s) is strictly concave, we have: 
+
+W (s) < W (s∗) + ∇W (s∗)T (s − s∗)= W (s∗) + ⟨
+
+ ∂(A(s) − c1(s1)) 
+
+∂s 1
+
+, ∂(A(s) − c2(s2)) 
+
+∂s 2
+
+, . . . , ∂(A(s) − cn(sn)) 
+
+∂s n
+
+
+
+> s=s∗
+
+, s − s∗⟩
+
+Since si − s∗ 
+
+> i
+
+≥ 0 for all i ∈ [n], using Lemma D.1, we have: 
+
+W (s) < W (s∗) + ⟨
+
+ ∂(φA 
+
+> 1
+
+(s) − c1(s1)) 
+
+∂s 1
+
+, ∂(φA 
+
+> 2
+
+(s) − c2(s2)) 
+
+∂s 2
+
+, . . . , ∂(φAn (s) − cn(sn)) 
+
+∂s n
+
+
+
+> s=s∗
+
+, s − s∗⟩
+
+= W (s∗)
+
+where the last inequality follows from the fact that s∗ is an NE. 
+
+Theorem 4.9. Consider any FL instance with n agents where agents have (i) identical payoff function a(s) = 1 − α ·
+
+(∥s∥1 + 1) −β for α > 0 and β ∈ (0 , 1] , and (ii) linear cost functions ci(si) = γi · si + di for γi, d i ≥ 0. Then MShap 
+
+satisfies: (i) DataGain (MShap ) ≥ n 1 
+
+> β+1
+
+, and (ii) AccGain (MShap ) ≥ 1 + α 1 
+
+> β+1
+
+· β −ββ+1 · (min i γi) ββ+1 ·  1 − n− β
+
+> 1+ β
+
+.
+
+Proof. We first show part (i). Let K = arg min i∈N γi be the set of agents with the least marginal cost denoted by 
+
+γk = min i∈N γi. Consider a NE s0 of the mechanism M0 without payments. At the NE, no agent has any incentive to change their contribution, i.e., ∂a i(s) 
+
+> ∂s i
+
+= ∂c i(si) 
+
+> ∂s i
+
+. Using this condition, we observe that α·β 
+
+> (∥s0∥1+1) β+1
+
+= γi = γk for all i ∈ K.Moreover, s0 
+
+> i
+
+= 0 for all i / ∈ K, since an agent i / ∈ K has no incentive to contribute any data points. Thus, an NE s0 of M0
+
+satisfies: 
+
+∥s0∥1 + 1 = 
+
+ αβ γk
+
+ 1
+
+> β+1
+
+. (25) Let us now consider any NE s∗ of MShap . By definition of NE, we have that ∂φ Ai (s∗) 
+
+> ∂s i
+
+= ∂c i(s∗) 
+
+> ∂s i
+
+for all i ∈ N . Using linearity of costs and Lemma D.1, we note that ∂A (s∗) 
+
+> ∂s i
+
+≤ γi for all i. Explicitly computing the derivative gives us: 
+
+n · α · β
+
+(∥s∗∥1 + 1) β+1 ≤ min  
+
+> i
+
+γi = γk.
+
+In turn, this implies that ∥s∗∥1 + 1 ≥   n·α·βγk
+
+ 1 
+
+> β+1
+
+= n 1 
+
+> β+1
+
+·   α·βγk
+
+ 1 
+
+> β+1
+
+= n 1 
+
+> β+1
+
+· (∥s0∥1 + 1) , using (25) . Since n ≥ 1, this implies ∥s∗∥1 ≥ ∥ s0∥1. Therefore: 
+
+DataGain (MShap ) = ∥s∗∥1
+
+∥s0∥1
+
+≥ ∥s∗∥1 + 1 
+
+∥s0∥1 + 1 ≥ n 1 
+
+> β+1
+
+, (26) thus proving part (i). For part (ii), using the fact that agents have identical payoff functions, the accuracy gain is given by: 
+
+AccGain (MShap ) = A(s∗)
+
+A(s0) = a(s∗)
+
+a(s0)
+
+18 You Get What You Give: Reciprocally Fair Federated Learning 
+
+= 1 − α · (∥s∗∥1 + 1) −β
+
+1 − α · (∥s0∥1 + 1) −β
+
+= 1 + α · (∥s0∥1 + 1) −β − (∥s∗∥1 + 1) −β
+
+1 − α · (∥s0∥1 + 1) −β
+
+≥ 1 + α
+
+(∥s0∥1 + 1) β ·
+
+
+
+1 − (∥s0∥1 + 1) β
+
+(∥s∗∥1 + 1) β
+
+
+
+≥ 1 + α
+
+(∥s0∥1 + 1) β ·
+
+
+
+1 − n− ββ+1 
+
+
+
+(By Equation (26)) 
+
+≥ 1 + α
+
+( αβ γk ) ββ+1 
+
+·
+
+
+
+1 − n− ββ+1 
+
+
+
+(by Equation (25)) 
+
+≥ 1 + α 1 
+
+> β+1
+
+· β −ββ+1 · γ 
+
+> ββ+1
+> k
+
+·
+
+
+
+1 − n− ββ+1 
+
+
+
+,
+
+thus proving the theorem. 
+
+# E. More Details of Best Response Dynamics 
+
+We set the number of clients as 30 for the three image-based datasets. Each client a) in MNIST has 175 -191 batches of training data and 17 -18 batches of testing data; b) in FashionMNIST has 173 -192 batches of training data and 17 -18 batches of testing data; c) in CIFAR has 27 batches of training data and 6 batches of testing data. We use a simple CNN network with two 5 × 5 convolution layers followed by two fully connected layers with ReLU activation for MNIST/FashionMNIST and the ResNet-18 (He et al., 2016) for CIFAR-10. We use ResMLP (Touvron et al., 2022) for local training of the healthcare dataset and a simple quadratic regression for the synthetic dataset. 
+
+Fitting the accuracy functions. As described in Section 5.1, we perform a preprocessing training step to fit the accuracy functions in advance. Specifically, we first conduct a lightweight standard FL training without strategic sharing, using 0 and 
+
+200 batches from each group, respectively. We run the training for 100 epochs and fit the closed-form accuracy functions using the collected results. For the four non-synthetic datasets, the parameters of the closed-form accuracy functions are as follows: • MNIST: 
+
+w11 w12 w13 
+
+w21 w22 w23 
+
+w31 w32 w33 
+
+ =
+
+
+
+3.1 × 10 −3 4.7 × 10 −4 4.4 × 10 −4
+
+6.7 × 10 −4 1.9 × 10 −3 6.5 × 10 −4
+
+9.3 × 10 −4 8.3 × 10 −4 2.1 × 10 −3
+
+
+
+• FashionMNIST: 
+
+w11 w12 w13 
+
+w21 w22 w23 
+
+w31 w32 w33 
+
+ =
+
+
+
+1.3 × 10 −3 3.1 × 10 −4 5.7 × 10 −4
+
+1.0 × 10 −4 1.5 × 10 −3 2.6 × 10 −4
+
+4.9 × 10 −4 4.4 × 10 −4 1.6 × 10 −3
+
+
+
+• CIFAR-10: w11 w12 w13 
+
+w21 w22 w23 
+
+w31 w32 w33 
+
+ =
+
+5.8 × 10 −3 1.4 × 10 −3 7.9 × 10 −4
+
+2.5 × 10 −3 6.1 × 10 −3 7.4 × 10 −4
+
+4.2 × 10 −3 3.0 × 10 −3 1.8 × 10 −3
+
+
+
+• Lumpy-Skin-Disease: w11 w12 
+
+w21 w22 
+
+
+
+=
+
+1.2 × 10 −2 9.1 × 10 −3
+
+1.4 × 10 −2 1.6 × 10 −2
+
+
+
+The cost of adding one training data patch γi is chosen uniformly at random from [0 , 0.001] for MNIST, FashionMNIST, and CIFAR-10. We run the best response dynamics for all three mechanisms for 1000 iterations. We set the step size δ of best response dynamics to be 10 , and the learning rate α is set as 0.1 for the local training. 19 You Get What You Give: Reciprocally Fair Federated Learning 
+
+System configuration. Our experiments were conducted on the Illinois Campus Cluster configured with one node with 16 
+
+cores, Fedora@9.4 operating system, and one A100 GPU. 
+
+Approximation of Shapley value. We adopt a simple Monte Carlo estimate for the Shapley value by uniformly sampling a set of permutations of clients Π (Mann & Shapley, 1960; Maleki, 2015; Jia et al., 2019; Zhang et al., 2023). Let P σi be the set of clients located in front of i in the permutation σ. The approximate Shapley value of client i is given by: 
+
+ˆφAi (s) = 1
+
+|Π|
+
+X
+
+> σ∈Π
+
+(A(s[P σi ∪ { i}] − A(s[P σi ])) . (27) Theoretically, for n agents, m = 2nϵ2 ln 2nδ samples ensure an error of ϵ and confidence of 1 − δ. However, in the imple-mentation, we adopt a more ambitious setting by sampling only ⌊n · log n⌋ = 102 permutations for the three image-base datasets, as mentioned in Sec 5.1 of the first three image-base datasets. To justify the soundness of the setting, we report the standard deviation in Tables 2 to 4. It can be observed that all the statistics of MShap has a standard deviation of no more than 0.1, which demonstrates the sufficiency of the current number of samples. Method DataShare(%) Accuracy(%) Reciprocity DataGain AccGain Avg. Med. σ Avg. Med. σ Avg. Med. σ Avg. Med. σ Avg. Med. σ
+
+M0 5.8 5.6 0.002 88.3 88.5 0.004 0.609 0.630 0.041 1.000 1.000 0.000 1.000 1.000 0.000 
+
+MBG 7.6 7.6 0.002 87.6 87.6 0.018 0.702 0.706 0.012 1.324 1.349 0.043 0.992 0.990 0.024 
+
+MShap 54.9 54.9 0.000 90.4 90.5 0.006 1.000 1.000 0.000 9.514 9.719 0.354 1.024 1.022 0.004  
+
+> Table 2. Standard deviation of MNIST
+
+Method DataShare(%) Accuracy(%) Reciprocity DataGain AccGain Avg. Med. σ Avg. Med. σ Avg. Med. σ Avg. Med. σ Avg. Med. σ
+
+M0 4.1 3.9 0.003 60.9 61.3 0.017 0.466 0.467 0.030 1.000 1.000 0.000 1.000 1.000 0.000 
+
+MBG 6.2 6.2 0.001 61.5 61.1 0.011 0.752 0.759 0.020 1.513 1.558 0.078 1.023 1.023 0.012 
+
+MShap 54.8 54.8 0.000 63.3 63.4 0.016 1.000 1.000 0.000 13.436 13.895 0.795 1.054 1.069 0.055  
+
+> Table 3. Standard deviation of FashionMNIST
+
+Method DataShare(%) Accuracy(%) Reciprocity DataGain AccGain Avg. Med. σ Avg. Med. σ Avg. Med. σ Avg. Med. σ Avg. Med. σ
+
+M0 25.6 25.7 0.005 43.6 43.9 0.009 0.504 0.505 0.007 1.000 1.000 0.000 1.000 1.000 0.000 
+
+MBG 28.9 28.9 0.001 44.7 44.6 0.003 0.566 0.569 0.016 1.131 1.125 0.018 1.025 1.023 0.017 
+
+MShap 99.6 99.6 0.001 48.5 48.7 0.011 1.000 1.000 0.000 3.894 3.870 0.078 1.114 1.112 0.007  
+
+> Table 4. Standard deviation of CIFAR-10
+
+# F. FedBR-Shap Protocol 
+
+F.1. Motivation of FedBR-Shap 
+
+Still, in this section, we interpret si as the number of batches of the local training of client i. As discussed before, the computation of NE in Section 5.1 relies on static closed-form accuracy functions of s and forces every client to use a fixed 
+
+si throughout the training. However, the influence of data sharing on the accuracy can differ across stages: data sharing can be quite beneficial in the initial phases, but may become less effective as the model converges. As a result, a data client may also exhibit strategic behaviors at different stages of the training, e.g., reducing the number of batches of local training when the model turns to converge. In addition, the aforementioned mechanisms only make payments at the end of the training, which makes it hard to evaluate a client’s contribution to the training over various stages of the training. Motivated by the above aspects, we propose the protocol FedBR-Shap , which is a truly distributed FL protocol. 
+
+FedBR-Shap allows clients to adjust the value of si and also provide (budget-feasible) payments in different stages 20 You Get What You Give: Reciprocally Fair Federated Learning 
+
+of the training. The payment to agent i at iteration t depends on the contribution of agent i’s data sharing towards the accuracy improvement at that iteration. We make the following assumption for the learning rate: 
+
+Assumption F.1. Assume the learning rate of model updating is set as small enough such that, within any window of W
+
+iterations, the improvement of the accuracy between two consecutive iterations, ai(θt) − ai(θt−1) can be approximated by some identical function αi(st) that only depends on the sample vector at iteration t.
+
+F.2. Description of FedBR-Shap 
+
+FedBR-Shap computes the NEs of MShap following best response dynamics (Sec 4.2). In each iteration t, the algorithm computes a global model θt, and maintains copies of local models Ti trained only on agent i’s dataset of size sti, starting from the global model from the previous iteration, θt−1. The central server then updates its global model, and the agents update their data shares according to their current gradients of the utility functions. As motivated in Appendix F.1, the growth of accuracy varies during the training process. For this reason, we divide the entire training into a series of stages and decide the payments at the end of each stage. Below, we first define our payment mechanism, which essentially adopts the same idea of MShap . Thereafter, we provide the implementation of FedBR-Shap using best response dynamics. 
+
+Payments. A stage is defined as a sequence of W iterations. The central server distributes payments at every stage according to everyone’s contribution to accuracy improvement at that stage. Denote the accuracy of a model θ for agent i by ai(θ) and the model after the t-th iteration by θt. The total accuracy increase at stage h is given by Pni=1 ai(θt) − Pni=1 ai(θt−W ),where t = W · h. The central server then gives the payment 
+
+phi = φhi (sti, s t
+
+> −i
+
+) − (ai(θt) − ai(θt−W )) 
+
+to agent i, where φhi (sti, s t
+
+> −i
+
+) denotes the Shapley value of agent i towards the total accuracy increase at stage h, which is given by P 
+
+> i∈[n]
+
+ai(θt) − ai(θt−W ) .
+
+Best response dynamics. We follow the best response dynamics within every stage to compute an NE of agents’ strategies for the current training stage. If the clients take sample vector s, by Assumption F.1, the total accuracy increase Pni=1 ai(θt) − ai(θt−W ) is given by W · Pni=1 αi(s). Denote by α(·) the sum of αi(·). Then the utility of client i is 
+
+uhi (s) = W · φα 
+
+> i
+
+(si, s −i) − γi · si .
+
+Based on the utility function, FedBR-Shap performs W rounds of best response dynamics to update s. Each agent i
+
+updates to sti by computing the gradient of the current utility function, ∇iuhi (st), and hence the gradient of its Shapley share 
+
+∇iφα 
+
+> i
+
+(st). This is estimated by the server as a difference of Shapley shares, as 
+
+∇iφα 
+
+> i
+
+(st) ≈ 1
+
+ε · (φα 
+
+> i
+
+(sti + ε, s t
+
+> −i
+
+) − φα 
+
+> i
+
+(sti, s t
+
+> −i
+
+)) .
+
+Approximation of Shapley share. Now consider an agent i, for which the goal is to compute the ∇iφα 
+
+> i
+
+(st). By Assumption F.1, we have α(s) ≈ Pnj=1 aj (θt+1 ) − aj (θt). Denote by θtX the model after aggregating the local models of clients from a set X starting from the global model θt. Therefore, the Shapley value of stage h can be approximated as follows: 
+
+φα 
+
+> i
+
+(sti, s t
+
+> −i
+
+) ≈
+
+> n
+
+X
+
+> j=1
+
+φaj (θt+1 )−aj (θt) 
+
+> i
+
+(sti, s t
+
+> −i
+
+)= 12n−1
+
+X
+
+> X⊆[n]\{ i}
+> n
+
+X
+
+> j=1
+
+
+
+aj (θtX∪{ i} − aj (θtX )
+
+
+
+To compute the derivative, beginning with the current global model θt, each agent i ∈ [n] updates its local model Ti using 
+
+sti batches of its dataset. Moreover, each agent i trains an extra model of T εi on sti + ε batches of its local dataset, starting with θt−1. All these models are transmitted to the server. For each subset X ⊆ [n] where i / ∈ X, the server computes a single model: θtX = 1
+
+> |X|
+
+P 
+
+> j∈X
+
+Tj by averaging the model parameters from the agents in X. For each subset X ⊆ [n]
+
+where i ∈ X, the server computes two models: θtX = 1
+
+> |X|
+
+P 
+
+> j∈X
+
+Tj , and ˆθtX = 1 
+
+> |X|
+
+(T εi + P 
+
+> j∈X\{ i}
+
+Tj ). The server then distributes these models to all agents, who report back with their accuracies. 21 You Get What You Give: Reciprocally Fair Federated Learning 
+
+With this information, the server computes φα 
+
+> i
+
+(st) and φα 
+
+> i
+
+(sti + ϵ, s t
+
+> −i
+
+) using Eq. (3) . Note that for a subset X ⊆ [n] where 
+
+i ∈ X, the cumulative accuracy from θtX is used for computing φα 
+
+> i
+
+(sti, s t
+
+> −i
+
+), while the cumulative accuracy from ˆθtX is used for computing φα 
+
+> i
+
+(sti + ε, s t
+
+> −i
+
+). For each subset X ⊆ [n] where i / ∈ X, the cumulative accuracy of θtX is used in the computation of both φα 
+
+> i
+
+(sti, s t
+
+> −i
+
+) and φα 
+
+> i
+
+(sti + ε, s t
+
+> −i
+
+). Since agents are aware of their costs, each agent computes ∇iui(st)
+
+and updates its data share to st+1  
+
+> i
+
+using (11). 
+
+Algorithm 1 FedBR-Shap protocol 
+
+1: Input: number of iterations N , observation size W , learning rate α, step size δ, ε ∈ (0 , 1) , n agents; 
+
+2: Output: Model weights θt and individual contributions {sh}Hh=1 ;
+
+3: s1 ← (1 , . . . , 1) , initialize θ0 as a zero-model and set t ← 1;
+
+4: Each agent i ∈ [n] transmits its local model parameters Ti to the server after training on s1 
+
+> i
+
+batches of data, initialized from the current global model θ0;
+
+5: H ← ⌈ N/W ⌉;
+
+6: while h ≤ H do 
+
+7: ▷ Best response dynamics 
+
+8: for t = W · (h − 1) to W · H do 
+
+9: Each agent i ∈ [n] transmits its local model parameters Ti to the server after training on sti batches of data, initialized from the current global model θt−1 along with model parameters T ϵi to the server, trained on ϵ more batches of data; 
+
+10: The central server updates the global model as θt ← P 
+
+> i∈Rt
+
+Ti/n ;
+
+11: for i ∈ [n] do 
+
+12: The central server computes ∂φ hi (sti ,st 
+
+> −i)
+> ∂s i
+
+= φhi (sti +ε, st   
+
+> −i)−φhi(sti,st
+> −i)
+> ε
+
+as described in Section 5.2, and sends it along the new global model θt to agent i;
+
+13: Agent i computes ∂u i 
+
+> ∂s i
+
+← ∂φ hi (sti ,st 
+
+> −i)
+> ∂s i
+
+− ∂c i 
+
+> ∂s i
+
+;
+
+14: if sti + δ · ∂u i 
+
+> ∂s i
+
+< 0 then 
+
+15: st+1  
+
+> i
+
+← 0;
+
+16: else if sti + δ · ∂u i 
+
+> ∂s i
+
+> τ i then 
+
+17: st+1  
+
+> i
+
+← τi;
+
+18: else 
+
+19: st+1  
+
+> i
+
+← sti + δ · ∂u i 
+
+> ∂s i
+
+;
+
+20: end if 
+
+21: t ← t + 1 ;
+
+22: end for 
+
+23: end for 
+
+24: ▷ Payment according to the contribution of accuracy improvement 
+
+25: Central server computes the Shapley share of each agent i, φhi (sti, s t
+
+> −i
+
+);
+
+26: Each agent i is paid phi = φhi (sti, s t
+
+> −i
+
+) − (ai(θt) − ai(θt−W )) ;
+
+27: end while 
+
+28: return the model weights θt and {sh}Hh=1 ;22

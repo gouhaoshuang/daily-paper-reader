@@ -1,0 +1,2561 @@
+Title: Locally Interdependent Multi-Agent MDP: Theoretical Framework for Decentralized Agents with Dynamic Dependencies
+
+URL Source: https://openreview.net/pdf?id=iYYA5zDoCm
+
+Number of Pages: 23
+
+Markdown Content:
+# Locally Interdependent Multi-Agent MDP: Theoretical Framework for Decentralized Agents with Dynamic Dependencies 
+
+Alex DeWeese 1 Guannan Qu 1
+
+## Abstract 
+
+Many multi-agent systems in practice are decen-tralized and have dynamically varying dependen-cies. There has been a lack of attempts in the lit-erature to analyze these systems theoretically. In this paper, we propose and theoretically analyze a decentralized model with dynamically varying dependencies called the Locally Interdependent Multi-Agent MDP. This model can represent prob-lems in many disparate domains such as coopera-tive navigation, obstacle avoidance, and formation control. Despite the intractability that general par-tially observable multi-agent systems suffer from, we propose three closed-form policies that are the-oretically near-optimal in this setting and can be scalable to compute and store. Consequentially, we reveal a fundamental property of Locally Inter-dependent Multi-Agent MDP’s that the partially observable decentralized solution is exponentially close to the fully observable solution with respect to the visibility radius. We then discuss extensions of our closed-form policies to further improve tractability. We conclude by providing simula-tions to investigate some long horizon behaviors of our closed-form policies. 
+
+## 1. Introduction 
+
+Many important real-world multi-agent applications are de-centralized and have local dynamic relationships between agents. Examples cut across a broad spectrum of areas including obstacle avoidance, cooperative navigation, for-mation control. The decentralized nature of the problem presents a key challenge because agents have limited ac-cess to the state information of other agents. This may be     
+
+> 1Department of Electrical and Computer Engineering, Carnegie Mellon University, Pittsburgh PA, USA. Correspondence to: Alex DeWeese <mdeweese@andrew.cmu.edu >, Guannan Qu
+> <gqu@andrew.cmu.edu >.
+> Proceedings of the 41 st International Conference on Machine Learning , Vienna, Austria. PMLR 235, 2024. Copyright 2024 by the author(s).
+
+introduced either artificially to improve scalability or by physical constraints caused by communication limitations. Another challenge is, that while each agent has their own dynamics, they are interacting with the set of nearby agents that are dynamically varying. The presence of such dynamic interactions makes the decision problem for different agents highly coupled and nontrivial. With the recent successes in Reinforcement Learning (RL), there has been an increasing desire to use this emerging tool for these types of decentralized multi-agent systems with locally dynamic agent interactions. However, most of the work in this area is empirical ((Lowe et al., 2017; Han et al., 2020; Batra et al., 2022; Long et al., 2018; Baldazo et al., 2019; Zhou et al., 2019; Palanisamy, 2020; Aradi, 2020)). This is because it is non-trivial to create a model that accurately represents the decentralized partial observability and dynamic local dependencies of agents while producing theoretically sound and relatively tractable solutions. In addition to the empirical work, there has been a growing literature on theoretical MARL, but none attempt to model and solve the challenges brought by the decentralized partial observability and local dynamic agent interactions (Qu et al., 2022; 2020a;b; Lin et al., 2021; Kar et al., 2013; Zhang et al., 2018; Suttle et al., 2020; Chen et al., 2021). The discussions above naturally motivate the question: 
+
+Can we theoretically model and find near-optimal policies for decentralized agents with dynamic local dependencies in a scalable manner? 
+
+We answer this question affirmatively with our contributions described below. 
+
+1.1. Contributions 
+
+For our first contribution, we propose a novel setting called the Locally Interdependent Multi-Agent MDP. It is a coop-erative setting that consists of multiple agents acting in a common metric space. It models dynamic proximity-based relationships that allow agents within a distance R to in-fluence and depend on one another. Furthermore, agents within proximity V are also permitted to communicate with each other. As the location of the agents can dynamically change, both the “dependence graph” and the “communica-1Locally Interdependent Multi-Agent MDP 
+
+tion graph” can be dynamic and time-varying. As a second contribution, we provide near-optimal solutions and establish a fundamental property of this setting. Specifi-cally, we attempt to answer the following two questions: 
+
+1) Are there decentralized policies in this setting that per-form well theoretically? 
+
+We provide three closed-form policy solutions we call the Amalgam Policy, the Cutoff Policy, and the First Step Finite Horizon Optimal Policy. The policies in our decentralized framework have nearly the best possible theoretical perfor-mance guarantees in this setting. This is shown by providing an upper bound for the performance of each of policy we construct (Theorem 3.1, Theorem 3.2, Theorem 3.3) and matching them with a performance lower bound we also construct (Theorem 3.4), up to constant factors. 
+
+2) How significantly does decentralized partial observability impact the best possible performance? 
+
+As a corollary, we reveal that the performance of the optimal policy in our partially observable decentralized framework will approximate the optimal fully observable centralized policy exponentially well with the increase in the visibil-ity radius. This establishes a fundamental property of our decentralized framework in Locally Interdependent Multi-Agent MDP’s. Lastly, we give insight into the practical uses and behavior of our policies. We present some extensions of our solutions that can further improve scalability, and provide simulations of toy problems in obstacle avoidance, cooperative naviga-tion, and formation control. They demonstrate the long term behaviors of the policies and act as a proof of concept for applications in more complex systems. Together, these contributions constitute a novel framework that has wide applicability and has closed-form solutions with rigorous theoretical guarantees that are implementable in practice. 
+
+1.2. Related Work 
+
+Our work is related to two bodies of literature. Firstly, there exist many lines of empirical work that con-sider a multi-agent setting with decentralized agents and dynamic local dependencies. In fact, many resemblances of our model show up in practical applications in prob-lems such as cooperative navigation, obstacle avoidance, and formation control (Han et al., 2020; Batra et al., 2022; Lowe et al., 2017). Some examples are robot navigation (Han et al., 2020; Long et al., 2018), autonomous driving (Palanisamy, 2020; Aradi, 2020), UAV’s (Baldazo et al., 2019; Batra et al., 2022), and USV’s (Zhou et al., 2019). However, all of these works are empirical in nature and our goal is to provide a theoretical framework for these types of problems. Secondly, our work is also related to the large body of the theoretical MARL literature. This is a very broad area and some representative works include V-learning (Bai et al., 2020; Jin et al., 2021; Wang et al., 2023), mean-field RL (Yang et al., 2018; Gu et al., 2021; Carmona et al., 2023), and function approximation (Xie et al., 2020; Jin et al., 2022; Huang et al., 2022). In this literature, the areas most related to us are 1) the Dec-POMDP, 2) scalable RL, and 3) decentralized RL. 1) Our setting is indeed a special case of the Dec-POMDP (Oliehoek, 2012; Oliehoek et al., 2016). Unfortunately, solving a general Dec-POMDP is NEXP-Complete. Similar to our approach, there have been many attempts to con-sider special cases of the Dec-POMDP to improve tractabil-ity. However, as far as we know, these methods inherit the hardness of the Dec-POMDP (Goldman & Zilberstein, 2004; Bernstein et al., 2002; Allen & Zilberstein, 2009), cannot model the setting we consider, or are not theoreti-cally analyzed. A close example to our setting in the par-tially observable multi-agent literature is the Interaction Driven Markov Game (IDMG) (Spaan & Melo, 2008; Melo & Veloso, 2009) which has many related aspects to our setting such as rewards decomposing into a single-agent component and a multi-agent component, but the theory is not well explored. Compared to the IDMG, we make some additional assumptions, but we believe the key insight that improves the theoretical quality of our solution is to allow coordination between agents for several time steps prior to reward dependence (see the Lemma 4.1). Another exam-ple of a related setting is the Network Distributed POMDP (Nair et al., 2005; Zhang & Lesser, 2011) which has some resemblance of our setting such as transition independence and group reward dependence. However, it assumes a fixed reward grouping and independent observations, neither of which holds in our setting. As far as we know, the literature in this area is not able to solve problems in our setting in a theoretically sound, tractable, and scalable manner. We take a unique approach to circumvent the difficulties of ana-lyzing general partial observability structures. Namely, we propose reasonable closed-form solutions for a particular en-vironment and observability structure and then theoretically prove their effectiveness. 2) The scalable RL literature considers a setting very close to ours (Qu et al., 2022; 2020a;b; Lin et al., 2021). It considers decentralized agents with local dependencies much like our setting, however, the dependence network between agents is fixed or stochastic and the dependence is in terms of the probability transitions. Our work has dynamic time-varying dependence networks between agents and the dependence is in terms of the rewards. Nevertheless, it can be considered 2Locally Interdependent Multi-Agent MDP 
+
+an extension of works in this area and resemblances of relevant concepts such as the exponential decay property can be seen in this work. 3) The distributed RL literature considers multiple agents connected through a possibly stochastic network (Kar et al., 2013; Zhang et al., 2018; Suttle et al., 2020; Chen et al., 2021). It differs in that the objective of the distributed RL literature is to find the joint optimal policy for all the agents by exchanging reward information with its neighbors. In our case, agents will exchange state information with other agents and act only according to that acquired state information. 
+
+## 2. Preliminaries 
+
+2.1. Locally Interdependent Multi-Agent MDP 
+
+We consider a setting with a set of agents N = {1, ..., n }.Each agent k is associated with a state xk from a common metric space X with an associated distance metric d. This state xk is the “location” of agent k. Further, each agent 
+
+k ∈ N will also have an internal state from a local state space Yk. Thus the state for agent k can be represented as 
+
+sk = ( xk, y k) ∈ S k where xk ∈ X and yk ∈ Y k.Given the distance metric d, agents j, k ∈ N at states sj =(xj , y j ) ∈ S j , sk = ( xk, y k) ∈ S k are then associated with a notion of distance. We overload notation and denote the distance d between states as d(sj , s k) = d(xj , x k).Each agent takes an action ak that lies in a local action space 
+
+Ak. Given sk(t), a k(t) at time t, agent k’s state transitions according to a local transition function Pk, i.e. sk(t + 1) ∼
+
+Pk(·| sk(t), a k(t)) . We assume agents will not travel more than a distance of 1 at each step. That is, Pk(s′
+
+> k
+
+|sk, a k) = 0 if d(sk, s ′
+
+> k
+
+) > 1. Since the distance of 1 is a unitless distance dictated by the metric space, this simply reflects the assumption that movement distance at each step is bounded. Agents will cooperate and take actions to accumulate dis-counted rewards that have independent and interdependent components. Agents will obtain independent local rewards according to a local reward function rj (sj , a j ) at each step. Furthermore, for other agents k within a distance of a de-pendence constant R of agent j, an arbitrary reward of 
+
+rj,k (sj , a j , s k, a k) will be added. These rewards will then be discounted by factor γ throughout the time steps. This proximity-based reward function incentivizes each in-dividual agent while providing rewards and penalties for agents within its vicinity according to the distance metric 
+
+d. As agents move throughout the space, they will begin to influence each other in a time-varying dynamic way. If we assert rj,k (sj , a j , s k, a k) = 0 when d(sj , s k) > R, we can compactly say rj (s, a ) = P 
+
+> k∈N
+
+rj,k (sj , a j , s k, a k) where if j, k are equal, we say rj,j (sj , a j , s j , a j ) = rj (sj , a j ).To summarize, we define the Locally Interdependent Multi-Agent MDP to be M = ( S, A, P, r, R, γ ):• S := S1 × ... × S n
+
+• A := A1 × ... × A n
+
+• P (s′|s, a ) = Q 
+
+> k∈N
+
+Pk(s′
+
+> k
+
+|sk, a k) where 
+
+Pk(s′
+
+> k
+
+|sk, a k) = 0 if d(sk, s ′
+
+> k
+
+) > 1
+
+• r(s, a ) = P 
+
+> j,k ∈N
+
+rj,k (sj , a j , s k, a k) where 
+
+rj,k (sk, a k, s j , a j ) = 0 when d(sj , s k) > R. j, k 
+
+may be equal. For the subsequent sections, we denote ˜r = sup s,a |r(s, a )|
+
+We will also indicate a finite realizable trajectory in this MDP to be a sequence of state actions (s(t), a (t)) for t ∈{0, ..., T } that have the property P (s(t + 1) |s(t), a (t)) > 0
+
+for all t ∈ { 0, ..., T − 1}. This is similarly defined for infinite realizable trajectories. 
+
+2.2. Group Decentralized Policies 
+
+To introduce partial observability, we say two agents can communicate with each other and take a coordinated action if there is a path of adjacent agents each within a constant distance V of each other with V > R. Formally, for s ∈ S ,the visibility partition on the agents N denoted as Z(s)
+
+is defined by the equivalence relation such that for agents 
+
+j, k ∈ N , there is a sequence of agents n0, ..., n ℓ such that 
+
+n0 = j, n ℓ = k and d(ni, n i+1 ) ≤ V for i ∈ { 0, ..., ℓ − 1}.We say two agents within the same visibility partition can then communicate with one another (see Figure 1). Therefore our partially observable policy class of interest 
+
+ΠV contain policies π : S → ∆( A) that take the form 
+
+π(s) = ( πz (sz ) : z ∈ Z(s)) where agents within the same visibility group z ∈ Z(s) act according to some coordinated policy πz in Mz which is the associated Locally Interdepen-dent Multi-Agent MDP defined on a subset of agents z ⊂ N 
+
+with the same Sj , Aj , Pj , rj,k for j, k ∈ z. In other words, for z ∈ Z(s), πz will be a centralized policy based solely on the states of agents in the communication group and can thus be executed by our communication assumptions. We call this the group decentralized policy class. We will generalize this notation and define a concatenation of policies. For a partition P (s) on N possibly depending on s, and policies πp(sp) for p ∈ P (s), the concatenation of policies is denoted as π(s) = ( πp(sp) : p ∈ P (s)) .Throughout this paper, we also indicate a sample trajectory 
+
+τ = ( s(t), a (t)) distributed from a policy π with starting state s and starting action as a as τ ∼ π|s,a . If only the starting state is conditioned, we use τ ∼ π|s.3Locally Interdependent Multi-Agent MDP 
+
+2.3. Scalability 
+
+Notice that the size of this group decentralized policy class can be significantly smaller than all possible policies. To illustrate, we first establish a Locally Interdependent Multi-Agent MDP with kM agents, a finite |X | , finite |A 1| with 
+
+|A 1| = |A i| for all i, and a trivial internal state space for each agent. Now consider the policy class with policies of the form π(s) = ( πg (sg ) : g ∈ G) for some fixed partition 
+
+G with M agents in each group. The space required to store a group decentralized policy will be k|X | M |A 1|M
+
+elements as opposed to |X | kM |A 1|kM elements, which is a very dramatic difference numerically. Furthermore, the space required to store a deterministic group decentralized policy is reduced from |X | kM to k|X | M elements. In the group decentralized policy class “ G” changes dynam-ically with the state so the numerical advantages are MDP dependent. However, in practice, the improvements can be quite substantial (see Appendix A.5 for an example). The size reduction is reflected in the reduced space required to store these policies as well as the reduced computation time of some algorithms used to find them. We demonstrate this with the algorithms used to find the Cutoff and First Step Finite Horizon Optimal Policies, to be introduced later in Section 3 and extensions in Section 5. 
+
+V
+
+R
+
+# ×
+
+# ×
+
+# ×           
+
+> Figure 1. 3 agents moving in the space of X=R2with standard Euclidean distance. The bottom two agents potentially have an interdependent reward since they are within distance Rof one another. Furthermore, every agent is within distance Vof another agent so all agents can communicate with each other. Notably, the top and bottom agents may communicate even though they are not within distance Vof each other.
+
+2.4. Objectives 
+
+In this setting, we formally would like to answer the follow-ing questions that correspond to our objectives defined in Section 1.1: 
+
+1) Are there decentralized policies in this setting that per-form well theoretically? 
+
+Formally, we attempt to find group decentralized policies π
+
+that maximize V π (s) = Eτ ∼π|s
+
+ P∞ 
+
+> t=0
+
+γtr(s(t), a (t)) 
+
+
+
+.Equivalently, if we denote π∗ to be the optimal policy for all possible policies in the MDP and abbreviate V ∗ = V π∗
+
+,we attempt to find group decentralized policies π such that 
+
+|V ∗(s)−V π (s)| is small. This will establish concrete group decentralized policy solutions for Locally Interdependent Multi-Agent MDP’s. 
+
+2) How significantly does decentralized partial observability impact the best possible performance? 
+
+Formally, we ask whether |V ∗(s) − max π∈ΠV V π (s)| is small. This will answer whether the group decentralized policy class is a viable alternative to the entire policy class for optimization purposes. In this paper, we will answer both of these questions simul-taneously by providing three group decentralized policies with tight bounds. 
+
+2.5. Properties 
+
+Recalling V > R, a consequence of the reward and visibility structure is a buffer of time that agents can coordinate before the dependence begins. A constant that will occur frequently in this paper is c = ⌊ V−R  
+
+> 2
+
+⌋ and it represents the number of time steps that an agent from a visibility group cannot interact with agents from other visibility groups. This is more rigorously discussed in Lemma 4.1, the Dependence Time Lemma. Further, the positive gap between the visibility and depen-dence constant can be used to create an equivalent repre-sentation on the reward function. Firstly, for any g ⊂ N 
+
+define rg (sg , a g ) = P 
+
+> j,k ∈g
+
+rj,k (sj , a j , s k, a k). Then since 
+
+rj,k (sj , a j , s k, a k) = 0 when d(sj , s k) ≥ V > R, we can say r(s, a ) = P 
+
+> z∈Z(s)
+
+rz (sz , a z ). This equivalent decom-position for the reward function will also be used regularly. 
+
+2.6. Applications 
+
+In terms of modeling tasks in the environment, we may consider specific instances of the Locally Interdependent Multi-Agent MDP. We describe examples of three specific tasks below. 2.6.1. C OOPERATIVE NAVIGATION 
+
+In cooperative navigation, agents need to navigate toward a location without colliding with other agents, where two agents collide if they enter into a physical “width” of each other (Lowe et al., 2017). Cooperative navigation problems 4Locally Interdependent Multi-Agent MDP 
+
+are important in areas that have vehicles moving in a phys-ical environment such as in autonomous driving, UAV’s, robot navigation etc. To model this, we can set R to be the maximum width of an agent and assign a large penalty when other agents enter their width radius, or something more intricate depending on the application. For each agent k, we may provide indi-vidual incentives (such as for navigating to a location) by properly designing rk(sk, a k). Thus agents are incentivized to accumulate individual rewards rk(sk, a k) (for navigating to a location) while avoiding penalties for colliding other agents. Each agent may also have differing dynamics Pk
+
+depending on the physical environment. For a toy example of cooperative navigation using Locally Interdependent Multi-Agent MDP’s see Appendix A.5. 2.6.2. O BSTACLE AVOIDANCE 
+
+In the setting established in the previous section, we may also incorporate many types of dynamic obstacles by treat-ing the obstacles as agents with trivial action spaces. For example, an obstacle b ∈ N would have a trivial action space Ab = {X} and dynamics s′ 
+
+> b
+
+∼ Pb(·| sb, X ) that model the movement of the obstacle. We may then penalize other agents that are within R of agent b. For an example of a static obstacle, see Appendix A.3. In the above setting, the other agents do not know the po-sition of obstacle b apriori, so the agents must adapt to it dynamically. This is in contrast to integrating an obstacle into the reward function by penalizing agents for approach-ing a point x∗ ∈ X . In this case, all agents would know the position of this obstacle at all times. 2.6.3. F ORMATION CONTROL 
+
+In some applications, we would like agents to accomplish a task such as cooperative navigation or obstacle avoidance but prefer a specific formation, such as for drag reduction and surveillance in UAV’s (Wang et al., 2007; Dong et al., 2014). By providing a more intricate structure on r, we may spec-ify a preferred relative position to each agent. Suppose for example that relative to agent 1 at position x1 ∈ X , we would prefer if agent 2 and 3 are at positions x∗
+
+> 2
+
+, x ∗ 
+
+> 3
+
+∈ X 
+
+respectively where d(x1, x ∗
+
+> 2
+
+) ≤ R and d(x1, x ∗
+
+> 3
+
+) ≤ R . For example, x∗
+
+> 2
+
+, x∗ 
+
+> 3
+
+may form a specific angle or maintain a specific distance with x1. Then for all possible internal states for the three agents, we may take the associated states 
+
+s1, s ∗
+
+> 2
+
+, s ∗
+
+> 3
+
+, and set r(s1, a 1, s ∗
+
+> 2
+
+, a 2) and r(s1, a 1, s ∗
+
+> 3
+
+, a 3) to be a positive quantity for any a1, a 2, a 3 to incentivize these positions. In the case X is continuous (such as R2), these can be small positive reward regions that lie in a radius R of agent 1. This type of reward structure in the Locally Interde-pendent Multi-Agent MDP can model complex formations that prefer specific agent positions relative to each other. For an implementation of a toy example see Appendix A.4. 
+
+## 3. Main Results 
+
+Here we settle the case of whether the group decentralized policy class can perform well in the broadly applicable class of Locally Interdependent Multi-Agent MDP’s. We answer our objectives by first providing three closed-form stationary group decentralized policies with associated upper bound guarantees. Then, we provide a lower bound guarantee that matches each upper bound up to constant factors. Lastly, as a corollary, we find that the performance of group decen-tralized policies improves exponentially with respect to the visibility. All theorems are proved in Appendix C. 
+
+3.1. Three Upper Bound Constructions 
+
+3.1.1. A MALGAM POLICY 
+
+With our motivation to find group decentralized policies that perform well theoretically for general Locally Interde-pendent Multi-Agent MDP’s, we introduce our first con-struction, the Amalgam Policy λ. It is defined by taking the optimal policy for each visibility group. It is named as such because it is an amalgamation of local joint optimal policies. Formally λ(s) = ( π∗ 
+
+> z
+
+(sz ) : ∀z ∈ Z(s)) where π∗
+
+> z
+
+is the optimal policy for Mz the Locally Interdependent Multi-Agent MDP defined for a subset of agents z. We show that it satisfies the guarantee: 
+
+Theorem 3.1. |V ∗(s) − V λ(s)| ≤ 2(1 −γ)2 γc+1 ˜r.
+
+Recalling the definition c = ⌊ V−R  
+
+> 2
+
+⌋, this shows the quality of the Amalgam Policy improves exponentially with the increase of the visibility. Storing this policy will in general require less space because it only requires storing π∗ 
+
+> z
+
+(sz ) for states sz with agents z in the same communication group. Computing this policy can be fully scalable to compute when group sizes do not exceed some constant L. A more in-depth discussion is provided in Section 5. In the long horizon, this policy performs well for many of our examples described in Appendix A. In addition to the Amalgam Policy, we now introduce two more policies that approach the problem in unique ways and have some differing properties. 3.1.2. C UTOFF POLICY 
+
+We now introduce the group decentralized Cutoff Policy 
+
+χ which has properties that take advantage of the setting to improve scalability. We introduce a notion of the Cut-off Multi-Agent MDP which modifies the communication 5Locally Interdependent Multi-Agent MDP 
+
+structure for Locally Interdependent Multi-Agent MDP’s so agents are not allowed to re-enter visibility groups (for more details see Appendix B). The Cutoff Policy is the optimal policy in the Cutoff Multi-Agent MDP converted for use in the Locally Interdependent Multi-Agent MDP setting. Formally, we define χ(s) = ( πC 
+
+> z
+
+(( sz , {z})) : ∀z ∈ Z(s)) .We prove the bound: 
+
+Theorem 3.2. |V ∗(s) − V χ(s)| ≤ 2−γ 
+
+> (1 −γ)2
+
+γc+1 ˜r.
+
+Again, this is a group decentralized policy so it benefits from the reduced space required to store the policy. How-ever, in contrast to the Amalgam Policy, the computational scalability described in Section 2.3 is achieved with the Cutoff Policy. It benefits from the partial observability be-cause of the inherent properties of the Cutoff Multi-Agent MDP. Namely, the exact Bellman Equations in the Cutoff Multi-Agent MDP only require the computation of values for states sz where all agents in z are in the same commu-nication group (See Appendix B). This can significantly improve the tractability, as the computational scalability now reflects the size of the stored policy. The policy can perform better than the Amalgam Policy in the long horizon for examples with positive interdependent rewards (see Appendix A.2). 3.1.3. F IRST STEP FINITE HORIZON OPTIMAL POLICY 
+
+The final policy is called the First Step Finite Horizon Opti-mal Policy ϕ. As the name suggests, the policy will take the first step in the discounted finite horizon optimal policy for the Locally Interdependent Multi-Agent MDP. Formally, if 
+
+{π∗,0, π ∗,1, ..., π ∗,c } are the set of discounted finite horizon optimal policies with horizon c, the policy is defined as 
+
+ϕ(s) = π∗,0(s). This is stationary and shown to be a group decentralized policy by Corollary C.7. For this policy, we prove: 
+
+Theorem 3.3. |V ∗(s) − V ϕ(s)| ≤ 21−γ γc+1 ˜r.
+
+We also show that the First Step Finite Horizon Optimal Policy can equivalently be computed on the Cutoff Multi-Agent MDP with Theorem C.6. Therefore, we obtain the same reduced computational and storage savings. However, since this policy only considers a limited horizon, the long horizon behavior can be inferior to the other two. 3.1.4. S UMMARY OF THE THREE POLICIES 
+
+These three group decentralized policies take different in-tuitive approaches to perform well. Roughly, the Amal-gam, Cutoff, and First Step Finite Horizon Optimal Poli-cies convert the optimal policy π∗, optimal cutoff pol-icy πC , and the optimal discounted finite horizon pol-icy {π∗,0, π ∗,1, ..., π ∗,c }, respectively, into valid stationary group decentralized policies. All of these policies are more tractable to store and compute than the optimal policy except for the Amalgam Policy which can be modified using our discussions in Section 5 to improve computational scalability. Although they all satisfy a similar theoretical guarantee, differences will show in varying long horizon behaviors that are explored in Appendix A. 
+
+3.2. Lower Bound 
+
+Next, we present a construction for a lower bound on the best possible group decentralized policy. 
+
+Theorem 3.4. There exists a Locally Interdependent Multi-Agent MDP M(ℓ) such that for every visibility V =2ℓ + 1 , ℓ ∈ { 0, 1, ... }, there exists s, a such that |V ∗(s) −
+
+max π∈ΠV V π (s)| ≥ 12 
+
+> γc+2
+> 1−γ
+
+˜r.
+
+The above lower bound matches our three prior results up to constant factors and proves they nearly have the best performance guarantee we can establish for general Locally Interdependent Multi-Agent MDP’s. 
+
+3.3. Performance of Group Decentralized Policies 
+
+To conclude, notice all three upper bounds are also upper bounds for |V ∗(s) − max π∈ΠV V π (s)|. Together with our discussion above, we have proven a fundamental property of group decentralized policies in Locally Interdependent Multi-Agent MDP’s. Namely, 
+
+Corollary 3.5. |V ∗(s) − max π∈ΠV V π (s)| = O(γV ).
+
+We know this is the best asymptotic guarantee we may estab-lish for general Locally Interdependent Multi-Agent MDP’s because of our lower bound. This shows that the class of group decentralized policies can indeed produce viable so-lutions in Locally Interdependent Multi-Agent MDP’s. 
+
+## 4. Proof Summary 
+
+As mentioned previously, we would like to upper bound the quantity |V ∗(s) − V π (s)| for the three group decentralized policies in place of π. All three will use similar proof techniques that are outlined here. The proofs for each policy in Appendix C will be divided into 3 steps. In the first step, we discuss the consequences of the Dependence Time Lemma. In the second step, we will use ideas from the first step to demonstrate the performance of three naive versions of our closed-form group decentral-ized policies. Lastly, we will use the Telescoping Lemma to convert the guarantees from these naive policy candidates into guarantees for our closed-form group decentralized policies. 6Locally Interdependent Multi-Agent MDP 
+
+4.1. Step 1: Dependence Time Lemma 
+
+In this step of the proofs, we will introduce various relevant lemmas derived from the Dependence Time Lemma to be used in later steps. We introduce the Dependence Time Lemma here. The lemma describes a fundamental property of visibil-ity groups in Locally Interdependent Multi-Agent MDP’s. Since V > R and agents move at most a distance of 
+
+1, a buffer of time c = ⌊ V−R  
+
+> 2
+
+⌋ is created during which an agent cannot interact with another agent from outside its visibility group. That is, the interdependent rewards 
+
+r(sj (t), a j (t), s k(t), a k(t)) = 0 for agents j, k in different initial visibility groups for up to c time steps. Formally, this is stated in the following lemma. 
+
+Lemma 4.1. (Dependence Time Lemma) For any realizable trajectory (s(t), a (t)) and time step T , we have 
+
+r(s(T +δ), a (T +δ)) = X 
+
+> z∈Z(s(T))
+
+rz (sz (T +δ), a z (T +δ)) 
+
+for δ ∈ { 0, ..., c }.Proof. Consider two agents j, k ∈ N such that 
+
+d(sj (T ), s k(T )) > V. Firstly, using the definition of the distance metric and the probability transition function of the Locally Interdependent Multi-Agent MDP, we may conclude d(sj (T ), s j (T + δ)) ≤
+
+Pδ−1 
+
+> i=0
+
+d(sj (T + i), s j (T + i + 1)) ≤ δ. Similarly for agent k.Further by applying the reverse triangle inequality and substituting what we found, we have 
+
+d(sj (T + δ), s k(T + δ)) 
+
+≥ d(sj (T ), s k(T )) − d(sj (T + δ), s j (T )) 
+
+− d(sk(T + δ), s k(T )) 
+
+> V − 2δ
+
+≥ V − 2c
+
+≥ V − 2
+
+ V − R 
+
+2
+
+
+
+= R.
+
+Now that we established d(sj (T + δ), s k(T + δ)) > R,by the definition of the reward function for the Locally Interdependent Multi-Agent MDP, rj,k (sj (T + δ), a j (T +
+
+δ), s k(T + δ), a k(T + δ)) = 0 for agents j, k that have 
+
+d(sj (T ), s k(T )) > V. This implies r(s(T +δ), a (T +δ)) = P  
+
+> z∈Z(s(T))
+
+rz (sz (T + δ), a z (T + δ)) .
+
+4.2. Step 2: Performance of Naive Policies 
+
+With some consequences of the Dependence Time Lemma in hand, this step of the proof will look to three naive policy candidates that satisfy a guarantee similar to the one we are after. They are naive because none of them are valid group decentralized policies. We will attempt to convert these into valid group decentralized policies afterward. The proofs for all three following lemmas are provided in Appendix C. The first policy corresponds to a naive version of the Amal-gam Policy. For any partition G on N , let π∗
+
+> G
+
+(s) =(π∗ 
+
+> g
+
+(sg ) : ∀g ∈ G). Then the policy is defined as π∗
+
+> Z(s∗)
+
+(s)
+
+for some fixed s∗. Notice that this is not a group decentral-ized policy and is not allowed in our setting because the communication groups are fixed. Using lemmas derived in step 1, we may derive the following lemma: 
+
+Lemma 4.2. |V ∗(s) − V π∗ 
+
+> Z(s)
+
+(s)| ≤ 2(1 −γ) γc+1 ˜r.
+
+The second policy candidate is the optimal cutoff policy πC .This policy viewed from the perspective of the Locally In-terdependent Multi-Agent MDP is non-Markovian since the policy uses information about the cutoff partition. However, the following result still holds: 
+
+Lemma 4.3. |V ∗(s) − V πC
+
+(( s, Z (s))) | ≤ 1(1 −γ) γc+1 ˜r.
+
+The last policy candidate is the discounted finite horizon optimal policy with a horizon of c. It will turn out that a consequence of the Dependence Time Lemma is that π∗,0
+
+in {π∗,0, π ∗,1, ..., π ∗,c } is a group decentralized policy by Corollary C.7. However, all together, the discounted finite horizon optimal policy is not valid because the policy is non-stationary. We show that the following relationship is satisfied: 
+
+Lemma 4.4. |V ∗(s) − V ∗ 
+
+> 0
+
+(s)| ≤ 1(1 −γ) γc+1 ˜r.
+
+where V ∗ 
+
+> 0
+
+is the optimal discounted finite horizon values up to horizon c.
+
+4.3. Step 3: Telescoping Lemma 
+
+Lastly, we will use the Telescoping Lemma introduced here to help bridge the gap between our policy candidates and their corresponding valid group decentralized policies. Intu-itively, it says that if we can express the expected discounted rewards within two stopping times as the expected differ-ence between two discounted value functions, then we may express the whole value function as an expectation of a telescoping sum of these discounted value functions. Below is the formal condition we would like to be held for the lemma: 
+
+Condition 4.5. For a MDP, a given policy π, and a sequence of stopping times 0 = T0 < T 1 < ... , we have a family of 
+
+7Locally Interdependent Multi-Agent MDP 
+
+value functions parameterized by the state {V s}, such that the following inequality is satisfied:          
+
+> Eτ∼π|s
+> Ti+1 −1
+> X
+> t=Ti
+> γtr(s(t), a (t))
+> 
+> ≥
+> Eτ∼π|s
+> 
+> γTiVs(Ti)(s(Ti)) −γTi+1 Vs(Ti)(s(Ti+1 ))
+> 
+
+.
+
+It turns out that this condition is satisfied with equality for the Amalgam policy using a change in the visibil-ity groups as the stopping time and setting V s(Ti)(s) = 
+
+V π∗ 
+
+> Z(s(Ti))
+
+(s). The Cutoff Policy satisfies a very simi-lar condition with equality by setting the stopping time to when any agent enters another agents visibility and 
+
+V s(Ti)(s) = V πC
+
+(( s, Z (s))) . The First Step Finite Hori-zon Optimal policy will use every step as the stopping time and V s(Ti)(s) = V ∗ 
+
+> 0
+
+(s). The condition does not hold with equality in this case. Below is the formal statement for the Telescoping Lemma. Note that the inequality holds with equality when the condi-tion Condition 4.5 is held with equality. 
+
+Lemma 4.6. (Telescoping Lemma) For any MDP, suppose 0 = T0 < T1 < ... are stopping times such that Condition 4.5 is satisfied. Then we have 
+
+V π (s) ≥ Eτ ∼π|s
+
+
+
+V s(s) − P∞ 
+
+> i=1
+
+γTi ∆τi
+
+
+
+where ∆τi =
+
+V s(Ti−1)(s(Ti)) − V s(Ti)(s(Ti)) .Proof. By definition and assumption, we may show 
+
+V π (s) = Eτ ∼π|s
+
+ ∞X
+
+> t=0
+
+γtr(s(t), a (t)) 
+
+
+
+=
+
+> ∞
+
+X
+
+> i=0
+
+Eτ ∼π|s
+
+ Ti+1 −1
+
+X
+
+> t=Ti
+
+γtr(s(t), a (t)) 
+
+
+
+≥ Eτ ∼π|s
+
+ ∞X
+
+> i=0
+
+
+
+γTi V s(Ti)(s(Ti)) 
+
+− γTi+1 V s(Ti)(s(Ti+1 )) 
+
+ 
+
+= Eτ ∼π|s
+
+
+
+V s(s) −
+
+> ∞
+
+X
+
+> i=1
+
+γTi ∆τi
+
+
+
+.
+
+Notice that in the case stopping times become infinite after a certain time, γ∞ = 0 , and the sum inside the expectation will be finite. By bounding the quantity ∆τi for all three policies, we may use this lemma to effectively bound the difference between the value functions of each naive policy candidate and its cor-responding valid group decentralized policies. This paired with our bound on the naive policy candidates will be suffi-cient for producing our desired upper bounds. 
+
+## 5. Fully Scalable Extensions 
+
+We discussed in Section 2.3 that for our setting, the re-stricted visibility can improve the computation and storage requirements of these group decentralized policies. Here, we present modifications of our policies that fully mitigate the effect of the curse of dimensionality and are completely scalable. As is currently presented, when the visibility groups become too large, the state and action space grow exponentially and the group decentralized policies can still be intractable to compute and store. The goal of the following extensions is to effectively deal with the situation where group sizes become too large. 
+
+5.1. Eliminating Large Groups 
+
+Depending on the specific Locally Interdependent Multi-Agent MDP instance and the initial state we are interested in, agents may be sparse in X when running our group de-centralized policies. This may happen when agents within 
+
+R of each other are penalized and agents are incentivized to pursue spread-out independent rewards. With this sparsity, visibility group sizes may naturally not exceed some small constant L when running our group decentralized policies. Then, for our three policies, we would only need to com-pute them for N = L agents. This can result in extreme computational savings in practice. See Appendix A.5 for a toy example of how we can tractably compute the exact Amalgam Policy for many agents with a fixed initial state. Since we are running the exact policy, our bounds in Sec-tion 3 hold for this initial state while benefiting from the scalability. 
+
+5.2. Reducing Visibility and Splitting Large Groups 
+
+Suppose that a group decentralized policy starting at a par-ticular initial state, the sizes of visibility groups do exceed 
+
+L but the dependence groups (similar to visibility groups but defined for radius R) do not exceed size L. This may occur when V is much larger than R. Then, we may reduce the complexity by artificially splitting the visibility groups into smaller groups that do not exceed size L. For the best possible split based on the visibility, we may reduce the vis-ibility V just until the point VL (up to some precision) that visibility group sizes do not exceed L. Essentially, reducing the visibility makes the agents more “sparse”. 
+
+5.3. Approximations of Large Groups 
+
+Lastly, we may handle larger group sizes > L by using empirical tools such as deep actor-critic methods (Lowe et al., 2017). For the Amalgam Policy, we may use these methods as intended to find an approximation for the optimal 8Locally Interdependent Multi-Agent MDP 
+
+policy for these large groups of agents. For the Cutoff and the First Step Finite Horizon Policies, empirical methods may need to be modified using the Bellman Optimality equations presented in Appendix B. This method is unique in that it combines theoretical and empirical methods. For the Amalgam Policy, in the case that the group sizes are small ≤ L, the local optimal policies are taken. When group sizes become large and finding the exact optimal policy is difficult, we transition to our empirical methods. This method provides very scalable solutions for Locally Interdependent Multi-Agent MDP’s. 
+
+## 6. Conclusion and Future Works 
+
+We have formulated a broadly applicable theoretical frame-work that models partially observable decentralized agents with dynamic local dependencies. We illustrated this using examples of applications such as cooperative navigation, obstacle avoidance, and formation control. We found three closed-form policy solutions (Amalgam Policy, Cutoff Pol-icy, and First Step Finite Horizon Optimal Policy) which satisfied theoretical upper bounds that were optimal up to constant factors. We also discussed the improved scalability in storing and computing these policies. Then, we gave various extensions to further improve the scalability of these policies. Lastly, we provided simulations and investigated the long term behaviors of the policies. Overall, we believe that the proof techniques utilized in this paper may be used for applications beyond the Multi-Agent MDP setting. For example, the Telescoping Lemma as stated applies to general MDP’s and is not commonly seen or used. Empirically, the scalability, applicability, and long horizon behaviors of the Amalgam and Cutoff Policies seem promis-ing (see Appendix A) when considered with our extensions described in Section 5. Some work however is required to overcome limitations described in Appendix A.6. An interesting follow-up work would be methods for per-forming reinforcement learning in this context. We are also interested to see whether we can extend this work to the setting where agents only act based on agents within view rather than forming communication groups. 
+
+## Acknowledgements 
+
+This research was supported by NSF Grants 2154171, 2339112, CMU CyLab Seed Funding, C3 AI Institute. In addition, Alex Deweese is supported by Leo Finzi Memorial Fellowship in Electrical & Computer Engineering. 
+
+## Impact Statement 
+
+This paper presents work whose goal is to advance the field of Machine Learning. There are many potential societal consequences of our work, none which we feel must be specifically highlighted here. 
+
+## References 
+
+Allen, M. and Zilberstein, S. Complexity of decentralized control: Special cases. Advances in neural information processing systems , 22, 2009. Aradi, S. Survey of deep reinforcement learning for motion planning of autonomous vehicles. IEEE Transactions on Intelligent Transportation Systems , 23(2):740–759, 2020. Bai, Y., Jin, C., and Yu, T. Near-optimal reinforcement learning with self-play. Advances in neural information processing systems , 33:2159–2170, 2020. Baldazo, D., Parras, J., and Zazo, S. Decentralized multi-agent deep reinforcement learning in swarms of drones for flood monitoring. In 2019 27th European Signal Processing Conference (EUSIPCO) , pp. 1–5. IEEE, 2019. Batra, S., Huang, Z., Petrenko, A., Kumar, T., Molchanov, A., and Sukhatme, G. S. Decentralized control of quadro-tor swarms with end-to-end deep reinforcement learning. In Conference on Robot Learning , pp. 576–586. PMLR, 2022. Bernstein, D. S., Givan, R., Immerman, N., and Zilberstein, S. The complexity of decentralized control of markov decision processes. Mathematics of operations research ,27(4):819–840, 2002. Carmona, R., Lauri `ere, M., and Tan, Z. Model-free mean-field reinforcement learning: mean-field mdp and mean-field q-learning. The Annals of Applied Probability , 33 (6B):5334–5381, 2023. Chen, T., Zhang, K., Giannakis, G. B., and Ba s¸ ar, T. Communication-efficient policy gradient methods for dis-tributed reinforcement learning. IEEE Transactions on Control of Network Systems , 9(2):917–929, 2021. Dong, X., Yu, B., Shi, Z., and Zhong, Y. Time-varying formation control for unmanned aerial vehicles: Theories and applications. IEEE Transactions on Control Systems Technology , 23(1):340–348, 2014. Goldman, C. V. and Zilberstein, S. Decentralized control of cooperative systems: Categorization and complexity analysis. Journal of artificial intelligence research , 22: 143–174, 2004. 9Locally Interdependent Multi-Agent MDP 
+
+Gu, H., Guo, X., Wei, X., and Xu, R. Mean-field controls with Q-learning for cooperative MARL: convergence and complexity analysis. SIAM Journal on Mathematics of Data Science , 3(4):1168–1196, 2021. Han, R., Chen, S., and Hao, Q. Cooperative multi-robot navigation in dynamic environment with deep reinforce-ment learning. In 2020 IEEE International Conference on Robotics and Automation (ICRA) , pp. 448–454. IEEE, 2020. Huang, B., Lee, J. D., Wang, Z., and Yang, Z. Towards gen-eral function approximation in zero-sum Markov games. In International Conference on Learning Representations ,2022. Jin, C., Liu, Q., Wang, Y., and Yu, T. V-learning–a sim-ple, efficient, decentralized algorithm for multiagent RL. 
+
+arXiv preprint arXiv:2110.14555 , 2021. Jin, C., Liu, Q., and Yu, T. The power of exploiter: Provable multi-agent RL in large state spaces. In International Con-ference on Machine Learning , pp. 10251–10279. PMLR, 2022. Kar, S., Moura, J. M., and Poor, H. V. QD-learning: A col-laborative distributed strategy for multi-agent reinforce-ment learning through consensus + innovations. IEEE Transactions on Signal Processing , 61(7):1848–1862, 2013. Lin, Y., Qu, G., Huang, L., and Wierman, A. Multi-agent reinforcement learning in stochastic networked systems. 
+
+Advances in neural information processing systems , 34: 7825–7837, 2021. Long, P., Fan, T., Liao, X., Liu, W., Zhang, H., and Pan, J. Towards optimally decentralized multi-robot colli-sion avoidance via deep reinforcement learning. In 2018 IEEE international conference on robotics and automa-tion (ICRA) , pp. 6252–6259. IEEE, 2018. Lowe, R., Wu, Y. I., Tamar, A., Harb, J., Pieter Abbeel, O., and Mordatch, I. Multi-agent actor-critic for mixed cooperative-competitive environments. Advances in neu-ral information processing systems , 30, 2017. Melo, F. S. and Veloso, M. Learning of coordination: Ex-ploiting sparse interactions in multiagent systems. In 
+
+Proceedings of The 8th International Conference on Au-tonomous Agents and Multiagent Systems-Volume 2 , pp. 773–780. Citeseer, 2009. Nair, R., Varakantham, P., Tambe, M., and Yokoo, M. Net-worked distributed pomdps: A synthesis of distributed constraint optimization and pomdps. In AAAI , volume 5, pp. 133–139, 2005. Oliehoek, F. A. Decentralized pomdps. In Reinforcement Learning: State-of-the-Art , pp. 471–503. Springer, 2012. Oliehoek, F. A., Amato, C., et al. A concise introduction to decentralized POMDPs , volume 1. Springer, 2016. Palanisamy, P. Multi-agent connected autonomous driving using deep reinforcement learning. In 2020 International Joint Conference on Neural Networks (IJCNN) , pp. 1–7. IEEE, 2020. Qu, G., Lin, Y., Wierman, A., and Li, N. Scalable multi-agent reinforcement learning for networked systems with average reward. Advances in Neural Information Process-ing Systems , 33, 2020a. Qu, G., Wierman, A., and Li, N. Scalable reinforcement learning of localized policies for multi-agent networked systems. In Learning for Dynamics and Control , pp. 256–266. PMLR, 2020b. Qu, G., Wierman, A., and Li, N. Scalable reinforcement learning for multiagent networked systems. Operations Research , 70(6):3601–3628, 2022. Spaan, M. T. and Melo, F. S. Interaction-driven markov games for decentralized multiagent planning under uncer-tainty. In Proceedings of the 7th international joint con-ference on Autonomous agents and multiagent systems-Volume 1 , pp. 525–532. Citeseer, 2008. Suttle, W., Yang, Z., Zhang, K., Wang, Z., Ba s¸ ar, T., and Liu, J. A multi-agent off-policy actor-critic algorithm for distributed reinforcement learning. IFAC-PapersOnLine ,53(2):1549–1554, 2020. Wang, X., Yadav, V., and Balakrishnan, S. Cooperative uav formation flying with obstacle/collision avoidance. 
+
+IEEE Transactions on control systems technology , 15(4): 672–679, 2007. Wang, Y., Liu, Q., Bai, Y., and Jin, C. Breaking the curse of multiagency: Provably efficient decentralized multi-agent rl with function approximation. In The Thirty Sixth Annual Conference on Learning Theory , pp. 2793–2848. PMLR, 2023. Xie, Q., Chen, Y., Wang, Z., and Yang, Z. Learning zero-sum simultaneous-move Markov games using function approximation and correlated equilibrium. In Conference on learning theory , pp. 3674–3682. PMLR, 2020. Yang, Y., Luo, R., Li, M., Zhou, M., Zhang, W., and Wang, J. Mean field multi-agent reinforcement learning. In 
+
+International Conference on Machine Learning , pp. 5571– 5580. PMLR, 2018. 10 Locally Interdependent Multi-Agent MDP 
+
+Zhang, C. and Lesser, V. Coordinated multi-agent rein-forcement learning in networked distributed pomdps. In 
+
+Proceedings of the AAAI Conference on Artificial Intelli-gence , volume 25, pp. 764–770, 2011. Zhang, K., Yang, Z., Liu, H., Zhang, T., and Basar, T. Fully decentralized multi-agent reinforcement learning with networked agents. In International Conference on Ma-chine Learning , pp. 5872–5881. PMLR, 2018. Zhou, X., Wu, P., Zhang, H., Guo, W., and Liu, Y. Learn to navigate: cooperative path planning for unmanned surface vehicles using deep reinforcement learning. Ieee Access , 7:165262–165278, 2019. 
+
+## A. Long Horizon Simulations 
+
+Our theory demonstrates that asymptotically, increasing the visibility of the Amalgam, Cutoff, and First Step Finite Horizon Optimal Policies will improve their quality expo-nentially. The First Step Finite Horizon Optimal Policy achieves this by considering the first c iterations and ignor-ing rewards beyond distance c. However, in practice, we may be interested in the behavior of these policies far be-yond c iterations for fixed visibility V and initial state, such as when rewards are sparse and unavailable for many iter-ations past c or when the visibility is small. Therefore, we would like to study the non-trivial long horizon behaviors of the Amalgam and Cutoff Policies. For the above purpose, we will run toy grid-world simu-lations for various settings which will serve as a proof of concept for our policy constructions, demonstrate the appli-cations of our Locally Interdependent Multi-Agent MDP settings, and uncover some peculiarities of our policies in the long horizon. We will then discuss various rollouts of the policies starting from a specific initial state in the various instances of the Locally Interdependent Multi-Agent MDP. In the figures, red will represent the optimal policy, blue will represent the Amalgam Policy, and green will represent the Cutoff Policy. The initial starting points are denoted by X’s and self-loops labeled with numbers describe how many times agents stayed in that position. Spaces colored in green represent locations where agents may obtain independent rewards and red represents independent penalties. All examples shown will have trivial internal states and deterministic transitions. 
+
+A.1. Bullseye Problem 
+
+The purpose of the following example is to demonstrate our theory described in the paper, provide an example of cooperative navigation, and begin exploring the differences between the Amalgam and the Cutoff Policies. The outcome of the simulation is shown in Figure 2. For this problem, we have a central reward of +100 that agents obtain individually at the center of the bullseye shown in green. Agents that reach the bullseye will not interact with any other agents and will no longer obtain any other rewards (formally, they are sent down a long chain of states with no rewards). Furthermore, any agent that is within a radius R = 20 of another agent is penalized with −500 .Also, agents that move away from the bullseye are penalized with −2. The visibilities V are described beneath the figure and the discount factor is γ = 0 .9. We consider 2 agents and put one of them 24 spaces on the left side of the bullseye and the other 25 spaces on the right side. The optimal policy is to wait for the closer agent to get close enough to the bullseye and trail behind. 11 Locally Interdependent Multi-Agent MDP 
+
+We see that the Amalgam Policy with V = 25 takes a sub-optimal policy that backtracks as it notices the other agent approaching. As we increase the visibility, we find the number of backtracks decreases, and the quality of the value function improves very quickly. We also see at the bottom, the Cutoff Policy does not per-form well in this example. A common theme across these simulations will be that the Cutoff Policy performs poorly when the interdependent rewards are primarily penalties. Note that this does not conflict with our theoretical upper bounds and a more extensive discussion is given in Ap-pendix A.6. 24 12 4821 × ×
+
+24 714 321 × ×
+
+24 220 23 × ×
+
+24 20 25 
+
+# × ×
+
+13 12 1
+
+∞ ∞
+
+# × ×
+
+Figure 2. Bullseye Problem: In red is the optimal policy with a discounted sum of rewards of 8.85 . The top three in blue are Amalgam Policy rollouts with V = 25 ,V = 35 , V = 45 top to bottom. They have a total discounted reward of 6.74 , 8.26 , and 
+
+8.85 respectively. Therefore, |V ∗(s) − V λ(s)| is 2.11 , 0.59 , 0
+
+respectively. In green is the Cutoff Policy with V = 25 . It obtains a discounted reward of −5.38 . All reported discounted sum of rewards are rounded to the second decimal place. 
+
+A.2. Aisle Walk Problem 
+
+The following example demonstrates that the Cutoff Policy does indeed perform better than the Amalgam Policy for certain examples. This example will have positive interde-pendent rewards. The outcome of the simulation is shown in Figure 3. For this problem with 2 agents, with V = 2 , an interdepen-dent reward of 20 is given whenever the agents are within 
+
+R = 1 step of each other, so the agents are incentivized to stick together. However, there is a tempting reward of 
+
++120 on either side shown in green, that agents may split apart and obtain on the sides of the central aisle. Agents are required to move one step forward at each time step and can only change the column they are in to move out of the central aisle or return to the central aisle at specific points shown in the figure. At the top of the figure, the agents are stuck in those positions and left to interact interdependently for the remainder of the iterations. The discount factor is 
+
+γ = 0 .9. The optimal policy is then to split apart to obtain independent rewards and rejoin again at the end of the aisle. We see that, for this example, the Cutoff Policy performs better than the Amalgam Policy. The Amalgam Policy is tempted by the independent rewards and does not have the mechanism to rejoin again because the other agent is out of view. However, the Cutoff Policy takes this into account and decides that staying in the aisle is the best option. 
+
+∞ ∞∞ ∞
+
+∞∞
+
+# × ×
+
+Figure 3. Aisle Walk Problem: In red is the optimal policy with a discounted reward of 496 .84 , In blue is the Amalgam Policy with a discounted reward of 234 .40 , and in green is the Cutoff Policy with a discounted reward of 400 . All reported discounted sum of rewards are rounded to the second decimal place. 
+
+A.3. Highway Problem 
+
+This problem demonstrates obstacle avoidance in our set-ting and provides another example of the Cutoff Policy performing poorly when penalties are introduced in the in-terdependent rewards. The outcome of the simulation is shown in Figure 4. Again with 2 agents, if any agent is within R = 3 of another, the agent receives an interdependent penalty of −500 . One agent is fixed near the center and acts as an obstacle. The visibility is V = 5 .12 Locally Interdependent Multi-Agent MDP 
+
+There is a primary reward at the top left of +100 shown in green and agents that achieve the primary reward will no longer obtain any other rewards. The agent that is not fixed has the option of traveling around the obstacle agent to obtain the primary reward or to use the “highway” at the bottom left shown in red to transport there in 1 iteration but incur a penalty of −25 . Using the highway will thus result in a less discounted primary reward. The discount factor is 
+
+γ = 0 .98 . The optimal strategy is to pay the price and take the highway to the +100 reward because of the obstacle agent that is in the way. The Amalgam Policy has limited visibility and does not initially see the obstacle. Thus, it attempts to maximize its reward by avoiding the cost of the highway and taking the long way around. Once it notices the obstacle, it avoids it and eventually receives a greater discounted final reward that is suboptimal. The Cutoff Policy shown in Figure 5 once again becomes confused once it notices the obstacle and performs poorly. This is again due to the penalties introduced in the inter-dependent rewards. A discussion of this phenomenon is provided in Appendix A.6. 
+
+# ×
+
+# × 
+
+> Figure 4. Highway Problem with Amalgam and Optimal Policy:
+> In red is the optimal policy with a discounted reward of 73.5 and in blue is the Amalgam Policy with 70.93 rounded to the second decimal place.
+
+A.4. Lane Merging Problem 
+
+The purpose of this example is to provide an example of formation control and to show a situation that both policies find the optimal policy. The outcome of the simulation is shown in Figure 6. 
+
+∞ ∞
+
+# ×
+
+# ×   
+
+> Figure 5. Highway Problem with Cutoff Policy: In green is the Cutoff Policy with an accumulated discounted reward of 0.
+
+For this example, every agent can only move forward or stay in its position. If an agent is within 1 distance of another agent, it will incur a penalty of −500 . However if the agent are exactly R = 2 distance from another agent, it will receive a reward of +10 . Lastly, any agent in the rightmost 7 squares will receive a reward of +100 at every step. V = 4 
+
+and the discount factor is γ = 0 .9. There are two agents on each side of two lanes that merge in the center, one set closer to the junction than the other. The optimal strategy is then to allow the agents closer to the junction to pass and then to follow in formation. All policies for this example find the exact optimal policy. Once the agents take a step forward, the agents all come within view of each other and they can coordinate effec-tively. 
+
+A.5. Bullseye Problem with Many Agents 
+
+This example demonstrates scalable cooperative navigation with many agents. The outcome of the simulation is shown in Figure 7. For this example, we have two “bullseyes” similar to Ap-pendix A.1. Agents that are at the center of a bullseye will receive +100 reward and receive a penalty of −10 for mov-ing away from either bullseye. Agents will also receive a penalty of −500 if they are within R = 1 space of another agent. V = 3 and the discount factor is γ = 0 .9. Similar to the Bullseye Problem, once an agent reaches the bullseye, it will not incur any more rewards or penalties. Here we consider an initial state with 8 agents. The optimal strategy 13 Locally Interdependent Multi-Agent MDP 
+
+# × ×
+
+# × 3
+
+# × 3
+
+∞ ∞
+
+∞∞
+
+# × ×
+
+# × 3
+
+# × 3
+
+∞ ∞
+
+∞∞
+
+# × ×
+
+# × 3
+
+# × 3
+
+∞ ∞
+
+∞∞
+
+Figure 6. Lane Merging Problem: The Amalgam, optimal, and Cutoff Policies have the same trajectory with accumulated dis-counted reward of 2514 .11 .
+
+is intractable to compute on the machine this was computed on. For this particular initial state, group sizes of the Amalgam Policy do not exceed 3 so the exact actions were found by simply computing the Amalgam Policy for 3 agents. This is an example of how our discussion in Section 5.1 can be used in practice. 
+
+# × 1
+
+# ×
+
+# × 2
+
+# ×
+
+# ×
+
+2
+
+# × 1
+
+# ×
+
+2
+
+# ×
+
+Figure 7. Bullseye Problem with Many Agents: The paths taken by the 8 agents with the Amalgam Policy. Only computation for 3 agents is required. 
+
+A.6. Discussion: Penalty Jittering 
+
+Intuitively the Cutoff Policy seems like it should perform better than the Amalgam policy for many cases as in the Aisle Walk Problem because the solution to the Cutoff Multi-Agent MDP incorporates information about the visibility dynamics. This is in comparison to the Amalgam Policy which simply consists of local optimal policies patched together. But, as seen in the previous examples, if interdependent rewards include heavy penalties, the Cutoff Policy may not perform well. We call this phenomenon “penalty jittering” as the interdependent penalties cause agents taking the pol-icy to get stuck moving back and forth. This is a general phenomenon that may occur for the Amalgam Policy as well but is particularly an issue for the Cutoff Policy. To illustrate the issue, consider a grid world in Figure 8. Agents incur a large penalty (e.g. −500 ) when overlapping with each other ( R = 0 ). There is a large reward (e.g. 
+
++100 ) for remaining in the leftmost state and a small reward (e.g. +10 ) for remaining in the rightmost state. The optimal strategy is for one agent to stay in the leftmost state and the other agent to stay in the rightmost state. The visibility is 
+
+V = 1 .For this example, both the Amalgam and the Cutoff Policies will fail to find the optimal policy. When the agent on the right is in the rightmost state, the agent does not see the agent on the left but is aware of the high reward leftmost state so it moves to the center. When the agent on the right is in the center and in the visibility of the left agent, both policies will suggest the right agent to move to the smaller reward rightmost state because the agent on the left already occupies the leftmost state. The agent will move to the rightmost state but will forget the existence of the other agent and re-enter the center state for the same reason as before. Therefore, the agent on the right will continue to move back and forth. In general, this is a larger issue for the Cutoff Policy, because the “suggestion” made by the policy when the agents are connected assumes that when agents are disconnected, they will never reconnect (see Appendix B). That is, the initial suggestion made by the policy for the agent to leave the visibility group assumes the agent will be able to return to the area and obtain a high independent reward without any consequences. Therefore, the Cutoff Policy will tend to prefer these types of situations. For this example, when overlapping agents gain a positive reward, the penalty jittering phenomenon will not be ob-served because if the policy “suggests” for an agent to leave the visibility, returning to the group will only seem less attractive with the interdependent rewards removed. We believe that this “forgetfulness” is a general issue for group decentralized policies and overcoming this will be an important part of using these policies in more complex sys-tems. One potential way to overcome this is to incorporate memory into group decentralized policies, which we leave as a future direction. Finally, we note that the penalty jittering does not conflict 14 Locally Interdependent Multi-Agent MDP 
+
+with our theoretical upper bounds, as the bounds are asymp-totic in terms of visibility, whereas the penalty jittering examples occur in this long horizon setting with a fixed limited visibility. 
+
+# × ×
+
+∞
+
+∞
+
+∞ 
+
+> Figure 8. Example of Penalty Jittering.
+
+## B. The Cutoff Multi-Agent MDP setting 
+
+It will turn out that for any Locally Interdependent Multi-Agent MDP, there will be an instance of a related setting we call the Cutoff Multi-Agent MDP that has nice properties we describe below. It is used in the construction of one of our closed-form policies, the Cutoff Policy (See Theorem 3.2). Intuitively, the Cutoff Multi-Agent MDP is a version of the Locally Interdependent Multi-Agent MDP with an embed-ded communication structure where agents do not interact with one another once they disconnect. More specifically, if two agents lie in different visibility partitions at any time, the agents will lie in different visibility partitions for all subsequent time steps (see Figure 9). We refer to this new notion of a permanently disconnecting visibility partition as the cutoff partition. 
+
+A1
+
+A1
+
+A1
+
+A2
+
+A2
+
+A2
+
+A1
+
+A1
+
+A1
+
+A2
+
+A2
+
+A2 
+
+> Figure 9. The diagram on the left represents our communication structure in the Locally Interdependent Multi-Agent MDP. Agents that leave each other’s visibility reconnect when re-entering each other’s visibility. On the right is the Cutoff Multi-Agent MDP. Agents that leave each other’s visibility are not able to reconnect even when the agents re-enter each other’s visibility radii.
+
+Formally for any realizable trajectory τ = ( s(t), a (t)) in a Locally Interdependent Multi-Agent MDP, we define the cutoff partition at time T as Cτ (T ) = T 
+
+> 0≤t′≤T
+
+Z(s(t′)) .Here, the intersection denotes an intersection of partitions defined as P1 ∩ P2 = {p1 ∩ p2|p1 ∈ P1, p 2 ∈ P2} \ { ∅}
+
+for partitions P1, P2. Observe that this partition only gets finer in time similar to our intuition above. Furthermore, in this setting, we will say that agents in dif-ferent cutoff partitions do not incur interdependent rewards. We can summarize these ideas with the complete definition of the Cutoff Multi-Agent MDP. For the following definition let B(N ) be the set of all partitions on N .For any Locally Interdependent Multi-Agent MDP M =(S, A, P, r, γ ), we can define the Cutoff Multi-Agent MDP as C = ( SC , AC , P C , r C , γ ). Where: • SC := {(s, C ) : s ∈ S , C ∈ B(N )}
+
+• AC := A
+
+• P C (( s′, Z (s′) ∩ C)|(s, C ), a ) = P (s′|s, a ) and 0 oth-erwise • rC (( s, C ), a ) = P 
+
+> c∈C
+
+rc(sc, a c).We will overload notation and say a policy π in the Lo-cally Interdependent Multi-Agent MDP may be viewed as a policy in the Cutoff Multi-Agent MDP by letting 
+
+π(( s, C )) = π(s)
+
+Consider the relationship between the distribution of the trajectories with policy π in the associated Locally In-terdependent Multi-Agent MDP and in the Cutoff Multi-Agent MDP. We can compare realizable trajectories in the Locally Interdependent Multi-Agent MDP of the form 
+
+τ = ( s(t), a (t)) with s(0) = s, a(0) = a and realizable trajectories in the Cutoff Multi-Agent MDP of the form 
+
+τ ′ = (( s(t), C ′(t)) , a (t)) with C′(0) = Z(s). Notice that by the definition of P C , we have for any time step T and state action pair s∗, a ∗,        
+
+> P
+> 
+> (s(T), a (T)) = ( s∗, a ∗)
+> 
+> =
+> PC
+> 
+> (( s(T), C ′(T)) , a (T)) = (( s∗, C τ(T)) , a ∗)
+> 
+
+where Cτ (T ) is the Cutoff Partition for the Locally Interde-pendent Multi-Agent MDP trajectory. Thus, these trajecto-ries are equivalently distributed. For ease of notation going forward, anytime a state is a tuple consisting of a partition on the agents, it will refer to a state in the Cutoff Multi-Agent MDP. We will also use Cg to reference the related Cutoff Multi-Agent MDP for Mg . The value function of Cg will be defined implicitly by passing in the state for a subset of agents g ∈ N . For example, with a policy πg , the value function at (sg , C g ) would be 
+
+V πg (( sg , C g )) . We will also denote the optimal policy for 
+
+Cg as πC 
+
+> g
+
+.15 Locally Interdependent Multi-Agent MDP 
+
+The permanent disconnections in this setting lead to a key property for Cutoff Multi-Agent MDP’s. Namely, the value function will decompose according to our agent partitions for the Cutoff Multi-Agent MDP. We may equivalently write, 
+
+V πg (( sg , C g )) = Eτ ∼πg |(sg ,C g )
+
+ ∞X
+
+> t=0
+
+γt X 
+
+> c∈Cg(t)
+
+rc(sc(t), a c(t)) 
+
+
+
+= Eτ ∼πg |(sg ,C g )
+
+ ∞X
+
+> t=0
+
+γt X
+
+> c∈Cg
+
+rc(sc(t), a c(t)) 
+
+
+
+= X
+
+> c∈Cg
+
+Eτ ∼πg |(sg ,C g )
+
+ ∞X
+
+> t=0
+
+γtrc(sc(t), a c(t)) 
+
+
+
+= X
+
+> c∈Cg
+
+V πc (( sc, {c})) .
+
+The second equality is permitted because the partitions only get finer with time. This decomposition tells us that the value function for states with the trivial partition (a partition with only a single group) serve as the “atoms” for the Cutoff Multi-Agent MDP. That is finding the value function for all states reduces to finding the value function for states with the trivial partition. Furthermore, we can substitute this decomposition into the Bellman Consistency Equations to obtain: 
+
+V πg (( sg , {g})) = Eag ∼πg (sg )
+
+
+
+Qπg (( sg , {g}), a g )
+
+
+
+where 
+
+Qπg (( sg , {g}), a g ) = r(( sg , {g}), a g )+ 
+
+γEs′    
+
+> g∼P(·| sg,a g)
+
+ P  
+
+> z∈Z(s′
+> g)
+
+V πz (( sz , {z})) 
+
+
+
+.And in the case of the Bellman Optimality equations we have: 
+
+V ∗(( sg , {g})) = max ag Q∗(( sg , {g}), a g )
+
+where 
+
+Q∗(( sg , {g}), a g ) = r(( sg , {g}), a g )+ 
+
+γEs′    
+
+> g∼P(·| sg,a g)
+
+ P  
+
+> z∈Z(s′
+> g)
+
+V ∗(( sz , {z})) 
+
+
+
+.In other words, the process for deriving the values for trivial partition states only requires values of other trivial partition states. With this, we may safely ignore the value function for states with a non-trivial partition for the Cutoff Multi-Agent MDP. In fact, for this paper, we will only be interested in values of the form V (( s, Z (s))) . Consequentially, we only need to look at values of the form V (( sg , {g})) for a subset of agents g ∈ N with g ∈ Z(s) for some state s. This means our “atoms” are states sg that have every agent within dis-tance V of some other agent, paired with the trivial partition. Thus, we have savings in this partially observable setting by only having to compute a smaller table of values corre-sponding to the states of agents within the same visibility group. By definition, these savings will show up exactly in the computation of the Cutoff Policy described in Section 3.1.2. 
+
+## C. Proofs 
+
+Recall from the proof summary in Section 4, there will be three steps for proving each upper bound. • Step 1) Consequences of the Dependence Time Lemma 
+
+• Step 2) Bounding performance of naive policies 
+
+• Step 3) Use Telescoping Lemma to bound performance of final policy. 
+
+We cover these 3 steps for each closed-form policy. Then, we conclude by presenting the construction and proof for the lower bound. For the remainder of this section, for a fixed parti-tion G, define: 
+
+V πG (s′) = Eτ ∼π|s′
+
+ P∞
+
+> t=0
+
+P 
+
+> g∈G
+
+γtrg (sg (t), a g (t)) 
+
+
+
+.We will also denote for any partition on N , E(P ) =
+
+{(j, k )|j, k ∈ p, p ∈ P } to be pairs of agents within the same partition. Similarly, Ec(P ) = N × N \ E(P ) are pairs of agents in different partitions. 
+
+C.1. The Amalgam Policy 
+
+Recall the definition of the Amalgam Policy λ(s) =(π∗ 
+
+> z
+
+(sz ) : ∀z ∈ Z(s)) .C.1.1. S TEP 1) Using the Dependence Time Lemma, we may derive the following lemma. Intuitively, it is the effect that the De-pendence Time Lemma has on the Q-values for Locally Interdependent Multi-Agent MDP’s. 
+
+Lemma C.1. For any policy π, any realizable trajectory (s(t), a (t)) , and δ ∈ {0, ..., c }, let 
+
+T ≥ δ be an arbitrary time step. We have 
+
+|V π (s(T )) − V πZ(s(T −δ)) (s(T )) | ≤ γc+1 −δ 
+
+> 1−γ
+
+˜r. 
+
+Proof. Recall, in our notation τ ∼ π|s,a refers to the ran-dom trajectory (s(t), a (t)) generated by the MDP starting 16 Locally Interdependent Multi-Agent MDP 
+
+with s(0) = s, a (0) = a.Notice that if we are given a new trajectory realization 
+
+(s′(t′), a ′(t′)) with s′(0) = s(T ), the concatenated trajec-tory defined as (s(t′′ ), a (t′′ )) for t′′ ∈ { 0, ..., T − 1} and 
+
+(s′(t′′ − T ), a ′(t′′ − T )) for t′′ ∈ { T, T + 1 , ... } is also a re-alizable trajectory. Furthermore, we may apply Dependence Time Lemma on this trajectory at time step T − δ to prove that r(s′(t′), a ′(t′)) = P  
+
+> z∈Z(s(T−δ))
+
+rz (s′ 
+
+> z
+
+(t′), a ′ 
+
+> z
+
+(t′)) for 
+
+t′ ∈ { 0, ..., c − δ}. Using this decomposition, we can obtain:                                                 
+
+> Vπ(s(T)) =Eτ∼π|s(T)
+> ∞X
+> t′=0
+> γt′X
+> j,k ∈N
+> rj,k (s′
+> j(t′), a ′
+> j(t′), s ′
+> k(t′), a ′
+> k(t′))
+> 
+> =Eτ∼π|s(T)
+> c−δX
+> t′=0
+> γt′X
+> z∈Z(s(T−δ))
+> rz(s′
+> z(t′), a ′
+> z(t′)) +
+> ∞X
+> t′=c+1 −δ
+> γt′X
+> j,k ∈N
+> rj,k (s′
+> i(t′), a ′
+> j(t′), s ′
+> k(t′), a ′
+> k(t′))
+> 
+> =Eτ∼π|s(T)
+> ∞X
+> t′=0
+> γt′X
+> z∈Z(s(T−δ))
+> rz(s′
+> z(t′), a ′
+> z(t′)) +
+> ∞X
+> t′=c+1 −δ
+> γt′X
+> (j,k )∈Ec(Z(s(T−δ)))
+> rj,k (s′
+> j(t′), a ′
+> j(t′), s ′
+> k(t′), a ′
+> k(t′))
+> 
+> := VπZ(s(T−δ)) (s(T)) + ξ.
+
+For the third equality, recall that by our notation, 
+
+Ec(Z(s(T − δ))) denotes tuples of two agents j, k that do not lie in the same partitions of Z(s(T − δ)) . In this step, we have completed the infinite sum in the first term by regrouping the rj,k terms. Which concludes the proof since ξ ∈ [− γc+1 −δ 
+
+> 1−γ
+
+˜r, γc+1 −δ 
+
+> 1−γ
+
+˜r].C.1.2. S TEP 2) Recall the definition of the naive policy candidate 
+
+π∗
+
+> Z(s∗)
+
+(s) = ( π∗ 
+
+> g
+
+(sg ) : ∀g ∈ Z(s∗)) for some fixed s∗.
+
+Proof for Lemma 4.2 . With the lemma from step 1 in hand, we are ready to prove the bound on the naive policy candidate. 
+
+Proof. Notice that because π∗ 
+
+> Z(s)
+
+takes the local optimal policies, the expected discounted sum of rewards accumu-lated by the agents in this group is optimal. Therefore, for any z ∈ Z(s),
+
+Eτ ∼π∗
+
+> Z(s)|s
+
+ P∞ 
+
+> t=0
+
+γtrz (sz (t), a z (t)) 
+
+
+
+≥
+
+Eτ ∼π∗|s
+
+ P∞ 
+
+> t=0
+
+γtrz (sz (t), a z (t)) 
+
+
+
+.This implies V ∗
+
+> Z(s)
+
+(s) − V π∗ 
+
+> Z(s)
+> Z(s)
+
+(s) ≤ 0.Using this relationship between the value functions and applying Lemma C.1 twice with δ = 0 ,
+
+V ∗(s) − V π∗ 
+
+> Z(s)
+
+(s)
+
+≤ V ∗
+
+> Z(s)
+
+(s) − V π∗ 
+
+> Z(s)
+> Z(s)
+
+(s) + 2(1 − γ) γc+1 ˜r
+
+≤ 2(1 − γ) γc+1 ˜r. 
+
+C.1.3. S TEP 3) We start with an auxiliary lemma before proving Theo-rem 3.1. 
+
+Lemma C.2. For realizable trajectories in a Locally In-terdependent Multi-Agent MDP, define a sequence of stop-ping times with T0 = 0 and Ti the time step t for which 
+
+Z(s(t)) ̸ = Z(s(t−1)) for the i-th time. Then Condition 4.5 holds for the Amalgam Policy λ with V π∗ 
+
+> Z(s)
+
+as the family of value functions. Proof. For this proof, given a realizable trajectory τ =(s(t), a (t)) , we let τT be (s(t), a (t)) with t ∈ { T, ... ∞} .
+
+τ T will be (s(t), a (t)) for t ∈ { 0, ...T − 1} appended with 
+
+s(T ). Lastly, τ T2 
+
+> T1
+
+is (s(t), a (t)) for t ∈ { T1, ..., T 2 − 1}
+
+appended with s(T2).To begin the proof, we show the following equivalence. 
+
+Eτ ∼λ|s
+
+ Ti+1 −1
+
+X
+
+> t=Ti
+
+γtr(s(t), a (t)) 
+
+
+
+= Eτ Ti ∼λ|s
+
+
+
+Eτ ∼λ|s
+
+ Ti+1 −1
+
+X
+
+> t=Ti
+
+γtr(s(t), a (t)) τ Ti
+
+ 
+
+= Eτ Ti ∼λ|s
+
+
+
+EτTi ∼λ|s
+
+ Ti+1 −1
+
+X
+
+> t=Ti
+
+γtr(s(t), a (t)) τ Ti
+
+ 
+
+= Es(Ti)∼λ|s
+
+
+
+EτTi ∼λ|s
+
+ Ti+1 −1
+
+X
+
+> t=Ti
+
+γtr(s(t), a (t)) s(Ti)
+
+ 
+
+.
+
+The second equality eliminates unnecessary random vari-ables that don’t appear in the expectation and the third equal-ity evokes the strong Markov property of Markov Chains. Now notice that by the definition of our stopping times, for all t′ ∈ { Ti, ..., T i+1 −1} we have Z(s(Ti)) = Z(s(t′)) and therefore π∗ 
+
+> Z(s(Ti))
+
+= π∗
+
+> Z(s(t′))
+
+. In other words, between these two stopping times, the policy π∗ 
+
+> Z(s(Ti))
+
+is taken. To continue this pattern, we define a virtual trajectory 
+
+τ ′ 
+
+> Ti
+
+= ( s′(t), a ′(t)) defined only for t ∈ { Ti, T i + 1 , ... } as 
+
+τ Ti+1  
+
+> Ti
+
+concatenated with an instance the realizable trajectory 
+
+(svirt (t), a virt (t)) ∼ π∗
+
+> Z(s(Ti))
+
+|s(Ti+1 ). Formally, we define the virtual trajectory τ Ti+1  
+
+> Ti
+
+to consist of           
+
+> s′(t), a ′(t) =
+> (
+> s(t), a (t)t∈ { Ti, ..., T i+1 −1}
+> svirt (t−Ti+1 ), a virt (t−Ti+1 )t∈ { Ti+1 , ... }.
+
+17 Locally Interdependent Multi-Agent MDP 
+
+We now have completed the trajectory that takes π∗ 
+
+> Z(s(Ti))
+
+at each step to generate τ ′ 
+
+> Ti
+
+. By construction, it is equivalently distributed to π∗
+
+> Z(s(Ti))
+
+|s(Ti) starting at time step Ti.Returning to our proof, we may substitute our virtual trajec-tory into what we found earlier, to get    
+
+> Es(Ti)∼λ|s
+> 
+> Eτ′
+> Ti
+>  PTi+1 −1
+> t=Tiγtr(s′(t), a ′(t)) s(Ti)
+> 
+
+which is equivalent to       
+
+> Es(Ti)∼λ|s
+> 
+> γTiVπ∗
+> Z(s(Ti)) (s(Ti))
+> 
+> −
+> Es(Ti)∼λ|s
+> 
+> Eτ′
+> Ti
+>  P∞
+> t=Ti+1 γtr(s′(t), a ′(t)) s(Ti)
+> 
+> .
+
+We simplify the second term using similar techniques as above to obtain:                        
+
+> Es(Ti)∼λ|s
+> 
+> Eτ′
+> Ti
+> ∞X
+> t=Ti+1
+> γtr(s′(t), a ′(t)) s(Ti)
+> 
+> =Eτ Ti+1
+> Ti∼λ|s
+> 
+> Eτ′
+> Ti
+> ∞X
+> t=Ti+1
+> γtr(s′(t), a ′(t)) τTi+1
+> Ti
+> 
+> =Eτ Ti+1
+> Ti∼λ|s
+> 
+> Eτ′
+> Ti+1
+> ∞X
+> t=Ti+1
+> γtr(s′(t), a ′(t)) τTi+1
+> Ti
+> 
+> =Es(Ti+1 )∼λ|s
+> 
+> Eτ′
+> Ti+1
+> ∞X
+> t=Ti+1
+> γtr(s′(t), a ′(t)) s(Ti+1 )
+> 
+> =Es(Ti+1 )∼λ|s
+> 
+> γTi+1 Vπ∗
+> Z(s(Ti)) (s(Ti+1 ))
+> 
+> .
+
+The first equality conditions on additional variables. Similar to before, the second equality eliminates variables that do not appear in the expectation and the third equality evokes the strong Markov property. Substituting this into what we found above, we achieve 
+
+Eτ ∼λ|s
+
+ Ti+1 −1
+
+X
+
+> t=Ti
+
+γtr(s(t), a (t)) 
+
+
+
+=
+
+Eτ ∼λ|s
+
+
+
+γTi V π∗ 
+
+> Z(Ti)
+
+(s(Ti)) − γTi+1 V π∗ 
+
+> Z(s(Ti))
+
+(s(Ti+1 )) 
+
+
+
+which is exactly Condition 4.5. 
+
+Proof of Theorem 3.1 . With the above preparations, we are now ready to prove Theorem 3.1. 
+
+Proof. For any partition G on N , let π∗
+
+> G
+
+(s) = ( π∗ 
+
+> g
+
+(sg ) : 
+
+∀g ∈ G).Let T0 = 0 and Ti be the time step t for which 
+
+Z(s(t)) ̸ = Z(s(t − 1)) for the i-th time. By definition, for all t′ ∈ { Ti, ..., T i+1 − 1} we have Z(s(Ti)) = Z(s(t′)) 
+
+and therefore π∗ 
+
+> Z(s(Ti))
+
+= π∗
+
+> Z(s(t′))
+
+.From Lemma C.2, we know Condition 4.5 is satisfied and we may use the Telescoping Lemma. We have 
+
+V λ(s) ≥ Eτ ∼π|s
+
+
+
+V π∗ 
+
+> Z(s)
+
+(s) − P∞ 
+
+> i=1
+
+γTi ∆τi
+
+
+
+and we may bound 
+
+∆τi = V π∗ 
+
+> Z(s(Ti−1))
+
+(s(Ti)) − V π∗ 
+
+> Z(s(Ti))
+
+(s(Ti)) 
+
+≤ V ∗(s(Ti)) − V π∗ 
+
+> Z(s(Ti))
+
+(s(Ti)) 
+
+≤ V ∗
+
+> Z(s(Ti))
+
+(s(Ti)) − V π∗ 
+
+> Z(s(Ti))
+> Z(s(Ti))
+
+(s(Ti)) + 2(1 − γ) γc+1 ˜r
+
+≤ 2(1 − γ) γc+1 ˜r. 
+
+Where the inequality in the penultimate step is by Lemma C.1 with δ = 0 applied twice. The last step is because 
+
+V ∗
+
+> Z(s(Ti))
+
+(s(Ti)) − V π∗ 
+
+> Z(s(Ti))
+> Z(s(Ti))
+
+(s(Ti)) ≤ 0, using the same reasoning as in Lemma 4.2. Plugging in our upper bound for ∆τi into our result from the Telescoping Lemma, we get 
+
+V λ(s) ≥ V π∗ 
+
+> Z(s)
+
+(s) − 2(1 −γ)2 γc+2 ˜r.Therefore, using Lemma 4.2 we obtain 
+
+V ∗(s) − V λ(s)
+
+≤ V ∗(s) − V π∗ 
+
+> Z(s)
+
+(s) + 2(1 − γ)2 γc+2 ˜r
+
+≤ 2(1 − γ) γc+1 ˜r + 2(1 − γ)2 γc+2 ˜r
+
+= 2(1 − γ)2 γc+1 ˜r. 
+
+C.2. The Cutoff Policy 
+
+Recall the definition of the Cutoff Policy χ(s) =(πC 
+
+> z
+
+(( sz , {z})) : ∀z ∈ Z(s)) . This is equivalent to say-ing χ(s) = πC (( s, Z (s))) by the following equality: 
+
+πC (( s, Z (s))) = argmax aQ∗(( s, Z (s)) , a )= argmax a
+
+X
+
+> z∈Z(s)
+
+Q∗(( sz , {z}), a z )=
+
+
+
+argmax az Q∗(( sz , {z}), a z ) : ∀z ∈ Z(s)
+
+
+
+= ( πC 
+
+> z
+
+(( sz , {z})) : ∀z ∈ Z(s)) .
+
+The decomposition in the second equality can be shown similarly to the value decomposition shown in Appendix B. We will also overload notation for this section and say a policy π in the Locally Interdependent Multi-Agent MDP 18 Locally Interdependent Multi-Agent MDP 
+
+may be viewed as a policy in the Cutoff Multi-Agent MDP by letting π(( s, C )) = π(s).C.2.1. S TEP 1) We begin by using the Dependence Time Lemma to establish a relationship between policies in the Cutoff Multi-Agent MDP and the Locally Interdependent Multi-Agent MDP. 
+
+Lemma C.3. For any policy π in the Lo-cally Interdependent Multi-Agent MDP, we have 
+
+|V π (s) − V π (( s, Z (s))) | ≤ γc+1  
+
+> 1−γ
+
+˜r.Proof. Recall our notation Ec(P ) for a partition P are all tuples (j, k ) such that agents j, k do not lie in the same partitions. A consequence of the Dependence Time Lemma in the Locally Interdependent Multi-Agent MDP setting is that, for any realizable trajectory τ ,with t ∈ {0, ...c } and δ0 ∈ {0, ..., t } we have 
+
+r(s(t), a (t)) = P 
+
+> z∈Z(s(δ0))
+
+rz (sz (t), a z (t)) .With this decomposition, we know that for every δ0 spec-ified above, we have rj,k (sj (t), a j (t), s k(t), a k(t)) = 0 
+
+for (j, k ) ∈ Ec(Z(s(δ0))) . In otherwords, 
+
+rj,k (sj (t), a j (t), s k(t), a k(t)) = 0 for (j, k ) ∈
+
+Ec(∩δ0≤tZ(s(δ0))) using our notation for the inter-section of partitions. The quantity ∩δ0≤tZ(s(δ0)) is exactly 
+
+Cτ (t) by definition, so we may make the decomposition 
+
+r(s(t), a (t)) = P  
+
+> z∈Cτ(t)
+
+rz (sz (t), a z (t)) .Therefore, 
+
+V π (s) = Eτ ∼π|s
+
+ ∞X
+
+> t=0
+
+γt X
+
+> j,k ∈N
+
+rj,k (sj (t), a j (t), s k (t), a k (t)) 
+
+
+
+= Eτ ∼π|s
+
+ cX
+
+> t=0
+
+γt X 
+
+> z∈Cτ(t)
+
+rz (sz (t), a z (t)) +
+
+> ∞
+
+X
+
+> t=c+1
+
+γt X
+
+> j,k ∈N
+
+rj,k (si(t), a j (t), s k (t), a k (t)) 
+
+
+
+= Eτ ∼π|s
+
+ ∞X
+
+> t=0
+
+γt X 
+
+> z∈Cτ(t)
+
+rz (sz (t), a z (t)) +
+
+> ∞
+
+X
+
+> t=c+1
+
+γt X 
+
+> (j,k )∈Ec(Cτ(t))
+
+rj,k (sj (t), a j (t), s k (t), a k (t)) 
+
+
+
+:= V π (( s, Z (s))) + ξ. 
+
+This concludes the proof since ξ ∈ [− γc+1  
+
+> 1−γ
+
+˜r, γc+1  
+
+> 1−γ
+
+˜r].The following is the corresponding lemma to Lemma C.1 in the Cutoff Setting. It also can be viewed as the effect the Dependence Time Lemma has on the Q-values for the Cutoff MDP. 
+
+Lemma C.4. Let (s(t), a (t)) be any realizable trajectory in the Locally Interdependent Multi-Agent MDP, π be any policy in the Cutoff Multi-Agent MDP, and δ ∈ { 0, ..., c }.Further, let T ≥ δ is an arbitrary time step. We have 
+
+|V π (( s(T ), Z (s(T )))) − V πZ(s(T −δ)) (( s(T ), Z (s(T )))) | ≤  
+
+> γc+1 −δ
+> 1−γ
+
+˜r.Proof. Notice that the realizable trajectory in the statement is in the Locally Interdependent Multi-Agent MDP, and therefore, we may use the Dependence Time Lemma. Simi-lar to what is shown in Lemma C.1, we consider a new trajec-tory realization (s′(t′), a ′(t′)) with s′(0) = s(T ). For t′ ∈{0, ...c −δ} we know rj,k (sj (t′), a j (t′), s k(t′), a k(t′)) = 0 
+
+for (j, k ) ∈ Ec(Z(s(T − δ))) . By the definition of rC ,we also have rj,k (sj (t′), a j (t′), s k(t′), a k(t′)) = 0 for the tuples (j, k ) in Ec(Cτ (t′)) . Put together, this gives us the following decomposition rC (( s(t′), C (t′)) , a (t′)) = P   
+
+> z∈Cτ(t′)∩Z(s(T−δ))
+
+rz (sz (t′), a z (t′)) on the reward func-tion. Using this equality, we have                                                     
+
+> Vπ(( s(T), Z (s(T)))) =Eτ∼π|s(T)
+> ∞X
+> t′=0
+> γt′X
+> z∈Cτ(t′)
+> rz(sz(t′), a z(t′))
+> 
+> =Eτ∼π|s(T)
+> c−δX
+> t′=0
+> γt′X
+> z∈Cτ(t′)∩Z(s(T−δ))
+> rz(sz(t′), a z(t′)) +
+> ∞X
+> t′=c+1 −δ
+> γt′X
+> z∈Cτ(t′)
+> rz(sz(t′), a z(t′))
+> 
+> =Eτ∼π|s(T)
+> ∞X
+> t′=0
+> γt′X
+> z∈Cτ(t′)∩Z(s(T−δ))
+> rz(sz(t′), a z(t′)) +
+> ∞X
+> t′=c+1 −δ
+> γt′X
+> (j,k )∈E(Cτ(t′)) ∩
+> Ec(Z(s(T−δ)))
+> rj,k (sj(t′), a j(t′), s k(t′), a k(t′))
+> 
+> := VπZ(s(T−δ)) (( s(T), Z (s(T)))) + ξ.
+
+The reasoning in most of the steps is similar to Lemma C.1. In the penultimate step, E(Cτ (t′)) ∩ Ec(Z(s(T − δ))) ex-presses the tuples of agents (j, k ) such that j, k are in differ-ent partitions of Z(s(T − δ)) but are in the same partition in Cτ (t′).This concludes the proof since ξ ∈ [− γc+1 −δ 
+
+> 1−γ
+
+˜r, γc+1 −δ 
+
+> 1−γ
+
+˜r].C.2.2. S TEP 2) 
+
+Proof of Lemma 4.3 . We will next prove the naive policy candidate bound. 19 Locally Interdependent Multi-Agent MDP 
+
+Proof. Using Lemma C.3, we can show 
+
+V ∗(s)−V πC
+
+(( s, Z (s))) 
+
+≤ V ∗(s) − V π∗
+
+(( s, Z (s))) 
+
+≤ 1(1 − γ) γc+1 ˜r. 
+
+C.2.3. S TEP 3) We say that for partitions P1 and P2 on N , partition P1
+
+is finer than a partition P2, P1 ⊂ P2 if for all p1 ∈ P1,there exists p2 ∈ P2 such that p1 ⊂ p2. Then, we have the following: 
+
+Lemma C.5. For realizable trajectories in a Locally In-terdependent Multi-Agent MDP, define a sequence of stop-ping times with T0 = 0 and Ti the time step t for which 
+
+Z(s(t)) ̸ ⊂ Z(s(t − 1)) for the i-th time. Then we have,            
+
+> Eτ∼χ|s
+> Ti+1 −1
+> X
+> t=Ti
+> γtr(s(t), a (t))
+> 
+> =Eτ∼χ|s
+> 
+> γTiVπC
+> (( s(Ti), Z (s(Ti))))
+> 
+> −Eτ∼χ|s
+> 
+> γTi+1 VπC
+> (( s(Ti+1 ),\
+> Ti≤t′≤Ti+1
+> Z(s(t′))))
+> 
+
+Proof. The proof is omitted as it is very similar to Lemma C.2. 
+
+Proof of Theorem 3.2 . Finally, with all the previous results in hand, we may prove the main result. 
+
+Proof. Let T0 = 0 and Ti be the time step t for which 
+
+Z(s(t)) ̸ ⊂ Z(s(t − 1)) for the i-th time. By definition, for all t′ ∈ { Ti, ..., T i+1 − 1} the visibility partitions only become finer. We use Lemma C.5, and a minor variation of the Telescop-ing Lemma (proof very similar to Lemma 4.6) to obtain: 
+
+V χ(s) ≥ Eτ ∼χ|s
+
+
+
+V πC
+
+(( s, Z (s))) − P∞ 
+
+> i=1
+
+γTi ∆τi
+
+
+
+where we have 
+
+∆τi = V πC
+
+(( s(Ti), \
+
+> Ti−1≤t′≤Ti
+
+Z(s(t′)))) 
+
+− V πC
+
+(( s(Ti), Z (s(Ti)))) = V πC
+
+(( s(Ti), Z (s(Ti − 1) ∩ Z(s(Ti)))) 
+
+− V πC
+
+(( s(Ti), Z (s(Ti)))) = V πC
+
+> Z(s(Ti−1))
+
+(( s(Ti), Z (s(Ti)))) 
+
+− V πC
+
+(( s(Ti), Z (s(Ti)))) 
+
+≤ 1(1 − γ) γc ˜r, 
+
+where the inequality in the last step is by Lemma C.4 with 
+
+δ = 1 .Plugging in our upper bound for ∆τi into our result from above, we get 
+
+V χ(s) ≥ V πC
+
+(( s, Z (s))) − 1(1 −γ)2 γc+1 ˜r.Therefore, by using Lemma 4.3 we find 
+
+V ∗(s) − V χ(s)
+
+≤ V ∗(s) − V πC
+
+(( s, Z (s))) + 1(1 − γ)2 γc+1 ˜r
+
+≤ 1(1 − γ) γc+1 ˜r + 1(1 − γ)2 γc+1 ˜r
+
+= 2 − γ
+
+(1 − γ)2 γc+1 ˜r, 
+
+and this concludes the proof. 
+
+C.3. The First Step Finite Horizon Optimal Policy 
+
+Recall the definition of the First Step Finite Horizon Optimal Policy. If π∗ 
+
+> f inite
+
+= {π∗,0, π ∗,1, ..., π ∗,c } are the set of discounted finite horizon optimal policies with horizon c,then ϕ(s) = π∗,0(s).For the purposes of this section, τ ct ∼ π∗  
+
+> f inite s
+
+will denote a realizable trajectory defined between time steps t and c
+
+distributed according to a roll out starting at s(t) = s using the non-stationary policy π∗,t ′
+
+(s(t′)) for t′ ∈ { t, ..., c } to generate actions. τ ct ∼ π∗  
+
+> f inite s,a
+
+is defined similarly and will condition on s(t) = s and a(t) = a.C.3.1. S TEP 1) First, we will show that the First Step Finite Horizon Opti-mal Policy for a Locally Interdependent Multi-Agent MDP can equivalently be computed on the Cutoff Multi-Agent MDP. Let V ∗ 
+
+> h
+
+, Q∗ 
+
+> h
+
+be the values for the discounted finite horizon optimal reward for a Locally Interdependent Multi-Agent MDP with horizon c. Similarly V C 
+
+> h
+
+, QC 
+
+> h
+
+will represent the optimal discounted finite horizon values with horizon c in the Cutoff Multi-Agent MDP. Then we have the following lemma: 
+
+Theorem C.6. Q∗
+
+> 0
+
+(s, a ) = QC 
+
+> 0
+
+(( s, Z (s)) , a ) for any s, a .Proof. Recall from the proof of Lemma C.3, we have for any realizable trajectory τ ′ = ( s′(t′), a ′(t′)) in a Lo-cally Interdependent Multi-Agent MDP, r(s′(t′), a ′(t′)) = P   
+
+> z∈Cτ′(t′)
+
+rz (s′ 
+
+> z
+
+(t′), a ′ 
+
+> z
+
+(t′)) for t′ ∈ { 0, ..., c }.For h ∈ {0, ..., c } let τ h 
+
+> 0
+
+be any realizable trajectory. In the following, we will append an instance of τ ch ∼
+
+20 Locally Interdependent Multi-Agent MDP 
+
+πC   
+
+> f inite (s(h),C τ(h)) ,a (h)
+
+from h + 1 onwards and call this realizable trajectory τ . We find, 
+
+QC
+
+> h
+
+(( s(h), C τ (h)) , a (h)) = Eτ ch∼πC  
+
+> f inite (s(h),C τ(h)) ,a (h)
+
+ cX
+
+> t=h
+
+γt X 
+
+> z∈Cτ(t)
+
+rz (sz (t), a z (t)) 
+
+
+
+= Eτ ch∼πC  
+
+> f inite (s(h),C τ(h)) ,a (h)
+
+ cX
+
+> t=h
+
+γtr(s(t), a (t))) 
+
+
+
+= r(s, a )+ 
+
+γEs′∼P (·| s,a )
+
+
+
+max  
+
+> a′
+
+QC
+
+> h+1
+
+(( s′, C τ (h) ∩ Z(s′)) , a ′)
+
+
+
+.
+
+This is nearly identical to the Bellman Equations for the Discounted Finite Horizon Locally Interdependent Multi-Agent MDP problem. In fact, we have QC
+
+> h
+
+(( s(h), C τ (h)) , a (h)) =
+
+Q∗
+
+> h
+
+(s(h), a (h)) inductively since QC 
+
+> c
+
+= Q∗ 
+
+> c
+
+= 0.Therefore, Q∗
+
+> 0
+
+(s, a ) = QC 
+
+> 0
+
+(( s, Z (s)) , a ).Next, we use Theorem C.6 to prove that the discounted finite horizon optimal policy is a group-decentralized policy. 
+
+Corollary C.7. The discounted finite horizon joint optimal policy π∗,0 for M is a group decentralized policy. Proof. Using Theorem C.6 and a decomposition similar to the Cutoff Multi-Agent MDP value decomposition shown in Appendix B we can show that π∗,0 is group decentralized: 
+
+π∗,0(s) = argmax aQ∗
+
+> 0
+
+(s, a )= argmax aQC 
+
+> 0
+
+(( s, Z (s)) , a )= argmax a
+
+X
+
+> z∈Z(s)
+
+QC 
+
+> 0
+
+(( sz , {z}), a z )=
+
+
+
+argmax az QC 
+
+> 0
+
+(( sz , {z}), a z ) : ∀z ∈ Z(s)
+
+
+
+.
+
+C.3.2. S TEP 2) 
+
+Proof of Lemma 4.4 . We are now ready to prove the bound on the naive policy candidate. 
+
+Proof. Using the definition of the discounted finite horizon optimal policy, we find 
+
+V ∗(s) − V ∗ 
+
+> 0
+
+(s)
+
+≤ Eτ ∼π∗|s
+
+ ∞X
+
+> t=0
+
+γtr(s(t), a (t)) 
+
+
+
+− Eτ c  
+
+> 0∼π∗
+> f inite s
+
+" cX
+
+> t=0
+
+γtr(s(t), a (t)) 
+
+#
+
+≤ Eτ ∼π∗|s
+
+ ∞X
+
+> t=c+1
+
+γtr(s(t), a (t)) 
+
+
+
+≤ 1(1 − γ) γc+1 ˜r. 
+
+The second inequality holds because the optimal discounted finite horizon reward will have a larger expected discounted sum of rewards in the first c iterations. C.3.3. S TEP 3) 
+
+Lemma C.8. For the First Step Finite Horizon Optimal Policy ϕ and and i ∈ { 0, 1, ... }           
+
+> Eτ∼ϕ|s
+> 
+> γir(s(i), a (i))
+> 
+> ≥
+> Eτ∼ϕ|s
+> 
+> γiV∗
+> 0(s(i)) −γi+1 V∗
+> 0(s(i+ 1))
+> 
+> −γi+c+1 ˜r
+
+.Proof. Recall our notation from Lemma C.2 for τT , τ T and 
+
+τ T2 
+
+> T1
+
+. It will be used again in this Lemma. To achieve Condition 4.5 with our specific stopping time and policy, we must bound Eτ ∼ϕ|s
+
+
+
+γir(s(i), a (i)) 
+
+
+
+for each i.Similar to Lemma C.2 we will apply the law of total expec-tation, eliminate random variables, and apply the Markov property to obtain the equivalence, 
+
+Eτ ∼ϕ|s
+
+
+
+γir(s(i), a (i)) 
+
+
+
+= Eτ i∼ϕ|s
+
+
+
+Eτ ∼ϕ|s
+
+
+
+γir(s(i), a (i)) τ i
+
+ 
+
+= Eτ i∼ϕ|s
+
+
+
+Eτi∼ϕ|s
+
+
+
+γir(s(i), a (i)) τ i
+
+ 
+
+= Es(i)∼ϕ|s
+
+
+
+Eτi∼ϕ|s
+
+
+
+γir(s(i), a (i)) s(i)
+
+ 
+
+.
+
+Again as in to Lemma C.2, we will construct a virtual tra-jectory. Here, we will define (s′(t), a ′(t)) to be τ ′i+c+1 
+
+> i
+
+for t ∈ { i, ..., i + c + 1 } by starting with s(i), a (i) and ap-pending an instance of the trajectory (svirt (t′), a virt (t′)) = (τ virt )c 
+
+> 1
+
+∼ π∗
+
+> f inite
+
+|s(i+1) starting at time step 1 . Further, we will append what we call a ghost sample of svirt (c), a virt (c).This is a state s′′ ∼ P (·| svirt (c), a virt (c)) and an arbitrary action a′′ .21 Locally Interdependent Multi-Agent MDP 
+
+In other words,                   
+
+> s′(t), a ′(t) =
+> 
+> s(i), a (i)t=isvirt (t−i), a virt (t−i)t∈ { i+ 1 , ..., i +c}
+> s′′ , a ′′ t=i+c+ 1 .
+
+We use this new realizable trajectory in place of τi by adding and subtracting the rest of the trajectory to obtain,          
+
+> Es(i)∼ϕ|s
+> 
+> Eτi∼ϕ|s
+> 
+> γir(s(i), a (i)) s(i)
+> 
+> =Es(i)∼ϕ|s
+> 
+> Eτ′i+c+1
+> i
+> i+c+1 X
+> t=i
+> γtr(s′(t), a ′(t)) s(i)
+> 
+> −Es(i)∼ϕ|s
+> 
+> Eτ′i+c+1
+> i
+> i+c+1 X
+> t=i+1
+> γtr(s′(t), a ′(t)) s(i)
+> 
+> .
+
+We can bound the first quantity by bounding the ghost sam-ple and recognizing that the trajectory leading up to that sample is distributed according to π∗
+
+> f inite
+
+|s(i) as follows 
+
+Es(i)∼ϕ|s
+
+
+
+Eτ ′i+c+1 
+
+> i
+
+ i+c+1 X
+
+> t=i
+
+γtr(s′(t), a ′(t)) s(i)
+
+ 
+
+≥ Es(i)∼ϕ|s
+
+
+
+Eτ ′i+ci
+
+ i+cX
+
+> t=i
+
+γtr(s′(t), a ′(t)) s(i)
+
+ 
+
+− γi+c+1 ˜r
+
+= Es(i)∼ϕ|s
+
+
+
+γiV ∗ 
+
+> 0
+
+(s(i)) 
+
+
+
+− γi+c+1 ˜r. 
+
+In the second quantity, notice that the inner expectation is over τ ′i+c+1  
+
+> i
+
+is a realizable trajectory under a non-stationary policy. Therefore, we may upper bound the discounted sum of rewards under this trajectory for c iterations with the discounted finite horizon optimal expected reward. Using steps similar to before, 
+
+Es(i)∼ϕ|s
+
+
+
+Eτ ′i+c+1 
+
+> i
+
+ i+c+1 X
+
+> t=i+1
+
+γtr(s′(t), a ′(t)) s(i)
+
+ 
+
+= Eτ i+1  
+
+> i∼ϕ|s
+
+
+
+Eτ ′i+c+1 
+
+> i
+
+ i+c+1 X
+
+> t=i+1
+
+γtr(s′(t), a ′(t)) τ i+1 
+
+> i
+
+ 
+
+= Eτ i+1  
+
+> i∼ϕ|s
+
+
+
+Eτ ′i+c+1 
+
+> i+1
+
+ i+c+1 X
+
+> t=i+1
+
+γtr(s′(t), a ′(t)) τ i+1 
+
+> i
+
+ 
+
+= Es(i+1) ∼ϕ|s
+
+
+
+Eτ ′i+c+1 
+
+> i+1
+
+ i+c+1 X
+
+> t=i+1
+
+γtr(s′(t), a ′(t)) s(i + 1) 
+
+ 
+
+≤ Es(i+1) ∼ϕ|s
+
+
+
+γi+1 V ∗ 
+
+> 0
+
+(s(i + 1)) 
+
+
+
+.
+
+Substituting these two bounds into our original equation, 
+
+Eτ ∼ϕ|s
+
+
+
+γir(s(i), a (i)) 
+
+
+
+≥
+
+Eτ ∼ϕ|s
+
+
+
+γiV ∗ 
+
+> 0
+
+(s(i)) − γi+1 V ∗ 
+
+> 0
+
+(s(i + 1)) 
+
+
+
+− γi+c+1 ˜r
+
+as desired. 
+
+Proof of Theorem 3.3 . With all the previous preparations, we are now ready to prove the main result. 
+
+Proof. Let Ti = i. Using Lemma C.8, we have 
+
+Eτ ∼ϕ|s
+
+
+
+γir(s(i), a (i)) 
+
+
+
+≥ Eτ ∼ϕ|s
+
+
+
+γiV ∗ 
+
+> 0
+
+(s(i)) − γi+1 V ∗ 
+
+> 0
+
+(s(i + 1)) 
+
+
+
+− γi+c+1 ˜r
+
+and therefore, 
+
+Eτ ∼ϕ|s
+
+
+
+γi(r(s(i), a (i)) + γc+1 ˜r)
+
+
+
+≥ Eτ ∼ϕ|s
+
+
+
+γiV ∗ 
+
+> 0
+
+(s(i)) − γi+1 V ∗ 
+
+> 0
+
+(s(i + 1)) 
+
+
+
+.Intuitively, we can think about this as Condition 4.5 applied to an MDP with all rewards adjusted by +γc+1 ˜r.Using the Telescoping Lemma, we have 
+
+V ϕ(s) = ( V ϕ(s) + 
+
+> ∞
+
+X
+
+> t=c+1
+
+γt ˜r) − 11 − γ γc+1 ˜r
+
+≥ Eτ ∼ϕ|s
+
+
+
+V ∗ 
+
+> 0
+
+(s) −
+
+> ∞
+
+X
+
+> i=1
+
+γTi ∆τi
+
+
+
+− 11 − γ γc+1 ˜r
+
+= V ∗ 
+
+> 0
+
+(s) − 11 − γ γc+1 ˜r, 
+
+where the last equality holds because ∆τi =
+
+V ∗ 
+
+> 0
+
+(s(i)) − V ∗ 
+
+> 0
+
+(s(i)) = 0 
+
+Therefore, we may substitute our result from the Telescoping Lemma to obtain 
+
+V ∗(s) − V ϕ(s)
+
+≤ V ∗(s) − V ∗ 
+
+> 0
+
+(s) + 11 − γ γc+1 ˜r
+
+≤ 21 − γ γc+1 ˜r. 
+
+where Lemma 4.4 is used in the last inequality. 
+
+C.4. Lower Bound Proof of Theorem 3.4 . We conclude by providing the construction for the lower bound here. 
+
+Proof. The construction is a completely deterministic MDP with 2 agents and the only non-trivial action can be taken at S3 shown in Figure 10. The MDP consists of no rewards and will only suffer penalty −˜r if agents overlap ( R = 0 ). Notice that states S5, S6 transition to each other determinis-tically. Here, c = ℓ because V = 2 ℓ + 1 implies c = ⌊ V−R  
+
+> 2
+
+⌋ =
+
+⌊ℓ + 12 ⌋ = ℓ. When agents are at state S1, S 3, the optimal action is for the S3 agent to take a1 so they do not collide. 22 Locally Interdependent Multi-Agent MDP 
+
+S1 S2
+
+S3
+
+S3
+
+S5
+
+S3
+
+S3
+
+S3S4
+
+S6
+
+> . . .
+
+a0
+
+a1
+
+> . . .
+> ℓ
+> ℓ
+
+Figure 10. Lower Bound Construction Mℓ
+
+Similarly, when agents are at S2, S 3, the optimal is for the agent at S3 to take action a0.Denote the trivial action as X and p0 = P (π(S3) = a0).Notice, 
+
+|V (( S1, S 3)) | = |p0Q(( S1, S 3), (X, a 0)) |
+
+= p0
+
+γℓ+1 
+
+1 − γ ˜r = p0
+
+γc+1 
+
+1 − γ ˜r ≥ p0
+
+γc+2 
+
+1 − γ ˜r
+
+and 
+
+|V (( S2, S 3)) | = |(1 − p0)Q(( S2, S 3), (X, a 1)) |
+
+= (1 − p0) γℓ+2 
+
+1 − γ ˜r = (1 − p0) γc+2 
+
+1 − γ ˜r. 
+
+Since V ∗(( S1, S 3)) = V ∗(( S2, S 3)) = 0 ,either |V ∗(( S1, S 3)) − V (( S1, S 3)) | ≥ 12 
+
+> γc+2
+> 1−γ
+
+˜r or 
+
+|V ∗(( S2, S 3)) − V (( S2, S 3)) | ≥ 12 
+
+> γc+2
+> 1−γ
+
+˜r must be true. 23

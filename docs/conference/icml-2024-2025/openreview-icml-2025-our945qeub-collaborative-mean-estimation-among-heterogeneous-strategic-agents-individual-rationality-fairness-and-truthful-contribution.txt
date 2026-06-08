@@ -1,0 +1,13003 @@
+Title: Collaborative Mean Estimation Among Heterogeneous Strategic Agents: Individual Rationality, Fairness, and Truthful Contribution
+
+URL Source: https://openreview.net/pdf?id=OUr945QeUb
+
+Number of Pages: 50
+
+Markdown Content:
+# Collaborative Mean Estimation Among Heterogeneous Strategic Agents: Individual Rationality, Fairness, and Truthful Contribution 
+
+Alex Clinton 1 Yiding Chen 2 Xiaojin Zhu 1 Kirthevasan Kandasamy 1
+
+Abstract 
+
+We study a collaborative learning problem where 
+
+m agents aim to estimate a vector μ =(μ1, . . . , μ d) ∈ Rd by sampling from associated univariate normal distributions {N (μk, σ 2)}k∈[d].Agent i incurs a cost ci,k to sample from 
+
+N (μk, σ 2). Instead of working independently, agents can exchange data, collecting cheaper sam-ples and sharing them in return for costly data, thereby reducing both costs and estimation er-ror. We design a mechanism to facilitate such collaboration, while addressing two key chal-lenges: ensuring individually rational (IR) and fair outcomes so all agents benefit, and prevent-ing strategic behavior (e.g., non-collection, data fabrication) to avoid socially undesirable out-comes. We design a mechanism and an associ-ated Nash equilibrium (NE) which minimizes the social penalty–sum of agents’ estimation errors and collection costs–while being IR for all agents. We achieve a O(√m)–approximation to the mini-mum social penalty in the worst case and an O(1) –approximation under favorable conditions. Addi-tionally, we establish three hardness results: no nontrivial mechanism guarantees (i) a dominant strategy equilibrium where agents report truth-fully, (ii) is IR for every strategy profile of other agents, (iii) or avoids a worst-case Ω( √m) price of stability in any NE. Finally, by integrating con-cepts from axiomatic bargaining, we demonstrate that our mechanism supports fairer outcomes than one which minimizes social penalty. 
+
+1. Introduction 
+
+With the rise of machine learning, data has become a cru-cial resource for organizations. However, collecting data      
+
+> 1Department of Computer Sciences, University of Wisconsin-Madison, Madison, WI, USA 2Department of Computer Science, Cornell University, Ithaca, New York, USA. Correspondence to: Alex Clinton <aclinton@wisc.edu >.
+> Proceedings of the 42 nd International Conference on Machine Learning , Vancouver, Canada. PMLR 267, 2025. Copyright 2025 by the author(s).
+
+often involves significant costs and resources, such as exper-iments, simulations, surveys, or market research. If agents 
+
+share data , it can be mutually beneficial, particularly when they have complementary data collection capabilities, as an agent can exchange cheap or easily accessible data for costly or hard-to-obtain data. For example, a hospital may be limited in the type of data it collects, due to local demo-graphic and disease patterns, but values diverse data from other hospitals to improve treatments for all patients. Today, data sharing platforms exist in many sectors, including busi-ness (goo; aws; azu; del), science (pub, a; 53 & 68, 2013; cit; pub, b), and public institutions (mad; sfo; nyc). 
+
+Incentive-related challenges. However, data sharing raises two fundamental incentive-related challenges. (i) First, we must divide the data collection work and distribute the col-lected data in an individually rational (no agent loses by participating) and fair way . For example, while it would be most efficient to have agents with the cheapest costs collect all of the data, this would not be fair to such agents and even discourage them from participating. (ii) Second, we must 
+
+guard against strategic behavior , ensuring agents cannot manipulate mechanisms for personal gain at others’ expense. For example, naive protocols like pooling and sharing all agents’ data can lead to free-riding, where an agent may contribute little data if others are expected to contribute more. Moreover, simple checks to prevent free-riding, such as counting the number of data submitted, can be easily bypassed by submitting fabricated (fake) data. These considerations make defining individual rationality (IR) and fairness nontrivial. While some prior work address free-riding behaviors like non-collection and data fabrica-tion, they assume homogeneous agents with identical collec-tion costs. Moreover, the interplay between IR/fairness and strategic behavior presents novel challenges. In this work, we investigate these challenges in Gaussian mean estimation problem. 
+
+1.1. Summary of Contributions Model. There are m agents who seek to estimate an un-known vector μ ∈ Rd using samples from d associated univariate normal distributions. Agent i incurs a cost ci,k to draw one sample from the kth distribution N (μk, σ 2). An 1Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+agent’s penalty (negative utility) is the sum of her estimation error and data collection costs. By sharing data with others, she can improve her estimate while reducing costs, espe-cially by collecting data from distributions with low ci,k and exchanging for those with high ci,k . We wish to design a mechanism (without money) to facilitate such sharing. In such a mechanism, agents will collect data from these distri-butions and submit it. The mechanism then returns, to each agent, an estimate for μ, or more generally, information about μ from which she can estimate μ.
+
+1. Problem formalism. In §3, we formalize the three desiderata for a mechanism: (1) individual rationality (IR): 
+
+every agent is no worse off than working on her own, (2) incentive-Compatibility (IC): agents are incentivized to col-lect sufficient data and report it truthfully, and (3) efficiency: 
+
+the social penalty (sum of agent penalties) is minimized. A key challenge in formalizing this problem, novel to our setting, when agents have unequal costs, is that directly minimizing social penalty can violate IR as it demands the lowest-cost agents to collect most of the data, resulting in higher data collection costs for them compared to work-ing alone. Therefore, we propose a baseline mechanism that achieves the smallest possible penalty among all IR mechanisms. However, this baseline is not IC. Our objec-tive is therefore to construct a mechanism whose penalty approximates this baseline while ensuring both IR and IC. 
+
+2. Mechanism. In §4, we present our mechanism. To ensure truthful data reporting, we rely, partly, on techniques from prior work, which evaluate an agents’ submission by comparing it to the submissions of others. While such an evaluation is straightforward when all agents collect similar data amounts from the same distribution, it is challenging in our setting where agents collect varying amounts of data from different distributions. To effectively apply this tech-nique, we first modify the amount of data collected in the above baseline. Our modification ensures that, when pos-sible, a sufficient number of agents collect data from each distribution, so that a mechanism has enough data from other agents when evaluating the submission of any given agent. However, this may require some high-cost agents to collect more data than in the baseline, increasing total costs. Hence, the modification must be carefully designed to pre-vent a significant increase in social penalty. We prove that our mechanism has a Nash equilibrium (NE) which achieves a O(√m)–approximation to the baseline in the worst-case, and an O(1) –approximation under favorable conditions. 
+
+3. Hardness results. In §5 we supplement the above result with three hardness results. The first two show, for any efficient mechanism, we cannot hope for a dominant strategy equilibrium nor a guarantee of IR at every strategy profile of other agents. The third result characterizes the difficulty of our problem, showing that in the worst case, the social penalty in any NE of any mechanism can be as large as a factor Ω( √m) away from the baseline. 
+
+4. Fairness considerations. While minimizing social penalty subject to IR is our primary goal, it places most of the data collection burden onto agents with the lowest costs, leading to potential unfairness. In §6 we show that our mechanism can accommodate fairer divisions of work, which we formalize using concepts from axiomatic bargain-ing. To our knowledge, this integration of cooperative game theory for fair work allocation and noncooperative game theory for enforcement has not been explored in prior work. 
+
+1.2. Related Work Collaborative learning and truthful reporting. Several prior work has studied free-riding issues in data sharing and collaborative learning (Blum et al., 2021; Karimireddy et al., 2022; Fraboni et al., 2021; Lin et al., 2019; Huang et al., 2023), but have assumed that agents contribute data truthfully. Dorner et al. (2024) study collaborative mean es-timation among competitors and allow agents to alter their submissions, but their strategy space is restricted to two scalars that agents can use to modify the data they report. This is significantly simpler than our setting, where we al-low an agent’s submission to be as general to the extent possible, even allowing it to depend on the data she has collected. (Hardt et al., 2016) consider a strategic classifica-tion problem where participants may willingly incur a cost to manipulate their submission to obtain a better classifica-tion outcome. Others have explored mechanisms to enforce truthful reporting (Cai et al., 2015; Chen et al., 2020; Ghosh et al., 2014), employing methods akin to ours by compar-ing an agent’s submission with those of others, but not for data sharing. They also do not formally study fabrication or falsification as part of the agent’s strategy, as we do. Prior work has considered designing mechanisms to incentivize participation in collaborative learning (Donahue & Klein-berg, 2021; Capitaine et al., 2024; Tu et al., 2022) but do not address the issue of truthful reporting. Our work is most closely related to Chen et al. (2023), who studied collaborative univariate normal mean estimation with strategic agents. There are two (orthogonal) challenges to incentivizing truthful contributions while maintaining an efficient system. The first, addressed by Chen et al. (2023), is designing methods to validate an agent’s submission us-ing others’ data. The second, not addressed by Chen et al. (2023) and the focus of this paper, is ensuring that there is enough data from all agents so that each agent’s submission can be sufficiently validated against the others, without com-promising on efficiency (social penalty). Chen et al. (2023) avoid the second issue by assuming a single distribution and 
+
+equal costs across agents, allowing equal data contribution and ensuring sufficient data from all agents. However, this 2Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+breaks down with heterogeneous collection costs. While we adopt a similar strategy to solve the first challenge, doing so requires overcoming technical hurdles. Consequently, our problem formulation in §3, mechanism and analysis in §4, and hardness results in §5 are novel and fundamental to the heterogeneous case. 
+
+Cooperative game theory in data sharing. Some apply coalitional game concepts, like Shapley value, to value data contributions of many agents (Sim et al., 2020; Jia et al., 2019; Xu et al., 2021). But, they do not study strategic agents attempting to manipulate a mechanism. 
+
+Data collection with money. Prior work has studied data collection protocols and data marketplaces where agents are incentivized to collect data via payments (Agarwal et al., 2019; 2024; Wang et al., 2020; Cai et al., 2015; Kong et al., 2020; Zhang et al., 2014). However, our focus is on mecha-nisms for data sharing without money .
+
+2. Description of the Environment 
+
+We will begin with a description of the environment. For any v ∈ Rp, let ∥v∥2 denote the ℓ2-norm. For any set S, let 
+
+∆( S) denote all probability distributions over S.
+
+Preliminaries. The universe chooses a vector μ ∈ Rd.There are m agents who wish to estimate μ. They do not possess any auxiliary information, such as a prior, about μ,but can collect samples from associated univariate normal distributions {N (μk, σ 2)}k∈[d]. Agent i ∈ [m] incurs cost 
+
+ci,k ∈ (0 , ∞] to draw a single sample from the kth distribu-tion N (μk, σ 2). If ci,k = ∞, it means that the agent cannot sample from the kth distribution 1. Let c = {ci,k }i∈[m],k ∈[d]
+
+denote all costs. We will assume that for each distribution there is at least one agent who can sample from it with finite cost. Let C, defined below, be the set of such costs, 
+
+C = c = {ci,k }i∈[m],k ∈[d] ∈ (0 , ∞]m×d :
+
+∀ k ∈ [d], ∃ i ∈ [m] such that ci,k < ∞ . (1) The variance σ2 and costs c are publicly known. While our results generalize to different variances across agents or dis-tributions, we assume a common variance σ for simplicity. 
+
+Mechanism. We now formally define a mechanism. The example in §3.2 will illustrate the ideas. Intuitively, a mech-anism accepts data from agents and returns information they can use to estimate μ. We first define “information”. 
+
+Information space. An information space I is a set chosen by the mechanism designer. The information the mechanism returns to each agent is simply an element of I. The simplest information space is I = Rd, where the mechanism returns       
+
+> 1Our model generalizes other models, where agents can either sample from a distribution or not (e.g., (Huang et al., 2023)), by setting ci,k = 1 or ci,k =∞, respectively.
+
+an estimate for μ. While our mechanism also uses I = Rd,this general definition is necessary for our hardness results. 
+
+Mechanism. A mechanism is a tuple (I, b ), where I is a chosen information space, and b maps the datasets received from the agents, to some information, i.e. an element in 
+
+I, for each agent. Let D =   S  
+
+> n≥0
+
+Rnd be the space of datasets that can be submitted by a single agent—an agent may submit a different number of points from each distribution. Then, the space of mechanisms is M = M =(I, b ) : b : Dm → I m .
+
+Agent’s strategy space. A pure strategy of an agent i
+
+consists of three components: (i) First, she will choose ni =
+
+{ni,k }k, where ni,k indicates how many samples she will collect from distribution k ∈ [d]. She then collects her initial dataset Xi = {Xi,k }k, where Xi,k = {xi,k,n }ni,k  
+
+> n=1
+
+refers to the ni,k points collected from distribution k. (ii) She then submits fi(Xi) = Yi = {Yi,k }k, to the mechanism; the 
+
+submission function fi maps the dataset collected by the agent to her submission. Here, Yi,k = {yi,k,n }n is ideally 
+
+Xi,k , but a dishonest agent may choose to report untruthfully via fabrication, altering, or withholding data. Crucially, the agent’s report can depend on the actual dataset Xi she has collected, and when computing Yi,k , she may use data from other distributions ℓ̸ = k. (iii) Once the mechanism returns the information Ii, the agent will estimate μ using all the information she has, which is her initial dataset Xi,her submission Yi, and her information Ii returned by the mechanism, via an estimator hi(Xi, Y, I i). A pure strategy 
+
+of an agent i is therefore the 3-tuple (ni, f i, h i) ∈ S , where the strategy space S = Nd × F × H and 
+
+F = f : D → D , H = h : D × D × I → Rd . (2) A mixed (randomized) strategy si ∈ ∆( S) is a distribu-tion over S. An agent using a mixed strategy samples a pure strategy (ni, f i, h i) ∼ si via an external random seed independent of data randomness, and executes it. Going forward, s = {si}i denotes the strategies of all agents and 
+
+s–i = {sj }j̸ =i denotes the strategies of all agents except i.
+
+Truthful submissions and accepting an estimate. Let id ∈F denote the identity submission function, where an agent truthfully submits their collected data, i.e. id (Xi) = Xi.We wish to incentivize each agent to use fi = id so that others can benefit from the agent’s submission. Next, in this work, we focus on the information set space I = Rd,where the mechanism returns an estimate for μ based on all agents’ data. Let hACC be the estimator which directly accepts the mechanism’s estimate, i.e. hACC (·, ·, I i) = Ii.As we will see, naive mechanisms allow strategic agents to gain by misreporting data ( fi̸ = id ) and/or altering the mechanism’s estimate instead of accepting it ( hi̸ = hACC ). 
+
+Agent’s penalty. An agent’s penalty (negative utility) pi
+
+is the sum of her L2–risk and data collection costs. As this 3Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+depends on the mechanism M and strategies s, we write 
+
+pi(M, s ) := sup 
+
+> μ∈Rd
+
+E
+
+"
+
+∥hi(Xi, Y i, I i) − μ∥22 +
+
+> d
+
+X
+
+> k=1
+
+ci,k ni,k 
+
+#
+
+.
+
+(3) 
+
+Here, the expectation accounts for randomness in the data, the mechanism, and agents’ mixed strategies. We take supre-mum over all μ since μ is unknown, and strategies should achieve a small penalty for any μ. For instance, if μ = μ′,for a fixed μ′, the optimal strategy for an agent in any mech-anism is to forgo data collection and choose an estimator which always outputs μ′, i.e. hi(·, ·, ·) = μ′, incurring zero penalty. However, this assumes prior knowledge of 
+
+μ. The supremum ensures the problem is well-defined, and is similar to maximum risk in frequentist statistics (Wald, 1939). 
+
+The social penalty. The social penalty P (M, s ) under a mechanism M and a set of strategies s is the sum of agent penalties, i.e. P (M, s ) = Pni=1 pi(M, s ).
+
+3. Problem Definition 
+
+Goal. Our goal is to design a mechanism–strategy pair 
+
+(M, s ⋆) ∈ M × S that incentivizes agents to follow s⋆
+
+(incentive compatibility, IC), ensures agents are better off than acting independently (individual rationality, IR), and minimizes the social penalty P (M, s ⋆) (efficiency). In § 3.1 and § 3.2, we establish baselines for IR and efficiency, and in § 3.3, we formalize these three desiderata. 
+
+3.1. A Baseline for Individual Rationality Agent working individually. To establish a baseline for IR, consider an agent acting on her own, who will collect some amount of data and estimate μ using this data. Let si be a (mixed) strategy which chooses the number of data ni ∈ Nd
+
+an agent will collect, and an estimator gi : D → Rd for μ
+
+which uses her own data. The minimum penalty pIND  
+
+> i
+
+an agent can achieve is, 
+
+pIND  
+
+> i
+
+:= inf 
+
+> si
+
+sup 
+
+> μ∈Rd
+
+E
+
+"
+
+∥gi(Xi) − μ∥22 +
+
+> d
+
+X
+
+> k=1
+
+ci,k ni,k 
+
+#! 
+
+.
+
+Here, the expectation is with respect to the data and any randomness in the agent’s strategy. The following fact es-tablishes an expression for pIND  
+
+> i
+
+; the proof is given in §A.1. 
+
+Fact 1. We have 
+
+pIND  
+
+> i
+
+=
+
+
+
+2σ
+
+> d
+
+X
+
+> k=1
+
+√ci,k if ci,k < ∞ ∀ k, 
+
+∞ otherwise. 
+
+(4) 
+
+When designing a mechanism and strategy profile (M, s ⋆),individual rationality will require that pi(M, s ⋆) ≤ pIND  
+
+> i
+
+.
+
+3.2. A Baseline for Efficiency: Minimizing Social Penalty While Satisfying Individual Rationality 
+
+Our goal in §3.2 is to establish a baseline for minimizing social penalty (though, as we will see, this baseline will not be IC). We begin by introducing a simple mechanism and a set of agent strategies that achieve low social penalty. 
+
+The sample mean mechanism. A simple example of a mechanism is one which estimates μ via the sample means, i.e. it pools the data from all agents from each distribu-tion N (μk, σ 2), takes the average to estimate each μk, and then returns this estimate to all agents. For this mecha-nism, the information space is simply I = Rd. Let MSM 
+
+denote this mechanism. Suppose, each agent i reports 
+
+Yi = {Yi,k }k, where Yi,k = {yi,k,n }n is agent i’s sub-mission for distribution k. Let Y:,k = ∪i∈[m]Yi,k be all the data for distribution k ∈ [d] received from all agents. The mechanism computes an estimate bμ ∈ Rd for μ, where 
+
+bμk = 1 
+
+> |Y:,k |
+
+P 
+
+> y∈Y:,k
+
+y is the sample mean of all data re-ceived for distribution k. Finally, it returns this estimate to all agents, so b({Yi}i∈[m]) = {Ii}i∈[m], where Ii = bμ for all i ∈ [m]. While this mechanism is simple, it achieves the smallest possible penalty for given data collection amounts when all agents submit their data truthfully ( fi = id ) and accept the estimate ( hi = hACC ), as demonstrated in the fact below. Its proof is given in §A.2. 
+
+Fact 2. Fix the data collection amounts of each agent n =
+
+{ni}i∈[m]. Then, among all mechanisms, and all possible submission functions and estimators agents could use, the sample mean mechanism, along with truthful submission and accepting the estimate achieves the smallest possible social penalty. It can be expressed as follows, 
+
+inf    
+
+> M, (fj,h j)j
+
+P (M, (nj , f j , h j )j ) = P (MSM , (nj , id , h ACC )j )=
+
+> d
+
+X
+
+> k=1
+
+mσ 2
+
+Pmi=1 ni,k 
+
++
+
+> m
+
+X
+
+> i=1
+
+ci,k ni,k 
+
+!
+
+. (5) 
+
+Challenges in social penalty minimization. Before we proceed, we observe that naively minimizing social penalty, as is standard mechanism design, is problematic in our set-ting, where agents have different data collection costs. We will illustrate this with d = 1 , where all agents wish to estimate a scalar quantity μ1. For the purpose of this illus-tration, let us assume that c1,1 < · · · < c m, 1 < ∞. Let us also assume, for now, that agents are compliant , i.e. will follow any set of strategies recommended by a mechanism designer (even if it is not the best strategy for them). Suppose that the mechanism designer wishes to minimize the social penalty. As agents are compliant, by Fact 2, for any given data collection amounts n = {ni}i∈[m],where ni ∈ N, she can use MSM , and recommend agents to submit the data truthfully ( fi = id ) and accept the estimate ( hi = hACC ). For convenience let sCOM  
+
+> n
+
+:= 
+
+4Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Figure 1. An illustration of different allocations of the data collection work in the sample mean mechanism. Here, d = 1 , c1,1 = 0 .033 ,
+
+c2,1 = 0 .066 , c3,1 = 0 .1, and σ = 10 . The blue and red columns represent the number of data collected and penalties incurred, respectively. The solid, dashed, and dotted gray lines indicate the penalties incurred by agents 1, 2, and 3 when working alone. Agents can significantly reduce their penalties by sharing data. However, minimizing the social penalty without IR constraints (Fig. (b)) leaves agent 1 worse off than working alone (Fig. (a)). While our primary objective is reducing social penalty, in §6, we explore axiomatic bargaining concepts to achieve fairer work allocations (Fig. (d) and (e)). 
+
+{(ni, id , h ACC )}i∈[m] refer to the strategy profile where the agents follow the collection amounts n and comply with the recommendations fi = id and hi = hACC . To mini-mize social penalty, the mechanism designer can optimize for n ∈ Nm×1. From Fact 2 this is equivalent to minimizing 
+
+P (MSM , s COM  
+
+> n
+
+) = mσ 2
+
+Pmi=1 ni, 1
+
++
+
+> m
+
+X
+
+> i=1
+
+ci, 1ni, 1.
+
+As agent 1 has the smallest cost, the RHS is minimized by assigning all the work to agent 1, i.e. n1,1 = σpm/c 1,1,and ni, 1 = 0 for all i̸ = 1 . However, as illustrated in Fig. 1 (b), this allocation of work benefits all others at the expense of agent 1. In fact, it is not even IR for agent 1 as she will be better off just working on her own Fig. 1 (a): her penalty will be pi(MSM , s COM ) = σ2/n 1,1 + c1,1n1,1 =(√m + 1 /√m)σ√c1,1 > 2σ√c1,1 = pIND 1 . It would be hopeless to aim for globally minimum penalty when agents are strategic, when it is not even IR when they are compliant. 
+
+IR mechanisms and strategies. A more attainable goal, and the one we take in this paper, is to minimize the social penalty subject to IR constraints. For this, let us define 
+
+ΘIR to be all mechanism and strategy tuples (M, s ) that are individually rational for all agents . We have, 
+
+ΘIR = (M, s ) ∈ M × ∆( S)m : pi(M, s ) ≤ pIND  
+
+> i
+
+, ∀ i ∈ [m] .
+
+(6) 
+
+Baseline for efficiency. We can now present our baseline for efficiency. To find a mechanism and strategy profile pair (M, s ) which minimizes the social penalty in ΘIR , re-call from Fact 2, that (MSM , s COM  
+
+> n
+
+) minimizes the social penalty for any given n ∈ Nm×d. Therefore, we should find n ∈ Nm×d to minimize P (MSM , s COM  
+
+> n
+
+) subject to the IR constraints pi
+
+ MSM , s COM 
+
+> n
+
+ ≤ pIND  
+
+> i
+
+, ∀ i ∈ [m]. Re-call that sCOM  
+
+> n
+
+:= {(n, id , h ACC )}i∈[m] and that pIND  
+
+> i
+
+is from (4) . From writing this explicitly in terms of n and using Fact 2, if nOPT minimizes the optimization problem below, it follows that (MSM , s COM  
+
+> nOPT
+
+) = argmin (M,s )∈ΘIR P (M, s ).
+
+minimize 
+
+> nd
+
+X
+
+> k=1
+
+mσ 2
+
+Pmj=1 nj,k 
+
++
+
+> m
+
+X
+
+> i=1
+
+ci,k ni,k 
+
+!
+
+s.t
+
+> d
+
+X
+
+> k=1
+
+σ2
+
+Pmj=1 nj,k 
+
++ ci,k ni,k 
+
+!
+
+≤ pIND  
+
+> i
+
+, ∀ i ∈ [m]. (7) 
+
+Since the optimization problem above is convex, it can be solved using common optimization libraries. We have illustrated an example of the solution, nOPT , in Fig. 1 (c). 
+
+From compliant to strategic agents. While (MSM , s COM  
+
+> nOPT
+
+)
+
+is IR for all agents and minimizes the social penalty subject to IR constraints, it is not incentive-compatible, as some agents can collect no data to avoid costs, and simply just receive the estimates from the mechanism. For instance, in Fig. 1 (c), even if agent 2 does not collect any data, her penalty will be small as agent 1 is already collecting a sufficiently large amount of data (details provided in §C). Even a modification of MSM which counts the amount of data an agents submits to verify |Yi,k | = nOPT  
+
+> i,k
+
+will not work as agents can simply fabricate data. Specifi-cally, instead of collecting {nOPT  
+
+> i,k
+
+}k points, she can col-lect 0 points, submit as many fabricated (fake) points via 
+
+{Yi,k }k, and appropriately discount the fabricated dataset from her estimator hi = {hi,k }k. That is by choosing 
+
+hi,k (∅, Y i, I i) = ( n:,k · Ii,k − sum (Yi,k )) /(n:,k − | Yi,k |),where n:,k = P  
+
+> j̸=i
+
+nj,k . While this behavior benefits agent 
+
+i, it hurts others who may use this data. Hence, our goal (formalized in §3.3), is to design (M, s ⋆) ∈
+
+ΘIR so that it is the best strategy for agents to follow s⋆ in 
+
+M , and so that P (M, s ⋆) approximates P (MSM , s COM  
+
+> nOPT
+
+).
+
+Fairness considerations. Before we proceed, it is worth pointing out, that while (MSM , s COM  
+
+> nOPT
+
+) is IR for all agents, the outcomes may not necessarily be fair. For instance, in Fig. 1 (c), the penalty of agent 1 is the same as when compared to working alone; while she is not worse off anymore, she has not befitted from collaboration, while the others have. Hence, we may consider other baselines which produce more fair outcomes, even at higher social penalty. 5Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+In §6, we use approaches from axiomatic bargaining to define fairer baselines, and show how our mechanism in §4 can be straightforwardly extended to such situations. 
+
+3.3. Desiderata for Mechanism Design 
+
+Our goal is to design a mechanism and strategy profile pair 
+
+(M, s ⋆) ∈ M × S , where agents are collecting a sufficient amount of data and reporting it truthfully, so as to satisfy the following three requirements: 1. Nash incentive-compatibility (NIC): (M, s ⋆) is NIC if 
+
+s⋆ is a Nash equilibrium (NE) in the mechanism M .That is, ∀i ∈ [m], pi(M, (s⋆i , s ⋆
+
+> –i
+
+)) ≤ pi(M, (si, s ⋆
+
+> –i
+
+)) 
+
+for all other si ∈ ∆( S).2. Individual rationality (IR): (M, s ⋆) is IR if each agent’s penalty at s⋆ is no worse than the smallest penalty pIND  
+
+> i
+
+she could achieve independently (4) .That is, ∀i ∈ [m], pi(M, s ⋆) ≤ pIND  
+
+> i
+
+.3. Efficiency: We say that (M, s ⋆) is ρ-efficient if it satis-fies P (M, s ⋆) ≤ ρ · inf (M ′,s ′)∈ΘIR P (M ′, s ′).
+
+DSIC, IR regardless of other agent behavior. Before we proceed, we note that in the first two requirements, other agents are assumed to follow the recommended strat-egy, s–i = s⋆
+
+> –i
+
+. One could consider a dominant-strategy incentive-compatibility (DSIC) condition where following 
+
+s⋆i is the best strategy for agent i regardless of others’ strate-gies. Similarly, one could consider a stronger IR condition where pi(M, (s⋆i , s ′−i) ≤ pIND  
+
+> i
+
+, for all other agent strate-gies s′−i. However, in §5, we will establish hardness results which demonstrate that any mechanism satisfying either of these properties will be very inefficient. 
+
+4. Mechanism and Theoretical Results 
+
+We will now describe our mechanism, MCBL (Corrupt Based on Leverage), outlined in Algorithm 2. As an argument, it takes a collection scheme n ∈ Nm×d. Since our goal is to minimize social penalty, throughout this section we should think of and will take n = nOPT (see (7) ). For the purpose of generalizing our mechanism to fairer solutions in §6, we will continue to write n. Our mechanism sets I = Rd to be the information space, as it returns an estimate of μ.
+
+Computing an enforceable division of work. To ensure truthful data reporting, we adapt techniques from prior work, which evaluate an agents’ submission by comparing it to the submissions of others (e.g (Chen et al., 2023; Cai et al., 2015)). This is straightforward when all agents collect sim-ilar data amounts from the same distribution, as there will be enough data from others to evaluate any given agent’s submission. However, in nOPT , agents with the lowest costs for a distribution typically collect most of the data for that distribution (see Fig. 1(c)). To address this, Algorithm 2 first modifies n (= nOPT ) using the Compute-n-Approx subroutine, so as to enable such evaluations when possible. Compute-n-Approx consists of the following high level steps. 1) Initialize the approximation en to be n. 2) Continu-ally check if there is an agent i whose penalty for distribu-tion k when working alone 
+
+ σ2
+
+> nIND
+> i,k
+
++ ci,k nIND 
+
+> i,k
+
+
+
+is already within a factor of 4 of their estimation error when all agents are compliant and follow en, then update en so that agent i
+
+only collects nIND  
+
+> i,k
+
+points. 3) Record which indices of n
+
+have been updated via the sets Vk. 4) Update en to ensure that agents whose collection amount has not been modified are not collecting too small a fraction of the total data. 5) Return the approximation en, (Vk)dk=1 , and the total amount of data under en for each distribution, (Tk)dk=1 . If i̸ ∈ Vk,then agent i is reliant on others for data from distribution 
+
+k. This will turn out to be a key component of determining which agents we can incentivize to collect data according to ni,k . If i ∈ Vk then it means that agent i can achieve a good penalty on distribution k without much help from others. The point of calculating en is to find a division of work which is enforceable (each agent is incentivized to follow it assuming the others do so). 
+
+Algorithm 1 Compute-n-Approx 
+
+1: Inputs: collection scheme n ∈ Nm×d
+
+2: en ← n # en will be an approximation to n for which truthful reporting is enforceable. 3: Vk ← ∅ ∀k ∈ [d] # Agents who will receive no new data from others for distribution k.4: while ∃(i, k ) ∈ [m]\Vk × [d] such that σ2
+
+> nIND
+> i,k
+
++ ci,k nIND  
+
+> i,k
+
+≤
+
+4
+
+ σ2  
+
+> Pmj=1 enj,k
+
++ ci,k eni,k 
+
+
+
+do 
+
+5: eni,k ← nIND 
+
+> i,k
+
+6: Vk ← Vk ∪ { i}
+
+7: Tk ← Pmi=1 eni,k ∀k ∈ [d]
+
+8: while ∃(i, k ) ∈ [m]\Vk × [d] such that eni,k > 0 and 
+
+eni,k Tk <  nIND 
+
+> i,k
+
+2 do 
+
+9: eni,k ←
+
+ nIND 
+
+> i,k
+
+2
+
+> Tk
+
+10: Return en, (Vk )dk=1 , (Tk )dk=1 
+
+Algorithm 2 walk through. After computing the enforce-able approximation en, the mechanism designer publishes the mechanism and the recommended strategies s⋆ (which we will define shortly). Each agent then chooses their strat-egy (not necessarily following s⋆) before collecting and submitting their data to the mechanism. After receiving agent submissions, Algorithm 2 determines if based on the input, the following favorable condition holds for (c, n ):
+
+∀i, k σ2
+
+nIND 
+
+> i,k
+
++ ci,k nIND  
+
+> i,k
+
+≥ σ2
+
+Pmj=1 nj,k 
+
++ ci,k ni,k . (8) 6Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Algorithm 2 MCBL 
+
+1: Inputs: collection scheme n ∈ Nm×d # For minimizing social penalty, take n = nOPT (7) 2: Mechanism designer: 
+
+3: n⋆, (Vk)dk=1 , (Tk)dk=1 ← Compute-n-Approx (n)
+
+4: Publish the information space I = Rd, the mechanism (lines 9–29), and the recommended strategies s⋆ in (9). 
+
+5: Each agent i:
+
+6: Choose a strategy si ∈ ∆( S) and use it to select  (ni,k )k , f i, h i
+
+ ∼ si.
+
+7: Sample {ni,k }k points from the distributions to collect Xi = {Xi,k }k, where Xi,k ∈ Rni,k .
+
+8: Submit Yi = ( Yi, 1, . . . , Y i,d ) = fi(Xi, 1, . . . , X i,d ) to the mechanism. 
+
+9: Mechanism: 
+
+10: Y–i,k ← S  
+
+> j̸=i
+
+Yj,k ∀(i, k ) ∈ [m] × [d]
+
+11: if the conditions in (8) are satisfied then 
+
+12: for (i, k ) ∈ [m] × [d] do 
+
+13: if i ∈ Vk then 
+
+14: Ii,k ← 1 
+
+> |Yi,k |
+
+P 
+
+> y∈Yi,k
+
+y # Use sample mean of only the agent’s data. 15: else 
+
+16: if n⋆i,k = 0 then 
+
+17: Ii,k ← 1 
+
+> |Y–i,k |
+
+P 
+
+> y∈Y–i,k
+
+y # Use sample mean of others’ data. 18: else 
+
+19: Y ′ 
+
+> –i,k
+
+← sample Tk − n⋆i,k points from Y–i,k without replacement 
+
+20: Zi,k ← sample min   Y ′ 
+
+> –i,k
+
+, n ⋆i,k 
+
+ points from Y ′ 
+
+> –i,k
+
+without replacement 
+
+21: η2 
+
+> i,k
+
+← α2
+
+> i,k
+
+ 1 
+
+> |Yi,k |
+
+P 
+
+> y∈Yi,k
+
+y − 1 
+
+> |Zi,k |
+
+P 
+
+> z∈Zi,k
+
+z
+
+2
+
+# See (11) for αi,k .22: Z′ 
+
+> i,k
+
+←
+
+n
+
+z + εz : z ∈ Y ′
+
+> –i,k
+
+\Zi,k , εz ∼ N (0 , η 2
+
+> i,k
+
+)
+
+o
+
+# Lines 20–23 adapted from (Chen et al., 2023) 23: Ii,k ←             
+
+> 1
+> σ2|Yi,k ∪Zi,k |
+> P
+> y∈Yi,k ∪Zi,k y+1(σ2+η2
+> i,k )|Z′
+> i,k |
+> P
+> z∈Z′
+> i,k z
+> 1
+> σ2|Yi,k ∪Zi,k |+1
+> σ2+η2
+> i,k
+
+|Z′ 
+
+> i,k
+
+|
+
+24: else 
+
+25: for (i, k ) ∈ [m] × [d] do 
+
+26: if i ∈ argmin j cj,k then 
+
+27: Ii,k ← 1 
+
+> |Yi,k |
+
+P 
+
+> y∈Yi,k
+
+y # Use sample mean of only the agent’s data. 28: else 
+
+29: Ii,k ← 1 
+
+> |Y–i,k |
+
+P 
+
+> y∈Y–i,k
+
+y # Use sample mean of others’ data. 30: Each agent i:
+
+31: Post-process the estimates via the estimator function hi (Xi, Y i, I i).This condition checks if, for each distribution, only sharing data for that distribution according to n is better for an agent than working on her own, when all agents are compliant. This condition is favorable because, when (8) is satisfied, we have enough data to validate the data of every agent that relies on the mechanism to achieve a good penalty, and hence we will be able to obtain a good bound on the efficiency. If (8) does not hold, for each distribution, we have the agent with the lowest collection cost, collect their individually rational amount of data for that distribution. The sample mean of this data, for each distribution, is then returned to all agents. When (8) holds, Algorithm 2 checks two conditions. First if i ∈ Vk then agent i receives the sample mean of only their data for distribution k (which is fine as i ∈ Vk implies that agent i achieves a good penalty for distribution k working alone). Second, if n⋆i,k = 0 then there is no data to validate so i receives the sample mean using the data other agents submitted for distribution k. If neither of these conditions hold, the algorithm begins running a corruption process sim-ilar to Chen et al. (2023) and returns the weighted average of the clean data agent i submitted and corrupted data (created from the data of the other agents) for Ii,k . The corruption co-efficients used in this process, αi,k , are defined in §B. In our proof, we show that this choice for αi,k ensures this penalty is minimized at the value of eni,k returned by Algorithm 1. 
+
+Recommended strategies. We now define the recom-mended strategies s⋆. Let (eni,k )dk=1 denote the values re-7Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+turned by Algorithm 1 when Compute-n-Approx (n) is ex-ecuted in Algorithm 2. In the following definition, the superscript L indicates leverage, as condition (8) implies that the mechanism has enough data from the other agents (when submitting truthfully) to incentivize sufficient data collection from the remaining agent. On the other hand, NL denotes no leverage. Define s⋆i := ( n⋆i , f ⋆i , h ⋆i ) where 
+
+f ⋆i = id , h⋆i = hACC , and 
+
+n⋆i =
+
+ nL
+
+> i,k
+
+dk=1 if (c, n ) satisfies (8) 
+
+ nNL 
+
+> i,k
+
+dk=1 otherwise 
+
+, where, (9) 
+
+nL 
+
+> i,k
+
+:= eni,k nNL  
+
+> i,k
+
+:= 
+
+(
+
+nIND  
+
+> i,k
+
+if i ∈ argmin j cj,k 
+
+0 otherwise .
+
+We now state the first theoretical result of this paper, which gives the properties of Algorithm 2 and the recommended strategies s⋆ in (9) . In §5, we show that the worst-case 
+
+Ω( √m) bound on the price of stability is unavoidable. 
+
+Theorem 1. Let c ∈ C and Algorithm 2 be executed with and n = nOPT (see (1) , (7) ). Then, (MCBL , s ⋆) is NIC, IR, and √m–efficient. Moreover, if  c, n OPT  satisfies (8) , then 
+
+(MCBL , s ⋆) is 8–efficient. 
+
+On condition (8) . Condition (8) can be interpreted as follows: it is true if, for each distribution, we separately allowed agents to share data for that distribution according to n (= nOPT ), would agents be better than working on their own. For example, this is easily satisfied if all agents have the same or similar costs for each distribution. More generally, any problem instance where agents 1) collect no more data for each distribution than they would individually and 2) receive at least as much data for each distribution as they would collect individually, also satisfies (8). 
+
+Proof challenges. Beyond the design challenges high-lighted above, we mention some of the technical challenges in our proof. First, we show that (8) and i̸ ∈ Vk form a suffi-cient condition to guarantee the existence of αi,k (as defined previously), and then lower bound αi,k by pn⋆i,k . This en-sures that for each agent it is exactly optimal to collect n⋆i,k 
+
+points and contribute them truthfully. Next, we need to show that collecting n⋆i,k points is also efficient for the agents. In particular, penalizing agents too severely via large αi,k may be necessary to incentivize truthful contribution but result in poor efficiency. 
+
+5. Hardness Results 
+
+Theorem 1 shows that s⋆i is a NE and that at this NE, each agent is better off than working on her own. As discussed in §3.3, we may consider stronger IR and IC conditions, which hold regardless of other agents’ strategies. In par-ticular, is there an efficient mechanism-strategy pair (M, s )
+
+which is either (1) always IR : ∀i ∈ [m], ∀s′−i ∈ ∆( S)m−1,
+
+pi
+
+ M,  si, s ′−i
+
+ ≤ pIND  
+
+> i
+
+, or (2) a dominant strategy profile : ∀i ∈ [m], ∀s′ 
+
+> i
+
+∈ ∆( S), ∀s′−i ∈ ∆( S)m−1,
+
+pi
+
+ M,  si, s ′−i
+
+ ≤ pi
+
+ M,  s′
+
+> i
+
+, s ′−i
+
+ . The following two theorems answers these in the negative, showing that every 
+
+agent will incur large penalty at every strategy profile. 
+
+Theorem 2. For any c ∈ C, if M is a mechanism under which s is always IR then ∀i ∈ [m], ∀s′−i ∈
+
+∆( S)m−1, pi
+
+ M,  si, s ′−i
+
+ ≥ pIND  
+
+> i
+> 2
+
+.
+
+Theorem 3. For any c ∈ C , if M is a mechanism un-der which s is a dominant strategy profile then ∀i ∈
+
+[m], ∀s′−i ∈ ∆( S)m−1, pi
+
+ M,  si, s ′−i
+
+ ≥ pIND  
+
+> i
+> 2
+
+.
+
+Hence, no agent performs better than a factor 1/2 com-pared to working alone, implying agent penalties remains large and do not decrease with the number of agents m. In contrast, agent penalties under (MSM , n OPT ) and our mech-anism typically decreases with m. To illustrate this, sup-pose d = 1 and c1,i = c′. The minimum social penalty is 2σ√c′m, with agents incurring a penalty of 2σ√c′ 
+
+> √m
+
+. For strategic agents, as (8) is satisfied, our mechanism achieves a social penalty of 16 σ√c′m and an agent penalty of 16 σ√c′ 
+
+> √m
+
+.In contrast, the lower bound from Theorems 2 and 3 gives a social penalty of at least 2σm √c′ and an agent penalty of 
+
+2σ√c′, both of which are O(√m) larger than those in our mechanism. Our fourth theorem establishes that an Ω( √m) price of sta-bility is unavoidable in the worst case. While Theorems 2 and 3 also apply to homogeneous settings, this result is fundamental to the heterogeneous setting with multiple dis-tributions and varying agent data collection costs. 
+
+Theorem 4. There exists a set of costs c ∈ C such that the following is true. Let ΘIR be as defined in (6) for these costs 
+
+c. For any mechanism M ∈ M and any Nash equilibrium 
+
+s⋆ ∈ ∆( S) of this mechanism, we have 
+
+P (M, s ⋆) ≥ Ω( √m) · inf  
+
+> (M′,s ′)∈ΘIR
+
+P (M ′, s ′).
+
+6. Fairness 
+
+Thus far we have focused on designing (M, s ⋆) ∈ ΘIR to minimize social penalty. While this ensures IR, it is still unfair for agents with small data collection costs, as they will collect most, if not all the data. For example, in Fig. 1 (c), Agent 1 is doing only as well as working on her own, while others reap all the benefits. However, one can lever-age ideas from axiomatic bargaining, to choose fairer divi-sions of work. Some common bargaining solutions include Nash bargaining (Nash et al., 1950), egalitarian bargain-ing (Mas-Colell et al., 1995), and the Kalai-Smordinsky solution (Kalai & Smorodinsky, 1975). We have reviewed 8Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+these solutions in detail in §C. Both of these solutions cor-respond to solving simple optimization problems. In Fig. 1 (d) and (e), we give examples of these solutions. In both cases, all agents benefit more fairly even though the social penalty is worse (by definition). 
+
+Specifying a bargaining solution. Fortunately, our mech-anism can also accommodate such fair divisions of work, while still enforcing truthful reporting. To formalize this, re-call the sample mean mechanism MSM (§3.2), the compliant strategy profile sCOM  
+
+> n
+
+where agents collect data according to n ∈ Nm×d (§3.2), and an agent’s penalty when working alone pIND  
+
+> i
+
+(Fact 1). Now define,            
+
+> N=
+> n
+> n∈Nm×d:pi(MSM , s COM
+> n)≤pIND
+> i∀i∈[m]
+> o
+> .
+> (10)
+
+We refer to any nB ∈ N as a bargaining solution . It speci-fies an individually rational division of work, i.e. how much data each agent should collect from each distribution, when all agents comply in the sample mean mechanism. In fact, 
+
+N is precisely the utility possibility set in bargaining (Mas-Colell et al., 1995). By definition nOPT ∈ N (see (7) ), but a mechanism designer may prefer a fairer bargaining solution. 
+
+Bargaining-specific approximations. If the goal is to im-plement a bargaining solution nB other than nOPT , in place of efficiency, we should consider a new notion measuring how effectively the mechanism implements nB in terms of agent penalties. We say that (M, s ⋆) ρ–approximates nB ∈N , if ∀i ∈ [m], we have pi(M, s ⋆) ≤ ρ · pi(MSM , s COM  
+
+> nB
+
+),i.e. all agents are within a factor ρ of the penalty they would incur if they collected data according to nB and complied in the sample mean mechanism. The following theorem states that when n = nB satisfies the same favorable condition in (8), we can guarantee efficient data sharing. 
+
+Theorem 5. Let c ∈ C and nB ∈ N (see (1) , (10) ). Suppose Algorithm 2 is executed with n = nB. Then, (MCBL , s ⋆) is NIC and IR. Moreover, if  c, n B satisfies the condition in (8) , then (MCBL , s ⋆) is an 8–approximation to nB.
+
+7. Conclusion 
+
+We study collaborative mean estimation where strategic agents estimate a vector μ ∈ Rd by sampling from distri-butions with different costs. We design an IR, NIC, and efficient mechanism, supported by matching hardness re-sults, and show that it accommodates fairer divisions of work without additional modifications. 
+
+Acknowledgements 
+
+This work was partially supported by NSF grant 2441796. 
+
+Impact Statement 
+
+The paper focuses on providing algorithms to enable mul-tiple parties to benefit from data sharing. As the paper is primarily theoretical in nature we do not feel the need to highlight particular societal and ethical consequences be-yond the standard considerations, concerns, and practices that accompany sharing data. 
+
+References 
+
+AWS Data Hub. https://aws.amazon.com/blogs /big-data/tag/datahub/ . Accessed: 2024-05-11. Azure Data Share. https://azure.microsoft.com /en-us/products/data-share . Accessed: 2024-05-10. Citrine IO. https://citrine.io/ . Accessed: 2024-05-11. Delta Sharing. https://docs.databricks.com/en /data-sharing/index.html . Accessed: 2024-05-11. Ads Data Hub. https://developers.google.com /ads-data-hub/guides/intro . Accessed: 2022-05-10. Madison Open Data. https://data-cityofmadison .opendata.arcgis.com/ . Accessed: 2024-05-11. New York City Open Data. 
+
+https://opendata.cityofnewyork.us/ .Accessed: 2024-05-11. PubChem. https://pubchem.ncbi.nlm.nih.gov ,a. Accessed: 2022-05-10. PubMed. https://pubmed.ncbi.nlm.nih.gov , b. Accessed: 2024-05-10. San Francisco Open Data. 
+
+https://datasf.org/opendata/ . Accessed: 2024-05-11. 53, D. C. C. B. R. . J. M. A. . K. A. . P. T. . P. D. . W. Y. and 68, T. S. S. L. D. A. The cancer genome atlas pan-cancer analysis project. Nature genetics , 45(10):1113–1120, 2013. Agarwal, A., Dahleh, M., and Sarkar, T. A marketplace for data: An algorithmic solution. In Proceedings of the 2019 ACM Conference on Economics and Computation ,pp. 701–726, 2019. Agarwal, A., Dahleh, M., Horel, T., and Rui, M. Towards data auctions with externalities. Games and Economic Behavior , 148:323–356, 2024. 9Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Blum, A., Haghtalab, N., Phillips, R. L., and Shao, H. One for one, or all for all: Equilibria and optimality of collabo-ration in federated learning. In International Conference on Machine Learning , pp. 1005–1014. PMLR, 2021. Cai, Y., Daskalakis, C., and Papadimitriou, C. Optimum statistical estimation with strategic data sources. In Con-ference on Learning Theory , pp. 280–296. PMLR, 2015. Capitaine, A., Boursier, E., Scheid, A., Moulines, E., Jordan, M., El-Mhamdi, E.-M., and Durmus, A. Unravelling in collaborative learning. Advances in Neural Information Processing Systems , 37:97231–97260, 2024. Chen, Y., Shen, Y., and Zheng, S. Truthful data acquisition via peer prediction. Advances in Neural Information Processing Systems , 33:18194–18204, 2020. Chen, Y., Zhu, J., and Kandasamy, K. Mechanism Design for Collaborative Normal Mean Estimation. Advances in Neural Information Processing Systems , 36, 2023. Donahue, K. and Kleinberg, J. Model-sharing games: Ana-lyzing federated learning under voluntary participation. In Proceedings of the AAAI Conference on Artificial In-telligence , volume 35, pp. 5303–5311, 2021. Dorner, F. E., Konstantinov, N., Pashaliev, G., and Vechev, M. Incentivizing honesty among competitors in collab-orative learning and optimization. Advances in Neural Information Processing Systems , 36, 2024. Fraboni, Y., Vidal, R., and Lorenzi, M. Free-rider attacks on model aggregation in federated learning. In International Conference on Artificial Intelligence and Statistics , pp. 1846–1854. PMLR, 2021. Ghosh, A., Ligett, K., Roth, A., and Schoenebeck, G. Buy-ing private data without verification. In Proceedings of the fifteenth ACM conference on Economics and compu-tation , pp. 931–948, 2014. Hardt, M., Megiddo, N., Papadimitriou, C., and Wootters, M. Strategic classification. In Proceedings of the 2016 ACM conference on innovations in theoretical computer science , pp. 111–122, 2016. Huang, B., Karimireddy, S. P., and Jordan, M. I. Evaluating and incentivizing diverse data contributions in collabora-tive learning. arXiv preprint arXiv:2306.05592 , 2023. Jia, R., Dao, D., Wang, B., Hubis, F. A., Hynes, N., G ¨urel, N. M., Li, B., Zhang, C., Song, D., and Spanos, C. J. Towards efficient data valuation based on the shapley value. In The 22nd International Conference on Artificial Intelligence and Statistics , pp. 1167–1176. PMLR, 2019. Kalai, E. and Smorodinsky, M. Other solutions to nash’s bargaining problem. Econometrica: Journal of the Econo-metric Society , pp. 513–518, 1975. Karimireddy, S. P., Guo, W., and Jordan, M. I. Mechanisms that incentivize data sharing in federated learning. arXiv preprint arXiv:2207.04557 , 2022. Kong, Y., Schoenebeck, G., Tao, B., and Yu, F.-Y. Informa-tion elicitation mechanisms for statistical estimation. In 
+
+Proceedings of the AAAI Conference on Artificial Intelli-gence , volume 34, pp. 2095–2102, 2020. Lehmann, E. L. and Casella, G. Theory of point estimation .Springer Science & Business Media, 2006. Lin, J., Du, M., and Liu, J. Free-riders in federated learning: Attacks and defenses. arXiv preprint arXiv:1911.12560 ,2019. Mas-Colell, A., Whinston, M. D., Green, J. R., et al. Mi-croeconomic theory , volume 1. Oxford university press New York, 1995. Nash, J. F. et al. The bargaining problem. Econometrica ,18(2):155–162, 1950. Sim, R. H. L., Zhang, Y., Chan, M. C., and Low, B. K. H. Collaborative machine learning with incentive-aware model rewards. In International conference on machine learning , pp. 8927–8936. PMLR, 2020. Tu, X., Zhu, K., Luong, N. C., Niyato, D., Zhang, Y., and Li, J. Incentive mechanisms for federated learning: From economic and game theoretic perspective. IEEE transac-tions on cognitive communications and networking , 8(3): 1566–1593, 2022. Wald, A. Contributions to the theory of statistical estimation and testing hypotheses. The Annals of Mathematical Statistics , 10(4):299–326, 1939. Wang, T., Rausch, J., Zhang, C., Jia, R., and Song, D. A prin-cipled approach to data valuation for federated learning. 
+
+Federated Learning: Privacy and Incentive , pp. 153–167, 2020. Xu, X., Lyu, L., Ma, X., Miao, C., Foo, C. S., and Low, B. K. H. Gradient driven rewards to guarantee fairness in collaborative machine learning. Advances in Neural Information Processing Systems , 34:16104–16117, 2021. Zhang, X., Yang, Z., Zhou, Z., Cai, H., Chen, L., and Li, X. Free market of crowdsourcing: Incentive mechanism design for mobile sensing. IEEE transactions on parallel and distributed systems , 25(12):3190–3200, 2014. 10 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+A. Proofs of referenced facts 
+
+A.1. Proof of Fact 1 
+
+Let us first consider agents who can sample from all distributions, i.e ci,k < ∞ for all k ∈ [d]. Suppose this agent collects Xi, via ni = {ni,k }k samples from each distribution, incurring cost P 
+
+> k
+
+ci,k ni,k . It can be shown using standard arguments (Lehmann & Casella, 2006), that for any such ni,k , the deterministic sample mean hSM = {hSM  
+
+> k
+
+}k, where 
+
+hSM  
+
+> k
+
+(Xi) = 1 
+
+> |Xi,k |
+
+P 
+
+> x∈Xi,k
+
+x, which simply takes the average of all points from distribution k, is minimax optimal. Moreover, for any μ ∈ Rd, the expected squared estimation error for each k is E[( hSM  
+
+> k
+
+(Xi)−μk)2] = σ2/n i,k . Consequently, 
+
+E[∥hSM (Xi) − μ∥22] = Pnk=1 σ2/n i,k . A rational agent will choose ni = {ni,k }k to minimize her penalty Pdk=1 σ2/n i,k +
+
+ci,k ni,k . As this decomposes, a straightforward calculation shows that her penalty is minimized by deterministically 
+
+choosing ni,k = σ/ √ci,k samples from each distribution k. For convenience, let nIND  
+
+> i
+
+denote these choices for ni,k . Next, consider agents for whom ci,k ′ = ∞ for some k′ ∈ [d]. As this agent cannot obtain any samples from distribution k′ on her own, her maximum risk in estimating μk′ is infinite, and consequently sup μ E[∥hi(Xi, ∅, ∅) − μ∥22] = ∞ for any estimator 
+
+hi. Therefore, their penalty will also be infinite. Putting these together yields the claim. 
+
+A.2. Proof of Fact 2 
+
+By definition 
+
+P (MSM , (nj , id , h ACC )j ) = 
+
+> m
+
+X
+
+> i=1
+
+sup 
+
+> μ∈Rd
+
+E
+
+"
+
+∥hACC (Xi, id , bμ) − μ∥22 +
+
+> d
+
+X
+
+> k=1
+
+ci,k ni,k 
+
+#! 
+
+=
+
+> m
+
+X
+
+> i=1
+
+sup 
+
+> μ∈Rd
+
+E ∥hACC (Xi, id , bμ) − μ∥22
+
+ +
+
+> m
+
+X
+
+> i=1
+> d
+
+X
+
+> k=1
+
+ci,k ni,k .
+
+Since we are taking n = {ni}i∈[m] to be fixed, minimizing the social penalty is equivalent to minimizing the first term in the second line. It can be shown using standard arguments (Lehmann & Casella, 2006), that for any n, the deterministic sample mean of the collected points hSM = {hSM  
+
+> k
+
+}k =
+
+n 1 
+
+> |X:,k |
+
+P 
+
+> x∈X:,k
+
+x
+
+o
+
+> k
+
+(where X:,k = ∪i∈[m]Xi,k ) is the is minimax optimal. Therefore, 
+
+> m
+
+X
+
+> i=1
+
+sup 
+
+> μ∈Rd
+
+E ∥hACC (Xi, id , bμ) − μ∥22
+
+ ≥
+
+> m
+
+X
+
+> i=1
+
+sup 
+
+> μ∈Rd
+
+E ∥hSM − μ∥22
+
+
+
+But notice that when agents submit truthfully, the sample mean of the collected points is the same as the sample mean of the submitted so hACC (Xi, id , bμ) = hSM . Therefore the lower bound above is achieved using MSM when agents submit truthfully and accept the estimate so we conclude 
+
+P (MSM , (nj , id , h ACC )j ) = inf    
+
+> M, (fj,h j)j∈[m]
+
+P (M, (nj , f j , h j )j ).
+
+Using that the data dimensions are independent, we find 
+
+P (MSM , (nj , id , h ACC )j ) = 
+
+> m
+
+X
+
+> i=1
+
+sup 
+
+> μ∈Rd
+
+E ∥hSM − μ∥22
+
+ +
+
+> m
+
+X
+
+> i=1
+> d
+
+X
+
+> k=1
+
+ci,k ni,k .
+
+=
+
+> m
+
+X
+
+> i=1
+
+sup 
+
+> μ∈Rd
+
+E
+
+
+
+> d
+
+X
+
+> k=1
+
+ 1
+
+X:,k 
+
+X
+
+> x∈X:,k
+
+x − μk
+
+
+
+> 2
+
+ +
+
+> m
+
+X
+
+> i=1
+> d
+
+X
+
+> k=1
+
+ci,k ni,k 
+
+=
+
+> m
+
+X
+
+> i=1
+
+sup 
+
+> μ∈Rd
+> d
+
+X
+
+> k=1
+
+E
+
+ 1
+
+X:,k 
+
+X
+
+> x∈X:,k
+
+x − μk
+
+
+
+> 2
+
+ +
+
+> m
+
+X
+
+> i=1
+> d
+
+X
+
+> k=1
+
+ci,k ni,k 
+
+=
+
+> m
+
+X
+
+> i=1
+
+sup 
+
+> μ∈Rd
+> d
+
+X
+
+> k=1
+
+σ2
+
+X:,k 
+
++
+
+> m
+
+X
+
+> i=1
+> d
+
+X
+
+> k=1
+
+ci,k ni,k 
+
+11 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+=
+
+> d
+
+X
+
+> k=1
+
+mσ 2
+
+X:,k 
+
++
+
+> m
+
+X
+
+> i=1
+> d
+
+X
+
+> k=1
+
+ci,k ni,k 
+
+=
+
+> d
+
+X
+
+> k=1
+
+mσ 2
+
+Pmi=1 ni,k 
+
++
+
+> m
+
+X
+
+> i=1
+
+ci,k ni,k 
+
+!
+
+.
+
+B. Definition of Gi,k (αi,k )
+
+The corruption coefficients used in Algorithm 2, αi,k , are each defined to be the smallest number larger than pn⋆i,k such that Gi,k (αi,k ) = 0 where Gi,k is defined as 
+
+Gi,k (αi,k ) := 4αi,k 
+
+√Tk
+
+4α2
+
+> i,k
+
+Tk
+
+Di,k n⋆i,k 
+
+− 1 − ci,k 
+
+16 α2
+
+> i,k
+
+Tkn⋆i,k 
+
+σ2Di,k 
+
+!
+
+− exp Tk
+
+8α2
+
+> i,k
+
+! 4α2
+
+> i,k
+
+Tk
+
+Tk
+
+n⋆i,k 
+
++ 1 
+
+!
+
+− 1
+
+! √2πErfc 
+
+s Tk
+
+8α2
+
+> i,k
+
+!
+
+. (11) and Di,k := Tk − 2n⋆i,k .
+
+C. Examples of different bargaining solutions 
+
+This section gives the bargaining solutions and associated computations shown in Fig. 1 (i.e. when d = 1 , c1,1 = 0 .033 ,
+
+c2,1 = 0 .066 , c3,1 = 0 .1, and σ = 10 ). Each bargaining solution corresponds to a simple optimization problem. The following computations were obtained by feeding the respective optimization problems into Mathematica with the aforementioned problem parameters. 
+
+Working alone. Recall from §A.1 that when agents work alone they will collect σ√ci, 1 points to minimize their penalty. This results in a penalty of 2σ√ci, 1. Therefore, 
+
+nIND 1,1 = 55 nIND 2,1 = 39 , nIND 3,1 = 32 ,
+
+=⇒ pIND 1 ≈ 3.63 , pIND 2 ≈ 5.13 , pIND 3 ≈ 6.23 .
+
+Social penalty minimization without IR constraints. Without IR constraints, the agent with the cheapest collection cost for each distribution will be responsible for collecting all of the data for that distribution. Because agents can have the same collection costs, there are multiple agents which could have the cheapest collection cost resulting in different bargaining solutions with the same social penalties. In this case, for the sake of convenience, assume that i = argmin i ci,k chooses one of the agents with the cheapest cost for distribution k in which case the following bargaining solution is one of potentially many which minimizes the social penalty 
+
+nSP =  nSP 
+
+> i,k
+
+ 
+
+> i,k
+
+where nSP  
+
+> i,k
+
+=
+
+(argmin ni,k 
+
+
+
+m σ2 
+
+> ni,k
+
++ ci,k ni,k 
+
+
+
+if i = argmin i ci,k 
+
+0 otherwise 
+
+=
+
+(
+
+2σ√mc i,k if i = argmin i ci,k 
+
+0 otherwise .
+
+In our example this results in 
+
+nSP  
+
+> 1,1
+
+= 95 , nSP  
+
+> 2,1
+
+= 0 , nSP  
+
+> 3,1
+
+= 0 ,
+
+=⇒ p1
+
+ MSM , s COM 
+
+> nSP
+
+ ≈ 4.19 , p2
+
+ MSM , s COM 
+
+> nSP
+
+ = p3
+
+ MSM , s COM 
+
+> nSP
+
+ ≈ 1.05 .
+
+Social penalty minimization with respect to IR constraints. Recall that minimizing social penalty subject to IR constraints is given by the optimization problem in (7) . Although the cheapest agent for a particular distribution can no longer collect all of the data (as this would not be IR), it turns out that the solution to (7) still has the cheapest agents 12 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+collecting most of the data. More specifically, the cheapest agents collect slightly more data than they would on their own and receive a small amount of data from the other agents which offsets this increase in penalty. It can be shown that under the solution to (7) there is a set of cheap agents whose penalty is exactly their penalty when working alone. If it were the case that this penalty was lower than when working alone, more of the work of data collection could be shifted to this agent which would result in a decreased social penalty. Solving (7) in our example we find that 
+
+nOPT 1,1 = 71 , nOPT 2,1 = 7 , nOPT 3,1 = 0 ,
+
+=⇒ p1
+
+ MSM , s COM 
+
+> nOPT
+
+ ≈ 3.63 , p2
+
+ MSM , s COM 
+
+> nOPT
+
+ ≈ 1.72 , p3
+
+ MSM , s COM 
+
+> nOPT
+
+ ≈ 1.28 .
+
+Nash bargaining. Nash bargaining typically refers to the bargaining solution which maximizes the product of each agents utility minus the utility they can achieve when working alone (Mas-Colell et al., 1995). In our setting we can think of penalty as negative utility. Thus, while there are multiple ways to define the Nash bargaining solution in our problem, it is reasonable to define it as 
+
+nNB = argmax 
+
+> nk
+
+Y
+
+> i=1
+
+ pIND  
+
+> i
+
+− pi
+
+ MSM , s COM 
+
+> n
+
+ .
+
+i.e. the bargaining solution which maximizes product of the differences between an agents penalty when working alone and when collaborating with others. In our example we get that 
+
+nNB  
+
+> 1,1
+
+= 35 , nNB  
+
+> 2,1
+
+≈ 23 , nNB  
+
+> 3,1
+
+≈ 16 ,
+
+=⇒ p1
+
+ MSM , s COM 
+
+> nNB
+
+ ≈ 2.50 , p2
+
+ MSM , s COM 
+
+> nNB
+
+ ≈ 2.89 , p3
+
+ MSM , s COM 
+
+> nNB
+
+ ≈ 2.92 .
+
+Egalitarian bargaining. Egalitarian bargaining is typically defined as the bargaining solution under which all agents achieve the same utility and for which this utility is maximized (Mas-Colell et al., 1995). In our problem penalty can be viewed as negative utility. While there are many ways in which egalitarian bargaining can be defined, it is reasonable to define the egalitarian bargaining solution to be 
+
+nEB = argmin 
+
+> n
+
+max  
+
+> i
+
+pi
+
+ MSM , s COM 
+
+> n
+
+ .
+
+In our example we get that 
+
+nEB  
+
+> 1,1
+
+= 41 nEB  
+
+> 2,1
+
+= 21 nEB  
+
+> 3,1
+
+= 14 =⇒ p1
+
+ MSM , s COM 
+
+> nEB
+
+ = p2
+
+ MSM , s COM 
+
+> nEB
+
+ = p3
+
+ MSM , s COM 
+
+> nEB
+
+ ≈ 2.69 .
+
+D. Proof of Theorem 1 
+
+The proof of the theorem can be divided into two cases based on whether or not  c, n B satisfies the condition given in (8) .Proving the theorem when (8) does not hold is given in §D.1. When (8) holds the proof is given in §D.2. 
+
+D.1. Proof when condition (8) is not satisfied Incentive Compatibility and Individual Rationality. If  c, n B does not satisfy (8) , the mechanism employs the following simple procedure for each agent and distribution. If an agent does not have the lowest collection cost for a distribution, they receive the sample mean of all of the data for that distribution. Otherwise, the agent only receives the sample mean of the data they submitted for that distribution. Note that when an agent has the lowest collection cost, it is best for her to collection nIND  
+
+> i,k
+
+points and use the sample mean. Moreover, she is no worse off submitting this data truthfully, and accepting the estimate from the mechanism. Also, when an agent doesn’t have the lowest collection cost for a particular distribution, she will receive all the data from agents that do have the cheapest collection cost. Because their collection cost is cheaper, the best strategy for the agent receiving the data is to not collect any data (as the cost of data collection outweighs the marginal decrease in estimation error). Therefore, assuming the other agents follow s⋆
+
+> –i
+
+, the best strategy for agent i is s⋆i , i.e. s⋆ is a Nash equilibrium under MCBL when (8) isn’t satisfied. Finally NIC implies IR since an agent working on their own is a valid strategy. 13 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Efficiency. Recall that the social penalty is minimized by, for each distribution k ∈ [d], having one of the agent with the cheapest cost to sample that distribution, collect σ√m 
+
+> min i
+> √ci,k
+
+points from distribution k and freely share them with the other agents after which each agent will take the sample mean of the data for each distribution. Therefore we have that 
+
+pi(MSM , s COM  
+
+> n
+
+) ≤
+
+> d
+
+X
+
+> k=1
+
+ σ2
+
+> σ√m
+> min j
+> √cj,k
+
++ 1
+
+
+
+i ∈ argmin 
+
+> j
+
+cj,k 
+
+
+
+min  
+
+> j
+
+cj,k 
+
+σ√m
+
+min j
+
+√cj,k 
+
+
+
+=
+
+> d
+
+X
+
+> k=1
+
+
+
+σ min j
+
+√cj,k 
+
+√m + 1
+
+
+
+i ∈ argmin 
+
+> j
+
+cj,k 
+
+
+
+σ√m min 
+
+> j
+
+√cj,k 
+
+
+
+Here the inequality is used in case there are multiple agents with the same cheapest collection cost in which only one of them collects the data. Using the definition of the mechanism we also have that 
+
+pi (MCBL , s ⋆) = 
+
+> d
+
+X
+
+> k=1
+
+σ2
+
+argmin j cj,k σ
+
+> min i
+> √ci,k
+
++ 1
+
+
+
+i ∈ argmin 
+
+> j
+
+cj,k 
+
+
+
+min  
+
+> i
+
+ci,k 
+
+σ
+
+min i
+
+√ci,k 
+
+!
+
+Therefore, 
+
+pi (MCBL , s ⋆)
+
+pi(MSM , s COM  
+
+> n
+
+) =
+
+Pdk=1 σ2
+
+|argmin j cj,k | σ 
+
+> min i√ci,k
+
++ 1 i ∈ argmin j cj,k 
+
+ min i ci,k σ
+
+> min i
+> √ci,k
+
+!Pdk=1 
+
+
+
+σ min j 
+
+> √cj,k
+> √m
+
++ 1 i ∈ argmin j cj,k 
+
+ σ√m min j
+
+√cj,k 
+
+
+
+≤
+
+Pdk=1 σ2
+
+|argmin j cj,k | σ 
+
+> min i√ci,k
+
+Pdk=1 σ min j
+
+> √cj,k
+> √m
+
+≤ √m. 
+
+Therefore, (MCBL , s ⋆) √m–approximates nB. When nB = nOPT it follows from summing the penalties of all the agents that (MCBL , s ⋆) is √m–efficient. 
+
+D.2. Proof when condition (8) is satisfied 
+
+When (8) is satisfied the proof becomes just an instance of Theorem 5 by taking nB = nOPT .
+
+E. Proof of Theorem 5 
+
+We will first show in §E.1 that the constants used in Algorithm 2 are well defined. We then prove Nash incentive compatibility, individual rationality, and efficiency in §E.2, §E.3, and §E.4 respectively. 
+
+E.1. Proving αi,k is well defined when i̸ ∈ Vk and n⋆i,k > 0
+
+We have discussed how it may not be the case that for all (i, k ) ∈ [m] × [d] a solution to Gi,k (αi,k ) exists. However, we can show that i̸ ∈ Vk, n ⋆i,k > 0 is a sufficient condition for the existence of such an αi,k . We can also show that αi,k ≥ pn⋆i,k .The following lemma proves these two claims. Thus αi,k as used in Algorithm 2 is well defined. 
+
+Lemma 1. Let Gi,k (αi,k ) be defined as in (11) . For any agent i̸ ∈ Vk such that n⋆i,k > 0, ∃αi,k ≥ pn⋆i,k such that 
+
+Gi,k (αi,k ) = 0 .Proof. We will show that lim αi,k →∞ Gi,k (αi,k ) = ∞ and Gi,k 
+
+ p n⋆i,k 
+
+ ≤ 0. Since Gi,k 
+
+ p n⋆i,k 
+
+ is continuous, we will conclude that ∃αi,k ≥ pn⋆i,k such that Gi,k (αi,k ) = 0 .14 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+By the definition of Gi,k (αi,k ) we have 
+
+lim   
+
+> αi,k →∞
+
+Gi,k (αi,k )= lim  
+
+> αi,k →∞
+
+4αi,k 
+
+√Tk
+
+4α2
+
+> i,k
+
+Tk
+
+Di,k n⋆i,k 
+
+− 1 − ci,k 
+
+16 α2
+
+> i,k
+
+Tkn⋆i,k 
+
+σ2Di,k 
+
+!
+
+− exp Tk
+
+8α2
+
+> i,k
+
+! 4α2
+
+> i,k
+
+Tk
+
+Tk
+
+n⋆i,k 
+
++ 1 
+
+!
+
+− 1
+
+! √2πErfc 
+
+s Tk
+
+8α2
+
+> i,k
+
+! ! 
+
+≥ lim  
+
+> αi,k →∞
+
+4αi,k 
+
+√Tk
+
+4α2
+
+> i,k
+
+Tk
+
+Di,k n⋆i,k 
+
+− 1 − ci,k 
+
+16 α2
+
+> i,k
+
+Tkn⋆i,k 
+
+σ2Di,k 
+
+!
+
+− 100 4α2
+
+> i,k
+
+Tk
+
+Tk
+
+n⋆i,k 
+
++ 1 
+
+!
+
+− 1
+
+!! 
+
+= lim  
+
+> αi,k →∞
+
+4αi,k 
+
+√Tk
+
+4α2
+
+> i,k
+
+Tkσ2 − Di,k n⋆i,k σ2 − 16 ci,k α2
+
+> i,k
+
+Tk(n⋆i,k )2
+
+Di,k n⋆i,k σ2
+
+!
+
+− 100 4α2
+
+> i,k
+
+Tk
+
+Tk
+
+n⋆i,k 
+
++ 1 
+
+!
+
+− 1
+
+! ! 
+
+= lim  
+
+> αi,k →∞
+
+4αi,k 
+
+Di,k n⋆i,k σ2√Tk
+
+ 4Tkα2
+
+> i,k
+
+(σ2 − 4ci,k (n⋆i,k )2) − Di,k n⋆i,k σ2 − 100 4α2
+
+> i,k
+
+Tk
+
+Tk
+
+n⋆i,k 
+
++ 1 
+
+!
+
+− 1
+
+! ! 
+
+.
+
+Notice that σ2 − 4ci,k (n⋆i,k )2 > 0 ⇐⇒ σ 
+
+> 2√ci,k
+
+> n ⋆i,k ⇐⇒ nIND  
+
+> i,k
+> 2
+
+> n ⋆i,k which is implied by Lemma 10 since 
+
+i̸ ∈ Vk. Therefore, since the first term is positive for sufficiently large αi,k and has α3 
+
+> i,k
+
+while the second term has α2
+
+> i,k
+
+,
+
+lim αi,k →∞ Gi,k (αi,k ) = ∞.Recall the definition of Gi,k (αi,k ). Notice that αi,k ≥ pn⋆i,k ⇒ − 1 + 4 
+
+ 1 
+
+> Tk
+
++ 1
+
+> n⋆i,k
+
+
+
+α2 
+
+> i,k
+
+≥ 0. Lemma 8 gives us the following lower bound on the Gaussian complementary error function Erfc LB (x) := 1
+
+√π
+
+ exp( −x2)
+
+x − exp( −x2)2x3
+
+
+
+.
+
+Therefore, for αi,k ≥ pn⋆i,k , we have the following upper bound on Gi,k (αi,k )
+
+Gi,k (αi,k )UB := 4αi,k 
+
+
+
+−1 + 4Tk α2    
+
+> i,k
+> n⋆i,k (Tk−2n⋆i,k )
+
+− 16 ci,k n⋆i,k Tk α2  
+
+> i,k
+> (Tk−2n⋆i,k )σ2
+
+
+
+√Tk
+
+− e
+
+> Tk
+> 8α2
+> i,k
+
+√2π
+
+−1 + 4
+
+
+
+1 + Tk
+
+> n⋆i,k
+
+
+
+α2
+
+> i,k
+
+Tk
+
+ Erfc LB 
+
+s Tk
+
+8α2
+
+> i,k
+
+!
+
+. (12) Using Lemma 14, we can write Gi,k 
+
+pn⋆i,k 
+
+
+
+> UB
+
+as 
+
+Gi,k 
+
+q 
+
+n⋆i,k 
+
+
+
+> UB
+
+= − 64( n⋆i,k )3/2(ci,k n⋆i,k (Tk)3 + (2( n⋆i,k )2 − (Tk)2)σ2)(Tk)5/2(Tk − 2n⋆i,k )σ2 .
+
+Now observe that 
+
+Gi,k 
+
+q 
+
+n⋆i,k 
+
+
+
+> UB
+
+≤ 0 ⇐⇒ − 64( n⋆i,k )3/2(ci,k n⋆i,k (Tk)3 + (2( n⋆i,k )2 − (Tk)2)σ2)(Tk)5/2(Tk − 2n⋆i,k )σ2 ≤ 0
+
+⇐⇒ ci,k n⋆i,k (Tk)3 + (2( n⋆i,k )2 − (Tk)2)σ2 ≥ 0 .
+
+But, since i̸ ∈ Vk, we have n⋆i,k Tk ≥ (nIND  
+
+> i,k
+
+)2 as a result of the second while loop in Algorithm 1. Thus, 
+
+ci,k n⋆i,k (Tk)3 + (2( n⋆i,k )2 − (Tk)2)σ2 ≥ ci,k (nIND  
+
+> i,k
+
+)2(Tk)2 + (2( n⋆i,k )2 − (Tk)2)σ2
+
+= σ2(Tk)2 + 2( n⋆i,k )2σ2 − σ2(Tk)2
+
+= 2( n⋆i,k )2σ2 ≥ 0 .
+
+Therefore, Gi,k (pn⋆i,k )UB ≤ 0 which gives us that Gi,k (pn⋆i,k ) ≤ 0. Since Gi,k (αi,k ) is continuous, together with 
+
+Gi,k (pn⋆i,k ) ≤ 0 and lim αi,k →∞ Gi,k (αi,k ) = ∞, we conclude that ∃αi,k ≥ pn⋆i,k such that Gi,k (αi,k ) = 0 .15 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+E.2. MCBL is Nash incentive compatible 
+
+We will follow the proof structure of Nash incentive compatibility in Chen et al. (2023). Like Chen et al. (2023), we will decompose the proof into two lemmas. The first lemma shows that for any distribution over ni, the optimal strategy is to use 
+
+fi = f ⋆i and hi = h⋆i . The second lemma shows that the optimal strategy is to set ni = n⋆i . Together, these lemmas imply that si = ( n⋆i , f ⋆i , h ⋆i ) is the optimal strategy. Although the proof structure will be the same, we will need to make changes to handle our more general problem setting. 
+
+Lemma 2. For all i ∈ [m] and si ∈ ∆( S) we have that 
+
+pi (MCBL , (s⋆i , s ⋆
+
+> –i
+
+)) ≤ pi (MCBL , (si, s ⋆
+
+> –i
+
+)) 
+
+where s⋆ is the pure strategy defined in (9) .
+
+We can decompose the proof into the following two lemmas: 
+
+Lemma 3. For all i ∈ [m] and si ∈ ∆( S), define the randomized strategy esi ∈ ∆( S) by sampling (ni, f i, h i) ∼ si and selecting (ni, f ⋆i , h ⋆i ). Then, we have that 
+
+pi (MCBL , (esi, s ⋆
+
+> –i
+
+)) ≤ pi (MCBL , (si, s ⋆
+
+> –i
+
+)) .
+
+Proof. See H.1. 
+
+Lemma 4. For all i ∈ [m] and si ∈ ∆( S) such that fi = f ⋆i , h i = h⋆i
+
+pi (MCBL , (s⋆i , s ⋆
+
+> –i
+
+)) ≤ pi (MCBL , (si, s ⋆
+
+> –i
+
+)) .
+
+Proof. See H.2. 
+
+Proof of Lemma 2. For any strategy si ∈ ∆( S) we can construct the strategy s′ 
+
+> i
+
+which samples (ni, f i, h i) ∼ si and selects 
+
+(ni, f ⋆i , h ⋆i ). Applying Lemmas 3 and 4 we get 
+
+pi (MCBL , (s⋆i , s ⋆
+
+> –i
+
+)) ≤ pi (MCBL , (s′
+
+> i
+
+, s ⋆
+
+> –i
+
+)) ≤ pi (MCBL , (si, s ⋆
+
+> –i
+
+)) .
+
+E.3. MCBL is individually rational 
+
+If an agent works on their own they, by definition, achieve their individually rational penalty. Furthermore, an agent may choose to work on their own as this is an option contained within their strategy space. Therefore, because we have shown that MCBL is incentive compatible, any agent has no incentive to deviate from their recommended strategy, hence they must achieve a penalty no worse than their individually rational penalty. Therefore, MCBL is individually rational. 
+
+E.4. (MCBL , s ⋆) is an 8–approximation to nB
+
+Let pi,k denote the penalty agent i incurs as a result of trying to estimation μk, i.e. the sum of her estimation error for distribution k plus the cost she incurs collecting ni,k points from distribution k. We will show in Lemma 5 that for all 
+
+(i, k ) ∈ [m] × [d]
+
+pi,k (MCBL , s ⋆)
+
+pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ ≤ 8
+
+Using this, we will get 
+
+pi (MCBL , s ⋆)
+
+pi
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ =
+
+Pdk=1 pi,k (MCBL , s ⋆)
+
+Pdk=1 pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+
+
+≤
+
+Pdk=1 8pi,k 
+
+
+
+MSM ,   nB, id , h ACC 
+
+> j
+
+Pdk=1 pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+
+
+= 8 
+
+16 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+This also tells us that we can bound the price of stability on the social penalty by writing 
+
+Pmi=1 pi (MCBL , s ⋆)
+
+Pmi=1 pi
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ ≤
+
+Pmi=1 8pi
+
+
+
+MSM ,   nB, id , h ACC 
+
+> j
+
+Pmi=1 pi
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ = 8 
+
+Lemma 5. For all (i, k ) ∈ [m] × [d] we have 
+
+pi,k (MCBL , s ⋆)
+
+pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ ≤ 8
+
+Proof. We break the proof into two cases depending on whether or nor i ∈ Vk. When i ∈ Vk we further subdivide into the following three sub cases: (a) nB 
+
+> i,k
+
+= 0 , (b) n⋆i,k = nB 
+
+> i,k
+
+> 0, and (c) n⋆i,k ̸ = nB 
+
+> i,k
+
+> 0.
+
+Case 1. ( i ∈ Vk) In this case we know that n⋆i,k = nIND  
+
+> i,k
+
+as a result of the first while loop in Algorithm 1. Furthermore, we know from Algorithm 2 that Ii,k = 1
+
+> Yi,k
+
+P 
+
+> y∈Yi,k
+
+y. Therefore, because agent i reports truthfully under s⋆, we have that 
+
+pi,k (MCBL , s ⋆) = σ2
+
+n⋆i,k 
+
++ ci,k n⋆i,k = σ2
+
+nIND 
+
+> i,k
+
++ ci,k nIND 
+
+> i,k
+
+Since i ∈ Vk, we also know that 
+
+σ2
+
+nIND 
+
+> i,k
+
++ ci,k nIND  
+
+> i,k
+
+≤ 4 σ2
+
+Pmj=1 n′
+
+> i,k
+
++ ci,k n′
+
+> i,k
+
+!
+
+where n′ is the value of en on the iteration when i was added to Vk. Furthermore, we know that nIND 
+
+> i,k
+> nB
+> i,k
+
+> 12 as a result of Lemma 11. But this implies that Pmj=1 n′ > 12
+
+Pmi=1 nB
+
+> i,k
+
+. Therefore, 
+
+σ2
+
+Pmj=1 n′
+
+> i,k
+
++ ci,k n′ 
+
+> i,k
+
+< 2σ2
+
+Pmj=1 nB
+
+> j,k
+
++ ci,k n′
+
+> i,k
+
+= 2σ2
+
+Pmj=1 nB
+
+> j,k
+
++ ci,k nB
+
+> i,k
+
+< 2 σ2
+
+Pmj=1 nB
+
+> j,k
+
++ ci,k nB
+
+> i,k
+
+!
+
+Combining these two inequalities, we get 
+
+pi,k (MCBL , s ⋆)
+
+pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ =
+
+> σ2
+> nIND
+> i,k
+
++ ci,k nIND  
+
+> i,k σ2
+> Pmj=1 nB
+> j,k
+
++ ci,k nB
+
+> i,k
+
+≤
+
+8
+
+ σ2 
+
+> Pmj=1 nB
+> j,k
+
++ ci,k nB
+
+> i,k
+
+ 
+
+> σ2
+> Pmj=1 nB
+> j,k
+
++ ci,k nB
+
+> i,k
+
+= 8 
+
+Therefore, in this case we can conclude that 
+
+pi,k (MCBL , s ⋆)
+
+pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ ≤ 8
+
+Case 2. (a) ( i̸ ∈ Vk, n B 
+
+> i,k
+
+= 0 ) In this case i simply receives the sample mean of all of the other agents’ uncorrupted data for distribution k. In this case we can apply Lemma 13 to get 
+
+pi,k (MCBL , s ⋆)
+
+pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ =    
+
+> σ2
+> P
+> j̸=in⋆j,k
+> σ2
+> P
+> j̸=inB
+> i,k
+
+=
+
+P  
+
+> j̸=i
+
+nB
+
+> i,k
+
+P  
+
+> j̸=i
+
+n⋆j,k 
+
+≤ 2
+
+Therefore, in this case we can conclude that 
+
+pi,k (MCBL , s ⋆)
+
+pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ ≤ 2
+
+17 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Case 2. (b) ( i̸ ∈ Vk, n ⋆i,k = nB 
+
+> i,k
+
+> 0) In this case i instead receives a weighted average of clean and uncorrupted data for distribution k from the other agents. Using Lemma 12 and that n⋆i,k = nB, we have 
+
+pi,k (MCBL , s ⋆)
+
+pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ = pi,k (MCBL , s ⋆) 
+
+> σ2
+> Pni=1 nB
+> i,k
+
++ ci,k nB
+
+> i,k
+
+= pi,k (MCBL , s ⋆) 
+
+> σ2
+> Pni=1 nB
+> i,k
+
++ ci,k n⋆i,k 
+
+≤ pi,k (MCBL , s ⋆)  
+
+> σ2
+> 2Pni=1 n′
+> i,k
+
++ ci,k n⋆i,k 
+
+Let Tk = Pmi=1 n′
+
+> i,k
+
+, i.e. how it is specified in Algorithm 1. Lemma 17 gives us an explicit expression for pi,k (MCBL , s ⋆).Substituting this in, we get 
+
+pi,k (MCBL , s ⋆)  
+
+> σ2
+> 2Pni=1 n′
+> i,k
+
++ ci,k n⋆i,k 
+
+= Tk
+
+n⋆i,k (2 ci,k n⋆i,k Tk + σ2)
+
+2ci,k (n⋆i,k )2 + σ2 +
+
+αi,k 
+
+
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
++ ( n⋆i,k (Tk − 2n⋆i,k ) − 4Tkα2
+
+> i,k
+
+)σ2
+
+
+
+−n⋆i,k Tkαi,k + 4( n⋆i,k + Tk)α3
+
+> i,k
+
+
+
+= Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(n⋆i,k + Tk)(2 ci,k n⋆i,k Tk + σ2) + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)( −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+)(2 ci,k n⋆i,k Tk + σ2) (13) Here the second equality is a direct result of Lemma 18. Because we know αi,k ≥ pn⋆i,k , the denominator of the second term is positive. Additionally the numerator of the second term is also positive. To see this observe that 
+
+4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+= 3 ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 + ci,k (n⋆i,k )2(Tk)3 − n⋆i,k (Tk)2σ2
+
+≥ 3ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 + ci,k n⋆i,k T 2
+
+> k
+
+σ2
+
+ci,k 
+
+− n⋆i,k (Tk)2σ2 (14) 
+
+= 3 ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2
+
+≥ 3ci,k (n⋆i,k )2Tk
+
+
+
+4 σ2
+
+ci,k 
+
+
+
+− 2( n⋆i,k )2Tkσ2 (15) 
+
+= 10( n⋆i,k )2Tkσ2
+
+> 0
+
+Line (14) uses that n⋆i,k Tk ≥  nIND 
+
+> i,k
+
+2 = σ2 
+
+> ci,k
+
+and line (15) uses that Tk > 2nIND  
+
+> i,k
+
+= σ√ci,k which is a result of Lemma 9. Both of these statements make use of the fact that i̸ ∈ Vk. This means that the penalty ratio bound is decreasing as αi,k 
+
+increases. Therefore, taking αi,k = pn⋆i,k gives an upper bound on this entire expression. Therefore, by Lemma 20, substituting in αi,k = pn⋆i,k into (13) yields: 
+
+Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(n⋆i,k + Tk)(2 ci,k n⋆i,k Tk + σ2) + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)( −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+)(2 ci,k n⋆i,k Tk + σ2)=2Tk
+
+
+
+ci,k n⋆i,k 
+
+
+
+4n⋆i,k + 11 Tk
+
+
+
++ σ2
+
+
+
+4n⋆i,k + 3 Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+ (16) Since i̸ ∈ Vk, Lemmas 9 and 10 tell us that Tk > 2nIND  
+
+> i,k
+
+and nIND  
+
+> i,k
+> 2
+
+> n ⋆i,k . Therefore, Tk > 4n⋆i,k . We can use this fact to 18 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+bound (16) as follows 
+
+2Tk
+
+
+
+ci,k n⋆i,k 
+
+
+
+4n⋆i,k + 11 Tk
+
+
+
++ σ2
+
+
+
+4n⋆i,k + 3 Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+= 8ci,k (n⋆i,k )2Tk
+
+
+
+4n⋆i,k + 3 Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+ +2Tk
+
+
+
+11 ci,k n⋆i,k Tk + σ2
+
+
+
+4n⋆i,k + 3 Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+= 8ci,k (n⋆i,k )2Tk
+
+8ci,k (n⋆i,k )2Tk + 6 ci,k n⋆i,k T 2 
+
+> k
+
++ 4 n⋆i,k σ2 + 3 Tkσ2 +3Tk
+
+ 23 11 ci,k n⋆i,k Tk + 23 σ2
+
+
+
+4n⋆i,k + 3 Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+≤ 8ci,k (n⋆i,k )2Tk
+
+8ci,k (n⋆i,k )2Tk + 24 ci,k (n⋆i,k )2Tk + 4 n⋆i,k σ2 + 3 Tkσ2 +
+
+
+
+4n⋆i,k + 3 Tk
+
+  23 11 ci,k n⋆i,k Tk + 23 σ2
+
+
+
+4n⋆i,k + 3 Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+≤ 8ci,k (n⋆i,k )2Tk
+
+32 ci,k (n⋆i,k )2Tk
+
++
+
+> 11 3
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+≤ 4
+
+Therefore, in this case we can conclude that 
+
+pi,k (MCBL , s ⋆)
+
+pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ ≤ 4
+
+Case 2. (c) ( i̸ ∈ Vk, n ⋆i,k ̸ = nB 
+
+> i,k
+
+> 0) Similar to the previous case, i receives a weighted average of clean and uncorrected data for distribution k from the other agents. However, the difference is that in Algorithm 1, eni,k was changed to 
+
+ nIND 
+
+> i,k
+
+2 
+
+> Tk
+
+by the second while loop. Thus, n⋆i,k =
+
+ nIND 
+
+> i,k
+
+2 
+
+> Tk
+
+. We again know from Lemma 12 that Pni=1 nB 
+
+> i,k
+
+≤ 2 Pmi=1 n′
+
+> i,k
+
+. Therefore, we have that 
+
+pi,k (MCBL , s ⋆)
+
+pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ = pi,k (MCBL , s ⋆) 
+
+> σ2
+> Pni=1 nB
+> i,k
+
++ ci,k nB
+
+> i,k
+
+≤ pi,k (MCBL , s ⋆) 
+
+> σ2
+> Pni=1 nB
+> i,k
+
+≤ pi,k (MCBL , s ⋆)  
+
+> σ2
+> 2Pni=1 n′
+> i,k
+
+The only difference so far from the previous case is that we dropped the ci,k nB 
+
+> i,k
+
+term in the denominator. It turns out that we can get away with doing this, knowing that n⋆i,k =
+
+ nIND 
+
+> i,k
+
+2 
+
+> Tk
+
+. Let Tk = Pmi=1 n′
+
+> i,k
+
+. Lemma 17 gives us an explicit expression for pi,k (MCBL , s ⋆). Substituting this in, we get 
+
+pi,k (MCBL , s ⋆)  
+
+> σ2
+> 2Pni=1 n′
+> i,k
+
+= Tk
+
+n⋆i,k σ2
+
+2ci,k (n⋆i,k )2 + σ2 +
+
+αi,k 
+
+
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
++ ( n⋆i,k (Tk − 2n⋆i,k ) − 4Tkα2
+
+> i,k
+
+)σ2
+
+
+
+−n⋆i,k Tkαi,k + 4( n⋆i,k + Tk)α3
+
+> i,k
+
+
+
+= Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(n⋆i,k + Tk)σ2 + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)( −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+)σ2 (17) 19 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Here, the second equality is a direct result of Lemma 19. For αi,k ≥ pn⋆i,k , the denominator of the second term is positive. Also notice that the numerator of the second term is the same as the one we showed was positive in the previous case. Therefore, we can again conclude that the penalty ratio is decreasing as αi,k increases and so taking αi,k = pn⋆i,k gives an upper bound on the entire expression. Therefore, by Lemma 21, substituting in αi,k = pn⋆i,k into (17) yields: 
+
+Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(n⋆i,k + Tk)σ2 + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)( −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+)σ2
+
+=2Tk
+
+
+
+ci,k n⋆i,k 
+
+
+
+4n⋆i,k + 11 Tk
+
+
+
++ σ2
+
+
+
+4n⋆i,k + 3 Tk
+
+
+
+σ2
+
+(18) Using the fact that n⋆i,k =
+
+ nIND 
+
+> i,k
+
+2 
+
+> Tk
+
+= σ2  
+
+> ci,k Tk
+
+, (18) becomes 
+
+2Tk
+
+
+
+ci,k n⋆i,k 
+
+
+
+4n⋆i,k + 11 Tk
+
+
+
++ σ2
+
+
+
+4n⋆i,k + 3 Tk
+
+
+
+σ2
+
+=2Tk σ2 + σ2  
+
+> 11 Tk+4σ2
+> ci,k Tk
+> 
+> Tk
+
+!
+
+σ2
+
+
+
+3Tk + 4σ2 
+
+> ci,k Tk
+
+
+
+= 2Tk
+
+3Tk + 4σ2 
+
+> ci,k Tk
+
++ 2 
+
+ 11 Tk + 4σ2 
+
+> ci,k Tk
+
+3Tk + 4σ2 
+
+> ci,k Tk
+
+
+
+≤ 23 + 2 11 Tk
+
+3Tk
+
+= 8 
+
+Therefore, in this case we can conclude that 
+
+pi,k (MCBL , s ⋆)
+
+pi,k 
+
+
+
+MSM , {(nB, id , h ACC )}j
+
+ ≤ 8
+
+In all of the cases we have considered the penalty ratio is bounded by 8. Thus concludes the proof. 
+
+F. Hardness results 
+
+F.1. Proof of Theorem 2 
+
+Proof. We claim that each agent collects their IR amount of data for each distribution 
+
+n
+
+nIND 
+
+> i,k
+
+o
+
+> k
+
+. Suppose that this were not the case, and consider s′−i ∈ ∆( S)m−1 such that P  
+
+> j̸=i,k
+
+n′ 
+
+> j,k
+
+= 0 (i.e. when the other agents collect no data). In this case agent i is working alone as they are the only one collecting data and we know from Fact 1 that when working alone the best penalty an agent can achieve is pIND  
+
+> i
+
+which implies that pi
+
+ M,  si, s ′−i
+
+ < p IND  
+
+> i
+
+unless ni,k = nIND  
+
+> i,k
+
+. Now since we know that ni,k = nIND  
+
+> i,k
+
+we get pi
+
+ M,  si, s ′−i
+
+ ≥ P 
+
+> k
+
+ci,k nIND  
+
+> i,k
+
+= pIND  
+
+> i
+> 2
+
+.
+
+F.2. Proof of Theorem 3 
+
+Proof. We claim that each agent collects their IR amount of data for each distribution 
+
+n
+
+nIND 
+
+> i,k
+
+o
+
+> k
+
+. Suppose that this were not the case, and consider s′−i ∈ ∆( S)m−1 such that P  
+
+> j̸=i,k
+
+n′ 
+
+> j,k
+
+= 0 (i.e. when the other agents collect no data). In this situation agent i could improve their penalty by collecting their IR amount of data and using the sample mean (see §A.1). But this would contradict that s is a dominant strategy. Thus, ni,k = nIND  
+
+> i,k
+
+and so pi
+
+ M,  si, s ′−i
+
+ ≥ P 
+
+> k
+
+ci,k nIND  
+
+> i,k
+
+= 
+
+> pIND
+> i
+> 2
+
+.
+
+F.3. Proof of Theorem 4 
+
+We will now prove the hardness result given in Theorem 4. 20 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Construction. We will begin by constructing a difficult problem instance. Suppose there are m agents and d = 2 
+
+distributions. Let γ ∈ (0 , ∞), and let the costs c ∈ (0 , ∞]m×2 be: 
+
+c1,1 = γ, c1,2 = ∞, ci, 1 = ∞, ci, 2 = γ ∀i ∈ { 2, . . . , m }. (19) Next, let us compute the minimizer of the social penalty in Θ. Recall that for a given n ∈ Nm×d, we have that 
+
+(MSM , {(nj , id , h ACC )}j ) simultaneously minimizes the individual penalties of all the agents, and hence the social penalty (see (5) ). Moreover, as no agent can sample both distributions, we have pIND  
+
+> i
+
+= ∞ for all agents i ∈ [m]. Hence, we can simply minimize the social penalty without any constraints to obtain inf (M ′,s ′)∈Θ P (M ′, s ′) (see (5), (7), and (10)). To do so, let us write the social penalty P (MSM , s COM  
+
+> n
+
+) as follows, 
+
+P (MSM , s COM  
+
+> n
+
+) = 
+
+> m
+
+X
+
+> i=1
+
+pi(MSM , {(nj , id , h ACC )}j ) = 
+
+> m
+
+X
+
+> i=1
+> 2
+
+X
+
+> k=1
+
+σ2
+
+Pmj=1 nj,k 
+
++ ci,k ni,k 
+
+!! 
+
+=
+
+> 2
+
+X
+
+> k=1
+
+mσ 2
+
+Pmj=1 nj,k 
+
++
+
+> m
+
+X
+
+> i=1
+
+ci,k ni,k 
+
+!
+
+As c1,2 = ∞, we can set n1,2 = 0 ; otherwise the social penalty would be infinite. Similarly, we can set ni, 1 = 0 for all 
+
+i ∈ { 2, . . . , m }. This gives us, 
+
+P (MSM , {(nj , id , h ACC )}j ) = mσ 2
+
+n1,1
+
++ γn 1,1 + mσ 2
+
+Pmj=2 nj, 2
+
++ γ
+
+> m
+
+X
+
+> j=2
+
+nj, 2.
+
+Therefore, the RHS can be minimized by choosing any n which satisfies 
+
+n1,1 = σ
+
+r mγ , n1,2 = 0 , ni, 1 = 0 ,
+
+> m
+
+X
+
+> i=2
+
+ni, 2 = σ
+
+r mγ (20) Therefore the optimum social penalty is, 
+
+inf   
+
+> (M′,s ′)∈Θ
+
+P (M ′, s ′) = P (MSM , s COM  
+
+> n
+
+) = 4 σ√mγ. (21) 
+
+Proof intuition and challenges. We will first intuitively describe the plan of attack and the associated challenges. In our construction above, to minimize the social penalty, we need to collect σpm/γ points from both distributions. Since agent 1 is the only agent collecting data from the first distribution N (μ1, σ 2), she is responsible for collecting all of that data. Though costly, this is still IR for agent 1 as she would have a penalty of ∞ working alone. However, no mechanism can validate agent 1’s submission because she is the only one with access to distribution 1. Therefore, agent 1 will only collect an amount of data to minimize her own penalty, leaving the others with significantly less data than they would have in nB,leading to our hardness result. In particular, suppose a mechanism explicitly penalizes agent 1 for submitting only a small amount of data, say, by adding large noise to the estimate for μ2, or even not returning any information about μ2 at all. Then, agent 1 can fabricate a large amount of data by sampling from some normal distribution N (eμ1, σ 2) at no cost, and submit this fabricated dataset instead. Intuitively, we should not expect a mechanism to be able to determine if the agent is submitting data from the true distribution N (μ1, σ 2) or the fabricated one N (eμ1, σ 2) as only agent 1 has access to distribution 1. Hence, the best that a mechanism could hope for is to simply ask agent 1 to collect an amount of data to minimize her own penalty and submit it truthfully. Formalizing this intuition however is technically challenging. In particular, our proof cannot arbitrarily choose eμ1 when fabricating data for agent 1. For instance, if she arbitrarily chose eμ1 = 1 .729 , this would work poorly against a mechanism which explicitly penalizes agent 1 for submitting data whose mean is close to 1.729 . The key challenge is in showing that for any mechanism, there is always fabricated data which agent 1 can submit to the mechanism so that the information she receives about μ2 is not compromised. We will now formally prove Theorem 4 using this intuition. 
+
+Notation. Unless explicitly stated otherwise, throughout this proof, we will treat n1,1, n1,2, f1, and h1 = ( h1,1, h 1,2) as random quantities sampled from a mixed strategy for agent 1. For instance, if we write Ps1 (n1,1 = 5) , we are referring to the probability that, when agent 1 follows mixed strategy s1, she collects 5 samples from the first distribution. 21 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Proof of Theorem 4. Let M ∈ M be a mechanism and let s⋆ = ( s⋆
+
+> 1
+
+, . . . , s ⋆m) ∈ ∆( S)m be a (possibly mixed) Nash equilibrium of M . First observe that if Ps⋆ 
+
+> 1
+
+(n1,2 > 0) > 0, i.e if agent 1 were to collect samples from the second distribution with nonzero probability, then p1(M, s ⋆) = ∞ which implies P (M, s ⋆) = ∞, and we are done. Hence, going forward, we will assume Ps⋆ 
+
+> 1
+
+(n1,2 = 0) = 1 . Similarly, we can assume Ps⋆i (ni, 1 = 0) = 1 . Note that we can also write any estimator 
+
+h1 : D × D × I → R2 for agent 1 as h1 = ( h1,1, h 1,2) where h1,k : D × D × I → R is her estimate for μk.The key technical ingredient of this proof is Lemma 6, stated below. It states that instead of following the recommended Nash strategy s⋆
+
+> 1
+
+, agent 1 can follow an alternative strategy es1 in which she submits a fabricated dataset and not be worse off. In particular, even if s⋆ 
+
+> 1
+
+is pure, es1 may be a mixed (randomized) strategy where the randomness comes from sampling (fabricating) data. She can then use the legitimate data she collected to estimate μ1 and the information set she receives from submitting the fabricated data to estimate μ2. In es1, her submission function ef1 and estimator eh1,2 for μ2 may be random quantities which are determined by the fabricated data and do not depend on the data X1 = ( X1,1, ∅) she collects. We have proved Lemma 6 in Appendix F.3.1. 
+
+Lemma 6. Let M ∈ M and s⋆ be a Nash equilibrium in M . Then, there exists a strategy es1 ∈ ∆( S) for agent 1, such that 
+
+p1 (M, s ⋆) = p1(M, (es1, s ⋆
+
+> –1
+
+)) = E
+
+> es1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ sup 
+
+> μ2
+
+E
+
+> (es1,s ⋆
+> –1)
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2 (D, f 1(D), A 1) − μ2)2i
+
+for any D ∈ D . Additionally, let 
+
+
+
+(en1,1, 0) , ef1, (eh1,1, eh1,2)
+
+
+
+be drawn from es and let (( n⋆
+
+> 1,1
+
+, 0) , f ⋆ 
+
+> 1
+
+, (h⋆
+
+> 1,1
+
+, h ⋆
+
+> 1,2
+
+)) be drawn from s⋆
+
+> 1
+
+. The following statements about these random variables are true 1. en1,1 = n⋆
+
+> 1,1
+
+, i.e. the amount of data the agent collects in both strategies is the same. 2. eh1,1(X1, ·, ·) = hSM 1 (X1), i.e. agent 1 uses the sample mean of the data she collected from the first distribution to estimate μ1, regardless of what she submits and the information set she receives from the mechanism. 3. eh1,2 is constant with respect to (i.e does not depend on) μ1 and X1 = ( X1,1, ∅), i.e. the agent’s estimator for μ2 does not use the data she collects from the first distribution. 
+
+We will organize the remainder of the proof into two steps: - Step 1. Using Lemma 6, we will show that in any Nash equilibrium s⋆, agent 1 always collects σ/ √γ points which is a factor √m less than the amount in nB (see (20)), that is Ps⋆ 
+
+> 1
+
+(n1,1̸ = σ/ √γ) = 0 .- Step 2. Consequently, we show that all other agents will incur a large penalty, resulting in large social penalty. 
+
+Step 1. Let nIND 1,1 := σ/ √γ. In this step we will show that Ps⋆ 
+
+> 1
+
+(n1,1̸ = nIND 1,1 ) = 0 .Suppose for a contradiction that Ps⋆ (n1,1̸ = nIND 1,1 ) > 0. Let es1 be the strategy that Lemma 6 claims exists. Now define the strategy s′ 
+
+> 1
+
+to be the same as es1 except that agent 1 always collects nIND 1,1 points from distribution 1. Concretely, in s′
+
+> 1
+
+, the agent first samples (( n1,1, 0) , f 1, (h1,1, h 1,2)) ∼ es1, and then executes    nIND 1,1 , 0 , f 1, (h1,1, h 1,2). Let s′ := ( s′
+
+> 1
+
+, s ⋆
+
+> –1
+
+) be the strategy profile where all other agents are following the recommended Nash strategies while agent 1 is following s′
+
+> 1
+
+.Using the fact that in s′ 
+
+> 1
+
+the agent always collects nIND 1,1 points and uses the sample mean for h1,1 (Lemma 6), we can write 
+
+p1 (M, s ′) = sup 
+
+> μ1,μ 2
+
+E
+
+> s′
+
+ E
+
+> X1...X m
+> M
+
+ X
+
+> k∈{ 1,2}
+
+(h1,k (X1, f 1(X1), A 1) − μk)2
+
+ + γn 1,1
+
+
+
+= sup 
+
+> μ1,μ 2
+
+E
+
+> s′
+
+ E
+
+> X1...X m
+> M
+
+h
+
+(h1,2 (X1, f 1(X1), A 1) − μ2)2i + σ2
+
+nIND 1,1
+
++ γn IND 1,1 .
+
+Next, Lemma 6 also tells us that in es1, and hence in s′
+
+> 1
+
+, neither f1 nor h1,2 depends on the actual dataset X1 = ( X1,1, ∅)
+
+agent 1 has collected. Hence, we can replace X1 with any D ∈ D and drop the dependence on X1 and consequently μ1 in 22 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+the third term of the RHS above. This leads us to, 
+
+p1 (M, s ′) = sup 
+
+> μ2
+
+E
+
+> s′
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2 (D, f 1(D), A 1) − μ2)2i + σ2
+
+nIND 1,1
+
++ γn IND 1,1 .
+
+Next, by property 1 of es1 in Lemma 6, and our assumption (for the contradiction), we have Pes1 (n1,1̸ = nIND 1,1 ) = Ps⋆ (n1,1̸ =
+
+nIND 1,1 ) > 0. Noting that σ2 
+
+> x
+
++ γx is strictly convex in x and is minimized by x = nIND 1,1 = σ/ √γ, we have 
+
+p1 (M, (s′
+
+> 1
+
+, s ⋆
+
+> –1
+
+)) = σ2
+
+nIND 1,1
+
++ γn IND 1,1
+
+!
+
++ sup 
+
+> μ2
+
+E
+
+(s′
+
+> 1,s ⋆
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2 (D, f 1(D), A 1) − μ2)2i
+
+< E
+
+> es1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ sup 
+
+> μ2
+
+E
+
+(s′
+
+> 1,s ⋆
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2 (D, f 1(D), A 1) − μ2)2i
+
+= E
+
+> es1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ sup 
+
+> μ2
+
+E
+
+> (es1,s ⋆
+> –i)
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2 (D, f 1(D), A 1) − μ2)2i .
+
+Above, the final step simply observes that s′ = ( s′
+
+> 1
+
+, s ⋆
+
+> –1
+
+) and that f1 and h1,2 are almost surely equal in both s′ 
+
+> 1
+
+and es1. By Lemma 6, the last expression above is equal to p1(M, s ⋆), which gives us p1(M, (s′
+
+> 1
+
+, s ⋆
+
+> –1
+
+)) < p 1(M, s ⋆) which contradicts the fact that s⋆ is a Nash equilibrium, as agent 1 can improve their penalty by switching to s′
+
+> 1
+
+. Therefore, we conclude 
+
+Ps⋆ 
+
+> 1
+
+(n1,1̸ = nIND 1,1 ) = 0 .
+
+Step 2. We will now show that agents 2 · · · m will have a large penalty, which in turn results in large social penalty. Consider the penalty pi(M, s ⋆) for any agent i ∈ { 2, . . . , m } under s⋆. Recall that Ps⋆i (ni, 1 = 0) = 1 for all such agents (otherwise their individual penalties, and hence the social penalty would be infinite). We can write, 
+
+pi (M, s ⋆) = sup 
+
+> μ1,μ 2
+
+E
+
+> s⋆
+
+ E
+
+> X1...X m
+> M
+
+ X
+
+> k∈{ 1,2}
+
+(hi,k (Xi, f i(Xi), I i) − μk)2
+
+ + γn i, 2
+
+
+
+≥ sup 
+
+> μ1,μ 2
+
+E
+
+> s⋆
+
+ E
+
+> X1...X m
+> M
+
+h
+
+(hi, 1 (Xi, f i(Xi), I i) − μ1)2i
+
+≥ σ2
+
+nIND 1,1
+
+= σ√γ. 
+
+Above we have dropped some non-negative terms in the second step and then in the third step used the fact that we cannot do better than the (minimax optimal) sample mean of agent 1’s submission X1,1 to estimate μ1. Similarly, agent 1’s penalty will be at least σ√γ as she collects σ/ √γ points. Therefore, the social penalty pi(M, s ⋆) is at least mσ √γ. On the other hand, from (21) , we have, 
+
+P (MSM , {(nj , id , h ACC )}j ) = 4 σ√mγ . This gives us 
+
+P (M, s ⋆)
+
+P (MSM , {(nj , id , h ACC )}j ) ≥√m
+
+4 ,
+
+for any mechanism M and Nash equilibrium s⋆ of M .It is worth mentioning that our anlaysis in step 2 to bound the social penalty at (M, s ⋆) is quite loose in the constants as we have dropped the penalty due to the estimation error and data collections of the second distribution. F.3.1. P ROOF OF LEMMA 6At a high level, Lemma 6 says that we can decompose agent 1’s penalty into two parts, one for each distribution. The first term is the sum of the estimation cost for distribution 1 plus to cost to collect the data from distribution 1. The second term 23 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+is the estimation error for the second distribution based on the information set provided by the mechanism. Notice that the second term only involves a supremum over μ2 and an expectation over the data drawn from distribution 2 as opposed to a supremum over both of μ1, μ 2 and an expectation over all of the data. This is because the submission and estimation functions sampled from es will be constant with respect to μ1 and the data drawn from distribution 1. 
+
+Proof of Lemma 6. We will break this proof down into four steps: - Step 1. Using a sequence of priors on μ1, {Λτ }τ ≥1, we will construct a sequence of lower bounds on p1(M, s ⋆).Furthermore, the limit as τ → ∞ of these lower bounds will also be a lower bound on p1(M, s ⋆).- Step 2. We will show that this lower bound is achieved for a careful choice of es = ( es1, s ⋆
+
+> –1
+
+) which satisfies the properties listed in Lemma 6. - Step 3. Using the fact that s⋆ 
+
+> 1
+
+is the optimal strategy for agent 1 (assuming the other agents follow s⋆
+
+> –1
+
+), we can upper bound p1(M, s ⋆) by p1 (M, (es1, s ⋆
+
+> –1
+
+)) .- Step 4. We will show that our upper bound for p1(M, s ⋆) matches our lower bound for p1(M, s ⋆). Therefore, 
+
+p1(M, s ⋆) equals our upper/lower bound. 
+
+Step 1. For the sake of convenience, let ∆( S)′ := s ∈ ∆( S) : n1,1 = n⋆ 
+
+> 1,1
+
+. By the definition of p1(M, s ⋆) and the fact that s⋆ is a Nash equilibrium, we have 
+
+p1(M, s ⋆) = sup 
+
+> μ1,μ 2
+
+E
+
+> s⋆
+
+ E
+
+> X1...X m
+> M
+
+ X
+
+> k∈{ 1,2}
+
+(h1,k (X1, f 1(X1), I 1) − μk)2
+
+ + γn 1,1
+
+
+
+= inf  
+
+> s1∈∆( S)′
+
+sup 
+
+> μ1,μ 2
+
+E
+
+(s1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X1...X m
+> M
+
+ X
+
+> k∈{ 1,2}
+
+(h1,k (X1, f 1(X1), I 1) − μk)2
+
+ + γn 1,1
+
+ . (22) If the second equality did not hold, then agent 1 could deviate from s⋆ 
+
+> 1
+
+by choosing a strategy with a different distribution over the set of submission/estimation functions and achieve a lower penalty (which would contradict that s⋆ is a Nash equilibrium). We will now construct a sequence of priors parameterized by τ ≥ 1 and use them to lower bound (22) and thus p1(M, s ⋆).Let Λτ := N (0 , τ 2). Since the supremum is larger than the average we have 
+
+inf  
+
+> s1∈∆( S)′
+
+sup 
+
+> μ1,μ 2
+
+E
+
+(s1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X1...X m
+> M
+
+ X
+
+> k∈{ 1,2}
+
+(h1,k (X1, f 1(X1), I 1) − μk)2
+
+ + γn 1,1
+
+
+
+≥ inf  
+
+> s1∈∆( S)′
+
+sup 
+
+> μ2
+
+E
+
+> μ1∼Λτ
+
+ E
+
+(s1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X1...X m
+> M
+
+ X
+
+> k∈{ 1,2}
+
+(h1,k (X1, f 1(X1), I 1) − μk)2
+
+ + γn 1,1
+
+ . (23) We can switch the order of the expectation for μ1 and X1 by rewriting μ1 conditioned on the marginal distribution of X1.For convenience, let D(τ ) denote the marginal distribution for X1. Changing the order, (23) becomes 
+
+inf  
+
+> s1∈∆( S)′
+
+sup 
+
+> μ2
+
+E
+
+(s1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+ E 
+
+> X1∼D(τ)
+
+ E
+
+> μ1
+
+ X
+
+> k∈{ 1,2}
+
+(h1,k (X1, f 1(X1), I 1) − μk)2 X1
+
+ + γn 1,1
+
+ . (24) Consider the term Eμ1
+
+h
+
+(h1,1(X1, f 1(X1), I 1) − μ1)2 |X1
+
+i
+
+. It is well known (Lehmann & Casella, 2006) that for a normal distribution, the Bayes’ risk is minimized by the Bayes estimator and and that the Bayes’ risk under this estimator is simply the posterior variance, i.e. 
+
+E
+
+> μ1
+
+h
+
+(h1,1(X1, f 1(X1), I 1) − μ1)2 |X1
+
+i
+
+= σ2
+
+n1,1 + σ2 
+
+> τ2
+
+.
+
+24 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Following this observation, we rewrite (24) as 
+
+inf  
+
+> s1∈∆( S)′
+
+sup 
+
+> μ2
+
+E
+
+(s1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+"
+
+E 
+
+> X1∼D(τ)
+
+"
+
+E
+
+> μ1
+
+"
+
+σ2
+
+n1,1 + σ2 
+
+> τ2
+
++ ( h1,2(X1, f 1(X1), I 1) − μ2)2 X1
+
+### 
+
++ γn 1,1
+
+
+
+= inf  
+
+> s1∈∆( S)′
+
+sup 
+
+> μ2
+
+E
+
+(s1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+
+
+E 
+
+> X1∼D(τ)
+
+
+
+E
+
+> μ1
+
+
+
+(h1,2(X1, f 1(X1), I 1) − μ2)2 X1
+
+ 
+
++ σ2
+
+n1,1 + σ2 
+
+> τ2
+
++ γn 1,1
+
+ . (25) We now observe that when we condition on the data from distribution 1, (h1,2(X1, f 1(X1), I 1) − μ2)2 | X1 is constant with respect to μ1. This allows us to drop the expectation over μ1 which let us rewrite (25) as 
+
+inf  
+
+> s1∈∆( S)′
+
+sup 
+
+> μ2
+
+E
+
+(s1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+
+
+E 
+
+> X1∼D(τ)
+
+h
+
+(h1,2(X1, f 1(X1), I 1) − μ2)2i
+
++ σ2
+
+n1,1 + σ2 
+
+> τ2
+
++ γn 1,1
+
+ . (26) If we take the limit as τ → ∞ of (26) , using monotone convergence and that s1 ∈ ∆( S)′, we obtain the following lower bound on equation p1(M, s ⋆)
+
+p1(M, s ⋆) ≥ E
+
+> s⋆
+> 1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ lim   
+
+> τ→∞
+
+inf  
+
+> s1∈∆( S)′
+
+sup 
+
+> μ2
+
+E
+
+(s1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+
+
+E 
+
+> X1∼D(τ)
+
+h
+
+(h1,2(X1, f 1(X1), I 1) − μ2)2i . (27) 
+
+Step 2. Lemma 7 shows that the right hand term in (27) is constant in τ which allows us to drop the limit. Additionally, Lemma 7, and the remarks that precede its proof, describe and show how sampling X1 from D(τ ) can be incorporated into the strategy s1 because D(τ ) a probability distribution that does not depend on μ1, μ 2 or X2, . . . , X m. Therefore, the submission/estimation functions used in estimating distribution 2 do not depend on the data collected from distribution 1. Thus, without loss of generality we can write the lower bound in (27) as 
+
+E
+
+> s⋆
+> 1
+
+ σ2
+
+n1,1
+
++ c1,1n1,1
+
+
+
++ inf  
+
+> s1∈∆( S)′
+
+sup 
+
+> μ2
+
+E
+
+(s1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2(D, f 1(D), I 1) − μ2)2i| {z }
+
+> L:=
+
+(28) where D ∈ D is any dataset. Therefore, we have 
+
+p1(M, s ⋆) ≥ E
+
+> s⋆
+> 1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ L . (29) However, a priori, we do not know that there exists a single strategy s1 ∈ ∆( S)′ which actually achieves estimation error of L on distribution 2 (i.e. the error corresponding to plugging the strategy into the right hand term of (28) ). Suppose for a contradiction that this is not the case. We know that for all ε > 0, we can find a strategy whose estimation error for distribution 2 comes within ε of L. Furthermore, for each of these strategies, the distribution over h1,1 does not affect the estimation error of distribution 2 since the right hand term does not involve h1,1. Therefore, we can suppose that these strategies all select hε 
+
+> 1,1
+
+= hSM 1 (X1). More concretely, ∀ε > 0, ∃sε 
+
+> 1
+
+∈ ∆( S)′ such that hε 
+
+> 1,1
+
+= hSM 1 (X1) and 
+
+sup 
+
+> μ2
+
+E
+
+(sε
+
+> 1,s ⋆
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2(D, f 1(D), I 1) − μ2)2i < L + ε . 
+
+If we plug the strategy (sε
+
+> 1
+
+, s ⋆
+
+> –1
+
+) into equation (22) we obtain the following upper bound on p1(M, s ⋆)
+
+p1(M, s ⋆) ≤ sup 
+
+> μ1,μ 2
+
+E
+
+(sε
+
+> 1,s ⋆
+> –1
+
+)
+
+ E
+
+> X1...X m
+> M
+
+ X
+
+> k∈{ 1,2}
+
+(h1,k (X1, f 1(X1), I 1) − μk)2
+
+ + E
+
+> sε
+> 1
+
+[γn 1,1]
+
+25 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+= E
+
+> sε
+> 1
+
+ σ2
+
+n1,1
+
+
+
++ sup 
+
+> μ2
+
+E
+
+(sε
+
+> 1,s ⋆
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2(D, f 1(D), I 1) − μ2)2i + E
+
+> sε
+> 1
+
+[γn 1,1]= E
+
+> s⋆
+> 1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ sup 
+
+> μ2
+
+E
+
+(sε
+
+> 1,s ⋆
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2(D, f 1(D), I 1) − μ2)2i
+
+= E
+
+> s⋆
+> 1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ L + ε . (30) As we are supposing that the lower bound in inequality (29) is not actually achieved for any s1 ∈ ∆( S)′, the inequality is strict. Combining inequalities (29) and (30), we get 
+
+E
+
+> s⋆
+> 1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ L + ε > p 1(M, s ⋆) > E
+
+> s⋆
+> 1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ L . 
+
+However, this yields a contradiction since these inequalities hold ∀ε > 0. Therefore, we conclude that ∃ en1, ef1, eh1
+
+ = es1 ∈
+
+∆( S)′ such that 
+
+sup 
+
+> μ2
+
+E
+
+(es1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2(D, f 1(D), I 1) − μ2)2i = L . 
+
+Furthermore, for this strategy, the distribution over h1,1 does not affect the above term (the estimation error of distribution 2) since h1,1 doesn’t appear in the expression. Therefore, we can suppose that es1 always selects eh1,1 = hSM 1 (X1). Also observe that since we were able to replace X1 with D in step 2, we have that ef1, eh1,2 are constant with respect to μ1 and X1.Additionally, since es1 ∈ ∆( S)′ we know that en1,1 = n⋆
+
+> 1,1
+
+. Therefore, es1 satisfies our three desired properties which are listed below. 1. en1,1 = n⋆
+
+> 1,1
+
+. 2. eh1,1 = hSM 1 (X1). 3. eh1,2 is constant with respect to μ1 and X1.Let es be defined as es := ( es1, s ⋆
+
+> –1
+
+). We can now write the lower bound in equation (29) as 
+
+p1(M, s ⋆) ≥ E
+
+> es1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ sup 
+
+> μ2
+
+E
+
+> es
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2(D, f 1(D), I 1) − μ2)2i . (31) 
+
+Step 3. We can now take es1, plug it into equation (22) , and use properties two and three of es1 to get the following upper bound on p1(M, s ⋆)
+
+p1(M, s ⋆) ≤ sup 
+
+> μ1,μ 2
+
+E
+
+> es
+
+ E
+
+> X1...X m
+> M
+
+ X
+
+> k∈{ 1,2}
+
+(hi,k (X1, f 1(X1), I 1) − μk)2
+
+ + E
+
+> es1
+
+[γn 1,1]= E
+
+> es1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ sup 
+
+> μ2
+
+E
+
+> es
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2(D, f 1(D), I 1) − μ2)2i . (32) 
+
+Step 4. But notice that (31) and (32) provide matching lower and upper bounds for p1(M, s ⋆). We can therefore conclude that 
+
+p1(M, s ⋆) = E
+
+> es1
+
+ σ2
+
+n1,1
+
++ γn 1,1
+
+
+
++ sup 
+
+> μ2
+
+E
+
+> es
+
+ E
+
+> X2...X m
+> M
+
+h
+
+(h1,2(D, f 1(D), I 1) − μ2)2i .
+
+This completes the proof. 26 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Lemma 7. The expression introduced in Step 1. of Lemma 6 and given below is constant in τ .
+
+z1(τ ) := inf  
+
+> s1∈∆( S)′
+
+sup 
+
+> μ2
+
+E
+
+(s1,s ⋆
+
+> –1
+
+)
+
+ E
+
+> X2...X m
+> M
+
+
+
+E 
+
+> X1∼D(τ)
+
+h
+
+(h1,2(X1, f 1(X1), I 1) − μ2)2i| {z }
+
+> z2(τ,s 1):=
+
+Remark 1. For convenience, we have defined the quantities z1(τ ) and z2(τ, s 1) above. We can think of z1(τ ) as the best possible estimation error agent 1 can achieve on distribution 2 for a particular τ and any choice of s1 ∈ ∆( S)′. z2(τ, s 1)
+
+can be thought of as the estimation error agent 1 achieves on distribution 2 for a particular τ and choice of strategy 
+
+s1 ∈ ∆( S)′.
+
+Remark 2. Here is an intuitive justification for why we should believe Lemma 7 is true. For any choice of τ , D(τ ) is just some probability distribution that does not depend on μ1, μ 2 or the data drawn from these distributions. If z1(τa) < z 1(τb)
+
+for two different values of of tau, it means that we were able to achieve a lower estimation error by using X1 ∼ D(τa) than using X1 ∼ D(τb). However, because agent 1 can use a randomized strategy, they could draw and use data from D(τa)
+
+while ignoring any data drawn from D(τb). Therefore, the error we achieve should not be subject to the value of τ . We now use this idea to prove Lemma 7. Proof of Lemma 7. Suppose for a contradiction that ∃τa̸ = τb such that z1(τa) < z 1(τb). A priori we do not know that 
+
+z1(τa) is achieved by a single choice of s1 ∈ ∆( S)′ so let (sa,n  
+
+> 1
+
+)n∈N be a sequence such that lim n→∞ z2 (τa, s a,n  
+
+> 1
+
+) = z1 (τb).But using this sequence, we can construct a different sequence (sb,n  
+
+> 1
+
+)n∈N defined via (nb,n  
+
+> 1
+
+, f b,n  
+
+> 1
+
+, h b,n  
+
+> 1
+
+) ∼ sb,n  
+
+> 1
+
+such that 
+
+(nb,n  
+
+> 1
+
+, f b,n  
+
+> 1
+
+, h b,n  
+
+> 1
+
+) = 
+
+
+
+na,n  
+
+> 1
+
+, f a,n  
+
+> 1
+
+(Xτa 
+
+> 1
+
+) ,
+
+
+
+ha,n  
+
+> 1,1
+
+, h a,n 
+
+> 1,2
+
+ Xτa 
+
+> 1
+
+, f a,n  
+
+> 1
+
+(Xτa 
+
+> 1
+
+) , A 1
+
+
+
+where (na,n  
+
+> 1
+
+, f a,n  
+
+> 1
+
+, h a,n  
+
+> 1
+
+) ∼ sa,n  
+
+> 1
+
+and Xτa 
+
+> 1
+
+∼ D(τa)
+
+This construction samples a strategy from sa,n  
+
+> 1
+
+and then uses data sampled from D(τa) in place of the data sampled from 
+
+D(τb). But notice that via this construction 
+
+z2(τa, s b,n  
+
+> 1
+
+) = sup 
+
+> μ2
+
+E
+
+> X2...X m
+> M
+
+"
+
+E
+
+(sb,n  
+
+> 1,s ⋆
+> –1
+
+)
+
+
+
+E
+
+> X1∼D(τb)
+
+h
+
+(h1,2 (X1, f 1X1, A 1) − μ2)2i#
+
+= sup 
+
+> μ2
+
+E
+
+> X2...X m
+> M
+
+"
+
+E
+
+(sa,n  
+
+> 1,s ⋆
+> –1
+
+)
+
+"
+
+E 
+
+> Xτa
+> 1∼D(τa)
+
+
+
+E
+
+> X1∼D(τb)
+
+h
+
+(h1,2 (Xτa 
+
+> 1
+
+, f 1Xτa 
+
+> 1
+
+, A 1) − μ2)2i## 
+
+= sup 
+
+> μ2
+
+E
+
+> X2...X m
+> M
+
+"
+
+E
+
+(sa,n  
+
+> 1,s ⋆
+> –1
+
+)
+
+"
+
+E 
+
+> Xτa
+> 1∼D(τa)
+
+h
+
+(h1,2 (Xτa 
+
+> 1
+
+, f 1Xτa 
+
+> 1
+
+, A 1) − μ2)2i## 
+
+= sup 
+
+> μ2
+
+E
+
+> X2...X m
+> M
+
+"
+
+E
+
+(sa,n  
+
+> 1,s ⋆
+> –1
+
+)
+
+
+
+E
+
+> X1∼D(τa)
+
+h
+
+(h1,2 (X1, f 1X1, A 1) − μ2)2i#
+
+= z2(τa, s a,n  
+
+> 1
+
+)
+
+This implies that lim n→∞ z2(τb, s b,n  
+
+> 1
+
+) = lim n→∞ z2(τa, s a,n  
+
+> 1
+
+). We can therefore say that z1(τa) ≥ z1(τb) which is a contradiction. Therefore, z1 is constant in τ .
+
+G. Technical Results 
+
+This section is comprised of technical results that are not relevant to the ideas of the proofs they are used in. 
+
+Lemma 8. For all x > 0
+
+Erfc (x) ≥ 1
+
+√π
+
+ exp( −x2)
+
+x − exp( −x2)2x3
+
+
+
+27 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Proof. First set 
+
+g(x) := Erfc (x) − 1
+
+√π
+
+ exp( −x2)
+
+x − exp( −x2)2x3
+
+
+
+.
+
+We find that g′(x) = −3 exp( −x2)4x4 < 0. Furthermore, since 
+
+lim 
+
+> x→∞
+
+
+
+Erfc (x) − 1
+
+√π
+
+ exp( −x2)
+
+x − exp( −x2)2x3
+
+ 
+
+= 0 
+
+we conclude that g(x) ≥ 0.
+
+Lemma 9. Let n′ 
+
+> i,k
+
+be the value of eni,k after the first while loop but before the second in Algorithm 1. Also let 
+
+Tk = Pmi=1 n′ 
+
+> i,k
+
+then 
+
+σ2
+
+nIND 
+
+> i,k
+
++ ci,k nIND  
+
+> i,k
+
+> 4 σ2
+
+Pmj=1 n′
+
+> j,k
+
++ ci,k n′
+
+> i,k
+
+!
+
+⇒ Tk > 2nIND 
+
+> i,k
+
+Proof. We will prove the contrapositive. Since nIND  
+
+> i,k
+
+= σ√ci,k 
+
+4 σ2
+
+Pmj=1 n′
+
+> j,k
+
++ ci,k n′
+
+> i,k
+
+!
+
+= 4 
+
+ σ2
+
+Tk
+
++ ci,k n′
+
+> i,k
+
+
+
+≥ 4 σ2
+
+2nIND 
+
+> i,k
+
++ ci,k n′
+
+> i,k
+
+!
+
+≥ 2 σ2
+
+nIND 
+
+> i,k
+
+= σ2
+
+nIND 
+
+> i,k
+
++ ci,k nIND 
+
+> i,k
+
+Therefore Tk > 2nIND  
+
+> i,k
+
+.
+
+Lemma 10. Suppose that nB satisfies (8) . If i̸ ∈ Vk then nIND  
+
+> i,k
+> 2
+
+> n ⋆i,k .Proof. Let en be the corresponding vector returned in Algorithm 1, and let n′ 
+
+> i,k
+
+denote the value of en after the first while loop but before the second while loop in Algorithm 1. Since i̸ ∈ Vk, we know that σ2
+
+> nIND
+> i,k
+
++ ci,k nIND  
+
+> i,k
+
+> 4
+
+ σ2 
+
+> Pmj=1 n′
+> j,k
+
++ ci,k n′
+
+> i,k
+
+
+
+.We now consider two cases: If n′ 
+
+> i,k
+
+= eni,k : Since nIND  
+
+> i,k
+
+= σ√ci,k we have that 
+
+2nIND  
+
+> i,k
+
+ci,k = σ2
+
+nIND 
+
+> i,k
+
++ ci,k nIND  
+
+> i,k
+
+> 4 σ2
+
+Pmj=1 n′
+
+> j,k
+
++ ci,k n′
+
+> i,k
+
+!
+
+> 4ci,k n′ 
+
+> i,k
+
+⇒ nIND 
+
+> i,k
+
+2 > eni,k 
+
+If n′
+
+> i,k
+
+̸ = eni,k : We know that eni,k was changed in loop two, otherwise n′ 
+
+> i,k
+
+and eni,k would be equal since they are equal after loop one by definition. Because eni,k was updated in the second loop, we know that eni,k = (nIND   
+
+> i,k )2
+> Tk
+
+where Tk = Pmi=1 n′
+
+> i,k
+
+by the definition of Algorithm 1. Lemma 9 tells us that Tk > 2nIND  
+
+> i,k
+
+. Therefore eni,k = (nIND   
+
+> i,k )2
+> Tk
+
+< nIND  
+
+> i,k
+> 2
+
+.In both cases nIND  
+
+> i,k
+> 2
+
+> eni,k . Therefore nIND  
+
+> i,k
+> 2
+
+> n ⋆i,k as n⋆ is defined in Algorithm 2 to be the value of en returned by Algorithm 1. 28 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Lemma 11. Suppose that nB satisfies (8) . Then nIND 
+
+> i,k
+> nB
+> i,k
+
+> 12 .Proof. Let ni,k be the maximum amount of data that is individually rational for agent i to collect assuming that k is the only distribution that i is trying to estimate. By this definition we have 
+
+σ2
+
+ni,k + P  
+
+> j̸=i
+
+nB
+
+> j,k
+
++ ci,k ni,k = σ2
+
+nIND 
+
+> i,k
+
++ ci,k nIND  
+
+> i,k
+
+= 2 σ√ci,k 
+
+Therefore ci,k ni,k < 2σ√ci,k ⇒ ni,k < 2σ√ci,k . We can now write 
+
+nIND 
+
+> i,k
+
+ni,k 
+
+>
+
+> σ√ci,k
+> 2σ√ci,k
+
+= 12 .
+
+By definition ni,k ≥ nB 
+
+> i,k
+
+and so nIND 
+
+> i,k
+> nB
+> i,k
+
+≥ nIND  
+
+> i,k
+> ni,k
+
+> 12 which proves the claim. 
+
+Lemma 12. Suppose that nB satisfies (8) . Let n′ be the value of en in Algorithm 1 after the first while loop but before the second while loop. Then n′
+
+> i,k
+> nB
+> i,k
+
+> 12 .Proof. Initially eni,k = nB 
+
+> i,k
+
+but may be modified by the first while loop. If eni,k is unchanged by the first loop then 
+
+n′ 
+
+> i,k
+
+= nB 
+
+> i,k
+
+and so n′
+
+> i,k
+> nB
+> i,k
+
+> 12 . If eni,k is changed by the first loop then eni,k becomes nIND  
+
+> i,k
+
+. But since nB satisfies (8) , we know by Lemma 11 that nIND 
+
+> i,k
+> nB
+> i,k
+
+> 12 and n′
+
+> i,k
+> nB
+> i,k
+
+> 12 . In both cases the desired inequality holds. 
+
+Lemma 13. Suppose that nB satisfies (8) . Let n⋆ be the value returned by Algorithm 1. Then n⋆i,k 
+
+> nB
+> i,k
+
+> 12 .Proof. The final value of en will be the value returned for n⋆ in Algorithm 1. Initially eni,k = nB 
+
+> i,k
+
+and is modified (if at all) in either the first or the second while loop. The second while loop can only increase eni,k from nB 
+
+> i,k
+
+to (nIND  
+
+> i,k
+
+)2 
+
+> Tk
+
+so if eni,k 
+
+is modified by the second while loop we know that n⋆i,k 
+
+> nB
+> i,k
+
+> 12 . If eni,k is unchanged by either loop then eni,k = nB 
+
+> i,k
+
+and so 
+
+> n⋆i,k
+> nB
+> i,k
+
+> 12 . If eni,k is changed by the first loop then eni,k becomes nIND  
+
+> i,k
+
+. But since nB satisfies (8) , we know by Lemma 11 that nIND 
+
+> i,k
+> nB
+> i,k
+
+> 12 and n⋆i,k 
+
+> nB
+> i,k
+
+> 12 . In every case the desired inequality holds. 
+
+Lemma 14. Let Gi,k (αi,k )UB be as defined in (12) . Then we have that 
+
+Gi,k 
+
+q 
+
+n⋆i,k 
+
+
+
+> UB
+
+= − 64( n⋆i,k )3/2(ci,k n⋆i,k (Tk)3 + (2( n⋆i,k )2 − (Tk)2)σ2)(Tk)5/2(Tk − 2n⋆i,k )σ2 .
+
+Proof. The exponential terms in Gi,k 
+
+pn⋆i,k 
+
+
+
+> UB
+
+cancel giving 
+
+Gi,k 
+
+q 
+
+n⋆i,k 
+
+
+
+> UB
+
+=
+
+> (a)
+
+z }| {
+
+4pn⋆i,k 
+
+√Tk
+
+−1 + 4Tk
+
+Tk − 2n⋆i,k 
+
+− 16 ci,k (n⋆i,k )2Tk
+
+(Tk − 2n⋆i,k )σ2
+
+!
+
+−√2 −1 + 4 1 + Tk
+
+n⋆i,k 
+
+! n⋆i,k 
+
+Tk
+
+!  8n⋆i,k 
+
+Tk
+
+1/2
+
+− 12
+
+ 8n⋆i,k 
+
+Tk
+
+3/2!| {z }
+
+> (b)
+
+29 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Now notice that 
+
+(a) = − 4( n⋆i,k )1/2(Tk)2σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2 + 8( n⋆i,k )3/2(Tk)2σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2
+
++ 16( n⋆i,k )1/2(Tk)3σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2 − 64 ci,k (n⋆i,k )5/2(Tk)3
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2
+
+(b) = −√2
+
+
+
+3 + 4n⋆i,k 
+
+Tk
+
+  8n⋆i,k 
+
+Tk
+
+1/2
+
+− 12
+
+ 8n⋆i,k 
+
+Tk
+
+3/2!
+
+= −√2 3
+
+ 8n⋆i,k 
+
+Tk
+
+1/2
+
+− 32
+
+ 8n⋆i,k 
+
+Tk
+
+3/2
+
++ 8√2( n⋆i,k )3/2
+
+(Tk)3/2 − 32 √2( n⋆i,k )5/2
+
+(Tk)5/2
+
+!
+
+= − 12( n⋆i,k )1/2(Tk)2(Tk − 2n⋆i,k )σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2 + 48( n⋆i,k )3/2Tk(Tk − 2n⋆i,k )σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2
+
+− 16( n⋆i,k )3/2Tk(Tk − 2n⋆i,k )σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2 + 64( n⋆i,k )5/2(Tk − 2n⋆i,k )σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2
+
+= − 12( n⋆i,k )1/2(Tk)3σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2 + 24( n⋆i,k )3/2(Tk)2σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2
+
++ 48( n⋆i,k )3/2(Tk)2σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2 − 96( n⋆i,k )5/2Tkσ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2
+
+− 16( n⋆i,k )3/2Tk(Tk)2σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2 + 32( n⋆i,k )5/2Tkσ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2
+
++ 64( n⋆i,k )5/2Tkσ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2 − 128( n⋆i,k )7/2σ2
+
+(Tk)5/2(Tk − 2n⋆i,k )σ2
+
+The result now follows from 
+
+(a) + ( b) = − 64( n⋆i,k )3/2(ci,k n⋆i,k (Tk)3 + (2( n⋆i,k )2 − (Tk)2)σ2)(Tk)5/2(Tk − 2n⋆i,k )σ2
+
+Lemma 15. In the context of §H.2 we have that 
+
+∂p i
+
+∂n i,k 
+
+(n⋆i,k ) = = − σ2Di,k 
+
+64 α3
+
+i,k 
+
+√Tkn⋆i,k 
+
+4αi,k 
+
+√Tk
+
+4α2
+
+i,k Tk
+
+Di,k n⋆i,k 
+
+− 1 − ci,k 
+
+16 α2
+
+i,k Tkn⋆i,k 
+
+σ2Di,k 
+
+!
+
+− exp Tk
+
+8α2
+
+i,k 
+
+! 4α2
+
+i,k 
+
+Tk
+
+Tk
+
+n⋆i,k 
+
++ 1 
+
+!
+
+− 1
+
+! √2πErfc 
+
+s Tk
+
+8α2
+
+i,k 
+
+! ! 
+
+Proof. By the dominated convergence theorem we have 
+
+∂p i
+
+∂n i,k 
+
+(n⋆i,k ) = E
+
+x∼N (0 ,1) 
+
+
+
+−σ2
+
+1 + Di,k 
+
+
+
+1+ α2
+
+> i,k
+
+
+
+> 1
+> n⋆i,k
+
++ 1
+
+> n⋆i,k
+
+
+
+x2
+
+2
+
+α2 
+
+> i,k
+
+x2
+
+(n⋆i,k )2
+
+ Di,k 
+
+1+ α2
+
+> i,k
+
+
+
+> 1
+> n⋆i,k
+
++ 1
+
+> n⋆i,k
+
+
+
+x2
+
++ n⋆i,k + n⋆i,k 
+
+
+
+2
+
+
+
++ ci,k 
+
+30 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+= −σ2 E
+
+x∼N (0 ,1) 
+
+
+
+1 + Di,k 
+
+
+
+1+ 2α2
+
+> i,k n⋆i,k
+
+x2
+
+2
+
+α2 
+
+> i,k
+
+x2
+
+(n⋆i,k )2
+
+ Di,k 
+
+1+ 2α2
+
+> i,k n⋆i,k
+
+x2
+
++ 2 n⋆i,k 
+
+
+
+2
+
+
+
++ ci,k 
+
+= − σ2
+
+(n⋆i,k )2 E
+
+x∼N (0 ,1) 
+
+
+
+1 + Di,k α2 
+
+> i,k
+
+x2
+
+(n⋆i,k +2 α2 
+
+> i,k
+
+x2)2
+
+ Di,k 
+
+n⋆i,k +2 α2 
+
+> i,k
+
+x2 + 2 
+
+2
+
+ + ci,k 
+
+= − σ2
+
+4( n⋆i,k )2 E
+
+x∼N (0 ,1) 
+
+
+
+4
+
+
+
+n⋆i,k + 2 α2
+
+i,k x2
+
+2
+
++ 4 Di,k α2
+
+i,k x2
+
+
+
+Di,k + 2 
+
+
+
+n⋆i,k + 2 α2
+
+i,k x2
+
+ 2
+
+ + ci,k 
+
+= − σ2
+
+4( n⋆i,k )2 E
+
+x∼N (0 ,1) 
+
+1 + −(Di,k )2 − 4Di,k (n⋆i,k + 2 α2
+
+i,k x2) + 4 Di,k α2
+
+i,k x2
+
+
+
+Di,k + 2 
+
+
+
+n⋆i,k + 2 α2
+
+i,k x2
+
+ 2
+
+ + ci,k 
+
+= − σ2
+
+4( n⋆i,k )2 E
+
+x∼N (0 ,1) 
+
+1 + Di,k 
+
+−Di,k − 4( n⋆i,k + 2 α2
+
+i,k x2) + 4 α2
+
+i,k x2
+
+
+
+4α2
+
+i,k x2 + Tk
+
+2
+
+ + ci,k 
+
+= − σ2
+
+4( n⋆i,k )2 E
+
+x∼N (0 ,1) 
+
+1 + Di,k 
+
+−Tk − 2n⋆i,k − 4α2
+
+i,k x2
+
+
+
+4α2
+
+i,k x2 + Tk
+
+2
+
+ + ci,k 
+
+= − σ2
+
+4( n⋆i,k )2 + σ2
+
+4( n⋆i,k )2 Di,k E
+
+x∼N (0 ,1) 
+
+ 1
+
+
+
+4α2
+
+i,k x2 + Tk
+
+ + 2n⋆i,k 
+
+
+
+4α2
+
+i,k x2 + Tk
+
+2
+
+ + ci,k 
+
+= − σ2
+
+4( n⋆i,k )2 + σ2
+
+4( n⋆i,k )2 Di,k E
+
+x∼N (0 ,1) 
+
+ 14α2
+
+i,k 
+
+1
+
+
+
+x2 + Tk
+
+4α2
+
+> i,k
+
+ + 2n⋆i,k 
+
+16 α4
+
+i,k 
+
+1
+
+
+
+x2 + Tk
+
+4α2
+
+> i,k
+
+2
+
+ + ci,k 
+
+= ci,k − σ2
+
+4( n⋆i,k )2 + σ2
+
+4( n⋆i,k )2 Di,k 
+
+2n⋆i,k 
+
+16 α4
+
+i,k 
+
+1
+
+Tk
+
+2α2
+
+> i,k
+
++ σ2
+
+4( n⋆i,k )2 Di,k 
+
+ 14α2
+
+i,k 
+
++ 2n⋆i,k 
+
+16 α4
+
+i,k 
+
+1 − Tk
+
+4α2
+
+> i,k
+
+Tk
+
+2α2
+
+> i,k
+
+ exp Tk
+
+8α2
+
+i,k 
+
+!
+
+Erfc 
+
+s Tk
+
+8α2
+
+i,k 
+
+! s π
+
+Tk
+
+2α2
+
+> i,k
+
+= ci,k − σ2
+
+4( n⋆i,k )2 1 − Di,k n⋆i,k 
+
+4α2
+
+i,k Tk
+
+!
+
++ σ2
+
+4( n⋆i,k )2 Di,k 
+
+14α2
+
+i,k 
+
++ n⋆i,k 
+
+4α2
+
+i,k Tk
+
+− n⋆i,k 
+
+16 α4
+
+i,k 
+
+!
+
+exp Tk
+
+8α2
+
+i,k 
+
+!
+
+Erfc 
+
+s Di,k 
+
+8α2
+
+i,k 
+
+! s π
+
+Tk
+
+2α2
+
+> i,k
+
+= ci,k − σ2
+
+4( n⋆i,k )2 1 − Di,k n⋆i,k 
+
+4α2
+
+i,k Tk
+
+!
+
++ σ2
+
+4( n⋆i,k )2 Di,k 
+
+αi,k 
+
+√2π
+
+√Tk
+
+n⋆i,k 
+
+16 α4
+
+i,k 
+
+4α2
+
+i,k 
+
+Tk
+
+Tk
+
+n⋆i,k 
+
++ 1 
+
+!
+
+− 1
+
+!
+
+exp Tk
+
+8α2
+
+i,k 
+
+!
+
+Erfc 
+
+s Tk
+
+8α2
+
+i,k 
+
+!
+
+= − σ2Di,k 
+
+64 α3
+
+i,k 
+
+√Tkn⋆i,k 
+
+4αi,k 
+
+√Tk
+
+4α2
+
+i,k Tk
+
+Di,k n⋆i,k 
+
+− 1 − ci,k 
+
+16 α2
+
+i,k Tkn⋆i,k 
+
+σ2Di,k 
+
+!
+
+31 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+− exp Tk
+
+8α2
+
+i,k 
+
+! 4α2
+
+i,k 
+
+Tk
+
+Tk
+
+n⋆i,k 
+
++ 1 
+
+!
+
+− 1
+
+! √2πErfc 
+
+s Tk
+
+8α2
+
+i,k 
+
+! ! 
+
+Lemma 16. Suppose that (8) is satisfied. Let Tk be as defined in Algorithm 1 and Di,k = Tk − 2n⋆i,k . If i̸ ∈ Vk and 
+
+n⋆i,k > 0 then 
+
+pi,k (MCBL , s ⋆) = σ2
+
+2n⋆i,k 
+
+− σ2
+
+4α2
+
+i,k 
+
+ Di,k 
+
+n⋆i,k 
+
+
+
+2 exp Tk
+
+8α2
+
+i,k 
+
+!
+
+Erfc 
+
+s Tk
+
+8α2
+
+i,k 
+
+! v uut π
+
+ Tk
+
+2α2
+
+> i,k
+
+ + ci,k n⋆i,k .
+
+Proof. By the expression for agent i’s penalty for distribution k given in the proof of Lemma 3 and the result of Lemma 24, we have that 
+
+pi,k (MCBL , s ⋆)= E
+
+x∼N (0 ,1) 
+
+
+
+1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+α2
+
+> i,k
+
+ σ2  
+
+> |Xi,k |
+
++ σ2 
+
+> |Zi,k |
+
+
+
+x2 + |Xi,k |+|Zi,k |
+
+σ2
+
+ + ci,k n⋆i,k 
+
+= E
+
+x∼N (0 ,1) 
+
+
+
+1
+
+Di,k 
+
+σ2+α2
+
+> i,k
+
+
+
+> σ2
+> n⋆i,k
+
++ σ2
+
+> n⋆i,k
+
+
+
+x2
+
++ n⋆i,k +n⋆i,k 
+
+σ2
+
+ + ci,k n⋆i,k 
+
+= E
+
+x∼N (0 ,1) 
+
+
+
+1
+
+Di,k 
+
+σ2+α2
+
+> i,k
+
+
+
+> 2σ2
+> n⋆i,k
+
+x2
+
+ + 2n⋆i,k 
+
+σ2
+
+ + ci,k n⋆i,k 
+
+= σ2
+
+n⋆i,k 
+
+E
+
+x∼N (0 ,1) 
+
+
+
+1
+
+Di,k /n ⋆i,k 
+
+1+ 2α2
+
+> i,k x2
+> n⋆i,k
+
++ 2 
+
+ + ci,k n⋆i,k 
+
+= σ2
+
+n⋆i,k 
+
+E
+
+x∼N (0 ,1) 
+
+
+
+1
+
+Di,k /n ⋆i,k +2+ 4α2
+
+> i,k x2
+> n⋆i,k
+
+1+ 2α2
+
+> i,k x2
+> n⋆i,k
+
+
+
++ ci,k n⋆i,k 
+
+= σ2
+
+n⋆i,k 
+
+E
+
+x∼N (0 ,1) 
+
+
+
+1 + 2α2 
+
+> i,k
+
+x2
+
+n⋆i,k 
+
+Di,k /n ⋆i,k + 2 + 4α2 
+
+> i,k
+
+x2
+
+n⋆i,k 
+
+ + ci,k n⋆i,k 
+
+= σ2
+
+n⋆i,k 
+
+E
+
+x∼N (0 ,1) 
+
+ 12 −
+
+ Di,k 
+
+n⋆i,k 
+
+
+
+21
+
+Di,k /n ⋆i,k + 2 + 4α2 
+
+> i,k
+
+x2
+
+n⋆i,k 
+
+ + ci,k n⋆i,k 
+
+= σ2
+
+2n⋆i,k 
+
+− σ2
+
+n⋆i,k 
+
+Di,k /n ⋆i,k 
+
+2 E
+
+x∼N (0 ,1) 
+
+ 1
+
+Di,k /n ⋆i,k + 2 + 4α2 
+
+> i,k
+
+x2
+
+n⋆i,k 
+
+ + ci,k n⋆i,k 
+
+32 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+= σ2
+
+2n⋆i,k 
+
+− σ2
+
+n⋆i,k 
+
+Di,k /n ⋆i,k 
+
+21
+
+ 4α2
+
+> i,k
+
+n⋆i,k 
+
+ E
+
+x∼N (0 ,1) 
+
+
+
+1
+
+Di,k /n ⋆i,k +2 
+
+ 4α2
+
+> i,k n⋆i,k
+
+ + x2
+
+ + ci,k n⋆i,k 
+
+= σ2
+
+2n⋆i,k 
+
++ ci,k n⋆i,k 
+
+− σ2
+
+4α2
+
+i,k 
+
+Di,k /n ⋆i,k 
+
+2 exp 
+
+ Di,k /n ⋆i,k + 2 2
+
+ 4α2
+
+> i,k
+
+n⋆i,k 
+
+ Erfc 
+
+vuut Di,k /n ⋆i,k + 2 2
+
+ 4α2
+
+> i,k
+
+n⋆i,k 
+
+vuuuut
+
+π
+
+2
+
+ Di,k /n ⋆i,k +2 
+
+ 4α2
+
+> i,k n⋆i,k
+
+
+
+
+
+= σ2
+
+2n⋆i,k 
+
+− σ2
+
+4α2
+
+i,k 
+
+Di,k /n ⋆i,k 
+
+2 exp Tk
+
+8α2
+
+i,k 
+
+!
+
+Erfc 
+
+s Tk
+
+8α2
+
+i,k 
+
+! s π
+
+Tk
+
+2α2
+
+> i,k
+
++ ci,k n⋆i,k .
+
+Lemma 17. Suppose that (8) is satisfied. Let Tk be as defined in Algorithm 1. If i̸ ∈ Vk and n⋆i,k > 0 then 
+
+pi,k (MCBL , s ⋆) = 2ci,k (n⋆i,k )2 + σ2 + αi,k (16 ci,k (n⋆i,k )2Tk α2 
+
+> i,k
+
++( n⋆i,k (−2n⋆i,k +Tk )−4Tk α2 
+
+> i,k
+
+)σ2)
+
+−n⋆i,k Tk αi,k +4( n⋆i,k +Tk )α3
+
+> i,k
+
+2n⋆i,k 
+
+Proof. Let Di,k = Tk − 2n⋆i,k . We have already shown that Gi,k (αi,k ) = 0 has a solution. Therefore 
+
+exp Tk
+
+8α2
+
+i,k 
+
+!
+
+Erfc 
+
+s Tk
+
+8α2
+
+i,k 
+
+!
+
+=2
+
+q 2
+
+π αi,k 
+
+
+
+−1 + 4Tk α2
+
+> i,k
+
+Di,k n⋆i,k 
+
+− 16 ci,k n⋆i,k Tk α2
+
+> i,k
+
+Di,k σ2
+
+
+
+√Tk
+
+−1 + 4
+
+
+
+1+ Tkn⋆i,k 
+
+
+
+α2
+
+> i,k
+
+Tk
+
+
+
+Substituting this expression into Lemma 16 gives us 
+
+pi,k (MCBL , s ⋆)= ci,k n⋆i,k + σ2
+
+2n⋆i,k 
+
+−
+
+Di,k 
+
+q α2
+
+> i,k
+
+Tk
+
+
+
+−1 + 4Tk α2
+
+> i,k
+
+Di,k n⋆i,k 
+
+− 16 ci,k n⋆i,k Tk α2
+
+> i,k
+
+Di,k σ2
+
+
+
+σ2
+
+2n⋆i,k 
+
+√Tkαi,k 
+
+−1 + 4
+
+
+
+1+ Tkn⋆i,k 
+
+
+
+α2
+
+> i,k
+
+Tk
+
+
+
+= 12n⋆i,k 
+
+
+
+2ci,k (n⋆i,k )2 + σ2 −
+
+Di,k 
+
+q α2
+
+> i,k
+
+Tk
+
+
+
+−1 + 4Tk α2
+
+> i,k
+
+Di,k n⋆i,k 
+
+− 16 ci,k n⋆i,k Tk α2
+
+> i,k
+
+Di,k σ2
+
+
+
+σ2
+
+√Tkαi,k 
+
+−1 + 4
+
+
+
+1+ Tkn⋆i,k 
+
+
+
+α2
+
+> i,k
+
+Tk
+
+| {z }
+
+(∗)
+
+
+
+where we have the following expression for (∗)(∗) = 
+
+−
+
+q α2
+
+> i,k
+
+Tk
+
+
+
+−Di,k σ2 + 4Tk α2 
+
+> i,k
+
+σ2
+
+n⋆i,k 
+
+− 16 ci,k n⋆i,k Tkα2
+
+i,k 
+
+
+
+−√Tkαi,k + 4
+
+
+
+1+ Tkn⋆i,k 
+
+
+
+α3
+
+> i,k
+
+√Tk
+
+33 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+=
+
+−n⋆i,k 
+
+q α2
+
+> i,k
+
+Tk
+
+
+
+−Di,k σ2 + 4Tk α2 
+
+> i,k
+
+σ2
+
+n⋆i,k 
+
+− 16 ci,k n⋆i,k Tkα2
+
+i,k 
+
+
+
+1√Tk
+
+
+
+−Tkαi,k n⋆i,k + 4( n⋆i,k + Tk)α3
+
+i,k 
+
+
+
+=
+
+−αi,k 
+
+
+
+−Di,k σ2n⋆i,k + 4 Tkα2
+
+i,k σ2 − 16 ci,k (n⋆i,k )2Tkα2
+
+i,k 
+
+
+
+−Tkαi,k n⋆i,k + 4( n⋆i,k + Tk)α3
+
+i,k 
+
+=
+
+αi,k 
+
+
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k + ( Di,k n⋆i,k − 4Tkα2
+
+i,k )σ2
+
+
+
+−n⋆i,k Tkαi,k + 4( n⋆i,k + Tk)α3
+
+i,k 
+
+=
+
+αi,k 
+
+
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k + ( n⋆i,k (−2n⋆i,k + Tk) − 4Tkα2
+
+i,k )σ2
+
+
+
+−n⋆i,k Tkαi,k + 4( n⋆i,k + Tk)α3
+
+i,k 
+
+Substituting in this expression for (∗) gives the desired result. 
+
+Lemma 18. The following two expressions are equal 
+
+Tk
+
+n⋆i,k (2 ci,k n⋆i,k Tk + σ2)
+
+2ci,k (n⋆i,k )2 + σ2 +
+
+αi,k 
+
+
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k + ( n⋆i,k (Tk − 2n⋆i,k ) − 4Tkα2
+
+i,k )σ2
+
+
+
+−n⋆i,k Tkαi,k + 4( n⋆i,k + Tk)α3
+
+i,k 
+
+
+
+= Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(n⋆i,k + Tk)(2 ci,k n⋆i,k Tk + σ2) + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)( −n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k )(2 ci,k n⋆i,k Tk + σ2) .
+
+Proof. Via a sequence of algebraic manipulations, we have that 
+
+Tk
+
+n⋆i,k (2 ci,k n⋆i,k Tk + σ2)
+
+2ci,k (n⋆i,k )2 + σ2 +
+
+αi,k 
+
+
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k + ( n⋆i,k (Tk − 2n⋆i,k ) − 4Tkα2
+
+i,k )σ2
+
+
+
+−n⋆i,k Tkαi,k + 4( n⋆i,k + Tk)α3
+
+i,k 
+
+
+
+=
+
+Tk
+
+
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k 
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+ +
+
+Tk
+
+
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k +
+
+
+
+n⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+− 4Tkα2
+
+i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k 
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+  
+
+−n⋆i,k Tk + 4 
+
+
+
+n⋆i,k + Tk
+
+
+
+α2
+
+i,k 
+
+
+
+=
+
+Tk
+
+ n⋆i,k +Tk
+
+n⋆i,k 
+
+  
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
++
+
+Tk
+
+ n⋆i,k +Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k +
+
+
+
+n⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+− 4Tkα2
+
+i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+=
+
+Tk
+
+
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+ +
+
+T 2
+
+> k
+
+n⋆i,k 
+
+
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
++
+
+Tk
+
+
+
+1 + Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k +
+
+
+
+n⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+− 4Tkα2
+
+i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+=
+
+Tk
+
+
+
+2ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+ +
+
+−6ci,k n⋆i,k T 2
+
+k + T 2
+
+> k
+
+n⋆i,k 
+
+
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+ (33) 
+
++
+
+Tk
+
+
+
+1 + Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k +
+
+
+
+n⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+− 4Tkα2
+
+i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+ (34) 34 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Notice that we can rewrite line (34) as 
+
+Tk
+
+
+
+1 + Tk
+
+> n⋆i,k
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
++
+
+
+
+n⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+− 4Tkα2
+
+> i,k
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+=
+
+
+
+1 + Tk
+
+> n⋆i,k
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
++
+
+
+
+1 + Tk
+
+> n⋆i,k
+
+  
+
+Tkn⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+=
+
+
+
+1 + Tk
+
+> n⋆i,k
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
++
+
+n⋆i,k T 2 
+
+> k
+
+σ2 − 2( n⋆i,k )2Tkσ2 + T 2
+
+> k
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+=
+
+
+
+1 + Tk
+
+> n⋆i,k
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
++ 4ci,k (n⋆i,k )2T 3 
+
+> k
+
+− 2( n⋆i,k )2Tkσ2 − n⋆i,k Tkσ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
++ −4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+Substituting in this expression, we have that lines (33) and (34) become 
+
+Tk
+
+
+
+2ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
++ 4ci,k (n⋆i,k )2T 3 
+
+> k
+
+− 2( n⋆i,k )2Tkσ2 − n⋆i,k Tkσ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
++
+
+−6ci,k n⋆i,k T 2 
+
+> k
+
++ T 2
+
+> k
+> n⋆i,k
+
+
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+ (35) 
+
++
+
+
+
+1 + Tk
+
+> n⋆i,k
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+ (36) 
+
++ −4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+ (37) Now notice that if we can show lines (35) , (36) , and (37) sum to 0 then we are done with the proof. We can rewrite the sum of these three lines as 
+
+
+
+−4ci,k n⋆i,k T 2 
+
+> k
+
++ T 2 
+
+> kσ2
+> n⋆i,k
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+35 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
++
+
+
+
+1 + Tk
+
+> n⋆i,k
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
++ −4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+=  n⋆i,k + Tk
+
+   −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+   2ci,k n⋆i,k Tk + σ2 !−1
+
+−4ci,k n⋆i,k T 2 
+
+> k
+
++ T 2 
+
+> k
+
+σ2
+
+n⋆i,k 
+
+!  −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+ (38) 
+
++ 1 + Tk
+
+n⋆i,k 
+
+!  16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2 − 4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+!
+
+(39) We will conclude by showing that lines (38) and (39) sum to 0 which will complete the proof. 
+
+−4ci,k n⋆i,k T 2 
+
+> k
+
++ T 2 
+
+> k
+
+σ2
+
+n⋆i,k 
+
+!  −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+
+
++ 1 + Tk
+
+n⋆i,k 
+
+!  16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2 − 4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+= −ci,k (n⋆i,k )2T 3 
+
+> k
+
+− 16 ci,k (n⋆i,k )2T 2 
+
+> k
+
+α2 
+
+> i,k
+
+− 16 ci,k n⋆i,k T 3 
+
+> k
+
+α2
+
+> i,k
+
+− T 3 
+
+> k
+
+σ2 + 4 T 2 
+
+> k
+
+σ2α2 
+
+> i,k
+
++ 4T 3 
+
+> k
+
+σ2α2
+
+> i,k
+
+n⋆i,k 
+
++ 16 ci,k (n⋆i,k )2T 2 
+
+> k
+
+α2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2
+
++ 16 ci,k n⋆i,k T 3 
+
+> k
+
+α2 
+
+> i,k
+
+− 4T 3 
+
+> k
+
+α2
+
+> i,k
+
+σ2
+
+n⋆i,k 
+
+− 4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+= 0 
+
+Lemma 19. The following two expressions are equal 
+
+Tk
+
+n⋆i,k σ2
+
+2ci,k (n⋆i,k )2 + σ2 +
+
+αi,k 
+
+
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
++ ( n⋆i,k (Tk − 2n⋆i,k ) − 4Tkα2
+
+> i,k
+
+)σ2
+
+
+
+−n⋆i,k Tkαi,k + 4( n⋆i,k + Tk)α3
+
+> i,k
+
+
+
+= Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(n⋆i,k + Tk)σ2 + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)( −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+)σ2 .
+
+Proof. Via a sequence of algebraic manipulations, we have that 
+
+Tk
+
+n⋆i,k σ2
+
+2ci,k (n⋆i,k )2 + σ2 +
+
+αi,k 
+
+
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
++ ( n⋆i,k (Tk − 2n⋆i,k ) − 4Tkα2
+
+> i,k
+
+)σ2
+
+
+
+−n⋆i,k Tkαi,k + 4( n⋆i,k + Tk)α3
+
+> i,k
+
+
+
+=
+
+Tk
+
+
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k σ2 +
+
+Tk
+
+
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
++
+
+
+
+n⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+− 4Tkα2
+
+> i,k
+
+
+
+σ2
+
+
+
+n⋆i,k 
+
+
+
+−n⋆i,k Tk + 4 
+
+
+
+n⋆i,k + Tk
+
+
+
+α2
+
+> i,k
+
+
+
+σ2
+
+36 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+=
+
+Tk
+
+ n⋆i,k +Tk
+
+n⋆i,k 
+
+  
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k + Tk
+
+
+
+σ2
+
++
+
+Tk
+
+ n⋆i,k +Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k +
+
+
+
+n⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+− 4Tkα2
+
+i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
+=
+
+Tk
+
+
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k + Tk
+
+
+
+σ2
+
++
+
+T 2
+
+> k
+
+n⋆i,k 
+
+
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k + Tk
+
+
+
+σ2
+
++
+
+Tk
+
+
+
+1 + Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k +
+
+
+
+n⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+− 4Tkα2
+
+i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
+=
+
+Tk
+
+
+
+2ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2
+
+
+
+n⋆i,k + Tk
+
+
+
+σ2
+
++
+
+−6ci,k n⋆i,k T 2
+
+k + T 2
+
+> k
+
+n⋆i,k 
+
+
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k + Tk
+
+
+
+σ2
+
+(40) 
+
++
+
+Tk
+
+
+
+1 + Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k +
+
+
+
+n⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+− 4Tkα2
+
+i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
+(41) Notice that we can rewrite line (41) as 
+
+Tk
+
+
+
+1 + Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k +
+
+
+
+n⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+− 4Tkα2
+
+i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
+=
+
+
+
+1 + Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k − 4T 2
+
+k α2
+
+i,k σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
++
+
+
+
+1 + Tk
+
+n⋆i,k 
+
+  
+
+Tkn⋆i,k 
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
+=
+
+
+
+1 + Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k − 4T 2
+
+k α2
+
+i,k σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
++
+
+n⋆i,k T 2
+
+k σ2 − 2( n⋆i,k )2Tkσ2 + T 2
+
+k
+
+
+
+Tk − 2n⋆i,k 
+
+
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
+=
+
+
+
+1 + Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k − 4T 2
+
+k α2
+
+i,k σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
++ 4ci,k (n⋆i,k )2T 3
+
+k − 2( n⋆i,k )2Tkσ2 − n⋆i,k Tkσ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
++ −4ci,k (n⋆i,k )2T 3
+
+k + T 3
+
+k σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
+Substituting in this expression, we have that lines (40) and (41) become 
+
+Tk
+
+
+
+2ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2
+
+
+
+n⋆i,k + Tk
+
+
+
+σ2
+
++ 4ci,k (n⋆i,k )2T 3
+
+k − 2( n⋆i,k )2Tkσ2 − n⋆i,k Tkσ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
++
+
+−6ci,k n⋆i,k T 2
+
+k + T 2
+
+> k
+
+n⋆i,k 
+
+
+
+2ci,k (n⋆i,k )2 + σ2
+
+
+
+n⋆i,k + Tk
+
+
+
+σ2
+
+(42) 
+
++
+
+
+
+1 + Tk
+
+n⋆i,k 
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2
+
+i,k − 4T 2
+
+k α2
+
+i,k σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k 
+
+
+
+σ2
+
+(43) 37 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
++ −4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+
+
+σ2
+
+(44) Now notice that if we can show lines (42) , (43) , and (44) sum to 0 then we are done with the proof. We can rewrite the sum of these three lines as 
+
+
+
+−4ci,k n⋆i,k T 2 
+
+> k
+
++ T 2 
+
+> kσ2
+> n⋆i,k
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+
+
+σ2
+
++
+
+
+
+1 + Tk
+
+> n⋆i,k
+
+  
+
+16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+
+
+σ2
+
++ −4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+
+
+n⋆i,k + Tk
+
+  
+
+−n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+
+
+σ2
+
+=  n⋆i,k + Tk
+
+   −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+ σ2
+
+!−1
+
+× −4ci,k n⋆i,k T 2 
+
+> k
+
++ T 2 
+
+> k
+
+σ2
+
+n⋆i,k 
+
+!  −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+ (45) 
+
++ 1 + Tk
+
+n⋆i,k 
+
+!  16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2 − 4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+!
+
+(46) We will conclude by showing that lines (45) and (46) sum to 0 which will complete the proof. 
+
+−4ci,k n⋆i,k T 2 
+
+> k
+
++ T 2 
+
+> k
+
+σ2
+
+n⋆i,k 
+
+!  −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+
+
++ 1 + Tk
+
+n⋆i,k 
+
+!  16 ci,k (n⋆i,k )2Tkα2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2 − 4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+= −ci,k (n⋆i,k )2T 3 
+
+> k
+
+− 16 ci,k (n⋆i,k )2T 2 
+
+> k
+
+α2 
+
+> i,k
+
+− 16 ci,k n⋆i,k T 3 
+
+> k
+
+α2
+
+> i,k
+
+− T 3 
+
+> k
+
+σ2 + 4 T 2 
+
+> k
+
+σ2α2 
+
+> i,k
+
++ 4T 3 
+
+> k
+
+σ2α2
+
+> i,k
+
+n⋆i,k 
+
++ 16 ci,k (n⋆i,k )2T 2 
+
+> k
+
+α2 
+
+> i,k
+
+− 4T 2 
+
+> k
+
+α2
+
+> i,k
+
+σ2
+
++ 16 ci,k n⋆i,k T 3 
+
+> k
+
+α2 
+
+> i,k
+
+− 4T 3 
+
+> k
+
+α2
+
+> i,k
+
+σ2
+
+n⋆i,k 
+
+− 4ci,k (n⋆i,k )2T 3 
+
+> k
+
++ T 3 
+
+> k
+
+σ2
+
+= 0 
+
+Lemma 20. Let αi,k = pn⋆i,k . Then 
+
+Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(n⋆i,k + Tk)(2 ci,k n⋆i,k Tk + σ2) + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)( −n⋆i,k Tk + 4 n⋆i,k α2 
+
+> i,k
+
++ 4 Tkα2
+
+> i,k
+
+)(2 ci,k n⋆i,k Tk + σ2)=2Tk
+
+
+
+ci,k n⋆i,k 
+
+
+
+4n⋆i,k + 11 Tk
+
+
+
++ σ2
+
+
+
+4n⋆i,k + 3 Tk
+
+  
+
+2ci,k n⋆i,k Tk + σ2
+
+ .
+
+38 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Proof. Via a sequence of algebraic manipulations, we have 
+
+Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(n⋆i,k + Tk)
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+ + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)( −n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k )
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+=(4n⋆i,k +3 Tk )(n⋆i,k +Tk ) Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(4 n⋆i,k + 3 Tk)
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+ + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)n⋆i,k (4 n⋆i,k + 3 Tk)
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+=(4n⋆i,k +3 Tk )(n⋆i,k +Tk ) Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(4 n⋆i,k + 3 Tk)
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+ +
+
+1
+
+n⋆i,k +Tk
+
+
+
+4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+
+
+(4 n⋆i,k + 3 Tk)
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+=
+
+1
+
+(n⋆i,k +Tk )(4 n⋆i,k + 3 Tk)
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+  4n⋆i,k + 3 Tk
+
+ T  2ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2
+
++ 4 ci,k n⋆i T 3
+
+k − 2n⋆i,k Tkσ2 − T 2
+
+k σ2
+
+=
+
+1
+
+(n⋆i,k +Tk )(4 n⋆i,k + 3 Tk)
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+8ci,k (n⋆i,k )3Tk + 30 ci,k (n⋆i,k )2T 2
+
+k + 2 n⋆i,k Tkσ2 + 22 ci,k n⋆i,k T 3
+
+k + 2 T 2
+
+k σ2
+
+=
+
+1
+
+(n⋆i,k +Tk )(4 n⋆i,k + 3 Tk)
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+  2Tk
+
+ n⋆i,k + Tk
+
+   ci,k n⋆i,k 
+
+ 4n⋆i,k + 11 Tk
+
+ + σ2 
+
+=2Tk
+
+
+
+ci,k n⋆i,k 
+
+
+
+4n⋆i,k + 11 Tk
+
+
+
++ σ2
+
+
+
+(4 n⋆i,k + 3 Tk)
+
+
+
+2ci,k n⋆i,k Tk + σ2
+
+
+
+Lemma 21. Let αi,k = pn⋆i,k . Then 
+
+Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(n⋆i,k + Tk)σ2 + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)( −n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k )σ2
+
+=2Tk
+
+
+
+ci,k n⋆i,k 
+
+
+
+4n⋆i,k + 11 Tk
+
+
+
++ σ2
+
+
+
+4n⋆i,k + 3 Tk
+
+
+
+σ2
+
+.
+
+Proof. Via a sequence of algebraic manipulations, we have 
+
+Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(n⋆i,k + Tk)σ2 + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)( −n⋆i,k Tk + 4 n⋆i,k α2
+
+i,k + 4 Tkα2
+
+i,k )σ2
+
+=(4n⋆i,k +3 Tk )(n⋆i,k +Tk ) Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(4 n⋆i,k + 3 Tk)σ2 + 4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+(n⋆i,k + Tk)n⋆i,k (4 n⋆i,k + 3 Tk)σ2
+
+=(4n⋆i,k +3 Tk )(n⋆i,k +Tk ) Tk(2 ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2)(4 n⋆i,k + 3 Tk)σ2 +
+
+1
+
+n⋆i,k +Tk
+
+
+
+4ci,k (n⋆i,k )2(Tk)3 − 2( n⋆i,k )2Tkσ2 − n⋆i,k (Tk)2σ2
+
+
+
+(4 n⋆i,k + 3 Tk)σ2
+
+=
+
+1
+
+(n⋆i,k +Tk )(4 n⋆i,k + 3 Tk)σ2
+
+  4n⋆i,k + 3 Tk
+
+ T  2ci,k (n⋆i,k )2 + 6 ci,k n⋆i,k Tk + σ2 + 4 ci,k n⋆i T 3
+
+k − 2n⋆i,k Tkσ2 − T 2
+
+k σ2
+
+39 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+=
+
+> 1
+
+(n⋆i,k +Tk )(4 n⋆i,k + 3 Tk)σ2
+
+ 8ci,k (n⋆i,k )3Tk + 30 ci,k (n⋆i,k )2T 2 
+
+> k
+
++ 2 n⋆i,k Tkσ2 + 22 ci,k n⋆i,k T 3 
+
+> k
+
++ 2 T 2 
+
+> k
+
+σ2
+
+=
+
+> 1
+
+(n⋆i,k +Tk )(4 n⋆i,k + 3 Tk)σ2
+
+ 2Tk
+
+ n⋆i,k + Tk
+
+   ci,k n⋆i,k 
+
+ 4n⋆i,k + 11 Tk
+
+ + σ2 
+
+=2Tk
+
+
+
+ci,k n⋆i,k 
+
+
+
+4n⋆i,k + 11 Tk
+
+
+
++ σ2
+
+
+
+(4 n⋆i,k + 3 Tk)σ2 .
+
+H. Results based on other work 
+
+This section presents the proof of lemmas related to incentive-compatibility. As we use a similar corruption strategy to Chen et al. (2023), the high-level proof ideas are similar to theirs. However, adapting specific techniques to unequal costs requires nontrivial algebraic adaptations. 
+
+H.1. Proof of Lemma 3 
+
+In Algorithm 2 we have specified the information set space for MCBL to be Rd, which corresponds to d estimates of the d
+
+distributions. We could have defined an equivalent mechanism where the information set space is I = D × D × Rd and 
+
+Ii = ( Ii, 1, . . . , I i,d ) where Ii,k =  Z, Z ′, η 2). In this setup Z is clean data, Z′ is corrupted data, and η2 is the amount of noise added to obtain Z′. For the sake of convenience, we define the following sets to characterize the types of information sets i receives for each distribution. We also specify the information sets provided under this alternative information set space. 
+
+A := {k : i ∈ Vk} if k ∈ A then Ii,k = ( ∅, ∅, 0) 
+
+B := k : n⋆i,k = 0 and i̸ ∈ Vk if k ∈ B then Ii,k = ( Y–i,k , ∅, 0) 
+
+C := k : n⋆i,k > 0 and i̸ ∈ Vk if k ∈ C then Ii,k =  Zi,k , Z ′
+
+> i,k
+
+, η 2
+
+> i,k
+
+
+
+Under this change, we would now recommend agent i to use the estimator 
+
+hi,k (Xi, Y i, I i) =   
+
+> 1
+> σ2|Yi,k ∪Zi,k |
+
+P  
+
+> y∈Yi,k ∪Zi,k
+
+y + 1(σ2+η2  
+
+> i,k )|Z′
+> i,k |
+
+P
+
+> z∈Z′
+> i,k
+
+z 
+
+> 1
+> σ2
+
+|Yi,k ∪ Zi,k | + 1
+
+> σ2+η2
+> i,k
+
+Z′
+
+> i,k
+
+instead of directly accepting estimates directly from the mechanism. In fact, Chen et al. (2023) use the single variable version of this exact information set space. Notice that in this setup agents receive more information since, in each case, the estimate recommended by MCBL is function of  Z, Z ′, η 2. In the proof of this lemma, we will show that if agent i has access to Ii,k =  Z, Z ′, η 2 then it is optimal to submit data truthfully and compute the same estimates that are returned by MCBL . Therefore, when I = Rd, and the agent only receives recommended estimates in place of  Z, Z ′, η 2, the agent will achieve the same penalty by submitting truthfully and accepting the estimates of the mechanism, even when they now receive less information. This will imply that submitting truthfully and accepting estimates from the mechanism is the optimal strategy in the information set space I = Rd. We now present an argument of this claim, adapting the proof of Lemma 5 from Chen et al. (2023). - Step 1. First, we construct a sequence of multivariable prior distributions {Λℓ}ℓ≥1 for μ ∈ Rd and calculate the sequence of Bayesian risks under the prior distributions 
+
+Rℓ := inf  
+
+> s′
+> i∈∆( S)′
+
+E
+
+> μ∼Λℓ
+
+"
+
+E
+
+(s′
+
+> i,s ⋆
+> –i
+
+)
+
+
+
+E
+
+> μ,M CBL
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+#
+
+, ℓ ≥ 1
+
+Here ∆( S)′ is the set of strategies where i collects the same amount of data as in si, i.e. ∆( S)′ := 
+
+{(n′
+
+> i
+
+f ′ 
+
+> i
+
+, h ′
+
+> i
+
+) = s′ 
+
+> i
+
+∈ ∆( S) : n′ 
+
+> i
+
+= ni a.s. }.40 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+- Step 2. Next, we define esi to be the randomized strategy given by (ni, f ⋆i , h ⋆i ). We then show that 
+
+lim  
+
+> ℓ→∞
+
+Rℓ = sup 
+
+> μ
+
+"
+
+E
+
+(esi,s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+> μ,M CBL
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+#
+
+- Step 3. Finally, using that the Bayesian risk is a lower bound on the maximum risk, we conclude that amongst the strategies in ∆( S)′, esi is minimax optimal. Thus, an agent will suffer no worse of an error when using fi = f ⋆i and 
+
+hi = h⋆i , regardless of the distribution over ni.
+
+Step 1. (Bounding the Bayes’ risk under the sequence of priors) We will use a sequence of multivariable normal priors 
+
+Λℓ := N  0, ℓ 2Id
+
+ for ℓ ≥ 1. Notice that for an agent i, the mechanism returns an uncorrupted estimate for distribution k if 
+
+i ∈ Vk or n⋆i,k = 0 and a corrupted estimate otherwise. More specifically, if i ∈ Vk an uncorrupted estimate using only Yi,k 
+
+is returned whereas if n⋆i,k = 0 an uncorrupted estimate using Y–i,k is returned. Fix some fi ∈ F . We now analyze the optimal choice for hi,k depending on whether k is in A, B, or C.Suppose that k ∈ A. Recall that x | μk ∼ N (μk, σ 2), ∀x ∈ Xi,k . Since k ∈ A, Ii,k is just a function of Xi,k as no other data from the other agents is given. Therefore, the posterior distribution for μk conditioned on Xi,k , Y i,k , I i,k can be written as μk | Xi,k , Y i,k , I i,k = μk | Xi,k . Furthermore, it is well known (See Example 1.14 in Chapter 5 of (Lehmann & Casella, 2006)) that μk | Xi,k ∼ N 
+
+
+
+μA,ℓ,k , σ 2
+
+> A,ℓ,k
+
+
+
+where 
+
+μA,ℓ,k :=    
+
+> |Xi,k |
+> σ2
+> |Xi,k |
+> σ2
+
++ 1
+
+> ℓ2
+
+μk +  
+
+> 1
+> ℓ2
+> |Xi,k |
+> σ2
+
++ 1
+
+> ℓ2
+
+hSM (Xi,k ) σ2 
+
+> A,ℓ,k
+
+:= 1  
+
+> |Xi,k |
+> σ2
+
++ 1
+
+> ℓ2
+
+Therefore, μk | Xi,k , Y i,k , I i,k ∼ N 
+
+
+
+μA,ℓ,k , σ 2
+
+> A,ℓ,k
+
+
+
+.If k ∈ B then agent i receives Y–i,k regardless of what they submit. Again, we know from (Lehmann & Casella, 2006) that 
+
+μk | Xi,k , Y i,k , I i,k ∼ N 
+
+
+
+μB,ℓ,k , σ 2
+
+> B,ℓ,k
+
+
+
+where 
+
+μB,ℓ,k :=      
+
+> |Xi,k ∪Y–i,k |
+> σ2
+> |Xi,k ∪Y–i,k |
+> σ2
+
++ 1
+
+> ℓ2
+
+μk +   
+
+> 1
+> ℓ2
+> |Xi,k ∪Y–i,k |
+> σ2
+
++ 1
+
+> ℓ2
+
+hSM (Xi,k ∪ Y–i,k ) σ2 
+
+> B,ℓ,k
+
+:= 1  
+
+> |Xi,k |
+> σ2
+
++ 1
+
+> ℓ2
+
+If k ∈ C we have that 
+
+x | μk ∼ N  μk, σ 2 ∀x ∈ Xi,k ∪ Zi,k 
+
+x | μk, η 2 
+
+> i,k
+
+∼ N  μk, σ 2 + η2
+
+> i,k
+
+ ∀x ∈ Z′
+
+> i,k
+
+Recall that η2 
+
+> i,k
+
+is a function of Yi,k and Zi,k . Assume for now that Xi, –k is fixed. Under this assumption, and having fixed 
+
+fi, both Yi,k and η2 
+
+> i,k
+
+are deterministic functions of Xi,k and Zi,k . Therefore, the posterior distribution for μk conditioned on (Xi,k , Y i,k , I i,k ) can be calculated as follows: 
+
+p (μk|Xi,k , Y i,k , I i,k ) = p  μk|Xi,k , Y i,k , Z i,k , Z ′
+
+> i,k
+
+, η 2
+
+> i,k
+
+ = p  μk|Xi,k , Z i,k , Z ′
+
+> i,k
+
+
+
+∝ p  μk, X i,k , Z i,k , Z ′
+
+> i,k
+
+ = p  Z′
+
+> i,k
+
+|Xi,k , Z i,k , μ k
+
+ p (Xi,k , Z i,k |μk) p(μk)= p  Z′
+
+> i,k
+
+|Xi,k , Z i,k , μ k
+
+ p (Xi,k |μk) p (Zi,k |μk) p(μk)
+
+∝ exp 
+
+− 12( σ2 + η2
+
+> i,k
+
+)
+
+X
+
+> x∈Z′
+> i,k
+
+(x − μk)2
+
+ exp 
+
+− 12σ2
+
+X 
+
+> x∈Xi,k ∪Zi,k
+
+(x − μk)2
+
+ exp 
+
+
+
+− μ2
+
+> k
+
+2ℓ2
+
+
+
+∝ exp 
+
+− 12
+
+ Z′
+
+> i,k
+
+σ2 + η2
+
+> i,k
+
++ |Xi,k | + |Zi,k |
+
+σ2 + 1
+
+ℓ2
+
+ μ2
+
+> k
+
+ exp 12 2
+
+P
+
+> x∈Z′
+> i,k
+
+xσ2 + η2
+
+> i,k
+
++
+
+P  
+
+> x∈Xi,k ∪Zi,k
+
+xσ2
+
+!
+
+μk
+
+!
+
+41 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+= exp − 12
+
+1
+
+σ2
+
+> C,ℓ,k
+
+μ2 
+
+> k
+
+− 2 μC,ℓ,k 
+
+σ2
+
+> C,ℓ,k
+
+μk
+
+!! 
+
+∝ exp − 12σ2
+
+> C,ℓ,k
+
+(μk − μC,ℓ,k )2
+
+!
+
+where 
+
+μC,ℓ,k :=  
+
+> P
+> x∈Z′
+> i,k xσ2+η2
+> i,k
+
++  
+
+> P
+> x∈Xi,k ∪Zi,k xσ2
+
+|Z′ 
+
+> i,k
+
+|
+
+> σ2+η2
+> i,k
+
++ |Xi,k |+|Zi,k | 
+
+> σ2
+
++ 1
+
+> ℓ2
+
+and σ2 
+
+> C,ℓ,k
+
+:= 1
+
+|Z′ 
+
+> i,k
+
+|
+
+> σ2+η2
+> i,k
+
++ |Xi,k |+|Zi,k | 
+
+> σ2
+
++ 1
+
+> ℓ2
+
+We can therefore conclude that (despite the non i.i.d nature of the data), the posterior distribution of μk conditioned on 
+
+Xi,k , Y i,k , I i,k , assuming Xi, –k is fixed, is Gaussian with mean and variance as given above, i.e. 
+
+μk | Xi,k , Y i,k , I i,k ∼ N  μC,ℓ,k , σ 2
+
+> C,ℓ,k
+
+
+
+Next, following standard steps (See Corollary 1.2 in Chapter 4 of (Lehmann & Casella, 2006)), we know that 
+
+Eμk
+
+h
+
+(hi,k (Xi, Y i, I i) − μk)2 | Xi,k , Y i,k , I i,k 
+
+i
+
+is minimized when 
+
+hi,k (Xi, Y i, I i) = E
+
+> μk
+
+[μk | Xi,k , Y i,k , I i,k ]
+
+When Xi, –k is assumed to be fixed, Eμk [μk | Xi,k , Y i,k , I i,k ] = μC,ℓ,k . This shows that for any fi ∈ F and fixed Xi, –k, the optimal hi,k is simply the posterior mean of μk under the prior Λℓ conditioned on (Xi,k , Y i,k , I i,k ).We have now derived our optimal choices for hi,k (either μA,ℓ,k , μ B,ℓ,k , or μC,ℓ,k ) depending on whether k ∈ A, k ∈ B, or 
+
+k ∈ C. Going forward, we will also use fi and hi to denote probability distributions over F and H respectively. For some fixed fi ∈ ∆( F), we can rewrite the minimum average risk over hi ∈ ∆( H) by switching the order of expectation: 
+
+inf  
+
+> hi∈∆( H)
+
+E
+
+> μ∼Λℓ
+
+"
+
+E
+
+((ni,f i,h i),s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+> μ,M CBL
+
+[∥hi (Xi, Y i, I i) − μ∥]22
+
+#
+
+= inf  
+
+> hi∈∆( H)
+
+E
+
+> μ∼Λℓ
+
+"
+
+E
+
+> (ni,f i,h i)
+
+"
+
+E
+
+> μ,M CBL
+
+" dX
+
+> k=1
+
+(hi,k (Xi, Y i, I i) − μk)2
+
+### 
+
+= inf 
+
+> hi∈∆( H)
+> d
+
+X
+
+> k=1
+
+E
+
+> (ni,f i,h i)
+
+"
+
+E
+
+> Xi,Z i,Z ′
+> i
+
+
+
+E
+
+> μ
+
+h
+
+(hi,k (Xi, Y i, I i) − μk)2 | Xi, Z i, Z ′
+
+> i
+
+i#
+
+= inf 
+
+> hi∈∆( H)
+> d
+
+X
+
+> k=1
+
+E
+
+> (ni,f i,h i)
+
+"
+
+E   
+
+> Xi, –k,Z i, –k,Z′
+> i, –k,μ –k
+
+"
+
+E  
+
+> Xi,k ,Z i,k ,Z ′
+> i,k
+
+"
+
+(47) 
+
+E
+
+> μk
+
+ (hi,k (Xi, Y i, I i) − μk)2 | Xi,k , Z i,k , Z ′
+
+> i,k
+
+ Xi, –k, Z i, –k, Z ′
+
+> i, –k
+
+, μ –k
+
+### 
+
+(48) Substituting in the appropriate posterior depending on whether k is in A, B, or C tell us that the equation in lines (47) and (48) is bounded below by 
+
+X
+
+> k∈A
+
+E
+
+> (ni,f i)
+
+ E   
+
+> Xi, –k,Z i, –k,Z′
+> i, –k,μ –k
+
+"
+
+E
+
+> Xi,Z i,Z ′
+> i
+
+
+
+E
+
+> μk
+
+h
+
+(μA,ℓ,k − μk)2 | Xi,k , Z i,k , Z ′
+
+> i,k
+
+ Xi, –k, Z i, –k, Z ′
+
+> i, –k
+
+, μ –k
+
+i#
+
++ X
+
+> k∈B
+
+E
+
+> (ni,f i)
+
+ E   
+
+> Xi, –k,Z i, –k,Z′
+> i, –k,μ –k
+
+"
+
+E  
+
+> Xi,k ,Z i,k ,Z ′
+> i,k
+
+
+
+E
+
+> μk
+
+h
+
+(μB,ℓ,k − μk)2 | Xi,k , Z i,k , Z ′
+
+> i,k
+
+ Xi, –k, Z i, –k, Z ′
+
+> i, –k
+
+, μ –k
+
+i#
+
++ X
+
+> k∈C
+
+E
+
+> (ni,f i)
+
+ E   
+
+> Xi, –k,Z i, –k,Z′
+> i, –k,μ –k
+
+"
+
+E  
+
+> Xi,k ,Z i,k ,Z ′
+> i,k
+
+
+
+E
+
+> μk
+
+h
+
+(μC,ℓ,k − μk)2 | Xi,k , Z i,k , Z ′
+
+> i,k
+
+ Xi, –k, Z i, –k, Z ′
+
+> i, –k
+
+, μ –k
+
+i#
+
+42 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+= X
+
+k∈A
+
+E
+
+(ni,f i)
+
+ E
+
+Xi, –k ,Z i, –k ,Z′ 
+
+> i, –k
+
+,μ –k
+
+"
+
+E
+
+Xi,k ,Z i,k ,Z ′
+
+> i,k
+
+"
+
+1
+
+|Xi,k |
+
+σ2 + 1
+
+ℓ2
+
+##  + X
+
+k∈B
+
+E
+
+(ni,f i)
+
+ E
+
+Xi, –k ,Z i, –k ,Z′ 
+
+> i, –k
+
+,μ –k
+
+"
+
+E
+
+Xi,k ,Z i,k ,Z ′
+
+> i,k
+
+"
+
+1
+
+|Xi,k ∪Y–i,k |
+
+σ2 + 1
+
+ℓ2
+
+## 
+
+(49) 
+
++ X
+
+k∈C
+
+E
+
+(ni,f i)
+
+ E
+
+Xi, –k ,Z i, –k ,Z′ 
+
+> i, –k
+
+,μ –k
+
+ E
+
+Xi,k ,Z i,k ,Z ′
+
+> i,k
+
+ 1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ |Xi,k |+|Zi,k |
+
+σ2 + 1
+
+ℓ2
+
+ (50) Now notice that if k ∈ A or k ∈ B then Ii,k does not depend on Yi,k so lines (49) and (50) become 
+
+X
+
+k∈A
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
++ X
+
+k∈B
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k ∪Y–i,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
+(51) 
+
++ X
+
+k∈C
+
+E
+
+(ni,f i)
+
+ E
+
+Xi, –k ,Z i, –k ,Z′ 
+
+> i, –k
+
+,μ –k
+
+ E
+
+Xi,k ,Z i,k 
+
+ 1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ |Xi,k |+|Zi,k |
+
+σ2 + 1
+
+ℓ2
+
+ (52) Since η2
+
+i,k depends on μ–k, X i, –k, X i,k , Z i,k , |Xi| , |Zi,k |, and Z′
+
+i,k but not Zi, –k nor Z′
+
+i, –k, we can write (51) and (52) as 
+
+X
+
+k∈A
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
++ X
+
+k∈B
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k ∪Y–i,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
+(53) 
+
++ X
+
+k∈C
+
+E
+
+(ni,f i)
+
+ E
+
+μ–k ,X i, –k
+
+ E
+
+Xi,k ,Z i,k 
+
+ 1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ |Xi,k |+|Zi,k |
+
+σ2 + 1
+
+ℓ2
+
+ (54) The second to last step follows from the fact that if k ∈ A or k ∈ B then Ii,k does not depend on Yi,k . Notice that the terms in (53) do not depend on fi whereas the terms in (54) do. We will now show that (54) (and thus the entire equation) is minimized for the following choice of fi which shrinks each point in Xi,k by an amount that depends on the prior Λℓ:
+
+fi,k (Xi) = 
+
+( |Xi,k |
+
+σ2
+
+|Xi,k |
+
+σ2 + 1
+
+ℓ2
+
+x, ∀x ∈ Xi,k 
+
+)
+
+(55) To prove this, we first define the following quantities: 
+
+bμ(Xi,k ) := 1
+
+|Xi,k |
+
+X
+
+x∈Xi,k 
+
+x bμ(Yi,k ) := 1
+
+|Yi,k |
+
+X
+
+y∈Yi,k 
+
+y bμ(Zi,k ) := 1
+
+|Zi,k |
+
+X
+
+z∈Zi,k 
+
+z
+
+We will also find it useful to express η2
+
+i,k as follows (here αi,k is as defined in (11)): 
+
+η2
+
+i,k = α2
+
+i,k (bμ(Yi,k ) − bμ(Zi,k )) 2
+
+The following calculations show that, conditioned on Xi,k , bμ(Zi,k ) − μk and μk − |Xi,k |/σ 2
+
+|Xi,k |/σ 2+1 /ℓ 2 bμ(Xi,k ) are independent Gaussian random variables: 
+
+p (bμ(Zi,k ) − μk, μ k|Xi,k ) ∝ p (bμ(Zi,k ) − μk, μ k, X i,k )=p (bμ(Zi,k ) − μk, X i,k |μk) p(μk) = p (bμ(Zi,k ) − μk|μk) p (Xi,k |μk) p(μk)
+
+∝ exp 
+
+
+
+− 12
+
+|Zi,k |
+
+σ2 (bμ(Zi,k ) − μk)2
+
+
+
+exp 
+
+− 12σ2
+
+X
+
+x∈Xi,k 
+
+(x − μk)2
+
+ exp 
+
+
+
+− 12ℓ2 μ2
+
+k
+
+
+
+43 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+∝ exp 
+
+
+
+− 12
+
+|Zi,k |
+
+σ2 (bμ(Zi,k ) − μk)2
+
+| {z }
+
+∝p(bμ(Zi,k )−μk |Xi,k )
+
+exp − 12
+
+ |Xi,k |
+
+σ2 + 1
+
+ℓ2
+
+  
+
+μk − |Xi,k | /σ 2
+
+|Xi,k | /σ 2 + 1 /ℓ 2 bμ(Xi,k )
+
+2!| {z }
+
+∝p μk − |Xi,k |/σ 2
+
+|Xi,k |/σ 2+1 /ℓ 2 bμ(Xi,k )|Xi,k 
+
+!
+
+Thus, conditioning on Xi,k , we can write 
+
+bμ(Zi,k ) − μk
+
+μk − |Xi,k |/σ 2
+
+|Xi,k |/σ 2+1 /ℓ 2 bμ(Xi,k )
+
+!
+
+∼ N 
+
+00
+
+
+
+,
+
+σ2
+
+|Zi,k | 00 1
+
+|Xi,k |/σ 2+1 /ℓ 2
+
+!! 
+
+which leads us to 
+
+bμ(Zi,k ) − |Xi,k | /σ 2
+
+|Xi,k | /σ 2 + 1 /ℓ 2 bμ(Xi,k ) Xi,k ∼ N 
+
+ 0, σ2
+
+|Zi,k | + 1
+
+|Xi,k | /σ 2 + 1 /ℓ 2
+
+| {z }
+
+=: eσ2
+
+> ℓ,k
+
+
+
+Next, we rewrite the squared difference in η2
+
+i,k as follows: 
+
+η2
+
+i,k 
+
+α2
+
+i,k 
+
+= ( bμ(Yi,k ) − bμ(Zi,k )) 2
+
+=
+
+bμ(Zi,k ) − |Xi,k | /σ 2
+
+|Xi,k | /σ 2 + 1 /ℓ 2 bμ(Xi,k )
+
+| {z }
+
+=eσℓ,k e
+
++
+
+
+
+|Xi,k | /σ 2
+
+|Xi,k | /σ 2 + 1 /ℓ 2 bμ(Xi,k ) − bμ(Yi,k )
+
+| {z }
+
+=: ϕ(Xi,k ,f i)
+
+
+
+2
+
+(56) Here we observe that the first part of the RHS above is equal to eσℓ,k where e is a noise e|Xi,k ∼ N (0 , 1) where eσℓ,k is defined in (56) . For brevity, we denote the second part of the RHS as ϕ(Xi,k , h i,k ) which intuitively characterizes the difference between Xi,k and Yi,k . Importantly, ϕ(Xi,k , h i,k ) = 0 when fi is chosen to be (55) . Using e and ϕ, we can rewrite each term in (54) using conditional expectation. 
+
+E
+
+(ni,f i)
+
+ E
+
+μ–k ,X i, –k
+
+ E
+
+Xi,Z i
+
+ 1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ |Xi,k |+|Zi,k |
+
+σ2 + 1
+
+ℓ2
+
+
+
+= E
+
+(ni,f i)
+
+ E
+
+μ–k ,X i, –k
+
+ E
+
+Xi
+
+ E
+
+Zi,k |Xi,k 
+
+ 1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ |Xi,k |+|Zi,k |
+
+σ2 + 1
+
+ℓ2
+
+
+
+= E
+
+(ni,f i)
+
+ E
+
+μ–k ,X i, –k
+
+ E
+
+Xi
+
+ E
+
+e|Xi,k 
+
+ 1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+α2 
+
+> i,k
+
+(eσℓ,k e+ϕ(Xi,k ,f i,k )) 2 + |Xi,k |+|Zi,k |
+
+σ2 + 1
+
+ℓ2
+
+
+
+= E
+
+(ni,f i)
+
+
+
+E
+
+μ–k ,X i, –k
+
+
+
+E
+
+Xi
+
+Z ∞−∞ 
+
+1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+α2 
+
+> i,k
+
+eσ2
+
+> ℓ,k
+
+
+
+e+ ϕ(Xi,k ,f i,k )
+
+> eσℓ,k
+
+2 + |Xi,k |+|Zi,k |
+
+σ2 + 1
+
+ℓ2
+
+| {z }
+
+=: F1,k (e+ϕ(Xi,k ,f i,k )/eσℓ,k )
+
+exp 
+
+ −e2
+
+2
+
+
+
+de 
+
+√2π
+
+| {z }
+
+=: F2(e)
+
+
+
+(57) where we use the fact that e|Xi,k ∼ N (0 , 1) in the last step. To proceed, we will consider the inner expectation in the RHS above. For any fixed Xi,k , F1,k (·) (as marked on the RHS) is an even function that monotonically increases on [0 , ∞)
+
+44 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+bounded by σ
+
+|Xi,k |+|Zi,k | and F2(·) (as marked on the RHS) is an even function that monotonically decreases on [0 , ∞).That means, for any a ∈ R,
+
+Z ∞−∞ 
+
+F1,k (e − a)F2(e)de ≤
+
+Z ∞−∞ 
+
+σ
+
+|Xi,k | + |Zi,k | F2(e)de = σ
+
+|Xi,k | + |Zi,k | < ∞
+
+By Lemma 23, we have 
+
+Z ∞−∞ 
+
+F1,k (e + ϕ(Xi,k , f i,k )/eσℓ,k )F2(e)de ≥
+
+Z ∞−∞ 
+
+F1,k (e)F2(e)de, (58) the equality is achieved when ϕ(Xi,k , f i,k )/eσℓk = 0 . In particular, the equality holds when fi,k is chosen as specified in (55). Now, to complete Step 1, we combine (53)/(54), (57), and (58) to obtain 
+
+inf 
+
+hi∈∆( H) E
+
+μ∼Λℓ
+
+"
+
+E
+
+((ni,f i,h i),s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+μ,M CBL 
+
+[∥hi (Xi, Y i, I i) − μ∥]22
+
+#
+
+= X
+
+k∈A
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
++ X
+
+k∈B
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k ∪Y–i,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
++ X
+
+k∈C
+
+E
+
+(ni,f i)
+
+
+
+E
+
+μ–k ,X i, –k
+
+
+
+E
+
+Xi,k 
+
+Z ∞−∞ 
+
+F1,k 
+
+
+
+e + ϕ(Xi,k , f i,k )
+
+eσℓ,k 
+
+
+
+F2(e)de 
+
+ 
+
+≥ X
+
+k∈A
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
++ X
+
+k∈B
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k ∪Y–i,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
++ X
+
+k∈C
+
+E
+
+ni,k 
+
+Z ∞−∞ 
+
+F1,k (e) F2(e)de 
+
+
+
+(59) Here the inner most expectations in the last summation are dropped as F1,k only depends on |Xi,k |, |Zi,k |, and |Z′
+
+i,k | but not their instantiations. Using (59), we can rewrite the Bayes risk under any prior Λℓ as: 
+
+Rℓ := inf 
+
+s′
+
+> i
+
+inf 
+
+s′
+
+> i
+
+∈∆( S)′ E
+
+μ∼Λℓ
+
+"
+
+E
+
+(s′
+
+> i
+
+,s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+μ,M CBL 
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+#
+
+= X
+
+k∈A
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
++ X
+
+k∈B
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k ∪Y–i,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
++ X
+
+k∈C
+
+E
+
+ni,k 
+
+Z ∞−∞ 
+
+F1,k (e) F2(e)de 
+
+
+
+= X
+
+k∈A
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
++ X
+
+k∈B
+
+E
+
+ni,k 
+
+"
+
+1
+
+|Xi,k ∪Y–i,k |
+
+σ2 + 1
+
+ℓ2
+
+#
+
++ X
+
+k∈C
+
+E
+
+ni,k 
+
+ E
+
+e∼N (0 ,1) 
+
+ 1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+α2 
+
+> i,k
+
+eσ2e2 + |Xi,k |+|Zi,k |
+
+σ2 + 1
+
+ℓ2
+
+
+
+Because all the terms inside the expectations are bounded and lim ℓ→∞ eσ2
+
+ℓ,k = σ2
+
+|Xi,k | + σ2
+
+|Zi,k | , we can use dominated convergence to show that 
+
+R∞ := lim 
+
+ℓ→∞ Rℓ = X
+
+k∈A
+
+E
+
+ni,k 
+
+ σ2
+
+|Xi,k |
+
+
+
++ X
+
+k∈B
+
+E
+
+ni,k 
+
+ σ2
+
+|Xi,k ∪ Y–i,k |
+
+
+
++ X
+
+k∈C
+
+E
+
+ni,k 
+
+
+
+E
+
+e∼N (0 ,1) 
+
+
+
+1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+α2
+
+> i,k
+> σ2
+
+|Xi,k | + σ2
+
+|Zi,k |
+
+!
+
+e2
+
++ |Xi,k |+|Zi,k |
+
+σ2
+
+
+
+(60) 45 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Step 2. (Maximum risk of esi) Define esi to be the randomized strategy given by (ni, f ⋆i , h ⋆i ). Recall that ni is the randomized distribution over how much data is collected. Thus, esi is the strategy always submits data truthfully and uses the suggested estimator while following the same data collection strategy as si.We will now compute the maximum risk of esi and show that it is equal to the RHS of (60). First note that we can write, 
+
+bμ(Xi,k ) − μk
+
+bμ(Zi,k ) − μk
+
+
+
+∼ N 
+
+00
+
+
+
+,
+
+σ2
+
+|Xi,k | 00 σ2
+
+|Zi,k |
+
+!! 
+
+By a linear transformation of this Gaussian vector, we obtain 
+
+ |Xi,k |
+
+σ2 (bμ(Xi,k ) − μk) + |Zi,k |
+
+σ2 (bμ(Zi,k ) − μk)
+
+bμ(Xi,k ) − bμ(Zi,k )
+
+
+
+=
+
+ |Xi,k |
+
+σ2
+
+|Zi,k |
+
+σ2
+
+1 −1
+
+  bμ(Xi,k ) − μk
+
+bμ(Zi,k ) − μk
+
+
+
+∼N 
+
+00
+
+
+
+,
+
+|Xi,k |+|Zi,k |
+
+σ2 00 σ2
+
+|Xi,k | + σ2
+
+|Zi,k |
+
+!! 
+
+which means |Xi,k |
+
+σ2 (bμ(Xi,k ) − μk) + |Zi,k |
+
+σ2 (bμ(Zi,k ) − μk) and ηi,k 
+
+αi,k = bμ(Xi,k ) − bμ(Zi,k ) are independent Gaussian random variables. Therefore, the maximum risk of esi is: 
+
+sup 
+
+μ∈Rd
+
+E
+
+(esi,s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+μ,M CBL 
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+
+
+= sup 
+
+μ∈Rd
+
+E
+
+ni
+
+"
+
+E
+
+μ,M CBL 
+
+" X
+
+k∈A
+
+(hi,k (Xi, Y i, I i) − μk)2 + X
+
+k∈B
+
+(hi,k (Xi, Y i, I i) − μk)2 + X
+
+k∈C
+
+(hi,k (Xi, Y i, I i) − μk)2
+
+## 
+
+= sup 
+
+μ∈Rd
+
+E
+
+ni
+
+"
+
+E
+
+μ,M CBL 
+
+" X
+
+k∈A
+
+(bμ(Xi,k ) − μk)2 + X
+
+k∈B
+
+(bμ(Xi,k ∪ Y–i,k ) − μk)2 + X
+
+k∈C
+
+(hi,k (Xi, Y i, I i) − μk)2
+
+## 
+
+= sup 
+
+μ∈Rd
+
+E
+
+ni
+
+"
+
+E
+
+μ,M CBL 
+
+" X
+
+k∈A
+
+σ2
+
+|Xi,k | + X
+
+k∈B
+
+σ2
+
+|Xi,k ∪ Y–i,k | + X
+
+k∈C
+
+(hi,k (Xi, Y i, I i) − μk)2
+
+## 
+
+= X
+
+k∈A
+
+E
+
+ni,k 
+
+ σ2
+
+|Xi,k |
+
+
+
++ X
+
+k∈B
+
+E
+
+ni,k 
+
+ σ2
+
+|Xi,k ∪ Y–i,k |
+
+
+
++ sup 
+
+μ∈Rd
+
+E
+
+ni
+
+E
+
+μ,M CBL 
+
+"X
+
+k∈C
+
+(hi,k (Xi, Y i, I i) − μk)2
+
+#
+
+(61) Now notice that we can rewrite the last summation, given in (61), as: 
+
+sup 
+
+μ∈Rd
+
+E
+
+ni
+
+E
+
+μ,M CBL 
+
+"X
+
+k∈C
+
+(hi,k (Xi, Y i, I i) − μk)2
+
+#
+
+= sup 
+
+μ∈Rd
+
+X
+
+k∈C
+
+E
+
+ni
+
+
+
+E
+
+μ,M CBL 
+
+(hi,k (Xi, Y i, I i) − μk)2
+
+= sup 
+
+μ∈Rd
+
+X
+
+k∈C
+
+E
+
+ni
+
+ E
+
+ηi,k 
+
+E
+
+
+
+bμ(Z′ 
+
+> i,k
+
+)|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ bμ(Zi,k )|Zi,k |
+
+σ2 + bμ(Xi,k )|Xi,k |
+
+σ2
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ |Zi,k ∪Xi,k |
+
+σ2
+
+− μk
+
+
+
+2
+
+ηi,k 
+
+
+
+= sup 
+
+μ∈Rd
+
+X
+
+k∈C
+
+E
+
+ni,k 
+
+ E
+
+ηi,k 
+
+E
+
+
+
+(bμ(Z′ 
+
+> i,k
+
+)−μk )|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ (bμ(Zi,k )−μk )|Zi,k |
+
+σ2 + (bμ(Xi,k )−μk )|Xi,k |
+
+σ2
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ |Zi,k ∪Xi,k |
+
+σ2
+
+
+
+2
+
+ηi,k 
+
+
+
+= sup 
+
+μ∈Rd
+
+X
+
+k∈C
+
+E
+
+ni,k 
+
+ E
+
+ηi,k 
+
+
+
+E
+
+" (bμ(Z′ 
+
+> i,k
+
+)−μk )|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ (bμ(Zi,k )−μk )|Zi,k |
+
+σ2 + (bμ(Xi,k )−μk )|Xi,k |
+
+σ2
+
+2
+
+ηi,k 
+
+# |Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ |Zi,k ∪Xi,k |
+
+σ2
+
+2
+
+
+
+46 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+= sup 
+
+μ∈Rd
+
+X
+
+k∈C
+
+E
+
+ni,k 
+
+ E
+
+ηi,k 
+
+
+
+1
+
+ |Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ |Zi,k ∪Xi,k |
+
+σ2
+
+2
+
+
+
+Z′
+
+i,k 
+
+
+
+σ2 + η2
+
+i,k 
+
+
+
+σ2 + η2
+
+i,k 
+
+2 + |Xi,k | + |Zi,k |
+
+σ2
+
+
+
+= X
+
+k∈C
+
+E
+
+ni,k 
+
+ E
+
+ηi,k 
+
+ 1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+η2
+
+> i,k
+
++ |Zi,k ∪Xi,k |
+
+σ2
+
+
+
+= X
+
+k∈C
+
+E
+
+ni,k 
+
+E
+
+ 1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+α2 
+
+> i,k
+
+(bμ(Xi,k )−bμ(Zi,k )) 2 + |Zi,k ∪Xi,k |
+
+σ2
+
+
+
+= X
+
+k∈C
+
+E
+
+ni,k 
+
+
+
+E
+
+e∼N (0 ,1) 
+
+
+
+1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+α2
+
+> i,k
+> σ2
+
+|Zi,k | + σ2
+
+|Xi,k |
+
+! + |Zi,k ∪Xi,k |
+
+σ2
+
+
+
+Here the last line follows from the fact that bμ(Xi,k ) − bμ(Zi,k ) ∼ N 
+
+
+
+0, σ2
+
+|Xi,k | + σ2
+
+|Zi,k |
+
+
+
+. Substituting this expression into line (61) we get 
+
+sup 
+
+μ∈Rd
+
+E
+
+(esi,s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+μ,M CBL 
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+
+
+= X
+
+k∈A
+
+E
+
+ni,k 
+
+ σ2
+
+|Xi,k |
+
+
+
++ X
+
+k∈B
+
+E
+
+ni,k 
+
+ σ2
+
+|Xi,k ∪ Y–i,k |
+
+
+
+(62) 
+
++ X
+
+k∈C
+
+E
+
+ni,k 
+
+
+
+E
+
+e∼N (0 ,1) 
+
+
+
+1
+
+|Z′ 
+
+> i,k
+
+|
+
+σ2+α2
+
+> i,k
+> σ2
+
+|Zi,k | + σ2
+
+|Xi,k |
+
+! + |Zi,k ∪Xi,k |
+
+σ2
+
+
+
+(63) 
+
+= R∞
+
+Here, we have observed that the final expression in the above equation is exactly the same as the Bayes risk in the limit in (60) from Step 1. 
+
+Step 3. (Minimax optimality of esi) As the maximum is larger than the average, we can write, for any prior Λℓ and any 
+
+s′
+
+i ∈ ∆( S)sup 
+
+μ∈Rd
+
+E
+
+(s′
+
+> i
+
+,s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+μ,M CBL 
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+
+
+≥ E
+
+μ∼Λℓ
+
+"
+
+E
+
+(s′
+
+> i
+
+,s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+μ,M CBL 
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+#
+
+≥ Rℓ
+
+As this is true for all ℓ, taking the limit, we have that ∀s′
+
+i ∈ ∆( S)′,
+
+sup 
+
+μ∈Rd
+
+E
+
+(s′
+
+> i
+
+,s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+μ,M CBL 
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+
+
+≥ R∞ = sup 
+
+μ∈Rd
+
+E
+
+(esi,s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+μ,M CBL 
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+
+
+that is, esi = ( ni, f ⋆i , h ⋆i ) has a smaller maximum risk than any other s′
+
+i ∈ ∆( S).
+
+H.2. Proof of Lemma 4 
+
+Since we are assuming that fi = f ⋆i , h i = h⋆i , we have that 
+
+pi := pi (MCBL , (( ni, f ⋆i , h ⋆i ) , s ⋆
+
+–i)) 
+
+47 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+= sup 
+
+> μ∈Rd
+
+E
+
+(si,s ⋆
+
+> –i
+
+)
+
+"
+
+E
+
+> μ,M CBL
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+ +
+
+> d
+
+X
+
+> k=1
+
+ci,k ni,k 
+
+#
+
+= E
+
+(si,s ⋆
+
+> –i
+
+)
+
+" dX
+
+> k=1
+
+ci,k ni,k 
+
+#
+
++ sup 
+
+> μ∈Rd
+
+E
+
+(si,s ⋆
+
+> –i
+
+)
+
+
+
+E
+
+> μ,M CBL
+
+∥hi (Xi, Y i, I i) − μ∥22
+
+
+
+Since fi = f ⋆i , h i = h⋆i we can use the expression we calculated for the maximum risk in lines (62) and (63) to rewrite the penalty as 
+
+pi = E
+
+> ni,k
+
+" dX
+
+> k=1
+
+ci,k ni,k 
+
+#
+
++ X
+
+> k∈A
+
+E
+
+> ni,k
+
+ σ2
+
+|Xi,k |
+
+
+
++ X
+
+> k∈B
+
+E
+
+> ni,k
+
+ σ2
+
+|Xi,k ∪ Y–i,k |
+
+
+
++ X
+
+> k∈C
+
+E
+
+> ni,k
+
+
+
+E 
+
+> e∼N (0 ,1)
+
+
+
+1
+
+|Z′ 
+
+> i,k
+
+|
+
+> σ2+α2
+> i,k
+> σ2
+
+|Zi,k | + σ2
+
+|Xi,k | 
+
+> !
+
++ |Zi,k ∪Xi,k |
+
+> σ2
+
+
+
+= X
+
+> k∈A
+
+E
+
+> ni,k
+
+ σ2
+
+|Xi,k | + ci,k ni,k 
+
+
+
++ X
+
+> k∈B
+
+E
+
+> ni,k
+
+ σ2
+
+|Xi,k ∪ Y–i,k | + ci,k ni,k 
+
+
+
++ X
+
+> k∈C
+
+E
+
+> ni,k
+
+
+
+E 
+
+> e∼N (0 ,1)
+
+
+
+1
+
+|Z′ 
+
+> i,k
+
+|
+
+> σ2+α2
+> i,k
+> σ2
+
+|Zi,k | + σ2
+
+|Xi,k | 
+
+> !
+
++ |Zi,k ∪Xi,k |
+
+> σ2
+
+
+
++ ci,k ni,k 
+
+
+
+≥ X
+
+> k∈A
+
+min 
+
+> ni,k
+
+ σ2
+
+|Xi,k | + ci,k ni,k 
+
+
+
++ X
+
+> k∈B
+
+min 
+
+> ni,k
+
+ σ2
+
+|Xi,k ∪ Y–i,k | + ci,k ni,k 
+
+
+
++ X
+
+> k∈C
+
+min 
+
+> ni,k
+
+
+
+E 
+
+> e∼N (0 ,1)
+
+
+
+1
+
+|Z′ 
+
+> i,k
+
+|
+
+> σ2+α2
+> i,k
+> σ2
+
+|Zi,k | + σ2
+
+|Xi,k | 
+
+> !
+
++ |Zi,k ∪Xi,k |
+
+> σ2
+
+
+
++ ci,k ni,k 
+
+
+
+To minimize this entire quantity, we minimize each of the terms, making use of the fact that these terms are all separable and each only depend on one of ni, 1, . . . , n i,d . We do this by cases, depending on whether k is in A, B, or C.If k ∈ A, then we know that by definition 
+
+argmin 
+
+> ni,k
+
+σ2
+
+|Xi,k | + ci,k ni,k = argmin 
+
+> ni,k
+
+= σ2
+
+ni,k 
+
++ ci,k ni,k = nIND 
+
+> i,k
+
+Furthermore, since k ∈ A, n⋆i,k = nIND  
+
+> i,k
+
+by the definition given in (9). If k ∈ B, then n⋆i,k = 0 . We know that Y–i,k ≥ Tk by the definition of Algorithm 1. Since i̸ ∈ Vk, Lemma 9 tells us that 
+
+Tk > 2nIND  
+
+> i,k
+
+> n IND  
+
+> i,k
+
+and so Y–i,k > n IND  
+
+> i,k
+
+. Therefore, the cost for agent i to collect more data is not offset by the marginal decrease in estimation error due to this extra data. This means that 
+
+argmin 
+
+> ni,k
+
+σ2
+
+|Xi,k ∪ Y–i,k | + ci,k ni,k = argmin 
+
+> ni,k
+
+= σ2
+
+ni,k + |Y–i,k | + ci,k ni,k = 0 
+
+Furthermore, since k ∈ B, n⋆i,k = 0 by the definition given in (9). 48 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+If k ∈ C, then more work is required to show that 
+
+argmin 
+
+> ni,k
+
+
+
+E 
+
+> e∼N (0 ,1)
+
+
+
+1
+
+|Z′ 
+
+> i,k
+
+|
+
+> σ2+α2
+> i,k
+> σ2
+
+|Zi,k | + σ2
+
+|Xi,k | 
+
+> !
+
++ |Zi,k ∪Xi,k |
+
+> σ2
+
+
+
++ ci,k ni,k 
+
+
+
+= n⋆i,k 
+
+Let Di,k = Tk − 2n⋆i,k . Now notice that 
+
+min 
+
+> ni,k
+
+ E 
+
+> x∼N (0 ,1)
+
+
+
+1       
+
+> |Z′
+> i,k |
+> σ2+α2
+> i,k
+> σ2
+> |Xi,k |+σ2
+> |Zi,k |
+> 
+> x2
+
++ |Xi,k |+|Zi,k |
+
+> σ2
+
+ + ci,k ni,k 
+
+
+
+= min 
+
+> ni,k
+
+
+
+E 
+
+> x∼N (0 ,1)
+
+
+
+1  
+
+> Di,k
+> σ2+α2
+> i,k
+> 
+> σ2
+> ni,k +σ2
+> n⋆i,k
+> 
+> x2
+
++ ni,k +n⋆i,k 
+
+> σ2
+
+| {z }  
+
+> =: l(ni,k ,x ;αi,k )
+
+
+
++ ci,k ni,k 
+
+
+
+(64) We will now show that l is convex in ni,k .
+
+∂∂n i,k 
+
+l(ni,k , x ; αi,k ) − σ2
+
+1 + Di,k    
+
+> 
+> 1+ α2
+> i,k
+> 
+> 1
+> ni,k +1
+> n⋆i,k
+> 
+> x2
+> 2
+> α2
+> i,k x2
+> n2
+> i,k
+
+ Di,k   
+
+> 1+ α2
+> i,k
+> 
+> 1
+> ni,k +1
+> n⋆i,k
+> 
+> x2
+
++ ni,k + n⋆i,k 
+
+ 
+
+> 2
+
+− σ2
+
+1 + Di,k α2   
+
+> i,k x2
+> 
+> ni,k +α2
+> i,k
+> 
+> 1+ ni,k n⋆i,k
+> 
+> x2
+> 2
+
+ Di,k   
+
+> 1+ α2
+> i,k
+> 
+> 1
+> ni,k +1
+> n⋆i,k
+> 
+> x2
+
++ ni,k + n⋆i,k 
+
+
+
+> 2
+
+We have that ∂∂n i,k l (ni,k , x ; αi,k ) is an increasing function and thus l (ni,k , x ; αi,k ) is convex. Because taking expectation preserves convexity (see Lemma 22), the penalty term as a whole is convex. By Lemma 15 we have that 
+
+∂p i
+
+∂n i,k 
+
+(n⋆i,k ) = − σ2Di,k 
+
+64 α3
+
+> i,k
+
+√Tkn⋆i,k 
+
+4αi,k 
+
+√Tk
+
+4α2
+
+> i,k
+
+Tk
+
+Di,k n⋆i,k 
+
+− 1 − ci,k 
+
+16 α2
+
+> i,k
+
+Tkn⋆i,k 
+
+σ2Di,k 
+
+!
+
+− exp Tk
+
+8α2
+
+> i,k
+
+! 4α2
+
+> i,k
+
+Tk
+
+Tk
+
+n⋆i,k 
+
++ 1 
+
+!
+
+− 1
+
+! √2πErfc 
+
+s Tk
+
+8α2
+
+> i,k
+
+! ! 
+
+.
+
+Now notice that the right hand term has a factor of Gi,k (αi,k ) = 0 . This means that (64) is minimized when ni,k = n⋆i,k .Thus, by combining our analyses for when k ∈ A, B or C, we conclude that pi is minimized when ni,k = n⋆i,k .
+
+I. Known results 
+
+In this section, we will state known results that are either used directly or with minimal modifications. 
+
+Lemma 22. Let Y be a random variable and f : R2 → R be a function for which f (x, Y ) is convex in x and ∀x ∈ R,
+
+E [|f (x, Y )|] < ∞. Then E [f (x, Y )] is also convex in x.Proof. For all x1, x 2 ∈ R and t ∈ [0 , 1] we have 
+
+f (x1t + x2(1 − t), Y ) ≤ f (x1, Y )t + f (x2, Y )(1 − t)
+
+⇒ E [f (x1t + x2(1 − t), Y )] ≤ E [f (x1, Y )] t + E [f (x2, Y )] (1 − t).
+
+49 Collaborative Mean Estimation Among Heterogeneous Strategic Agents 
+
+Lemma 23 (Chen et al. (2023) (A corollary of Hardy-Littlewood)) . Let f , g be nonnegative even functions such that, 
+
+• f is monotonically increasing on [0 , ∞).
+
+• g is monotonically decreasing on [0 , ∞), and has a finite integral R 
+
+> R
+
+g(x)dx < ∞.
+
+• ∀a, R 
+
+> R
+
+f (x − a)g(x)dx < ∞.Then for all a, Z
+
+> R
+
+f (x)g(x)dx ≤
+
+Z
+
+> R
+
+f (x − a)g(x)dx 
+
+Lemma 24 (Chen et al. (2023)) . For all t ≥ 0 and some L > 0, define 
+
+I(t) := 
+
+Z ∞−∞ 
+
+1
+
+L + x2
+
+1
+
+√2π exp  −tx 2 dx J(t) := 
+
+Z ∞−∞ 
+
+1(L + x2)2
+
+1
+
+√2π exp  −tx 2 dx. 
+
+Then we have 
+
+I(t) = exp( Lt )Erfc (√Lt )
+
+r π
+
+2LJ(t) = 
+
+r π
+
+2L
+
+ 12L − t
+
+
+
+exp( Lt )Erfc (√Lt ) + 
+
+√t
+
+√2L .
+
+50

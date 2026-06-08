@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "extractor": "papercropper",
+  "figures": [
+    {
+      "url": "assets/figures/openreview/openreview-icml-2025-our945qeub/fig-001.webp",
+      "caption": "",
+      "page": 0,
+      "index": 1,
+      "width": 1748,
+      "height": 317,
+      "label": "Figure"
+    }
+  ]
+}
