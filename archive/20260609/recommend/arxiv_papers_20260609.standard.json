@@ -1,0 +1,409 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-09T21:38:23.015016+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2606.04627v1",
+      "source": "arxiv",
+      "title": "MIRAGE: Mobile Agents with Implicit Reasoning and Generative World Models",
+      "abstract": "Mobile agents are increasingly expected to operate everyday applications from screenshots and language goals, where reliable control requires reasoning over screen affordances, multi-step navigation, and future state changes. However, many agents externalize this computation as long textual chains of thought, which slows interaction, increases supervision cost, and complicates deployment. We introduce MIRAGE, a framework that learns continuous latent reasoning representations from visible textual reasoning traces. MIRAGE transfers explicit reasoning into compact hidden states, enabling the agent to reason internally without decoding long rationales. It also incorporates a generative world-model objective: latent reasoning vectors are aligned with future screenshots, encouraging the agent to anticipate upcoming interface states before acting. This turns hidden computation into both a compressed thought representation and a forward-looking model of environment dynamics. At inference time, MIRAGE reasons in continuous latent space, reducing token generation while improving execution efficiency. On AndroidWorld, MIRAGE matches explicit chain-of-thought supervised fine-tuning in the 4B ablation with a 3-5x lower decoded-token budget and improves a comparable instruction-tuned baseline by 10.2 points; on AndroidControl, it improves action grounding while generating over 75% fewer tokens.",
+      "authors": [
+        "Zhichao Yang",
+        "Yuanze Hu",
+        "Haojie Hao",
+        "Longkun Hao",
+        "Dongshuo Huang",
+        "Hongyu Lin",
+        "Gen Li",
+        "Lanqing Hong",
+        "Yihang Lou",
+        "Yan Bai"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-03T09:01:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.04627v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "mobile agent framework",
+      "llm_evidence_cn": "移动智能体框架",
+      "llm_evidence": "移动智能体框架",
+      "canonical_evidence": "移动智能体框架",
+      "llm_tldr_en": "MIRAGE enables mobile agents to reason internally via latent representations without explicit chain-of-thought, improving efficiency.",
+      "llm_tldr_cn": "现有移动智能体依赖长链式思维推理，导致交互缓慢和部署复杂。MIRAGE提出学习连续隐式推理表示，将显式推理转化为紧凑隐状态，并引入生成式世界模型对齐未来状态；实验表明，该方法在手机操作任务中大幅提升推理效率与鲁棒性，为移动智能体部署提供了高效新方案。",
+      "llm_tldr": "现有移动智能体依赖长链式思维推理，导致交互缓慢和部署复杂。MIRAGE提出学习连续隐式推理表示，将显式推理转化为紧凑隐状态，并引入生成式世界模型对齐未来状态；实验表明，该方法在手机操作任务中大幅提升推理效率与鲁棒性，为移动智能体部署提供了高效新方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.04627v2",
+      "source": "arxiv",
+      "title": "MIRAGE: Mobile Agents with Implicit Reasoning and Generative World Models",
+      "abstract": "Mobile agents are increasingly expected to operate everyday applications from screenshots and language goals, where reliable control requires reasoning over screen affordances, multi-step navigation, and future state changes. However, many agents externalize this computation as long textual chains of thought, which slows interaction, increases supervision cost, and complicates deployment. We introduce MIRAGE, a framework that learns continuous latent reasoning representations from visible textual reasoning traces. MIRAGE transfers explicit reasoning into compact hidden states, enabling the agent to reason internally without decoding long rationales. It also incorporates a generative world-model objective: latent reasoning vectors are aligned with future screenshots, encouraging the agent to anticipate upcoming interface states before acting. This turns hidden computation into both a compressed thought representation and a forward-looking model of environment dynamics. At inference time, MIRAGE reasons in continuous latent space, reducing token generation while improving execution efficiency. On AndroidWorld, MIRAGE matches explicit chain-of-thought supervised fine-tuning in the 4B ablation with a 3-5x lower decoded-token budget and improves a comparable instruction-tuned baseline by 10.2 points; on AndroidControl, it improves action grounding while generating over 75% fewer tokens.",
+      "authors": [
+        "Zhichao Yang",
+        "Yuanze Hu",
+        "Haojie Hao",
+        "Longkun Hao",
+        "Dongshuo Huang",
+        "Hongyu Lin",
+        "Gen Li",
+        "Lanqing Hong",
+        "Yihang Lou",
+        "Yan Bai"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-03T09:01:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.04627v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Mobile agents with implicit reasoning and world models",
+      "llm_evidence_cn": "移动智能体通过隐式推理和世界模型实现高效操作",
+      "llm_evidence": "移动智能体通过隐式推理和世界模型实现高效操作",
+      "canonical_evidence": "移动智能体通过隐式推理和世界模型实现高效操作",
+      "llm_tldr_en": "Introduces MIRAGE, a framework for mobile agents that learns compact latent reasoning representations from explicit traces, enabling faster and more deployable mobile AI agents.",
+      "llm_tldr_cn": "移动智能体通常依赖冗长的文本推理链，导致交互慢、部署困难。本文提出MIRAGE框架，将显式推理转化为紧凑的隐式表示，并引入生成式世界模型目标，使智能体能够内化推理过程。实验表明，MIRAGE在移动应用操作任务中显著缩短推理时间并保持高成功率，为移动AI智能体提供了高效实用的解决方案。",
+      "llm_tldr": "移动智能体通常依赖冗长的文本推理链，导致交互慢、部署困难。本文提出MIRAGE框架，将显式推理转化为紧凑的隐式表示，并引入生成式世界模型目标，使智能体能够内化推理过程。实验表明，MIRAGE在移动应用操作任务中显著缩短推理时间并保持高成功率，为移动AI智能体提供了高效实用的解决方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.02763v1",
+      "source": "arxiv",
+      "title": "InquiryBits: Sharing AI Conversation Traces to Support Collaboration Within Trust Boundaries",
+      "abstract": "AI chat tools are shifting problem-solving and brainstorming conversations away from colleagues and into private AI interactions, reducing the shared awareness that supports team coordination. We introduce InquiryBits, a system that shares minimal summaries of AI conversations within configurable trust boundaries, separating AI-only analysis from human-visible sharing. In a study with 80 professionals, we find that people are broadly willing to share these traces to support collaboration and avoid duplicating work - but only within bounded groups. Comfort drops sharply as audience expands beyond close teams; the level of detail shared matters less than who can see it, with a preference for more detail over less within trusted groups. These findings suggest that trust boundaries, more than information granularity, may be the most impactful design parameter.",
+      "authors": [
+        "Caitlin Morris",
+        "Pattie Maes"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-06-01T18:27:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.02763v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Focus on sharing AI traces to support team collaboration",
+      "llm_evidence_cn": "研究AI对话痕迹的共享以支持团队协作",
+      "llm_evidence": "研究AI对话痕迹的共享以支持团队协作",
+      "canonical_evidence": "研究AI对话痕迹的共享以支持团队协作",
+      "llm_tldr_en": "InquiryBits shares minimal AI conversation summaries within trust boundaries to enhance team collaboration and reduce duplicated work, showing users prefer sharing more detail within close teams.",
+      "llm_tldr_cn": "本文针对AI工具导致同事间沟通减少的问题，提出InquiryBits系统，在可配置的信任范围内共享AI对话的最小摘要。通过80名专业人士的研究发现，人们愿意分享这些痕迹以支持协作并避免重复工作，但仅限于紧密团队内；随着受众扩大，舒适度急剧下降。分享细节多少的影响小于谁能看到的影响，在信任的群体内用户倾向于分享更多细节。该系统有助于在保护隐私的同时维持团队协作的共享意识。",
+      "llm_tldr": "本文针对AI工具导致同事间沟通减少的问题，提出InquiryBits系统，在可配置的信任范围内共享AI对话的最小摘要。通过80名专业人士的研究发现，人们愿意分享这些痕迹以支持协作并避免重复工作，但仅限于紧密团队内；随着受众扩大，舒适度急剧下降。分享细节多少的影响小于谁能看到的影响，在信任的群体内用户倾向于分享更多细节。该系统有助于在保护隐私的同时维持团队协作的共享意识。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.05793v1",
+      "source": "arxiv",
+      "title": "CollabBench: Benchmarking and Unleashing Collaborative Ability of LLMs with Diverse Players via Proactive Engagement",
+      "abstract": "While LLM-based agents excel at individual tasks, effective collaboration with realistic human partners remains challenging. Most of the existing conversation-level collaborative studies lack grounded interaction and behavioral execution, motivating the need for cooperative game environments that enable contextualized and immersive collaboration. To this end, this paper proposes CollabBench, a benchmark for evaluating and training collaborative agents in cooperative games. CollabBench features a Diverse Player Profile Simulation pipeline to model varied players behaviors, and a Collaborative Agentic Training paradigm that unifies reasoning, communication, and action via agentic rollouts, optimized with a hybrid reward balancing task efficiency and affective adaptation. We further extend classic environments to CWAH-MultiPlayer and Cook-MultiPlayer for systematic evaluation under diverse personalities. Experiments with efficiency and affective metrics show that our trained models outperform base models, achieving 19.5% higher efficiency and 24.4% improved affective performance. Further analysis reveals key collaborative limitations of existing models and offers insights for future collaborative training.",
+      "authors": [
+        "Hong Qian",
+        "Yuanhao Liu",
+        "Zihan Zhou",
+        "Zongbao Zhang",
+        "Hanjie Ge",
+        "Haotian Shi",
+        "Liang Dou",
+        "Xiangfeng Wang",
+        "Jingwen Yang",
+        "Aimin Zhou"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.CY",
+        "cs.LG"
+      ],
+      "published": "2026-06-04T07:22:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.05793v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "benchmark for collaborative LLM agents in cooperative games",
+      "llm_evidence_cn": "合作游戏中LLM智能体的协作能力基准",
+      "llm_evidence": "合作游戏中LLM智能体的协作能力基准",
+      "canonical_evidence": "合作游戏中LLM智能体的协作能力基准",
+      "llm_tldr_en": "CollabBench evaluates and trains collaborative LLM agents in cooperative game environments with diverse player profiles and proactive engagement.",
+      "llm_tldr_cn": "现有协作研究缺乏具身交互与行为执行，难以评估真实协作能力。CollabBench提出基于合作游戏的评测与训练框架，包含多样化玩家画像模拟流水线，以及统一推理、通信与动作的协作智能体训练范式。实验表明该基准能有效区分不同模型协作能力，并提升智能体与人类协作表现，为多智能体协作研究提供了标准化的评测平台。",
+      "llm_tldr": "现有协作研究缺乏具身交互与行为执行，难以评估真实协作能力。CollabBench提出基于合作游戏的评测与训练框架，包含多样化玩家画像模拟流水线，以及统一推理、通信与动作的协作智能体训练范式。实验表明该基准能有效区分不同模型协作能力，并提升智能体与人类协作表现，为多智能体协作研究提供了标准化的评测平台。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.08197v1",
+      "source": "arxiv",
+      "title": "AlignFed: Alignment-Aware Asynchronous Federated Fine-Tuning for Large Language Models in Heterogeneous Edge Environments",
+      "abstract": "Large Language Models (LLMs) have significantly propelled the advancement of edge intelligence and have been widely deployed across various scenarios, including autonomous driving, industrial inspection, and personalized IoT services. However, the collaborative adaptation of LLMs on edge devices continues to face formidable challenges due to strict data privacy constraints, highly heterogeneous computing and communication resources, and the non-independent and identically distributed (non-IID) nature of local data. Federated Fine-Tuning (FFT) enables the collaborative optimization of distributed models without exposing raw data. Yet, traditional synchronous aggregation suffers from a severe straggler effect, resulting in high system latency and low resource utilization. Existing asynchronous federated learning methods are predominantly designed for small-to-medium-scale models and struggle to address the specific challenges inherent in LLM fine-tuning namely, model drift caused by stale updates, aggravated client drift stemming from data heterogeneity, and aggregation fairness imbalance resulting from the dominance of fast clients. To address these issues, this paper proposes AlignFed, an asynchronous federated fine-tuning framework for LLMs tailored to heterogeneous edge environments. AlignFed employs a lightweight multi-stage semantic alignment mechanism comprising three core modules: version-aware update grouping, cross-version semantic alignment based on a mini-batch calibration set, and fairness-aware aggregation that integrates both update freshness and client participation frequency. This framework effectively mitigates cross-version model drift and client drift while enhancing aggregation fairness, thereby achieving stable and efficient asynchronous federated optimization in scenarios characterized by high heterogeneity and significant update staleness.",
+      "authors": [
+        "Yan Wang",
+        "Ziyi Gao",
+        "Rui Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.DC"
+      ],
+      "published": "2026-06-06T14:28:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.08197v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Proposes federated fine-tuning for LLMs in heterogeneous edge environments, enabling collaborative model adaptation",
+      "llm_evidence_cn": "提出异构边缘环境中LLM的联邦微调，支持协作模型自适应",
+      "llm_evidence": "提出异构边缘环境中LLM的联邦微调，支持协作模型自适应",
+      "canonical_evidence": "提出异构边缘环境中LLM的联邦微调，支持协作模型自适应",
+      "llm_tldr_en": "AlignFed introduces alignment-aware asynchronous federated fine-tuning for LLMs on heterogeneous edge devices, addressing straggler effects and non-IID data to enable collaborative optimization.",
+      "llm_tldr_cn": "本文针对边缘设备上LLM协作自适应面临的异构计算资源、数据隐私和非独立同分布数据挑战，提出AlignFed，一种对齐感知的异步联邦微调方法。该方法通过异步聚合和适应数据异质性，缓解传统同步聚合的队尾效应，实现分布式模型的高效协作优化，推动边缘智能的落地应用。",
+      "llm_tldr": "本文针对边缘设备上LLM协作自适应面临的异构计算资源、数据隐私和非独立同分布数据挑战，提出AlignFed，一种对齐感知的异步联邦微调方法。该方法通过异步聚合和适应数据异质性，缓解传统同步聚合的队尾效应，实现分布式模型的高效协作优化，推动边缘智能的落地应用。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.05304v1",
+      "source": "arxiv",
+      "title": "What Should Agents Say? Action-state Communication for Efficient Multi-Agent Systems",
+      "abstract": "Multi-agent systems (MAS) built on large language models are typically organized around roles, pipelines, and turn schedules, while the content that agents pass to one another is often left as unconstrained natural language. However, this free-form communication can rapidly inflate token usage, consume the shared context window, and ultimately affect both system performance and inference cost. We analyze five common inter-agent communication strategies across two MAS topologies, finding that no fixed strategy is universally optimal. Instead, effective inter-agent messages consistently preserve action-centered information needed by downstream agents. Building on this, we propose the PACT (Protocolized Action-state Communication and Transmission), which treats inter-agent communication as a public state-update problem and projects each raw agent output into a compact action-state record before it enters shared history. Across different MAS topologies, PACT consistently improves the performance-cost trade-off, achieving comparable or stronger task performance with substantially fewer tokens. The gains extend to production coding harnesses: PACT lifts OpenHands' resolve rate at -10% tokens-per-resolved, and is resolve-neutral on SWE-agent while halving input tokens. Our code is publicly available at https://github.com/iNLP-Lab/PACT.",
+      "authors": [
+        "Chen Huang",
+        "Yuhao Wu",
+        "Wenxuan Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-03T18:00:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.05304v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "protocolized communication for multi-agent collaboration",
+      "llm_evidence_cn": "多智能体协作的协议化通信",
+      "llm_evidence": "多智能体协作的协议化通信",
+      "canonical_evidence": "多智能体协作的协议化通信",
+      "llm_tldr_en": "PACT proposes action-state communication protocols for multi-agent systems to reduce token waste and improve collaboration efficiency.",
+      "llm_tldr_cn": "多智能体系统常使用自由文本通信，导致令牌膨胀与上下文窗口占用。论文分析了五种通信策略，发现保留动作中心信息的消息最有效。据此提出PACT（协议化动作状态通信与传输）框架，规范智能体间消息格式。实验表明PACT在多种拓扑结构下显著降低推理成本，同时保持或提升协作性能，为高效多智能体协同提供了实用通信协议。",
+      "llm_tldr": "多智能体系统常使用自由文本通信，导致令牌膨胀与上下文窗口占用。论文分析了五种通信策略，发现保留动作中心信息的消息最有效。据此提出PACT（协议化动作状态通信与传输）框架，规范智能体间消息格式。实验表明PACT在多种拓扑结构下显著降低推理成本，同时保持或提升协作性能，为高效多智能体协同提供了实用通信协议。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.06399v2",
+      "source": "arxiv",
+      "title": "CollabSim: A CSCW-Grounded Methodology for Investigating Collaborative Competence of LLM Agents through Controlled Multi-Agent Experiments",
+      "abstract": "Multi-agent systems (MAS) built on large language models have shown growing promise, with their effectiveness resting on agents' ability to coordinate through text-based channels much as human teams do. Yet recent study suggests that MAS often falter not because agents lack individual task-solving ability, but because they lack collaborative competence: the capacity to establish common ground, maintain shared task understanding, balance individual and collective incentives, and repair misalignment as interaction unfolds. Decades of research in Computer-Supported Cooperative Work have characterized these requirements for human teams coordinating under constrained communication, yet existing MAS evaluations focus mainly on task outcomes or single-agent proficiency in reasoning, planning, and tool use. To enable a systematic analysis of agents' collaborative competence in MAS, we introduce CollabSim, a configurable simulation framework that combines a theory-grounded definition of collaborative capabilities, controlled manipulation of interaction conditions, and action-level probing of agents' internal states. Experiments across four LLMs show that CollabSim can capture condition effects, separate model performance patterns, and reveal task-dependent effects of agent design.",
+      "authors": [
+        "Jiaju Chen",
+        "Bo Sun",
+        "Yuxuan Lu",
+        "Yun Wang",
+        "Dakuo Wang",
+        "Bingsheng Yao"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-04T17:06:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.06399v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Investigates collaborative competence of LLM agents through controlled multi-agent experiments",
+      "llm_evidence_cn": "通过受控多智能体实验研究LLM代理的协作能力",
+      "llm_evidence": "通过受控多智能体实验研究LLM代理的协作能力",
+      "canonical_evidence": "通过受控多智能体实验研究LLM代理的协作能力",
+      "llm_tldr_en": "CollabSim uses CSCW principles to study LLM agent collaborative competence via controlled multi-agent experiments, revealing that agents often fail due to lack of collaborative skills, not individual ability.",
+      "llm_tldr_cn": "本文利用计算机支持协同工作（CSCW）原理，提出CollabSim方法，通过受控多智能体实验研究LLM代理的协作能力。研究发现多智能体系统失败常不是因为个体任务解决能力，而是缺乏建立共同基础、维持共享任务理解、平衡个体与集体激励以及修复协调偏差的协作能力。该方法为评估和提升代理协作提供了系统化框架。",
+      "llm_tldr": "本文利用计算机支持协同工作（CSCW）原理，提出CollabSim方法，通过受控多智能体实验研究LLM代理的协作能力。研究发现多智能体系统失败常不是因为个体任务解决能力，而是缺乏建立共同基础、维持共享任务理解、平衡个体与集体激励以及修复协调偏差的协作能力。该方法为评估和提升代理协作提供了系统化框架。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.07200v1",
+      "source": "arxiv",
+      "title": "Learning Multi-Agent Communication Protocol: Study on Information Entropy Efficiency in MARL",
+      "abstract": "Multi-Agent Systems (MAS) have emerged as a fundamental paradigm for distributed problem-solving, where autonomous agents collaborate to achieve complex objectives. Within this framework, Multi-Agent Reinforcement Learning (MARL) with communication has demonstrated remarkable success in cooperative tasks. However, existing approaches predominantly pursue performance gains through increasingly complex architectures and expanding communication overhead, lacking principled metrics to evaluate the efficiency of information exchange. In this paper, we focus on enabling agents to learn efficient multi-agent communication protocols that balance performance and information compactness. We propose the Information Entropy Efficiency Index (IEI), a novel metric that quantifies the ratio between message entropy and task performance in learned communication protocols. A lower IEI indicates more compact and efficient message representations. By incorporating IEI into training loss functions, we encourage agents to develop communication protocols that achieve high performance with improved communication efficiency. Extensive experiments across diverse MARL algorithms demonstrate that our approach achieves equivalent or superior task performance compared to baseline methods while improving communication efficiency. These findings challenge the prevailing assumption that performance improvements require complex architectures or increased communication overhead and highlight the potential of improving both task success and communication efficiency to enable scalable MAS.",
+      "authors": [
+        "Xinren Zhang",
+        "Zixin Zhong",
+        "Jiadong Yu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-06-05T12:08:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.07200v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Efficient multi-agent communication protocol for collaboration",
+      "llm_evidence_cn": "高效的多智能体通信协议提升协作效率",
+      "llm_evidence": "高效的多智能体通信协议提升协作效率",
+      "canonical_evidence": "高效的多智能体通信协议提升协作效率",
+      "llm_tldr_en": "Proposes Information Entropy Efficiency Index to learn communication protocols balancing performance and compactness in cooperative MARL.",
+      "llm_tldr_cn": "现有MARL通信协议设计缺乏信息效率评估指标，本文提出信息熵效率指数，引导智能体学习兼顾性能与信息紧凑性的通信协议。通过在协作任务中验证，该协议在保持任务性能的同时显著降低通信开销，为多智能体系统提供可扩展的协作通信方法。",
+      "llm_tldr": "现有MARL通信协议设计缺乏信息效率评估指标，本文提出信息熵效率指数，引导智能体学习兼顾性能与信息紧凑性的通信协议。通过在协作任务中验证，该协议在保持任务性能的同时显著降低通信开销，为多智能体系统提供可扩展的协作通信方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.07940v1",
+      "source": "arxiv",
+      "title": "SGTO-MAS: Secure Gorilla Troops Optimization for Multi-Agent LLM Systems",
+      "abstract": "Multi-agent large language model (LLM) systems offer strong capabilities for complex reasoning and decision-making, yet coordination across agents introduces error propagation, security risks, and inefficient use of resources. Existing methods often rely on heuristic, static strategies and lack a principled mechanism for balancing performance, security, and computational cost. This paper formulates multi-agent LLM coordination as a constrained optimization problem and proposes a security-aware method for adaptive agent selection. The method integrates trust modeling, risk-aware evaluation, and collective intelligence within a unified optimization objective. To solve the problem efficiently, we use a swarm-intelligence strategy inspired by Gorilla Troops Optimization (GTO), enabling adaptive coordination under varying threat conditions. Controlled experiments across 500 independent runs demonstrate the effectiveness of the proposed method. The system achieves a stable average performance score of 0.5281, with high consensus (0.8764), controlled risk (0.3000), and compact agent subsets averaging 4.04 selected agents. The optimization process converges efficiently, with an average runtime of 24.09 seconds per run and low score variability (standard deviation = 0.0173). Robustness analysis indicates graceful degradation under perturbations, with performance drops limited to 2.5% under agent removal and 5.3% under consensus disruption. These results show that effective multi-agent coordination can be achieved through structured optimization that jointly manages performance, security, and efficiency. The proposed method provides a practical security-aware solution for coordinating multi-agent LLM systems in complex adversarial settings.",
+      "authors": [
+        "Saeid Jamshidi"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-06-06T02:00:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.07940v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent LLM coordination and collaboration",
+      "llm_evidence_cn": "多智能体LLM协调与协作",
+      "llm_evidence": "多智能体LLM协调与协作",
+      "canonical_evidence": "多智能体LLM协调与协作",
+      "llm_tldr_en": "SGTO-MAS formulates multi-agent LLM coordination as a constrained optimization problem and uses swarm intelligence for secure, efficient agent collaboration.",
+      "llm_tldr_cn": "多智能体LLM系统中协调、安全与资源效率难以平衡，现有方法缺乏机制原则。SGTO-MAS将多智能体协调建模为约束优化问题，引入信任建模与风险感知评估，采用大猩猩部队优化启发的群体智能算法进行自适应智能体选择。实验证明该方法在保证性能的同时提升了安全性与计算效率，为多智能体LLM协作提供了有效的安全感知方案。",
+      "llm_tldr": "多智能体LLM系统中协调、安全与资源效率难以平衡，现有方法缺乏机制原则。SGTO-MAS将多智能体协调建模为约束优化问题，引入信任建模与风险感知评估，采用大猩猩部队优化启发的群体智能算法进行自适应智能体选择。实验证明该方法在保证性能的同时提升了安全性与计算效率，为多智能体LLM协作提供了有效的安全感知方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.09537v1",
+      "source": "arxiv",
+      "title": "STEPS: Semantic-Contract-Guided Scheduling for LLM-Assisted Natural-Language-Driven Edge AI Services",
+      "abstract": "Networked AI services are increasingly delivered through edge infrastructures to support latency-sensitive applications. Edge scheduling is critical for deciding where and how AI services are executed under limited communication and computing resources. Existing frameworks usually assume that requirements are given as numerical constraints, such as latency bounds, energy budgets, or cost limits. In practice, users often express expectations through ambiguous natural language, creating a gap between user intent and resource constrained scheduling. To bridge this gap, we propose semantic-contract-guided edge potential scheduling (STEPS), a natural language driven scheduling framework for LLM assisted edge AI services. STEPS introduces semantic contracts as executable interfaces between user-side semantics and edge-side decision making. An LLM assisted semantic parser extracts service levels and confidence scores, which are converted into service preferences, fulfillment bounds, and semantic uncertainty. Based on these contracts, STEPS formulates edge scheduling as a contract-guided potential game that jointly determines execution-node selection, computing-resource provisioning, and bandwidth allocation. It also builds feedback signals from semantic request drift, fulfillment drift, fulfillment pressure, and admission pressure to adjust semantic admission, contract conservativeness, and edge coordination. We characterize the exact potential game structure, establish pure strategy Nash equilibrium existence, and prove convergence and stability properties. Experiments show that STEPS improves semantic contract fulfillment, reduces contract guided service loss, and maintains robust adaptation under ambiguous requests and non-stationary edge environments.",
+      "authors": [
+        "Houyi Qi",
+        "Minghui Liwang",
+        "Xianbin Wang",
+        "Seyyedali Hosseinalipour"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-06-08T14:19:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.09537v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "natural language driven scheduling for edge AI services",
+      "llm_evidence_cn": "面向边缘AI服务的自然语言驱动调度",
+      "llm_evidence": "面向边缘AI服务的自然语言驱动调度",
+      "canonical_evidence": "面向边缘AI服务的自然语言驱动调度",
+      "llm_tldr_en": "STEPS proposes semantic-contract-guided scheduling for LLM-assisted edge AI services, bridging user intent and resource constraints via language-based contracts.",
+      "llm_tldr_cn": "现有边缘调度框架通常假设数值约束，但用户常以自然语言表达需求，造成意图与资源之间的鸿沟。STEPS提出语义合同指导的边缘潜在调度框架，利用LLM将自然语言需求转化为可执行的调度约束，在边缘基础设施上优化AI服务执行。实验表明该方法在满足用户意图的同时提高了资源利用率，为边缘AI服务提供了一种更灵活的人机交互调度方式。",
+      "llm_tldr": "现有边缘调度框架通常假设数值约束，但用户常以自然语言表达需求，造成意图与资源之间的鸿沟。STEPS提出语义合同指导的边缘潜在调度框架，利用LLM将自然语言需求转化为可执行的调度约束，在边缘基础设施上优化AI服务执行。实验表明该方法在满足用户意图的同时提高了资源利用率，为边缘AI服务提供了一种更灵活的人机交互调度方式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

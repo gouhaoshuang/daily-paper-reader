@@ -6,71 +6,54 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-08
-- 运行时间：2026-06-08 21:13:19 UTC
+- 最新运行日期：2026-06-09
+- 运行时间：2026-06-09 21:46:12 UTC
 - 运行状态：成功
-- 本次总论文数：17
-- 精读区：6
-- 速读区：11
+- 本次总论文数：10
+- 精读区：5
+- 速读区：5
 
 ### 今日简报（AI）
-今日共收录17篇论文，精读6篇、速读11篇，重点聚焦6G-LLM架构与边缘-云推理路由优化。最值得关注的是《A Communication-Centric 6G-LLM Architecture》提出的战术网络可扩展方案，以及《INAR-VL》中面向视觉语言推理的输入感知路由机制。建议优先阅读精读列表中的两篇高分论文，并速读《Ahoy》和《Beyond tokens》以理解LLM多智能体通信的新范式。
-- 详情：[/202606/08/README](/202606/08/README)
+今天精读高分论文《MIRAGE》探讨移动Agent隐式推理与生成世界模型，并速读多Agent通信协议与协作能力评估研究。
+
+最值得关注的是MIRAGE提出的隐式推理框架，以及《What Should Agents Say?》中的动作-状态通信机制。
+
+建议结合实际应用场景，优先深入理解隐式推理如何提升Agent自主性，再拓展至多Agent协作效率优化。
+- 详情：[/202606/09/README](/202606/09/README)
 
 ### 精读区论文标签
-1. [A Communication-Centric 6G-LLM Architecture for Scalable Tactical Autonomous Defense Vehicle Networks](/202606/08/2606.01312v1-a-communication-centric-6g-llm-architecture-for-scalable-tactical-autonomous-defense-vehicle-networks)  
+1. [MIRAGE: Mobile Agents with Implicit Reasoning and Generative World Models](/202606/09/2606.04627v1-mirage-mobile-agents-with-implicit-reasoning-and-generative-world-models)  
    标签：评分：9.0/10、query:eca
-   evidence：面向战术自主车辆网络的边缘辅助LLM推理与6G架构
-2. [INAR-VL: Input-Aware Routing for Edge-Cloud Vision-Language Inference](/202606/08/2605.18853v1-inar-vl-input-aware-routing-for-edge-cloud-vision-language-inference)  
+   evidence：移动智能体框架
+2. [MIRAGE: Mobile Agents with Implicit Reasoning and Generative World Models](/202606/09/2606.04627v2-mirage-mobile-agents-with-implicit-reasoning-and-generative-world-models)  
+   标签：评分：9.0/10、query:eca
+   evidence：移动智能体通过隐式推理和世界模型实现高效操作
+3. [InquiryBits: Sharing AI Conversation Traces to Support Collaboration Within Trust Boundaries](/202606/09/2606.02763v1-inquirybits-sharing-ai-conversation-traces-to-support-collaboration-within-trust-boundaries)  
    标签：评分：8.0/10、query:eca
-   evidence：边云协同路由系统，利用互补视觉语言模型进行推理
-3. [$E^3$-Agent: An Executable and Evolving Agent for Resource Management of Edge Generative Inference](/202606/08/2605.27428v1-e3-agent-an-executable-and-evolving-agent-for-resource-management-of-edge-generative-inference)  
+   evidence：研究AI对话痕迹的共享以支持团队协作
+4. [CollabBench: Benchmarking and Unleashing Collaborative Ability of LLMs with Diverse Players via Proactive Engagement](/202606/09/2606.05793v1-collabbench-benchmarking-and-unleashing-collaborative-ability-of-llms-with-diverse-players-via-proactive-engagement)  
    标签：评分：8.0/10、query:eca
-   evidence：可执行且可演化的代理，用于边缘生成内容资源管理
-4. [Dynamic Trust-Aware Sparse Communication Topology for LLM-Based Multi-Agent Consensus](/202606/08/2606.01828v1-dynamic-trust-aware-sparse-communication-topology-for-llm-based-multi-agent-consensus)  
+   evidence：合作游戏中LLM智能体的协作能力基准
+5. [AlignFed: Alignment-Aware Asynchronous Federated Fine-Tuning for Large Language Models in Heterogeneous Edge Environments](/202606/09/2606.08197v1-alignfed-alignment-aware-asynchronous-federated-fine-tuning-for-large-language-models-in-heterogeneous-edge-environments)  
    标签：评分：8.0/10、query:eca
-   evidence：面向LLM多代理共识的动态稀疏通信拓扑
-5. [Toward a Modular Architecture for Embedded AI Agent Systems at the Edge](/202606/08/2606.02862v1-toward-a-modular-architecture-for-embedded-ai-agent-systems-at-the-edge)  
-   标签：评分：8.0/10、query:eca
-   evidence：面向边缘的嵌入式AI代理模块化架构
-6. [From Prompt to Service: An SLM-Based Agent Orchestration Gateway for AI-Driven Virtual Worlds](/202606/08/2606.03557v1-from-prompt-to-service-an-slm-based-agent-orchestration-gateway-for-ai-driven-virtual-worlds)  
-   标签：评分：8.0/10、query:eca
-   evidence：提出边缘部署的SLM网关协调端云服务
+   evidence：提出异构边缘环境中LLM的联邦微调，支持协作模型自适应
 
 ### 速读区论文标签
-1. [Ahoy: LLMs Enacting Multiagent Interaction Protocols](/202606/08/2606.05390v1-ahoy-llms-enacting-multiagent-interaction-protocols)  
-   标签：评分：8.0/10、query:eca
-   evidence：LLM代理通过声明式交互协议实现多代理协作
-2. [Beyond tokens: a unified framework for latent communication in LLM-based multi-agent systems](/202606/08/2606.05711v2-beyond-tokens-a-unified-framework-for-latent-communication-in-llm-based-multi-agent-systems)  
-   标签：评分：8.0/10、query:eca
-   evidence：多智能体系统中的潜在通信框架
-3. [AI-IoT-Robotics Integration: Survey of Frameworks, Emerging Trends, and the Path Toward Connected Robotics](/202606/08/2606.01015v1-ai-iot-robotics-integration-survey-of-frameworks-emerging-trends-and-the-path-toward-connected-robotics)  
+1. [What Should Agents Say? Action-state Communication for Efficient Multi-Agent Systems](/202606/09/2606.05304v1-what-should-agents-say-action-state-communication-for-efficient-multi-agent-systems)  
    标签：评分：7.0/10、query:eca
-   evidence：广泛涵盖面向机器人的端云协同AI智能体架构
-4. [EES-CND: Collaborative Neural Decision-Making for Drift-Aware Fault-Tolerant Edge-Cloud Service Placement](/202606/08/2606.02259v1-ees-cnd-collaborative-neural-decision-making-for-drift-aware-fault-tolerant-edge-cloud-service-placement)  
+   evidence：多智能体协作的协议化通信
+2. [CollabSim: A CSCW-Grounded Methodology for Investigating Collaborative Competence of LLM Agents through Controlled Multi-Agent Experiments](/202606/09/2606.06399v2-collabsim-a-cscw-grounded-methodology-for-investigating-collaborative-competence-of-llm-agents-through-controlled-multi-agent-experiments)  
    标签：评分：7.0/10、query:eca
-   evidence：边缘云协同的容错服务放置与神经网络决策
-5. [MOC: Multi-Order Communication in LLM-based Multi-Agent Systems](/202606/08/2606.02359v1-moc-multi-order-communication-in-llm-based-multi-agent-systems)  
+   evidence：通过受控多智能体实验研究LLM代理的协作能力
+3. [Learning Multi-Agent Communication Protocol: Study on Information Entropy Efficiency in MARL](/202606/09/2606.07200v1-learning-multi-agent-communication-protocol-study-on-information-entropy-efficiency-in-marl)  
    标签：评分：7.0/10、query:eca
-   evidence：面向多智能体系统的多阶通信方案
-6. [FederatedSkill: Federated Learning for Agentic Skill Evolution](/202606/08/2606.03143v1-federatedskill-federated-learning-for-agentic-skill-evolution)  
+   evidence：高效的多智能体通信协议提升协作效率
+4. [SGTO-MAS: Secure Gorilla Troops Optimization for Multi-Agent LLM Systems](/202606/09/2606.07940v1-sgto-mas-secure-gorilla-troops-optimization-for-multi-agent-llm-systems)  
    标签：评分：7.0/10、query:eca
-   evidence：隐私保护的智能体技能协作进化
-7. [SMAC-Talk: A Natural Language Extension of the StarCraft Multi-Agent Challenge for Large Language Models](/202606/08/2606.04202v1-smac-talk-a-natural-language-extension-of-the-starcraft-multi-agent-challenge-for-large-language-models)  
+   evidence：多智能体LLM协调与协作
+5. [STEPS: Semantic-Contract-Guided Scheduling for LLM-Assisted Natural-Language-Driven Edge AI Services](/202606/09/2606.09537v1-steps-semantic-contract-guided-scheduling-for-llm-assisted-natural-language-driven-edge-ai-services)  
    标签：评分：7.0/10、query:eca
-   evidence：面向LLM的多代理协作自然语言通信基准
-8. [Channel Fracture: Architectural Blind Spots in Scheduled Cross-Agent Memory Injection for Multi-Agent Orchestration Systems](/202606/08/2606.04896v1-channel-fracture-architectural-blind-spots-in-scheduled-cross-agent-memory-injection-for-multi-agent-orchestration-systems)  
-   标签：评分：7.0/10、query:eca
-   evidence：多智能体编排中的跨智能体记忆注入
-9. [Can LLM Agents Sustain Long-Horizon Organizational Dynamics?](/202606/08/2606.01199v1-can-llm-agents-sustain-long-horizon-organizational-dynamics)  
-   标签：评分：6.0/10、query:eca
-   evidence：面向组织仿真的层次化多代理协调框架
-10. [Multi-Agent Computer Use](/202606/08/2606.01533v1-multi-agent-computer-use)  
-   标签：评分：6.0/10、query:eca
-   evidence：面向计算机使用任务的多智能体架构与并行执行
-11. [Discovering Agents for Discovery: The Case for DNS](/202606/08/2606.02314v1-discovering-agents-for-discovery-the-case-for-dns)  
-   标签：评分：6.0/10、query:eca
-   evidence：基于DNS的分布式智能体发现机制
+   evidence：面向边缘AI服务的自然语言驱动调度
 
 
 <div class="dpr-home-promo-card">
