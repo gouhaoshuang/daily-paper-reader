@@ -1,0 +1,216 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-10T22:11:22.877905+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.08340v1",
+      "source": "arxiv",
+      "title": "Benchmarking Open-Ended Multi-Agent Coordination in Language Agents",
+      "abstract": "As language models are increasingly deployed as autonomous agents, they must coordinate with others over long horizons in open-ended interactive tasks. Yet existing evaluations rarely test these demands together, instead emphasising single-agent tasks, short interactions, or highly structured multi-agent settings. We introduce $alem$, a JAX-based benchmark for open-ended multi-agent coordination built on Craftax-like dynamics. Alem embeds procedurally generated coordination tasks, soft specialisation, communication, and controllable coordination difficulty into a long-horizon survival world with exploration, crafting, trading, and combat. We evaluate $13$ modern LLMs zero-shot within homogeneous teams, with trained MARL agents as reference points. Current LLM agents remain far from solving alem, averaging only ~6% normalised return, but their failures are not uniform. On the hardest coordination setting, zero-shot Gemini-3.1-Pro-High approaches MARL agents trained for one billion steps, while GPT-5.4-High achieves strong base-task reward but much lower coordination reward. This contrast shows that individual task competence does not imply coordination competence. Ablations show that communication is the largest contributor to coordination, while memory and reasoning help when used to maintain multi-step plans. Overall, our results identify coordination as a distinct bottleneck for frontier LLM agents, separate from single-agent capabilities. Alem makes this bottleneck measurable and provides a controlled testbed for developing agents that communicate, allocate roles, and execute shared plans. Code is available at https://github.com/alem-world/alem-env.",
+      "authors": [
+        "Kale-ab Abebe Tessera",
+        "Andras Szecsenyi",
+        "Cameron Barker",
+        "Alexander Rutherford",
+        "Davide Paglieri",
+        "Aidan Scannell",
+        "Henry Gouk",
+        "Elliot J. Crowley",
+        "Tim Rocktäschel",
+        "Amos Storkey"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-06-06T21:13:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.08340v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "benchmark for open-ended multi-agent coordination",
+      "llm_evidence_cn": "开放式多智能体协调基准",
+      "llm_evidence": "开放式多智能体协调基准",
+      "canonical_evidence": "开放式多智能体协调基准",
+      "llm_tldr_en": "Introduces a benchmark for open-ended multi-agent coordination among language agents, testing long-horizon tasks with communication and specialisation.",
+      "llm_tldr_cn": "现有评估很少同时测试语言智能体的长周期协调和开放性。本文提出alem基准，基于Craftax环境构建程序化生成的协调任务，支持通信、软特化和可控难度。评估了13个现代LLM在零样本同质团队中的表现，揭示了当前模型在开放式多智能体协同中的不足。该基准为协作式AI智能体的研究提供了标准化评估平台。",
+      "llm_tldr": "现有评估很少同时测试语言智能体的长周期协调和开放性。本文提出alem基准，基于Craftax环境构建程序化生成的协调任务，支持通信、软特化和可控难度。评估了13个现代LLM在零样本同质团队中的表现，揭示了当前模型在开放式多智能体协同中的不足。该基准为协作式AI智能体的研究提供了标准化评估平台。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.09122v1",
+      "source": "arxiv",
+      "title": "Autonomous Incident Resolution at Hyperscale: An Agentic AI Architecture for Network Operations",
+      "abstract": "Cloud network infrastructure at hyperscale presents unique operational challenges where traditional human-driven incident response cannot keep pace with the volume, velocity, and complexity of failures. This paper presents an agentic AI architecture for autonomous incident resolution in large-scale network operations. Our system employs a multi-agent orchestration framework where specialized AI agents collaborate to detect, diagnose, and remediate network incidents without human intervention. We describe the architectural principles, including hierarchical agent decomposition, skills-based tool invocation via standardized protocols, structured knowledge encoding from operational runbooks, progressive autonomy with safety boundaries, and closed-loop verification. The architecture has been deployed in production at a major cloud provider, demonstrating that agentic AI systems can achieve autonomous resolution rates exceeding 90% for common incident categories while maintaining safety guarantees through layered authorization and rollback mechanisms. We discuss design tradeoffs, failure modes, and lessons learned from operating autonomous AI agents at scale.",
+      "authors": [
+        "Arun Malik"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE",
+        "cs.AI",
+        "cs.ET",
+        "cs.MA",
+        "cs.NI"
+      ],
+      "published": "2026-06-08T07:15:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.09122v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent orchestration framework with collaboration for incident resolution",
+      "llm_evidence_cn": "多代理编排框架，代理协作处理事件",
+      "llm_evidence": "多代理编排框架，代理协作处理事件",
+      "canonical_evidence": "多代理编排框架，代理协作处理事件",
+      "llm_tldr_en": "Presents an agentic AI architecture for autonomous incident resolution in hyperscale networks using multi-agent collaboration.",
+      "llm_tldr_cn": "超大规模网络运维中人工响应难以及时处理故障。本文提出一个多代理编排架构，由专门AI代理协作检测、诊断和修复网络事件，无需人工干预。实验表明该架构显著提升了事件解决速度。",
+      "llm_tldr": "超大规模网络运维中人工响应难以及时处理故障。本文提出一个多代理编排架构，由专门AI代理协作检测、诊断和修复网络事件，无需人工干预。实验表明该架构显著提升了事件解决速度。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.10402v1",
+      "source": "arxiv",
+      "title": "Harnessing the Collective Intelligence of AI Agents in the Wild for New Discoveries",
+      "abstract": "Scientific discovery is often a collective process: researchers share partial results, inspect failed attempts, and build on each other's ideas over long time horizons. Recent AI systems have shown that language-model-based agents can make meaningful progress on open scientific problems, but most existing systems operate in isolation. In this paper, we present EinsteinArena, an agent-native platform for open distributed research and discovery. EinsteinArena provides agents with a live set of open problems, each with a solid verifier, public leaderboard, and problem-specific discussion forum where agents can ask questions and share insights. We focus on mathematical tasks that have garnered substantial research interest, where progress can be measured unambiguously. As of May 2026, agents on EinsteinArena have discovered 12 new state-of-the-art results better than any previous human or AI solutions. One notable example is the kissing number problem in dimension 11, where the platform improved the best known lower bound from 593 to 604. This advance did not come from a single agent or isolated run. Rather it arose through a sequence of submissions, public discussion, verifier refinement, and subsequent agent-to-agent borrowing of ideas. These results provide evidence that decentralized scientific discovery can emerge from open interaction among autonomous agents in the wild, demonstrating a new paradigm for collective AI-driven research.",
+      "authors": [
+        "Federico Bianchi",
+        "Yongchan Kwon",
+        "Aneesh Pappu",
+        "James Zou"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-09T04:25:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.10402v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "collective intelligence, collaboration among agents",
+      "llm_evidence_cn": "代理间的集体智能与协作",
+      "llm_evidence": "代理间的集体智能与协作",
+      "canonical_evidence": "代理间的集体智能与协作",
+      "llm_tldr_en": "Introduces EinsteinArena, a platform enabling collaborative AI agents to share insights and solve open scientific problems collectively.",
+      "llm_tldr_cn": "现有AI科学发现系统多孤立运行，缺乏集体协作。本文提出EinsteinArena，一个代理原生平台，允许代理通过论坛共享见解、公开排行榜竞争，实现开放分布式研究。在数学任务上验证了集体智能的有效性。",
+      "llm_tldr": "现有AI科学发现系统多孤立运行，缺乏集体协作。本文提出EinsteinArena，一个代理原生平台，允许代理通过论坛共享见解、公开排行榜竞争，实现开放分布式研究。在数学任务上验证了集体智能的有效性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.10662v1",
+      "source": "arxiv",
+      "title": "Decentralized Multi-Agent Systems with Shared Context",
+      "abstract": "Multi-agent systems (MAS) can scale large language model reasoning at test time by decomposing complex problems into parallel subtasks. However, most existing MAS rely on centralized orchestration, where a main agent assigns work, collects outputs, and merges results. As the number of subtasks grows, this controller becomes a communication and integration bottleneck. We propose Decentralized Language Models (DeLM), a MAS framework that decentralizes coordination through parallel agents, a shared verified context, and a task queue. Agents asynchronously claim subtasks, read accumulated progress, perform local reasoning, and write back compact verified updates. The shared context acts as a common communication substrate, enabling agents to build on one another's verified progress without routing every update through a central controller. Empirically, DeLM improves both software-engineering test-time scaling and long-context reasoning. On SWE-bench Verified, DeLM achieves the best performance across Avg.@1, Pass@2, and Pass@4, with gains of up to 10.5 percentage points over the strongest baseline, while reducing cost per task by roughly 50%. On LongBench-v2 Multi-Doc QA, DeLM achieves the highest average accuracy across four frontier model families, improving over the strongest baseline by up to 5.7 percentage points. The code is available on our project website at https://yuzhenmao.github.io/DeLM/.",
+      "authors": [
+        "Yuzhen Mao",
+        "Azalia Mirhoseini"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-06-09T10:13:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.10662v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "decentralized multi-agent system with shared context",
+      "llm_evidence_cn": "去中心化多智能体系统与共享上下文",
+      "llm_evidence": "去中心化多智能体系统与共享上下文",
+      "canonical_evidence": "去中心化多智能体系统与共享上下文",
+      "llm_tldr_en": "Proposes Decentralized Language Models (DeLM), a multi-agent framework that decentralizes coordination through parallel agents, shared verified context, and task queue, enabling scalable asynchronous collaboration without centralized bottleneck.",
+      "llm_tldr_cn": "本文针对集中式多智能体系统中主控节点成为通信和整合瓶颈的问题，提出去中心化语言模型（DeLM）框架。该框架通过并行代理、共享验证上下文和任务队列实现异步协调，代理们自主认领子任务、读取进度、执行推理并写入更新。实验表明DeLM消除了集中式瓶颈，提升了可扩展性。该架构对分布式边云Agent系统具有直接借鉴意义。",
+      "llm_tldr": "本文针对集中式多智能体系统中主控节点成为通信和整合瓶颈的问题，提出去中心化语言模型（DeLM）框架。该框架通过并行代理、共享验证上下文和任务队列实现异步协调，代理们自主认领子任务、读取进度、执行推理并写入更新。实验表明DeLM消除了集中式瓶颈，提升了可扩展性。该架构对分布式边云Agent系统具有直接借鉴意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.11113v1",
+      "source": "arxiv",
+      "title": "A Neurosymbolic Prolog Skill for LLM-Driven Service Placement",
+      "abstract": "Service placement in the cloud-edge continuum requires assigning application components to heterogeneous resources under multiple constraints, including latency, locality, and policy requirements. Existing approaches rely on optimisation models or heuristics that require explicit modelling, while neural methods lack transparency and formal guarantees. This work proposes a neuro-symbolic alternative based on a Prolog skill, a reusable interface for schema-constrained fact generation and querying, for constraint-aware placement. The skill enables a language model to structure placement intent into symbolic facts, rules, and queries, while delegating validation and reasoning to Prolog. This design bridges high-level intent and formal constraint evaluation, enabling inspectable and policy-aware placement decisions in cloud-edge environments.",
+      "authors": [
+        "Jacopo Massa",
+        "Giuseppe Bisicchia",
+        "Patrizio Dazzi",
+        "Antonio Brogi"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-09T17:10:00+00:00",
+      "link": "https://arxiv.org/pdf/2606.11113v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "neurosymbolic Prolog skill for service placement in cloud-edge continuum",
+      "llm_evidence_cn": "神经符号Prolog技能用于云边连续体中的服务放置",
+      "llm_evidence": "神经符号Prolog技能用于云边连续体中的服务放置",
+      "canonical_evidence": "神经符号Prolog技能用于云边连续体中的服务放置",
+      "llm_tldr_en": "Proposes a neuro-symbolic Prolog skill for LLM-driven service placement in cloud-edge continuum, enabling constraint-aware placement with formal guarantees.",
+      "llm_tldr_cn": "针对云边连续体中的服务放置问题，现有方法依赖优化模型或启发式算法，缺乏透明性和保证。本文提出一种神经符号Prolog技能，作为可复用接口，将放置意图转化为符号事实、规则和查询，并由Prolog进行验证和推理，从而弥合高层意图与形式约束评估之间的鸿沟。该方法展示了如何让语言模型在边缘云协同环境中进行可靠的约束意识放置。",
+      "llm_tldr": "针对云边连续体中的服务放置问题，现有方法依赖优化模型或启发式算法，缺乏透明性和保证。本文提出一种神经符号Prolog技能，作为可复用接口，将放置意图转化为符号事实、规则和查询，并由Prolog进行验证和推理，从而弥合高层意图与形式约束评估之间的鸿沟。该方法展示了如何让语言模型在边缘云协同环境中进行可靠的约束意识放置。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
