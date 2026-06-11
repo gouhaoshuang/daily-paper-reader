@@ -1,0 +1,418 @@
+Title: Strabo: Declarative Specification and Implementation of Agentic Interaction Protocols
+
+URL Source: https://arxiv.org/pdf/2606.05043v1
+
+Published Time: Thu, 04 Jun 2026 01:20:19 GMT
+
+Number of Pages: 21
+
+Markdown Content:
+# Strabo: Declarative Specification and Implementation of Agentic Interaction Protocols 
+
+Samuel H. Christie V 1, Munindar P. Singh 1, and Amit K. Chopra 2 
+
+> 1
+
+North Carolina State University 
+
+{schrist, singh }@ncsu.edu  
+
+> 2
+
+Lancaster University 
+
+amit.chopra@lancaster.ac.uk 
+
+Abstract. The last few years have witnessed major advances in the modeling and implementation of multiagent systems based on declarative interaction protocols. Our contribution, Strabo, establishes the relevance of these advances to ongoing industry efforts in Agentic AI. Specifically, we consider UCP, the Universal Commerce Protocol , a recent Google-led effort to standardize e-commerce interactions for AI agents. Our exercise is in two parts. One, we model the part of UCP dealing with checkouts as a declarative Langshaw protocol and implement agents using Peach, a programming model for Langshaw. This part of the exercise brings out the advantages of formal, declarative specifications. Two, we show that Peach agents can interoperate with UCP agents implemented by Google, thereby establishing the fidelity of our approach with respect to UCP. Such interoperation enables the incremental introduction of declarative protocols and agents into a conventional setting, indicating a pathway by which EMAS ideas could influence practice without demanding a wholesale update. 
+
+# 1 Introduction 
+
+Interaction protocols model multiagent systems and serve as blueprints for engi-neering agents. Recent work, as exemplified by BSPL [13, 14, 15] and Langshaw [16], has emphasized formal, declarative approaches for specifying protocols. For-mal specification enables verifying protocols for correctness before any agents are implemented. Declarative specifications better reflect stakeholder intuitions about the meaning of interactions [12] and, consequently, support flexible interac-tions between agents. Programming models that facilitate implementing agents based on declarative protocols [3, 5, 8, 9] support improved code structure and dealing with changing requirements. Protocols are conceptual abstractions. Not specifying them doesn’t mean they don’t have to be implemented. It’s just that, absent explicit protocols, developers end up encoding the relevant interaction constraints directly in low-level code, which is cumbersome and hides assump-tions and errors. The Agentic AI paradigm has emerged concurrently with the advances in protocols. Its basic value proposition is that LLM-based agents will do all kinds 
+
+> arXiv:2606.05043v1 [cs.AI] 3 Jun 2026
+
+of tasks on behalf of their users. Many of these tasks will involve interacting with the agents of the other users, e.g., for shopping, booking travel, and so on. This recognition has led to a flurry of industry efforts aimed at standardizing interactions between LLM agents. Among the prominent ones are the Google-led Universal Commerce Protocol (UCP) [17], which standardizes e-commerce interactions such as checkout and order processing, and the Agent2Agent (A2A) protocol [1], which provides a general-purpose framework for interagent task delegation. These protocols are specified informally in terms of JSON schemas, prose descriptions, and example HTTP traces. 
+
+Contributions. Our objective is to establish the relevance of the “academic” declarative approaches for “practical” uses. To this end, we contribute Strabo , a general method for exploiting declarative protocols in Langshaw in the context of ongoing industry efforts that model protocols via JSON-RPC or REST API calls. The method has two components: (1) Mapping the industry effort into a Langshaw protocol and implementing agents using Peach [5], a programming model for Langshaw, and (2) Creating a bridge layer that enables Peach agents to interoperate with industry agents, thus demonstrating interoperation with legacy agents built with conventional methods. We explain Strabo by modeling UCP’s Checkout capability as a Langshaw protocol and implementing Peach agents to enact that protocol. We demonstrate the interoperability of these Peach agents with sample agents available in a UCP code repository 3 to establish the fidelity of the Langshaw protocol with respect to UCP. This exercise establishes that formal, declarative protocols are directly appli-cable to industry efforts. Whereas UCP is informally specified, leaving important aspects ambiguous, the Langshaw model of UCP specifies interaction constraints formally, bringing precision without sacrificing practical interoperability. Our exercise also surfaced implicit assumptions in UCP and revealed enhancements required by Langshaw and Peach. 
+
+# 2 Background on UCP, Langshaw, and Peach 
+
+We now describe the existing approaches that we build upon in this paper. 
+
+2.1 UCP, the Universal Commerce Protocol 
+
+UCP addresses e-commerce interactions involving the roles of Platform (cus-tomer), Business (merchant), Credential Provider (digital wallets), and 
+
+Payment Provider (e.g., PayPal and Stripe). The idea is that Platform ,as representative of the shopper, shops with Business and uses the Creden-tial Provider to generate payment tokens that the Business redeems with the Payment Provider . 
+
+> 3UCP sample code is available at https://github.com/Universal-Commerce-Protocol /samples
+
+A typical UCP interaction proceeds as follows. Both Platform and Busi-ness publish UCP profiles that list their capabilities. Capabilities are the broad activities involved in an e-commerce interaction, such as Checkout , Order , and 
+
+Identity Linking (for computing loyalty rewards, and so on). Capabilities may be extended. For example, Fulfillment extends Checkout to support the delivery of physical goods. Based on its own profile and that of Platform , Business 
+
+determines if they can interoperate. 
+
+Capabilities. A capability is defined by a JSON schema. Table 1 gives some fields in the Checkout capability (the full schema is in Appendix A).                                  
+
+> Field Type Required Description
+> id string Yes Unique identifier of the checkout session.
+> line items LineItemResponse[] Yes List of line items being checked out.
+> buyer Buyer No Representation of the buyer.
+> status string Yes Checkout state indicating the current phase and required action.
+> totals TotalResponse[] Yes Different cart totals.
+> messages Message[] No List of messages with error and info about the checkout session state.
+> payment PaymentResponse Yes Payment configuration and handler info.
+> order OrderConfirmation No Details about an order created for this session.
+> Table 1. The Checkout capability (extracted from [17]).
+
+Operations. All operations on an instance of the Checkout capability—i.e., 
+
+Create , Get , Update , Complete , and Cancel —are performed by Platform .Each operation specifies an input and an output schema comprising required and optional fields. The output schema specifies Checkout instances that are returned by Business in response. Business recomputes the instance based on the input in an Update . Listings 1 and 2, with minor divergences from UCP documentation, show a Create and its (truncated) response.                                                                                   
+
+> Listing 1. ACreate operation.
+> POST / c h e c k o u t −s e s s i o n s HTTP/ 1 . 1
+> {” l i n e i t e m s ” : [
+> {” i t e m ” : {
+> ” i d ” : ” i t e m 1 2 3 ” , ” t i t l e ” : ”Red T−S h i r t ” , ” p r i c e ” : 2 5 0 0 },” i d ” : ” l i 1 ” , ” q u a n t i t y ” : 2}]}Listing 2. Response to Listing 1 (truncated).
+> HTTP/ 1 . 1 201 C r e a t e d
+> {
+> ” i d ” : ” c h k 1 2 3 4 5 6 7 8 9 0 ” , ” s t a t u s ” : ” i n c o m p l e t e ” , ” m e s s a g e s ” : [{” t y p e ” : ” e r r o r ” , ” code ” : ” m i s s i n g ” , ” p a t h ” : ”$. b u y e r . e m a i l ” , ” c o n t e n t ” : ” Buyer e m a i l i s r e q u i r e d ” }] , ” c u r r e n c y ” : ”USD” , ” t o t a l s ” : [{” t y p e ” : ” s u b t o t a l ” , ” amount ” : 5 0 0 0 },
+> {” t y p e ” : ” t a x ” , ” amount ” : 4 0 0 },
+> {” t y p e ” : ” t o t a l ” , ” amount ” : 5 4 0 0 }] , ” payment ” : {” i n s t r u m e n t s ” : [/∗. . . ∗/]},” l i n e i t e m s ” : [/∗. . . ∗/] , ” l i n k s ” : [/∗. . . ∗/]
+> }
+
+The response indicates that the buyer’s email is missing. Platform ad-dresses this exception with an Update (PUT /checkout-sessions/ {id }) that supplies the buyer and, optionally, the fulfillment fields; Business recomputes and returns the full instance. Once the instance reaches status ready for complete ,
+
+Platform sends Complete (POST /checkout-sessions/ {id }/complete ) with payment instrument data. 
+
+2.2 Langshaw 
+
+Langshaw [16] is a declarative protocol language for specifying multiagent in-teractions. We illustrate its concepts using the checkout protocol in Listing 3, which we discuss in detail in Section 3. A Langshaw protocol defines who interacts (roles), what constitutes a com-plete enactment, and what they do (actions with attributes). The who clause names the roles—in our example, Platform and Business . The do clause lists actions, each performed by a specific role and with some attributes. For instance, 
+
+Create is performed by Platform and carries attributes such as line items and 
+
+> buyer
+
+.Some attributes are designated as key . Keys correlate actions into enact-ments , that is, protocol instances. A protocol declares one or more attributes as keys in its what clause; all actions bearing the same key values belong to the same enactment. In SimpleUCP , cid is the sole key, so all actions sharing a cid 
+
+value constitute one checkout session. An attribute can only be bound once within a given enactment; once bound, it is immutable. Performing an action either reuses the binding of each parameter or generates a new one. Action names are themselves bound as attributes when the action occurs, so an action that references another action’s name depends on it having occurred. For example, Created references Create , establishing a causal dependency: Created can only occur after Create .The sayso clause assigns data ownership—which role may bind which at-tributes. In the simplest case, a sayso entry gives a role absolute ownership over an attribute: only that role may produce its binding. However, sayso entries may also specify priority orderings among roles, allowing controlled sharing of attributes where one role’s binding takes precedence over another’s. The nono 
+
+clause declares mutual exclusion (e.g., Completed and Cancelled cannot both occur in the same enactment), and the nogo clause declares directional exclu-sion (e.g., once Cancel occurs, Complete is blocked, but not vice versa). The 
+
+what clause also specifies a completion goal: which actions must occur for an enactment to be considered complete. 
+
+2.3 Peach 
+
+Peach [5] is a programming model for building agents that participate in Lang-shaw protocols. A developer instantiates a PeachAdapter (our tooling) by speci-fying a protocol, the role the agent plays, and an executor that handles commu-nication and the underlying state model. The adapter implements the protocol’s semantics: it tracks which actions are feasible given the current state of the en-actment, enforces sayso and causal dependencies, and manages key correlation. Developers build agent logic on top of this adapter rather than reimplementing protocol constraints in application code. The adapter exposes a small API. Crucially, adapter.enabled() returns the ac-tions the agent may currently perform, given the enactment state. The developer selects an action, binds its attribute values via FeasibleAction.bind() , and submits the result via adapter.attempt() , which returns a promise. The promise resolves when the action is finalized or rejects if the action fails (e.g., due to a conflicting concurrent action), allowing the developer to handle failures explicitly. To react to other agents’ actions, the developer registers observation handlers using the 
+
+@adapter.observation decorator. A @adapter.on completion handler fires when the protocol’s completion goal is satisfied. This API is the same regardless of the executor: Peach currently supports a synchronous executor that connects to a 
+
+SyncServer providing shared state with either instant or batched finalization, and an asynchronous executor based on direct message passing. A key aspect of Peach is its enablement-based programming model (from BSPL [13] and Kiko [9]). Rather than requiring the developer to determine which actions are valid after each event—consulting the protocol specification and encoding the operational logic in event handlers—the adapter computes the set of currently feasible actions and presents them directly. The developer (or, in principle, an LLM operating the agent) simply selects from the enabled actions and provides bindings. This shifts the burden of protocol compliance entirely to the adapter: the developer makes domain decisions, not protocol decisions. Operationally, each adapter computes enabled actions from the protocol and the current state of the enactment, and concurrent attempts within the Peach MAS are reconciled at the SyncServer using its configured finalization policy (instant or batched). Because correlation is by key, agents engaged in overlapping enactments do not interfere; each enactment’s state is independent. A formal operational semantics is given in [5]. 3 Modeling UCP in Langshaw 
+
+There are potentially several ways of capturing UCP’s Checkout capability in Langshaw. We focus here on an atomic variant that captures the simplest com-plete checkout: all information is submitted in a single action, exposing the essential data dependencies and completion conditions. An incremental variant that decomposes updates into separate actions, making data flow and authority explicit, is given in Appendix C. Our exercise surfaces several assumptions that UCP leaves implicit. 
+
+3.1 A Closer Look at UCP Checkout 
+
+We make the following remarks about UCP. 
+
+R1 Each Checkout instance has a unique identifier. Instances are thought of as 
+
+sessions . The Create does not bear the instance identifier. It is generated in the response. 
+
+R2 Some fields, e.g., id , are atomic whereas others, e.g., line items , are composite. 
+
+R3 Some fields, e.g., line items , are required in an instance; others, e.g., buyer ,are optional. An operation’s response may additionally specify some of the optional fields, e.g., order in the response to a Complete , as required. 
+
+R4 Updates can be partial, possibly overriding existing information. 
+
+R5 Operations are conceptually request-response in nature, as is evident from their input-output style specification. 
+
+R6 UCP implicitly assumes a synchronous model for operations. Specifically, 
+
+Platform may issue an operation on an instance only after the previous operation on the instance has returned a response. Otherwise, Platform 
+
+and Business could have incompatible views of the instance. To see this, sup-pose Platform performs an Update on an instance and, before it receives a response, also performs a Complete on it. Now, if Complete is processed by 
+
+Business before Update (maybe because Update is delayed in the network), the order placed may not reflect the intentions of Platform .
+
+3.2 UCP in Langshaw 
+
+Listing 3 gives SimpleUCP , a checkout protocol in Langshaw that captures the UCP checkout interactions. The protocol is atomic in the sense that Platform 
+
+submits all checkout information in a single Create action; Business responds with either Created (bearing the server-generated id ) or Failed (bearing reason ,indicating that creation was rejected—e.g., due to missing required fields or a server error). If the checkout was created successfully, Platform may Complete 
+
+or Cancel it; a successful Complete yields a Completed action carrying the order 
+
+details. Listing 3. SimpleUCP checkout protocol in Langshaw. 
+
+SimpleUCP who P l a t f o r m , B u s i n e s s what c i d key , Completed o r F a i l e d do P l a t f o r m : C r e a t e ( c i d , l i n e i t e m s , c u r r e n c y , b u y e r , p a y m e n t p r e f , d i s c o u n t c o d e s , f u l f i l l m e n t p r e f ) B u s i n e s s : C r e a t e d ( c i d , C r e a t e , i d , t o t a l s , payment , d i s c o u n t s , f u l f i l l m e n t ) B u s i n e s s : F a i l e d ( c i d , C r e a t e , r e a s o n ) P l a t f o r m : Complete ( c i d , C r e a t e d , i d , p a y m e n t d a t a , r i s k s i g n a l s ) B u s i n e s s : Completed ( c i d , Complete , o r d e r ) P l a t f o r m : C a n c e l ( c i d , C r e a t e d , i d ) s a y s o P l a t f o r m : l i n e i t e m s , c u r r e n c y , b u y e r , d i s c o u n t c o d e s , f u l f i l l m e n t p r e f , p a y m e n t p r e f , p a y m e n t d a t a , r i s k s i g n a l s B u s i n e s s : i d , t o t a l s , payment , d i s c o u n t s , f u l f i l l m e n t , o r d e r , r e a s o n nono Completed F a i l e d C r e a t e d F a i l e d 
+
+The nono clauses enforce mutual exclusion among outcomes: Created and 
+
+Failed cannot both occur in a session (creation either succeeds or fails), and 
+
+Completed and Failed cannot both occur (a completed checkout cannot also be failed). Because there is no nono between Complete and Cancel , Platform may emit both concurrently. How they are resolved depends on the synchronization server configuration: an instant-resolution server processes them in arrival order, so the first received wins; a batch-resolution server may accept both as pending and deliver them together, leaving it to Business to decide which to honor and respond to. Table 2 shows the mapping from UCP operations to SimpleUCP actions. Notice that UCP’s Update is realized in SimpleUCP via two actions: the Cancel 
+
+of the existing checkout and the Create of a new one. 
+
+# 4 Programming Peach UCP Agents 
+
+We now show how developers build agents for a Langshaw protocol using Peach. The central point is the separation of concerns: agent code contains only domain decisions (which actions to take and what values to bind), whereas the adapter handles protocol compliance, key correlation, and communication. We show a 
+
+Platform agent and a Business proxy agent for SimpleUCP .UCP HTTP SimpleUCP Role 
+
+Create POST /checkout-sessions Create Platform 
+
+201 Created Created Business 
+
+4xx/5xx Failed Business 
+
+Get GET /checkout-sessions/ {id } — —
+
+Update PUT /checkout-sessions/ {id } (Cancel ,Create ) Platform 
+
+Complete POST .../complete Complete Platform 
+
+200 OK Completed Business 
+
+Cancel POST .../cancel Cancel Platform 
+
+Table 2. Mapping from UCP operations to SimpleUCP actions. Get is unused because the adapter tracks protocol state. Update is realized at the protocol level by the Plat-form agent issuing (Cancel, Create); on the wire, the outbound Create itself is a POST followed by a PUT to supply fields UCP does not accept in the initial request. 
+
+4.1 Platform Agent 
+
+The Platform agent drives the checkout process. Listing 4 shows the adapter setup: the developer loads a protocol, creates an adapter for the Platform 
+
+role, and registers handlers for observations and protocol completion. Listing 5 shows the enablement-driven handlers, each invoked by the adapter when its action becomes feasible. The adapter also ensures consistency and correctness by presenting only currently valid actions, propagating bindings from prior ob-servations, and accepting via FeasibleAction.bind() only attributes the agent has sayso over. 
+
+Listing 4. Platform agent core: adapter setup and observation handlers. 
+
+p r o t o c o l = L a n g s h a w P r o t o c o l . l o a d ( ” p r o t o c o l s / atomic −ucp . l s h ” ) a d a p t e r = P e a c h A d a p t e r ( ” p l a t f o r m ” , p r o t o c o l , ” P l a t f o r m ” , e x e c u t o r ) done = a s y n c i o . E v e n t ( ) @ a d a p t e r . o n c o m p l e t i o n a s y n c d e f o n d o n e ( k e y s , m a s i d ) : done . s e t ( ) @ a d a p t e r . o b s e r v a t i o n ( ’ C r e a t e d ’ , ’ F a i l e d ’ , ’ Completed ’ ) a s y n c d e f o n o b s e r v a t i o n ( a c t i o n , p e r f o r m e r ) : p r i n t ( f ” O b s e r v e d { a c t i o n . a c t i o n . name } by { p e r f o r m e r } ” ) 
+
+Listing 5. Platform agent enablement-driven handlers: the adapter invokes each handler when its action becomes feasible. 
+
+@ a d a p t e r . o n e n a b l e d ( ’ C r e a t e ’ ) a s y n c d e f o n c r e a t e e n a b l e d ( f a ) : a w a i t a d a p t e r . a t t e m p t ( [ f a . b i n d ( l i n e i t e m s=SAMPLE LINE ITEMS , c u r r e n c y=”USD” , b u y e r=SAMPLE BUYER , p a y m e n t p r e f = {} ,d i s c o u n t c o d e s = {” c o d e s ” : [ ] } ,f u l f i l l m e n t p r e f =SAMPLE FULFILLMENT PREF ) ] ) @ a d a p t e r . o n e n a b l e d ( ’ Complete ’ ) a s y n c d e f o n c o m p l e t e e n a b l e d ( f a ) : a w a i t a d a p t e r . a t t e m p t ( [ f a . b i n d ( p a y m e n t d a t a=SAMPLE PAYMENT DATA, r i s k s i g n a l s = {” i p ” : ” 1 2 7 . 0 . 0 . 1 ” } ) ] ) 
+
+# 5 Interoperation with Google’s UCP Agents 
+
+5.1 Architecture 
+
+Figure 1 shows the runtime architecture. The Peach MAS comprises a Plat-form agent that drives the checkout flow and a Business proxy adapter that bridges to the external merchant. Both sides share access to a SyncServer that maintains the protocol’s social state. When the Platform agent performs a 
+
+SimpleUCP action, the SyncServer notifies the Business Proxy , which uses its built-in field mapping to construct one or more corresponding UCP requests, sends them to the actual UCP Business over HTTP, parses the responses, and performs the corresponding SimpleUCP action. Field-name translation is con-figured inline via the route() DSL; neither the Platform agent nor the proxy contains hand-written HTTP code, with the only imperative code being orches-tration for actions that map to multiple HTTP calls (such as Create , which requires a POST followed by a PUT ).        
+
+> Peach MAS
+> Business Proxy
+> External
+> Platform Agent
+> Sync Server
+> Proxy Adapter
+> UCP Business (Google)
+> SimpleUCP SimpleUCP REST UCP
+> Fig. 1. Strabo Architecture. The Peach MAS interoperates with Google’s UCP mer-chant via a Strabo proxy, which translates Langshaw actions in SimpleUCP to REST calls using built-in field mapping configured via the route() DSL.
+
+5.2 Proxy 
+
+The proxy bridges the Langshaw protocol to the external merchant HTTP API. 
+
+ProxyAdapter is a PeachAdapter subclass with built-in HTTP client and field mapping. Routes are defined via the route() DSL, and for each route, the adapter auto-registers an observation handler that fires the HTTP request and submits the response action. For SimpleUCP , Create requires orchestration: a single Langshaw Create maps to a POST to /checkout-sessions followed by a PUT (to supply fields like discounts and fulfillment that UCP does not accept in the initial request). Listing 6 shows the core of the proxy: routes are declared inline, and the Create action is excluded from auto-proxy so that a custom handler can orchestrate the two HTTP calls. All other actions (e.g., Complete , Cancel ) are handled automatically. 
+
+Listing 6. ProxyAdapter setup with route() DSL and custom Create orchestration. 
+
+p r o x y = P r o x y A d a p t e r ( ” a t o m i c p r o x y ” , p r o t o c o l , ” B u s i n e s s ” , e x e c u t o r , b a s e u r l=m e r c h a n t u r l , i n t e r n a l =[” c i d ” ] , h e a d e r h o o k=u c p h e a d e r h o o k , e x c l u d e =[” C r e a t e ” ] ) p r o x y . r o u t e ( ” C r e a t e −> C r e a t e d ” , ”POST / c h e c k o u t −s e s s i o n s ” ) p r o x y . r o u t e ( ” Update −> Updated ” , ”PUT / c h e c k o u t −s e s s i o n s / { i d } ” , r e q u e s t = {” d i s c o u n t c o d e s ” : ” $ . d i s c o u n t s ” , ” f u l f i l l m e n t p r e f ” : ” $ . f u l f i l l m e n t ” , ” p a y m e n t p r e f ” : ” $ . payment ” } )p r o x y . r o u t e ( ” Complete −> Completed ” , ”POST / c h e c k o u t −s e s s i o n s / { i d }/ c o m p l e t e ” ) p r o x y . r o u t e ( ” C a n c e l −> C a n c e l l e d ” , ”POST / c h e c k o u t −s e s s i o n s / { i d }/ c a n c e l ” ) @proxy . o b s e r v a t i o n ( ’ C r e a t e ’ ) a s y n c d e f o n c r e a t e ( a c t i o n , p e r f o r m e r ) : i f p e r f o r m e r == p r o x y . name : r e t u r n c r e a t e r e s p = a w a i t p r o x y . r e q u e s t ( ” C r e a t e ” , 
+
+{ k : a c t i o n . b i n d i n g s [ k ] f o r k i n ( ” l i n e i t e m s ” , ” c u r r e n c y ” , ” b u y e r ” ) } )u p d a t e r e s p = a w a i t p r o x y . r e q u e s t ( ” Update ” , 
+
+{∗∗ a c t i o n . b i n d i n g s , ” i d ” : c r e a t e r e s p [ ” i d ” ] } )combined = {∗∗ a c t i o n . b i n d i n g s , ∗∗ c r e a t e r e s p , 
+
+∗∗ u p d a t e r e s p }
+
+a w a i t p r o x y . a t t e m p t ( [ p r o x y . b u i l d a c t i o n ( ” C r e a t e d ” , combined ) ] ) 
+
+For each route() declaration, ProxyAdapter auto-generates an observation handler that fires when the trigger action is observed, sends the correspond-ing HTTP request, and submits a fixed response action back into the protocol. This assumes a one-to-one mapping between request and response actions. Pro-tocols with alternative responses (e.g., Create yielding either Created or Failed 
+
+depending on the HTTP status) are supported but require a custom observa-tion handler that inspects the response and selects the appropriate action, as illustrated above for Create .
+
+5.3 Field Mapping 
+
+Field mapping is configured inline via the route() DSL (visible in Listing 6). Each route() call declares a round-trip: a pair of Langshaw actions mapped to an HTTP endpoint. The adapter supports three kinds of mappings. Identity 
+
+mappings require no configuration: when a Langshaw attribute name matches the corresponding JSON field name (e.g., buyer ↔ $.buyer ), the adapter trans-lates automatically. Explicit mappings handle cases where names differ: the re-quest and response keyword arguments specify non-identity translations (e.g., dis-count codes ↔ $.discounts , or payment pref ↔ $.payment ). Excluded attributes— those declared via internal —never appear in HTTP traffic (e.g., cid , which is the Langshaw enactment key). The complete mapping between UCP fields and Sim-pleUCP attributes is given in Appendix B. 
+
+5.4 Interactions 
+
+Figure 2 shows the interactions for a complete SimpleUCP checkout. Each Lang-shaw action submitted by Platform is intercepted by the proxy, translated into HTTP calls using the route’s field mapping, and the response is returned as a Langshaw observation—keeping the Platform agent entirely free of HTTP concerns. 
+
+Platform Business Proxy Business 
+
+> Create (
+
+cid ,line items ,buyer ,. . . )    
+
+> POST /checkout-sessions
+> 201 {id, status,... }
+> PUT /checkout-sessions/ {id }fulfillment, discounts,. . .
+> 200 {totals,... }
+> Created (
+
+cid ,id ,totals ,payment )
+
+> Complete (
+
+cid ,id ,payment data ) 
+
+> POST /checkout-sessions/ {id }/complete
+> 200 {order,... }
+> Completed (
+
+cid ,order )
+
+> Langshaw
+> HTTP/REST
+
+Fig. 2. Interactions for a SimpleUCP checkout via the proxy. Platform speaks Lang-shaw; the proxy bridges to the merchant’s HTTP API using its built-in field mapping. The proxy-internal PUT supplies fields (e.g., discounts and fulfillment ) that UCP does not accept in the initial POST . Solid arrows: requests; dashed: responses. 6 Evaluation 
+
+6.1 Evaluation Criteria 
+
+We evaluate our approach along four dimensions. Clarity : Does the Langshaw specification make implicit assumptions explicit? Generality : Does the formalism naturally support protocol variants that UCP does not distinguish? Fidelity :Can Peach agents interoperate with Google’s UCP reference implementation? 
+
+Economy : How much agent code is needed and what fraction is domain logic versus boilerplate? 
+
+6.2 Clarity and Generality 
+
+We focus on how the SimpleUCP Langshaw protocol addresses the UCP features noted in the remarks above. 
+
+Checkout identity (Remark R1). In UCP, checkouts are identified by id , which is generated by Business in response to Platform ’s Create . Such a model not only reflects a centralized mindset, but also is incompatible with meaning: Being unidentified, a UCP Create by itself cannot be meaningful. Since Langshaw’s purpose is to support meaning, it identifies every action instance. In SimpleUCP ,this is accomplished by declaring cid as the key for every action, including Create .For compatibility with UCP, SimpleUCP introduces the (non-key) attribute id ,over which Business has sayso; it is generated by Business in Created , and is used by Platform in subsequent actions such as Complete and Cancel . For interoperation with Google’s sample agents, the proxies strip out cid .
+
+Atomic versus composite fields (Remark R2). UCP distinguishes atomic fields (e.g., id , a string) from composite ones (e.g., line items , an array of objects). Langshaw treats all attributes uniformly; their internal structure is orthogonal to the protocol specification. Peach handles atomic and composite values equally well by treating composite fields as opaque values compared using deep equality (a built-in Python feature over dictionaries) and serializing all values for storage as JSON, which is compatible with the format received from UCP. 
+
+Modeling optional attributes (Remark R3). UCP marks certain fields as optional: 
+
+> buyer
+
+, fulfillment , and discount codes may or may not be supplied. One way to cap-ture such optionality is via null values. In the SimpleUCP protocol, all attributes appear on the Create action. An attribute that the agent does not wish to supply is bound to a null value; the proxy strips null-valued fields before constructing the HTTP request. This approach is concise but relies on a convention external to the protocol specification: Langshaw does not distinguish a deliberately null binding from a missing one. A better approach would be to add support for 
+
+optional action attributes in the Langshaw language. We leave this extension as future work. The incremental variant in Appendix C avoids null values altogether by giving each optional concern its own action. Overwrite semantics (Remark R4). UCP allows Platform to selectively update fields that have already been bound in a session. In Langshaw, attributes may be bound at most once in an enactment; they are immutable thereafter. More-over, SimpleUCP models a checkout as a complete, immutable object. To revise a checkout, Platform cancels the current session and creates a new one with the updated data—a cancel-and-recreate pattern that is semantically equiva-lent to an in-place update. This comes at some cost: a Cancel is ambiguous, as observers cannot distinguish a genuine user cancellation from a revision. In exchange, each session has a definitive state, and it is always clear which version of the checkout is being completed. Mutable amendment would conflict with Langshaw’s commitment to immutability, which lets agents reason about enact-ment state without a shared mutable store. The incremental variant’s version key (Appendix C) is the principled counterpart to UCP’s in-place update: each amendment is a fresh subenactment, and the application interprets the collec-tion of versions as its domain requires (e.g., treating the highest sortable v as authoritative). The incremental versioning example is deliberately minimal; a richer structure—e.g., recording parent–child lineage or scoping versioning to attribute groups—could more closely reflect UCP’s selective-update semantics without relaxing immutability. 
+
+Request-response and synchronous ordering (Remarks R5 and R6). UCP opera-tions are conceptually request-response pairs, and UCP implicitly assumes that operations on a session are issued sequentially. Langshaw replaces both con-ventions with structural causal dependencies: an action that references another action’s name can only occur after it. SimpleUCP is inherently synchronous— a single Create –Complete exchange—so no additional ordering mechanism is needed. The incremental variant makes the design choice explicit by declaring v
+
+(version) as key (Appendix C). Attribute binding authority, implicit in UCP’s JSON schemas, is made explicit through sayso .UCP additionally requires idempotency keys in HTTP headers to prevent the server from reprocessing a duplicate request and repeating side-effects (e.g., cre-ating a second order). The UCP sample generates a fresh random key per request (Listing 7), which provides protection only at the network level—where the same request is resent with its original headers intact—but not against application-level retries where a new key would be generated. In our implementation, idempo-tency key generation is encapsulated in the ProxyAdapter , keeping this transport concern transparent to the agent. Table 3 summarizes how each remark is addressed. 
+
+6.3 Fidelity: Interoperation with Google’s UCP Agents 
+
+We tested interoperation end-to-end by connecting a Peach Platform agent to Google’s UCP reference Business server via the ProxyAdapter . The Plat-form agent successfully completed checkout sessions with the Google server, with the adapter’s built-in field mapping handling name translation and session ID correlation transparently. # UCP Model SimpleUCP Model 
+
+1 Create lacks instance ID Explicit key cid ; Created introduces id 
+
+2 Atomic vs. composite fields Uniform attributes; types orthogonal 3 Required vs. optional fields Null values ( SimpleUCP ) or separate actions (incremental) 4 Overwrite semantics Avoided in SimpleUCP ; version key in incremental (Appendix) 5 Request-response convention Structural causal dependencies 6 Synchronous ordering (implicit) SimpleUCP is inherently synchronous; incremental uses v key (Appendix) 
+
+Table 3. How Langshaw addresses assumptions implicit in UCP’s specification. 
+
+6.4 Economy: Comparison with Google’s UCP Agent 
+
+We compare the Peach agent implementation with a comparable agent built directly against Google’s UCP SDK. In the Peach agent, ordering constraints, session management, and data ownership are enforced by the adapter—the agent code contains no ordering logic. In the direct HTTP agent, the developer must manually track session identifiers, check status before completing (e.g., verify-ing ready for complete ), and construct correct HTTP requests. The Business 
+
+proxy is particularly compact: the ProxyAdapter auto-generates observation han-dlers from route() declarations, so adding a new UCP capability (e.g., Orders) requires only a new protocol file and a few route definitions, not new agent code. Table 4 compares lines of code across implementations. The difference is most visible in equivalent operations. Listings 7 and 8 show checkout creation in the direct HTTP client and the Peach agent, respectively. 
+
+Listing 7. Checkout creation using the UCP SDK directly. 
+
+i t e m 1 = I t e m C r e a t e R e q u e s t ( i d=” b o u q u e t r o s e s ” , t i t l e =”Red Rose ” ) l i n e i t e m 1 = L i n e I t e m C r e a t e R e q u e s t ( q u a n t i t y =1, i t e m=i t e m 1 ) p a y m e n t r e q = P a y m e n t C r e a t e R e q u e s t ( i n s t r u m e n t s = [ ] , s e l e c t e d i n s t r u m e n t i d=None , h a n d l e r s=s u p p o r t e d h a n d l e r s ) b u y e r r e q = Buyer ( f u l l n a m e=” John Doe” , e m a i l=” j o h n @ e x a m p l e . com” ) c r e a t e p a y l o a d = C h e c k o u t C r e a t e R e q u e s t ( c u r r e n c y=”USD” , l i n e i t e m s =[ l i n e i t e m 1 ] , payment=p a y m e n t r e q , b u y e r=b u y e r r e q ) h e a d e r s = g e t h e a d e r s ( ) # UCP −Agent , s i g n a t u r e , i d e m p o t e n c y −k e y 
+
+j s o n b o d y = c r e a t e p a y l o a d . model dump ( mode=” j s o n ” , b y a l i a s=True , e x c l u d e n o n e=True ) r e s p o n s e = c l i e n t . p o s t ( ” / c h e c k o u t −s e s s i o n s ” , j s o n=j s o n b o d y , h e a d e r s=h e a d e r s ) c h e c k o u t i d = r e s p o n s e . j s o n ( ) . g e t ( ” i d ” ) Listing 8. Checkout creation using the Peach adapter.                                
+
+> @ a d a p t e r . o n e n a b l e d ( ’ C r e a t e ’ ) a s y n c d e f o n c r e a t e e n a b l e d ( f a ) : a w a i t a d a p t e r . a t t e m p t ( [ f a . b i n d ( l i n e i t e m s=SAMPLE LINE ITEMS , c u r r e n c y=”USD” , b u y e r=SAMPLE BUYER , p a y m e n t p r e f = {} ) ] )
+> Google Peach Component REST Client SimpleUCP Incremental Direct
+> Platform agent 915 97 113 128
+> Business proxy —163 171 134
+> Table 4. Lines of code comparison for the Checkout capability, with our Peach agent as Platform and the Google sample as Business . The Business proxy includes inline
+> route() declarations for field mapping.
+
+# 7 Discussion 
+
+Agent2Agent (A2A) [1], originally developed by Google and now managed by the Linux Foundation, is a widely adopted protocol for interagent task delegation. A client discovers remote agents via AgentCard s and delegates tasks; tasks progress through states ( submitted , working , completed , failed , canceled ) and may involve multiturn conversations. A2A and UCP are complementary: A2A handles discovery and delegation while UCP handles domain-specific interactions such as checkout. Like UCP, A2A is mostly informally specified; its state machine is described in prose, and constraints such as whether a canceled task may be resumed are ambiguous. A2A’s context identifier is analogous to a Langshaw enactment key, and the bridge architecture presented here could equally apply: model the A2A task lifecycle as a Langshaw protocol and bridge to A2A’s JSON-RPC transport. Baldoni et al. [2] recently demonstrated BSPL integration with the SARL agent language, exploring a different point in the implementation design space. Chopra et al. [6] survey the IOP toolkit Strabo builds on—protocol languages, verifiers, and programming models. Strabo’s contribution is not in expressive-ness or execution semantics, which are inherited from Langshaw and Peach, but in the bridge architecture: the ProxyAdapter and route() DSL map declarative actions onto informally-specified HTTP APIs, letting new capabilities be added by writing a protocol and a few routes rather than new agent code. Strabo is concerned with bridging formal protocols to existing HTTP APIs. Chopra and Singh [7] recently proposed Fluid, which brings social norms to web-based multiagent systems—a complementary direction that could inform how normative constraints are layered atop protocols like those modeled here. Historically, agent communication was standardized through FIPA-ACL [11] and KQML [10], which focused on speech-act semantics for individual messages. UCP and A2A represent a new generation of industry protocols that empha-size structured interactions, but share with their predecessors the challenges of informal specification and inadequate support for meaning [12]. The end-to-end test demonstrates feasibility but is not an exhaustive evalu-ation of protocol conformance. 
+
+# 8 Conclusion 
+
+We have shown that formal, declarative MAS protocol techniques are directly ap-plicable to industry e-commerce protocols. Modeling UCP’s Checkout capability in Langshaw made explicit several assumptions—most notably around attribute binding authority and ordering—that UCP’s informal specification leaves im-plicit. The Langshaw formalism naturally supports protocol variants that UCP does not distinguish, exposing a design space that practitioners can reason about; an incremental variant is explored in Appendix C. Peach agents built against the Langshaw protocol interoperate with Google’s UCP reference implementation via Strabo’s ProxyAdapter , which bridges protocol actions to HTTP round-trips with inline field mapping, demonstrating that formal specification and practi-cal interoperability are not at odds. Industry protocols like UCP and A2A are defining the interaction patterns for AI-assisted commerce and multiagent coor-dination; our exercise demonstrates that MAS protocol research can contribute precision and verifiability to these efforts. This exercise was focused on operations in the UCP Checkout capability; UCP additionally includes Order , Identity Linking , and extensible capabilities, each of which would need its own protocol and route definitions. We model only the Platform –Business interactions; the protocol also involves roles cor-responding to credential and payment providers. Extending Strabo to address additional capabilities and roles should be a rewarding direction, potentially testing Langshaw’s support for protocol composition (a core facility in BSPL) and dynamic role bindings (supported in Splee [4], a BSPL extension). Several directions remain for future work. Adding optional attribute sup-port to Langshaw would address the null-value convention that SimpleUCP cur-rently relies on, making optionality a first-class protocol concept rather than an implementation convention. The bridge architecture generalizes beyond UCP: A2A’s task lifecycle could be modeled as a Langshaw protocol and bridged to its JSON-RPC transport, testing the approach against a complementary indus-try standard with a different interaction style. Finally, a benefit of Langshaw that we did not exploit is decentralized enactments—where each agent main-tains its own local view of the protocol state without a shared server. Exploiting this property would enable peer-to-peer agent interaction more naturally aligned with the distributed nature of agentic AI deployments, and would test whether the ProxyAdapter architecture extends to settings without central coordination. 
+
+Reproducibility. Our software is available at https://gitlab.com/masr/strabo. Bibliography 
+
+[1] A2A: Agent2Agent protocol (2025), https://a2aprotocol.ai/, last accessed: 2025-08-11 [2] Baldoni, M., Baroglio, C., Galland, S., Micalizio, R., Outay, F., Tedeschi, S.: Interaction protocols in an imperative agent-oriented programming lan-guage: The case of BSPL and SARL. In: Proceedings of the 24th Interna-tional Conference on Autonomous Agents and MultiAgent Systems (AA-MAS). pp. 2426–2427. IFAAMAS, Detroit (May 2025). https://doi.org/10 .5555/3709347.3743891 [3] Baldoni, M., Christie V, S.H., Singh, M.P., Chopra, A.K.: Orpheus: Engi-neering multiagent systems via communicating agents. In: Proceedings of the 39th AAAI Conference on Artificial Intelligence (AAAI). pp. 23135– 23143. AAAI, Philadelphia (Feb 2025). https://doi.org/10.1609/aaai.v39i2 2.34478 [4] Chopra, A.K., Christie V, S.H., Singh, M.P.: Splee: A declarative information-based language for multiagent interaction protocols. In: Pro-ceedings of the 16th International Conference on Autonomous Agents and MultiAgent Systems (AAMAS). pp. 1054–1063. IFAAMAS, S˜ ao Paulo (May 2017). https://doi.org/10.5555/3091125.3091274 [5] Chopra, A.K., Christie V, S.H., Singh, M.P.: Peach: Program each agent and communicate howsoever. In: Proceedings of the 25th International Confer-ence on Autonomous Agents and MultiAgent Systems (AAMAS). IFAA-MAS, Paphos, Cyprus (May 2026), accepted [6] Chopra, A.K., Christie V, S.H., Singh, M.P.: Tools for implementing mul-tiagent systems based on protocols. In: Collier, R., Mascardi, V., Ricci, A. (eds.) Agents and Multi-Agent Systems Development: Platforms, Toolkits, Technologies, chap. 8, pp. 211–230. Springer Nature, Cham, Switzerland (2026). https://doi.org/10.1007/978-3-032-01082-7 8 [7] Chopra, A.K., Singh, M.P.: Fluid: Social norms-based multiagent systems on the Web. In: In Proceedings of the 13th Engineering Multiagent Systems Workshop. LNCS, vol. 16407, pp. 62–79. Springer (2025) [8] Christie V, S.H., Chopra, A.K., Singh, M.P.: Mandrake: Multiagent systems as a basis for programming fault-tolerant decentralized applications. Journal of Autonomous Agents and Multi-Agent Systems (JAAMAS) 36 (1), 16:1– 16:30 (Apr 2022). https://doi.org/10.1007/s10458-021-09540-8 [9] Christie V, S.H., Singh, M.P., Chopra, A.K.: Kiko: Programming agents to enact interaction protocols. In: Proceedings of the 22nd International Conference on Autonomous Agents and MultiAgent Systems (AAMAS). pp. 1154–1163. IFAAMAS, London (May 2023). https://doi.org/10.5555/ 3545946.3598758 [10] Finin, T., Fritzson, R., McKay, D., McEntire, R.: KQML as an agent com-munication language. In: Proceedings of the 3rd International Conference on Information and Knowledge Management. pp. 456–463. ACM Press, Gaithersburg, Maryland (Dec 1994). https://doi.org/10.1145/191246.1 91322 [11] FIPA: FIPA agent communication language specifications. http://www.fip a.org/repository/aclspecs.html (2002), FIPA: The Foundation for Intelli-gent Physical Agents. Accessed 2025-01-20 [12] Singh, M.P.: Agent communication languages: Rethinking the principles. IEEE Computer 31 (12), 40–47 (Dec 1998). https://doi.org/10.1109/2.7358 49 [13] Singh, M.P.: Information-driven interaction-oriented programming: BSPL, the Blindingly Simple Protocol Language. In: Proceedings of the 10th In-ternational Conference on Autonomous Agents and MultiAgent Systems (AAMAS). pp. 491–498. IFAAMAS, Taipei (May 2011). https://doi.org/10 .5555/2031678.2031687 [14] Singh, M.P.: Semantics and verification of information-based protocols. In: Proceedings of the 11th International Conference on Autonomous Agents and MultiAgent Systems (AAMAS). pp. 1149–1156. IFAAMAS, Valencia, Spain (Jun 2012). https://doi.org/10.5555/2343776.2343861 [15] Singh, M.P., Christie V, S.H.: Tango: Declarative semantics for multiagent communication protocols. In: Proceedings of the 30th International Joint Conference on Artificial Intelligence (IJCAI). pp. 391–397. IJCAI, Online (Aug 2021). https://doi.org/10.24963/ijcai.2021/55 [16] Singh, M.P., Christie V, S.H., Chopra, A.K.: Langshaw: Declarative inter-action protocols based on sayso and conflict. In: Proceedings of the 33rd International Joint Conference on Artificial Intelligence (IJCAI). pp. 202– 210. IJCAI, Jeju, Korea (Aug 2024). https://doi.org/10.24963/ijcai.2024/23 [17] UCP: Universal commerce protocol (Jan 2026), https://ucp.dev, last ac-cessed: 2026-02-20 A Checkout Capability 
+
+Table 5 gives the complete specification of the Checkout capability. 
+
+Field Type Required Description 
+
+ucp ResponseCheckout Yes Protocol metadata and checkout response root. 
+
+id string Yes Unique identifier of the checkout session. 
+
+line items LineItemResponse[] Yes List of line items being checked out. 
+
+buyer Buyer No Representation of the buyer. 
+
+status string Yes Checkout state indicating the current phase and required action. 
+
+currency string Yes ISO 4217 currency code. 
+
+totals TotalResponse[] Yes Different cart totals. 
+
+messages Message[] No List of messages with error and info about the checkout session state. 
+
+links Link[] Yes Links to be displayed by the Platform 
+
+(e.g., Privacy Policy, TOS). 
+
+expires at string No RFC 3339 expiry timestamp; default TTL often ∼6 hours. 
+
+continue url string No URL for checkout handoff and session re-covery. 
+
+payment PaymentResponse Yes Payment configuration and handler info. 
+
+order OrderConfirmation No Details about an order created for this session. 
+
+Table 5. The Checkout capability (extracted from [17]). 
+
+# B Mapping Between UCP Fields and SimpleUCP 
+
+# Attributes 
+
+Table 6 gives the complete field-to-attribute mapping used by the ProxyAdapter .Identity mappings use the same name on both sides. Explicit mappings arise where UCP and SimpleUCP use different names for the same data. Fields marked 
+
+dropped have no protocol equivalent in SimpleUCP because their information is either implicit in the action sequence or unnecessary for the Langshaw model. 
+
+# C Incremental Checkout Protocol 
+
+The incremental protocol (Listing 9) generalizes SimpleUCP to support UCP’s multistep update flow. Rather than submitting all information in a single Create ,
+
+Platform may issue separate actions for each concern: SetBuyer , ApplyDis-counts , SetFulfillment , and SetPayment , each carrying only its own attributes. UCP Field SimpleUCP Attribute Mapping                                                  
+
+> Checkout response fields
+> ucp —dropped (protocol metadata)
+> id id identity
+> line items line items identity
+> buyer buyer identity
+> status —dropped (implicit in action sequence)
+> currency currency identity
+> totals totals identity
+> messages reason partial (error messages →Failed )
+> links —dropped
+> expires at —dropped
+> continue url —dropped
+> payment payment identity (in Created )
+> order order identity (in Completed )
+> Request fields (sent in Update /Complete )
+> discounts discount codes explicit ( route() DSL)
+> fulfillment fulfillment pref explicit ( route() DSL)
+> payment payment pref explicit ( route() DSL)
+> payment data payment data identity
+> risk signals risk signals identity
+> Langshaw-internal (not in UCP)
+> —cid enactment key; stripped by proxy
+> Table 6. Mapping between UCP fields and SimpleUCP attributes. UCP’s payment
+> field is overloaded: in request context it carries payment preferences ( payment pref ); in response context it carries payment configuration ( payment ).
+
+Business responds to each with a corresponding acknowledgment. This decom-position makes data flow explicit—each action pair affects only the attributes it names. Regarding optional attributes (Remark R3): each concern has its own action, so the agent simply omits any action it does not need. No null values are required; the protocol specification itself captures which combinations of actions are valid. The incremental protocol introduces a second key, v, which serves as a ver-sion identifier. Each mutation action and its response carry v, and since an attribute may only be bound once per composite key, successive mutations are distinguished by their v values—each operates within its own subenactment. This also addresses overwrite semantics (Remark R4): successive updates pro-duce distinct bindings rather than overwriting previous ones, and agents can observe all bindings across subenactments to merge values and selectively over-ride at the application level. The version key does not itself impose ordering; however, the developer may choose sortable values (e.g., ULIDs) and operate on the latest version, achieving the sequential behavior that UCP assumes by convention (Remark R6). The protocol makes this design choice explicit. Listing 9. Incremental UCP checkout protocol in Langshaw. 
+
+I n c r e m e n t a l U C P who P l a t f o r m , B u s i n e s s what e i d key , v key , Completed o r C a n c e l l e d do P l a t f o r m : C r e a t e ( e i d , l i n e i t e m s , c u r r e n c y , b u y e r , payment ) B u s i n e s s : C r e a t e d ( e i d , C r e a t e , i d , p a y m e n t c o n f i g , m e s s a g e s ) B u s i n e s s : S t a t u s C h a n g e ( e i d , C r e a t e d , s t a t u s , t o t a l s , m e s s a g e s ) P l a t f o r m : Update ( e i d , v , C r e a t e d , i d , l i n e i t e m s , c u r r e n c y ) B u s i n e s s : Updated ( e i d , v , Update , l i n e i t e m s , m e s s a g e s ) P l a t f o r m : S e t B u y e r ( e i d , v , C r e a t e d , i d , b u y e r ) B u s i n e s s : B u y e r S e t ( e i d , v , S e t B u y e r , b u y e r , m e s s a g e s ) P l a t f o r m : A p p l y D i s c o u n t s ( e i d , v , C r e a t e d , i d , d i s c o u n t c o d e s ) B u s i n e s s : D i s c o u n t s A p p l i e d ( e i d , v , A p p l y D i s c o u n t s , d i s c o u n t s a p p l i e d , m e s s a g e s ) P l a t f o r m : S e t F u l f i l l m e n t ( e i d , v , C r e a t e d , i d , f u l f i l l m e n t p r e f ) B u s i n e s s : F u l f i l l m e n t S e t ( e i d , v , S e t F u l f i l l m e n t , f u l f i l l m e n t , m e s s a g e s ) P l a t f o r m : SetPayment ( e i d , v , C r e a t e d , i d , p a y m e n t p r e f ) B u s i n e s s : PaymentSet ( e i d , v , SetPayment , p a y m e n t c o n f i g , m e s s a g e s ) P l a t f o r m : Complete ( e i d , v , C r e a t e , i d , p a y m e n t d a t a , r i s k s i g n a l s ) B u s i n e s s : Completed ( e i d , v , Complete , o r d e r , m e s s a g e s ) P l a t f o r m : C a n c e l ( e i d , v , C r e a t e d , i d ) B u s i n e s s : C a n c e l l e d ( e i d , v , C a n c e l , m e s s a g e s ) B u s i n e s s : S h i p p e d ( e i d , Completed , o r d e r i d , t r a c k i n g n u m b e r , t r a c k i n g u r l , c a r r i e r ) B u s i n e s s : D e l i v e r e d ( e i d , Shippe d , o r d e r i d ) s a y s o P l a t f o r m : l i n e i t e m s , c u r r e n c y , b u y e r , d i s c o u n t c o d e s , f u l f i l l m e n t p r e f , p a y m e n t p r e f , p a y m e n t d a t a , r i s k s i g n a l s , payment B u s i n e s s : i d , s t a t u s , t o t a l s , d i s c o u n t s a p p l i e d , f u l f i l l m e n t , p a y m e n t c o n f i g , o r d e r , o r d e r i d , t r a c k i n g n u m b e r , t r a c k i n g u r l , c a r r i e r , m e s s a g e s nono Completed C a n c e l l e d nogo C a n c e l −/> Complete

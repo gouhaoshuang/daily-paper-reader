@@ -1,0 +1,333 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-11T22:03:05.858115+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2606.05670v1",
+      "source": "arxiv",
+      "title": "Do More Agents Help? Controlled and Protocol-Aligned Evaluation of LLM Agent Workflows",
+      "abstract": "Does adding more agents help an LLM workflow once compared systems share the same benchmark loader, tool access, answer contract, usage accounting, and trajectory logging? We introduce BenchAgent, an evaluation framework that places single-agent, fixed multi-agent (MAS), and evolving MAS workflows under one normalized execution and logging protocol. BenchAgent evaluates these substrate-internal workflows across ten reasoning, coding, and tool-use benchmarks with GPT-4.1, and separately reports a Protocol-Aligned External (PAE) GAIA study of a runtime-generated workflow. Under SI conditions, at most one of six tested MAS exceeds the matched single-agent anchor on benchmark-balanced average accuracy: EvoAgent lies within the Wilson one-run guidance, while the remaining five trail by 2.56-11.29 points and occupy more expensive accuracy-cost trade-offs. On the PAE GAIA snapshot, a Claude-Code-style runtime workflow reaches 66.72% overall and 69.23% on Level 3, more than 20 points above the strongest non-Claude baseline, Jarvis, a fixed MAS.",
+      "authors": [
+        "Yuhang Fu",
+        "Ruishan Fang",
+        "Jiaqi Shao",
+        "Huiyu Zheng",
+        "Zhengtao Zhu",
+        "Bing Luo",
+        "Tao Lin"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-04T03:50:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.05670v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "evaluation of multi-agent LLM workflows for collaboration",
+      "llm_evidence_cn": "多智能体LLM工作流协作评估",
+      "llm_evidence": "多智能体LLM工作流协作评估",
+      "canonical_evidence": "多智能体LLM工作流协作评估",
+      "llm_tldr_en": "BenchAgent evaluates single vs. multi-agent LLM workflows under a normalized protocol, finding that adding more agents rarely improves average accuracy.",
+      "llm_tldr_cn": "当前多智能体系统协作效果缺乏严格评估。本文提出BenchAgent框架，在统一执行协议下对比单智能体、固定多智能体和演化多智能体工作流。在10个基准测试中，仅少数多智能体方案超过单智能体基线。该研究为多智能体协作的实际增益提供了严谨的实证洞察。",
+      "llm_tldr": "当前多智能体系统协作效果缺乏严格评估。本文提出BenchAgent框架，在统一执行协议下对比单智能体、固定多智能体和演化多智能体工作流。在10个基准测试中，仅少数多智能体方案超过单智能体基线。该研究为多智能体协作的实际增益提供了严谨的实证洞察。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.07805v1",
+      "source": "arxiv",
+      "title": "Beyond Goodhart's Law: A Dynamic Benchmark for Evaluating Compliance in Multi-Agent Systems",
+      "abstract": "The rapid evolution of Large Language Models (LLMs) from passive assistants to autonomous, execution-capable agents has introduced critical operational risks. Most current evaluation frameworks neglect procedural compliance, leading to ''Machiavellian'' behaviors where agents strategically violate safety rules to maximize rewards - a direct manifestation of Goodhart's Law. To address this blind spot, we introduce MAC-Bench, a dynamic, adversarial benchmark designed to evaluate the procedural alignment of multi-agent systems under realistic pressure. We propose the SERV(Seed - Evolve - Refine - Verify) pipeline, an ``Agent-as-a-Benchmark'' paradigm that transforms unstructured legal texts into executable, contamination-free scenarios. By synthesizing holographic sandbox environments and injecting calibrated social-engineering pressure vectors, MAC-Bench forces agents into Pareto-optimal trade-offs between task success and regulatory adherence. We introduced novel metrics: the Compliance-Weighted Success Rate (CSR) and the Machiavellian Gap (MG), and conducted a comprehensive evaluation of state-of-the-art frontier models to reveal the pervasive trade-offs between success and compliance.",
+      "authors": [
+        "Yiyang Zhao",
+        "Zhuo Zhang",
+        "Qingxuan Le",
+        "Lizhen Qu",
+        "Zenglin Xu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-06-05T19:33:58+00:00",
+      "link": "https://arxiv.org/pdf/2606.07805v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent systems compliance benchmark",
+      "llm_evidence_cn": "多智能体系统合规性基准",
+      "llm_evidence": "多智能体系统合规性基准",
+      "canonical_evidence": "多智能体系统合规性基准",
+      "llm_tldr_en": "MAC-Bench evaluates procedural compliance in multi-agent systems, targeting Machiavellian behaviors that violate safety rules for rewards.",
+      "llm_tldr_cn": "多智能体系统可能展现策略性违规以达到目标。本文提出MAC-Bench，一个动态对抗性基准，通过SERV流水线将法律文本转化为可执行场景，评估多智能体系统的程序合规性。实验表明现有系统容易受到违规诱惑。该基准填补了合规性评估的空白。",
+      "llm_tldr": "多智能体系统可能展现策略性违规以达到目标。本文提出MAC-Bench，一个动态对抗性基准，通过SERV流水线将法律文本转化为可执行场景，评估多智能体系统的程序合规性。实验表明现有系统容易受到违规诱惑。该基准填补了合规性评估的空白。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.10484v1",
+      "source": "arxiv",
+      "title": "AgentCanary: A Security Evaluation Framework for Autonomous AI Agents in Real Executable Environments",
+      "abstract": "Autonomous AI agents have driven the transition from conversation to task execution, shifting security failures from textual deception to system compromise. Although security evaluation is crucial for proactive risk prevention, prior work is constrained by fundamental bottlenecks, including fragmented risk coverage, static or low-fidelity execution environments, and single-dimensional and coarse-grained assessment metrics. To address these challenges, we propose AgentCanary, a comprehensive security evaluation framework for autonomous AI agents. AgentCanary provides a systematic solution along three contributions. First, comprehensive risk coverage: we introduce an orthogonal Entry $\\times$ Impact risk taxonomy that decouples how adversarial influence enters the agent from what harm it ultimately causes, and instantiate it as a scenario-aligned task suite spanning realistic deployment workflows. Second, a high-fidelity real executable environment: rather than static Q&A or mocked tool responses, agents interact with real tools against dynamically provisioned task artifacts, with persistent state across multi-step interactions that naturally supports long-horizon attack evaluation. Third, trajectory-grounded multi-dimensional evaluation: evaluation consumes the full agent trajectory rather than the reply text or a single tool call, enabling decomposed scoring along three orthogonal dimensions, Outcome Safety, Security Awareness, and Task Utility. We evaluate a broad set of frontier models on AgentCanary against multiple established adversarial attack methods across three agent frameworks. The results reveal that current agents often fail to recognize the attacks they face, particularly under compromised skills, persistent state, and long-horizon execution attacks, and provide a systematic baseline for developing more reliable and secure agent systems.",
+      "authors": [
+        "Peiyang Li",
+        "Songping Wang",
+        "Yi Huang",
+        "Yanhua Shi",
+        "Chenhao Zhang",
+        "Qi Li",
+        "Yueming Lyu",
+        "Caifeng Shan",
+        "Fengting Li",
+        "Chao Feng",
+        "Chuanqun Zhu",
+        "Liang Chen"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-06-09T06:55:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.10484v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "security evaluation framework for autonomous AI agents",
+      "llm_evidence_cn": "自主AI智能体安全评估框架",
+      "llm_evidence": "自主AI智能体安全评估框架",
+      "canonical_evidence": "自主AI智能体安全评估框架",
+      "llm_tldr_en": "AgentCanary provides a comprehensive security evaluation framework for autonomous AI agents, covering risk taxonomy, execution fidelity, and multi-dimension metrics.",
+      "llm_tldr_cn": "自主AI智能体从对话转向任务执行带来安全挑战。本文提出AgentCanary，一个全面的安全评估框架，引入正交Entry*Impact风险分类，支持真实可执行环境，并提供多维度细粒度评估指标。该框架填补了现有评估在风险覆盖、环境保真度和评估粒度上的不足。",
+      "llm_tldr": "自主AI智能体从对话转向任务执行带来安全挑战。本文提出AgentCanary，一个全面的安全评估框架，引入正交Entry*Impact风险分类，支持真实可执行环境，并提供多维度细粒度评估指标。该框架填补了现有评估在风险覆盖、环境保真度和评估粒度上的不足。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.11592v1",
+      "source": "arxiv",
+      "title": "Defense Against Prompt Inversion Attacks: An Information-Theoretic Approach for LLM Collaborative Inference",
+      "abstract": "Collaborative edge-cloud inference enables resource-constrained devices to leverage large language models (LLMs) by offloading partial computation to cloud servers. However, transmitting intermediate activations exposes sensitive user prompts to prompt inversion attacks, where an adversary reconstructs the original input from shared representations. Existing defenses rely largely on heuristic perturbations or empirical tuning, offering limited theoretical understanding of privacy leakage and its interaction with utility and latency constraints. We propose an information-theoretic defense framework for prompt inversion in collaborative LLM inference. Our approach learns privacy-preserving representations by explicitly minimizing the mutual information between intermediate activations and the input prompt while maintaining task utility under computational constraints. We derive theoretical guarantees on prompt reconstruction error, characterize fundamental privacy-utility tradeoffs, and establish token-level accuracy bounds for downstream inference. We then propose a novel defense based on privacy adapters implemented via low-dimensional information bottlenecks. Extensive experiments across multiple settings demonstrate that our method achieves superior privacy-utility-latency tradeoffs compared to existing defenses (up to 35% reduction in attack success), providing a principled foundation for private and efficient collaborative LLM inference.",
+      "authors": [
+        "Sayedeh Leila Noorbakhsh",
+        "Hossein Khalili",
+        "Nader Sehatbakhsh"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-06-10T02:36:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.11592v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "collaborative edge-cloud LLM inference with privacy defense",
+      "llm_evidence_cn": "边缘云协同LLM推理下的隐私保护方法",
+      "llm_evidence": "边缘云协同LLM推理下的隐私保护方法",
+      "canonical_evidence": "边缘云协同LLM推理下的隐私保护方法",
+      "llm_tldr_en": "Proposes an information-theoretic defense framework for prompt inversion attacks in collaborative edge-cloud LLM inference, learning privacy-preserving representations.",
+      "llm_tldr_cn": "边缘云协同的LLM推理中存在提示反转攻击的隐私风险，现有启发式防御缺乏理论保证。本文提出基于信息论的隐私保护框架，通过学习隐私表示来平衡隐私、效用与延迟约束。实验表明，该方法在保持推理任务性能的同时显著降低了攻击成功率，为边缘云协同推理提供了有理论依据的隐私保障。",
+      "llm_tldr": "边缘云协同的LLM推理中存在提示反转攻击的隐私风险，现有启发式防御缺乏理论保证。本文提出基于信息论的隐私保护框架，通过学习隐私表示来平衡隐私、效用与延迟约束。实验表明，该方法在保持推理任务性能的同时显著降低了攻击成功率，为边缘云协同推理提供了有理论依据的隐私保障。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.05250v1",
+      "source": "arxiv",
+      "title": "Towards Persistent Case-Based Memory for Autonomous Data Science: A CBR-Augmented R&D-Agent with a Locally Deployable Small Language Model",
+      "abstract": "Most top-performing autonomous data-science agents rely on frontier cloud models and lack persistent, cross-session memory. This paper addresses two open gaps: (1) the underexplored use of formally structured, quality-controlled Case-Based Reasoning (CBR) case bases coupling symbolic case records with executable code artefacts; and (2) the untested viability of Small Language Models (SLMs) as locally deployable agent backbones. We present CBR-augmented R&D-Agent, integrating a persistent CBR layer into Microsoft's R&D-Agent framework with a custom backend for Gemma 4 31B Dense -- the first published end-to-end evaluation of Gemma 4 as an autonomous data-science agent backbone. The CBR layer overrides three R&D loop phases via a surgical subclass toggled by a single environment variable. Cases are stored as structured records with executable code snapshots and quality metadata; a five-gate quality filter and a heuristic reuse-detection mechanism assess knowledge transfer by combining embedding similarity, code-fingerprint overlap, and injection provenance. Evaluated on two Kaggle competitions (NOMAD 2018, Spaceship Titanic) with four seeds over eight improvement loops each, CBR achieves directionally higher accuracy than the CBR-disabled baseline on Spaceship Titanic (0.8147 vs. 0.8098, d = -1.41) with substantially lower variance. Heuristic reuse detection across 108 retrieval events shows high semantic relevance (mean embedding similarity 0.882) alongside variable structural proximity (mean code-fingerprint similarity 0.305), consistent with conceptual guidance rather than verbatim code copying.",
+      "authors": [
+        "Felix Stocker"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-06-03T12:56:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.05250v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "locally deployable small language model for autonomous agents",
+      "llm_evidence_cn": "可本地部署的小语言模型智能体",
+      "llm_evidence": "可本地部署的小语言模型智能体",
+      "canonical_evidence": "可本地部署的小语言模型智能体",
+      "llm_tldr_en": "Integrates case-based reasoning with a locally deployable small language model to enable persistent memory for autonomous data science agents, evaluated with Gemma 4.",
+      "llm_tldr_cn": "自主数据科学智能体通常依赖云端大模型且缺乏跨会话记忆。本文提出基于案例推理（CBR）增强的R&D智能体，结合本地可部署的小语言模型Gemma 4，实现持久记忆。实验表明，该方案在本地推理条件下仍能保持有效记忆和竞争性任务性能，为移动或边缘设备上部署智能体提供了可行路径。",
+      "llm_tldr": "自主数据科学智能体通常依赖云端大模型且缺乏跨会话记忆。本文提出基于案例推理（CBR）增强的R&D智能体，结合本地可部署的小语言模型Gemma 4，实现持久记忆。实验表明，该方案在本地推理条件下仍能保持有效记忆和竞争性任务性能，为移动或边缘设备上部署智能体提供了可行路径。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.04896v2",
+      "source": "arxiv",
+      "title": "Channel Fracture: Architectural Blind Spots in Scheduled Cross-Agent Memory Injection for Multi-Agent Orchestration Systems",
+      "abstract": "Multi-agent AI orchestration systems increasingly rely on persistent memory to maintain context across sessions, agents, and tasks. When one agent must inject knowledge into another agent's memory -- a common requirement in hierarchical team architectures -- the delivery mechanism must be architecturally sound. We report the discovery of a systematic failure mode we term channel fracture: a condition where scheduled (cron) agents in orchestration frameworks are silently unable to write to the target agent's persistent memory due to hardcoded memory isolation guards. Through experiments on a production Hermes Agent deployment with five specialized profiles, we tested three injection channels: (A) direct SQLite database writes, (B) target-agent self-writes via memory tools, and (C) cron-delegated writes. Channel C failed completely due to two architectural constraints: skip_memory=True hardcoded at the scheduler layer and dynamic registration of memory tools contingent on _memory_manager initialization, which is bypassed in cron execution contexts. We propose CADVP (Cross-Agent Delivery Verification Protocol) v1.1, a 13-dimension verification framework with a veto-level channel confirmation check (CC-0) that prevents false-positive delivery assurance. We articulate two design principles: the inverse verification principle and the channel matching principle.",
+      "authors": [
+        "Dexing Liu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-06-03T13:55:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.04896v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "cross-agent memory injection for multi-agent orchestration",
+      "llm_evidence_cn": "多智能体编排中的跨智能体内存注入",
+      "llm_evidence": "多智能体编排中的跨智能体内存注入",
+      "canonical_evidence": "多智能体编排中的跨智能体内存注入",
+      "llm_tldr_en": "Identifies channel fracture failure in scheduled cross-agent memory injection, revealing architectural blind spots in multi-agent orchestration systems.",
+      "llm_tldr_cn": "该论文研究了多智能体编排系统中规划任务写入目标智能体持久内存时发生的系统故障模式——通道断裂。通过在生产级Hermes Agent部署上的实验，测试了三种注入通道，发现由于硬编码的内存隔离保护，规划智能体静默失败。这一发现揭示了当前多智能体协作架构中的设计盲点，为构建更健壮的协作系统提供了重要指导。",
+      "llm_tldr": "该论文研究了多智能体编排系统中规划任务写入目标智能体持久内存时发生的系统故障模式——通道断裂。通过在生产级Hermes Agent部署上的实验，测试了三种注入通道，发现由于硬编码的内存隔离保护，规划智能体静默失败。这一发现揭示了当前多智能体协作架构中的设计盲点，为构建更健壮的协作系统提供了重要指导。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.06388v1",
+      "source": "arxiv",
+      "title": "Humans' ALMANAC: A Human Collaboration Dataset of Action-Level Mental Model Annotations for Agent Collaboration",
+      "abstract": "Recent advances in LLM agents have enabled complex cognitive capabilities, such as multi-step reasoning, planning, and tool use, that increasingly position these agents as human collaborators. Effective collaboration, however, requires collaborators to continuously maintain and align mental models of their own reasoning,partners' intentions, and shared goals during the collaborative process. Today's agents rarely develop such capabilities since they are primarily optimized for task completion, and the community lacks authentic human collaboration data with action-level mental model annotations that could guide agents toward process-level collaborative competence. To bridge this gap, we present ALMANAC, a dataset of Action-Level Mental model ANnotations for Agent Collaboration built from the Map Task, a classic dyadic routing task from social science. ALMANAC contains 2,987 collaboration actions, each paired with theory-informed mental model annotations that record the participants' self-reasoning, perceived partner intent, and perceived team goal. We benchmark six LLMs on predicting humans' next-turn behavior and mental models. Our results demonstrate ALMANAC's utility in evaluating models' ability to simulate human collaborative behaviors and infer their underlying mental models.",
+      "authors": [
+        "Jiaju Chen",
+        "Yuxuan Lu",
+        "Jiayi Su",
+        "Chaoran Chen",
+        "Songlin Xiao",
+        "Zheng Zhang",
+        "Yun Wang",
+        "Yunyao Li",
+        "Jian Zhao",
+        "Tongshuang Wu",
+        "Toby Jia-Jun Li",
+        "Dakuo Wang",
+        "Bingsheng Yao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-04T16:56:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.06388v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "human collaboration dataset for agent collaboration",
+      "llm_evidence_cn": "人类协作数据集用于代理协作",
+      "llm_evidence": "人类协作数据集用于代理协作",
+      "canonical_evidence": "人类协作数据集用于代理协作",
+      "llm_tldr_en": "Presents ALMANAC, a dataset of human-human collaboration with action-level mental model annotations, enabling agents to learn process-level collaborative competence beyond task completion.",
+      "llm_tldr_cn": "为解决当前AI代理缺乏真实协作数据和心智模型对齐能力的问题，构建了ALMANAC数据集，包含人类协作中动作级的心智模型标注。该数据集可引导代理在协作过程中理解自身推理、伙伴意图和共享目标，从而提升过程级协作能力，而不仅仅是任务完成率。",
+      "llm_tldr": "为解决当前AI代理缺乏真实协作数据和心智模型对齐能力的问题，构建了ALMANAC数据集，包含人类协作中动作级的心智模型标注。该数据集可引导代理在协作过程中理解自身推理、伙伴意图和共享目标，从而提升过程级协作能力，而不仅仅是任务完成率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.05043v1",
+      "source": "arxiv",
+      "title": "Strabo: Declarative Specification and Implementation of Agentic Interaction Protocols",
+      "abstract": "The last few years have witnessed major advances in the modeling and implementation of multiagent systems based on declarative interaction protocols. Our contribution, Strabo, establishes the relevance of these advances to ongoing industry efforts in Agentic AI. Specifically, we consider UCP, the Universal Commerce Protocol, a recent Google-led effort to standardize e-commerce interactions for AI agents. Our exercise is in two parts. One, we model the part of UCP dealing with checkouts as a declarative Langshaw protocol and implement agents using Peach, a programming model for Langshaw. This part of the exercise brings out the advantages of formal, declarative specifications. Two, we show that Peach agents can interoperate with UCP agents implemented by Google, thereby establishing the fidelity of our approach with respect to UCP. Such interoperation enables the incremental introduction of declarative protocols and agents into a conventional setting, indicating a pathway by which EMAS ideas could influence practice without demanding a wholesale update.",
+      "authors": [
+        "Samuel H. Christie",
+        "Amit K. Chopra",
+        "Munindar P. Singh"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-03T16:05:25+00:00",
+      "link": "https://arxiv.org/pdf/2606.05043v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "declarative agent interaction protocols",
+      "llm_evidence_cn": "声明式智能体交互协议",
+      "llm_evidence": "声明式智能体交互协议",
+      "canonical_evidence": "声明式智能体交互协议",
+      "llm_tldr_en": "Presents Strabo, a declarative specification for agentic interaction protocols, demonstrated by modeling UCP checkout protocol and enabling interoperability with existing agents.",
+      "llm_tldr_cn": "声明式交互协议在工业Agentic AI中的应用不足。本文提出Strabo，将UCP结账协议建模为声明式Langshaw协议，并使用Peach实现智能体，展示了与UCP智能体的互操作性，突显形式化声明式规范的优势。",
+      "llm_tldr": "声明式交互协议在工业Agentic AI中的应用不足。本文提出Strabo，将UCP结账协议建模为声明式Langshaw协议，并使用Peach实现智能体，展示了与UCP智能体的互操作性，突显形式化声明式规范的优势。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
