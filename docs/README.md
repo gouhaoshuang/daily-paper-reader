@@ -6,44 +6,37 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-11
-- 运行时间：2026-06-11 22:08:07 UTC
+- 最新运行日期：2026-06-12
+- 运行时间：2026-06-12 21:55:46 UTC
 - 运行状态：成功
-- 本次总论文数：8
-- 精读区：4
+- 本次总论文数：5
+- 精读区：1
 - 速读区：4
 
 ### 今日简报（AI）
-今日重点探讨多智能体协作效率与记忆机制。精读揭示更多智能体未必更好，需协议对齐评估；速读则关注持久案例记忆与人机协作标注。下一步建议关注多智能体评估协议设计及本地小语言模型的实用部署方案。
-- 详情：[/202606/11/README](/202606/11/README)
+今日精读1篇、速读4篇，聚焦智能体协作与异构调度。  
+《Statistical Priors for Implicit Preferences》解耦技能选择作为本地约束，是个人智能体设计的亮点；速读中《Fair Comparison of Scheduling Algorithms》的基准方法也值得关注。  
+建议读者优先精读该文理解隐式偏好建模思路，再结合速读文章了解多智能体通信与调度实践的对比。
+- 详情：[/202606/12/README](/202606/12/README)
 
 ### 精读区论文标签
-1. [Do More Agents Help? Controlled and Protocol-Aligned Evaluation of LLM Agent Workflows](/202606/11/2606.05670v1-do-more-agents-help-controlled-and-protocol-aligned-evaluation-of-llm-agent-workflows)  
+1. [Statistical Priors for Implicit Preferences: Decoupling Skill Selection as a Local Harness in Personal Agents](/202606/12/2606.05828v1-statistical-priors-for-implicit-preferences-decoupling-skill-selection-as-a-local-harness-in-personal-agents)  
    标签：评分：8.0/10、query:eca
-   evidence：多智能体LLM工作流协作评估
-2. [Beyond Goodhart's Law: A Dynamic Benchmark for Evaluating Compliance in Multi-Agent Systems](/202606/11/2606.07805v1-beyond-goodharts-law-a-dynamic-benchmark-for-evaluating-compliance-in-multi-agent-systems)  
-   标签：评分：8.0/10、query:eca
-   evidence：多智能体系统合规性基准
-3. [AgentCanary: A Security Evaluation Framework for Autonomous AI Agents in Real Executable Environments](/202606/11/2606.10484v1-agentcanary-a-security-evaluation-framework-for-autonomous-ai-agents-in-real-executable-environments)  
-   标签：评分：8.0/10、query:eca
-   evidence：自主AI智能体安全评估框架
-4. [Defense Against Prompt Inversion Attacks: An Information-Theoretic Approach for LLM Collaborative Inference](/202606/11/2606.11592v1-defense-against-prompt-inversion-attacks-an-information-theoretic-approach-for-llm-collaborative-inference)  
-   标签：评分：8.0/10、query:eca
-   evidence：边缘云协同LLM推理下的隐私保护方法
+   evidence：本地部署与远程API结合的个人代理架构
 
 ### 速读区论文标签
-1. [Towards Persistent Case-Based Memory for Autonomous Data Science: A CBR-Augmented R&D-Agent with a Locally Deployable Small Language Model](/202606/11/2606.05250v1-towards-persistent-case-based-memory-for-autonomous-data-science-a-cbr-augmented-rd-agent-with-a-locally-deployable-small-language-model)  
+1. [Beyond tokens: a unified framework for latent communication in LLM-based multi-agent systems](/202606/12/2606.05711v1-beyond-tokens-a-unified-framework-for-latent-communication-in-llm-based-multi-agent-systems)  
    标签：评分：7.0/10、query:eca
-   evidence：可本地部署的小语言模型智能体
-2. [Humans' ALMANAC: A Human Collaboration Dataset of Action-Level Mental Model Annotations for Agent Collaboration](/202606/11/2606.06388v1-humans-almanac-a-human-collaboration-dataset-of-action-level-mental-model-annotations-for-agent-collaboration)  
+   evidence：统一框架探索大语言模型多智能体系统中的潜在通信协议
+2. [Fair Comparison of Scheduling Algorithms on Heterogeneous Edge Clusters: A Continuous Adaptive Benchmark](/202606/12/2606.12343v1-fair-comparison-of-scheduling-algorithms-on-heterogeneous-edge-clusters-a-continuous-adaptive-benchmark)  
    标签：评分：7.0/10、query:eca
-   evidence：人类协作数据集用于代理协作
-3. [Channel Fracture: Architectural Blind Spots in Scheduled Cross-Agent Memory Injection for Multi-Agent Orchestration Systems](/202606/11/2606.04896v2-channel-fracture-architectural-blind-spots-in-scheduled-cross-agent-memory-injection-for-multi-agent-orchestration-systems)  
+   evidence：边缘-云连续体上AI工作负载调度基准
+3. [Humans' ALMANAC: A Human Collaboration Dataset of Action-Level Mental Model Annotations for Agent Collaboration](/202606/12/2606.06388v2-humans-almanac-a-human-collaboration-dataset-of-action-level-mental-model-annotations-for-agent-collaboration)  
    标签：评分：6.0/10、query:eca
-   evidence：多智能体编排中的跨智能体内存注入
-4. [Strabo: Declarative Specification and Implementation of Agentic Interaction Protocols](/202606/11/2606.05043v1-strabo-declarative-specification-and-implementation-of-agentic-interaction-protocols)  
+   evidence：人类协作数据集用于训练代理协作
+4. [SwarmSense-DNN: A Trustworthy and Decentralized Neural Framework for Proactive Anomaly Defense in Consumer IoT](/202606/12/2606.11803v1-swarmsense-dnn-a-trustworthy-and-decentralized-neural-framework-for-proactive-anomaly-defense-in-consumer-iot)  
    标签：评分：6.0/10、query:eca
-   evidence：声明式智能体交互协议
+   evidence：群体智能合作异常检测
 
 
 <div class="dpr-home-promo-card">
