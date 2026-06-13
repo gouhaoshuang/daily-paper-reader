@@ -6,37 +6,30 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-12
-- 运行时间：2026-06-12 21:55:46 UTC
+- 最新运行日期：2026-06-13
+- 运行时间：2026-06-13 20:30:43 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：1
-- 速读区：4
+- 本次总论文数：3
+- 精读区：0
+- 速读区：3
 
 ### 今日简报（AI）
-今日精读1篇、速读4篇，聚焦智能体协作与异构调度。  
-《Statistical Priors for Implicit Preferences》解耦技能选择作为本地约束，是个人智能体设计的亮点；速读中《Fair Comparison of Scheduling Algorithms》的基准方法也值得关注。  
-建议读者优先精读该文理解隐式偏好建模思路，再结合速读文章了解多智能体通信与调度实践的对比。
-- 详情：[/202606/12/README](/202606/12/README)
+今日聚焦多智能体协同新范式，三篇论文分别从角色分解、基础设施感知和共识共享切入。最值得关注方向：通过角色分工与跨Agent学习信号提升协作效率，以及基于共识的通信机制。下一步可关注多智能体LLM训练中的角色分解方法与共识通信协议设计。
+- 详情：[/202606/13/README](/202606/13/README)
 
 ### 精读区论文标签
-1. [Statistical Priors for Implicit Preferences: Decoupling Skill Selection as a Local Harness in Personal Agents](/202606/12/2606.05828v1-statistical-priors-for-implicit-preferences-decoupling-skill-selection-as-a-local-harness-in-personal-agents)  
-   标签：评分：8.0/10、query:eca
-   evidence：本地部署与远程API结合的个人代理架构
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Beyond tokens: a unified framework for latent communication in LLM-based multi-agent systems](/202606/12/2606.05711v1-beyond-tokens-a-unified-framework-for-latent-communication-in-llm-based-multi-agent-systems)  
+1. [Divide and Cooperate: Role-Decomposed Multi-Agent LLM Training with Cross-Agent Learning Signals](/202606/13/2606.10684v1-divide-and-cooperate-role-decomposed-multi-agent-llm-training-with-cross-agent-learning-signals)  
    标签：评分：7.0/10、query:eca
-   evidence：统一框架探索大语言模型多智能体系统中的潜在通信协议
-2. [Fair Comparison of Scheduling Algorithms on Heterogeneous Edge Clusters: A Continuous Adaptive Benchmark](/202606/12/2606.12343v1-fair-comparison-of-scheduling-algorithms-on-heterogeneous-edge-clusters-a-continuous-adaptive-benchmark)  
+   evidence：角色分解的多智能体协作训练
+2. [INFRAMIND: Infrastructure-Aware Multi-Agent Orchestration](/202606/13/2606.11440v1-inframind-infrastructure-aware-multi-agent-orchestration)  
    标签：评分：7.0/10、query:eca
-   evidence：边缘-云连续体上AI工作负载调度基准
-3. [Humans' ALMANAC: A Human Collaboration Dataset of Action-Level Mental Model Annotations for Agent Collaboration](/202606/12/2606.06388v2-humans-almanac-a-human-collaboration-dataset-of-action-level-mental-model-annotations-for-agent-collaboration)  
-   标签：评分：6.0/10、query:eca
-   evidence：人类协作数据集用于训练代理协作
-4. [SwarmSense-DNN: A Trustworthy and Decentralized Neural Framework for Proactive Anomaly Defense in Consumer IoT](/202606/12/2606.11803v1-swarmsense-dnn-a-trustworthy-and-decentralized-neural-framework-for-proactive-anomaly-defense-in-consumer-iot)  
-   标签：评分：6.0/10、query:eca
-   evidence：群体智能合作异常检测
+   evidence：基础设施感知的多代理编排适用于分布式边缘云
+3. [CCKS: Consensus-based Communication and Knowledge Sharing](/202606/13/2606.12281v1-ccks-consensus-based-communication-and-knowledge-sharing)  
+   标签：评分：7.0/10、query:eca
+   evidence：基于共识的知识共享用于协作多智能体系统
 
 
 <div class="dpr-home-promo-card">
