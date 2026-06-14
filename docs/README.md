@@ -6,30 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-13
-- 运行时间：2026-06-13 20:30:43 UTC
+- 最新运行日期：2026-06-14
+- 运行时间：2026-06-14 21:03:30 UTC
 - 运行状态：成功
 - 本次总论文数：3
-- 精读区：0
-- 速读区：3
+- 精读区：2
+- 速读区：1
 
 ### 今日简报（AI）
-今日聚焦多智能体协同新范式，三篇论文分别从角色分解、基础设施感知和共识共享切入。最值得关注方向：通过角色分工与跨Agent学习信号提升协作效率，以及基于共识的通信机制。下一步可关注多智能体LLM训练中的角色分解方法与共识通信协议设计。
-- 详情：[/202606/13/README](/202606/13/README)
+今日精读《The Internet of Agentic AI》与《SemanticXR》两篇高分论文，速读《PerspectiveGap》一篇，重点关注智能体通信与语义映射。最值得关注的是大规模智能体网络中的集体智能架构，以及低功耗实时语义映射的物体级云-端协同方案。建议先精读《The Internet of Agentic AI》以理解智能体协调原理，再结合《SemanticXR》的实践技术评估应用可行性。
+- 详情：[/202606/14/README](/202606/14/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [The Internet of Agentic AI: Communication, Coordination, and Collective Intelligence at Scale](/202606/14/2606.12835v1-the-internet-of-agentic-ai-communication-coordination-and-collective-intelligence-at-scale)  
+   标签：评分：9.0/10、query:eca
+   evidence：边缘云协同AI代理系统
+2. [SemanticXR: Low Power and Real-time Queryable Semantic Mapping with an Object-Level Device-Cloud Architecture](/202606/14/2606.12849v1-semanticxr-low-power-and-real-time-queryable-semantic-mapping-with-an-object-level-device-cloud-architecture)  
+   标签：评分：8.0/10、query:eca
+   evidence：设备-云端架构实现移动XR实时语义映射
 
 ### 速读区论文标签
-1. [Divide and Cooperate: Role-Decomposed Multi-Agent LLM Training with Cross-Agent Learning Signals](/202606/13/2606.10684v1-divide-and-cooperate-role-decomposed-multi-agent-llm-training-with-cross-agent-learning-signals)  
-   标签：评分：7.0/10、query:eca
-   evidence：角色分解的多智能体协作训练
-2. [INFRAMIND: Infrastructure-Aware Multi-Agent Orchestration](/202606/13/2606.11440v1-inframind-infrastructure-aware-multi-agent-orchestration)  
-   标签：评分：7.0/10、query:eca
-   evidence：基础设施感知的多代理编排适用于分布式边缘云
-3. [CCKS: Consensus-based Communication and Knowledge Sharing](/202606/13/2606.12281v1-ccks-consensus-based-communication-and-knowledge-sharing)  
-   标签：评分：7.0/10、query:eca
-   evidence：基于共识的知识共享用于协作多智能体系统
+1. [PerspectiveGap: A Benchmark for Multi-Agent Orchestration Prompting](/202606/14/2606.08878v1-perspectivegap-a-benchmark-for-multi-agent-orchestration-prompting)  
+   标签：评分：6.0/10、query:eca
+   evidence：多智能体编排基准
 
 
 <div class="dpr-home-promo-card">

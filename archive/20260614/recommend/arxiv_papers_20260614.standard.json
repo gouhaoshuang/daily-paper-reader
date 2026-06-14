@@ -1,0 +1,134 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-14T20:59:43.945561+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2606.12835v1",
+      "source": "arxiv",
+      "title": "The Internet of Agentic AI: Communication, Coordination, and Collective Intelligence at Scale",
+      "abstract": "The rapid emergence of autonomous AI agents is transforming artificial intelligence from isolated model inference into distributed systems of reasoning, communication, and action. This paper develops the vision of the Internet of Agentic AI (IoAI): an open ecosystem in which heterogeneous agents discover one another, negotiate responsibilities, exchange context, invoke tools, and execute workflows across cloud, edge, device, organizational, and cyber-physical environments. We synthesize foundations from single-agent agentic AI, multi-agent systems, distributed computing, communication networks, game theory, and security engineering to characterize the architectures and mechanisms required for scalable agent ecosystems. The paper examines agent deployment models, workflow lifecycles, communication protocols, interoperability layers, resource-management challenges, and trust architectures, with case studies in adaptive manufacturing and distributed operational coordination. The resulting framework highlights the central research challenges of controlled emergence, semantic interoperability, secure identity, incentive-compatible coordination, resource-aware orchestration, and governance for large-scale networks of autonomous agents.",
+      "authors": [
+        "Quanyan Zhu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CY",
+        "cs.NI"
+      ],
+      "published": "2026-06-11T03:02:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.12835v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge cloud collaborative AI agent system",
+      "llm_evidence_cn": "边缘云协同AI代理系统",
+      "llm_evidence": "边缘云协同AI代理系统",
+      "canonical_evidence": "边缘云协同AI代理系统",
+      "llm_tldr_en": "Proposes Internet of Agentic AI (IoAI) for heterogeneous agents across cloud, edge, device environments, focusing on communication and coordination.",
+      "llm_tldr_cn": "当前AI代理从独立推理向分布式系统转变，但缺乏统一框架支持跨云、边缘、设备的异构代理协作。本文提出IoAI，一个开放生态，允许代理自动发现、协商、交换上下文并在多环境执行工作流。它综合多智能体系统、分布式计算等基础，为可扩展的代理生态系统提供架构。该工作直接支撑端云协同AI代理系统的核心需求。",
+      "llm_tldr": "当前AI代理从独立推理向分布式系统转变，但缺乏统一框架支持跨云、边缘、设备的异构代理协作。本文提出IoAI，一个开放生态，允许代理自动发现、协商、交换上下文并在多环境执行工作流。它综合多智能体系统、分布式计算等基础，为可扩展的代理生态系统提供架构。该工作直接支撑端云协同AI代理系统的核心需求。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.12849v1",
+      "source": "arxiv",
+      "title": "SemanticXR: Low Power and Real-time Queryable Semantic Mapping with an Object-Level Device-Cloud Architecture",
+      "abstract": "Semantic mapping is a core service that enables grounded interactions in emerging Extended Reality (XR) applications such as AI assistants and spatial object search. Deploying this capability on mobile XR devices requires a system that is open-vocabulary, real-time, and low-power. Existing approaches are compute-intensive and assume server-class resources. Cloud offloading offers a practical path, but no existing system splits semantic mapping across the device-cloud boundary or manages its communication, execution, and memory footprint.   We present SemanticXR, the first device-cloud system for real-time, open-vocabulary semantic mapping and querying under XR power, bandwidth, and memory constraints. Our key insight is to elevate semantically identifiable objects to first-class units of communication, execution, and memory across the device and server. On the server, object-level parallelism and geometry downsampling improve mapping latency, while object-level depth-mapping co-design reduces upstream bandwidth. On the device, an object-level sparse local map with incremental updates and update prioritization enables network-robust querying with bounded memory and downstream bandwidth. Object-level configurable resource usage vs. quality trade-offs let applications and the system adapt mapping to application requirements and operating conditions, respectively.   Against a device-cloud baseline with the same perception models, object-level organization improves server-side mapping latency by 2.2X at equal semantic quality. Depth-mapping co-design maintains upstream bandwidth under 2.5 Mbps. On the device, SemanticXR sustains sub-100 ms query latency for up to 10,000 objects even under network drops, supports tens of thousands of objects within 500 MB, and scales downstream bandwidth with map changes, not total scene size. The system adds only 2% device power during normal operation.",
+      "authors": [
+        "Rahul Singh",
+        "Devdeep Ray",
+        "Connor Smith",
+        "Sarita Adve"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.CV",
+        "cs.RO"
+      ],
+      "published": "2026-06-11T03:24:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.12849v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "device-cloud architecture for real-time semantic mapping on mobile XR",
+      "llm_evidence_cn": "设备-云端架构实现移动XR实时语义映射",
+      "llm_evidence": "设备-云端架构实现移动XR实时语义映射",
+      "canonical_evidence": "设备-云端架构实现移动XR实时语义映射",
+      "llm_tldr_en": "SemanticXR is the first device-cloud system for real-time, open-vocabulary semantic mapping under XR power constraints, directly exemplifying edge-cloud collaborative AI agent architecture.",
+      "llm_tldr_cn": "移动XR设备上部署语义映射面临功耗和实时性挑战。本文提出SemanticXR，首个体跨设备-云边界的系统，通过云卸载和内存管理在能耗、带宽和延迟约束下实现开放词汇的实时查询。该架构为端云协同AI智能体在移动场景的应用提供了范例。",
+      "llm_tldr": "移动XR设备上部署语义映射面临功耗和实时性挑战。本文提出SemanticXR，首个体跨设备-云边界的系统，通过云卸载和内存管理在能耗、带宽和延迟约束下实现开放词汇的实时查询。该架构为端云协同AI智能体在移动场景的应用提供了范例。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.08878v1",
+      "source": "arxiv",
+      "title": "PerspectiveGap: A Benchmark for Multi-Agent Orchestration Prompting",
+      "abstract": "Real-world LLM applications are moving beyond single-agent workflows toward orchestrated multi-agent systems, yet current models still struggle to determine what each sub-agent needs to know. To measure this, we introduce PerspectiveGap, a benchmark for evaluating LLMs' ability to compose orchestration prompts for multi-agent systems. PerspectiveGap contains 110 scenarios, each evaluated through two distractor-mixed task formats: role-fragment assignment and free-form prompt writing. These scenarios are organized into 10 topologies, which are distilled from the authors' real-world engineering practice and framed by the Prompt Economy principle: building loop-centered orchestrations that maximize utility with minimal role and engineering overhead. In experiments with 27 commercial models from 10 companies, GPT-5.5 substantially outperforms all competitors, whereas Opus 4.7 shows a notable weakness in orchestration prompting despite its strong coding performance. Nevertheless, PerspectiveGap remains challenging: the evaluated models achieve an average combined pass rate of only 14.9\\% (GPT-5.5 62.0\\%) and an average overall leakage rate of 246.5\\% (a per-scenario information leak-event count, not a proportion; GPT-5.5 49.1\\%). These findings suggest that multi-agent orchestration prompting is a distinct and under-evaluated capability, and PerspectiveGap provides a foundation for measuring and improving it systematically.",
+      "authors": [
+        "Youran Sun",
+        "Xingyu Ren",
+        "Kejia Zhang",
+        "Xinpeng Liu",
+        "Jiaxuan Guo"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.MA"
+      ],
+      "published": "2026-06-07T23:26:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.08878v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent orchestration benchmark",
+      "llm_evidence_cn": "多智能体编排基准",
+      "llm_evidence": "多智能体编排基准",
+      "canonical_evidence": "多智能体编排基准",
+      "llm_tldr_en": "Introduces PerspectiveGap, a benchmark for evaluating LLMs' ability to compose orchestration prompts for multi-agent systems, with 110 scenarios across 10 topologies.",
+      "llm_tldr_cn": "该论文针对多智能体系统中模型难以确定子代理所需信息的问题，提出了PerspectiveGap基准，包含110个场景和10种拓扑结构。通过角色分配和自由写作任务评估LLM的编排提示能力。实验表明现有模型在复杂的多代理编排中表现不足。该基准促进了多代理系统Prompt设计的研究。",
+      "llm_tldr": "该论文针对多智能体系统中模型难以确定子代理所需信息的问题，提出了PerspectiveGap基准，包含110个场景和10种拓扑结构。通过角色分配和自由写作任务评估LLM的编排提示能力。实验表明现有模型在复杂的多代理编排中表现不足。该基准促进了多代理系统Prompt设计的研究。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

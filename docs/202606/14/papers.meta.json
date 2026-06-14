@@ -1,0 +1,54 @@
+{
+  "label": "2026-06-14",
+  "date": "2026-06-14",
+  "generated_at": "2026-06-14T21:03:37",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202606/14/2606.12835v1-the-internet-of-agentic-ai-communication-coordination-and-collective-intelligence-at-scale",
+      "section": "deep",
+      "title_en": "The Internet of Agentic AI: Communication, Coordination, and Collective Intelligence at Scale",
+      "authors": "Quanyan Zhu",
+      "date": "2026-06-11",
+      "pdf": "https://arxiv.org/pdf/2606.12835v1",
+      "score": "9.0",
+      "evidence": "边缘云协同AI代理系统",
+      "tldr": "自主AI代理的兴起推动AI从孤立模型转向分布式系统。本文提出物联网代理AI（IoAI）愿景，构建开放生态使异构代理自主发现、协商、交互与协作。通过综合多智能体系统、分布式计算、通信网络等基础，设计部署模型、工作流生命周期及信任架构。案例验证其在自适应制造和分布式协调中的有效性，并提出受控涌现、语义互操作等核心挑战。",
+      "tags": "query:eca",
+      "abstract_en": "The rapid emergence of autonomous AI agents is transforming artificial intelligence from isolated model inference into distributed systems of reasoning, communication, and action. This paper develops the vision of the Internet of Agentic AI (IoAI): an open ecosystem in which heterogeneous agents discover one another, negotiate responsibilities, exchange context, invoke tools, and execute workflows across cloud, edge, device, organizational, and cyber-physical environments. We synthesize foundations from single-agent agentic AI, multi-agent systems, distributed computing, communication networks, game theory, and security engineering to characterize the architectures and mechanisms required for scalable agent ecosystems. The paper examines agent deployment models, workflow lifecycles, communication protocols, interoperability layers, resource-management challenges, and trust architectures, with case studies in adaptive manufacturing and distributed operational coordination. The resulting framework highlights the central research challenges of controlled emergence, semantic interoperability, secure identity, incentive-compatible coordination, resource-aware orchestration, and governance for large-scale networks of autonomous agents.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/14/2606.12849v1-semanticxr-low-power-and-real-time-queryable-semantic-mapping-with-an-object-level-device-cloud-architecture",
+      "section": "deep",
+      "title_en": "SemanticXR: Low Power and Real-time Queryable Semantic Mapping with an Object-Level Device-Cloud Architecture",
+      "authors": "Rahul Singh, Devdeep Ray, Connor Smith, Sarita Adve",
+      "date": "2026-06-11",
+      "pdf": "https://arxiv.org/pdf/2606.12849v1",
+      "score": "8.0",
+      "evidence": "设备-云端架构实现移动XR实时语义映射",
+      "tldr": "面向XR应用的语义映射需实时、低功耗且支持开放词汇，但现有方案计算密集。SemanticXR提出对象级设备-云架构，以语义对象为基本单元，服务器端通过对象级并行和几何降采样将映射延迟提升2.2倍，深度映射协同设计将上行带宽降至2.5 Mbps以下；设备端采用对象级稀疏局部地图与增量更新，在网络波动下仍保持子100毫秒查询延迟，支持数万对象且内存低于500 MB。系统运行时仅增加2%设备功耗，首次在XR约束下实现可查询的实时语义映射。",
+      "tags": "query:eca",
+      "abstract_en": "Semantic mapping is a core service that enables grounded interactions in emerging Extended Reality (XR) applications such as AI assistants and spatial object search. Deploying this capability on mobile XR devices requires a system that is open-vocabulary, real-time, and low-power. Existing approaches are compute-intensive and assume server-class resources. Cloud offloading offers a practical path, but no existing system splits semantic mapping across the device-cloud boundary or manages its communication, execution, and memory footprint.   We present SemanticXR, the first device-cloud system for real-time, open-vocabulary semantic mapping and querying under XR power, bandwidth, and memory constraints. Our key insight is to elevate semantically identifiable objects to first-class units of communication, execution, and memory across the device and server. On the server, object-level parallelism and geometry downsampling improve mapping latency, while object-level depth-mapping co-design reduces upstream bandwidth. On the device, an object-level sparse local map with incremental updates and update prioritization enables network-robust querying with bounded memory and downstream bandwidth. Object-level configurable resource usage vs. quality trade-offs let applications and the system adapt mapping to application requirements and operating conditions, respectively.   Against a device-cloud baseline with the same perception models, object-level organization improves server-side mapping latency by 2.2X at equal semantic quality. Depth-mapping co-design maintains upstream bandwidth under 2.5 Mbps. On the device, SemanticXR sustains sub-100 ms query latency for up to 10,000 objects even under network drops, supports tens of thousands of objects within 500 MB, and scales downstream bandwidth with map changes, not total scene size. The system adds only 2% device power during normal operation.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/14/2606.08878v1-perspectivegap-a-benchmark-for-multi-agent-orchestration-prompting",
+      "section": "quick",
+      "title_en": "PerspectiveGap: A Benchmark for Multi-Agent Orchestration Prompting",
+      "authors": "Youran Sun, Xingyu Ren, Kejia Zhang, Xinpeng Liu, Jiaxuan Guo",
+      "date": "2026-06-07",
+      "pdf": "https://arxiv.org/pdf/2606.08878v1",
+      "score": "6.0",
+      "evidence": "多智能体编排基准",
+      "tldr": "大型语言模型应用正从单智能体向多智能体系统发展，但现有模型难以确定各子智能体的信息需求。为此提出PerspectiveGap基准，包含110个场景，采用角色片段分配和自由提示编写两种格式，基于Prompt Economy原则组织拓扑。评估27个商业模型，平均通过率仅14.9%，GPT-5.5达到62.0%，但Opus 4.7在编排任务上表现不佳，且信息泄露率高。该基准揭示了多智能体编排提示是一项独特且被低估的能力，为系统化评估和改进提供了基础。",
+      "tags": "query:eca",
+      "abstract_en": "Real-world LLM applications are moving beyond single-agent workflows toward orchestrated multi-agent systems, yet current models still struggle to determine what each sub-agent needs to know. To measure this, we introduce PerspectiveGap, a benchmark for evaluating LLMs' ability to compose orchestration prompts for multi-agent systems. PerspectiveGap contains 110 scenarios, each evaluated through two distractor-mixed task formats: role-fragment assignment and free-form prompt writing. These scenarios are organized into 10 topologies, which are distilled from the authors' real-world engineering practice and framed by the Prompt Economy principle: building loop-centered orchestrations that maximize utility with minimal role and engineering overhead. In experiments with 27 commercial models from 10 companies, GPT-5.5 substantially outperforms all competitors, whereas Opus 4.7 shows a notable weakness in orchestration prompting despite its strong coding performance. Nevertheless, PerspectiveGap remains challenging: the evaluated models achieve an average combined pass rate of only 14.9\\% (GPT-5.5 62.0\\%) and an average overall leakage rate of 246.5\\% (a per-scenario information leak-event count, not a proportion; GPT-5.5 49.1\\%). These findings suggest that multi-agent orchestration prompting is a distinct and under-evaluated capability, and PerspectiveGap provides a foundation for measuring and improving it systematically.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
