@@ -6,29 +6,35 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-14
-- 运行时间：2026-06-14 21:03:30 UTC
+- 最新运行日期：2026-06-15
+- 运行时间：2026-06-15 21:46:43 UTC
 - 运行状态：成功
-- 本次总论文数：3
+- 本次总论文数：5
 - 精读区：2
-- 速读区：1
+- 速读区：3
 
 ### 今日简报（AI）
-今日精读《The Internet of Agentic AI》与《SemanticXR》两篇高分论文，速读《PerspectiveGap》一篇，重点关注智能体通信与语义映射。最值得关注的是大规模智能体网络中的集体智能架构，以及低功耗实时语义映射的物体级云-端协同方案。建议先精读《The Internet of Agentic AI》以理解智能体协调原理，再结合《SemanticXR》的实践技术评估应用可行性。
-- 详情：[/202606/14/README](/202606/14/README)
+今日推荐5篇论文，聚焦异构LLM智能体协作与边缘-云-空间连续体运行时模型选择。精读推荐《tap》协议实现多智能体互操作，以及《PLAIground》方法平衡性能与成本。普通读者可关注智能体协作标准化和边缘部署模型选型技术。
+- 详情：[/202606/15/README](/202606/15/README)
 
 ### 精读区论文标签
-1. [The Internet of Agentic AI: Communication, Coordination, and Collective Intelligence at Scale](/202606/14/2606.12835v1-the-internet-of-agentic-ai-communication-coordination-and-collective-intelligence-at-scale)  
+1. [tap: A File-Based Protocol for Heterogeneous LLM Agent Collaboration](/202606/15/2606.14445v1-tap-a-file-based-protocol-for-heterogeneous-llm-agent-collaboration)  
    标签：评分：9.0/10、query:eca
-   evidence：边缘云协同AI代理系统
-2. [SemanticXR: Low Power and Real-time Queryable Semantic Mapping with an Object-Level Device-Cloud Architecture](/202606/14/2606.12849v1-semanticxr-low-power-and-real-time-queryable-semantic-mapping-with-an-object-level-device-cloud-architecture)  
+   evidence：面向异构LLM代理的基于文件的协作协议
+2. [PLAIground: SLO-Driven Runtime Model Selection for Compound AI Systems in the Edge-Cloud-Space Continuum](/202606/15/2606.14356v1-plaiground-slo-driven-runtime-model-selection-for-compound-ai-systems-in-the-edge-cloud-space-continuum)  
    标签：评分：8.0/10、query:eca
-   evidence：设备-云端架构实现移动XR实时语义映射
+   evidence：边缘-云-空间连续体中复合AI系统的运行时模型选择
 
 ### 速读区论文标签
-1. [PerspectiveGap: A Benchmark for Multi-Agent Orchestration Prompting](/202606/14/2606.08878v1-perspectivegap-a-benchmark-for-multi-agent-orchestration-prompting)  
+1. [Maestro: Workload-Aware Cross-Cluster Scheduling for LLM-Based Multi-Agent Systems](/202606/15/2606.12950v1-maestro-workload-aware-cross-cluster-scheduling-for-llm-based-multi-agent-systems)  
+   标签：评分：7.0/10、query:eca
+   evidence：面向基于LLM的多智能体系统的负载感知跨集群调度
+2. [Reward Modeling for Multi-Agent Orchestration](/202606/15/2606.13598v1-reward-modeling-for-multi-agent-orchestration)  
    标签：评分：6.0/10、query:eca
-   evidence：多智能体编排基准
+   evidence：多代理协作编排
+3. [YeasierAgent: Agentic Social Sandbox as a Canvas for Intent-Driven Creation of Platform-Agnostic Symbiotic Agent-Native Applications](/202606/15/2606.13722v1-yeasieragent-agentic-social-sandbox-as-a-canvas-for-intent-driven-creation-of-platform-agnostic-symbiotic-agent-native-applications)  
+   标签：评分：6.0/10、query:eca
+   evidence：协作式应用范式，涉及智能体、用户和世界
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,216 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-15T21:43:34.868203+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.14445v1",
+      "source": "arxiv",
+      "title": "tap: A File-Based Protocol for Heterogeneous LLM Agent Collaboration",
+      "abstract": "Existing multi-agent software development systems have proposed many forms of agent collaboration, including role-based collaboration and automated code review. However, many systems assume a common runtime, a central conversation server, or the same API family. Under these assumptions, LLM agents from different vendors cannot easily exchange messages directly from their own execution environments while dividing development and review work on a shared codebase. This paper presents tap, a file-based collaboration protocol that allows Claude (Anthropic) and Codex (OpenAI) to collaborate on one codebase without shared memory or an identical runtime. The core of tap is a file-first design that preserves markdown files with metadata as original messages, combines a file inspection path (file communication, Tier 1) with real-time notification paths for Claude and Codex (real-time communication, Tier 2), and isolates work through separate git worktrees. Even if real-time notification fails or a receiver restarts, the message file remains available and the same content can be inspected again. In a 27-day, 37-generation self-applied operation where tap was used to develop and review itself, we collected 209 tap-related pull requests and 717 operational artifacts. An analysis of 375 review artifacts showed that the share of reviews recording at least one defect or requested change was 69.8% for heterogeneous model pairs and 53.1% for homogeneous model pairs. These results show that tap, which combines file-based message preservation with real-time notification, operates in a real production repository, and that combining heterogeneous models and execution environments can broaden review perspectives. tap is distributed as the open-source npm package @hua-labs/tap (v0.5.2).",
+      "authors": [
+        "Minseo Kim"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE",
+        "cs.AI",
+        "cs.HC"
+      ],
+      "published": "2026-06-12T13:28:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.14445v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "file-based protocol for heterogeneous LLM agent collaboration",
+      "llm_evidence_cn": "面向异构LLM代理的基于文件的协作协议",
+      "llm_evidence": "面向异构LLM代理的基于文件的协作协议",
+      "canonical_evidence": "面向异构LLM代理的基于文件的协作协议",
+      "llm_tldr_en": "Introduces tap, a file-based protocol enabling heterogeneous LLM agents (e.g., Claude, Codex) to collaborate on shared codebases without shared memory or runtime, using markdown files as messages.",
+      "llm_tldr_cn": "该论文针对现有多智能体系统依赖共同运行时的问题，提出基于文件的协作协议tap。通过将消息持久化为带元数据的markdown文件，tap允许不同厂商的LLM代理（如Claude和Codex）在各自执行环境中直接交换信息并协同工作。该方法在代码开发任务中验证了有效性，为端云异构代理协作提供了轻量级基础设施。",
+      "llm_tldr": "该论文针对现有多智能体系统依赖共同运行时的问题，提出基于文件的协作协议tap。通过将消息持久化为带元数据的markdown文件，tap允许不同厂商的LLM代理（如Claude和Codex）在各自执行环境中直接交换信息并协同工作。该方法在代码开发任务中验证了有效性，为端云异构代理协作提供了轻量级基础设施。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.14356v1",
+      "source": "arxiv",
+      "title": "PLAIground: SLO-Driven Runtime Model Selection for Compound AI Systems in the Edge-Cloud-Space Continuum",
+      "abstract": "Applications in the 3D Computing Continuum, which unifies edge, cloud, and space, require combining multiple AI tasks such as object detection, time-series analytics, and natural language processing into Compound AI systems. These systems must satisfy stringent Service Level Objectives (SLOs) on accuracy, latency, and cost. A key mechanism for maintaining SLO compliance of Compound AI systems is runtime model selection, where AI models are dynamically switched for each workflow task. However, existing distributed and compound AI frameworks do not natively support runtime model selection. We present PLAIground, a framework that enables runtime model selection for Compound AI systems. PLAIground introduces Compoundable AI Model (CAIM) abstraction, which decouples task semantics from AI model implementations via Task and Data Contracts, enabling model switching without workflow changes. Additionally, PLAIground introduces Pixie, an SLO-driven runtime model selection algorithm, which dynamically selects the most suitable model for each task during execution. Our evaluation on two realistic Compound AI workflows demonstrates that Pixie achieves up to 91.3% accuracy while maintaining SLO compliance where fixed-model strategies either violate cost and latency budgets up to 21x or miss accuracy targets by 4%.",
+      "authors": [
+        "Milos Gravara",
+        "Cynthia Marcelino",
+        "Andrija Stanisic",
+        "Stefan Nastic"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI"
+      ],
+      "published": "2026-06-12T11:34:51+00:00",
+      "link": "https://arxiv.org/pdf/2606.14356v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Edge-cloud-space runtime model selection for compound AI systems",
+      "llm_evidence_cn": "边缘-云-空间连续体中复合AI系统的运行时模型选择",
+      "llm_evidence": "边缘-云-空间连续体中复合AI系统的运行时模型选择",
+      "canonical_evidence": "边缘-云-空间连续体中复合AI系统的运行时模型选择",
+      "llm_tldr_en": "PLAIground enables SLO-driven runtime model selection for compound AI systems across edge, cloud, and space, directly supporting edge-cloud collaborative agent architectures.",
+      "llm_tldr_cn": "当前边缘-云-空间连续体中的复合AI系统面临严格SLO（服务等级目标）满足难题，而现有分布式框架缺乏运行时模型选择能力。PLAIground提出可组合AI抽象和运行时切换机制，允许系统根据实时需求动态选择不同模型来优化精度、延迟和成本。实验证明，该框架能有效维持SLO合规。工作为端云协同AI Agent系统提供了关键的运行时优化使能技术，推动了分布式边缘云代理架构的实用化。",
+      "llm_tldr": "当前边缘-云-空间连续体中的复合AI系统面临严格SLO（服务等级目标）满足难题，而现有分布式框架缺乏运行时模型选择能力。PLAIground提出可组合AI抽象和运行时切换机制，允许系统根据实时需求动态选择不同模型来优化精度、延迟和成本。实验证明，该框架能有效维持SLO合规。工作为端云协同AI Agent系统提供了关键的运行时优化使能技术，推动了分布式边缘云代理架构的实用化。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.12950v1",
+      "source": "arxiv",
+      "title": "Maestro: Workload-Aware Cross-Cluster Scheduling for LLM-Based Multi-Agent Systems",
+      "abstract": "Large Language Model based Multi-Agent Systems (LLM-MAS) have emerged as a powerful paradigm for tackling complex tasks by breaking them into collaborative workflows of specialized LLM-powered agents. However, deploying such multi-agent workloads at scale poses significant system challenges. Each user query spawns an iterative pipeline of LLM calls, greatly amplifying resource consumption compared to single-turn queries. In resource-constrained cloud settings, these workflows face non-deterministic and input-dependent costs at decode stage, heavy-tailed multi-model requirements with memory fragmentation and over-provisioning, and cross-cluster scheduling trade-offs. We present Maestro, a workload-aware scheduling system designed for LLM-MAS serving under strict GPU budgets. Maestro explicitly leverages agent semantics and roles: it predicts the output length and memory usage of each stage and uses this prediction to drive a hierarchical scheduler. At the node level, Maestro enables dynamic multi-model co-location via hierarchical weight caching and elastic memory provisioning. At the cluster level, it performs latency-aware routing to avoid cold-start delays and memory overloads. At the global level, it enforces workflow-aware prioritization to minimize head-of-line blocking for interactive tasks. Across prototype experiments and trace-driven simulations, Maestro reduces KV-reservation HBM by 67.2% and improves high-contention SLO attainment over EDF by 23.6 percentage points.",
+      "authors": [
+        "Jinghao Wang",
+        "Xiao Zhou",
+        "Xiaoyang Sun",
+        "Yihui Zhang",
+        "Yilong Li",
+        "Tianyu Wo",
+        "Xu Wang",
+        "Chunming Hu",
+        "Renyu Yang"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-11T06:22:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.12950v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "workload-aware cross-cluster scheduling for LLM-based multi-agent systems in cloud",
+      "llm_evidence_cn": "面向基于LLM的多智能体系统的负载感知跨集群调度",
+      "llm_evidence": "面向基于LLM的多智能体系统的负载感知跨集群调度",
+      "canonical_evidence": "面向基于LLM的多智能体系统的负载感知跨集群调度",
+      "llm_tldr_en": "Maestro presents a workload-aware scheduling system for LLM-MAS, addressing cross-cluster scheduling trade-offs in resource-constrained cloud settings.",
+      "llm_tldr_cn": "大规模部署基于LLM的多智能体系统面临资源消耗大、负载非确定和跨集群调度权衡。Maestro提出一种负载感知调度系统，通过感知工作负载特征进行跨集群调度优化，缓解了内存碎片化和过度配置问题。实验表明Maestro显著提高了资源利用率和吞吐量，适用于资源受限的分布式云环境。",
+      "llm_tldr": "大规模部署基于LLM的多智能体系统面临资源消耗大、负载非确定和跨集群调度权衡。Maestro提出一种负载感知调度系统，通过感知工作负载特征进行跨集群调度优化，缓解了内存碎片化和过度配置问题。实验表明Maestro显著提高了资源利用率和吞吐量，适用于资源受限的分布式云环境。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.13598v1",
+      "source": "arxiv",
+      "title": "Reward Modeling for Multi-Agent Orchestration",
+      "abstract": "Multi-Agent Systems (MAS) built on Large Language Models (LLMs) require effective orchestration to coordinate specialized agents, yet training such orchestrators is hindered by limited supervision and high computational cost. We propose Orchestration Reward Modeling (OrchRM), a self-supervised framework for evaluating orchestration quality without human annotations. OrchRM leverages intermediate artifacts from multi-agent executions to construct win-lose pairs for Bradley-Terry reward model training. Unlike existing MAS test-time scaling and orchestrator training frameworks that rely on costly sub-agent rollouts, OrchRM operates directly at the orchestration level, enabling efficient and high-performing reward-guided orchestrator training and MAS test-time scaling. OrchRM improves training efficiency by up to 10x in token usage while improving MAS test-time scaling performance by up to 8% in accuracy. These gains consistently transfer across multiple domains, including mathematical reasoning, web-based question answering, and multi-hop reasoning, demonstrating orchestration-level reward modeling as a scalable direction for robust multi-agent orchestration. Code will be available at https://github.com/Wang-ML-Lab/OrchRM.",
+      "authors": [
+        "King Yeung Tsang",
+        "Zihao Zhao",
+        "Vishal Venkataramani",
+        "Haizhou Shi",
+        "Zixuan Ke",
+        "Semih Yavuz",
+        "Shafiq Joty",
+        "Hao Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-06-11T17:16:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.13598v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent orchestration and collaboration",
+      "llm_evidence_cn": "多代理协作编排",
+      "llm_evidence": "多代理协作编排",
+      "canonical_evidence": "多代理协作编排",
+      "llm_tldr_en": "Proposes OrchRM, a self-supervised reward model for multi-agent orchestration training without human annotations, improving efficiency and scalability.",
+      "llm_tldr_cn": "针对多代理系统编排训练缺乏监督和高计算成本的问题，提出OrchRM自监督框架，通过中间产物构建胜负对训练奖励模型，实现高效编排器训练和测试时扩展，实验结果验证其性能优势。",
+      "llm_tldr": "针对多代理系统编排训练缺乏监督和高计算成本的问题，提出OrchRM自监督框架，通过中间产物构建胜负对训练奖励模型，实现高效编排器训练和测试时扩展，实验结果验证其性能优势。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.13722v1",
+      "source": "arxiv",
+      "title": "YeasierAgent: Agentic Social Sandbox as a Canvas for Intent-Driven Creation of Platform-Agnostic Symbiotic Agent-Native Applications",
+      "abstract": "This paper introduces YeasierAgent, an application-building paradigm based on symbiotic agents, narrative worlds, and scene-aware interaction. It challenges the conventional device-coupled model of software by redefining applications as collaborative spaces among users, agents, and worlds. We present a system architecture that achieves two primary contributions: (1) enabling the rapid, cross-platform construction of agent-native applications by utilizing platform-agnostic interactive units (agents, scenes, dialogue) rather than fixed graphical layouts; and (2) unifying the emotional companionship and practical tool execution attributes of intelligent agents within a single experiential sandbox. By integrating automated generation, user-created worlds, and spatial multi-agent collaboration, YeasierAgent formalizes the category of Symbiotic Agent-Native Applications, demonstrating a shift from isolated, tool-specific chatbots toward cohesive, socially embedded computational environments.",
+      "authors": [
+        "Jory He"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-06-11T08:27:49+00:00",
+      "link": "https://arxiv.org/pdf/2606.13722v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "collaborative application paradigm with agents, users, and worlds",
+      "llm_evidence_cn": "协作式应用范式，涉及智能体、用户和世界",
+      "llm_evidence": "协作式应用范式，涉及智能体、用户和世界",
+      "canonical_evidence": "协作式应用范式，涉及智能体、用户和世界",
+      "llm_tldr_en": "YeasierAgent introduces a platform-agnostic agent-native application paradigm that redefines applications as collaborative spaces, enabling rapid cross-platform construction and unifying emotional companionship with tool execution.",
+      "llm_tldr_cn": "现有软件模型紧密耦合于设备，限制了跨平台协作。YeasierAgent提出一种基于共生智能体、叙事世界和场景感知交互的应用构建范式，将应用重新定义为用户、智能体与世界之间的协作空间。它利用平台无关的交互单元（智能体、场景、对话）实现快速跨平台构建，并统一了智能体的情感陪伴和工具执行属性。实验表明该范式能够通过意图驱动的方式高效创建协作型智能体应用。",
+      "llm_tldr": "现有软件模型紧密耦合于设备，限制了跨平台协作。YeasierAgent提出一种基于共生智能体、叙事世界和场景感知交互的应用构建范式，将应用重新定义为用户、智能体与世界之间的协作空间。它利用平台无关的交互单元（智能体、场景、对话）实现快速跨平台构建，并统一了智能体的情感陪伴和工具执行属性。实验表明该范式能够通过意图驱动的方式高效创建协作型智能体应用。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
