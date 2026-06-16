@@ -1,0 +1,3326 @@
+Title: STEPS: Semantic Contract-Guided Scheduling for LLM-Assisted Natural Language-Driven Edge AI Services
+
+URL Source: https://arxiv.org/pdf/2606.09537v2
+
+Published Time: Tue, 16 Jun 2026 02:33:37 GMT
+
+Number of Pages: 15
+
+Markdown Content:
+> 1
+
+# STEPS: Semantic Contract-Guided Scheduling for LLM-Assisted Natural Language-Driven Edge AI Services 
+
+Houyi Qi, Graduate Student Member , IEEE , Minghui Liwang, Senior Member , IEEE , Xianbin Wang, Fellow ,
+
+IEEE , Xinlei Yi, Senior Member , IEEE , and Seyyedali Hosseinalipour, Senior Member , IEEE 
+
+Abstract —Edge user/service scheduling has become a corner-stone of distributed AI systems, governing where and how AI services are executed under limited communication and comput-ing resources. Nevertheless, existing edge scheduling frameworks typically assume that service requirements are explicitly specified as numerical quantities/constraints, such as latency bounds or energy budgets. In practice, however, users often express their service expectations through ambiguous and context-dependent natural language descriptions (e.g., “finish quickly” or “save energy”), creating a fundamental gap between user intent and scheduling decisions. Bridging this semantic-to-optimization gap is particularly challenging in dynamic edge environments with time-varying resources and execution conditions. To address this challenge, we propose semantic contract–guided edge potential scheduling (STEPS) , a natural language-driven scheduling frame-work that introduces semantic contracts as executable interfaces between user-side semantics and edge-side decision making. Specifically, in STEPS, a large language model (LLM)-assisted semantic parser interprets natural language requests and extracts semantic service requirements together with confidence scores, which are subsequently converted into service requirements and semantic uncertainty. Based on this information, STEPS formu-lates edge scheduling as a contract-guided potential game that jointly determines execution-node selection, computing-resource provisioning, and bandwidth allocation. STEPS further incorpo-rates a set of carefully crafted feedback signals to enable adaptive scheduling under evolving service and network conditions. We characterize the exact potential game structure of the STEPS scheduling problem, establish the existence of pure-strategy Nash equilibrium , and prove convergence and stability properties of the associated scheduling and adaptation processes. Extensive experiments demonstrate that STEPS improves semantic contract fulfillment, reduces contract-guided service loss, and maintains robust adaptation under ambiguous natural language requests in non-stationary networked AI environments. 
+
+Index Terms —Natural Language-Driven Scheduling, Semantic Contract, Edge Intelligence, Potential Game. 
+
+I. I NTRODUCTION 
+
+# RECENT advances in artificial intelligence (AI) and com-puting technologies have led to the emergence of net-worked AI , where AI models are deployed to enable intelligent services, such as industrial automation, autonomous driving, and immersive human-machine interaction [1], [2]. Unlike conventional cloud-based AI services, networked AI operates over the distributed and time-varying device-edge-cloud con-tinuum, where communication (e.g., data transmission) and computation (e.g., modeling training and inference) are tightly coupled with execution feedback loops. In this context, edge computing provides a natural substrate of edge services for                                         
+
+> H. Qi (houyiqi@tongji.edu.cn), M. Liwang (minghuiliwang@ tongji.edu.cn), and X. Yi (xinleiyi@tongji.edu.cn) are with the Shanghai Research Institute for Intelligent Autonomous Systems, State Key Laboratory of Autonomous Intelligent Unmanned Systems, Frontiers Science Center for Intelligent Autonomous Systems, and Department of Control Science and Engineering, Tongji University, Shanghai, China. X. Wang (xianbin.wang@uwo.ca) is with the Department of Electrical and Computer Engineering, Western University, Ontario, Canada. S. Hosseinalipour (alipour@buffalo.edu) is with the Department of Electrical Engineering, University at Buffalo-SUNY, USA.
+
+net worked AI (E4NetAI), enabling latency-sensitive tasks to be executed closer to end users and thus reducing end-to-end ser-vice latency [3], [4]. Motivated by this premise, a major body of work on E4NetAI has focused on distributed device/service scheduling and network orchestration schemes [1], [5]. How-ever, such works largely follow a parameter-driven paradigm that requires users to explicitly specify low-level quantita-tive requirements (e.g., delay tolerances, energy budgets, and payment limits) [5], [6]. This assumption is often unrealistic for non-expert users who lack backgrounds in the detailed pipelines of innovative technologies. In fact, ordinary users mostly tend to express their subjective preferences and service expectations in natural language [7]–[9], e.g., “finish this task as quickly as possible without incurring excessive cost”. As a result, the user interactions in E4NetAI services is expected to shift from expert-oriented parameter configuration toward 
+
+human-centric semantic interaction . While this shift lowers the access barrier to networked AI services for the users, it also poses a major challenge to the pipeline of networked services: 
+
+transforming implicit and uncertain natural language-based user intents into executable and optimizable service specifica-tions that are consistent with edge resource constraints. 
+
+To address this challenge, recent advances in intent-based networking (IBN) and large language models (LLMs) pro-vide new opportunities. Specifically, IBN translates high-level user/operator intents into network policies and config-urations [10]–[12], while LLM-assisted network orchestration enables natural language interpretation and automated service configuration [7], [13]. Nevertheless, directly applying existing IBN and LLM-assisted orchestration techniques to E4NetAI remains insufficient. This is because while IBN and LLMs are effective at interpreting high-level user/operator intents and generating service policies, they do not inherently provide an optimization-compatible representation that can reliably bridge ambiguous user semantics and resource-constrained edge decision-making. Motivated by this shortcoming, we develop a unified semantic contract framework that bridges intent interpretation and execution through contract-based de-cision evolution . In particular, our framework aims to address the following three research questions (RQs). 
+
+• RQ 1: How can unstructured natural language service intents be systematically grounded into a structured and constraint-consistent decision representation for E4NetAI? 
+
+Addressing this question is important because natural language service requests are inherently ambiguous, qualitative, and context-dependent, whereas edge schedulers require precise representations that can be evaluated and optimized under resource constraints. Moreover, while existing IBN and LLM-assisted orchestration approaches can translate user intents into high-level policies or control directives [7], [10], they still lack an explicit intermediate representation that simultaneously pre-serves semantic meaning and enables optimization-compatible decision making. Therefore, a key challenge is to establish an 
+
+> arXiv:2606.09537v2 [cs.NI] 15 Jun 2026 2
+
+executable interface between user-side semantics and edge-side scheduling decisions while maintaining feasibility under system performance, cost, and execution constraints. 
+
+• RQ 2: How can semantic contracts reshape the structure of edge scheduling under tightly coupled constraints and seman-tic uncertainty? This question stems from the fact that, once natural language intents are transformed into semantic con-tracts, service requirements are no longer represented solely by fixed numerical constraints. Instead, they become preference-aware, uncertainty-aware, and fulfillment-oriented objectives that must be simultaneously considered during user/service scheduling. Consequently, conventional edge scheduling for-mulations, which primarily optimize resource utilization or quality-of-service metrics under predefined constraints [5], [14], are no longer applicable. Therefore, a key challenge is to design a scheduling framework that jointly determines execution placement, computing-resource provisioning, and bandwidth allocation while accounting for semantic contract requirements, resource limitations, and semantic uncertainty. 
+
+• RQ 3: How can post-execution contract-satisfaction feed-back enable principled adaptation in non-stationary E4NetAI systems? This question arises because E4NetAI operates in highly dynamic environments, where user preferences, re-source availability, and execution conditions evolve over time. Nevertheless, existing adaptive optimization and drift-aware learning approaches primarily focus on observable varia-tions in data distributions, network states, or model perfor-mance [15]. As a result, they largely overlook the mismatch between semantic contract expectations and realized service outcomes, which can only be evaluated after task execution. Subsequently, a key challenge is to construct meaningful contract-satisfaction feedback signals and distinguish between changes originating from user-side semantic evolution (i.e., 
+
+semantic-request drift , where the expectations expressed in user requests change over time) and changes caused by system-side execution conditions (i.e., contract-fulfillment drift , where contract-satisfaction outcomes vary due to fluctuations in re-sources, network conditions, or service performance). To answer the above RQs, we propose semantic con tract– guided edge potential scheduling (STEPS) . In a nutshell, to ad-dress RQ1, STEPS introduces LLM-driven semantic contracts as an executable interface between natural language intents and edge service decisions. To address RQ 2 , STEPS formulates a semantic contract-guided edge scheduling problem under coupled communication-computation constraints, where the decision variables are optimized through a distributed potential game-based equilibrium. To address RQ 3 , STEPS evaluates post-execution contract fulfillment and constructs feedback signals to enable adaptive scheduling under evolving service and network conditions. Subsequently, our main contributions in this work can be summarized as follows. 
+
+• We propose STEPS, which establishes one of the first closed-loop pipelines from natural language service requests to semantic abstraction, contract-guided edge scheduling, post-execution contract-satisfaction evaluation, and fulfillment-driven adaptation. Further, through introducing the semantic contract as an executable interface, STEPS bridges user-side natural language semantics and edge resource optimization. 
+
+• We design an LLM-empowered semantic contract generation engine that analyzes each request and extracts semantic service requirements (e.g., delay and cost sensitivity) together with a confidence score that quantifies the reliability of the semantic interpretation. Based on these extracted semantics, we utilize interpretable mapping rules to combine user requirements, task attributes, and system-side context to construct a semantic contract, which serves as an executable representation of user intent that can be directly used in scheduling decisions. 
+
+• Guided by the semantic contracts generated from user requests, we develop an edge scheduling engine that jointly determines task-execution placement, computing-resource pro-visioning, and bandwidth allocation while respecting commu-nication and computation resource constraints. To efficiently solve the formulated scheduling problem, we reformulate each time-slot scheduling problem as an exact potential game and develop an asynchronous best-response mechanism for distributed (i.e., scalable) equilibrium computation. 
+
+• We design a set of feedback signals that evaluate how well the executed services satisfy their semantic contracts. Specifically, they capture semantic-request drift, contract-fulfillment drift, and fulfillment pressure arising from contract violations, while using admission pressure to regulate highly uncertain requests. Based on these signals, our framework dynamically updates semantic-admission thresholds, contract conservativeness factors, and edge-coordination gains. 
+
+• We characterize the exact potential game structure of the contract-guided scheduling problem and establish key prop-erties of the proposed framework, including the existence of pure-strategy Nash equilibrium, finite-step convergence of the asynchronous best-response dynamics, and boundedness of the feedback-driven adaptive update process. 
+
+• Through numerical evaluations, we demonstrate that STEPS improves semantic contract fulfillment, reduces contract-guided service loss, and maintains robust adaptation under ambiguous natural language requests, semantic uncertainty, and non-stationary network conditions. II. L ITERATURE REVIEW 
+
+In the following, we review the literature across three interrelated domains and identify the fundamental differences between these research directions and STEPS. 
+
+(i) IBN and LLM-Assisted Service Orchestration: IBN serves as an important paradigm for simplifying network management by allowing users/operators to express high-level service intents instead of manually specifying low-level configurations [10], [16]. Recent advances in LLMs have further expanded the capabilities of intent-driven orchestration by enabling natural language understanding and automated de-cision support. For example, Mekrache et al. [16] proposed an LLM-centric intent-based management architecture for next-generation networks that supports intent decomposition, trans-lation, activation, and assurance. Mekrache and Ksentini [7] further studied LLM-enabled intent-driven service configura-tion, where natural language intents are translated into network service descriptors. At a larger operational scale, Wang et al. [17] developed a multi-agent LLM framework that decom-poses complex network management workflows into coordi-nated subtasks executed by multiple agents. Beyond traditional network management, recent studies have extended intent-driven paradigms toward computing and edge-service envi-ronments. For example, Akbari et al. [18] investigated LLM-assisted intent-based computing, where user-defined intents are monitored and handled through diagnosis and reconfiguration. 3
+
+Qin et al. [13] explored the integration of generative AI and intent-driven wireless communications to facilitate interactions between users and communication systems. Sun et al. [19] proposed an agentic-AI framework that maps user intents into resource-oriented representations and leverages generative meta-learning to improve cross-scenario generalization. These prior studies predominantly treat natural language inputs as mechanisms for generating policies, management actions, or scheduling directives. As a result, they provide limited support for representing user requests as uncertainty-aware semantic requirements that can be directly incorporated into resource-constrained optimization. Subsequently, our work introduces semantic contracts as executable interfaces between user-side semantics and edge-side scheduling decisions, enabling in-terpretable semantic grounding, contract-guided optimization, and fulfillment-driven adaptation within a unified framework. 
+
+(ii) Edge AI Service Scheduling and Provisioning: Edge networks are increasingly utilized for delivering real-time and personalized AI services to the users under limited commu-nication/computing resources [1], [20]–[22]. Consequently, a significant body of research has focused on how to efficiently schedule and provision AI workloads across devices, edge servers, and cloud resources. For example, Li and Bi [14] jointly optimized AI model partitioning and wireless resource allocation for device-edge collaborative inference. Xiao et al. [23] studied a content-aware compression and offloading framework for efficient edge-based vision inference. Zhang et al. [24] investigated resource-efficient deployment of genera-tive LLM inference at the network edge through optimizing quantization and resource scheduling. These prior studies gen-erally assume that service requirements are explicitly stated and available in the form of numerical specifications (e.g., latency bounds or accuracy targets); however, user requests are often expressed through qualitative and ambiguous de-scriptions. To this end, our work addresses the semantic-to-optimization gap by transforming natural language user requests into semantic contracts that directly guide resource-constrained service provisioning at the network edge. 
+
+(iii) Drift-Aware and Adaptive Optimization: Adaptive opti-mization and drift-aware adaptation have attracted growing at-tention for detecting changes in system behavior and adapting learning models or control policies to maintain performance over time. For example, Ganguly and Aggarwal [25] devel-oped an online federated learning framework integrating drift detection to improve performance under online data. Gudepu et al. [26] proposed a drift-management framework for Open Radio Access Network (O-RAN), that incorporates drift de-tection and adaptive mitigation mechanisms to reduce service-level-agreement violations and improve resource utilization. 
+
+Kalntis et al. [15] studied adaptive service provisioning for virtualized base stations in O-RAN, where resource-control decisions are updated according to time-varying network conditions/states. Uzlaner et al. [27] developed a modular drift-detection framework that determines when and which components of a deep learning-based receiver should be re-trained under dynamic channel conditions. Ameur et al. [28] designed a dual self-attention mechanism for detecting data drift, label drift, and concept drift in 6G networks. Although these studies enhance robustness and adaptability in non-stationary environments, their considered adaptation signals are predominantly derived from observable system charac- 
+
+> Fig. 1. STEPS framework for natural language-driven E4NetAI. Natural-language service requests are first transformed into semantic contracts, which then guide edge scheduling. Execution feedback further drives fulfillment-aware adaptive parameter updates for subsequent scheduling rounds.
+
+teristics, such as data distributions, model performance, and network condition. However, natural language-driven E4NetAI introduces an additional source of non-stationarity arising from evolving user semantics and their resulting fulfillment out-comes. Consequently, the impact of semantic-request drift (i.e., changes in the characteristics of user requests) and contract-fulfillment drift (i.e., changes in contract-satisfaction outcomes caused by variations in execution conditions) remains largely unexplored. Our work addresses this gap by jointly model-ing semantic-request drift, fulfillment drift, and instantaneous fulfillment pressure, and leveraging these signals to drive fulfillment-aware edge scheduling adaptation mechanisms. III. S YSTEM MODEL AND PROBLEM FORMULATION 
+
+In the following, we present the system model and formulate the long-term contract-guided scheduling problem of STEPS. 
+
+A. Time-Slotted Edge Service Platform 
+
+As illustrated in Fig. 1, STEPS operates over a time-varying E4NetAI system across a time-slotted horizon T =  
+
+> {1,2, . . . , 𝑇 }
+
+. At each timeslot 𝑡 ∈ T , the edge service platform (ESP) observes the system context and receives user device (UD) requests characterized by task attributes and natural language service descriptions. We consider an ESP formed by a set of geographically distributed edge servers (ESs), denoted by E = {𝑒 1, 𝑒 2, . . . , 𝑒 | E | }, which collaboratively deliver E4NetAI services. To account for network dynamics, at each timeslot   
+
+> 𝑡 ∈ T
+
+, we use U (𝑡 ) to denote the set of UDs that submit service requests to the ESP. The ESP ultimately determines whether the task of each UD should be executed locally or offloaded 
+
+to an ES for remote execution. To enable a unified treatment of local and edge execution decisions, we abstract all possible task execution locations as execution nodes (ENs). Specifically, we define the EN set as E0 = {𝑒 0 } ∪ E , where the virtual node 𝑒 0 denotes local execution on the requesting UD and each 𝑒 𝑗 ∈ E
+
+corresponds to an ES. For each ES 𝑒 𝑗 , we let 𝐹 (𝑡 ) 
+
+> 𝑗
+
+and 𝐵 (𝑡 )
+
+> 𝑗
+
+denote its available computing and bandwidth capacity at timeslot 𝑡 , respectively. For local execution, 𝐹 loc , (𝑡 ) 
+
+> 𝑖
+
+denotes the available computing capacity of UD 𝑢 𝑖 . Furthermore, each EN is associated with a trustworthiness-for-execution (T4E) score. Specifically, 𝜎 edge , (𝑡 )   
+
+> 𝑗 ∈ [ 0,1]
+
+denotes the T4E score of ES 𝑒 𝑗 , while 𝜎 loc , (𝑡 )   
+
+> 𝑖, 0∈ [ 0,1]
+
+denotes the T4E score of UD 𝑢 𝑖 ’s local device. Larger T4E scores indicate a higher degree of 4
+
+confidence that the corresponding EN can reliably execute the task and satisfy the trustworthiness-related requirement spec-ified in the semantic contract 1. The above resource and trust states, together with channel, queueing, and price information, constitute the system-side context used by the ESP before contract generation and scheduling. Specifically, the system-side context at timeslot 𝑡 is defined as 
+
+𝜉 (𝑡 ) ≜  F(𝑡 ) , B(𝑡 ) , Floc , (𝑡 ) , H(𝑡 ) , Q(𝑡 ) , 𝝀 f, (𝑡 ) , 𝝀 b, (𝑡 ) , 𝝈 edge , (𝑡 ) , 𝝈 loc , (𝑡 ) , (1) 
+
+where F(𝑡 ) = [𝐹 (𝑡 ) 
+
+> 𝑗
+
+]𝑒 𝑗 ∈ E and B(𝑡 ) = [𝐵 (𝑡 ) 
+
+> 𝑗
+
+]𝑒 𝑗 ∈ E denote the available computing and bandwidth capacities of ESs, Floc , (𝑡 ) =
+
+[𝐹 loc , (𝑡 ) 
+
+> 𝑖
+
+]𝑢 𝑖 ∈ U (𝑡 ) denotes the available local computing capaci-ties of UDs, H(𝑡 ) = [ℎ(𝑡 ) 
+
+> 𝑖, 𝑗
+
+]𝑢 𝑖 ∈ U (𝑡 ) ,𝑒 𝑗 ∈ E denotes the UD-to-ES wireless channel-gain matrix, and Q(𝑡 ) = [𝑄 (𝑡 ) 
+
+> 𝑗
+
+]𝑒 𝑗 ∈ E denotes the pre-decision queueing-delay state of ESs. Also, 𝝀 f, (𝑡 ) =
+
+[𝜆 f, (𝑡 ) 
+
+> 𝑗
+
+]𝑒 𝑗 ∈ E and 𝝀 b, (𝑡 ) = [𝜆 b, (𝑡 ) 
+
+> 𝑗
+
+]𝑒 𝑗 ∈ E denote the current unit price coefficients of ES computing and bandwidth resources, respectively. Moreover, the vectors 𝝈 edge , (𝑡 ) = [𝜎 edge , (𝑡 ) 
+
+> 𝑗
+
+]𝑒 𝑗 ∈ E 
+
+and 𝝈 loc , (𝑡 ) = [𝜎 loc , (𝑡 ) 
+
+> 𝑖, 0
+
+]𝑢 𝑖 ∈ U (𝑡 ) collect the T4E scores of ESs and local UD devices, respectively. This system-side context is maintained by the ESP and will be used in subsequent semantic contract generation and contract-guided scheduling. 
+
+B. Natural Language Request and Semantic Contract 
+
+At each timeslot 𝑡 , each UD 𝑢 𝑖 ∈ U (𝑡 ) submits a service request consisting of a task attribute vector 𝑞 (𝑡 ) 
+
+> 𝑖
+
+and its asso-ciated service-expectation description (SED) L (𝑡 ) 
+
+> 𝑖
+
+, represented by (𝑞 (𝑡 ) 
+
+> 𝑖
+
+, L (𝑡 ) 
+
+> 𝑖
+
+). The task attribute vector is defined as 𝑞 (𝑡 ) 
+
+> 𝑖
+
+=
+
+(𝑑 (𝑡 ) 
+
+> 𝑖
+
+, 𝑐 (𝑡 ) 
+
+> 𝑖
+
+), where 𝑑 (𝑡 ) 
+
+> 𝑖
+
+denotes the input data size and 𝑐 (𝑡 ) 
+
+> 𝑖
+
+de-notes the computation workload required for task completion. Together, these attributes characterize the task’s fundamental communication and computation requirements. The SED L (𝑡 )
+
+> 𝑖
+
+expresses user service requirements at a semantic level in natural language, such as “I do not have much time and budget" or "my phone is running out of power." Consequently, unlike conventional edge scheduling frameworks that rely on explicitly stated numerical constraints, STEPS treats natural language descriptions as the primary user-side input and trans-lates them into operational requirements through a semantic-contract interface. Specifically, the SED L (𝑡 ) 
+
+> 𝑖
+
+is processed by an LLM-assisted semantic parser that extracts a semantic feature vector y(𝑡 ) 
+
+> 𝑖
+
+= (ℓD, (𝑡 ) 
+
+> 𝑖
+
+, ℓ E, (𝑡 ) 
+
+> 𝑖
+
+, ℓ M, (𝑡 ) 
+
+> 𝑖
+
+, ℓ S, (𝑡 ) 
+
+> 𝑖
+
+, 𝑐 conf , (𝑡 ) 
+
+> 𝑖
+
+), where 
+
+ℓD, (𝑡 ) 
+
+> 𝑖
+
+, ℓE, (𝑡 ) 
+
+> 𝑖
+
+, ℓM, (𝑡 ) 
+
+> 𝑖
+
+, and ℓS, (𝑡 ) 
+
+> 𝑖
+
+denote the delay-sensitivity level, energy-sensitivity level, monetary-cost sensitivity level, and T4E requirement level, respectively, while 𝑐 conf , (𝑡 ) 
+
+> 𝑖
+
+∈ [ 0, 1] is the parsing confidence score. These quantities are transformed into optimization-compatible contract parameters via inter-pretable mapping rules, which are described in the following and incorporate task attributes and system-side context. A key component of STEPS is the semantic contract, which serves as the executable interface between natural language service requirements and optimization-driven edge scheduling. Specifically, based on the semantic feature vector y(𝑡 ) 
+
+> 𝑖
+
+, task attributes 𝑞 (𝑡 ) 
+
+> 𝑖
+
+, and system-side context 𝜉 (𝑡 ) , the ESP gener-ates a semantic contract for UD 𝑢 𝑖 at timeslot 𝑡 as C (𝑡 ) 
+
+> 𝑖
+
+=
+
+Fsc (y(𝑡 ) 
+
+> 𝑖
+
+, 𝑞 (𝑡 ) 
+
+> 𝑖
+
+; 𝜉 (𝑡 ) ) = (w(𝑡 ) 
+
+> 𝑖
+
+, g(𝑡 ) 
+
+> 𝑖
+
+, 𝜌 (𝑡 ) 
+
+> 𝑖
+
+), where Fsc (·) denotes the 
+
+> 1
+
+In this paper, trust is not modeled as a standalone security construct; instead, it is incorporated as one dimension of semantic contract fulfillment during task execution. 
+
+semantic contract generation function 2. The semantic contract 
+
+C (𝑡 ) 
+
+> 𝑖
+
+consists of three components: a preference vector w(𝑡 ) 
+
+> 𝑖
+
+,a fulfillment-bound vector g(𝑡 ) 
+
+> 𝑖
+
+, and a semantic-uncertainty measure 𝜌 (𝑡 )
+
+> 𝑖
+> 3
+
+. In particular, the preference vector w(𝑡 ) 
+
+> 𝑖
+
+=
+
+[𝑤 D, (𝑡 ) 
+
+> 𝑖
+
+, 𝑤 E, (𝑡 ) 
+
+> 𝑖
+
+, 𝑤 M, (𝑡 ) 
+
+> 𝑖
+
+, 𝑤 S, (𝑡 ) 
+
+> 𝑖
+
+] captures what the user prioritizes during service provisioning, where the four elements represent the relative importance of delay, energy consumption, mone-tary cost, and T4E, respectively. Let ˆℓk, (𝑡 ) 
+
+> 𝑖
+
+∈ [ 0, 1] denote the normalized semantic level of dimension 𝑘 ∈ { D, E, M, S}. The preference weights are generated according to 
+
+𝑤 k, (𝑡 ) 
+
+> 𝑖
+
+= exp ( 𝜃 𝑤 ˆℓk, (𝑡 ) 
+
+> 𝑖
+
+)
+
+Ír∈{ D,E,M,S} exp ( 𝜃 𝑤 ˆℓr, (𝑡 ) 
+
+> 𝑖
+
+) , k ∈ { D, E, M, S}. (2) 
+
+The parameter 𝜃 𝑤 ≥ 0 controls the degree of prefer-ence differentiation. By construction, the weights satisfy 
+
+Í𝑘 ∈ { D,E,M,S} 𝑤 k, (𝑡 ) 
+
+> 𝑖
+
+= 1 and 𝑤 k, (𝑡 ) 
+
+> 𝑖
+
+≥ 0. Also, fulfillment-bound vector g(𝑡 ) 
+
+> 𝑖
+
+= [𝐷 max , (𝑡 ) 
+
+> 𝑖
+
+, 𝐸 max , (𝑡 ) 
+
+> 𝑖
+
+, 𝑀 max , (𝑡 ) 
+
+> 𝑖
+
+, 𝑆 min , (𝑡 ) 
+
+> 𝑖
+
+] specifies the service requirements that must be satisfied during execution. Here, 𝐷 max , (𝑡 ) 
+
+> 𝑖
+
+, 𝐸 max , (𝑡 ) 
+
+> 𝑖
+
+, 𝑀 max , (𝑡 ) 
+
+> 𝑖
+
+, and 𝑆 min , (𝑡 ) 
+
+> 𝑖
+
+denote the maxi-mum tolerable delay, energy consumption, monetary cost, and the minimum required T4E level, respectively. To generate these bounds, the ESP first computes lightweight reference service indicators under the current system context, denoted by 
+
+¯𝐷 (𝑡 ) 
+
+> 𝑖
+
+, ¯𝐸 (𝑡 ) 
+
+> 𝑖
+
+, ¯𝑀 (𝑡 ) 
+
+> 𝑖
+
+, and ¯𝑆 (𝑡 ) 
+
+> 𝑖
+
+. These reference indicators represent pre-scheduling estimates of the service metrics defined in Sec. III-C, and can be obtained using a default policy 𝜋 ref ,such as local execution, nearest-edge execution, or historical average execution under context 𝜉 (𝑡 ) .4 Using them, the fulfill-ment bounds are defined as 
+
+𝐷 max , (𝑡 ) 
+
+> 𝑖
+
+= ¯𝐷 (𝑡 ) 
+
+> 𝑖
+
+𝛿 D ( ˆℓD, (𝑡 ) 
+
+> 𝑖
+
+), 𝐸 max , (𝑡 ) 
+
+> 𝑖
+
+= ¯𝐸 (𝑡 ) 
+
+> 𝑖
+
+𝛿 E ( ˆℓE, (𝑡 ) 
+
+> 𝑖
+
+),𝑀 max , (𝑡 ) 
+
+> 𝑖
+
+= ¯𝑀 (𝑡 ) 
+
+> 𝑖
+
+𝛿 M ( ˆℓM, (𝑡 ) 
+
+> 𝑖
+
+), 𝑆 min , (𝑡 ) 
+
+> 𝑖
+
+= [𝑆 0 + 𝛿 S ˆℓS, (𝑡 ) 
+
+> 𝑖
+
+]10 . (3) 
+
+Here, [𝑥 ]10 = min {max {𝑥, 0}, 1} denotes the projection of 𝑥 
+
+onto [0, 1]. The functions 𝛿 D (·) , 𝛿 E (·) , and 𝛿 M (·) are non-increasing mapping functions that translate semantic service requirements into quantitative fulfillment requirements. For example, a higher delay-sensitivity level leads to a smaller 
+
+𝛿 D ( ˆℓD, (𝑡 ) 
+
+> 𝑖
+
+) and hence a tighter delay bound 5. Finally, the se-mantic uncertainty 𝜌 (𝑡 ) 
+
+> 𝑖
+
+∈ [ 0, 1] quantifies the reliability of the semantic interpretation and its compatibility with the current system context, which we define it as 
+
+𝜌 (𝑡 ) 
+
+> 𝑖
+
+=
+
+h
+
+𝛼 𝑐 (1 − 𝑐 conf , (𝑡 ) 
+
+> 𝑖
+
+) + 𝛼 𝑥 𝑟 ctx , (𝑡 )
+
+> 𝑖
+
+i10 , (4) 
+
+where 𝛼 𝑐 , 𝛼 𝑥 ≥ 0 are weighting coefficients, and 𝑟 ctx , (𝑡 ) 
+
+> 𝑖
+
+∈ [ 0, 1]
+
+denotes the context-inconsistency risk. A larger value of 𝜌 (𝑡 )
+
+> 𝑖
+
+indicates that the request is either more ambiguous or less compatible with the current system state. To quantify context inconsistency, we define 
+
+𝑟 ctx , (𝑡 ) 
+
+> 𝑖
+
+=
+
+h
+
+𝜔 D 𝜈 D, (𝑡 ) 
+
+> 𝑖
+
++ 𝜔 E 𝜈 E, (𝑡 ) 
+
+> 𝑖
+
++ 𝜔 M 𝜈 M, (𝑡 ) 
+
+> 𝑖
+
++ 𝜔 S 𝜈 S, (𝑡 )
+
+> 𝑖
+
+i10 , (5) 
+
+> 2
+
+The semicolon in Fsc (y(𝑡 )        
+
+> 𝑖 , 𝑞 (𝑡 )
+> 𝑖 ;𝜉 (𝑡 ))
+
+separates the UD-specific inputs from the system-side conditioning context. Specifically, y(𝑡 ) 
+
+> 𝑖
+
+and 𝑞 (𝑡 ) 
+
+> 𝑖
+
+describe the semantic and task-specific information of UD 𝑢 𝑖 , whereas 𝜉 (𝑡 ) represents the system-side context that conditions the semantic contract generation. 
+
+> 3
+
+Notably, the LLM-assisted parser is responsible only for extracting se-mantic levels and confidence scores, whereas all continuous contract pa-rameters are generated through interpretable mapping rules that incorporate task attributes and system-side context. This design preserves interpretability and avoids relying on the LLM to directly generate (potentially infeasible) resource-allocation or scheduling decisions. 
+
+> 4
+
+Since these quantities are computed before scheduling, they do not introduce circular dependence. 
+
+> 5
+
+In experiments, these mapping functions can be implemented by fixed lookup tables corresponding to low, medium, and high semantic levels. 5
+
+where 𝜔 D, 𝜔 E, 𝜔 M, 𝜔 S ≥ 0 are weighting coefficients, and the mismatch/inconsistency terms are given by 
+
+𝜈 D, (𝑡 ) 
+
+> 𝑖
+
+=
+
+" ¯𝐷 (𝑡 ) 
+
+> 𝑖
+
+− 𝐷 max , (𝑡 )
+
+> 𝑖
+
+𝐷 max , (𝑡 )
+
+> 𝑖
+
+#
+
+> +
+
+, 𝜈 E, (𝑡 ) 
+
+> 𝑖
+
+=
+
+" ¯𝐸 (𝑡 ) 
+
+> 𝑖
+
+− 𝐸 max , (𝑡 )
+
+> 𝑖
+
+𝐸 max , (𝑡 )
+
+> 𝑖
+
+#
+
+> +
+
+,𝜈 M, (𝑡 ) 
+
+> 𝑖
+
+=
+
+" ¯𝑀 (𝑡 ) 
+
+> 𝑖
+
+− 𝑀 max , (𝑡 )
+
+> 𝑖
+
+𝑀 max , (𝑡 )
+
+> 𝑖
+
+#
+
+> +
+
+, 𝜈 S, (𝑡 ) 
+
+> 𝑖
+
+=
+
+h
+
+𝑆 min , (𝑡 ) 
+
+> 𝑖
+
+− ¯𝑆 (𝑡 )
+
+> 𝑖
+
+i 
+
+> +
+
+,
+
+(6) 
+
+where [𝑥 ]+ = max {𝑥, 0}. Intuitively, 𝑟 ctx , (𝑡 ) 
+
+> 𝑖
+
+becomes large when the semantic requirements implied by SED are substantially more stringent than what can be reasonably supported un-der the current network and edge-resource conditions. Be-cause natural language requests are inherently ambiguous and context-dependent, the semantic contracts are conservatively 
+
+calibrated before scheduling. Let 𝛽 (𝑡 ) ≥ 0 denote the conser-vativeness factor at timeslot 𝑡 , where larger values correspond to more conservative scheduling decisions. For each UD 𝑢 𝑖 ,we define the calibrated fulfillment bounds as 
+
+e𝐷 max , (𝑡 ) 
+
+> 𝑖
+
+= 𝐷 max , (𝑡 )
+
+> 𝑖
+
+1 + 𝛽 (𝑡 ) 𝜌 (𝑡 )
+
+> 𝑖
+
+, e𝐸 max , (𝑡 ) 
+
+> 𝑖
+
+= 𝐸 max , (𝑡 )
+
+> 𝑖
+
+1 + 𝛽 (𝑡 ) 𝜌 (𝑡 )
+
+> 𝑖
+
+,
+
+f𝑀 max , (𝑡 ) 
+
+> 𝑖
+
+= 𝑀 max , (𝑡 )
+
+> 𝑖
+
+1 + 𝛽 (𝑡 ) 𝜌 (𝑡 )
+
+> 𝑖
+
+, e𝑆 min , (𝑡 ) 
+
+> 𝑖
+
+= [𝑆 min , (𝑡 ) 
+
+> 𝑖
+
++ 𝛽 (𝑡 ) 𝜌 (𝑡 ) 
+
+> 𝑖
+
+]10 ,
+
+(7) 
+
+where e𝐷 max , (𝑡 ) 
+
+> 𝑖
+
+, e𝐸 max , (𝑡 ) 
+
+> 𝑖
+
+, e𝑀 max , (𝑡 ) 
+
+> 𝑖
+
+, and e𝑆 min , (𝑡 ) 
+
+> 𝑖
+
+denote the scheduling-stage delay, energy, monetary-cost, and T4E re-quirements, respectively. As the semantic uncertainty 𝜌 (𝑡 )
+
+> 𝑖
+
+increases, the scheduling process adopts stricter delay, energy, and cost limits while imposing a higher T4E requirement, thereby reserving a larger safety margin against uncertain semantic interpretations. Importantly, the above calibrated bounds are used only during scheduling and do not alter the users’ original service requirements (i.e., contract fulfillment is evaluated using the original fulfillment-bound vector g(𝑡 ) 
+
+> 𝑖
+
+). We further introduce a semantic admission threshold 𝜏 𝜌, (𝑡 ) ∈ [ 0, 1],which specifies the maximum acceptable semantic uncertainty at timeslot 𝑡 , and define the set of schedulable UDs as 
+
+Us, (𝑡 ) =
+
+n
+
+𝑢 𝑖 ∈ U (𝑡 ) 𝜌 (𝑡 ) 
+
+> 𝑖
+
+≤ 𝜏 𝜌, (𝑡 ) o
+
+, (8) 
+
+where only the UDs in Us, (𝑡 ) participate in the subsequent contract-guided scheduling process. 
+
+C. Edge Execution and Contract-Guided Service Loss 
+
+For each admitted UD 𝑢 𝑖 ∈ U s, (𝑡 ) , we define a binary EN selection variable 𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+∈ { 0, 1}, where 𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+= 1 indicates that UD 𝑢 𝑖 ’s task is executed at EN 𝑒 𝑗 ∈ E 0. Since each task can be executed at only one EN, the assignment variables satisfy ∑︁   
+
+> 𝑒 𝑗 ∈E 0
+
+𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+= 1, ∀𝑢 𝑖 ∈ U s, (𝑡 ) . (9) 
+
+For each ES 𝑒 𝑗 ∈ E, let 𝑓 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+≥ 0 and 𝑏 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+≥ 0 denote the computing and bandwidth resources allocated to UD 𝑢 𝑖 ,respectively. We note that the aggregate resource consumption at each ES must not exceed its available capacities, yielding ∑︁    
+
+> 𝑢 𝑖 ∈U s,(𝑡 )
+
+𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+𝑓 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+≤ 𝐹 (𝑡 ) 
+
+> 𝑗
+
+,∑︁    
+
+> 𝑢 𝑖 ∈U s,(𝑡 )
+
+𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+𝑏 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+≤ 𝐵 (𝑡 ) 
+
+> 𝑗
+
+, ∀𝑒 𝑗 ∈ E . (10) 
+
+Also, to couple EN selection and resource allocation, we impose the following resource-feasibility constraints 
+
+𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+𝑓 min ≤ 𝑓 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+≤ 𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+𝐹 (𝑡 ) 
+
+> 𝑗
+
+, 𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+𝑏 min ≤ 𝑏 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+≤ 𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+𝐵 (𝑡 ) 
+
+> 𝑗
+
+,𝑥 (𝑡 ) 
+
+> 𝑖, 0
+
+𝑓 loc min ≤ 𝑓 (𝑡 ) 
+
+> 𝑖, 0
+
+≤ 𝑥 (𝑡 ) 
+
+> 𝑖, 0
+
+𝐹 loc , (𝑡 ) 
+
+> 𝑖
+
+, 𝑏 (𝑡 ) 
+
+> 𝑖, 0
+
+= 0, (11) 
+
+where 𝑓 min , 𝑏 min , and 𝑓 loc min denote the minimum positive computing, bandwidth, and local-computing allocation levels required when the corresponding execution mode is selected. These constraints ensure that resource variables are activated only for the selected EN. Specifically, when 𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+= 0, both the lower and upper bounds force the corresponding resource allocations to zero; when 𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+= 1, the allocated resources must be positive and bounded by the available EN-side capacities. For edge execution, the uplink transmission rate between UD 𝑢 𝑖 and ES 𝑒 𝑗 during timeslot 𝑡 is given by 
+
+𝑅 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+= 𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+𝑏 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+log 2
+
+©«
+
+1 + 𝑝 (𝑡 ) 
+
+> 𝑖
+
+ℎ(𝑡 )
+
+> 𝑖, 𝑗
+
+𝑁 0 𝑏 (𝑡 )
+
+> 𝑖, 𝑗
+
+ª®¬
+
+, (12) 
+
+where 𝑝 (𝑡 ) 
+
+> 𝑖
+
+denotes the transmit power of UD 𝑢 𝑖 , ℎ(𝑡 ) 
+
+> 𝑖, 𝑗
+
+is the channel gain between UD 𝑢 𝑖 and ES 𝑒 𝑗 , and 𝑁 0 is the noise power spectral density. Based on the selected EN and allocated resources, the total service delay is defined as 
+
+𝐷 (𝑡 ) 
+
+> 𝑖
+
+= 𝑥 (𝑡 )
+
+> 𝑖, 0
+
+𝑐 (𝑡 )
+
+> 𝑖
+
+𝑓 (𝑡 ) 
+
+> 𝑖, 0
+
++ 𝜖 +∑︁   
+
+> 𝑒 𝑗 ∈E
+
+𝑥 (𝑡 )
+
+> 𝑖, 𝑗
+
+©«
+
+𝑑 (𝑡 )
+
+> 𝑖
+
+𝑅 (𝑡 ) 
+
+> 𝑖, 𝑗
+
++ 𝜖 + 𝑐 (𝑡 )
+
+> 𝑖
+
+𝑓 (𝑡 ) 
+
+> 𝑖, 𝑗
+
++ 𝜖 +𝑄 (𝑡 )
+
+> 𝑗
+
+ª®¬
+
+, (13) 
+
+where 𝜖 > 0 is a small constant introduced for numerical stability, and 𝑄 (𝑡 ) 
+
+> 𝑗
+
+is the pre-decision queueing delay included in the system-side context 𝜉 (𝑡 ) . For local execution, the energy consumption is modeled as 𝜅 𝑢 𝑐 (𝑡 ) 
+
+> 𝑖
+
+( 𝑓 (𝑡 ) 
+
+> 𝑖, 0
+
+)2, where 𝜅 𝑢 is the ef-fective switched-capacitance of UD 𝑢 𝑖 ’s device [14]. For edge execution, we assume that the dominant energy expenditure arises from uplink transmission as ESs are often not power-limited. Accordingly, the total energy consumption is 
+
+𝐸 (𝑡 ) 
+
+> 𝑖
+
+= 𝑥 (𝑡 ) 
+
+> 𝑖, 0
+
+𝜅 𝑢 𝑐 (𝑡 ) 
+
+> 𝑖
+
+( 𝑓 (𝑡 ) 
+
+> 𝑖, 0
+
+)2 +∑︁   
+
+> 𝑒 𝑗 ∈E
+
+𝑥 (𝑡 )
+
+> 𝑖, 𝑗
+
+𝑝 (𝑡 ) 
+
+> 𝑖
+
+𝑑 (𝑡 )
+
+> 𝑖
+
+𝑅 (𝑡 ) 
+
+> 𝑖, 𝑗
+
++ 𝜖 . (14) 
+
+Let 𝜆 f, (𝑡 ) 
+
+> 𝑗
+
+and 𝜆 b, (𝑡 ) 
+
+> 𝑗
+
+denote the unit prices of computing and bandwidth resources at ES 𝑒 𝑗 , respectively, which are treated as system-side scheduling parameters at timeslot 𝑡 . The monetary cost incurred by UD 𝑢 𝑖 is given by 
+
+𝑀 (𝑡 ) 
+
+> 𝑖
+
+=∑︁   
+
+> 𝑒 𝑗 ∈E
+
+𝑥 (𝑡 )
+
+> 𝑖, 𝑗
+
+
+
+𝜆 f, (𝑡 ) 
+
+> 𝑗
+
+𝑓 (𝑡 ) 
+
+> 𝑖, 𝑗
+
++ 𝜆 b, (𝑡 ) 
+
+> 𝑗
+
+𝑏 (𝑡 )
+
+> 𝑖, 𝑗
+
+
+
+. (15) 
+
+Finally, the achieved T4E level of UD 𝑢 𝑖 is defined as 𝑆 (𝑡 ) 
+
+> 𝑖
+
+=
+
+𝑥 (𝑡 ) 
+
+> 𝑖, 0
+
+𝜎 loc , (𝑡 ) 
+
+> 𝑖, 0
+
++Í𝑒 𝑗 ∈ E 𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+𝜎 edge , (𝑡 ) 
+
+> 𝑗
+
+, where 𝜎 edge , (𝑡 ) 
+
+> 𝑗
+
+denotes the T4E score maintained by the ESP based on historical service-fulfillment records, EN availability, and audit outcomes. In summary, 𝐷 (𝑡 ) 
+
+> 𝑖
+
+, 𝐸 (𝑡 ) 
+
+> 𝑖
+
+, 𝑀 (𝑡 ) 
+
+> 𝑖
+
+, and 𝑆 (𝑡 ) 
+
+> 𝑖
+
+characterize the realized execution outcomes of a service request and serve as the basis for subsequent semantic contract fulfillment evaluation. The semantic contract specifies both preferences and fulfill-ment requirements. To accommodate possible violations of the calibrated fulfillment bounds during scheduling, we introduce the nonnegative slack variables 𝑧 D, (𝑡 ) 
+
+> 𝑖
+
+, 𝑧 E, (𝑡 ) 
+
+> 𝑖
+
+, 𝑧 M, (𝑡 ) 
+
+> 𝑖
+
+, and 𝑧 S, (𝑡 )
+
+> 𝑖
+
+corresponding to delay, energy consumption, monetary cost, and T4E, respectively. We impose the following conditions 
+
+𝐷 (𝑡 ) 
+
+> 𝑖
+
+≤ e𝐷 max , (𝑡 ) 
+
+> 𝑖
+
+(1 + 𝑧 D, (𝑡 ) 
+
+> 𝑖
+
+), 𝐸 (𝑡 ) 
+
+> 𝑖
+
+≤ e𝐸 max , (𝑡 ) 
+
+> 𝑖
+
+(1 + 𝑧 E, (𝑡 ) 
+
+> 𝑖
+
+),𝑀 (𝑡 ) 
+
+> 𝑖
+
+≤ e𝑀 max , (𝑡 ) 
+
+> 𝑖
+
+(1 + 𝑧 M, (𝑡 ) 
+
+> 𝑖
+
+), e𝑆 min , (𝑡 ) 
+
+> 𝑖
+
+− 𝑆 (𝑡 ) 
+
+> 𝑖
+
+≤ 𝑧 S, (𝑡 ) 
+
+> 𝑖
+
+. (16) 
+
+In essence, the slack variables quantify the extent to which the realized service outcomes deviate from the calibrated contract requirements. Based on these quantities, we define the semantic contract violation degree as Ωsc , (𝑡 ) 
+
+> 𝑖
+
+= 𝜁 D 𝑧 D, (𝑡 ) 
+
+> 𝑖
+
++
+
+𝜁 E 𝑧 E, (𝑡 ) 
+
+> 𝑖
+
++ 𝜁 M 𝑧 M, (𝑡 ) 
+
+> 𝑖
+
++ 𝜁 S 𝑧 S, (𝑡 ) 
+
+> 𝑖
+
+, where 𝜁 D, 𝜁 E, 𝜁 M, and 𝜁 S are non-negative violation-penalty coefficients. Based on the calibrated semantic contract, we define contract-guided service loss of UD 𝑢 𝑖 at timeslot 𝑡 as 
+
+𝐽 (𝑡 ) 
+
+> 𝑖
+
+= 𝑤 D, (𝑡 )
+
+> 𝑖
+
+𝐷 (𝑡 )
+
+> 𝑖
+
+e𝐷 max , (𝑡 )
+
+> 𝑖
+
++ 𝑤 E, (𝑡 )
+
+> 𝑖
+
+𝐸 (𝑡 )
+
+> 𝑖
+
+e𝐸 max , (𝑡 )
+
+> 𝑖
+
++ 𝑤 M, (𝑡 )
+
+> 𝑖
+
+𝑀 (𝑡 )
+
+> 𝑖
+
+f𝑀 max , (𝑡 )
+
+> 𝑖
+
++ 𝑤 S, (𝑡 ) 
+
+> 𝑖
+
+(1 − 𝑆 (𝑡 ) 
+
+> 𝑖
+
+) + 𝜂 Ωsc , (𝑡 ) 
+
+> 𝑖
+
+,
+
+(17) 6
+
+where 𝜂 ≥ 0 controls the importance of contract violations. In (17), the first three terms capture the normalized delay, en-ergy, and monetary-cost performance relative to the calibrated fulfillment bounds, while the fourth term quantifies the loss associated with insufficient T4E. Also, the final term explicitly penalizes violations of the calibrated semantic contract. 
+
+D. Problem Formulation 
+
+Let z(𝑡 ) 
+
+> 𝑖
+
+= [𝑧 D, (𝑡 ) 
+
+> 𝑖
+
+, 𝑧 E, (𝑡 ) 
+
+> 𝑖
+
+, 𝑧 M, (𝑡 ) 
+
+> 𝑖
+
+, 𝑧 S, (𝑡 ) 
+
+> 𝑖
+
+]⊤ denote the semantic contract violation vector of UD 𝑢 𝑖 at timeslot 𝑡 . Based on the semantic contract framework developed above, we formulate the long-term contract-guided scheduling as problem P:
+
+(P) : min           
+
+> {x(𝑡 ),f(𝑡 ),b(𝑡 ),z(𝑡 )}𝑡 ∈T
+
+1
+
+𝑇 
+
+> 𝑇
+
+∑︁ 
+
+> 𝑡 =1
+
+∑︁ 𝑢 𝑖 ∈ U s, (𝑡 )
+
+𝐽 (𝑡 ) 
+
+> 𝑖
+
+(18) 
+
+s.t. 
+
+Constraints : 
+
+> •
+
+Task assignment: (9)  
+
+> •
+
+ES resource capacity: (10)  
+
+> •
+
+EN selection and resource-allocation coupling: (11)  
+
+> •
+
+Calibrated semantic-contract fulfillment: (16) 
+
+Variables : 
+
+> •
+
+EN selection variables: 
+
+{𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+∈ { 0, 1} | 𝑢 𝑖 ∈ U s, (𝑡 ) , 𝑒 𝑗 ∈ E 0, 𝑡 ∈ T }  
+
+> •
+
+Computing and bandwidth allocation variables: 
+
+{f (𝑡 ) , b(𝑡 ) }𝑡 ∈ T satisfying the resource-domain and cou-pling constraints in (11)  
+
+> •
+
+Semantic contract violation variables: 
+
+{z(𝑡 ) 
+
+> 𝑖
+
+⪰ 0 | 𝑢 𝑖 ∈ U s, (𝑡 ) , 𝑡 ∈ T } .6
+
+In P, the objective minimizes the long-term average contract-guided service loss across all admitted UDs. The listed con-straints enforce task assignment, ES-side capacity feasibil-ity, EN selection/resource-allocation coupling, and calibrated semantic-contract fulfillment. The listed variables correspond to EN selection, communication-computation resource alloca-tion, and semantic contract violation degrees. Problem P is a long-term mixed-integer nonlinear program (MINLP) that jointly addresses task assignment, communication-resource allocation, and computation-resource provisioning. The com-binatorial nature of EN selection, together with the nonlinear transmission-rate and delay expressions, renders its direct solution computationally prohibitive in dynamic E4NetAI en-vironments. This motivates the development of STEPS, trans-forming the original long-term optimization into a distributed and adaptive scheduling framework as discussed next. IV. D ESIGN METHODOLOGY OF STEPS In this section, we introduce STEPS, an online distributed framework for semantic contract-guided edge scheduling. 
+
+A. Per-Slot Penalized Surrogate and Potential Game 
+
+Directly solving P over the entire time horizon requires knowledge of future UDs’ requests, wireless channels, edge workloads, and resource availability, as well as centralized coordination across all UDs and ESs. Such knowledge is often unavailable in dynamic E4NetAI environments, where service demands and resource states evolve over time [14], [24]. Accordingly, STEPS adopts a slot-wise online decision structure based only on the currently observed system state.                   
+
+> 6a⪰bdenotes component-wise inequality for vectors of the same dimension; hence, z(𝑡 )
+> 𝑖 ⪰0means that all entries of z(𝑡 )
+> 𝑖 are nonnegative.
+
+Under this online formulation, the service loss experienced by a UD is primarily determined by its own EN selection and resource allocation decision. However, because multiple UDs may compete for the limited resources of the same ESs, their decisions remain coupled through shared computing and bandwidth capacities. To enable distributed scheduling, STEPS replaces these global capacity couplings with congestion-dependent penalty terms that reflect the impact of aggregate resource usage at each ES. Consequently, the original coupled scheduling problem is transformed into a penalized surrogate formulation in which the effects of resource contention can be locally observed and incorporated into individual decision making. This construction follows the general principles of congestion games and resource-pricing mechanisms [29], [30]. To further facilitate distributed optimization, the available computing and bandwidth resources are discretized into finite 
+
+resource packages [24]. At each timeslot, every admitted UD 
+
+𝑢 𝑖 ∈ Us, (𝑡 ) selects an intended EN with a corresponding resource-package combination according to its semantic con-tract and the current system state. The ESP then performs feasibility verification and allocation realization based on the actual resource capacities and possible resource conflicts. To formalize this process, we next define the feasible action space of each UD and show that the per-timeslot scheduling problem can be modeled as an exact potential game. 
+
+Definition 1. (Action Space of UDs) For each admitted UD 
+
+𝑢 𝑖 ∈ U s, (𝑡 ) , its action is denoted by 𝑎 (𝑡 ) 
+
+> 𝑖
+
+= (𝑒 (𝑡 ) 
+
+> 𝑖
+
+, 𝑟 f, (𝑡 ) 
+
+> 𝑖
+
+, 𝑟 b, (𝑡 ) 
+
+> 𝑖
+
+),where 𝑒 (𝑡 ) 
+
+> 𝑖
+
+∈ E0, 𝑟 f, (𝑡 ) 
+
+> 𝑖
+
+, and 𝑟 b, (𝑡 ) 
+
+> 𝑖
+
+capture the selected EN, computing-resource package, and bandwidth-resource pack-age, respectively. Since local execution does not require uplink bandwidth, the feasible action space of UD 𝑢 𝑖 is defined as            
+
+> A(𝑡 )
+> 𝑖 =Aloc ,(𝑡 )
+> 𝑖 ∪ A edge ,(𝑡 )
+> 𝑖 ,
+
+(19) 
+
+where Aloc , (𝑡 ) 
+
+> 𝑖
+
+= {( 𝑒 0, 𝑟 f, 0) | 𝑟 f ∈ R loc ,f, (𝑡 ) 
+
+> 𝑖
+
+}, and Aedge , (𝑡 ) 
+
+> 𝑖
+
+=
+
+{( 𝑒 𝑗 , 𝑟 f, 𝑟 b) | 𝑒 𝑗 ∈ E , 𝑟 f ∈ R f, (𝑡 ) 
+
+> 𝑖, 𝑗
+
+, 𝑟 b ∈ R b, (𝑡 ) 
+
+> 𝑖, 𝑗
+
+}. Here, Rloc ,f, (𝑡 ) 
+
+> 𝑖
+
+,
+
+Rf, (𝑡 ) 
+
+> 𝑖, 𝑗
+
+and Rb, (𝑡 ) 
+
+> 𝑖, 𝑗
+
+denote finite sets of feasible computing and bandwidth resource packages. Consequently, each action jointly specifies an execution location together with an asso-ciated resource allocation configuration, and can be mapped directly to the corresponding EN selection variable 𝑥 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+and the selected resource-package values. 
+
+For notational clarity, for any action 𝑎 (𝑡 ) 
+
+> 𝑖
+
+=
+
+(𝑒 (𝑡 ) 
+
+> 𝑖
+
+, 𝑟 f, (𝑡 ) 
+
+> 𝑖
+
+, 𝑟 b, (𝑡 ) 
+
+> 𝑖
+
+), let 𝑒 (𝑎 (𝑡 ) 
+
+> 𝑖
+
+) denote its selected execution node and 𝑟 z, (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+) denote its selected resource package of type z ∈ { f, b}. If 𝑒 (𝑎 (𝑡 ) 
+
+> 𝑖
+
+) = 𝑒 𝑗 ∈ E , we define 𝑗 (𝑎 (𝑡 ) 
+
+> 𝑖
+
+) = 𝑗 
+
+as the index of the selected ES. Given an action profile 
+
+a(𝑡 ) = [𝑎 (𝑡 ) 
+
+> 𝑖
+
+]𝑢 𝑖 ∈ U s, (𝑡 ) , the aggregate computing and bandwidth loads induced at ES 𝑒 𝑗 are                       
+
+> 𝐿 z,(𝑡 )
+> 𝑗 (a(𝑡 ))=∑︁
+> 𝑢 𝑖 ∈U s,(𝑡 )
+> I{𝑒 (𝑎 (𝑡 )
+> 𝑖 )=𝑒 𝑗 }𝑟 z,(𝑡 )
+> 𝑖 (𝑎 (𝑡 )
+> 𝑖 ),z∈ { f,b}.
+
+(20) 
+
+where I{·} is the indicator function. For each candidate action, STEPS evaluates the resulting service outcome relative to the calibrated semantic contract. To this end, we define the action-dependent fulfillment-shortfall terms as                                                     
+
+> 𝑧 D,(𝑡 )
+> 𝑖 (𝑎 𝑖 )=
+> "𝐷 (𝑡 )
+> 𝑖 (𝑎 𝑖 )
+> e𝐷 max ,(𝑡 )
+> 𝑖
+> −1
+> #
+> +
+> , 𝑧 E,(𝑡 )
+> 𝑖 (𝑎 𝑖 )=
+> "𝐸 (𝑡 )
+> 𝑖 (𝑎 𝑖 )
+> e𝐸 max ,(𝑡 )
+> 𝑖
+> −1
+> #
+> +
+> ,𝑧 M,(𝑡 )
+> 𝑖 (𝑎 𝑖 )=
+> "𝑀 (𝑡 )
+> 𝑖 (𝑎 𝑖 )
+> f𝑀 max ,(𝑡 )
+> 𝑖
+> −1
+> #
+> +
+> , 𝑧 S,(𝑡 )
+> 𝑖 (𝑎 𝑖 )=
+> he𝑆 min ,(𝑡 )
+> 𝑖 −𝑆 (𝑡 )
+> 𝑖 (𝑎 𝑖 )
+> i
+> +.
+
+(21) 
+
+These quantities measure the extent to which a candidate ac-7
+
+tion violates the calibrated contract requirements. Accordingly, the action-dependent semantic contract violation degree is defined as Ωsc , (𝑡 ) 
+
+> 𝑖
+
+(𝑎 𝑖 ) = 𝜁 D 𝑧 D, (𝑡 ) 
+
+> 𝑖
+
+(𝑎 𝑖 ) + 𝜁 E 𝑧 E, (𝑡 ) 
+
+> 𝑖
+
+(𝑎 𝑖 ) + 𝜁 M 𝑧 M, (𝑡 ) 
+
+> 𝑖
+
+(𝑎 𝑖 ) + 
+
+𝜁 S 𝑧 S, (𝑡 ) 
+
+> 𝑖
+
+(𝑎 𝑖 ). Unlike the optimization in Sec. III-D, this for-mulation evaluates contract violations directly from candidate actions, and thus avoids introducing additional continuous slack variables into the finite game. Subsequently, we define the contract-guided service loss of UD 𝑢 𝑖 as 
+
+𝐻 (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+) = 𝑤 D, (𝑡 )
+
+> 𝑖
+
+𝐷 (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+)
+
+e𝐷 max , (𝑡 )
+
+> 𝑖
+
++ 𝑤 E, (𝑡 )
+
+> 𝑖
+
+𝐸 (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+)
+
+e𝐸 max , (𝑡 )
+
+> 𝑖
+
++ 𝑤 M, (𝑡 )
+
+> 𝑖
+
+𝑀 (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+)
+
+f𝑀 max , (𝑡 )
+
+> 𝑖
+
++𝑤 S, (𝑡 )
+
+> 𝑖
+
+ 1 − 𝑆 (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+)  + 𝜂 Ωsc , (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+),
+
+(22) 
+
+where the first four terms evaluate delay, energy consumption, monetary cost, and T4E performance relative to the calibrated semantic contract, while the final term penalizes explicit contract violations. Therefore, 𝐻 (𝑡 ) 
+
+> 𝑖
+
+(·) given by (22) captures the semantic objective of each individual UD. We then note that while 𝐻 (𝑡 ) 
+
+> 𝑖
+
+(·) reflects user-side objectives, it does not account for resource contention among UDs sharing the same ES. Subsequently, to discourage excessive concen-tration of requests on ESs, we introduce congestion penalties based on aggregate resource utilization. Unlike hard capacity constraints, these penalties depend only on locally observable aggregate loads and can therefore be incorporated into our later-developed distributed best-response updates. Specifically, for 𝑒 𝑗 , the computing and bandwidth congestion (collectively capturing the resource congestion) penalties are defined as 
+
+Γf, (𝑡 ) 
+
+> 𝑗
+
+(𝐿 ) = 𝛾 f
+
+2
+
+©«
+
+𝐿 𝐹 (𝑡 )
+
+> 𝑗
+
+− 𝜚 f
+
++
+
+ª®¬
+
+> 2
+
+, Γb, (𝑡 ) 
+
+> 𝑗
+
+(𝐿 ) = 𝛾 b
+
+2
+
+©«
+
+𝐿 𝐵 (𝑡 )
+
+> 𝑗
+
+− 𝜚 b
+
++
+
+ª®¬
+
+> 2
+
+, (23) 
+
+where 𝛾 f and 𝛾 b are nonnegative penalty coefficients, and 
+
+𝜚 f, 𝜚 b ∈ ( 0, 1] are target utilization thresholds. In (23), when 
+
+𝜚 f = 𝜚 b = 1, penalties are activated only after capacity limits are exceeded. Also, when 𝜚 f and 𝜚 b are smaller than one, the system proactively discourages high-utilization ESs before overloading occurs. With both the user-side service loss and ES-side congestion penalties defined above, we next formulate the per-timeslot scheduling interaction as a distributed game. 
+
+Definition 2. (Contract-Guided Scheduling Game) At each timeslot 𝑡 , the distributed scheduling interaction among admit-ted UDs is modeled as the contract-guided scheduling game 
+
+G (𝑡 ) =
+
+
+
+Us, (𝑡 ) , { A (𝑡 ) 
+
+> 𝑖
+
+}𝑢 𝑖 ∈U s, (𝑡 ) , { J (𝑡 ) 
+
+> 𝑖
+
+}𝑢 𝑖 ∈U s, (𝑡 )
+
+
+
+, (24) 
+
+where Us, (𝑡 ) denotes the set of admitted UDs and constitutes the player set, A (𝑡 ) 
+
+> 𝑖
+
+is the finite action space of UD 𝑢 𝑖 , and 
+
+J (𝑡 ) 
+
+> 𝑖
+
+is the scheduling cost incurred by UD 𝑢 𝑖 .
+
+Given the game defined above, we combine the contract-guided service loss and the ES-side marginal congestion impact into the scheduling cost of each player. Specifically, the scheduling cost of UD 𝑢 𝑖 is defined as 
+
+J (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ) = 𝐻 (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+) + ( 1+ 𝜒 (𝑡 ) )∑︁ 
+
+> z∈ { f,b}
+
+ΔΓ z, (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ), (25) 
+
+where a(𝑡 )−𝑖 denotes the actions of all admitted UDs except 𝑢 𝑖 ,and 𝜒 (𝑡 ) is the edge coordination gain. For each ES 𝑒 𝑗 and each resource type z ∈ { f, b}, the aggregate load excluding UD 
+
+𝑢 𝑖 is defined as 
+
+𝐿 z, (𝑡 ) 
+
+> 𝑗, −𝑖
+
+(a(𝑡 )−𝑖 ) =∑︁      
+
+> 𝑢 𝑘 ∈U s,(𝑡 )\{ 𝑢 𝑖 }
+
+I{𝑒 (𝑎 (𝑡 )   
+
+> 𝑘 )=𝑒 𝑗 }
+
+𝑟 z, (𝑡 ) 
+
+> 𝑘
+
+(𝑎 (𝑡 ) 
+
+> 𝑘
+
+). (26) 
+
+The marginal congestion cost induced by UD 𝑢 𝑖 under candi-date action 𝑎 (𝑡 ) 
+
+> 𝑖
+
+is defined as the incremental ES-side conges-tion penalty caused by adding 𝑢 𝑖 ’s selected resource package to the ES selected by this action. Specifically, if 𝑒 (𝑎 (𝑡 ) 
+
+> 𝑖
+
+) = 𝑒 𝑗 ∈ E ,we define ΔΓ z, (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ) ≜ Γz, (𝑡 )
+
+> 𝑗
+
+
+
+𝐿 z, (𝑡 ) 
+
+> 𝑗, −𝑖
+
+(a(𝑡 )−𝑖 ) + 𝑟 z, (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+)
+
+
+
+−
+
+Γz, (𝑡 )
+
+> 𝑗
+
+
+
+𝐿 z, (𝑡 ) 
+
+> 𝑗, −𝑖
+
+(a(𝑡 )−𝑖 )
+
+
+
+, z ∈ { f, b}. For local execution (i.e., 𝑒 (𝑎 (𝑡 ) 
+
+> 𝑖
+
+) =
+
+𝑒 0), we set ΔΓ z, (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ) = 0. Here, Γz, (𝑡 ) 
+
+> 𝑗
+
+(·) is the ES-specific congestion penalty function defined in (23). With the above marginal congestion construction, the potential function 
+
+associated with G (𝑡 ) is defined as 
+
+Φ(𝑡 ) (a(𝑡 ) ) =∑︁    
+
+> 𝑢 𝑖 ∈U s,(𝑡 )
+
+𝐻 (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+)+ ( 1 + 𝜒 (𝑡 ) )∑︁   
+
+> 𝑒 𝑗 ∈E
+
+h
+
+Γf, (𝑡 )
+
+> 𝑗
+
+
+
+𝐿 f, (𝑡 ) 
+
+> 𝑗
+
+(a(𝑡 ) )
+
+
+
++ Γb, (𝑡 )
+
+> 𝑗
+
+
+
+𝐿 b, (𝑡 ) 
+
+> 𝑗
+
+(a(𝑡 ) )
+
+i 
+
+.
+
+(27) 
+
+The first term in Φ(𝑡 ) aggregates the contract-guided service losses of admitted UDs, while the second term penalizes edge-side resource congestion. Accordingly, the potential game targets the following finite-action penalized surrogate problem: 
+
+P (𝑡 ) 
+
+> pg
+
+: min      
+
+> a(𝑡 )∈A (𝑡 )
+
+Φ(𝑡 ) (a(𝑡 ) ), A (𝑡 ) ≜
+
+Ö   
+
+> 𝑢 𝑖 ∈U s,(𝑡 )
+
+A (𝑡 ) 
+
+> 𝑖
+
+. (28) 
+
+Compared with the original long-term problem P, P (𝑡 ) 
+
+> pg
+
+focuses on the current timeslot, restricts each admitted UD to the feasible action space in (19), and replaces hard ES-side ca-pacity constraints with the congestion penalties in (23). Thus, the potential game does not directly solve the long-horizon MINLP P; instead, it provides a distributed local-improvement mechanism for the per-slot surrogate objective in (28). To solve this surrogate problem in a distributed manner, STEPS adopts an asynchronous strict best-response process .Let a(𝑡 ) (𝑟 ) denote the current action profile at update round 𝑟 .During each round, the admitted UDs are visited sequentially in an asynchronous order. When UD 𝑢 𝑖 is visited, it observes the actions of admitted UDs, denoted by a(𝑡 )−𝑖 , and computes 
+
+𝑎 br , (𝑡 ) 
+
+> 𝑖
+
+∈ arg min     
+
+> 𝑎 (𝑡 )
+> 𝑖 ∈A (𝑡 )
+> 𝑖
+
+J (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ). (29) 
+
+If this best-response action strictly reduces the current schedul-ing cost, i.e., J (𝑡 ) 
+
+> 𝑖
+
+(𝑎 br , (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ) < J (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ), UD 𝑢 𝑖 updates its action to 𝑎 br , (𝑡 ) 
+
+> 𝑖
+
+; otherwise, it keeps its current action. After any successful update, the ES-side loads in (20) and the corresponding congestion penalties in (23) are refreshed before the next UD is visited. A full update round is called 
+
+improving if at least one admitted UD changes its action. The process stops when a complete update round produces no strict improvement, in which case every admitted UD is already a best response to the current actions of the others. This process is additionally capped by 𝐼 max rounds to control online scheduling latency. We note that the resulting action profile specifies the in-tended EN selections and resource-allocation requests of all admitted UDs before physical resource realization. Since these intended requests are determined through distributed best-response updates, their aggregate demand may still exceed the available resources of some ESs. Thus, to guarantee physical feasibility before execution, the ESP performs a resource-realization step on the final game outcome. Let afin , (𝑡 ) denote the final intended UD action profile returned by the asyn-chronous best-response procedure. For each ES 𝑒 𝑗 , we define the computing- and bandwidth-resource realization factors as 
+
+𝜅 f, (𝑡 ) 
+
+> 𝑗
+
+=
+
+
+
+min 
+
+(
+
+1, 𝐹 (𝑡 )      
+
+> 𝑗
+> 𝐿 f,(𝑡 )
+> 𝑗 (afin ,(𝑡 ))
+
+)
+
+, 𝐿 f, (𝑡 ) 
+
+> 𝑗
+
+(afin , (𝑡 ) ) > 0,
+
+1, 𝐿 f, (𝑡 ) 
+
+> 𝑗
+
+(afin , (𝑡 ) ) = 0,
+
+(30) 8
+
+and 
+
+𝜅 b, (𝑡 ) 
+
+> 𝑗
+
+=
+
+
+
+min 
+
+(
+
+1, 𝐵 (𝑡 )      
+
+> 𝑗
+> 𝐿 b,(𝑡 )
+> 𝑗 (afin ,(𝑡 ))
+
+)
+
+, 𝐿 b, (𝑡 ) 
+
+> 𝑗
+
+(afin , (𝑡 ) ) > 0,
+
+1, 𝐿 b, (𝑡 ) 
+
+> 𝑗
+
+(afin , (𝑡 ) ) = 0.
+
+(31) 
+
+These factors proportionally scale the requested resources whenever the aggregate demand exceeds the available capacity. Accordingly, the realized resource allocation is given by 
+
+𝑓 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+= I{𝑒 fin , (𝑡 )    
+
+> 𝑖 =𝑒 𝑗 }
+
+𝜅 f, (𝑡 ) 
+
+> 𝑗
+
+𝑟 f,fin , (𝑡 ) 
+
+> 𝑖
+
+,𝑏 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+= I{𝑒 fin , (𝑡 )    
+
+> 𝑖 =𝑒 𝑗 }
+
+𝜅 b, (𝑡 ) 
+
+> 𝑗
+
+𝑟 b,fin , (𝑡 ) 
+
+> 𝑖
+
+, 𝑒 𝑗 ∈ E . (32) 
+
+Similarly, for local execution, the realized local computing resource is 𝑓 (𝑡 ) 
+
+> 𝑖, 0
+
+= I{𝑒 fin , (𝑡 )   
+
+> 𝑖 =𝑒 0}
+
+𝑟 f,fin , (𝑡 ) 
+
+> 𝑖
+
+, while 𝑏 (𝑡 ) 
+
+> 𝑖, 0
+
+= 0. By construction, the realized allocation satisfies ∑︁    
+
+> 𝑢 𝑖 ∈U s,(𝑡 )
+
+𝑓 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+≤ 𝐹 (𝑡 ) 
+
+> 𝑗
+
+,∑︁    
+
+> 𝑢 𝑖 ∈U s,(𝑡 )
+
+𝑏 (𝑡 ) 
+
+> 𝑖, 𝑗
+
+≤ 𝐵 (𝑡 ) 
+
+> 𝑗
+
+, ∀𝑒 𝑗 ∈ E . (33) 
+
+The final allocation in (32) is then used to compute the actual execution delay, energy consumption, monetary cost, and T4E fulfillment. In this manner, the potential game determines distributed scheduling intentions, whereas the realization step converts them into a resource-feasible execution plan. 
+
+B. Fulfillment-Driven Feedback and Adaptive Optimization 
+
+After task execution, the ESP collects the realized service outcomes from the selected ESs for edge execution and from the originating UDs for local execution, and then evaluates how well the original semantic contract is satisfied. Unlike 
+
+Ωsc , (𝑡 ) 
+
+> 𝑖
+
+, which is used during scheduling with calibrated fulfill-ment bounds, the post-execution evaluation is performed with respect to the original fulfillment bounds in g(𝑡 ) 
+
+> 𝑖
+
+. Specifically, the fulfillment deviation of admitted UD 𝑢 𝑖 is defined as 
+
+Ωful , (𝑡 ) 
+
+> 𝑖
+
+= 𝜁 D
+
+" 𝐷 (𝑡 ) 
+
+> 𝑖
+
+− 𝐷 max , (𝑡 )
+
+> 𝑖
+
+𝐷 max , (𝑡 )
+
+> 𝑖
+
+#
+
+> +
+
++ 𝜁 E
+
+" 𝐸 (𝑡 ) 
+
+> 𝑖
+
+− 𝐸 max , (𝑡 )
+
+> 𝑖
+
+𝐸 max , (𝑡 )
+
+> 𝑖
+
+#
+
+> +
+
++ 𝜁 M
+
+" 𝑀 (𝑡 ) 
+
+> 𝑖
+
+− 𝑀 max , (𝑡 )
+
+> 𝑖
+
+𝑀 max , (𝑡 )
+
+> 𝑖
+
+#
+
+> +
+
++ 𝜁 S
+
+h
+
+𝑆 min , (𝑡 ) 
+
+> 𝑖
+
+− 𝑆 (𝑡 )
+
+> 𝑖
+
+i 
+
+> +
+
+.
+
+(34) 
+
+The semantic contract fulfillment degree is then defined as 
+
+𝜑 (𝑡 ) 
+
+> 𝑖
+
+= exp (− Ωful , (𝑡 ) 
+
+> 𝑖
+
+). A larger 𝜑 (𝑡 ) 
+
+> 𝑖
+
+indicates better fulfillment, while 𝜑 (𝑡 ) 
+
+> 𝑖
+
+= 1 implies that all requirements are satisfied. The above-defined fulfillment degree provides a direct mea-sure of how well the delivered service aligns with the user’s original semantic expectations. Since both user requirements and system operating conditions may evolve over time, fulfill-ment outcomes can exhibit changes that should be reflected in future scheduling decisions. To enable such adaptation in non-stationary E4NetAI environments, STEPS constructs feedback signals from observed fulfillment outcomes and distinguishes two complementary sources of variation. The first captures changes in user-side semantic requirements over time, whereas the second captures variations in the system’s ability to satisfy semantic contracts under evolving execution conditions. The following definitions formalize these two sources of variation. 
+
+Definition 3. (Semantic Request Drift) Let s(𝑡 ) 
+
+> 𝑖
+
+denote the semantic state of each UD 𝑢 𝑖 defined as 
+
+s(𝑡 ) 
+
+> 𝑖
+
+=
+
+h
+
+(w(𝑡 ) 
+
+> 𝑖
+
+)⊤ , ( ¯g(𝑡 ) 
+
+> 𝑖
+
+)⊤ , 𝜌 (𝑡 )
+
+> 𝑖
+
+i⊤
+
+, (35) 
+
+where ¯g(𝑡 ) 
+
+> 𝑖
+
+is the normalized version of the fulfillment-bound vector g(𝑡 ) 
+
+> 𝑖
+
+. The aggregate semantic state of the incoming requests across all UDs at timeslot 𝑡 is then given by 
+
+¯s(𝑡 ) 
+
+> all
+
+=
+
+( 1   
+
+> |U (𝑡 )|
+
+Í    
+
+> 𝑢 𝑖 ∈U (𝑡 )
+
+s(𝑡 ) 
+
+> 𝑖
+
+, | U (𝑡 ) | > 0,
+
+¯s(𝑡 −1) 
+
+> all
+
+, | U (𝑡 ) | = 0. (36) 
+
+To detect temporal changes in user semantics, STEPS com-pares the average semantic states observed over a recent win-dow and a historical window. In particular, let 𝑊 new and 𝑊 old 
+
+denote the recent and historical time windows, respectively 7.The semantic request drift is defined as 
+
+Δ(𝑡 ) 
+
+> sem
+
+= 1
+
+|𝑊 new |∑︁ 𝜏 ∈𝑊 new 
+
+¯s( 𝜏 ) 
+
+> all
+
+− 1
+
+|𝑊 old |∑︁ 𝜏 ∈𝑊 old 
+
+¯s( 𝜏 )
+
+> all
+> 2
+
+, (37) 
+
+where a larger value of Δ(𝑡 ) 
+
+> sem
+
+indicates a more pronounced shift in the semantic characteristics of incoming service requests. 
+
+Definition 4. (Contract-Fulfillment Drift) Let 𝑃 (𝑡 ) 
+
+> ful
+
+denote the average fulfillment pressure among admitted UDs defined as 
+
+𝑃 (𝑡 ) 
+
+> ful
+
+=
+
+( 1   
+
+> |U s,(𝑡 )|
+
+Í    
+
+> 𝑢 𝑖 ∈U s,(𝑡 )
+
+Ωful , (𝑡 ) 
+
+> 𝑖
+
+, | U s, (𝑡 ) | > 0,
+
+0, | U s, (𝑡 ) | = 0, (38) 
+
+where a larger 𝑃 (𝑡 ) 
+
+> ful
+
+indicates that the system experiences greater difficulty in satisfying the semantic contracts of ad-mitted UDs. To identify the changes in contract-fulfillment capability, STEPS compares the average fulfillment pressure observed over a recent window and a historical window, where the (contract-)fulfillment drift is defined as 
+
+Δ(𝑡 ) 
+
+> ful
+
+= 1
+
+|𝑊 new |∑︁ 𝜏 ∈𝑊 new 
+
+𝑃 ( 𝜏 ) 
+
+> ful
+
+− 1
+
+|𝑊 old |∑︁ 𝜏 ∈𝑊 old 
+
+𝑃 ( 𝜏 ) 
+
+> ful
+
+. (39) 
+
+A larger value of Δ(𝑡 ) 
+
+> ful
+
+indicates a more pronounced change in the system’s contract-fulfillment capability. 
+
+Beyond the above two drift signals, STEPS also incorporates instantaneous system pressure into the feedback mechanism. In particular, the fulfillment pressure 𝑃 (𝑡 ) 
+
+> ful
+
+in (38) reflects the current contract-violation burden among admitted UDs. However, evaluating only admitted UDs may conceal the pressure induced by highly uncertain requests that are rejected during semantic admission. To capture this effect, we define the semantic admission pressure as 
+
+𝑃 (𝑡 ) 
+
+> adm
+
+=
+
+(
+
+1 − |U s, (𝑡 ) ||U (𝑡 ) | , | U (𝑡 ) | > 0,
+
+0, | U (𝑡 ) | = 0. (40) 
+
+Based on the above drift and fulfillment-pressure signals, we define the fulfillment-side feedback signal as 
+
+Ψ(𝑡 ) 
+
+> ful
+
+= 𝛼 𝑠 Δ(𝑡 ) 
+
+> sem
+
++ 𝛼 𝑓 Δ(𝑡 ) 
+
+> ful
+
++ 𝛼 𝑝 𝑃 (𝑡 ) 
+
+> ful
+
+, (41) 
+
+where 𝛼 𝑠 ≥ 0, 𝛼 𝑓 ≥ 0, and 𝛼 𝑝 ≥ 0 are weighting coefficients. In (41), the first two terms capture long-term changes in user semantics and fulfillment capability, whereas the third term reflects the instantaneous fulfillment burden experienced by admitted UDs. Note that 𝑃 (𝑡 ) 
+
+> adm
+
+is intentionally excluded from 
+
+Ψ(𝑡 ) 
+
+> ful
+
+; instead, it is used separately to regulate semantic admis-sion and prevent excessive rejection of uncertain requests. The resulting feedback signals are then used to adapt both edge-side resource coordination and semantic contract management. First, after each timeslot, the ESP updates the resource prices for the next timeslot according to the intended resource demand reflected by the game-output action profile before feasibility realization. This allows the pricing mech-anism to react to latent resource pressure (i.e., the signed mismatch between the intended aggregate resource demand and the available ES capacity before resource capping). In particular, a positive mismatch indicates that the corresponding ES is over-requested by admitted UDs, even though the final realized allocation is later capped by physical resource limits. 
+
+> 7
+
+For early timeslots, when a complete historical window is unavailable, the averages are computed using the available observations. 9
+
+Specifically, 
+
+𝜆 f, (𝑡 +1) 
+
+> 𝑗
+
+=
+
+
+
+𝜆 f, (𝑡 ) 
+
+> 𝑗
+
++ 𝜇 f (1 + 𝜒 (𝑡 ) ) 𝐿 f, (𝑡 ) 
+
+> 𝑗
+
+(afin , (𝑡 ) ) − 𝐹 (𝑡 )
+
+> 𝑗
+
+𝐹 (𝑡 )
+
+> 𝑗
+
+
+
+> 𝜆 fmax
+> 𝜆 fmin
+
+,𝜆 b, (𝑡 +1) 
+
+> 𝑗
+
+=
+
+
+
+𝜆 b, (𝑡 ) 
+
+> 𝑗
+
++ 𝜇 b (1 + 𝜒 (𝑡 ) ) 𝐿 b, (𝑡 ) 
+
+> 𝑗
+
+(afin , (𝑡 ) ) − 𝐵 (𝑡 )
+
+> 𝑗
+
+𝐵 (𝑡 )
+
+> 𝑗
+
+
+
+> 𝜆 bmax
+> 𝜆 bmin
+
+,
+
+(42) 
+
+where 𝜇 f and 𝜇 b are price-update stepsizes, and [·] 𝜆 max  
+
+> 𝜆 min
+
+denotes projection onto the corresponding price interval. The updated prices 𝜆 f, (𝑡 +1) 
+
+> 𝑗
+
+and 𝜆 b, (𝑡 +1) 
+
+> 𝑗
+
+are used as the next-timeslot unit resource prices in the monetary-cost model in (15), and consequently affect the contract-guided service loss and best-response scheduling cost through (22) and (25). Moreover, a larger 𝜒 (𝑡 ) increases the sensitivity of the price-update process to congestion, thereby strengthening edge-side coordination under stronger non-stationarity. In addition to price adaptation, STEPS updates the semantic admission threshold, contract conservativeness factor, and edge coordination gain according to the observed feedback signals as 
+
+𝜏 𝜌, (𝑡 +1) =
+
+h
+
+𝜏 𝜌, (𝑡 )− 𝜇 𝜌 
+
+ Ψ(𝑡 ) 
+
+> ful
+
+− Ψ0
+
++ 𝜇 𝑎 
+
+ 𝑃 (𝑡 ) 
+
+> adm
+
+− 𝑃 adm ,0
+
+i 𝜏 max 
+
+> 𝜏 min
+
+,𝛽 (𝑡 +1) =
+
+h
+
+𝛽 (𝑡 ) + 𝜇 𝛽 
+
+ Ψ(𝑡 ) 
+
+> ful
+
+− Ψ0
+
+i 𝛽 max 
+
+> 𝛽 min
+
+,𝜒 (𝑡 +1) =
+
+h
+
+𝜒 (𝑡 ) + 𝜇 𝜒 
+
+ Ψ(𝑡 ) 
+
+> ful
+
+− Ψ0
+
+i 𝜒 max 
+
+> 𝜒 min
+
+,
+
+(43) 
+
+where Ψ0 denotes the acceptable fulfillment-feedback level and 𝑃 adm ,0 denotes the acceptable admission-pressure level. Moreover, 𝜇 𝜌 , 𝜇 𝑎 , 𝜇 𝛽 , 𝜇 𝜒 ≥ 0 are adaptive-control stepsizes, where 𝜇 𝜌 controls the sensitivity of the semantic admis-sion threshold to fulfillment-side feedback, 𝜇 𝑎 controls the admission-threshold relaxation driven by admission pressure, 
+
+𝜇 𝛽 controls the update speed of the contract conservativeness factor, and 𝜇 𝜒 controls the update speed of the edge coor-dination gain. The updated parameters are used in the next timeslot as follows: 𝜏 𝜌, (𝑡 +1) determines the schedulable UD set through (8), 𝛽 (𝑡 +1) calibrates the scheduling-stage fulfill-ment bounds through (7), and 𝜒 (𝑡 +1) enters the best-response scheduling cost and the potential function through (25) and (27). According to (43), when Ψ(𝑡 ) 
+
+> ful
+
+> Ψ0, the ESP inter-prets this as evidence of deteriorating fulfillment performance and responds by tightening semantic admission, increasing contract conservativeness, and strengthening edge coordina-tion. When 𝑃 (𝑡 ) 
+
+> adm
+
+> 𝑃 adm ,0, the semantic admission threshold is relaxed to avoid excessive rejection of semantically uncertain requests. Consequently, fulfillment pressure and admission pressure influence 𝜏 𝜌, (𝑡 ) in opposite directions, whereas 𝛽 (𝑡 )
+
+and 𝜒 (𝑡 ) are driven solely by fulfillment-side feedback. 
+
+C. Overarching Design 
+
+As explained above, STEPS converts natural language ser-vice requests into semantic contracts, performs contract-guided scheduling for admitted UDs, executes the resulting service decisions, and updates scheduling-control parameters using post-execution feedback. In this way, STEPS establishes a closed-loop scheduling framework that adapts to evolving user requirements and system conditions. The overall procedure is summarized in Alg. 1, comprising the steps below. 
+
+Step 1. Semantic Contract Generation (lines 4–6): At the beginning of each timeslot, each UD submits its task attributes and associated SED. The LLM-assisted semantic 
+
+Algorithm 1: Proposed STEPS                                                                                                                                                                                                         
+
+> 1Input: Task attributes {𝑞 (𝑡 )
+> 𝑖 }, SEDs {L (𝑡 )
+> 𝑖 }, system context 𝜉 (𝑡 ), adaptive control parameters 𝜏 𝜌, (𝑡 ), 𝛽 (𝑡 ), 𝜒 (𝑡 ), and maximum round number 𝐼 max .
+> 2for 𝑡 =1to 𝑇 do
+> 3for 𝑢 𝑖 ∈ U (𝑡 )do
+> 4Parse the SED L (𝑡 )
+> 𝑖 into semantic levels and confidence y(𝑡 )
+> 𝑖 ;
+> 5Generate semantic contract C (𝑡 )
+> 𝑖 ;
+> 6Construct Us,(𝑡 )={𝑢 𝑖 ∈ U (𝑡 ) |𝜌 (𝑡 )
+> 𝑖 ≤𝜏 𝜌, (𝑡 ) };
+> 7for 𝑢 𝑖 ∈ U s,(𝑡 )do
+> 8Calibrate contract bounds by (7);
+> 9Construct feasible action space A (𝑡 )
+> 𝑖 by (19);
+> 10 Initialize action profile a(𝑡 ) (0)and set 𝑟 ←0;
+> 11 repeat
+> 12 Set improved ←false ;
+> 13 Visit UDs in Us,(𝑡 )in an asynchronous order;
+> 14 for each visited UD 𝑢 𝑖 do
+> 15 Evaluate J (𝑡 )
+> 𝑖 in (25) for all 𝑎 (𝑡 )
+> 𝑖 ∈ A (𝑡 )
+> 𝑖 ;
+> 16 𝑎 br ,(𝑡 )
+> 𝑖 ←arg min 𝑎 (𝑡 )
+> 𝑖 ∈A (𝑡 )
+> 𝑖
+> J (𝑡 )
+> 𝑖 (𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 );
+> 17 if J (𝑡 )
+> 𝑖 (𝑎 br ,(𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 )<J (𝑡 )
+> 𝑖 (𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 )then
+> 18 Update 𝑎 (𝑡 )
+> 𝑖 ←𝑎 br ,(𝑡 )
+> 𝑖 ;
+> 19 Set improved ←true ;
+> 20 Update edge loads and congestion penalties by (20)–(23);
+> 21 𝑟 ←𝑟 +1;
+> 22 until improved =false or 𝑟 ≥𝐼 max ;
+> 23 Set afin ,(𝑡 ) ←a(𝑡 ) (𝑟 )as the final intended action profile;
+> 24 Realize feasible service provision by (30)–(32);
+> 25 Execute scheduled tasks and observe execution service outcomes;
+> 26 Compute fulfillment feedback by (34), drifts by (37)–(39), admission pressure by (40), and fulfillment-side feedback by (41);
+> 27 Update edge prices for the next timeslot by (42);
+> 28 Update 𝜏 𝜌, (𝑡 +1),𝛽 (𝑡 +1), and 𝜒 (𝑡 +1)by (43);
+> 29 Return: {x(𝑡 ),f(𝑡 ),b(𝑡 ) }, updated prices, and updated adaptive parameters.
+
+parser extracts semantic service levels and parsing confidence, which are subsequently mapped into semantic contract C (𝑡 ) 
+
+> 𝑖
+
+.
+
+Step 2. Semantic Admission and Feasible Action-Space Construction (lines 7–10): The ESP first constructs the schedulable UD set Us, (𝑡 ) according to the semantic uncer-tainty threshold 𝜏 𝜌, (𝑡 ) . For each admitted UD, STEPS cali-brates the fulfillment bounds using the semantic uncertainty 
+
+𝜌 (𝑡 ) 
+
+> 𝑖
+
+and contract conservativeness factor 𝛽 (𝑡 ) , and then con-structs the corresponding feasible action space A (𝑡 ) 
+
+> 𝑖
+
+according to (19). This action space contains the candidate local- and edge-execution decisions that can be evaluated in the subse-quent best-response updates. 
+
+Step 3. Potential Game and Asynchronous Best Response (lines 11–23): STEPS initializes the action profile and uses the asynchronous strict best-response rule in (29) as a distributed local-improvement method for the per-slot surrogate problem 
+
+P (𝑡 ) 
+
+> pg
+
+in (28). During each update round, admitted UDs are visited sequentially in an asynchronous order, and each visited UD updates its action if the best response strictly reduces its scheduling cost J (𝑡 ) 
+
+> 𝑖
+
+. Due to the exact-potential construction, such an action also decreases the surrogate objective Φ(𝑡 ) . The process terminates when a complete update round produces no strict improvement or when the maximum round number 𝐼 max 
+
+is reached. The resulting action profile provides the intended 
+
+EN selections and resource-allocation requests. 
+
+Step 4. Feasibility Realization and Execution (lines 24–26): 
+
+The intended decisions are converted into physically feasible resource allocations through the realization mechanism. Based on the resulting computing and bandwidth assignments, the tasks are executed and the actual delay, energy consumption, monetary cost, and T4E outcomes are observed. 
+
+Step 5. Execution Feedback (line 27): The ESP computes 10 
+
+the fulfillment deviation Ωful , (𝑡 ) 
+
+> 𝑖
+
+and fulfillment degree 𝜑 (𝑡 ) 
+
+> 𝑖
+
+for each admitted UD. It then evaluates semantic request drift, fulfillment drift, fulfillment pressure, and admission pressure. 
+
+Step 6. Adaptive Scheduling-Control Update (lines 28– 29): Finally, STEPS closes the feedback loop by updating the scheduling-control parameters for the next timeslot. Resource prices are first adjusted according to the intended resource demand reflected by the game outcome. The contract conser-vativeness factor and edge coordination gain are then updated using the fulfillment-side feedback signal, while the semantic admission threshold is updated according to both fulfillment-side feedback and admission pressure. 
+
+D. Key Properties 
+
+We next summarize several key properties of STEPS. Recall that the original problem P is transformed into a distributed per-slot scheduling game through the penalized surrogate formulation introduced in Section IV-A. The following results characterize the equilibrium structure, convergence behavior, and stability properties of the proposed game-based scheduling mechanism. We note that for each timeslot 𝑡 , all pre-decision system states and adaptive-control parameters are fixed during the per-slot game G (𝑡 ) , and the interaction among UDs within the game arises only through the ES-side congestion penalties. 
+
+Theorem 1. (Exact Potential Property of STEPS) For each timeslot 𝑡 , the contract-guided scheduling game G (𝑡 ) is an exact potential game with the potential function Φ(𝑡 ) (a(𝑡 ) )
+
+defined in (27) . Specifically, for any UD 𝑢 𝑖 ∈ U s, (𝑡 ) , fixed 
+
+a(𝑡 )−𝑖 , and any two feasible actions 𝑎 (𝑡 ) 
+
+> 𝑖
+
+, b𝑎 (𝑡 ) 
+
+> 𝑖
+
+∈ A (𝑡 ) 
+
+> 𝑖
+
+, we have 
+
+J (𝑡 ) 
+
+> 𝑖
+
+(b𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ) − J (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ) = Φ (𝑡 ) (b𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ) − Φ(𝑡 ) (𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ).
+
+Theorem 2. (Existence of Pure-Strategy Nash Equilibrium) For each timeslot 𝑡 , the contract-guided scheduling game G (𝑡 )
+
+admits at least one pure-strategy Nash equilibrium. 
+
+Theorem 3. (Finite-Step Convergence Under Best Response) For each timeslot 𝑡 , consider the asynchronous strict best-response process defined in (29) for G (𝑡 ) . If the process terminates only when a full update round produces no strict improvement, then it converges in finite steps to a pure-strategy Nash equilibrium of the per-slot surrogate game. 
+
+Theorem 4. (Boundedness of Adaptive Control Parameters) For all timeslots 𝑡 ∈ T , the adaptive control parameters satisfy 
+
+𝜏 𝜌, (𝑡 ) ∈ [ 𝜏 min , 𝜏 max ], 𝛽 (𝑡 ) ∈ [ 𝛽 min , 𝛽 max ], and 𝜒 (𝑡 ) ∈ [ 𝜒 min , 𝜒 max ].Moreover, if the resource-price updates employ bounded pro-jection, then the resource prices also remain within their prescribed intervals. 
+
+For brevity, the detailed computational complexity analysis of Alg. 1 and the proofs of Theorems 1–4 are provided in the Appendix A. V. N UMERICAL EVALUATIONS 
+
+A. Experimental Setting 
+
+We evaluate STEPS under both synthetic and trace-driven real-world settings, with all results averaged over 30 indepen-dent Monte Carlo trials unless otherwise specified. Natural-language requests are generated from semantic templates cov-ering latency, energy, monetary cost, and T4E requirements, while ambiguous, conflicting, and out-of-scope requests are in-jected with ratio 𝑟 unc ∈ [ 0, 0.5] to emulate semantic uncertainty.                                                                                
+
+> TABLE I SIMULATION SETTINGS .
+> Aspect Setting
+> Network Topology 800 ×800 m2area; | E | =8by default; 50 –300 UDs. Wireless and Computing Resources
+> 𝑁 0=−174 dBm /Hz ;bandwidth 20 –40 MHz ;transmit power 10 –200 mW ; local/edge CPU 0.5–2.0
+> /20 –80 GHz .Task and Trust Settings Data size 5–20 MB ; workload 0.5–5.0×10 9cycles; trust score 0.4–1.0.Semantic Requests Four dimensions: delay, energy, monetary cost, and T4E; three levels: low, medium, high; 𝑟 unc ∈ [ 0,0.5].Non-Stationarity Semantic-preference shift and workload fluctuation with drift intensity of 0.6.LLM Parser Qwen3.5-4B served locally through Ollama; cached template-level parsing. Parser Confidence Average confidence 0.723 ; normal/uncertain-template confidence 0.828 /0.357 on average. STEPS Configuration 𝜏 𝜌
+> 0=0.86 ,𝜏 𝜌
+> min =0.55 ,𝛽 0=0.50 ,𝜒 0=1.5,𝛾 𝑓 =
+> 𝛾 𝑏 =10 , resource packages {0.04 ,0.08 ,0.14 }.Evaluation Settings 𝑇 =100 ;30 Monte Carlo trials; 𝐼 max =20 ; violation tolerance 𝜖 v=0.10 .
+
+For non-stationary evaluation, a drift event is introduced at timeslot 𝑡 d = 50 , after which the template-sampling distribution is shifted toward stricter service expectations and the task data size and computation workload are scaled with drift intensity 
+
+𝜂 d = 0.6. Semantic parsing is performed by Qwen3.5-4B served locally through Ollama, where Ollama is used only as the inference runtime rather than as a separate parser model. The parser outputs semantic service levels and parsing confidence, which are used to generate semantic contracts, and template-level parsing results are cached for reproducibility. All exper-iments are conducted on a workstation equipped with a 12th Gen Intel Core i9-12900H CPU and an NVIDIA GeForce RTX 3060 GPU. Following representative studies [14], [17], [19], [23], key simulation parameters are summarized in Table I. 
+
+B. Benchmark Methods 
+
+We compare STEPS with five representative benchmarks: (i) Param-Opt is a parameter-driven optimization baseline imple-mented following conventional edge AI resource scheduling studies [14]. It assumes that numerical service requirements, such as delay bounds, energy budgets, and monetary-cost limits are directly available from the ground-truth request tem-plates. (ii) Direct-LLM is an LLM-enabled intent-translation baseline implemented following service configuration meth-ods [7]. It maps natural language requests into scheduling parameters without explicitly modeling semantic uncertainty or contract calibration. (iii) DRL-Opt is a hybrid deep rein-forcement learning (DRL)-and-optimization baseline follow-ing learning-aided edge resource scheduling studies [14]. A DRL policy first selects ENs and resource levels, after which an optimization-based repair step enforces capacity feasibility. 
+
+(iv) Intent-Reconf is a violation-triggered intent management baseline following intent-driven resource management stud-ies [18]. It monitors post-execution service violations and triggers corrective actions, such as task migration, resource scaling, or local fallback, rather than proactively calibrating se-mantic contracts before scheduling. (v) GAH is a generalized-assignment heuristic baseline following edge LLM scheduling studies [24]. It assigns service tasks to ENs under resource-capacity constraints using a generalized assignment heuristic. We also evaluate two ablation variants of STEPS: NoCal 
+
+removes semantic admission and uncertainty-aware calibration by setting 𝜏 𝜌, (𝑡 ) = 1 and 𝛽 (𝑡 ) = 0; NoEvo disables fulfillment-driven evolution by fixing 𝜏 𝜌, (𝑡 ) = 1, 𝛽 (𝑡 ) = 𝛽 0, and 𝜒 (𝑡 ) = 𝜒 0,while retaining fixed uncertainty-aware calibration. 11 runc                    
+
+> (a)
+> 00.1 0.2 0.3 0.4 0.5
+> AFD
+> 0.2
+> 0.4
+> 0.6
+> runc
+> (b)
+> 00.1 0.2 0.3 0.4 0.5
+> CVR
+> 0.8
+> 0.9
+> 1
+> runc
+> (c)
+> 00.1 0.2 0.3 0.4 0.5
+> ACSL
+> 0
+> 10
+> 20
+> 30
+> runc
+> (d)
+> 00.1 0.2 0.3 0.4 0.5
+> SAR
+> 0.94
+> 0.96
+> 0.98
+> 1
+> 1.02
+
+Param-Opt Direct-LLM DRL-Opt Intent-Reconf GAH STEPS  
+
+> Fig. 2. Impact of semantic uncertainty on various performance metrics: (a) AFD, (b) CVR, (c) ACSL, and (d) SAR.
+
+C. Evaluation Protocol and Performance Metrics 
+
+For fair comparison, all methods are evaluated under the same network topology, task workloads, wireless conditions, edge resource states, and request templates. Fulfillment-related metrics are computed using the same template-derived se-mantic contracts and task attributes, rather than method-dependent internal bounds, to avoid biased self-assessment. Let I𝑚 = {( 𝑖, 𝑡 ) | 𝑢 𝑖 is served under method 𝑚 at timeslot 𝑡 } de-note the served user–timeslot pairs of method 𝑚 . We consider the following performance metrics (for methods without se-mantic admission, all UDs are treated as admitted): 
+
+1) Semantic Contract Fulfillment and Admission: We use average fulfillment degree (AFD), contract violation rate (CVR), average contract-guided service loss (ACSL), and semantic admission ratio (SAR) to evaluate contract fulfill-ment and semantic admission behavior. Specifically, AFD 𝑚 = 
+
+> 1
+> | I 𝑚 |
+
+Í(𝑖,𝑡 ) ∈ I 𝑚 𝜑 (𝑡 ) 
+
+> 𝑖
+
+measures the average semantic contract ful-fillment degree, where a larger value indicates better fulfill-ment. To avoid over-counting negligible deviations, CVR is defined as CVR 𝑚 = 1 
+
+> | I 𝑚 |
+
+Í(𝑖,𝑡 ) ∈ I 𝑚 I{Ωful , (𝑡 )   
+
+> 𝑖 >𝜖 v}
+
+, where 𝜖 v = 0.10 
+
+unless otherwise specified. A smaller CVR indicates fewer significant contract violations. Since CVR only measures the frequency of threshold-exceeding fulfillment deviations, rather than their magnitude or the overall service quality, it is interpreted jointly with ACSL. Specifically, ACSL 𝑚 = 
+
+> 1
+> | I 𝑚 |
+
+Í(𝑖,𝑡 ) ∈ I 𝑚 𝐽 (𝑡 ) 
+
+> 𝑖, eval
+
+measures the contract-guided service loss computed using the reference preferences and original fulfill-ment bounds. Since STEPS includes semantic admission, we further report SAR 𝑚 = 1
+
+> 𝑇
+
+Í𝑇 𝑡 =1       
+
+> | U s,(𝑡 )
+> 𝑚 || U (𝑡 )|
+
+to quantify the admission cost associated with fulfillment improvement. 
+
+2) Service Efficiency and Online Scalability: We use average service delay (ASD) and running time (RT) to evaluate service efficiency and online scheduling overhead. ASD is defined as ASD 𝑚 = 1 
+
+> | I 𝑚 |
+
+Í(𝑖,𝑡 ) ∈ I 𝑚 𝐷 (𝑡 ) 
+
+> 𝑖
+
+, where 𝐷 (𝑡 ) 
+
+> 𝑖
+
+is the end-to-end delay under the final feasible allocation. RT denotes the average computational time required to complete one per-slot scheduling decision, excluding semantic parsing time. 
+
+3) Non-Stationary Drift Adaptation: To evaluate adapta-tion under non-stationary conditions, we introduce semantic-preference and workload shifts at timeslot 𝑡 d. We report the moving-average AFD, CVR, and ACSL to characterize how different methods respond to such shifts over time. For a generic metric 𝑀 ∈ AFD , CVR , ACSL , its moving-average value is defined as e𝑀 (𝑡 ) 
+
+> 𝑚
+
+= 1 
+
+> | W 𝑡 |
+
+Í𝜏 ∈ W 𝑡 𝑀 ( 𝜏 ) 
+
+> 𝑚
+
+, where W𝑡 is the sliding window ending at timeslot 𝑡 . Based on the moving-average ACSL, the post-drift cumulative-average ACSL is defined as 
+
+PD -ACSL (𝑡 ) 
+
+> 𝑚
+
+= 1 
+
+> 𝑡 −𝑡 d+1
+
+Í𝑡 𝜏 =𝑡 d
+
+ACSL ( 𝜏 ) 
+
+> 𝑚
+
+, 𝑡 ≥ 𝑡 d. A smaller PD -ACSL 
+
+indicates lower accumulated post-drift service loss. 
+
+D. Synthetic Experiments 1) Impact of Semantic Uncertainty: We first evaluate the robustness of different methods under increasing semantic uncertainty. As specified in Section V-A and Table I, the uncertain-request ratio 𝑟 unc controls the fraction of ambigu-ous, conflicting, or out-of-scope natural language requests. Fig. 2(a) shows that the AFD of most methods decreases as 
+
+𝑟 unc increases, since uncertain requests make it more difficult to infer reliable service preferences and fulfillment bounds. Param-Opt and Direct-LLM achieve relatively high AFD under low uncertain-request ratios, as Param-Opt relies on template-provided numerical requirements and Direct-LLM directly translates natural language requests into scheduling parame-ters. However, their fulfillment performance degrades more rapidly as 𝑟 unc increases. In contrast, STEPS maintains a more stable AFD by incorporating parsing confidence into semantic contract generation and contract-guided scheduling. Fig. 2(b) reports the CVR under the significant violation tolerance 
+
+𝜖 v = 0.10 . As 𝑟 unc increases, most methods suffer from higher violation rates, indicating that ambiguous requests increase the likelihood of mismatch between inferred contracts and realized service outcomes. Since CVR only reflects the frequency of significant deviations, we further use ACSL to evaluate the severity of contract-guided service loss. Fig. 2(c) further reports the ACSL, which measures the severity of contract-guided service loss. STEPS achieves ACSL comparable to Direct-LLM and clearly lower than Param-Opt, DRL-Opt, Intent-Reconf, and GAH across all uncertain-request ratios. This suggests that direct LLM-based translation can reduce aggregate service loss under controlled semantic templates, while STEPS achieves similar loss reduction through an ex-plicit semantic-contract interface rather than directly mapping natural language requests into scheduling parameters. Fig. 2(d) reports the SAR of different methods. Since methods without semantic admission accept tasks associated with all service requests, their SAR remains close to one. For STEPS, SAR slightly decreases as 𝑟 unc increases, indicating that semantic admission becomes more selective under higher uncertainty. Nevertheless, SAR remains high even when 𝑟 unc = 0.5,showing that STEPS improves fulfillment robustness without relying on excessive rejection of uncertain requests. Com-bining Fig. 2 (a)–(d), STEPS provides more reliable overall fulfillment behavior by maintaining stable AFD, low CVR, competitive ACSL, and controlled semantic admission under increasing semantic uncertainty. 
+
+2) Scalability Under Different Problem Scales: We next evaluate the scalability of STEPS under different problem scales. Specifically, the four scales are defined as S1 :
+
+(|U (𝑡 ) |, |E|) = (50 , 2), S2 : (100 , 4), S3 : (200 , 8), and 
+
+S4 : (300 , 12 ). These settings jointly increase the numbers of UDs and ESs, leading to progressively larger scheduling instances. Fig. 3(a) shows that STEPS maintains stable and high AFD across all scales. Compared with other baselines such as DRL-Opt, Intent-Reconf, and GAH, STEPS achieves better fulfillment performance because it jointly considers se-mantic preferences, fulfillment bounds, and edge-side resource contention. Param-Opt and Direct-LLM also achieve favorable AFD due to their parameter-driven scheduling structures, 12  
+
+> Fig. 3. Scalability under different problem scales: (a) AFD, (b) ACSL, (c) RT, and (d) ASD.
+
+but they do not explicitly account for semantic uncertainty or fulfillment-driven contract evolution. Fig. 3(b) compares ACSL under different scales, where STEPS achieves ACSL comparable to Param-Opt and Direct-LLM, while substantially outperforming DRL-Opt, Intent-Reconf, and GAH. This ver-ifies that contract-guided scheduling can effectively control semantic contract service loss in larger edge systems. The performance gap between STEPS and the non-contract base-lines suggests that explicitly modeling semantic preferences, fulfillment bounds, and uncertainty is critical for natural language-driven edge scheduling. Fig. 3(c) reports RT: as the problem scale increases, RT grows due to enlarged action spaces and stronger resource contention. STEPS incurs higher computational overhead than lightweight baselines such as GAH and Intent-Reconf, but remains comparable to Param-Opt and Direct-LLM. This indicates that introducing semantic contracts and asynchronous best-response updates remains computationally manageable for online scheduling, especially considering the substantial reduction in ACSL. Fig. 3(d) presents ASD, where STEPS achieves delay close to Param-Opt and Direct-LLM, and significantly lower than DRL-Opt, Intent-Reconf, and GAH. This indicates that STEPS reduces semantic contract service loss without causing excessive delay degradation. Overall, Fig. 3 demonstrates that STEPS remains scalable as the numbers of UDs and ESs increase, achieving a favorable balance among fulfillment quality, scheduling overhead, and service delay. 
+
+3) Adaptation Under Non-Stationary Drift: As shown in Fig. 4, a drift event is introduced at 𝑡 d = 50 , as marked by the vertical dashed line. After the drift, UD semantic preferences and workload conditions change, causing a mismatch between prior scheduling behavior and new fulfillment requirements. Fig. 4(a) shows the moving-average AFD over time. Before the drift, Param-Opt, Direct-LLM, and STEPS achieve rel-atively high fulfillment degrees. After the drift, all methods experience a clear AFD decrease, indicating that the drift alters the service-fulfillment conditions. STEPS maintains higher post-drift fulfillment performance because its adaptive control parameters are updated according to fulfillment feedback. Fig. 4(b) reports the moving-average CVR, which increases after the drift for all methods, indicating that non-stationary semantic and workload changes introduce additional violation pressure. Since CVR reflects the occurrence rather than the magnitude of significant deviations, we further examine ACSL and post-drift cumulative-average ACSL. Fig. 4(c) shows that the ACSL of all methods increases after the drift, where STEPS maintains one of the lowest ACSL values during the post-drift period and outperforms DRL-Opt, Intent-Reconf, and GAH. This demonstrates that fulfillment-driven adaptive updates help adjust semantic admission, contract conserva-tiveness, and edge coordination to the changing environment. Fig. 4(d) further reports post-drift cumulative-average ACSL, where STEPS consistently achieves low cumulative-average     
+
+> TABLE II ABLATION STUDY RESULTS (MEAN ±STANDARD DEVIATION )
+> Method
+
+AFD ↑ CVR ↓ ACSL ↓ SAR                                                                                 
+
+> NoCal 0.267 ±0.017 0.958 ±0.011 15 .647 ±0.320 1.000 ±0.000
+> NoEvo 0.277 ±0.017 0.951 ±0.013 15 .568 ±0.321 1.000 ±0.000
+> STEPS 0.300 ±0.017 0.948 ±0.012 14 .473 ±0.340 0.905 ±0.004
+> TABLE III TRACE -DRIVEN HYBRID EVALUATION ON MELBOURNE CBD.
+> Method AFD ↑CVR ↓ACSL ↓ASD ↓RT ↓Post-ACSL ↓
+> Param-Opt 0.3727 0.9506 4.2859 1.3544 1.3290 19 .6168
+> Direct-LLM 0.3587 0.9536 4.3792 1.3923 1.3152 19 .7405
+> DRL-Opt 0.2741 0.8905 20 .2877 3.0571 0.1036 39 .2660
+> Intent-Reconf 0.2748 0.8536 22 .7815 3.5088 0.1718 41 .5401
+> GAH 0.2440 0.8604 23 .0266 3.6312 0.0914 38 .6770
+> STEPS 0.3688 0.9485 4.2142 1.3832 1.2986 18 .7764
+
+ACSL throughout the post-drift period and outperforms DRL-Opt, Intent-Reconf, and GAH. Compared with Direct-LLM, STEPS sustains lower post-drift service loss by explicitly updating contract-related control parameters instead of using fixed semantic-to-parameter mappings. 
+
+4) Ablation Study: To examine the contribution of the key modules in STEPS, we conduct an ablation study. As shown in Table II, NoCal yields the lowest AFD and the highest ACSL, although it admits all requests. This indicates that di-rectly using parsed semantic requirements without uncertainty-aware calibration can lead to inaccurate fulfillment targets and inefficient scheduling. NoEvo improves over NoCal, showing the benefit of fixed uncertainty-aware contract calibration. However, because all adaptive updates are disabled, NoEvo cannot adapt contract conservativeness or edge coordination according to fulfillment feedback, nor can it dynamically regulate semantic admission under changing uncertainty. The complete STEPS framework achieves the highest AFD and the lowest CVR and ACSL. Although its SAR is lower than those of NoCal and NoEvo, STEPS still maintains a high admission ratio while substantially reducing ACSL. This confirms that the performance gain of STEPS is attributed to uncertainty-aware contract calibration and fulfillment-driven adaptation rather than excessive request rejection. 
+
+E. Experiments on a Real-World Dataset 
+
+We next conduct an evaluation using the EUA dataset [31]. We select 300 UDs and 12 edge sites from the Melbourne central business district (CBD) topology, where the aver-age and maximum nearest-edge distances are 181 .574 mand 367 .711 m, respectively. Table III presents the results, where STEPS achieves the lowest ACSL and post-drift ACSL among all methods, demonstrating that semantic contract-guided scheduling remains effective under realistic spatial distributions of UDs and edge sites. Although Param-Opt obtains a slightly higher AFD and lower ASD due to its access to template-derived numerical service requirements, STEPS reduces ACSL from 4.2859 to 4.2142 and post-drift ACSL from 19 .6168 to 18 .7764 . Meanwhile, Intent-Reconf and GAH obtain lower CVR but much higher ACSL, indicating that CVR only measures the frequency of threshold-exceeding 13 Timeslot t                       
+
+> (a)
+> 020 40 60 80 100
+> AFD
+> 0
+> 0.2
+> 0.4
+> 0.6
+> Drift
+> Timeslott
+> (b)
+> 020 40 60 80 100
+> CVR
+> 0.4
+> 0.6
+> 0.8
+> 1
+> Drift
+> Timeslott
+> (c)
+> 020 40 60 80 100
+> ACSL
+> 0
+> 10
+> 20
+> 30
+> 40
+> Drift
+> Timeslott
+> (d)
+> 50 60 70 80 90 100
+> Cumulative
+> post-drift ACSL
+> 0
+> 10
+> 20
+> 30
+> 40
+> Drift
+
+Param-Opt Direct-LLM DRL-Opt Intent-Reconf GAH STEPS 
+
+Fig. 4. Adaptation under non-stationary drift: (a) moving-average AFD, (b) moving-average CVR, (c) moving-average ACSL, and (d) post-drift cumulative-average ACSL. 
+
+deviations and does not capture violation severity or overall contract-guided service quality. These results show that STEPS improves contract-guided service loss and post-drift robustness without introducing excessive scheduling time or service delay. VI. C ONCLUSION 
+
+In this paper, we proposed STEPS, a semantic contract-guided adaptive scheduling framework for natural language-driven E4NetAI. STEPS introduces the semantic contract as an executable interface between natural language requests and resource-constrained edge scheduling, capturing service pref-erences, fulfillment bounds, and semantic uncertainty. Based on these contracts, we formulated contract-guided schedul-ing under communication/computation constraints and trans-formed the per-slot problem into an exact potential game, enabling distributed EN selection and service provisioning. To handle non-stationary environments, STEPS further uses execution feedback to update semantic admission, contract conservativeness, and edge coordination. The theoretical anal-ysis established the existence of a pure-strategy equilibrium, finite-step convergence of the asynchronous best-response dynamics, and boundedness of the adaptive control param-eters. Synthetic and real-world-inspired experiments showed that STEPS reduces contract-guided service loss, maintains competitive fulfillment performance, and improves post-drift robustness with acceptable execution and delay overhead. REFERENCES [1] Y. Mao, X. Yu, K. Huang, Y.-J. A. Zhang, and J. Zhang, “Green edge AI: A contemporary survey,” Proc. IEEE , vol. 112, no. 7, pp. 880–911, 2024. [2] Y. He, X. Li, and J. Luo, “Task-oriented integrated sensing and semantic communications for multi-device video analytics,” IEEE Trans. Mobile Comput. , vol. 25, no. 5, pp. 7323–7337, 2026. [3] N. Jia, Z. Qu, B. Ye, Y. Wang, S. Hu, and S. Guo, “A comprehensive survey on communication-efficient federated learning in mobile edge environments,” IEEE Commun. Surveys Tut. , vol. 27, no. 6, pp. 3710– 3741, 2025. [4] Y. Wang, J. Fang, Y. Cheng, H. She, Y. Guo, and G. Zheng, “Cooperative end-edge-cloud computing and resource allocation for digital twin enabled 6G industrial IoT,” IEEE J. Sel. Topics Signal Process. , vol. 18, no. 1, pp. 124–137, 2024. [5] H. Qi, M. Liwang, S. Hosseinalipour, L. Fu, S. Zou, and W. Ni, “Future resource bank for ISAC: Achieving fast and stable win-win matching for both individuals and coalitions,” IEEE J. Sel. Areas Commun. , vol. 44, pp. 513–530, 2026. [6] W. Fan, F. Xiao, Y. Pan, X. Chen, L. Han, and S. Yu, “Latency-aware joint task offloading and energy control for cooperative mobile edge computing,” IEEE Trans. Serv. Comput. , no. 3, pp. 1515–1528, 2025. [7] A. Mekrache and A. Ksentini, “LLM-enabled intent-driven service configuration for next generation networks,” in 2024 IEEE Int. Conf. Netw. Softwarization (NetSoft) , pp. 253–257, IEEE, 2024. [8] A. S. Jacobs, R. J. Pfitscher, R. H. Ribeiro, R. A. Ferreira, L. Z. Granville, W. Willinger, and S. G. Rao, “Hey, Lumi! using natural language for {intent-based } network management,” in 2021 Usenix Annu. Tech. Conf. (Usenix atc 21) , pp. 625–639, 2021. [9] Z. Ji and Z. Qin, “Computational offloading in semantic-aware cloud-edge-end collaborative networks,” IEEE J. Sel. Topics Signal Process. ,vol. 18, no. 7, pp. 1235–1248, 2024. [10] Y. Wang, C. Yang, T. Li, Y. Ouyang, X. Mi, and Y. Song, “A survey on intent-driven end-to-end 6G mobile communication system,” IEEE Commun. Surveys Tut. , vol. 28, pp. 882–915, 2026. [11] K. Zhang, H. He, S. Song, J. Zhang, and K. B. Letaief, “Communication-efficient distributed on-device LLM inference over wireless networks,” 
+
+IEEE J. Sel. Topics Signal Process. , vol. 19, no. 7, pp. 1301–1317, 2025. [12] S. Zhang, G. Cheng, W. Wu, X. Huang, L. Song, and X. Shen, “Split fine-tuning for large language models in wireless networks,” IEEE J. Sel. Topics Signal Process. , vol. 19, no. 7, pp. 1376–1391, 2025. [13] X. Qin, M. Sun, J. Dai, P. Ma, Y. Cao, J. Zhang, J. Wang, X. Xu, P. Zhang, and D. Niyato, “Generative AI meets wireless networking: An interactive paradigm for intent-driven communications,” IEEE Trans. Cogn. Commun. Netw. , vol. 11, no. 4, pp. 2056–2077, 2025. [14] X. Li and S. Bi, “Optimal AI model splitting and resource allocation for device-edge co-inference in multi-user wireless sensing systems,” IEEE Trans. Wireless Commun. , vol. 23, no. 9, pp. 11094–11108, 2024. [15] M. Kalntis, G. Iosifidis, and F. A. Kuipers, “Adaptive resource allocation for virtualized base stations in O-RAN with online learning,” IEEE Trans. Commun. , vol. 73, no. 3, pp. 1787–1800, 2024. [16] A. Mekrache, A. Ksentini, and C. Verikoukis, “Intent-based management of next-generation networks: An LLM-centric approach,” IEEE Netw. ,vol. 38, no. 5, pp. 29–36, 2024. [17] Z. Wang, S. Lin, G. Yan, S. Ghorbani, M. Yu, J. Zhou, N. Hu, L. Baruah, S. Peters, S. Kamath, et al. , “Intent-driven network management with multi-agent LLMs: The confucius framework,” in Proc. ACM SIG-COMM 2025 Conf. , pp. 347–362, 2025. [18] N. Akbari, J. Grundy, A. Cheema, and A. N. Toosi, “Intentcontinuum: Using LLMs to support intent-based computing across the compute continuum,” in IEEE Int. Con. Web Serv. , pp. 573–583, 2025. [19] Y. Sun, Y. Liu, S. Guo, R. Zhang, F. Qi, X. Qiu, W. Gong, D. Niyato, and Q. Wu, “IGAA: Intent-driven general agentic AI for edge services scheduling using generative meta learning,” arXiv:2601.13702 , 2026. [20] M. Xu, H. Du, D. Niyato, J. Kang, Z. Xiong, S. Mao, Z. Han, A. Jamalipour, D. I. Kim, X. Shen, et al. , “Unleashing the power of edge-cloud generative AI in mobile networks: A survey of AIGC services,” 
+
+IEEE Commun. Surveys Tut. , vol. 26, no. 2, pp. 1127–1170, 2024. [21] G. Qu, Q. Chen, W. Wei, Z. Lin, X. Chen, and K. Huang, “Mobile edge intelligence for large language models: A contemporary survey,” IEEE Commun. Surveys Tut. , vol. 27, no. 6, pp. 3820–3860, 2025. [22] P. Abdisarabshali, F. Nadimi, K. Borazjani, N. Khosravan, M. Liwang, W. Ni, D. Niyato, M. Langberg, and S. Hosseinalipour, “Hierarchical federated foundation models over wireless networks for multi-modal multi-task intelligence: Integration of edge learning with D2D/P2P-enabled fog learning architectures,” IEEE Commun. Mag. , vol. 64, no. 4, pp. 66–72, 2026. [23] W. Xiao, Y. Hao, J. Liang, L. Hu, S. A. Alqahtani, and M. Chen, “Adaptive compression offloading and resource allocation for edge vision computing,” IEEE Trans. Cogn. Commun. Netw. , vol. 10, no. 6, pp. 2357–2369, 2024. [24] X. Zhang, J. Nie, Y. Huang, G. Xie, Z. Xiong, J. Liu, D. Niyato, and X. Shen, “Beyond the cloud: Edge inference for generative large language models in wireless networks,” IEEE Trans. Wireless Commun. ,vol. 24, no. 1, pp. 643–658, 2025. [25] B. Ganguly and V. Aggarwal, “Online federated learning via non-stationary detection and adaptation amidst concept drift,” IEEE/ACM Trans. Netw. , vol. 32, no. 1, pp. 643–653, 2024. [26] V. Gudepu, V. R. Chintapalli, P. Castoldi, L. Valcarenghi, B. R. Tamma, and K. Kondepu, “The drift handling framework for open radio ac-cess networks: An experimental evaluation,” Comput. Netw. , vol. 243, p. 110290, 2024. [27] N. Uzlaner, T. Raviv, N. Shlezinger, and K. Todros, “Asynchronous online adaptation via modular drift detection for deep receivers,” IEEE Trans. Wireless Commun. , vol. 24, no. 5, pp. 4454–4468, 2025. [28] M. Ameur, B. Brik, and A. Ksentini, “Dual self-attention is what you need for model drift detection in 6G networks,” IEEE Trans. Mach. Learn. Commun. Netw. , vol. 3, pp. 690–709, 2025. [29] R. W. Rosenthal, “A class of games possessing pure-strategy nash equilibria,” Int. J. Game Theory , vol. 2, p. 65–67, Dec. 1973. [30] F. P. Kelly, A. K. Maulloo, and D. K. H. Tan, “Rate control for commu-nication networks: shadow prices, proportional fairness and stability,” J. Oper. Res. Soc. , vol. 49, no. 3, pp. 237–252, 1998. [31] Q. He, G. Cui, X. Zhang, F. Chen, S. Deng, H. Jin, Y. Li, and Y. Yang, “A game-theoretical approach for user allocation in edge computing environment,” IEEE Trans. Parallel Distrib. Syst. , vol. 31, no. 3, pp. 515– 529, 2020. 14 
+
+APPENDIX ASUPPLEMENTARY ANALYSIS OF STEPS 
+
+A. Computational Complexity of STEPS 
+
+The computational complexity of STEPS is dominated by the asynchronous best-response procedure. Specifically, for each admitted UD 𝑢 𝑖 , the size of its action space is 
+
+|A (𝑡 ) 
+
+> 𝑖
+
+| = O
+
+
+
+|E 0 ||R f ||R b |
+
+
+
+, where |R f | and |R b | denote the maximum cardinalities of computing-resource and bandwidth-resource package sets. During each update round, every ad-mitted UD evaluates all candidate actions once. Therefore, the complexity of a 𝐼 max update rounds (i.e., the overall per-slot complexity) is O
+
+
+
+𝐼 max |U s, (𝑡 ) ||E 0 ||R f ||R b |
+
+
+
+. In addition, semantic parsing and contract generation are performed once for each incoming UD. As a result, the corresponding overhead scales linearly with |U (𝑡 ) |, excluding the internal inference cost of the selected LLM parser. Consequently, the dominant computational burden of STEPS arises from the contract-guided game-solving process rather than semantic contract construction. 
+
+B. Proofs of Key Properties 
+
+Theorem 1. (Exact Potential Property of STEPS) For each timeslot 𝑡 , the contract-guided scheduling game G (𝑡 ) is an exact potential game with the potential function Φ(𝑡 ) (a(𝑡 ) )
+
+defined in (27) . Specifically, for any UD 𝑢 𝑖 ∈ U s, (𝑡 ) , fixed 
+
+a(𝑡 )−𝑖 , and any two feasible actions 𝑎 (𝑡 ) 
+
+> 𝑖
+
+, b𝑎 (𝑡 ) 
+
+> 𝑖
+
+∈ A (𝑡 ) 
+
+> 𝑖
+
+, we have J (𝑡 ) 
+
+> 𝑖
+
+(b𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ) − J (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ) = Φ (𝑡 ) (b𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ) − 
+
+Φ(𝑡 ) (𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ).
+
+Proof. Consider an arbitrary timeslot 𝑡 . Fix a(𝑡 )−𝑖 and suppose that UD 𝑢 𝑖 changes its action from 𝑎 (𝑡 ) 
+
+> 𝑖
+
+to b𝑎 (𝑡 ) 
+
+> 𝑖
+
+. To establish the exact-potential property, it suffices to show that the resulting change in the potential function in (27) is identical to the change in the scheduling cost of UD 𝑢 𝑖 in (25). Under the fixed-per-slot convention, the contract-guided service loss of any other UD 𝑢 𝑘 ≠ 𝑢 𝑖 , denoted by 𝐻 (𝑡 ) 
+
+> 𝑘
+
+(𝑎 (𝑡 ) 
+
+> 𝑘
+
+) as defined in (22), is independent of 𝑢 𝑖 ’s action. Thus, the change in the aggregate service-loss term in (27) is simply 𝐻 (𝑡 ) 
+
+> 𝑖
+
+(b𝑎 (𝑡 ) 
+
+> 𝑖
+
+) − 
+
+𝐻 (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+).For the congestion component, fix a(𝑡 )−𝑖 . For each z ∈ { f, b},the ES-side load generated by the other admitted UDs is 
+
+𝐿 z, (𝑡 ) 
+
+> 𝑗, −𝑖
+
+(a(𝑡 )−𝑖 ) as defined in (26). Therefore, for any candidate action 𝑎 (𝑡 ) 
+
+> 𝑖
+
+, the change in the aggregate ES congestion potential caused by adding UD 𝑢 𝑖 ’s action is exactly ΔΓ z, (𝑡 ) 
+
+> 𝑖
+
+(𝑎 (𝑡 ) 
+
+> 𝑖
+
+, a(𝑡 )−𝑖 ).Consequently, ∑︁                                            
+
+> 𝑒 𝑗 ∈E
+> Γz,(𝑡 )
+> 𝑗
+> 
+> 𝐿 z,(𝑡 )
+> 𝑗 (b𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 )
+> 
+> −∑︁
+> 𝑒 𝑗 ∈E
+> Γz,(𝑡 )
+> 𝑗
+> 
+> 𝐿 z,(𝑡 )
+> 𝑗 (𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 )
+> 
+> = ΔΓ z,(𝑡 )
+> 𝑖 (b𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 ) − ΔΓ z,(𝑡 )
+> 𝑖 (𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 ),
+
+because the congestion potential contributed by the fixed profile a(𝑡 )−𝑖 is common to both action profiles and cancels out. Combining the service-loss and congestion-potential changes gives                                    
+
+> Φ(𝑡 )(b𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 ) − Φ(𝑡 )(𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 )=𝐻 (𝑡 )
+> 𝑖 (b𝑎 (𝑡 )
+> 𝑖 ) − 𝐻 (𝑡 )
+> 𝑖 (𝑎 (𝑡 )
+> 𝑖 )+ ( 1+𝜒 (𝑡 ))
+
+ΔΓ f, (𝑡 )                 
+
+> 𝑖 (b𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 ) − ΔΓ f,(𝑡 )
+> 𝑖 (𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 )
+
+     
+
+> + ( 1+𝜒 (𝑡 ))
+
+ΔΓ b, (𝑡 )                 
+
+> 𝑖 (b𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 ) − ΔΓ b,(𝑡 )
+> 𝑖 (𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 )
+
+                  
+
+> =J(𝑡 )
+> 𝑖 (b𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 ) − J (𝑡 )
+> 𝑖 (𝑎 (𝑡 )
+> 𝑖 ,a(𝑡 )−𝑖 ).
+
+This proves that the scheduling game G (𝑡 ) admits Φ(𝑡 ) as an exact potential function. ■
+
+Theorem 2. (Existence of Pure-Strategy Nash Equilibrium) For each timeslot 𝑡 , the contract-guided scheduling game G (𝑡 )
+
+admits at least one pure-strategy Nash equilibrium. Proof. For each admitted user, the action set A (𝑡 ) 
+
+> 𝑖
+
+is finite because both the EN set and the resource-package sets are finite. Hence, the joint action space A (𝑡 ) = Î𝑢 𝑖 ∈ U s, (𝑡 ) A (𝑡 )
+
+> 𝑖
+
+is finite. By Theorem 1, G (𝑡 ) is an exact potential game with potential function Φ(𝑡 ) . Since A (𝑡 ) is finite, Φ(𝑡 ) attains a minimum over A (𝑡 ) . Let a★, (𝑡 ) denote an action profile that minimizes Φ(𝑡 ) over A (𝑡 ) . We next show that a★, (𝑡 ) is a Nash equilibrium. Suppose, by contradiction, that a★, (𝑡 ) is not a pure-strategy Nash equilibrium. Then there exists a UD that can unilaterally switch to another feasible action and strictly decrease its scheduling cost. By the exact-potential property established in Theorem 1, the same unilateral deviation would strictly decrease the potential function Φ(𝑡 ) . This contradicts the assumption that a★, (𝑡 ) is a global minimizer of Φ(𝑡 ) .Therefore, no UD can improve its scheduling cost through a unilateral deviation from a★, (𝑡 ) , implying that a★, (𝑡 ) is a pure-strategy Nash equilibrium. Hence, G (𝑡 ) admits at least one pure-strategy Nash equilibrium. ■
+
+Theorem 3. (Finite-Step Convergence Under Best Response) For each timeslot 𝑡 , consider the asynchronous strict best-response process defined in (29) for G (𝑡 ) without the iteration cap 𝐼 max . If the process terminates only when a full update round produces no strict improvement, then it converges in finite steps to a pure-strategy Nash equilibrium of the per-slot surrogate game. Proof. Consider an arbitrary timeslot 𝑡 and the asynchronous strict best-response process defined in (29). By construction, a UD updates its action only when the selected best response strictly reduces its scheduling cost. Therefore, every effective update produces a strict decrease in the scheduling cost of the updating UD. By Theorem 1, G (𝑡 ) is an exact potential game. Con-sequently, every strict reduction in a UD’s scheduling cost induces an equal strict decrease in the potential function Φ(𝑡 ) .Hence, the sequence of effective updates generates a strictly decreasing sequence of potential values. Since the joint action space A (𝑡 ) is finite, the number of feasible action profiles is finite. As a result, Φ(𝑡 ) can attain only finitely many values over A (𝑡 ) . Because Φ(𝑡 ) decreases strictly after every effective update, no action profile can be revisited, and an infinite sequence of effective updates is im-possible. Therefore, the best-response process must terminate after a finite number of updates. At termination, no admitted UD can further reduce its scheduling cost through a unilateral deviation (i.e., every admitted UD reaches a best response to the current actions of the remaining UDs). By definition, the resulting action profile is a pure-strategy Nash equilibrium of G (𝑡 ) . Therefore, the asynchronous best-response process converges to a contract-stable pure-strategy Nash equilibrium in finite steps. ■
+
+Note that, when the iteration cap 𝐼 max is enforced, the returned action profile may not be an exact Nash equilibrium. To quantify the residual suboptimality of the finite-iteration 15 
+
+solution, the Nash-equilibrium gap can be used, which is 𝜖 (𝑡 ) 
+
+> NE
+
+=
+
+max 𝑢 𝑖 ∈ U s, (𝑡 )
+
+
+
+J (𝑡 ) 
+
+> 𝑖
+
+(𝑎 fin , (𝑡 ) 
+
+> 𝑖
+
+, afin , (𝑡 )−𝑖 ) − min 𝑎 ′   
+
+> 𝑖 ∈ A (𝑡 )
+> 𝑖
+
+J (𝑡 ) 
+
+> 𝑖
+
+(𝑎 ′ 
+
+> 𝑖
+
+, afin , (𝑡 )−𝑖 )
+
+
+
+> +
+
+.A smaller 𝜖 (𝑡 ) 
+
+> NE
+
+indicates a more stable finite-iteration output, and 𝜖 (𝑡 ) 
+
+> NE
+
+= 0 corresponds to an exact Nash equilibrium. While Theorems 1–3 characterize the equilibrium structure and convergence behavior of the per-slot scheduling game, the next result establishes the boundedness of the adaptive-control mechanism used by STEPS. 
+
+Theorem 4. (Boundedness of Adaptive Control Parameters) For all timeslots 𝑡 ∈ T , the adaptive control parameters satisfy 𝜏 𝜌, (𝑡 ) ∈ [ 𝜏 min , 𝜏 max ], 𝛽 (𝑡 ) ∈ [ 𝛽 min , 𝛽 max ], and 𝜒 (𝑡 ) ∈[ 𝜒 min , 𝜒 max ]. Moreover, if the resource-price updates employ bounded projection, then the resource prices also remain within their prescribed intervals. Proof. The updates in (43) use the projection operator [𝑥 ]𝑏 𝑎 =
+
+min {max {𝑥, 𝑎 }, 𝑏 }, whose output always lies in [𝑎, 𝑏 ]. Hence, 
+
+𝜏 𝜌, (𝑡 ) , 𝛽 (𝑡 ) , and 𝜒 (𝑡 ) remain within their prescribed intervals for all timeslots. The same argument applies to projected price updates in (42). ■
+
+This result of the above theorem establishes the stability of the adaptive-control layer of STEPS by ensuring that all feedback-updated parameters remain within predefined fea-sible regions. Consequently, the long-term operation of the framework is protected from parameter divergence, excessively conservative scheduling behavior, and unstable feedback am-plification.

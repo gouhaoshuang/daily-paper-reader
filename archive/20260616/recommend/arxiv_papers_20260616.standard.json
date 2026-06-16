@@ -1,0 +1,378 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-16T21:37:38.279890+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2606.09537v2",
+      "source": "arxiv",
+      "title": "STEPS: Semantic Contract-Guided Scheduling for LLM-Assisted Natural Language-Driven Edge AI Services",
+      "abstract": "Edge user/service scheduling has become a cornerstone of distributed AI systems, determining where and how AI services are executed under limited communication and computing resources. Existing edge scheduling frameworks usually assume that service requirements are given as numerical constraints, such as latency bounds or energy budgets. In practice, users often express service expectations through ambiguous and context-dependent natural language, creating a gap between user intent and scheduling decisions. To bridge this semantic-to-optimization gap, we propose semantic contract-guided edge potential scheduling (STEPS), a natural language-driven scheduling framework that introduces semantic contracts as executable interfaces between user-side semantics and edge-side decision making. In STEPS, a large language model (LLM)-assisted parser interprets natural language requests and extracts semantic service requirements with confidence scores, which are converted into service requirements and semantic uncertainty. Based on this information, STEPS formulates edge scheduling as a contract-guided potential game that jointly determines execution-node selection, computing-resource provisioning, and bandwidth allocation. STEPS further uses feedback signals to support adaptive scheduling under evolving service and network conditions. We characterize the exact potential game structure, establish the existence of a pure-strategy Nash equilibrium, and prove convergence and stability properties of the scheduling and adaptation processes. Extensive experiments show that STEPS improves semantic contract fulfillment, reduces contract-guided service loss, and maintains robust adaptation under ambiguous natural language requests in non-stationary networked AI environments.",
+      "authors": [
+        "Houyi Qi",
+        "Minghui Liwang",
+        "Xianbin Wang",
+        "Xinlei Yi",
+        "Seyyedali Hosseinalipour"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-06-08T14:19:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.09537v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge AI service scheduling with semantic contracts",
+      "llm_evidence_cn": "基于语义契约的边缘AI服务调度",
+      "llm_evidence": "基于语义契约的边缘AI服务调度",
+      "canonical_evidence": "基于语义契约的边缘AI服务调度",
+      "llm_tldr_en": "STEPS introduces semantic contracts to bridge natural language user intent and scheduling decisions in edge AI services, enabling constraint-aware placement and optimization.",
+      "llm_tldr_cn": "边缘AI服务调度常依赖数值约束，但用户意图常通过自然语言表达。STEPS提出语义契约作为可执行接口，将用户语义需求转化为调度约束，并基于边缘潜力进行调度优化。实验证明该方法在保持低延迟的同时，优于传统数值约束调度。该工作为边缘云协同智能系统中的自然语言驱动调度提供了有效方案。",
+      "llm_tldr": "边缘AI服务调度常依赖数值约束，但用户意图常通过自然语言表达。STEPS提出语义契约作为可执行接口，将用户语义需求转化为调度约束，并基于边缘潜力进行调度优化。实验证明该方法在保持低延迟的同时，优于传统数值约束调度。该工作为边缘云协同智能系统中的自然语言驱动调度提供了有效方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15210v1",
+      "source": "arxiv",
+      "title": "Generation Quality-Latency Tradeoff-Aware Inference Offloading for Multimodal LLMs in Cloud-Edge Continuum",
+      "abstract": "Beyond pure cloud, some efforts are being made to deploy Large Language Models (LLMs) in edge to accelerate inference response. So the deployment of LLMs in cloud-edge continuum becomes a promising paradigm, where the tasks involving multimodal data occupy a large part of requests. Under this continuum, users usually concern about multiple Quality-of-Service (QoS) attributes, but it is always intractable to jointly optimize them. In this paper, we propose to study the joint optimization of those attributes and focus on two key representatives, i.e., content generation quality and response latency. We propose to study the offloading technology to achieve a tradeoff between the two objectives in the cloud-edge collaborative Multimodal LLM (MLLM) system. However, it is highly difficult to predict generation quality and inference latency for MLLM inference tasks while optimizing this offloading process. To address these unprecedented difficulties, we propose a Quality-Latency Tradeoff-Aware MLLM Inference Offloading (QLMIO) framework to make decisions that optimally balance generation quality and response latency. Meanwhile, recognizing the absence of publicly available datasets tailored to the MLLM inference offloading problem, we constructed a real-world cloud-edge collaborative MLLM system and subsequently collected an MLLM Inference Offloading Benchmark (MIOBench) to comprehensively evaluate our framework and facilitate the study of this problem. Extensive experimental results demonstrate that the QLMIO framework reduces latency by up to 58.14\\% compared to baselines, while simultaneously matching the task completion rate achieved under the case that executes all requests exclusively on a cloud server. The dataset and codes are available at Github.",
+      "authors": [
+        "Zhongxiao Wang",
+        "Yueshen Xu",
+        "Xinkui Zhao",
+        "Wei Shao",
+        "Rui Li"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-13T09:16:10+00:00",
+      "link": "https://arxiv.org/pdf/2606.15210v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Inference offloading for multimodal LLMs in cloud-edge continuum, directly relevant to edge cloud collaborative AI agent system",
+      "llm_evidence_cn": "云边连续体中多模态大模型的推理卸载，直接相关于边缘云协作AI智能体系统",
+      "llm_evidence": "云边连续体中多模态大模型的推理卸载，直接相关于边缘云协作AI智能体系统",
+      "canonical_evidence": "云边连续体中多模态大模型的推理卸载，直接相关于边缘云协作AI智能体系统",
+      "llm_tldr_en": "Proposes quality-latency tradeoff-aware inference offloading for multimodal LLMs in cloud-edge continuum, optimizing generation quality and latency.",
+      "llm_tldr_cn": "该论文研究云边连续体中多模态大模型的推理卸载技术，联合优化内容生成质量和响应延迟，为端云协同AI智能体系统中的模型部署和资源调度提供了关键方法。",
+      "llm_tldr": "该论文研究云边连续体中多模态大模型的推理卸载技术，联合优化内容生成质量和响应延迟，为端云协同AI智能体系统中的模型部署和资源调度提供了关键方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15073v1",
+      "source": "arxiv",
+      "title": "Towards Ubiquitous 6G Computing and Networking Convergence: Architecture and Mechanism for Cross-Domain Resource Coordination",
+      "abstract": "The 6G network will support six major application scenarios, such as immersive communication, integrated AI and communication, and integrated sensing and communication. Many scenarios necessitate significant computational support. Moreover, user demands are becoming increasingly segmented, diverse, and personalized. Traditional network slicing alone is insufficient to meet the heterogeneous computing and networking demands of emerging service scenarios. Mobile computing network convergence (CNC) introduces a fundamentally different paradigm from the conventional cloud computing plus communication network model by deeply embedding computing resources into the mobile network infrastructure and enabling integrated computing-network services tailored to diverse user demands. In this article, we investigate orchestration architectures and mechanisms for CNC in 6G mobile networks. We begin by reviewing the evolution of CNC from a mobile network perspective and surveying existing studies, which we categorize according to mobile network architectures. Building on these insights, we propose a hierarchical, cross-domain coordination architecture and an orchestration mechanism based on hierarchical multi-agent reinforcement learning. Performance evaluations demonstrate that the proposed architecture and mechanism significantly reduce system energy consumption while enhancing task satisfaction rate. Finally, we discuss open challenges and future research directions.",
+      "authors": [
+        "Yang Li",
+        "Xing Zhang",
+        "Yan Zhang",
+        "Wenbo Wang"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-06-13T03:02:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.15073v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "6G computing-networking convergence architecture for cross-domain resource coordination, enabling distributed edge cloud agent infrastructure",
+      "llm_evidence_cn": "6G计算网络融合架构用于跨域资源协调，支持分布式边缘云智能体基础设施",
+      "llm_evidence": "6G计算网络融合架构用于跨域资源协调，支持分布式边缘云智能体基础设施",
+      "canonical_evidence": "6G计算网络融合架构用于跨域资源协调，支持分布式边缘云智能体基础设施",
+      "llm_tldr_en": "Proposes a 6G computing-network convergence architecture with cross-domain resource coordination, embedding computing into mobile networks for edge cloud collaboration.",
+      "llm_tldr_cn": "该论文提出面向6G的计算网络融合架构，将计算资源深度嵌入移动网络基础设施，实现跨域资源协调，为边缘云协同AI智能体系统提供了底层网络与计算架构支持。",
+      "llm_tldr": "该论文提出面向6G的计算网络融合架构，将计算资源深度嵌入移动网络基础设施，实现跨域资源协调，为边缘云协同AI智能体系统提供了底层网络与计算架构支持。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15179v1",
+      "source": "arxiv",
+      "title": "CONCORD: Asynchronous Sparse Aggregation for Device-Cloud RAG under Document Isolation",
+      "abstract": "Retrieval-augmented generation (RAG) has emerged as a pivotal technique for improving language models by incorporating external knowledge at inference time. As device-cloud collaborative inference makes it feasible to deploy small language models on edge devices, a new setting arises in which private documents remain on the device and public knowledge resides in the cloud. Privacy and policy constraints often forbid raw document exchange, creating a document-isolated dual-end RAG setting. However, existing methods rely on frequent remote synchronization and dense evidence transfer, limiting throughput under realistic latency and bandwidth conditions. To address this issue, we propose CONCORD, an asynchronous sparse aggregation framework for dual-end RAG under document isolation. CONCORD treats the cloud as an asynchronously arriving evidence source rather than a continuously synchronized co-generator. Specifically, we introduce waiting debt control to decide whether each decoding step should continue waiting for remote participation based on the observed return of waiting. We also design a certificate-guided minimal supplementation mechanism that requests only the remote evidence needed to determine the current greedy decision. Steps that consult the cloud preserve the same greedy token as dense dual-end aggregation, while the remaining steps commit locally without remote evidence. Experiments on Natural Questions and WikiText-2 show that CONCORD improves end-to-end throughput over baselines by $1.66\\times$ and $2.15\\times$, respectively, while reducing per-token communication by over two orders of magnitude and maintaining comparable answer quality and perplexity.",
+      "authors": [
+        "Xuedong Hu",
+        "Zhiqing Tang",
+        "Zhi Yao",
+        "Tian Wang",
+        "Weijia Jia"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-13T08:00:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.15179v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "device-cloud collaborative RAG with asynchronous sparse aggregation",
+      "llm_evidence_cn": "设备-云协同RAG的异步稀疏聚合方法",
+      "llm_evidence": "设备-云协同RAG的异步稀疏聚合方法",
+      "canonical_evidence": "设备-云协同RAG的异步稀疏聚合方法",
+      "llm_tldr_en": "CONCORD proposes an asynchronous sparse aggregation framework for device-cloud RAG under document isolation, enabling efficient retrieval-augmented generation on edge devices with reduced latency and bandwidth usage.",
+      "llm_tldr_cn": "CONCORD针对文档隔离场景下的设备-云RAG问题，提出了异步稀疏聚合框架。该方法通过避免频繁远程同步和密集证据传输，在保留隐私的同时实现了高效检索增强生成。实验表明，该框架在真实延迟和带宽条件下显著提升了吞吐量，为边缘设备上的智能体应用提供了一种可行的协同推理方案。",
+      "llm_tldr": "CONCORD针对文档隔离场景下的设备-云RAG问题，提出了异步稀疏聚合框架。该方法通过避免频繁远程同步和密集证据传输，在保留隐私的同时实现了高效检索增强生成。实验表明，该框架在真实延迟和带宽条件下显著提升了吞吐量，为边缘设备上的智能体应用提供了一种可行的协同推理方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15822v1",
+      "source": "arxiv",
+      "title": "TrustedARI: Towards Trust-Native Agentic Routing Infrastructure for Agentic AI",
+      "abstract": "AI agents increasingly access external models, tools, and services through Agentic Routing Infrastructure (ARI) to manage the overhead of heterogeneous interfaces and fragmented subscriptions. Yet, the architecture of ARI introduces fundamental trust risks: it obtains plaintext access to agent queries and service responses, while leaving agents unable to verify that their queries are routed to intended service providers or that requests and responses remain untampered. To address this problem, we present TrustedARI, the first trust-native agentic routing infrastructure for agentic AI. Architecturally, TrustedARI is built upon three core innovations: (i) an ARI-adapted three-party TLS handshake that enables the agent and ARI to jointly authenticate the service provider through role-specific distribution of TLS key materials; (ii) a privacy-preserving query-construction protocol that allows the agent and ARI to collaboratively construct well-formed queries without exposing their respective private inputs; and (iii) a verifiable billing protocol that supports fair usage-based settlement while preserving the integrity and confidentiality of service responses.   We implemented and extensively evaluated a prototype of TrustedARI to validate its performance. Experiments confirm that TrustedARI is highly efficient: our ARI-adapted handshake protocol reduces communication overhead by 39.34% compared to the existing three-party TLS handshake. Furthermore, the privacy-preserving query-construction protocol imposes negligible overhead-averaging 0.19 seconds in computation time and 0.58 MB in communication costs-while the verifiable billing protocol speeds up proof generation by 28.20x. Crucially, TrustedARI is readily deployable without any modification to the service providers.",
+      "authors": [
+        "Qi Li",
+        "Zhenhua Zou",
+        "Shuo Li",
+        "Mingwei Xu",
+        "Zhuotao Liu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CR"
+      ],
+      "published": "2026-06-14T13:39:56+00:00",
+      "link": "https://arxiv.org/pdf/2606.15822v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "trust-native routing infrastructure for distributed agents",
+      "llm_evidence_cn": "面向分布式智能体的可信路由基础设施",
+      "llm_evidence": "面向分布式智能体的可信路由基础设施",
+      "canonical_evidence": "面向分布式智能体的可信路由基础设施",
+      "llm_tldr_en": "TrustedARI introduces a trust-native agentic routing infrastructure with three-party TLS and TEE-based attestation, enabling secure and verifiable agent-service interactions in distributed settings.",
+      "llm_tldr_cn": "智能体访问外部服务时，现有路由基础设施存在明文访问和不可验证的安全风险。TrustedARI提出了首个信任原生的智能体路由架构，通过适配的三方TLS握手和可信执行环境认证，实现了端到端的请求完整性和隐私保护。实验表明该架构在引入较低开销的同时，提供了强大的安全保证。该工作为分布式边缘云智能体系统的安全互操作奠定了基础。",
+      "llm_tldr": "智能体访问外部服务时，现有路由基础设施存在明文访问和不可验证的安全风险。TrustedARI提出了首个信任原生的智能体路由架构，通过适配的三方TLS握手和可信执行环境认证，实现了端到端的请求完整性和隐私保护。实验表明该架构在引入较低开销的同时，提供了强大的安全保证。该工作为分布式边缘云智能体系统的安全互操作奠定了基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.13707v1",
+      "source": "arxiv",
+      "title": "Orchestra-o1: Omnimodal Agent Orchestration",
+      "abstract": "The recent success of agent swarms has shifted the paradigm of large language model (LLM)-based agents from single-agent workflows to multi-agent systems, highlighting the importance of agent orchestration for task decomposition and collaboration. However, existing orchestration frameworks are limited to a narrow set of modalities and struggle to generalize to more complex settings where heterogeneous modalities coexist and interact. This limitation becomes particularly pronounced in omnimodal scenarios, where tasks require the unified understanding and coordination of diverse inputs such as text, image, audio, and video. In this work, we propose Orchestra-o1, an omnimodal agent orchestration framework designed to support efficient agent collaboration across multiple modalities. Orchestra-o1 introduces a unified orchestration mechanism that enables modality-aware task decomposition, online sub-agent specialization, and parallel sub-task execution. This scalable design allows agent systems to effectively tackle complex real-world tasks involving heterogeneous information sources, surpassing the second-best approach by 10.3% accuracy on the OmniGAIA benchmark. Furthermore, we introduce decision-aligned group relative policy optimization (DA-GRPO), an efficient agentic reinforcement learning approach for training Orchestra-o1-8B, which also achieves state-of-the-art performance against all existing open-source omnimodal agents.",
+      "authors": [
+        "Fan Zhang",
+        "Vireo Zhang",
+        "Shengju Qian",
+        "Haoxuan Li",
+        "Hao Wu",
+        "Jinyang Wu",
+        "Donghao Zhou",
+        "Zhihong Zhu",
+        "Zheng Lian",
+        "Xin Wang",
+        "Pheng-Ann Heng"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.CV"
+      ],
+      "published": "2026-06-10T04:50:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.13707v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Omnimodal agent orchestration framework for efficient agent collaboration",
+      "llm_evidence_cn": "全模态智能体编排框架，支持高效智能体协作",
+      "llm_evidence": "全模态智能体编排框架，支持高效智能体协作",
+      "canonical_evidence": "全模态智能体编排框架，支持高效智能体协作",
+      "llm_tldr_en": "Proposes Orchestra-o1, an omnimodal agent orchestration framework enabling efficient collaboration across text, image, audio, and video.",
+      "llm_tldr_cn": "该论文提出Orchestra-o1，一个全模态智能体编排框架，实现文本、图像、音频、视频等异构模态下的任务分解与智能体协作，为多模态端云协同提供了方法借鉴。",
+      "llm_tldr": "该论文提出Orchestra-o1，一个全模态智能体编排框架，实现文本、图像、音频、视频等异构模态下的任务分解与智能体协作，为多模态端云协同提供了方法借鉴。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.15509v1",
+      "source": "arxiv",
+      "title": "What do you mean by human-AI collaboration: Prerequisite functions and the affordances needed to achieve it",
+      "abstract": "The concept of 'collaboration' has been extended rapidly to describe what people now do with conversational agents, intelligent tutors, adaptive platforms, and generative artificial intelligence (AI) tools in general. This chapter asks what is gained and lost when a demanding concept from the learning sciences is applied so freely. Returning to long-standing accounts of collaborative learning, it reconstructs the requirements that a situation, an interaction, and a set of cognitive processes have historically had to meet before being called collaborative. Human-AI collaboration requires a partly symmetric and negotiated relationship, shared and negotiable goals, a low and shifting division of labour, interactive and synchronous exchange, and mutual modelling, grounding, and socially shared regulation. Reviewing process-sensitive empirical studies of writing and problem solving, the chapter shows that most current human-AI interaction is better described as consultation, governance, delegation, or instruction rather than as collaboration. To make these distinctions functional, the chapter introduces a five-level diagnostic taxonomy of human-AI teaming (i.e. transactional, situational, operational, praxical, and synergistic) defined by the affordances an AI system exhibits. It shows that only the highest level begins to satisfy the conditions the tradition places on collaboration. The chapter derives the functions an AI system must possess for collaboration to be achievable, argues that most of these are present-day engineering choices rather than capabilities to be awaited, and sets out the implications for research, measurement, and responsible practice of human-AI collaboration in education.",
+      "authors": [
+        "Mutlu Cukurova"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.CY"
+      ],
+      "published": "2026-06-13T23:30:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.15509v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "human-AI collaboration conceptual analysis",
+      "llm_evidence_cn": "人机协作概念分析",
+      "llm_evidence": "人机协作概念分析",
+      "canonical_evidence": "人机协作概念分析",
+      "llm_tldr_en": "This chapter critically examines the concept of human-AI collaboration, reconstructing historical requirements from learning sciences and proposing affordances for genuine collaboration with AI.",
+      "llm_tldr_cn": "当前人机协作概念被滥用，本文回归学习科学对协作的经典定义，重构了情境、互动和认知过程的要求。作者提出人与AI实现真正协作需要部分对称的关系、共享且可协商的目标、以及低而灵活的任务分工。该分析为设计协作式AI系统提供了理论基础，对端云协同智能体的人机交互设计具有指导意义。",
+      "llm_tldr": "当前人机协作概念被滥用，本文回归学习科学对协作的经典定义，重构了情境、互动和认知过程的要求。作者提出人与AI实现真正协作需要部分对称的关系、共享且可协商的目标、以及低而灵活的任务分工。该分析为设计协作式AI系统提供了理论基础，对端云协同智能体的人机交互设计具有指导意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.14672v1",
+      "source": "arxiv",
+      "title": "Towards Direct Latent-Space Synthesis for Parallel Branches in LLM-Agent Workflows",
+      "abstract": "Large language models increasingly serve as execution engines for agentic systems, yet they still consume context through a sequential text interface. This creates a mismatch with modern structured agent workflows, in which independent branches explore subtasks, retrieve evidence, or generate candidate solutions before a final synthesis step. Existing systems typically merge these branches by concatenating their textual outputs, which discards the parallel structure and incurs redundant prefill computation. In this work, we introduce Parallel-Synthesis, a plug-and-play framework that enables a synthesizer to directly consume the KV caches produced by parallel worker agents. Parallel-Synthesis combines a cache mapper that calibrates independently generated branch caches with a fine-tuned synthesizer adapter that enables generation from this non-sequential cache interface. We train Parallel-Synthesis using data that exposes the synthesizer to parallel cache contexts, teaches aggregation across cached branches, and distills reasoning behavior from standard text-concatenation-based synthesis. Across nine downstream datasets spanning math, science QA, code generation, GAIA, and multi-agent database diagnosis, Parallel-Synthesis matches or outperforms text-based synthesis on seven datasets and remains close on the other two. It also reduces time-to-first-token by 2.5x-11x, suggesting that direct cache-based synthesis is a promising interface for more native and efficient synthesis over parallel agent branches.",
+      "authors": [
+        "Shikun Liu",
+        "Mufei Li",
+        "Dongqi Fu",
+        "Haoyu Wang",
+        "Yinglong Xia",
+        "Hong Li",
+        "Hong Yan",
+        "Pan Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-12T17:39:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.14672v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "parallel agent workflow synthesis for collaboration",
+      "llm_evidence_cn": "并行智能体工作流协作合成",
+      "llm_evidence": "并行智能体工作流协作合成",
+      "canonical_evidence": "并行智能体工作流协作合成",
+      "llm_tldr_en": "Parallel-Synthesis enables direct latent-space merging of KV caches from parallel workers in LLM-agent workflows, reducing redundant computation and preserving parallel structure.",
+      "llm_tldr_cn": "现有LLM智能体系统将并行分支的输出文本拼接，损失了并行结构并导致冗余计算。Parallel-Synthesis提出一种即插即用框架，通过缓存映射器直接合并工作智能体的KV缓存，避免了预填充冗余，并保持了分支的独立性。实验证明该方法显著减少了推理延迟和计算开销。该工作为智能体协作工作流的高效执行提供了新范式。",
+      "llm_tldr": "现有LLM智能体系统将并行分支的输出文本拼接，损失了并行结构并导致冗余计算。Parallel-Synthesis提出一种即插即用框架，通过缓存映射器直接合并工作智能体的KV缓存，避免了预填充冗余，并保持了分支的独立性。实验证明该方法显著减少了推理延迟和计算开销。该工作为智能体协作工作流的高效执行提供了新范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.15335v1",
+      "source": "arxiv",
+      "title": "Privacy-Preserving Text Sanitization for Distributed Agents Collaboration via Disentangled Representations",
+      "abstract": "When distributed agents exchange text across organizational boundaries, privacy leakage arises not only from explicit identifiers but also from distributional signatures such as formatting conventions, vocabulary choices, and syntactic patterns. We propose DiSan(Disentangled Sanitization), a privacy-preserving sanitization framework and a built-in component of Intern-Shannon for multi-agent collaboration. DiSan uses a two-stream encoder to factorize text into a source-invariant role subspace that preserves task semantics and a source-identifying style subspace that remains local. Federated proto-type alignment and adversarial regularization enable joint training without centralizing raw text. Experiments show that identifier-level masking is insufficient: masking 19.2% of tokens reduces TF-IDF stylometric attribution by only 18.6%. By contrast, DiSan reduces answer-level PII exposure by 20 times while maintaining 83% answer faithfulness on a distributed multi-agent RAG benchmark, and lowers Enron stylometric attribution by 73.2% under TF-IDF and 70.6% under a neural probe.",
+      "authors": [
+        "Xuan Liu",
+        "Hefeng Zhou",
+        "Sicheng Chen",
+        "Chao Yang",
+        "Xingcheng Xu",
+        "Jingjing Qu",
+        "Jiong Lou",
+        "Jie LI",
+        "Xia Hu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-13T14:55:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.15335v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Privacy-preserving sanitization for distributed agents collaboration, directly relevant to distributed edge-cloud architectures",
+      "llm_evidence_cn": "面向分布式智能体协作的隐私净化，直接关联分布式边缘云架构",
+      "llm_evidence": "面向分布式智能体协作的隐私净化，直接关联分布式边缘云架构",
+      "canonical_evidence": "面向分布式智能体协作的隐私净化，直接关联分布式边缘云架构",
+      "llm_tldr_en": "Proposes DiSan, a privacy-preserving sanitization framework for multi-agent collaboration that disentangles text into task and style subspaces, enabling federated training without raw text sharing.",
+      "llm_tldr_cn": "该论文针对分布式智能体在跨组织边界文本交换时的隐私泄露问题，提出了DiSan净化框架。DiSan通过双流编码器将文本分解为任务相关和风格相关子空间，并利用联邦原型对齐和对抗正则化实现联合训练，无需集中原始文本。实验表明该方法有效去除分布特征而保持语义，为分布式边缘云环境下的智能体协作提供了隐私保护方案。",
+      "llm_tldr": "该论文针对分布式智能体在跨组织边界文本交换时的隐私泄露问题，提出了DiSan净化框架。DiSan通过双流编码器将文本分解为任务相关和风格相关子空间，并利用联邦原型对齐和对抗正则化实现联合训练，无需集中原始文本。实验表明该方法有效去除分布特征而保持语义，为分布式边缘云环境下的智能体协作提供了隐私保护方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
