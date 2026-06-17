@@ -1,0 +1,211 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-17T21:37:46.157053+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2606.17368v1",
+      "source": "arxiv",
+      "title": "Distributed General-Purpose Agent Networks: Architecture, Key Mechanisms, and Prototypes",
+      "abstract": "Large language models have accelerated the transition from passive conversational assistants to autonomous agents that can understand goals, plan actions, invoke tools, and execute multi-step tasks. Yet the capability of a single agent remains constrained by its local data, tool permissions, runtime environment, and governance boundary. This paper studies distributed general-purpose agent networks: open peer-to-peer networks in which heterogeneous agents deployed on personal devices, edge nodes, or autonomous computing environments can discover one another, establish trust, negotiate cooperation rules, and execute open-ended tasks. We argue that such networks cannot be obtained by simply combining existing peer-to-peer overlays with conventional multi-agent systems. Unlike traditional P2P networks, agent networks must propagate semantic declarations about intentions, capabilities, states, and cooperation constraints. We therefore propose a layered architecture centered on a protocol adaptation layer that connects upper-level task semantics with lower-level network operations. Based on this architecture, the paper identifies three core mechanism problems: semantic announcement propagation for collaborator discovery, verifiable identity and multi-topic reputation for cooperation governance, and semantic-gradient mechanism design for open task execution. For each problem, we present a technical route, including bodyless gossip with sequential logs, BAID-based identity binding with MG-EigenTrust reputation, and a Stackelberg-style mechanism-generation loop driven by semantic attribution feedback. We further report prototype overhead results for BAID-style tiered verification and mechanism-level simulations of MG-EigenTrust under cross-topic disguise-collusion attacks. The resulting framework provides a system-level foundation for open, trustworthy, and scalable agent collaboration.",
+      "authors": [
+        "Shengli Zhang",
+        "Deen Ma",
+        "Zibin Lin",
+        "Taotao Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.NI"
+      ],
+      "published": "2026-06-15T23:57:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.17368v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "proposes distributed general-purpose agent networks on edge nodes and personal devices",
+      "llm_evidence_cn": "提出在边缘节点和个人设备上部署的分布式通用代理网络",
+      "llm_evidence": "提出在边缘节点和个人设备上部署的分布式通用代理网络",
+      "canonical_evidence": "提出在边缘节点和个人设备上部署的分布式通用代理网络",
+      "llm_tldr_en": "Studies distributed general-purpose agent networks where heterogeneous agents on edge nodes and devices discover, trust, and cooperate for open-ended tasks.",
+      "llm_tldr_cn": "单一智能体能力受限于本地数据、工具和运行环境。该文研究分布式通用代理网络，使部署在个人设备、边缘节点等异构环境中的代理能够相互发现、建立信任并协商协作规则。论文论证了简单叠加P2P覆盖无法实现该网络，提出了架构与关键机制。",
+      "llm_tldr": "单一智能体能力受限于本地数据、工具和运行环境。该文研究分布式通用代理网络，使部署在个人设备、边缘节点等异构环境中的代理能够相互发现、建立信任并协商协作规则。论文论证了简单叠加P2P覆盖无法实现该网络，提出了架构与关键机制。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15684v1",
+      "source": "arxiv",
+      "title": "Multi-agent Framework for Time-Sensitive Complementary Collaboration in Minecraft",
+      "abstract": "We present TickingCollabBench, a Minecraft-based multi-agent benchmark for a novel class of time-sensitive complementary collaboration tasks. Our benchmark reflects four core characteristics of real-world collaboration: agent heterogeneity, mandatory collaboration, dynamic environments, and strict real-time constraints with failure risks. To enable this, we develop the TickingCollab framework, which supports the generation of diverse dynamic environments and abstracts Minecraft's primitive APIs to enable declarative YAML task specifications for composing these events. Building on this, we design a feasibility-aware automated benchmark generation pipeline, where an LLM drafts structurally diverse task configurations and feasibility verifier filters out invalid ones using approximate constraints. Evaluations demonstrate that lang latency and inherent difficulty of coordinating under partial observability and agent heterogeneity cause LLMs to frequently fail under dynamic environments and fall significantly short of a global-knowledge oracle.",
+      "authors": [
+        "Juheon Yi",
+        "Jinglu Wang",
+        "Xiaoyi Zhang",
+        "Yan Lu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-14T09:02:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.15684v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "focuses on multi-agent collaboration with time constraints",
+      "llm_evidence_cn": "关注带时间约束的多代理协作",
+      "llm_evidence": "关注带时间约束的多代理协作",
+      "canonical_evidence": "关注带时间约束的多代理协作",
+      "llm_tldr_en": "TickingCollabBench: a Minecraft benchmark for time-sensitive complementary multi-agent collaboration tasks.",
+      "llm_tldr_cn": "现实协作需要异构代理在动态环境中实时协同。本文提出TickingCollabBench，一个基于Minecraft的多代理基准，模拟时间敏感的互补协作任务。框架支持声明式任务配置和自动化生成，实验验证了其有效性，为协作AI代理研究提供了测试平台。",
+      "llm_tldr": "现实协作需要异构代理在动态环境中实时协同。本文提出TickingCollabBench，一个基于Minecraft的多代理基准，模拟时间敏感的互补协作任务。框架支持声明式任务配置和自动化生成，实验验证了其有效性，为协作AI代理研究提供了测试平台。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.17489v1",
+      "source": "arxiv",
+      "title": "Online LLM Selection via Constrained Bandits with Time-Varying Demand",
+      "abstract": "Large Language Models (LLMs) are increasingly deployed in edge-cloud inference systems to handle diverse user tasks with heterogeneous accuracy, latency, and cost profiles. Selecting the appropriate LLM for each incoming task is critical for ensuring service quality and efficient resource utilization. However, model heterogeneity, stochastic and unknown performance characteristics, and time-varying task demands make static selection strategies inadequate. Real-world deployments often impose hard resource budgets such as monetary expenditure limits, along with soft service-level requirements such as latency guarantees. These constraints introduce additional challenges for online decision-making. We formulate this problem as a constrained stochastic bandit learning task, where the learner sequentially selects models under both packing-type (hard) and covering-type (soft) constraints, while adapting to time-varying task demand. The learner operates without access to the underlying reward, cost, or latency distributions and must rely on partial feedback. We develop a novel online learning algorithm that leverages confidence-bound estimates and demand predictions to balance reward maximization with long-term constraint satisfaction. We provide theoretical guarantees showing sublinear regret and sublinear covering constraint violations compared to an offline benchmark with full information. Experimental results on synthetic workloads demonstrate the effectiveness and robustness of our approach in dynamic, resource-constrained environments.",
+      "authors": [
+        "Yin Huang",
+        "Qingsong Liu",
+        "Jie Xu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-16T03:58:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.17489v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "online LLM selection for edge-cloud inference systems with time-varying demand",
+      "llm_evidence_cn": "面向边缘云推理系统的在线LLM选择，处理时变需求",
+      "llm_evidence": "面向边缘云推理系统的在线LLM选择，处理时变需求",
+      "canonical_evidence": "面向边缘云推理系统的在线LLM选择，处理时变需求",
+      "llm_tldr_en": "Formulates LLM selection in edge-cloud systems as a constrained bandit problem, handling heterogeneous models, unknown performance, and dynamic demand under resource budgets.",
+      "llm_tldr_cn": "边缘云推理系统中LLM选择面临模型异质、性能未知和任务需求动态变化等挑战。本文将问题建模为受限随机赌博机，在预算和延迟约束下在线决策，提供适配边缘云协同场景的可行方案。",
+      "llm_tldr": "边缘云推理系统中LLM选择面临模型异质、性能未知和任务需求动态变化等挑战。本文将问题建模为受限随机赌博机，在预算和延迟约束下在线决策，提供适配边缘云协同场景的可行方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.15116v1",
+      "source": "arxiv",
+      "title": "Graph of Trace: Visualizing Execution Traces of Scientific Agent",
+      "abstract": "Scientific AI agents can autonomously carry out complex research workflows, yet these unfolded workflows often remain difficult for humans to inspect and review, limiting interpretable, controllable and effective human-AI collaboration. To address this challenge, we present a monitoring and visualization framework that records fine-grained execution events and organizes them into a directed graph that makes agent workflows explicit as they proceed. The system records intermediate steps (e.g. tool calls and code executions), and renders them as real-time updated visual traces that expose workflow structure. This allows users to examine how results are produced, identify where failures emerge, and better understand agent behavior across different stages of the research process. We conduct an evaluation on complex research tasks with domain experts of interdisciplinary backgrounds in AI, neuroscience, and biology. Experts report that structured traces visualization improves understanding of agent workflows, perceived interpretability, and usability for analysis and further interaction.",
+      "authors": [
+        "Tianci Gao",
+        "Haoxuan Li",
+        "Jianhe Li",
+        "Tianxiang Zhao",
+        "Runze Shi",
+        "Weiran Wang",
+        "Zezhao Wu",
+        "Lu Mi"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-06-13T05:09:58+00:00",
+      "link": "https://arxiv.org/pdf/2606.15116v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "visualizing execution traces for human-AI collaboration in scientific agent",
+      "llm_evidence_cn": "可视化科学智能体执行轨迹以促进人机协作",
+      "llm_evidence": "可视化科学智能体执行轨迹以促进人机协作",
+      "canonical_evidence": "可视化科学智能体执行轨迹以促进人机协作",
+      "llm_tldr_en": "Presents a visualization framework that records and organizes agent execution traces into directed graphs to enhance human-AI collaboration and interpretability.",
+      "llm_tldr_cn": "科学AI智能体自主执行复杂工作流，但人类难以审查和干预。本文提出一个监测与可视化框架，记录细粒度执行事件并组织成有向图，实时展示智能体工作流结构。用户可查看结果如何产生、识别故障点，更好理解智能体行为。该工具提升了人机协作的可解释性和可控性。",
+      "llm_tldr": "科学AI智能体自主执行复杂工作流，但人类难以审查和干预。本文提出一个监测与可视化框架，记录细粒度执行事件并组织成有向图，实时展示智能体工作流结构。用户可查看结果如何产生、识别故障点，更好理解智能体行为。该工具提升了人机协作的可解释性和可控性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.17915v1",
+      "source": "arxiv",
+      "title": "Trustworthy Self-Composable Big-Data-as-a-Service: An LLM-Orchestrated Multi-Agent Framework for Automated Data Engineering, AutoML, MLOps Deployment, and Drift-Aware Lifecycle Optimization",
+      "abstract": "Big-Data-as-a-Service (BDaaS) platforms require re liable automation across data ingestion, cleaning, feature engi neering, model development, deployment, and post-deployment monitoring. However, existing LLM-based data science agents and AutoML systems mainly focus on isolated workflow stages, leaving limited support for lifecycle-level orchestration, artifact governance, human oversight, and drift-aware adaptation. This paper proposes a trustworthy self-composable BDaaS frame work based on LLM-orchestrated multi-agent collaboration. The proposed architecture decomposes the BDaaS lifecycle into specialized agents for data ingestion, data cleaning, feature engineering, AutoML training, model evaluation, MLOps de ployment, monitoring, and drift detection. A central LLM or chestration layer coordinates agent execution, validates interme diate outputs, manages workflow context, and enables dynamic workflow composition. The framework also incorporates shared artifact governance, reproducibility support, human-in-the-loop checkpoints, and drift-aware feedback loops. A prototype-based evaluation is conducted using controlled tabular benchmark datasets with missing values, categorical variables, outliers, class imbalance, and simulated covariate drift. Compared with manual ML, AutoML-only, and single-agent LLM baselines, the pro posed multi-agent BDaaS pipeline achieves competitive predictive performance while improving lifecycle-level reliability, including workflow completion, artifact traceability, deployment readiness, reproducibility, and drift recovery. The results suggest that LLM-orchestrated multi-agent systems can extend conventional AutoML toward trustworthy, adaptive, and production-oriented BDaaS lifecycle automation.",
+      "authors": [
+        "Aueaphum Aueawatthanaphisut",
+        "Badri Raj Lamichhane"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.DB",
+        "cs.SE"
+      ],
+      "published": "2026-06-16T13:34:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.17915v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LLM-orchestrated multi-agent collaboration for data service lifecycle",
+      "llm_evidence_cn": "基于LLM编排的多智能体协作实现数据服务全生命周期自动化",
+      "llm_evidence": "基于LLM编排的多智能体协作实现数据服务全生命周期自动化",
+      "canonical_evidence": "基于LLM编排的多智能体协作实现数据服务全生命周期自动化",
+      "llm_tldr_en": "Proposes a trustworthy self-composable BDaaS framework using LLM-orchestrated multi-agent collaboration to automate data engineering, AutoML, MLOps, and drift-aware lifecycle.",
+      "llm_tldr_cn": "现有大模型数据科学智能体与AutoML系统仅支持孤立工作流阶段，缺乏全生命周期编排。本文提出一个可信的自组合大数据服务框架，基于LLM编排的多智能体协作，将数据服务生命周期分解为数据摄入、特征工程、模型开发、部署与漂移感知监控等专业智能体。框架支持生命周期级自动化与人工监督。实验证明了多智能体协作在数据服务全流程中的有效性。",
+      "llm_tldr": "现有大模型数据科学智能体与AutoML系统仅支持孤立工作流阶段，缺乏全生命周期编排。本文提出一个可信的自组合大数据服务框架，基于LLM编排的多智能体协作，将数据服务生命周期分解为数据摄入、特征工程、模型开发、部署与漂移感知监控等专业智能体。框架支持生命周期级自动化与人工监督。实验证明了多智能体协作在数据服务全流程中的有效性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
