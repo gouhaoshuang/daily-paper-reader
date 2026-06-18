@@ -6,37 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-17
-- 运行时间：2026-06-17 21:40:58 UTC
+- 最新运行日期：2026-06-18
+- 运行时间：2026-06-18 22:02:08 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：3
-- 速读区：2
+- 本次总论文数：4
+- 精读区：1
+- 速读区：3
 
 ### 今日简报（AI）
-今日聚焦分布式通用智能体网络与Minecraft时序协作框架，两篇高分论文值得深入研读。  
-最值得关注的是《Distributed General-Purpose Agent Networks》（9.0分）提出的架构与原型，以及《Multi-agent Framework for Time-Sensitive Collaboration》（8.0分）在复杂场景下的互补协作机制。  
-建议优先精读上述两篇高价值论文，速读部分可快速浏览执行轨迹可视化与LLM编排多智能体服务流程。
-- 详情：[/202606/17/README](/202606/17/README)
+今日精读1篇、速读3篇，重点关注V2X带宽编码与LLM代理通信协议。最值得看《CABLE》的V2X系统编码优化（9.0分）及《A Technical Taxonomy of LLM Agent Communication Protocols》的协议分类。建议优先了解CABLE在车联网中的带宽节省方案，再结合多智能体系统可靠性研究深化理解。
+- 详情：[/202606/18/README](/202606/18/README)
 
 ### 精读区论文标签
-1. [Distributed General-Purpose Agent Networks: Architecture, Key Mechanisms, and Prototypes](/202606/17/2606.17368v1-distributed-general-purpose-agent-networks-architecture-key-mechanisms-and-prototypes)  
+1. [CABLE: Cloud-Assisted Bandwidth-efficient LMM-based Encoding for V2X Systems](/202606/18/2606.19258v1-cable-cloud-assisted-bandwidth-efficient-lmm-based-encoding-for-v2x-systems)  
    标签：评分：9.0/10、query:eca
-   evidence：提出在边缘节点和个人设备上部署的分布式通用代理网络
-2. [Multi-agent Framework for Time-Sensitive Complementary Collaboration in Minecraft](/202606/17/2606.15684v1-multi-agent-framework-for-time-sensitive-complementary-collaboration-in-minecraft)  
-   标签：评分：8.0/10、query:eca
-   evidence：关注带时间约束的多代理协作
-3. [Online LLM Selection via Constrained Bandits with Time-Varying Demand](/202606/17/2606.17489v1-online-llm-selection-via-constrained-bandits-with-time-varying-demand)  
-   标签：评分：8.0/10、query:eca
-   evidence：面向边缘云推理系统的在线LLM选择，处理时变需求
+   evidence：云辅助的端云协同感知框架
 
 ### 速读区论文标签
-1. [Graph of Trace: Visualizing Execution Traces of Scientific Agent](/202606/17/2606.15116v1-graph-of-trace-visualizing-execution-traces-of-scientific-agent)  
+1. [A Technical Taxonomy of LLM Agent Communication Protocols](/202606/18/2606.19135v1-a-technical-taxonomy-of-llm-agent-communication-protocols)  
+   标签：评分：7.0/10、query:eca
+   evidence：LLM代理通信协议分类学，面向分布式网络
+2. [On the Reliability of Networks of AI Agents: Density Evolution, Stopping Sets, and Architecture Optimization](/202606/18/2606.18121v1-on-the-reliability-of-networks-of-ai-agents-density-evolution-stopping-sets-and-architecture-optimization)  
    标签：评分：6.0/10、query:eca
-   evidence：可视化科学智能体执行轨迹以促进人机协作
-2. [Trustworthy Self-Composable Big-Data-as-a-Service: An LLM-Orchestrated Multi-Agent Framework for Automated Data Engineering, AutoML, MLOps Deployment, and Drift-Aware Lifecycle Optimization](/202606/17/2606.17915v1-trustworthy-self-composable-big-data-as-a-service-an-llm-orchestrated-multi-agent-framework-for-automated-data-engineering-automl-mlops-deployment-and-drift-aware-lifecycle-optimization)  
+   evidence：使用稀疏图上的消息传递建模多智能体协作
+3. [EARS: Explanatory Abstention for Reliable Sub-Agent Modeling in Large-scale Multi-Agent Systems](/202606/18/2606.18668v1-ears-explanatory-abstention-for-reliable-sub-agent-modeling-in-large-scale-multi-agent-systems)  
    标签：评分：6.0/10、query:eca
-   evidence：基于LLM编排的多智能体协作实现数据服务全生命周期自动化
+   evidence：多代理系统中的子代理建模与协作
 
 
 <div class="dpr-home-promo-card">

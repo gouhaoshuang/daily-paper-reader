@@ -1,0 +1,172 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-18T21:58:01.101737+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.19258v1",
+      "source": "arxiv",
+      "title": "CABLE: Cloud-Assisted Bandwidth-efficient LMM-based Encoding for V2X Systems",
+      "abstract": "Cloud-hosted large multimodal models (LMMs) can provide strong open-vocabulary perception for Vehicle-to-Everything systems, but naively transmitting full-resolution frames from edge to cloud causes severe communication overhead and high cloud-side prefill latency. We present CABLE, a cloud-assisted bandwidth-efficient LMM-based encoding framework for edge-cloud perception. CABLE propagates the previous cloud segmentation mask on the edge using ego-motion compensation, refines it with residual-motion cues, and consolidates disconnected regions via a corridor envelope to form a robust region of interest (ROI). Only ROI-masked images are uploaded, while the cloud segmentation output is fed back as the prior for the next frame, forming a mask-to-ROI-to-LMM feedback loop. Experiments on five datasets (nuScenes, WOD-ZB, Waymo, KITTI, and CADC) show consistent communication savings while largely preserving perception, achieving $73$--$87\\%$ ROI pixel-coverage reduction with $5$--$8\\times$ estimated LMM prefill speedup at a modest detection-quality trade-off relative to full-frame inference.",
+      "authors": [
+        "Haohua Que",
+        "Zhipeng Bao",
+        "Qianyi Wu",
+        "Handong Yao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.RO"
+      ],
+      "published": "2026-06-17T16:35:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.19258v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "cloud-assisted edge-cloud collaborative perception framework",
+      "llm_evidence_cn": "云辅助的端云协同感知框架",
+      "llm_evidence": "云辅助的端云协同感知框架",
+      "canonical_evidence": "云辅助的端云协同感知框架",
+      "llm_tldr_en": "Presents CABLE, a cloud-assisted bandwidth-efficient encoding framework that leverages edge-cloud collaboration for V2X perception, reducing communication overhead.",
+      "llm_tldr_cn": "车载多模态感知任务中，将全分辨率图像从边缘传输到云端会造成巨大通信开销和延迟。本文提出CABLE，一种云辅助的带宽高效编码框架。它通过边缘端利用前帧分割掩码和运动补偿生成感兴趣区域（ROI），仅上传ROI区域图像，云端反馈分割结果形成闭环。实验表明该方法在V2X场景下显著降低带宽需求并保持高感知精度。该框架直接对应端云协同AI智能体系统的感知需求，是实现移动端智能体的关键技术。",
+      "llm_tldr": "车载多模态感知任务中，将全分辨率图像从边缘传输到云端会造成巨大通信开销和延迟。本文提出CABLE，一种云辅助的带宽高效编码框架。它通过边缘端利用前帧分割掩码和运动补偿生成感兴趣区域（ROI），仅上传ROI区域图像，云端反馈分割结果形成闭环。实验表明该方法在V2X场景下显著降低带宽需求并保持高感知精度。该框架直接对应端云协同AI智能体系统的感知需求，是实现移动端智能体的关键技术。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.19135v1",
+      "source": "arxiv",
+      "title": "A Technical Taxonomy of LLM Agent Communication Protocols",
+      "abstract": "As large language models (LLMs) advance and multi-agent systems aim to overcome the limits of standalone agents, robust communication protocols are becoming essential infrastructure for distributed agent networks. Nonetheless, the fragmented protocol landscape presents a significant interoperability challenge. This study develops a technical taxonomy to classify and analyze LLM agent communication protocols. Following an established iterative method, we defined the taxonomy's purpose, meta-characteristic, and ending conditions, then performed five iterations, three empirical-to-conceptual and two conceptual-to-empirical, on nine actively maintained open-source protocols with demonstrable adoption. The taxonomy comprises five dimensions: counterparty, payload, interaction state, discovery mechanism, and schema flexibility. Classification reveals recurring architectural patterns: all sampled agent-to-agent protocols combine hybrid payloads with session-state persistence; most protocols support multiple predefined schemas, and two negotiate schemas at runtime, indicating a trend toward schema flexibility; decentralized discovery remains rare. Analysis suggests short-term convergence pressure toward protocols unifying agent-to-agent and agent-to-context (tool and data) communication. Long-term, however, no single protocol is likely to maximize versatility, efficiency, and portability simultaneously. The field will more likely evolve toward a federated, layered protocol stack. The framework guides protocol selection and highlights open research gaps such as privacy and policy enforcement.}",
+      "authors": [
+        "Linus Sander",
+        "Habtom Kahsay Gidey",
+        "Alexander Lenz",
+        "Alois Knoll"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.NI"
+      ],
+      "published": "2026-06-17T14:45:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.19135v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "taxonomy of LLM agent communication protocols for distributed networks",
+      "llm_evidence_cn": "LLM代理通信协议分类学，面向分布式网络",
+      "llm_evidence": "LLM代理通信协议分类学，面向分布式网络",
+      "canonical_evidence": "LLM代理通信协议分类学，面向分布式网络",
+      "llm_tldr_en": "Develops a technical taxonomy of LLM agent communication protocols covering five dimensions, aiding interoperability in distributed agent networks.",
+      "llm_tldr_cn": "针对分布式代理网络中协议碎片化导致互操作困难的问题，本文提出了LLM代理通信协议的技术分类学，包含对手方、载荷、交互模式等五个维度，基于九个活跃协议构建。该分类学为端云协同场景下的协议选型和标准化提供了系统指导。",
+      "llm_tldr": "针对分布式代理网络中协议碎片化导致互操作困难的问题，本文提出了LLM代理通信协议的技术分类学，包含对手方、载荷、交互模式等五个维度，基于九个活跃协议构建。该分类学为端云协同场景下的协议选型和标准化提供了系统指导。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.18121v1",
+      "source": "arxiv",
+      "title": "On the Reliability of Networks of AI Agents: Density Evolution, Stopping Sets, and Architecture Optimization",
+      "abstract": "Modern AI systems increasingly solve a task not with a single model call but with several imperfect agents working together: some propose pieces of a solution, others verify them, and the results are combined. These systems often outperform any single model, yet it is rarely clear why they succeed or when they will fail. We model such a system as message passing on a sparse graph, the structure that underlies low-density parity-check (LDPC) codes, and extend the density-evolution machinery of coding theory to this richer setting. In our model a task is a set of coupled binary subclaims, and an agent architecture is a sparse, role-typed factor graph whose check nodes are noisy Boolean verifier nodes, each computing a local Boolean function of the subclaims it touches. Three distinct failure modes, all modeled as erasures (an agent abstaining, a verifier returning no usable output, and a message lost between two agents), propagate as the agents exchange set-valued messages. The check agents combine these messages by a single logical-forcing rule that specializes to XOR, AND, OR, implication, and Horn constraints. This is more than a relabeling of LDPC theory: the verifier functions are nonlinear and value-asymmetric, and the three failure modes do not reduce to a single effective channel, so they require new threshold, finite-length, and converse results rather than a direct reuse of parity-check density evolution. We prove a density-evolution theorem that predicts the asymptotic fraction of unresolved subclaims on random role-typed architectures, with an extension to deterministic, locally tree-like graph sequences. The XOR case recovers the classical LDPC recursion on the binary erasure channel (BEC); the AND case exposes an asymmetry between positive and negative verifier certificates.",
+      "authors": [
+        "Ehsan Aghazadeh",
+        "Hossein Pishro-Nik"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.IT"
+      ],
+      "published": "2026-06-16T16:21:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.18121v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "models multi-agent collaboration using message passing on sparse graphs",
+      "llm_evidence_cn": "使用稀疏图上的消息传递建模多智能体协作",
+      "llm_evidence": "使用稀疏图上的消息传递建模多智能体协作",
+      "canonical_evidence": "使用稀疏图上的消息传递建模多智能体协作",
+      "llm_tldr_en": "Models networks of AI agents as message passing on sparse graphs, extending density evolution to analyze reliability and optimize architecture.",
+      "llm_tldr_cn": "现代AI系统常用多个不完美智能体协作解决问题，但其成功或失败的原因难以解释。本文受LDPC码启发，将智能体网络建模为稀疏图上的消息传递，并将编码理论的密度演化工具扩展至此场景。通过分析停止集和架构优化，揭示了多智能体协作系统的可靠性原理。该理论框架可用于设计更鲁棒的端云协同智能体系统。",
+      "llm_tldr": "现代AI系统常用多个不完美智能体协作解决问题，但其成功或失败的原因难以解释。本文受LDPC码启发，将智能体网络建模为稀疏图上的消息传递，并将编码理论的密度演化工具扩展至此场景。通过分析停止集和架构优化，揭示了多智能体协作系统的可靠性原理。该理论框架可用于设计更鲁棒的端云协同智能体系统。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.18668v1",
+      "source": "arxiv",
+      "title": "EARS: Explanatory Abstention for Reliable Sub-Agent Modeling in Large-scale Multi-Agent Systems",
+      "abstract": "In large-scale enterprise settings, centralized multi-agent systems (MAS) are increasingly adopted, in which a coordinator delegates user requests to lightweight, domain-specialized sub-agents. While this architecture improves modularity, scalability, and cost efficiency, its reliability depends not only on accurate routing but also on sub-agents' ability to calibrate their responses to capability constraints. In particular, sub-agents built on smaller fine-tuned models often struggle with such calibration, leading them to over-answer ambiguous, underspecified, misrouted, or unsupported requests and produce hallucinated outputs instead of actionable feedback. To address this challenge, we present EARS (Explanatory Abstention for Reliable Sub-Agent Modeling), a production-oriented framework that reframes sub-agent abstention as an inter-agent communication protocol: a sub-agent does not merely abstain, but exposes an actionable failure state to the coordinator. EARS curates human-agent interaction data using an ensemble of calibrated LLM-as-a-Judge models, producing structured abstention labels and rationales under a taxonomy of sub-agent failure modes. These data are used to fine-tune sub-agents to detect failure conditions and return rationales for coordinator-level clarification, rerouting, or fallback. We evaluate EARS in a large-scale production e-commerce assistant supporting enterprise business intelligence workflows. EARS improves the overall response pass rate from 68.5% to 78.9%, demonstrating that sub-agent-side explanatory abstention improves MAS reliability.",
+      "authors": [
+        "Shuang Xie",
+        "Yunan Lu",
+        "Han Li",
+        "Lingyun Wang"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.CL"
+      ],
+      "published": "2026-06-17T04:07:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.18668v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "sub-agent modeling in multi-agent systems with collaboration",
+      "llm_evidence_cn": "多代理系统中的子代理建模与协作",
+      "llm_evidence": "多代理系统中的子代理建模与协作",
+      "canonical_evidence": "多代理系统中的子代理建模与协作",
+      "llm_tldr_en": "Introduces EARS for sub-agents to abstain from unsupported requests, improving reliability in large-scale multi-agent collaboration.",
+      "llm_tldr_cn": "针对大规模多代理系统中轻量子代理容易过度回答导致幻觉的问题，提出EARS方法，使子代理能够对不支持的请求进行解释性弃权，从而提升协作系统的可靠性。该方法通过校准子代理响应能力，增强了多代理协作的鲁棒性。",
+      "llm_tldr": "针对大规模多代理系统中轻量子代理容易过度回答导致幻觉的问题，提出EARS方法，使子代理能够对不支持的请求进行解释性弃权，从而提升协作系统的可靠性。该方法通过校准子代理响应能力，增强了多代理协作的鲁棒性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
