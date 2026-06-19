@@ -1,0 +1,256 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-19T21:36:53.922881+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2606.18413v1",
+      "source": "arxiv",
+      "title": "Searching for Synergy in Shared Workspace Human-AI Collaboration",
+      "abstract": "Automated AI agents are increasingly capable, yet many scientific and professional tasks require human judgment and contextual expertise. We study shared-workspace human-AI teams, where AI agents and human collaborators must coordinate responsibilities before submitting a final answer. Using the Collaborative Gym environment with DiscoveryBench tasks, we examine when adding simulated human collaborators improves performance and when process loss turns additional collaborators into coordination overhead. Across 1,482 sessions, adding relevant collaborators can lower performance when teams lack structure to coordinate their contributions. We then evaluate scaffolding that combines shared group memory with simulated human-in-the-loop (HITL) gates, where selected actions require approval from a designated simulated participant. This scaffolding yields higher mean performance, most clearly in three-person teams, with clearer responsibility signals and stronger routing of expertise to team actions. Overall, how human-AI teams coordinate and integrate expertise matters as much as the capability available to them.",
+      "authors": [
+        "Nachiket Kotalwar",
+        "Rohini Das",
+        "Carolyn Rose"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.HC"
+      ],
+      "published": "2026-06-16T19:08:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.18413v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "shared-workspace human-AI collaboration with simulated human collaborators",
+      "llm_evidence_cn": "共享工作空间中人类与AI代理的协作",
+      "llm_evidence": "共享工作空间中人类与AI代理的协作",
+      "canonical_evidence": "共享工作空间中人类与AI代理的协作",
+      "llm_tldr_en": "Studies human-AI team coordination in shared workspace, finding that adding collaborators can lower performance without structure, and proposes scaffolding with shared memory and human-in-the-loop gates.",
+      "llm_tldr_cn": "该论文研究共享工作空间中人类与AI代理的协作问题。通过Collaborative Gym环境进行实验，发现缺乏协调结构时增加协作者反而降低性能。提出结合共享组记忆和模拟人在回路门的支架方法，以提高团队协作效率。",
+      "llm_tldr": "该论文研究共享工作空间中人类与AI代理的协作问题。通过Collaborative Gym环境进行实验，发现缺乏协调结构时增加协作者反而降低性能。提出结合共享组记忆和模拟人在回路门的支架方法，以提高团队协作效率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.18413v2",
+      "source": "arxiv",
+      "title": "Searching for Synergy in Shared Workspace Human-AI Collaboration",
+      "abstract": "Automated AI agents are increasingly capable, yet many scientific and professional tasks require human judgment and contextual expertise. We study shared-workspace human-AI teams, where AI agents and human collaborators must coordinate responsibilities before submitting a final answer. Using the Collaborative Gym environment with DiscoveryBench tasks, we examine when adding simulated human collaborators improves performance and when process loss turns additional collaborators into coordination overhead. Across 1,482 sessions, adding relevant collaborators can lower performance when teams lack structure to coordinate their contributions. We then evaluate scaffolding that combines shared group memory with simulated human-in-the-loop (HITL) gates, where selected actions require approval from a designated simulated participant. This scaffolding yields higher mean performance, most clearly in three-person teams, with clearer responsibility signals and stronger routing of expertise to team actions. Overall, how human-AI teams coordinate and integrate expertise matters as much as the capability available to them.",
+      "authors": [
+        "Nachiket Kotalwar",
+        "Rohini Das",
+        "Carolyn Rose"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.HC"
+      ],
+      "published": "2026-06-16T19:08:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.18413v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "studies human-AI collaboration in shared workspace",
+      "llm_evidence_cn": "研究共享空间中的人机协作",
+      "llm_evidence": "研究共享空间中的人机协作",
+      "canonical_evidence": "研究共享空间中的人机协作",
+      "llm_tldr_en": "Examines when adding simulated human collaborators improves or hurts performance in shared-workspace human-AI teams, proposing scaffolding with group memory and HITL gates.",
+      "llm_tldr_cn": "该论文研究了共享工作空间中人类与AI代理协作的协同效应。通过Collaborative Gym环境中的DiscoveryBench任务，发现添加更多协作者可能因缺乏协调结构而降低性能。提出了结合共享组记忆和人工循环门控的脚手架方法，以改善团队协作效率。这项工作揭示了人类-AI团队协作中的过程损失问题，并为设计更有效的协作机制提供了洞见。",
+      "llm_tldr": "该论文研究了共享工作空间中人类与AI代理协作的协同效应。通过Collaborative Gym环境中的DiscoveryBench任务，发现添加更多协作者可能因缺乏协调结构而降低性能。提出了结合共享组记忆和人工循环门控的脚手架方法，以改善团队协作效率。这项工作揭示了人类-AI团队协作中的过程损失问题，并为设计更有效的协作机制提供了洞见。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.12918v1",
+      "source": "arxiv",
+      "title": "MAStrike: Shapley-Guided Collusive Red-Teaming on Multi-Agent Systems",
+      "abstract": "Hierarchical multi-agent systems (MAS) are rapidly being deployed in high-stakes workflows across domains such as finance and software engineering. In these systems, safety and security are inherently distributed across role-specialized agents, significantly expanding the attack surface, particularly under coordinated adversarial behaviors such as privilege escalation and cross-agent collusion. Existing red-teaming approaches for MAS remain limited: they rely on heuristic selection of target agents and perturb isolated message streams, leaving critical questions unanswered as which agents are most responsible for system safety, and how compromised agents can coordinate to bypass defenses. We propose MAStrike, a closed-loop framework for collusive red-teaming in hierarchical MAS. We propose the first agent-level Shapley value analysis for MAS, quantifying each agent's marginal contribution to system robustness under task-specific distributions. GGuided by this attribution, MAStrike identifies vulnerable agent coalitions and generates coordinated, role-aware adversarial manipulations. These attacks are iteratively refined through structured causal diagnosis, attributing failure cases to uncompromised agents that block adversarial attempts. We further build a comprehensive MAS red-teaming benchmark and controllable environments spanning diverse hierarchical topologies and domains, including finance, software engineering, and CRM. Extensive experiments across MAS built on multiple frontier models show that MAStrike substantially outperforms heuristic baselines. Our analysis further uncovers non-trivial Shapley value distributions and higher-order interaction structures among agents, revealing critical vulnerabilities and coordination patterns that are overlooked by prior single-agent or template-based methods.",
+      "authors": [
+        "Chejian Xu",
+        "Zhaorun Chen",
+        "Jingyang Zhang",
+        "Freddy Lecue",
+        "Avni Kothari",
+        "Sarah Tan",
+        "Wenbo Guo",
+        "Bo Li"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-06-11T05:21:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.12918v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "collusive red-teaming on multi-agent systems",
+      "llm_evidence_cn": "多代理系统的合谋红队测试",
+      "llm_evidence": "多代理系统的合谋红队测试",
+      "canonical_evidence": "多代理系统的合谋红队测试",
+      "llm_tldr_en": "Proposes MAStrike, a framework for collusive red-teaming on multi-agent systems using Shapley values to identify critical agents and generate coordinated attacks.",
+      "llm_tldr_cn": "该论文提出MAStrike框架，利用Shapley值识别多代理系统中对安全最关键的代理，并生成合谋攻击策略。现有方法依赖启发式选择，MAStrike通过闭循环优化发现代理间的协调漏洞。",
+      "llm_tldr": "该论文提出MAStrike框架，利用Shapley值识别多代理系统中对安全最关键的代理，并生成合谋攻击策略。现有方法依赖启发式选择，MAStrike通过闭循环优化发现代理间的协调漏洞。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.19135v1",
+      "source": "arxiv",
+      "title": "A Technical Taxonomy of LLM Agent Communication Protocols",
+      "abstract": "As large language models (LLMs) advance and multi-agent systems aim to overcome the limits of standalone agents, robust communication protocols are becoming essential infrastructure for distributed agent networks. Nonetheless, the fragmented protocol landscape presents a significant interoperability challenge. This study develops a technical taxonomy to classify and analyze LLM agent communication protocols. Following an established iterative method, we defined the taxonomy's purpose, meta-characteristic, and ending conditions, then performed five iterations, three empirical-to-conceptual and two conceptual-to-empirical, on nine actively maintained open-source protocols with demonstrable adoption. The taxonomy comprises five dimensions: counterparty, payload, interaction state, discovery mechanism, and schema flexibility. Classification reveals recurring architectural patterns: all sampled agent-to-agent protocols combine hybrid payloads with session-state persistence; most protocols support multiple predefined schemas, and two negotiate schemas at runtime, indicating a trend toward schema flexibility; decentralized discovery remains rare. Analysis suggests short-term convergence pressure toward protocols unifying agent-to-agent and agent-to-context (tool and data) communication. Long-term, however, no single protocol is likely to maximize versatility, efficiency, and portability simultaneously. The field will more likely evolve toward a federated, layered protocol stack. The framework guides protocol selection and highlights open research gaps such as privacy and policy enforcement.}",
+      "authors": [
+        "Linus Sander",
+        "Habtom Kahsay Gidey",
+        "Alexander Lenz",
+        "Alois Knoll"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.NI"
+      ],
+      "published": "2026-06-17T14:45:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.19135v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "taxonomy of communication protocols for distributed agent networks",
+      "llm_evidence_cn": "分布式智能体通信协议的技术分类",
+      "llm_evidence": "分布式智能体通信协议的技术分类",
+      "canonical_evidence": "分布式智能体通信协议的技术分类",
+      "llm_tldr_en": "Develops a technical taxonomy of LLM agent communication protocols for distributed multi-agent networks, addressing interoperability challenges with five dimensions.",
+      "llm_tldr_cn": "针对分布式多智能体系统中通信协议碎片化导致的互操作性问题，本文采用迭代方法构建了LLM智能体通信协议的技术分类体系。该分类包含对手方、载荷、交互模式、协议语义和治理五个维度，涵盖九种主流开源协议。该工作为设计可互操作的分布式智能体系统提供了系统化参考框架，对边缘云协同等场景具有重要指导意义。",
+      "llm_tldr": "针对分布式多智能体系统中通信协议碎片化导致的互操作性问题，本文采用迭代方法构建了LLM智能体通信协议的技术分类体系。该分类包含对手方、载荷、交互模式、协议语义和治理五个维度，涵盖九种主流开源协议。该工作为设计可互操作的分布式智能体系统提供了系统化参考框架，对边缘云协同等场景具有重要指导意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.15024v1",
+      "source": "arxiv",
+      "title": "Resilient Consensus in Agentic AI",
+      "abstract": "Large language model (LLM) agents are increasingly deployed in multi-agent systems where they must coordinate and agree on shared decisions. We ask whether classical resilient consensus theory, developed for deterministic agents, transfers to LLM agents that may behave adversarially. Framing LLM agreement as a Byzantine consensus game, we run controlled experiments on complete and general communication graphs. We find that prompted LLM agents fail to reach agreement that is achievable in principle: consensus can fail even in settings where classical theory guarantees that a convergent algorithm exists, and this failure persists across temperatures and horizons. At the same time, wrapping the agents with classical resilient consensus filters improves agreement. The benefit of filtering depends on how much robustness the underlying topology already provides. Our results suggest that classical resilient consensus theory is a useful lens for the safety of agentic AI.",
+      "authors": [
+        "Sribalaji C. Anand",
+        "George J. Pappas"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "eess.SY"
+      ],
+      "published": "2026-06-12T23:41:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.15024v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Consensus mechanism for multi-agent coordination and agreement",
+      "llm_evidence_cn": "多智能体协调与共识机制",
+      "llm_evidence": "多智能体协调与共识机制",
+      "canonical_evidence": "多智能体协调与共识机制",
+      "llm_tldr_en": "Examines whether classical resilient consensus theory applies to LLM agents, finding they fail to reach agreement even in settings where convergence is guaranteed, but consensus filters improve agreement.",
+      "llm_tldr_cn": "该论文研究经典弹性共识理论是否适用于LLM智能体。实验发现，即使理论保证收敛，提示驱动的LLM智能体也无法达成共识，且失败在多种温度和视野下持续。将智能体包裹在经典弹性共识滤波器中可改善协议。过滤的益处依赖于通信图结构。这项工作为多智能体系统共识提供了经验基础。",
+      "llm_tldr": "该论文研究经典弹性共识理论是否适用于LLM智能体。实验发现，即使理论保证收敛，提示驱动的LLM智能体也无法达成共识，且失败在多种温度和视野下持续。将智能体包裹在经典弹性共识滤波器中可改善协议。过滤的益处依赖于通信图结构。这项工作为多智能体系统共识提供了经验基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.19758v1",
+      "source": "arxiv",
+      "title": "SIGMA: Skill-Incidence Graphs for Compositional Multi-Agent Design",
+      "abstract": "Existing graph-based multi-agent system (MAS) designers mainly improve collaboration by optimizing communication topologies over predefined agents, roles, or groups. However, because each node remains a closed-set entity, these methods struggle to generalize to tasks that require unseen combinations of capabilities. We propose SIGMA, a skill-incidence graph framework that constructs agents as task-conditioned bundles of reusable skills. Given a task and a skill library, SIGMA predicts a skill-agent incidence matrix, composes agent node embeddings from selected skills, and decodes a communication topology over the constructed agents. During execution, skill-specific mailboxes route messages to the relevant assigned capabilities, making the incidence structure directly operational. Across six reasoning and coding benchmarks with three base LLMs, SIGMA achieves the best average performance and improves over CARD, the strongest non-compositional topology-based baseline, by 2.06, 2.36, and 1.75 points, respectively. It also shows stronger robustness to unseen skill libraries, with an average performance drop of only 0.96 points. These results suggest that compositional node construction is a complementary and important axis for multi-agent design beyond communication topology optimization. Code is available at https://anonymous.4open.science/r/SIGMA-2338/.",
+      "authors": [
+        "Kun Zeng",
+        "Yu Huo",
+        "Siyu Zhang",
+        "Yuecheng Zhuo",
+        "Yuquan Lu",
+        "Haoyue Liu",
+        "Siyue Chen",
+        "Xiaoying Tang"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-06-18T03:41:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.19758v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "proposes skill-incidence graphs for multi-agent collaboration design",
+      "llm_evidence_cn": "提出技能关联图用于多代理协作设计",
+      "llm_evidence": "提出技能关联图用于多代理协作设计",
+      "canonical_evidence": "提出技能关联图用于多代理协作设计",
+      "llm_tldr_en": "Proposes SIGMA, a skill-incidence graph framework for compositional multi-agent design that constructs agents as task-conditioned bundles of skills, improving generalization to unseen capability combinations.",
+      "llm_tldr_cn": "现有图基多代理系统设计通过优化通信拓扑来改进协作，但无法泛化到未见能力组合。本文提出SIGMA框架，将代理构建为任务条件下的可复用技能包，预测技能-代理关联矩阵并解码通信拓扑。技能特定邮箱在运行时路由消息，使代理结构可动态组合。实验表明该方法在新任务上实现了更好的协作泛化。",
+      "llm_tldr": "现有图基多代理系统设计通过优化通信拓扑来改进协作，但无法泛化到未见能力组合。本文提出SIGMA框架，将代理构建为任务条件下的可复用技能包，预测技能-代理关联矩阵并解码通信拓扑。技能特定邮箱在运行时路由消息，使代理结构可动态组合。实验表明该方法在新任务上实现了更好的协作泛化。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

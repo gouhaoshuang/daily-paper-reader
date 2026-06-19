@@ -6,32 +6,40 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-18
-- 运行时间：2026-06-18 22:02:08 UTC
+- 最新运行日期：2026-06-19
+- 运行时间：2026-06-19 21:41:01 UTC
 - 运行状态：成功
-- 本次总论文数：4
+- 本次总论文数：6
 - 精读区：1
-- 速读区：3
+- 速读区：5
 
 ### 今日简报（AI）
-今日精读1篇、速读3篇，重点关注V2X带宽编码与LLM代理通信协议。最值得看《CABLE》的V2X系统编码优化（9.0分）及《A Technical Taxonomy of LLM Agent Communication Protocols》的协议分类。建议优先了解CABLE在车联网中的带宽节省方案，再结合多智能体系统可靠性研究深化理解。
-- 详情：[/202606/18/README](/202606/18/README)
+今日推荐6篇论文，精读1篇聚焦人机协同效应，速读涵盖智能体通信协议与多智能体组合设计。  
+最值得关注的是精读论文《Searching for Synergy in Shared Workspace Human-AI Collaboration》（8.0分），探讨共享工作空间中人类与AI的协同增效；速读中《A Technical Taxonomy of LLM Agent Communication Protocols》提供实用的智能体通信分类。  
+普通读者可优先精读这两篇，理解人机协作核心机制与智能体间通信框架。
+- 详情：[/202606/19/README](/202606/19/README)
 
 ### 精读区论文标签
-1. [CABLE: Cloud-Assisted Bandwidth-efficient LMM-based Encoding for V2X Systems](/202606/18/2606.19258v1-cable-cloud-assisted-bandwidth-efficient-lmm-based-encoding-for-v2x-systems)  
-   标签：评分：9.0/10、query:eca
-   evidence：云辅助的端云协同感知框架
+1. [Searching for Synergy in Shared Workspace Human-AI Collaboration](/202606/19/2606.18413v1-searching-for-synergy-in-shared-workspace-human-ai-collaboration)  
+   标签：评分：8.0/10、query:eca
+   evidence：共享工作空间中人类与AI代理的协作
 
 ### 速读区论文标签
-1. [A Technical Taxonomy of LLM Agent Communication Protocols](/202606/18/2606.19135v1-a-technical-taxonomy-of-llm-agent-communication-protocols)  
+1. [Searching for Synergy in Shared Workspace Human-AI Collaboration](/202606/19/2606.18413v2-searching-for-synergy-in-shared-workspace-human-ai-collaboration)  
    标签：评分：7.0/10、query:eca
-   evidence：LLM代理通信协议分类学，面向分布式网络
-2. [On the Reliability of Networks of AI Agents: Density Evolution, Stopping Sets, and Architecture Optimization](/202606/18/2606.18121v1-on-the-reliability-of-networks-of-ai-agents-density-evolution-stopping-sets-and-architecture-optimization)  
+   evidence：研究共享空间中的人机协作
+2. [A Technical Taxonomy of LLM Agent Communication Protocols](/202606/19/2606.19135v1-a-technical-taxonomy-of-llm-agent-communication-protocols)  
+   标签：评分：7.0/10、query:eca
+   evidence：分布式智能体通信协议的技术分类
+3. [SIGMA: Skill-Incidence Graphs for Compositional Multi-Agent Design](/202606/19/2606.19758v1-sigma-skill-incidence-graphs-for-compositional-multi-agent-design)  
+   标签：评分：7.0/10、query:eca
+   evidence：提出技能关联图用于多代理协作设计
+4. [MAStrike: Shapley-Guided Collusive Red-Teaming on Multi-Agent Systems](/202606/19/2606.12918v1-mastrike-shapley-guided-collusive-red-teaming-on-multi-agent-systems)  
    标签：评分：6.0/10、query:eca
-   evidence：使用稀疏图上的消息传递建模多智能体协作
-3. [EARS: Explanatory Abstention for Reliable Sub-Agent Modeling in Large-scale Multi-Agent Systems](/202606/18/2606.18668v1-ears-explanatory-abstention-for-reliable-sub-agent-modeling-in-large-scale-multi-agent-systems)  
+   evidence：多代理系统的合谋红队测试
+5. [Resilient Consensus in Agentic AI](/202606/19/2606.15024v1-resilient-consensus-in-agentic-ai)  
    标签：评分：6.0/10、query:eca
-   evidence：多代理系统中的子代理建模与协作
+   evidence：多智能体协调与共识机制
 
 
 <div class="dpr-home-promo-card">
