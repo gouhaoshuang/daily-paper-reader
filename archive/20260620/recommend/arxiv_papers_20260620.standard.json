@@ -1,0 +1,392 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-20T20:37:36.756491+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2606.20487v1",
+      "source": "arxiv",
+      "title": "Beyond Global Replanning: Hierarchical Recovery for Cross-Device Agent Systems",
+      "abstract": "Real-world computer-use tasks often span multiple applications and devices, requiring agents to coordinate heterogeneous environments under dynamic runtime failures. Existing multi-device agent systems support task decomposition and cross-device assignment, but recovery remains largely coarse-grained: when execution fails, they typically retry the same strategy, reassign the subtask, or revise the global plan, without systematically modeling the device-local strategy space. This limits their ability to distinguish failures that can be repaired within the current device from those that require cross-device replanning. We propose \\textbf{H-RePlan}, a hierarchical replanning framework for multi-device agents with unified API--CLI--GUI execution. H-RePlan equips each device with interchangeable execution strategies and separates device-local strategy recovery from orchestrator-level global replanning through a compact cross-layer failure abstraction. To evaluate this capability, we introduce \\textbf{HeraBench}, a fault-injected benchmark that constructs cross-device workflows over Linux and Android devices and injects strategy- and device-level failures. Experiments show that H-RePlan substantially outperforms single-strategy and coarse-grained multi-device baselines, achieving higher completion, instruction adherence, and perfect-pass rates while reducing the token cost required for reliable end-to-end success. These results demonstrate that scope-aware hierarchical recovery is essential for robust multi-device agent execution.",
+      "authors": [
+        "Shu Yao",
+        "Yuhua Luo",
+        "Qian Long",
+        "Jingru Fan",
+        "Zhuoyuan Yu",
+        "Yuheng Wang",
+        "Lin Wu",
+        "Yufan Dang",
+        "Huatao Li",
+        "Chen Qian"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-18T17:04:17+00:00",
+      "link": "https://arxiv.org/pdf/2606.20487v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "cross-device agent systems with hierarchical recovery for distributed edge-cloud architecture",
+      "llm_evidence_cn": "跨设备智能体系统的分层恢复方法，适用于分布式边缘云架构",
+      "llm_evidence": "跨设备智能体系统的分层恢复方法，适用于分布式边缘云架构",
+      "canonical_evidence": "跨设备智能体系统的分层恢复方法，适用于分布式边缘云架构",
+      "llm_tldr_en": "Proposes H-RePlan, a hierarchical replanning framework for multi-device agents, distinguishing device-local vs cross-device failures for efficient recovery.",
+      "llm_tldr_cn": "真实世界计算机使用任务常跨多应用和设备，现有跨设备智能体系统失败恢复粗粒度。本文提出H-RePlan分层重规划框架，通过统一API-CLI-GUI执行接口建模设备本地策略空间，区分可设备内修复与需跨设备重规划的失败。实验表明H-RePlan显著提升多设备任务成功率，为边缘云协同的智能体系统提供了关键恢复机制。",
+      "llm_tldr": "真实世界计算机使用任务常跨多应用和设备，现有跨设备智能体系统失败恢复粗粒度。本文提出H-RePlan分层重规划框架，通过统一API-CLI-GUI执行接口建模设备本地策略空间，区分可设备内修复与需跨设备重规划的失败。实验表明H-RePlan显著提升多设备任务成功率，为边缘云协同的智能体系统提供了关键恢复机制。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.14314v1",
+      "source": "arxiv",
+      "title": "Communication Policy Evolution for Proactive LLM Agents",
+      "abstract": "LLM agents have rapidly evolved into autonomous systems, yet a persistent information gap remains between users and agents: communication is costly, while users' identical preferences further limit information exchange. To investigate how agents should communicate across modalities, this paper formalizes Communication Policy, establishes textual and UI-based policies, and then evaluates communication policies across diverse environments, personas, and model combinations. Building information asymmetry for proactive agents, we set up two complementary settings, User-Agent and Planner-Executor. Experimental results reveal complementary strengths between interaction channels: text-based interaction often facilitates task performance, while structured UI improves agents' response quality and persona compliance. Motivated by that, a hybrid method combines these advantages. We further propose Communication Policy Evolution (CPE), a self-evolution framework for refining communication policies through rollout and prompt-level evolving. Without model modification, CPE achieves the best task success across multiple settings using prompt refinement alone. Our findings identify communication behavior as a critical yet underexplored design dimension for LLM agents.",
+      "authors": [
+        "Xinbei Ma",
+        "Jiyang Qiu",
+        "Yao Yao",
+        "Zheng Wu",
+        "Yijie Lu",
+        "Xiangmou Qu",
+        "Jiaxin Yin",
+        "Xingyu Lou",
+        "Jun Wang",
+        "Weiwen Liu",
+        "Weinan Zhang",
+        "Zhuosheng Zhang",
+        "Hai Zhao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-12T09:54:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.14314v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "collaboration via communication policies between user-agent and planner-executor",
+      "llm_evidence_cn": "通过用户-代理和规划者-执行者之间的通信策略实现协作",
+      "llm_evidence": "通过用户-代理和规划者-执行者之间的通信策略实现协作",
+      "canonical_evidence": "通过用户-代理和规划者-执行者之间的通信策略实现协作",
+      "llm_tldr_en": "Explores how proactive LLM agents should communicate across modalities by formalizing Communication Policy and evaluating text vs UI policies in user-agent and planner-executor settings.",
+      "llm_tldr_cn": "本文研究主动式LLM代理如何跨模态通信以弥合信息鸿沟。作者形式化了通信策略的概念，并在用户-代理和规划者-执行者两种互补场景下评估了文本与UI策略的效果。实验表明，文本交互有助于任务性能，而结构化UI则提升了代理的主动能力。该工作为设计更高效的代理协作通信机制提供了理论基础。",
+      "llm_tldr": "本文研究主动式LLM代理如何跨模态通信以弥合信息鸿沟。作者形式化了通信策略的概念，并在用户-代理和规划者-执行者两种互补场景下评估了文本与UI策略的效果。实验表明，文本交互有助于任务性能，而结构化UI则提升了代理的主动能力。该工作为设计更高效的代理协作通信机制提供了理论基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.19911v1",
+      "source": "arxiv",
+      "title": "Multi-Agent Transactive Memory",
+      "abstract": "The decentralized deployment of LLM agents with diverse capabilities across diverse tasks motivates infrastructure for knowledge sharing across heterogeneous agent populations. Just as search engines index human-generated artifacts to support human problem solving, retrieval systems can organize agent-generated artifacts for reuse across agent populations. We extend retrieval-augmented generation - which demonstrates the value of human-authored artifacts to individual agents - to retrieval of agent-generated artifacts supporting a population of agents. In particular, agent trajectories encode reusable procedural knowledge, yet these artifacts are typically discarded after a single use or retained only by the producing agent, forcing newly instantiated agents to repeatedly rediscover existing solutions. We propose Multi-Agent Transactive Memory (MATM), a framework for population-level storage and retrieval of agent-generated trajectories, where producer agents contribute trajectories to a shared repository and consumer agents retrieve them to improve task execution. We focus on interactive environments (ALFWorld and WebArena), where trajectories are long and encode especially rich procedural structure. Our experiments demonstrate that retrieving trajectories from MATM improves downstream task performance and reduces interaction steps without coordination or joint training. These results position MATM as a design pattern for population-level experience sharing in open agent ecosystems.",
+      "authors": [
+        "To Eun Kim",
+        "Xuhong He",
+        "Dishank Jain",
+        "Ambuj Agrawal",
+        "Negar Arabzadeh",
+        "Fernando Diaz"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.IR"
+      ],
+      "published": "2026-06-18T08:04:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.19911v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent knowledge sharing and retrieval across heterogeneous agent populations",
+      "llm_evidence_cn": "多代理异构种群间的知识共享与检索",
+      "llm_evidence": "多代理异构种群间的知识共享与检索",
+      "canonical_evidence": "多代理异构种群间的知识共享与检索",
+      "llm_tldr_en": "Extends retrieval-augmented generation to agent-generated artifacts, enabling knowledge sharing across heterogeneous agent populations via transactive memory.",
+      "llm_tldr_cn": "针对异构代理种群中知识重用困难的问题，本文扩展了检索增强生成到代理生成的工件，使得代理生成的轨迹等程序性知识可以被其他代理检索和复用。通过多代理交易记忆机制，新实例化的代理无需重新发现已有知识。实验证明了该方法在减少重复探索、提升整体任务效率方面的有效性。",
+      "llm_tldr": "针对异构代理种群中知识重用困难的问题，本文扩展了检索增强生成到代理生成的工件，使得代理生成的轨迹等程序性知识可以被其他代理检索和复用。通过多代理交易记忆机制，新实例化的代理无需重新发现已有知识。实验证明了该方法在减少重复探索、提升整体任务效率方面的有效性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.15077v1",
+      "source": "arxiv",
+      "title": "Risk-Aware LLM Agents for Geospatial Data Retrieval: Design and Preliminary Adversarial Evaluation",
+      "abstract": "We present an LLM-driven framework for retrieving remote sensing data from cloud-based geospatial catalogues using natural language queries. The system converts user intent into structured API calls, enabling efficient access to satellite imagery and environmental datasets. The architecture integrates three agents: Guardrail for safety and policy enforcement, General-QA for intent interpretation, and Recommender-Analyst for schema-aware API call generation. This coordinated design ensures reliable, semantically aligned interaction with external data services. The modular framework is portable across platforms through API schema substitution and supports applications in environmental monitoring, disaster response, and climate analysis. It establishes a scalable interface between user intent and geospatial infrastructure, enabling streamlined and automated Earth observation workflows. Preliminary experiments under adversarial multi-turn settings show that prompt-level safety instructions improve robustness, although rare high-impact failures persist in API manipulation scenarios and highlight the need for adaptive, system-level defenses that balance safety, usability, and cost efficiency, which motivates the use of our intercept-level Guardrail agent.",
+      "authors": [
+        "Kyle Gao",
+        "Joel Cumming",
+        "Jonathan Li",
+        "Linlin Xu",
+        "David A. Clausi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-13T03:15:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.15077v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent collaboration for geospatial data retrieval with three coordinated agents",
+      "llm_evidence_cn": "三个协调代理用于地理空间数据检索的多代理协作",
+      "llm_evidence": "三个协调代理用于地理空间数据检索的多代理协作",
+      "canonical_evidence": "三个协调代理用于地理空间数据检索的多代理协作",
+      "llm_tldr_en": "Presents a risk-aware LLM agent framework with three agents (Guardrail, General-QA, Recommender-Analyst) for retrieving remote sensing data via natural language queries.",
+      "llm_tldr_cn": "针对遥感数据检索中语义对齐和安全问题，本文提出风险感知的LLM代理框架，包含三个代理：Guardrail负责安全与策略执行，General-QA进行意图理解，Recommender-Analyst生成模式感知的API调用。这种协调设计确保了与外部数据服务的可靠交互。初步对抗评估表明框架对不同攻击具有鲁棒性。",
+      "llm_tldr": "针对遥感数据检索中语义对齐和安全问题，本文提出风险感知的LLM代理框架，包含三个代理：Guardrail负责安全与策略执行，General-QA进行意图理解，Recommender-Analyst生成模式感知的API调用。这种协调设计确保了与外部数据服务的可靠交互。初步对抗评估表明框架对不同攻击具有鲁棒性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.14249v1",
+      "source": "arxiv",
+      "title": "HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry",
+      "abstract": "AI agent performance depends critically on the runtime harness, comprising the prompts, tools, memory, and control flow that mediate how a model observes, reasons, and acts. Yet today's harnesses remain largely hand-crafted and static: each new model or task still demands bespoke scaffolding, and the rich traces produced during execution are rarely distilled back into systematic improvement. We introduce HarnessX, a foundry for composable, adaptive, and evolvable agent harnesses. HarnessX assembles typed harness primitives via a substitution algebra, adapts them through AEGIS, a trace-driven multi-agent evolution engine grounded in an operational mirror between symbolic adaptation and reinforcement learning, and closes the harness-model loop by turning trajectories into both harness updates and model training signal. Across five benchmarks (ALFWorld, GAIA, WebShop, tau^3-Bench, and SWE-bench Verified), HarnessX yields an average gain of +14.5% (up to +44.0%), with gains largest where baselines are lowest. These results suggest that agent progress need not come from model scaling alone: composing and evolving runtime interfaces from execution feedback is an actionable and complementary lever. The complete codebase will be open-sourced in a future release.",
+      "authors": [
+        "Tingyang Chen",
+        "Shuo Lu",
+        "Kang Zhao",
+        "Weicheng Meng",
+        "Hanlin Teng",
+        "Tianhao Li",
+        "Chao Li",
+        "Xule Liu",
+        "Jian Liang",
+        "Zhizhong Zhang",
+        "Yuan Xie",
+        "Heng Qu",
+        "Kun Shao",
+        "Jian Luan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-12T08:27:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.14249v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Provides composable agent harness with multi-agent evolution engine, applicable to building flexible edge-cloud collaborative agents",
+      "llm_evidence_cn": "提出可组合的代理框架，含多代理进化引擎，可用于构建端云协同的AI代理",
+      "llm_evidence": "提出可组合的代理框架，含多代理进化引擎，可用于构建端云协同的AI代理",
+      "canonical_evidence": "提出可组合的代理框架，含多代理进化引擎，可用于构建端云协同的AI代理",
+      "llm_tldr_en": "HarnessX presents a composable, adaptive, and evolvable agent harness foundry that can be used to build and adapt multi-agent systems, including potential edge-cloud collaborative AI agents.",
+      "llm_tldr_cn": "针对现有代理运行时框架静态且手工定制的问题，提出HarnessX框架工坊，它通过替换代数组合类型化原语，并利用基于轨迹的多代理进化引擎AEGIS实现自适应调整。该框架可提升代理系统的灵活性和学习能力，为构建端云协同AI代理提供了可迁移的方法基础。",
+      "llm_tldr": "针对现有代理运行时框架静态且手工定制的问题，提出HarnessX框架工坊，它通过替换代数组合类型化原语，并利用基于轨迹的多代理进化引擎AEGIS实现自适应调整。该框架可提升代理系统的灵活性和学习能力，为构建端云协同AI代理提供了可迁移的方法基础。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.18502v1",
+      "source": "arxiv",
+      "title": "Towards Scalable Customization and Deployment of Multi-Agent Systems for Enterprise Applications",
+      "abstract": "Large language model (LLM)-based multi-agent systems demonstrate strong performance on complex reasoning and task execution, enabling broad enterprise applications. However, production deployment remains challenging due to domain-specific customization requirements and high latency and inference costs in agentic workflows. We propose a unified framework for customization and efficient deployment of multi-agent systems in real-world settings. The first stage, Agentic Model Customization, combines continual pretraining, supervised fine-tuning, and preference optimization to adapt a compact model to specialized domains while retaining strong agentic capabilities. The second stage, Inference Optimization, integrates speculative decoding and FP8 quantization with targeted calibration to enable cost-efficient serving with minimal quality loss. Across enterprise workloads, our framework enables rapid domain adaptation and achieves a 4.48x speedup in throughput while maintaining performance and improving robustness on long-tail scenarios.",
+      "authors": [
+        "Paresh Dashore",
+        "Shreyas Kulkarni",
+        "Uttam Gurram",
+        "Nadia Bathaee",
+        "Kartik Balasubramaniam",
+        "Genta Indra Winata",
+        "Sambit Sahu",
+        "Shi-Xiong Zhang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-16T21:30:10+00:00",
+      "link": "https://arxiv.org/pdf/2606.18502v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "customization and efficient deployment of multi-agent systems with collaborative workflows",
+      "llm_evidence_cn": "多代理系统定制与高效部署，涉及协作工作流",
+      "llm_evidence": "多代理系统定制与高效部署，涉及协作工作流",
+      "canonical_evidence": "多代理系统定制与高效部署，涉及协作工作流",
+      "llm_tldr_en": "Proposes a unified framework for domain-specific customization and inference optimization of multi-agent systems, combining fine-tuning and speculative decoding for enterprise deployment.",
+      "llm_tldr_cn": "针对多代理系统在企业部署中面临领域定制和高延迟高成本挑战，本文提出统一框架。第一阶段通过持续预训练、监督微调和偏好优化实现代理模型定制；第二阶段通过推测解码等推理优化技术降低延迟。实验表明，该框架在保持强代理能力的同时显著提升了部署效率。",
+      "llm_tldr": "针对多代理系统在企业部署中面临领域定制和高延迟高成本挑战，本文提出统一框架。第一阶段通过持续预训练、监督微调和偏好优化实现代理模型定制；第二阶段通过推测解码等推理优化技术降低延迟。实验表明，该框架在保持强代理能力的同时显著提升了部署效率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.14923v1",
+      "source": "arxiv",
+      "title": "Trust Between AI Agents: Measuring Formation, Breakage, and Recovery, with Implications for Governing Multi-Agent Systems",
+      "abstract": "As language-model agents increasingly work in teams, each agent must decide how much to trust its teammates. Yet we lack a standard way to measure trust between AI agents. We propose a behavioral measure based on costly verification. In a cooperative survival game, checking a teammate's work consumes resources, while trusting a wrong answer can be fatal. Relative to a memoryless version of the same model, reduced verification provides an observable measure of trust. Using this framework, we study trust formation, breakage, and recovery across six frontier model snapshots. When paired with a consistently reliable teammate, four snapshots (Claude Opus 4.6, Claude Sonnet 4.6, GPT-5.1, and Gemini 3.1 Pro) reduce verification by roughly 60-85%, whereas two smaller snapshots show little or no such adjustment. Failures reverse this discount, but models differ in how they respond. Some concentrate renewed scrutiny on the culprit, while others become more cautious toward the entire team. Recovery is slower than formation, and clustered failures sustain suspicion far longer than the same number of failures spread apart. These differences have practical consequences. Models that form trust verify less, decide more quickly, and achieve higher payoffs in our environment. By contrast, persistent over-verification is associated with indecision rather than safety. Our results show that trust dispositions can be measured before deployment and suggest that calibration, rather than maximal suspicion, should be the central concern in the governance of multi-agent AI systems.",
+      "authors": [
+        "Yujiao Chen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CY",
+        "cs.MA"
+      ],
+      "published": "2026-06-12T19:58:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.14923v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "trust measurement between AI agents in multi-agent teams",
+      "llm_evidence_cn": "多智能体团队中智能体间信任的度量",
+      "llm_evidence": "多智能体团队中智能体间信任的度量",
+      "canonical_evidence": "多智能体团队中智能体间信任的度量",
+      "llm_tldr_en": "Proposes a behavioral trust measure for AI agents based on costly verification, studying formation, breakage, and recovery in cooperative games.",
+      "llm_tldr_cn": "语言模型智能体在团队协作中需要判断对队友的信任程度，但缺乏标准度量方法。本文提出基于代价验证的行为信任度量，通过合作生存游戏中的验证减少来量化信任。使用该框架研究六个前沿模型快照中信任的形成、破裂与恢复，发现部分模型展现出类似人类的信任动态。该工作为多智能体系统治理提供了可操作的信任测量工具。",
+      "llm_tldr": "语言模型智能体在团队协作中需要判断对队友的信任程度，但缺乏标准度量方法。本文提出基于代价验证的行为信任度量，通过合作生存游戏中的验证减少来量化信任。使用该框架研究六个前沿模型快照中信任的形成、破裂与恢复，发现部分模型展现出类似人类的信任动态。该工作为多智能体系统治理提供了可操作的信任测量工具。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.19319v1",
+      "source": "arxiv",
+      "title": "Data Intelligence Agents: Interpreting, Modeling, and Querying Enterprise Data via Autonomous Coding Agents",
+      "abstract": "Production data integration is bottlenecked by repeated, lossy handoffs between data owners, engineers, and analysts who must collaboratively discover, structure, and query enterprise data. We present Data Intelligence Agents (DIA), a system of three agents (Data Interpreter, Schema Creator, and Query Generator) that compresses this workflow by treating autonomous coding agents (ACAs) as a first-class abstraction: rather than emitting text, the agents generate, execute, validate, and repair concrete artifacts, draw on a shared memory for experience reuse, and surface each for review by domain experts. DIA is deployed in production for enterprise customers. We study the Query Generator in depth and evaluate it in fully autonomous mode across seven SQL benchmarks spanning four task categories and four dialects. It matches or surpasses the best published results on all seven, demonstrating that an architecture grounded in execution, built on ACAs and a shared memory, generalizes across the data intelligence workload with adaptation confined to natural-language instructions.",
+      "authors": [
+        "Anoushka Vyas",
+        "Aarushi Dhanuka",
+        "Sina Khoshfetrat Pakazad",
+        "Henrik Ohlsson"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.DB"
+      ],
+      "published": "2026-06-17T17:45:32+00:00",
+      "link": "https://arxiv.org/pdf/2606.19319v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent collaboration in enterprise data integration with shared memory",
+      "llm_evidence_cn": "企业数据集成中的多代理协作，包含共享记忆",
+      "llm_evidence": "企业数据集成中的多代理协作，包含共享记忆",
+      "canonical_evidence": "企业数据集成中的多代理协作，包含共享记忆",
+      "llm_tldr_en": "Presents Data Intelligence Agents (DIA), a system of three collaborating agents (Data Interpreter, Schema Creator, Query Generator) that generate, execute, and repair code artifacts for enterprise data querying.",
+      "llm_tldr_cn": "企业数据集成面临数据拥有者、工程师和分析师之间反复的手工交接瓶颈。本文提出数据智能代理系统DIA，包含三个协作代理：数据解释器、模式创建器和查询生成器。这些代理将自主编码代理作为一等公民，生成、执行、验证和修复代码工件，并通过共享记忆实现经验重用。实际部署表明，该系统显著压缩了工作流，提高了查询准确率。",
+      "llm_tldr": "企业数据集成面临数据拥有者、工程师和分析师之间反复的手工交接瓶颈。本文提出数据智能代理系统DIA，包含三个协作代理：数据解释器、模式创建器和查询生成器。这些代理将自主编码代理作为一等公民，生成、执行、验证和修复代码工件，并通过共享记忆实现经验重用。实际部署表明，该系统显著压缩了工作流，提高了查询准确率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.20058v1",
+      "source": "arxiv",
+      "title": "Autonomous Event-Driven Multi-Agent Orchestration for Enterprise AI at Scale",
+      "abstract": "Enterprise AI aims to move toward continuous event monitoring, detection, and action across specialist agents, yet existing multi-agent systems largely assume discrete request-response workflows and remain underexplored at enterprise scale. We evaluate DAG Plan and Execute and ReAct across 208 production-derived enterprise scenarios spanning Persona (<10 agents), Department (20-80), and Enterprise (200) scales, and introduce a Task Manager for continuous operation via priority inference, related-event merging, and preemption. Results show that scale, not task complexity, dominates orchestration performance: both architectures perform well at small scale but degrade at enterprise scale as agent discovery noise becomes the primary bottleneck, with simple tasks degrading more sharply than complex ones. DAG Plan and Execute offers higher precision and structured parallelization at smaller scales, but its higher overhead worsens at enterprise scale; ReAct is more robust by handling failures incrementally. The Task Manager reduces high-priority queue latency by 14-75% and improves related-event correctness by over 20 percentage points at enterprise scale.",
+      "authors": [
+        "Harsh Rao Dhanyamraju",
+        "Leonidas Raghav",
+        "Aaron Lee"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-18T10:32:38+00:00",
+      "link": "https://arxiv.org/pdf/2606.20058v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Studies multi-agent orchestration and collaboration at enterprise scale with event-driven task manager",
+      "llm_evidence_cn": "研究多代理系统的协作编排，引入事件驱动的任务管理器支持连续操作",
+      "llm_evidence": "研究多代理系统的协作编排，引入事件驱动的任务管理器支持连续操作",
+      "canonical_evidence": "研究多代理系统的协作编排，引入事件驱动的任务管理器支持连续操作",
+      "llm_tldr_en": "This paper studies multi-agent orchestration at scale, evaluating DAG Plan and Execute and ReAct architectures, and introduces an event-driven Task Manager for continuous collaboration, offering insights for distributed agent systems.",
+      "llm_tldr_cn": "针对现有企业级多代理系统局限于离散请求-响应的问题，该论文评估了DAG计划执行和ReAct架构在三种规模下的性能。提出基于事件的任务管理器，通过优先级推理、事件合并和抢占支持连续操作。实验表明，规模而非任务复杂度主导编排性能，为分布式代理协作提供了可扩展的解决方案。",
+      "llm_tldr": "针对现有企业级多代理系统局限于离散请求-响应的问题，该论文评估了DAG计划执行和ReAct架构在三种规模下的性能。提出基于事件的任务管理器，通过优先级推理、事件合并和抢占支持连续操作。实验表明，规模而非任务复杂度主导编排性能，为分布式代理协作提供了可扩展的解决方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

@@ -6,40 +6,51 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-19
-- 运行时间：2026-06-19 21:41:01 UTC
+- 最新运行日期：2026-06-20
+- 运行时间：2026-06-20 20:44:39 UTC
 - 运行状态：成功
-- 本次总论文数：6
-- 精读区：1
-- 速读区：5
+- 本次总论文数：9
+- 精读区：3
+- 速读区：6
 
 ### 今日简报（AI）
-今日推荐6篇论文，精读1篇聚焦人机协同效应，速读涵盖智能体通信协议与多智能体组合设计。  
-最值得关注的是精读论文《Searching for Synergy in Shared Workspace Human-AI Collaboration》（8.0分），探讨共享工作空间中人类与AI的协同增效；速读中《A Technical Taxonomy of LLM Agent Communication Protocols》提供实用的智能体通信分类。  
-普通读者可优先精读这两篇，理解人机协作核心机制与智能体间通信框架。
-- 详情：[/202606/19/README](/202606/19/README)
+今日日报推荐9篇论文，精读聚焦跨设备智能体分层恢复与LLM主动通信策略进化，速读覆盖风险感知地理数据检索及企业级多智能体定制。
+
+最值得精读的是9.0分的《层次化恢复》与8.0分的《通信策略进化》，分别解决跨设备系统容错和LLM预判性协作难题。
+
+普通读者可重点关注速读中《企业多智能体可扩展部署》和《数据智能体自主编码查询》，这两项更贴近实际工程落地与数据管理场景。
+- 详情：[/202606/20/README](/202606/20/README)
 
 ### 精读区论文标签
-1. [Searching for Synergy in Shared Workspace Human-AI Collaboration](/202606/19/2606.18413v1-searching-for-synergy-in-shared-workspace-human-ai-collaboration)  
+1. [Beyond Global Replanning: Hierarchical Recovery for Cross-Device Agent Systems](/202606/20/2606.20487v1-beyond-global-replanning-hierarchical-recovery-for-cross-device-agent-systems)  
+   标签：评分：9.0/10、query:eca
+   evidence：跨设备智能体系统的分层恢复方法，适用于分布式边缘云架构
+2. [Communication Policy Evolution for Proactive LLM Agents](/202606/20/2606.14314v1-communication-policy-evolution-for-proactive-llm-agents)  
    标签：评分：8.0/10、query:eca
-   evidence：共享工作空间中人类与AI代理的协作
+   evidence：通过用户-代理和规划者-执行者之间的通信策略实现协作
+3. [Multi-Agent Transactive Memory](/202606/20/2606.19911v1-multi-agent-transactive-memory)  
+   标签：评分：8.0/10、query:eca
+   evidence：多代理异构种群间的知识共享与检索
 
 ### 速读区论文标签
-1. [Searching for Synergy in Shared Workspace Human-AI Collaboration](/202606/19/2606.18413v2-searching-for-synergy-in-shared-workspace-human-ai-collaboration)  
+1. [Risk-Aware LLM Agents for Geospatial Data Retrieval: Design and Preliminary Adversarial Evaluation](/202606/20/2606.15077v1-risk-aware-llm-agents-for-geospatial-data-retrieval-design-and-preliminary-adversarial-evaluation)  
    标签：评分：7.0/10、query:eca
-   evidence：研究共享空间中的人机协作
-2. [A Technical Taxonomy of LLM Agent Communication Protocols](/202606/19/2606.19135v1-a-technical-taxonomy-of-llm-agent-communication-protocols)  
+   evidence：三个协调代理用于地理空间数据检索的多代理协作
+2. [Towards Scalable Customization and Deployment of Multi-Agent Systems for Enterprise Applications](/202606/20/2606.18502v1-towards-scalable-customization-and-deployment-of-multi-agent-systems-for-enterprise-applications)  
    标签：评分：7.0/10、query:eca
-   evidence：分布式智能体通信协议的技术分类
-3. [SIGMA: Skill-Incidence Graphs for Compositional Multi-Agent Design](/202606/19/2606.19758v1-sigma-skill-incidence-graphs-for-compositional-multi-agent-design)  
+   evidence：多代理系统定制与高效部署，涉及协作工作流
+3. [Data Intelligence Agents: Interpreting, Modeling, and Querying Enterprise Data via Autonomous Coding Agents](/202606/20/2606.19319v1-data-intelligence-agents-interpreting-modeling-and-querying-enterprise-data-via-autonomous-coding-agents)  
    标签：评分：7.0/10、query:eca
-   evidence：提出技能关联图用于多代理协作设计
-4. [MAStrike: Shapley-Guided Collusive Red-Teaming on Multi-Agent Systems](/202606/19/2606.12918v1-mastrike-shapley-guided-collusive-red-teaming-on-multi-agent-systems)  
+   evidence：企业数据集成中的多代理协作，包含共享记忆
+4. [Autonomous Event-Driven Multi-Agent Orchestration for Enterprise AI at Scale](/202606/20/2606.20058v1-autonomous-event-driven-multi-agent-orchestration-for-enterprise-ai-at-scale)  
+   标签：评分：7.0/10、query:eca
+   evidence：研究多代理系统的协作编排，引入事件驱动的任务管理器支持连续操作
+5. [HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry](/202606/20/2606.14249v1-harnessx-a-composable-adaptive-and-evolvable-agent-harness-foundry)  
    标签：评分：6.0/10、query:eca
-   evidence：多代理系统的合谋红队测试
-5. [Resilient Consensus in Agentic AI](/202606/19/2606.15024v1-resilient-consensus-in-agentic-ai)  
+   evidence：提出可组合的代理框架，含多代理进化引擎，可用于构建端云协同的AI代理
+6. [Trust Between AI Agents: Measuring Formation, Breakage, and Recovery, with Implications for Governing Multi-Agent Systems](/202606/20/2606.14923v1-trust-between-ai-agents-measuring-formation-breakage-and-recovery-with-implications-for-governing-multi-agent-systems)  
    标签：评分：6.0/10、query:eca
-   evidence：多智能体协调与共识机制
+   evidence：多智能体团队中智能体间信任的度量
 
 
 <div class="dpr-home-promo-card">
