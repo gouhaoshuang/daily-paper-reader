@@ -1,0 +1,69 @@
+{
+  "label": "2026-06-21",
+  "date": "2026-06-21",
+  "generated_at": "2026-06-21T20:45:57",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202606/21/2606.16190v1-embedded-arena-iterative-optimization-via-hardware-feedback",
+      "section": "quick",
+      "title_en": "Embedded Arena: Iterative Optimization via Hardware Feedback",
+      "authors": "Zhihan Zhang, Alexander Le Metzger, Jiuyang Lyu, Chun-Cheng Chang, Jiayi Shao, Yujia Liu, Emmanuel Azuh Mensah, Edward Wang, Kurtis Heimerl, Gregory D. Abowd, Shwetak Patel, Natasha Jaques, Vikram Iyer",
+      "date": "2026-06-15",
+      "pdf": "https://arxiv.org/pdf/2606.16190v1",
+      "score": "7.0",
+      "evidence": "嵌入式硬件上的LLM代理优化",
+      "tldr": "嵌入式设备AI优化面临内存、功耗、温度等多维硬约束，手工专家方式低效。本文提出硬件在环的智能体竞技场，让LLM agent迭代修改模型与固件，在真实MCU上编译、烧录、测量，实现闭环优化。无硬件反馈时所有模型部署失败，而该方法3次迭代内成功部署，7次内超越人类专家；实现视觉模型250x压缩且准确率损失<3.3%，音频400x压缩且特征错误率损失<6%，支持太阳能无电池运行。在实际麋鹿检测和语音转录系统中验证了实用效果。",
+      "tags": "query:eca",
+      "abstract_en": "Embedded devices from wildlife monitoring stations to clinical wearables require local AI inference due to latency, communication, or privacy constraints. Optimizing models for heterogeneous microcontrollers (MCUs) requires simultaneously satisfying hard physical constraints on memory, power, and temperature while preserving accuracy, a multidimensional optimization that is today performed manually by experts. We ask whether an LLM agent can autonomously navigate this complex, multi-turn pipeline guided by real hardware feedback, and introduce a hardware-in-the-loop agent arena in which the agent iteratively refines both model and firmware -- compiling, flashing, and measuring on real hardware -- to enable closed-loop optimization. Frontier models, including Claude Opus 4.7 and Gemini 3.1 Pro, fail entirely without hardware feedback (0% deployment success), whereas our hardware-in-the-loop formulation achieves the first successful deployment within three iterations and can surpass human expert results within seven. This agentic co-optimization achieves 250x compression for vision models with <3.3% accuracy loss and 400x for audio with <6% Feature Error Rate loss, enabling battery-free operation on a commercial MCU via solar harvesting. We demonstrate practical impact in two real-world systems: an elk-detection camera trap (96.7% accuracy) and a phonetic-transcription wearable (8.44% FER) for child development research.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/21/2606.16295v1-visualclaw-a-real-time-personalized-agent-for-the-physical-world",
+      "section": "quick",
+      "title_en": "VisualClaw: A Real-Time, Personalized Agent for the Physical World",
+      "authors": "Haoqin Tu, Jianwen Chen, Zijun Wang, Siwei Han, Juncheng Wu, Hardy Chen, Haonian Ji, Kaiwen Xiong, Jiaqi Liu, Peng Xia, Jieru Mei, Hongliang Fei, Jason Eshraghian, Zeyu Zheng, Yuyin Zhou, Huaxiu Yao, Cihang Xie",
+      "date": "2026-06-15",
+      "pdf": "https://arxiv.org/pdf/2606.16295v1",
+      "score": "6.0",
+      "evidence": "面向物理世界的实时个性化代理，可边缘部署",
+      "tldr": "视觉语言模型部署面临高延迟、高成本、无法自我进化以及缺乏工具使用场景基准的三大挑战。VisualClaw通过混合编码（级联门控过滤低信息帧+热/冷top-k注入压缩技能库）和基于失败记忆的技能进化机制，在四个视频QA基准上将API成本降低98%，平均准确率提升3.85%。同时构建了VisualClawArena基准，在200个工具使用场景中，结合计算机使用代理后宏准确率提升2.9%-3.2%，成本降低9.5%。该方法特别适用于边缘端，可将1小时流媒体API调用从3600次降至5-20次。",
+      "tags": "query:eca",
+      "abstract_en": "Vision language models are serving as general-purpose interfaces for complex multimodal tasks. However, deployment still faces three gaps: VLMs typically incur high latency and cost when processing dense video frames and long prompts, the agent scaffold remains static after deployment, and standard video-QA benchmarks do not test whether agents can use visual evidence inside tool-using workspaces. We present VisualClaw, a self-evolving multimodal agent built around two principles. First, hybrid encoding reduces deployment cost by filtering less informative streaming frames with a cascaded gate and compressing the text skill bank through hot/cold top-k injection. Second, skill evolution lets the agent learn from failures: retrieved memories condition an evolver as direct concatenated context or as guided evidence, producing skill-bank updates that help future questions. Across 4 video-QA benchmarks with 2 VLMs, VisualClaw cuts per-question API cost by an average -98% versus full-frame upload and by -25.9% over the offline uniform 8 frame baseline, while boosting accuracy in most settings, e.g., an average +3.85% and a peak +15.80% on EgoSchema with Gemini 3 Flash. To address the gap, we curate VisualClawArena, a 200-scenario multimodal agentic benchmark built through a strict five-stage pipeline; models must use video evidence, documents, dynamic updates, and executable checks inside a workspace. On VisualClawArena, the same framework with computer-use agent backends improves macro accuracy by +2.9% for Codex (GPT-5.5) and +3.2% for Claude Code (Sonnet 4.6) over no-evolution baselines, with a -9.5% cost reduction compared to the uniform-sampled baseline. These properties make VisualClaw a natural fit for edge applications, where the cascade reduces a 1-hour streaming session from ~3,600 API uploads down to only 5-20 calls and the self-evolution makes it a perfect personalized assistant.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/21/2606.17092v1-securing-multi-agent-gis-systems-risk-evaluation-and-prompt-hardening-optimization",
+      "section": "quick",
+      "title_en": "Securing Multi-Agent GIS Systems: Risk Evaluation and Prompt Hardening Optimization",
+      "authors": "Kyle Gao, Pranavi Kotta, Linlin Xu, Jonathan Li, David A. Clausi",
+      "date": "2026-06-13",
+      "pdf": "https://arxiv.org/pdf/2606.17092v1",
+      "score": "6.0",
+      "evidence": "多智能体协调在地理信息系统中",
+      "tldr": "多智能体GIS系统面临安全威胁，现有防护不足。本文提出安全框架：采用状态机协调多智能体行为，通过自适应攻击LLM和确定性裁判进行多轮红队测试，并设计结构化签名提示优化注入对抗示例，系统性提升鲁棒性且不损失任务性能。在商业系统上验证有效，可泛化至其他架构。",
+      "tags": "query:eca",
+      "abstract_en": "Agentic systems are increasingly integrated with geographic information systems (GIS), where multi-agent coordination enables complex conversational and spatial analysis but introduces security risks. This work presents a security-oriented framework for risk identification, evaluation, and mitigation in a multi-agent GIS system while maintaining adaptability to broader agentic architectures. We test the agentic system of a commercial geospatial partner while developing a modular state-machine-based orchestration framework that abstracts agent behavior into reusable components. We evaluate robustness using a red-teaming framework with an adaptive attacker LLM and a deterministic judge that produces binary outcomes with supporting rationales across multi-turn attacks. We further improve resilience with a prompt optimization framework that treats prompts as structured signatures and injects adversarial demonstrations, enabling systematic security improvements without degrading task performance.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/21/2606.19308v1-enhancing-decision-making-with-large-language-models-through-multi-agent-fictitious-play",
+      "section": "quick",
+      "title_en": "Enhancing Decision-Making with Large Language Models through Multi-Agent Fictitious Play",
+      "authors": "Leyang Shen, Yang Zhang, Xiaoyan Zhao, Chun Kai Ling, Tat-Seng Chua",
+      "date": "2026-06-17",
+      "pdf": "https://arxiv.org/pdf/2606.19308v1",
+      "score": "6.0",
+      "evidence": "多智能体协作决策",
+      "tldr": "现有基于大语言模型的多智能体系统在分解执行任务上表现优异，但在需要各方同时推理的决策任务中面临“立场纠缠”挑战。本文提出多智能体虚构博弈（MAFP）范式，将利益相关者立场建模为智能体，通过迭代最佳响应逼近均衡，使智能体逐步暴露并修正彼此弱点。在竞争性策略决策任务上，MAFP在锦标赛强度和鲁棒性两个指标上均超越单轮和多轮基线，首次将虚构博弈引入多LLM系统，有效应对决策复杂度。",
+      "tags": "query:eca",
+      "abstract_en": "Large language model (LLM)-based multi-agent systems (MAS) have demonstrated great potential in solving tasks with execution complexity, by distributing subtasks across cooperative agents. However, this divide-and-conquer paradigm falls short on decision-making tasks that are also prevalent in the real world. These tasks require simultaneous reasoning from the stances of all involved stakeholders whose decisions are mutually dependent and thus cannot be solved in isolation. We characterize this challenge as stance entanglement, a form of decision complexity distinct from execution complexity. To address it, we propose Multi-Agent Fictitious Play (MAFP), a novel MAS paradigm that represents stakeholder stances as agents and formulates decision-making as an equilibrium-seeking process. Built on the game-theoretic principle of fictitious play, MAFP iteratively updates each agent's decision by best responding to the empirical mixture of other agents' past decisions. This enables agents to expose and address one another's weaknesses, progressively improving decision quality and robustness. We evaluate MAFP on challenging decision-making tasks that test the capability of deciding strategies for competitive scenarios prior to acting. MAFP outperforms both single-round and multi-round baselines on two complementary metrics, tournament strength and robustness, demonstrating its effectiveness in addressing stance entanglement.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

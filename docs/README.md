@@ -6,51 +6,37 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-20
-- 运行时间：2026-06-20 20:44:39 UTC
+- 最新运行日期：2026-06-21
+- 运行时间：2026-06-21 20:45:50 UTC
 - 运行状态：成功
-- 本次总论文数：9
-- 精读区：3
-- 速读区：6
+- 本次总论文数：4
+- 精读区：0
+- 速读区：4
 
 ### 今日简报（AI）
-今日日报推荐9篇论文，精读聚焦跨设备智能体分层恢复与LLM主动通信策略进化，速读覆盖风险感知地理数据检索及企业级多智能体定制。
+今日速读4篇论文，无精读，主题涵盖硬件反馈优化、物理世界AI代理及多智能体GIS安全。
 
-最值得精读的是9.0分的《层次化恢复》与8.0分的《通信策略进化》，分别解决跨设备系统容错和LLM预判性协作难题。
+最值得关注的是《Embedded Arena》（7.0分）的迭代硬件反馈优化和《VisualClaw》（6.0分）的实时物理世界代理。
 
-普通读者可重点关注速读中《企业多智能体可扩展部署》和《数据智能体自主编码查询》，这两项更贴近实际工程落地与数据管理场景。
-- 详情：[/202606/20/README](/202606/20/README)
+建议优先阅读这两篇论文，关注硬件在环优化方法与物理世界AI落地的实际挑战。
+- 详情：[/202606/21/README](/202606/21/README)
 
 ### 精读区论文标签
-1. [Beyond Global Replanning: Hierarchical Recovery for Cross-Device Agent Systems](/202606/20/2606.20487v1-beyond-global-replanning-hierarchical-recovery-for-cross-device-agent-systems)  
-   标签：评分：9.0/10、query:eca
-   evidence：跨设备智能体系统的分层恢复方法，适用于分布式边缘云架构
-2. [Communication Policy Evolution for Proactive LLM Agents](/202606/20/2606.14314v1-communication-policy-evolution-for-proactive-llm-agents)  
-   标签：评分：8.0/10、query:eca
-   evidence：通过用户-代理和规划者-执行者之间的通信策略实现协作
-3. [Multi-Agent Transactive Memory](/202606/20/2606.19911v1-multi-agent-transactive-memory)  
-   标签：评分：8.0/10、query:eca
-   evidence：多代理异构种群间的知识共享与检索
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Risk-Aware LLM Agents for Geospatial Data Retrieval: Design and Preliminary Adversarial Evaluation](/202606/20/2606.15077v1-risk-aware-llm-agents-for-geospatial-data-retrieval-design-and-preliminary-adversarial-evaluation)  
+1. [Embedded Arena: Iterative Optimization via Hardware Feedback](/202606/21/2606.16190v1-embedded-arena-iterative-optimization-via-hardware-feedback)  
    标签：评分：7.0/10、query:eca
-   evidence：三个协调代理用于地理空间数据检索的多代理协作
-2. [Towards Scalable Customization and Deployment of Multi-Agent Systems for Enterprise Applications](/202606/20/2606.18502v1-towards-scalable-customization-and-deployment-of-multi-agent-systems-for-enterprise-applications)  
-   标签：评分：7.0/10、query:eca
-   evidence：多代理系统定制与高效部署，涉及协作工作流
-3. [Data Intelligence Agents: Interpreting, Modeling, and Querying Enterprise Data via Autonomous Coding Agents](/202606/20/2606.19319v1-data-intelligence-agents-interpreting-modeling-and-querying-enterprise-data-via-autonomous-coding-agents)  
-   标签：评分：7.0/10、query:eca
-   evidence：企业数据集成中的多代理协作，包含共享记忆
-4. [Autonomous Event-Driven Multi-Agent Orchestration for Enterprise AI at Scale](/202606/20/2606.20058v1-autonomous-event-driven-multi-agent-orchestration-for-enterprise-ai-at-scale)  
-   标签：评分：7.0/10、query:eca
-   evidence：研究多代理系统的协作编排，引入事件驱动的任务管理器支持连续操作
-5. [HarnessX: A Composable, Adaptive, and Evolvable Agent Harness Foundry](/202606/20/2606.14249v1-harnessx-a-composable-adaptive-and-evolvable-agent-harness-foundry)  
+   evidence：嵌入式硬件上的LLM代理优化
+2. [VisualClaw: A Real-Time, Personalized Agent for the Physical World](/202606/21/2606.16295v1-visualclaw-a-real-time-personalized-agent-for-the-physical-world)  
    标签：评分：6.0/10、query:eca
-   evidence：提出可组合的代理框架，含多代理进化引擎，可用于构建端云协同的AI代理
-6. [Trust Between AI Agents: Measuring Formation, Breakage, and Recovery, with Implications for Governing Multi-Agent Systems](/202606/20/2606.14923v1-trust-between-ai-agents-measuring-formation-breakage-and-recovery-with-implications-for-governing-multi-agent-systems)  
+   evidence：面向物理世界的实时个性化代理，可边缘部署
+3. [Securing Multi-Agent GIS Systems: Risk Evaluation and Prompt Hardening Optimization](/202606/21/2606.17092v1-securing-multi-agent-gis-systems-risk-evaluation-and-prompt-hardening-optimization)  
    标签：评分：6.0/10、query:eca
-   evidence：多智能体团队中智能体间信任的度量
+   evidence：多智能体协调在地理信息系统中
+4. [Enhancing Decision-Making with Large Language Models through Multi-Agent Fictitious Play](/202606/21/2606.19308v1-enhancing-decision-making-with-large-language-models-through-multi-agent-fictitious-play)  
+   标签：评分：6.0/10、query:eca
+   evidence：多智能体协作决策
 
 
 <div class="dpr-home-promo-card">
