@@ -1,0 +1,140 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-22T21:46:45.264703+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2606.18147v1",
+      "source": "arxiv",
+      "title": "WEQA: Wearable hEalth Question Answering with Query-Adaptive Agentic Reasoning",
+      "abstract": "Language models are remarkably capable at medical question answering, in some cases surpassing the accuracy of general physicians. However, answering questions about wearable health data remains challenging and understudied, as these ubiquitous sensors produce continuous, high-dimensional, and longitudinal data, which is non-trivial to align with text-centric distributions in LLM pretraining. The diversity of sensor modalities and user intents cannot be effectively handled by a fixed reasoning workflow or a single pretrained foundation model. To address these challenges, we propose WEQA, a query-adaptive agent framework that unifies LLM reasoning with specialized wearable analytical and modeling tools. An LLM controller is employed to synthesize execution plans and dynamically route each query to the appropriate combination of sensor analysis and pretrained models, and perform grounded response auditing with external knowledge. We also curate a benchmark spanning four open wearable datasets comprising analytic and predictive tasks in three different health domains. Experiments show that our framework is 24% more accurate than LLM and agentic baselines, and a blinded study with 12 medical experts and 8 users shows substantial gains in usefulness and clinical soundness.",
+      "authors": [
+        "Yuwei Zhang",
+        "Tong Xia",
+        "Bianca Emmerich",
+        "Yu Yvonne Wu",
+        "Dimitris Spathis",
+        "Xin Liu",
+        "Daniel McDuff",
+        "Cecilia Mascolo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-16T16:45:56+00:00",
+      "link": "https://arxiv.org/pdf/2606.18147v1",
+      "tags": [
+        "keyword:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "query-adaptive agent framework for wearable mobile health AI agent",
+      "llm_evidence_cn": "面向可穿戴移动健康AI智能体的自适应查询框架",
+      "llm_evidence": "面向可穿戴移动健康AI智能体的自适应查询框架",
+      "canonical_evidence": "面向可穿戴移动健康AI智能体的自适应查询框架",
+      "llm_tldr_en": "WEQA proposes a query-adaptive LLM agent for wearable health data, directly serving mobile AI agent applications.",
+      "llm_tldr_cn": "现有方法难以处理可穿戴传感器产生的连续高维数据，且无法适应多样化的用户意图。本文提出WEQA，一种自适应查询智能体框架，统一大模型推理与专用可穿戴分析工具。实验表明该框架能有效应对多种传感器模态和用户查询。贡献在于为移动AI智能体在健康领域的应用提供了可扩展的解决方案。",
+      "llm_tldr": "现有方法难以处理可穿戴传感器产生的连续高维数据，且无法适应多样化的用户意图。本文提出WEQA，一种自适应查询智能体框架，统一大模型推理与专用可穿戴分析工具。实验表明该框架能有效应对多种传感器模态和用户查询。贡献在于为移动AI智能体在健康领域的应用提供了可扩展的解决方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.18406v1",
+      "source": "arxiv",
+      "title": "CoreMem: Riemannian Retrieval and Fisher-Guided Distillation for Long-Term Memory in Dialogue Agents",
+      "abstract": "Personalized dialogue agents require continuous long-term memory to maintain coherent interactions across multiple sessions. However, deploying these capabilities on consumer-grade hardware (e.g., 8 GB VRAM edge devices) introduces severe memory and compute bottlenecks. Existing systems typically rely on isotropic cosine similarity for retrieval and heuristic rules for context compression. These approaches lack a unified theoretical foundation, frequently suffering from the hubness problem in high-dimensional retrieval and syntactic fragmentation during compression. To overcome these limitations, we propose CoreMem, a resource-efficient edge-cloud memory architecture fundamentally unified by information geometry. First, Riemannian retrieval replaces cosine matching with a locally adaptive Fisher-Rao metric, effectively penalizing hub memories via Mahalanobis distance with O(Ndr) Woodbury acceleration for real-time search. Second, Fisher-guided discrete token distillation (FDTD) introduces a hierarchical sentence-to-token compression mechanism. It derives sensitivity scores from Fisher information traces, providing a principled compression-KL tradeoff augmented with explicit structural syntax protection. Evaluated on the LOCOMO and LongMemEval-S benchmarks, CoreMem achieves strong accuracy improvements, yielding substantial gains in Open-domain (+4.51 pp) and Temporal (+4.17 pp) reasoning. Extensive profiling confirms that CoreMem operates seamlessly within a strict 8 GB VRAM budget, successfully bridging the gap between resource-constrained edge devices and the demand for theoretically grounded, lifelong memory agents.",
+      "authors": [
+        "Jiaqi Chen",
+        "Yongqin Zeng",
+        "Shaoshen Chen",
+        "Yijian Zhang",
+        "Hai-Tao Zheng",
+        "Chunxia Ma",
+        "XiuTeng Zhou"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-16T18:56:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.18406v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "edge-cloud memory architecture for agents",
+      "llm_evidence_cn": "面向智能体的端云内存架构",
+      "llm_evidence": "面向智能体的端云内存架构",
+      "canonical_evidence": "面向智能体的端云内存架构",
+      "llm_tldr_en": "Proposes CoreMem, a resource-efficient edge-cloud memory architecture using Riemannian retrieval and Fisher-guided distillation for long-term memory in dialogue agents on edge devices.",
+      "llm_tldr_cn": "本文针对对话智能体在消费级边缘设备上部署长时记忆的瓶颈，提出了CoreMem端云协同内存架构。该架构利用信息几何统一检索和压缩，通过黎曼度量检索解决高维中的集束问题，并采用Fisher引导蒸馏实现高效压缩。实验表明CoreMem在保持对话连贯性的同时大幅降低了边缘端资源消耗，为端侧个性化智能体提供了实用方案。",
+      "llm_tldr": "本文针对对话智能体在消费级边缘设备上部署长时记忆的瓶颈，提出了CoreMem端云协同内存架构。该架构利用信息几何统一检索和压缩，通过黎曼度量检索解决高维中的集束问题，并采用Fisher引导蒸馏实现高效压缩。实验表明CoreMem在保持对话连贯性的同时大幅降低了边缘端资源消耗，为端侧个性化智能体提供了实用方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.16328v1",
+      "source": "arxiv",
+      "title": "AdaSTORM: Scaling LLM Reasoning on Dynamic Graphs via Adaptive Spatio-Temporal Multi-Agent Collaboration",
+      "abstract": "Large Language Models (LLMs) demonstrate remarkable potential in dynamic graph reasoning, but suffer from a scaling bottleneck: current models can only handle graphs with tens of nodes, constrained by exponential reasoning overhead and finite context windows. While multi-agent systems (MAS) offer collective reasoning and topology-aware orchestration, capabilities naturally suited for graph-structured tasks, their application to dynamic graphs remains unexplored. This paper presents Scaling LLM Reasoning on Dynamic Graphs via Adaptive Spatio-Temporal Multi-Agent Collaboration (AdaSTORM), a framework that reformulates large-scale dynamic graph reasoning into two stages: (i) Adaptive Partitioning, partitioning large-scale dynamic graphs into subregions that match the model's reasoning capacity while minimizing inference cost; and (ii) Collaborative Reasoning, aligning graph partition topologies with a spatio-temporal decoupled multi-agent architecture. AdaSTORM is the first multi-agent framework tailored for dynamic graph reasoning. Extensive experiments show that AdaSTORM successfully breaks through the scaling bottleneck, scaling reasoning to thousand-node graphs with over 90% accuracy across several large-scale dynamic graph settings without external tools, significantly outperforms seven competitive baselines. Furthermore, it achieves state-of-the-art accuracy on existing benchmarks and generalizes robustly to real-world datasets. The source code is available at: https://github.com/irisorchid107/AdaSTORM/.",
+      "authors": [
+        "Bing Hao",
+        "Ruijie Wang",
+        "Haodong Qian",
+        "Yunlong Chu",
+        "Yuhang Liu",
+        "Yumeng Lin",
+        "Minglai Shao",
+        "Jianxin Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-15T07:32:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.16328v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "adaptive spatio-temporal multi-agent collaboration",
+      "llm_evidence_cn": "自适应时空多智能体协作",
+      "llm_evidence": "自适应时空多智能体协作",
+      "canonical_evidence": "自适应时空多智能体协作",
+      "llm_tldr_en": "Proposes AdaSTORM, a framework that reformulates large-scale dynamic graph reasoning into two stages: adaptive partitioning and multi-agent collaboration, enabling LLMs to scale to graphs with hundreds of nodes.",
+      "llm_tldr_cn": "本文针对大语言模型在动态图上推理时的扩展性瓶颈，提出AdaSTORM框架。该方法将大规模动态图推理拆解为自适应图分区和时空多智能体协作两个阶段。实验表明，AdaSTORM能够在数百节点的动态图上有效进行推理，显著超越现有方法。该工作为基于多智能体的大规模图推理提供了新思路。",
+      "llm_tldr": "本文针对大语言模型在动态图上推理时的扩展性瓶颈，提出AdaSTORM框架。该方法将大规模动态图推理拆解为自适应图分区和时空多智能体协作两个阶段。实验表明，AdaSTORM能够在数百节点的动态图上有效进行推理，显著超越现有方法。该工作为基于多智能体的大规模图推理提供了新思路。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
