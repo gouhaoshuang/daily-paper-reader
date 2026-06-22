@@ -1,0 +1,404 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-22T11:45:21.356542+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [
+    {
+      "id": "2605.26546v1",
+      "source": "arxiv",
+      "title": "MobileExplorer: Accelerating On-Device Inference for Mobile GUI Agents via Online Exploration",
+      "abstract": "Mobile graphical user interface (GUI) agents enable AI models to autonomously operate smartphones on behalf of users. However, most existing systems focus primarily on optimizing task accuracy and rely on cloud-hosted models for inference, which introduces privacy concerns and network-dependent latency. As a result, fully on-device deployment of mobile GUI agents remains underexplored. We propose MobileExplorer, a new framework that accelerates on-device inference for vision-based mobile GUI agents via online exploration. The key idea is to exploit the long per-step reasoning time of vision-language models (VLMs) by performing lightweight, parallel exploration of UI elements. During model inference, the agent proactively probes semantically relevant UI elements and records these exploration traces as structured memory. To ensure reliable execution in live mobile environments, we design a two-level rollback mechanism that robustly restores the initial UI state when a fast but naive backtracking strategy fails. The collected exploration traces are then summarized into concise contextual hints and injected into the prompt to enhance the subsequent reasoning step. We evaluate MobileExplorer on multiple off-the-shelf devices using the AndroidWorld benchmark, as well as newly designed, more complex tasks and dynamic on-device environments. MobileExplorer reduces the average number of reasoning steps and end-to-end latency by 23\\%, while maintaining or improving task success rates by up to 5\\%. A video demonstration of MobileExplorer performance in the real world is available at https://youtu.be/thK7MJmdlvM .",
+      "authors": [
+        "Runxi Huang",
+        "Liyu Zhang",
+        "Shengzhong Liu",
+        "Xiaomin Ouyang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-26T04:53:53+00:00",
+      "link": "https://arxiv.org/pdf/2605.26546v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "mobile GUI agents with on-device inference",
+      "llm_evidence_cn": "移动GUI代理的本地推理加速",
+      "llm_evidence": "移动GUI代理的本地推理加速",
+      "canonical_evidence": "移动GUI代理的本地推理加速",
+      "llm_tldr_en": "Proposes MobileExplorer to accelerate on-device inference for mobile GUI agents via online exploration, exploiting VLM reasoning time to probe UI elements in parallel, reducing latency while maintaining accuracy.",
+      "llm_tldr_cn": "针对移动GUI代理依赖云端推理导致隐私和延迟问题，提出MobileExplorer框架。该方法利用视觉语言模型较长的单步推理时间，并行探索UI元素，在不影响任务准确率的前提下大幅降低推理延迟，为移动代理的完全本地部署提供了可行方案。",
+      "llm_tldr": "针对移动GUI代理依赖云端推理导致隐私和延迟问题，提出MobileExplorer框架。该方法利用视觉语言模型较长的单步推理时间，并行探索UI元素，在不影响任务准确率的前提下大幅降低推理延迟，为移动代理的完全本地部署提供了可行方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.28642v1",
+      "source": "arxiv",
+      "title": "Bandwidth-Efficient and Privacy-Preserving Edge-Cloud Many-to-Many Speech Translation",
+      "abstract": "Multimodal large language models (MLLMs) have demonstrated significant potential for speech-to-text translation (S2TT). However, existing deployment paradigms face critical challenges: pure on-device models suffer from resource constraints, while centralized cloud systems incur severe privacy risks and bandwidth bottlenecks by transmitting raw voice data. Furthermore, most models exhibit English-centric biases, restricting many-to-many translation scaling. In this paper, we propose Edge-cloud Speech Recognition and Translation (ESRT), a privacy-preserving and bandwidth-efficient collaborative edge-cloud MLLM framework. Specifically, we design an edge-cloud split inference architecture that retains a lightweight speech encoder and adapter on the device, transmitting only highly compressed intermediate features to the cloud. This fundamentally prevents voiceprint leakage and reduces bandwidth requirements by up to 10$\\times$. To overcome English-centric bottlenecks, we introduce a multi-task weighted curriculum learning strategy with data balancing to ensure robust cross-lingual consistency. Extensive experiments on the FLEURS dataset demonstrate that our models, ESRT-4B and ESRT-12B, achieve state-of-the-art many-to-many S2TT performance across 45 languages ($45 \\times 44$ directions). Code and models are released to facilitate reproducible, privacy-aware MLLM S2TT research. The code and models are released at https://github.com/yxduir/esrt.",
+      "authors": [
+        "Yexing Du",
+        "Kaiyuan Liu",
+        "Youcheng Pan",
+        "Bo Yang",
+        "Ming Liu",
+        "Bing Qin",
+        "Yang Xiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-27T15:47:33+00:00",
+      "link": "https://arxiv.org/pdf/2605.28642v1",
+      "tags": [
+        "keyword:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge-cloud split inference for speech translation",
+      "llm_evidence_cn": "边缘云协同分割推理的语音翻译",
+      "llm_evidence": "边缘云协同分割推理的语音翻译",
+      "canonical_evidence": "边缘云协同分割推理的语音翻译",
+      "llm_tldr_en": "Proposes ESRT, a privacy-preserving bandwidth-efficient edge-cloud collaborative MLLM framework for many-to-many speech translation using split inference.",
+      "llm_tldr_cn": "针对纯设备端资源受限和纯云端传输原始语音的隐私带宽问题，提出边缘云协同的语音识别与翻译框架ESRT，采用边缘云分割推理架构，在边缘侧保留轻量语音编码器，在云端进行后续处理。该方法在保持翻译质量的同时显著降低带宽需求并保护隐私，支持多对多翻译。",
+      "llm_tldr": "针对纯设备端资源受限和纯云端传输原始语音的隐私带宽问题，提出边缘云协同的语音识别与翻译框架ESRT，采用边缘云分割推理架构，在边缘侧保留轻量语音编码器，在云端进行后续处理。该方法在保持翻译质量的同时显著降低带宽需求并保护隐私，支持多对多翻译。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.00756v1",
+      "source": "arxiv",
+      "title": "CoMIC: Collaborative Memory and Insights Circulation for Long-Horizon LLM Agents in Cloud-Edge Systems",
+      "abstract": "Deploying lightweight Large Language Model (LLM) agents on edge servers can reduce latency and move agentic services closer to users, but resource-constrained edge models often struggle with long-horizon tasks that require persistent memory, subgoal tracking, and reflection. Fine-tuning edge models after deployment is costly and difficult to scale across heterogeneous nodes, while purely local memory leaves agents with isolated experience and growing prompt context. We propose \\textsc{CoMIC}, a parameter-update-free cloud-edge framework for Collaborative Memory and Insights Circulation. \\textsc{CoMIC} follows a \\textit{Centralized Reflection, Decentralized Execution} design: edge agents execute locally using subgoal-oriented hierarchical memory and selective re-expansion of relevant histories, while a cloud-side LLM critic asynchronously evaluates completed trajectories, filters reusable experience, and aggregates cross-agent guidance keyed by semantic subgoal identifiers. Across five long-horizon agent tasks spanning symbolic planning and text interaction, \\textsc{CoMIC} improves progress rate and action grounding for weak edge agents and yields task-dependent success-rate gains without updating model parameters.",
+      "authors": [
+        "Yannan Wang",
+        "Longli Yang",
+        "Zhen Liu",
+        "Abhishek Kumar",
+        "Carsten Maple"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-30T14:45:39+00:00",
+      "link": "https://arxiv.org/pdf/2606.00756v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "cloud-edge framework for collaborative memory and insights circulation with LLM agents",
+      "llm_evidence_cn": "面向LLM代理的云边协同记忆与洞察循环框架",
+      "llm_evidence": "面向LLM代理的云边协同记忆与洞察循环框架",
+      "canonical_evidence": "面向LLM代理的云边协同记忆与洞察循环框架",
+      "llm_tldr_en": "Proposes CoMIC, a parameter-update-free cloud-edge framework enabling collaborative memory and insights circulation for long-horizon LLM agents.",
+      "llm_tldr_cn": "针对资源受限的边缘模型难以处理长程任务的问题，论文提出CoMIC框架，采用中央化反思与去中心化执行的设计，边缘代理通过子目标导向的本地协作记忆与云端洞察循环，无需参数更新即可提升长程任务性能。",
+      "llm_tldr": "针对资源受限的边缘模型难以处理长程任务的问题，论文提出CoMIC框架，采用中央化反思与去中心化执行的设计，边缘代理通过子目标导向的本地协作记忆与云端洞察循环，无需参数更新即可提升长程任务性能。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.25916v1",
+      "source": "arxiv",
+      "title": "Joint Optimization of Training and Inference in Federated Edge Learning via Constrained Multi-Objective Deep Reinforcement Learning",
+      "abstract": "Federated edge learning (FEEL) has recently emerged as a promising paradigm for achieving edge intelligence (EI) via enabling collaborative model training across edge devices while protecting data privacy. In this paper, we put forth an online optimization framework that jointly manages federated training and inference on resource-constrained edge devices. We introduce a tandem-queue-inspired conversion mechanism that bridges inference requests and training data, and further incorporate both data and model freshness into the accuracy formulation to capture temporal dynamics in real-world environments. To maximize inference accuracy while minimizing latency and energy consumption, the mode selections, communication, and computation resource allocations of edge devices are jointly optimized. We formulate this optimization as a multi-objective optimization problem, which is NP-hard and further complicated by the online setting. To address these challenges, we transform the problem into a multi-objective Markov decision process (MOMDP) and develop a \\underline{c}onstrained \\underline{m}ulti-\\underline{o}bjective \\underline{p}roximal \\underline{p}olicy \\underline{o}ptimization (C-MOPPO) algorithm. Specifically, C-MOPPO first learns a set of policies with different preferences across three objectives, then leverages constrained policy optimization to enrich the Pareto front and obtain high-quality, dense solutions. Extensive experiments demonstrate that C-MOPPO achieves well-balanced trade-offs among objectives and significantly outperforms baselines under various system configurations.",
+      "authors": [
+        "Zhen Li",
+        "Jun Cai",
+        "Chao Yang",
+        "Haoran Gao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.DC",
+        "cs.NI"
+      ],
+      "published": "2026-05-25T14:51:07+00:00",
+      "link": "https://arxiv.org/pdf/2605.25916v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Joint optimization of training and inference in federated edge learning",
+      "llm_evidence_cn": "联邦边缘学习中训练与推理的联合优化",
+      "llm_evidence": "联邦边缘学习中训练与推理的联合优化",
+      "canonical_evidence": "联邦边缘学习中训练与推理的联合优化",
+      "llm_tldr_en": "Proposes online optimization framework for joint federated training and inference on edge devices, using constrained multi-objective deep reinforcement learning.",
+      "llm_tldr_cn": "本文针对资源受限边缘设备上联邦学习训练与推理的协调问题，提出基于约束多目标深度强化学习的在线优化框架，引入串联队列转换机制桥接推理请求与训练数据，并考虑数据与模型新鲜度，在精度、延迟与能耗间取得平衡。",
+      "llm_tldr": "本文针对资源受限边缘设备上联邦学习训练与推理的协调问题，提出基于约束多目标深度强化学习的在线优化框架，引入串联队列转换机制桥接推理请求与训练数据，并考虑数据与模型新鲜度，在精度、延迟与能耗间取得平衡。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.25233v1",
+      "source": "arxiv",
+      "title": "Meta-Agent: From Task Descriptions to Verified Multi-Agent Systems",
+      "abstract": "AI agents are increasingly used to solve complex, multi-step tasks, but existing multi-agent frameworks remain brittle as workflows grow in scale and depth. Small errors at intermediate stages can propagate through agent interactions, while insufficient grounding and weak verification mechanisms further limit reliability. We present Meta-Agent, a two-phase framework that automatically constructs and executes specialized multi-agent systems from natural-language task descriptions. In the construction phase, a task planner decomposes a problem into a directed acyclic graph of agent specifications with explicit input/output contracts and verification criteria. A web search module grounds each specification with external evidence, and a code generation module produces system prompts and tool configurations. A construction-time verification stage then validates generated artifacts and triggers targeted regeneration when failures are detected. In the execution phase, a coordinator dispatches subtasks across the agent graph while execution-time verification gates intermediate outputs. We further introduce a three-level error attribution mechanism that distinguishes local, upstream, and structural failures, enabling targeted recovery strategies ranging from localized retries to partial re-execution and re-decomposition. We evaluate Meta-Agent across coding, contextual learning, and open-ended reasoning tasks. Experiments against strong multi-agent baselines and ablation studies demonstrate consistent improvements in task success rate, error recovery, and workflow stability. The results highlight the importance of tightly integrating planning, grounding, and verification for building reliable multi-agent systems.",
+      "authors": [
+        "Andy Xu",
+        "Yu-Wing Tai"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-24T19:38:54+00:00",
+      "link": "https://arxiv.org/pdf/2605.25233v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "automatic multi-agent system construction",
+      "llm_evidence_cn": "自动多智能体系统构建",
+      "llm_evidence": "自动多智能体系统构建",
+      "canonical_evidence": "自动多智能体系统构建",
+      "llm_tldr_en": "Meta-Agent automatically constructs verified multi-agent systems from natural-language task descriptions",
+      "llm_tldr_cn": "Meta-Agent提出两阶段框架，从自然语言任务描述自动构建并执行经过验证的多智能体系统。构造阶段将问题分解为有向无环图，明确输入输出合约和验证标准，并通过网络搜索增强规格。该方法提高了大规模工作流的可靠性。",
+      "llm_tldr": "Meta-Agent提出两阶段框架，从自然语言任务描述自动构建并执行经过验证的多智能体系统。构造阶段将问题分解为有向无环图，明确输入输出合约和验证标准，并通过网络搜索增强规格。该方法提高了大规模工作流的可靠性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.29313v1",
+      "source": "arxiv",
+      "title": "PatchBoard: Schema-Grounded State Mutation for Reliable and Auditable LLM Multi-Agent Collaboration",
+      "abstract": "LLM multi-agent systems often coordinate through natural-language dialogue or loosely structured shared memory, making intermediate state difficult to validate, attribute, and audit. We introduce PatchBoard, a schema-grounded collaboration architecture that replaces inter-agent dialogue with validated JSON Patch mutations over a shared structured state. An Architect agent constructs a task-specific schema and workflow rules, while a deterministic kernel validates each proposed state mutation against schema constraints, role-specific write contracts, and runtime invariants before committing it transactionally. On 630 matched ALFWorld episodes, PatchBoard achieves an 84.6% success rate, compared with 30.8% for LangGraph and 61.6% for Flock, while reducing tokens per successful task to 45.5k, compared with 368.3k and 64.2k, respectively.",
+      "authors": [
+        "Shuyu Zhang",
+        "Yaqi Shi",
+        "Lu Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-05-28T03:43:22+00:00",
+      "link": "https://arxiv.org/pdf/2605.29313v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent collaboration architecture",
+      "llm_evidence_cn": "多智能体协作架构",
+      "llm_evidence": "多智能体协作架构",
+      "canonical_evidence": "多智能体协作架构",
+      "llm_tldr_en": "PatchBoard replaces inter-agent dialogue with validated JSON Patch mutations for reliable multi-agent collaboration",
+      "llm_tldr_cn": "PatchBoard提出一种基于模式的协作架构，用经过验证的JSON补丁替换智能体间对话，确保状态变更的可审计性和可靠性。在630个ALFWorld任务中，成功率84.6%，显著优于LangGraph等基线。该方法为构建可靠的多智能体协作系统提供了通用框架。",
+      "llm_tldr": "PatchBoard提出一种基于模式的协作架构，用经过验证的JSON补丁替换智能体间对话，确保状态变更的可审计性和可靠性。在630个ALFWorld任务中，成功率84.6%，显著优于LangGraph等基线。该方法为构建可靠的多智能体协作系统提供了通用框架。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.27073v1",
+      "source": "arxiv",
+      "title": "Learning to Orchestrate Agents under Uncertainty",
+      "abstract": "Adaptive orchestration of heterogeneous agents requires making sequential delegation decisions under uncertain and evolving agent behaviour, e.g., coordinating specialised AI models with varying reliability, cost, and response quality. While prior work on agent orchestration focuses on performance or cost, uncertainty in agent reliability and output distributions is typically not modelled explicitly at the orchestration level. In this work, we study the problem of adaptive orchestration of heterogeneous agents under uncertainty, where a meta-controller must decide when to delegate to an agent, accounting for reliability, cost, and uncertainty. We propose BOT-Orch, a lightweight framework that recasts orchestration as a bandit problem over agents, regularized by OT distances between agent output distributions and task-specific reference distributions. We show that the regularised orchestration enjoys $\\mathcal{O}(\\sqrt{T})$ regret under standard assumptions, and provably induces preference ordering among agents with identical mean rewards but differing distributional alignment. Empirically, we demonstrate that BOT-Orch outperforms standard bandit and heuristic baselines in synthetic but adversarial task allocation settings with heterogeneous, non-i.i.d. agent behaviour.",
+      "authors": [
+        "Mary Chriselda Antony Oliver",
+        "Lan Jiang",
+        "Aaron Bundi Anampiu",
+        "Elaf Almahmoud",
+        "Francesco Quinzan",
+        "Umang Bhatt"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-26T14:23:22+00:00",
+      "link": "https://arxiv.org/pdf/2605.27073v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "adaptive orchestration of heterogeneous agents under uncertainty",
+      "llm_evidence_cn": "不确定性下异构代理的自适应编排",
+      "llm_evidence": "不确定性下异构代理的自适应编排",
+      "canonical_evidence": "不确定性下异构代理的自适应编排",
+      "llm_tldr_en": "Proposes BOT-Orch, a lightweight framework for adaptive orchestration of heterogeneous agents under uncertainty, modeling it as a bandit problem regularized by optimal transport distances.",
+      "llm_tldr_cn": "针对异构代理编排中可靠性不确定性的问题，提出BOT-Orch框架。该方法将编排转化为多臂赌博机问题，并通过最优传输距离正则化，在可靠性、成本和不确定性间平衡。实验证明在不确定环境下能做出更优的代理选择决策，为分布式代理系统编排提供了有效方案。",
+      "llm_tldr": "针对异构代理编排中可靠性不确定性的问题，提出BOT-Orch框架。该方法将编排转化为多臂赌博机问题，并通过最优传输距离正则化，在可靠性、成本和不确定性间平衡。实验证明在不确定环境下能做出更优的代理选择决策，为分布式代理系统编排提供了有效方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.00655v1",
+      "source": "arxiv",
+      "title": "Scaling Behavior of Single LLM-Driven Multi-Agent Systems",
+      "abstract": "The burgeoning field of LLM-based Multi-Agent Systems (MAS) promises to tackle complex tasks through collaborative intelligence, yet fundamental questions regarding their scaling behavior and intrinsic collective dynamics remain underexplored. This paper systematically investigates how the performance of a homogeneous MAS evolves as the number of agents increases, isolating the variable of collaboration from model or knowledge heterogeneity. We propose the Sequential Iterative Multi-Agent System (SIMAS) framework, a minimalist architecture centered on sequential inter-agent communication, to clearly observe scaling effects. Through extensive experiments across diverse tasks and model scales, we establish that MAS performance does not scale monotonically with agent count but follows a pattern of diminishing returns, governed by a trade-off between collaborative synergy and coordination overhead. Our findings reveal that effective MAS requires a sufficiently capable base LLM, that task type critically modulates the optimal agent count, and that collective intelligence is an emergent property contingent on strategic interaction design rather than a guaranteed outcome of agent plurality. The performance degradation stems coordination overhead rather than merely long-context failure, and the scaling tendency generalizes across interaction architectures like structured debate topologies. This work provides a foundational understanding of MAS scaling laws, offering practical guidance for designing efficient collaborative systems and challenging the prevailing assumption that more agents invariably lead to better performance.",
+      "authors": [
+        "Jialing Li",
+        "Zhouhong Gu",
+        "Yin Cai",
+        "Hongwei Feng"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CY"
+      ],
+      "published": "2026-05-30T09:57:49+00:00",
+      "link": "https://arxiv.org/pdf/2606.00655v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "scaling behavior of multi-agent systems with collaboration",
+      "llm_evidence_cn": "多代理系统的协作扩展行为",
+      "llm_evidence": "多代理系统的协作扩展行为",
+      "canonical_evidence": "多代理系统的协作扩展行为",
+      "llm_tldr_en": "Investigates scaling behavior of homogeneous LLM multi-agent systems, proposing SIMAS framework to isolate collaboration variable, showing non-monotonic performance with agent number.",
+      "llm_tldr_cn": "针对LLM多代理系统扩展行为未充分探索的问题，提出SIMAS框架，通过顺序间代理通信隔离协作变量。实验发现代理数量增加时性能非单调变化，存在最优规模，揭示了协作智能的复杂动力学，为设计可扩展的多代理系统提供了关键见解。",
+      "llm_tldr": "针对LLM多代理系统扩展行为未充分探索的问题，提出SIMAS框架，通过顺序间代理通信隔离协作变量。实验发现代理数量增加时性能非单调变化，存在最优规模，揭示了协作智能的复杂动力学，为设计可扩展的多代理系统提供了关键见解。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.29612v1",
+      "source": "arxiv",
+      "title": "CONCAT: Consensus- and Confidence-Driven Ad Hoc Teaming for Efficient LLM-Based Multi-Agent Systems",
+      "abstract": "Although large language model (LLM) based multi-agent systems (MAS) show their capability to solve complex tasks and achieve higher performance over single agent systems, they lead to huge computational overheads because of heavy communication between agents. Previous research has made efforts to train a sparse multi-agent graph or fine-tune a planner to orchestrate the workflow better. However, such extra training processes introduce computational costs and limit MAS to specific domains, therefore compromising their generalizability. In this paper, we propose CONCAT, a training-free multi-agent collaboration framework based on CONsensus and Confidence-driven Ad hoc Teaming to efficiently organize agent interactions. Specifically, agents are clustered based on their initial answers, and leaders of each cluster are selected based on the agents' confidence. Then, a heuristic function based on the Theory of Mind is designed to predict the collaboration benefits between every two leaders according to their answers and confidence. Finally, an ad hoc multi-agent network is organized after evicting a percentage of communications based on the predicted benefits. Experiments across three LLMs and three benchmarks show that CONCAT achieves up to 2.02x higher efficiency (accuracy/latency ratio) than LLM-Debate and outperforms training-aware methods such as AgentDropout, while reducing average latency by 50.1% on Qwen2.5-14B-Instruct, without any task-specific training.",
+      "authors": [
+        "Ziyang Ma",
+        "Dingyi Zhang",
+        "Sichu Liang",
+        "Jiajia Chu",
+        "Pengfei Xia",
+        "Hui Zang",
+        "Deyu Zhou"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.CL"
+      ],
+      "published": "2026-05-28T08:47:54+00:00",
+      "link": "https://arxiv.org/pdf/2605.29612v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "training-free multi-agent collaboration framework",
+      "llm_evidence_cn": "免训练的多智能体协作框架",
+      "llm_evidence": "免训练的多智能体协作框架",
+      "canonical_evidence": "免训练的多智能体协作框架",
+      "llm_tldr_en": "CONCAT uses consensus and confidence-driven ad hoc teaming to organize efficient multi-agent interactions without training",
+      "llm_tldr_cn": "CONCAT提出基于共识和置信度的临时组队框架，无需额外训练即可高效组织智能体交互，克服了传统方法需要特定训练且泛化性差的问题。实验表明该方法在多个任务上降低了计算开销并保持了高性能。",
+      "llm_tldr": "CONCAT提出基于共识和置信度的临时组队框架，无需额外训练即可高效组织智能体交互，克服了传统方法需要特定训练且泛化性差的问题。实验表明该方法在多个任务上降低了计算开销并保持了高性能。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.30136v1",
+      "source": "arxiv",
+      "title": "Enhancing Multi-Agent Communication through Attention Steering with Context Relevance",
+      "abstract": "LLM-based multi-agent systems have demonstrated remarkable performance on complex tasks through collaborative reasoning. However, these systems tend to rapidly accumulate extremely long conversation histories during interaction. As conversations lengthen, relevant information is increasingly diluted by irrelevant context, leading to degraded performance. In this work, we present Agent-Radar, a training-free context management method that dynamically steers each agent's attention toward relevant context with a novel temporal and spatial decay mechanism. Our experiments demonstrate that Agent-Radar outperforms state-of-the-art methods across five different benchmarks, yielding gains of up to 7.64 absolute points. Furthermore, our analysis shows that Agent-Radar remains effective and robust as the number of agents and interaction rounds increases. Finally, the ablation study shows that core components in Agent-Radar are crucial to performance and generalizable in different settings.",
+      "authors": [
+        "Hongxiang Zhang",
+        "Yuan Tian",
+        "Tianyi Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-05-28T16:02:52+00:00",
+      "link": "https://arxiv.org/pdf/2605.30136v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent communication context management",
+      "llm_evidence_cn": "多智能体通信上下文管理",
+      "llm_evidence": "多智能体通信上下文管理",
+      "canonical_evidence": "多智能体通信上下文管理",
+      "llm_tldr_en": "Agent-Radar dynamically steers each agent's attention to relevant context using temporal and spatial decay",
+      "llm_tldr_cn": "Agent-Radar提出训练免费的上下文管理方法，通过时间与空间衰减机制动态引导每个智能体关注相关上下文。在五个基准测试上平均提升7.64个绝对点，有效缓解了多智能体系统中长对话历史导致的信息稀释问题。",
+      "llm_tldr": "Agent-Radar提出训练免费的上下文管理方法，通过时间与空间衰减机制动态引导每个智能体关注相关上下文。在五个基准测试上平均提升7.64个绝对点，有效缓解了多智能体系统中长对话历史导致的信息稀释问题。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
