@@ -1,0 +1,447 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-23T21:51:39.070686+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2606.18413v3",
+      "source": "arxiv",
+      "title": "Searching for Synergy in Shared Workspace Human-AI Collaboration",
+      "abstract": "Automated AI agents are increasingly capable, yet many scientific and professional tasks require human judgment and contextual expertise. We use simulated shared-workspace human-AI teams as a controlled testbed for studying how collaboration structure shapes team behavior. Using the Collaborative Gym environment with tasks from DiscoveryBench, we vary team compositions and collaboration structures across 1,482 sessions. We find that adding additional collaborators can lower performance when coordination structure is absent. We then evaluate collaboration scaffolding that combines shared group memory with simulated human-in-the-loop (HITL) gates, where selected actions require approval from a designated simulated participant. This scaffolding improves performance, most clearly in three-person teams, with clearer responsibility signals and stronger routing of expertise to team actions. Overall, our results suggest that coordination structure is central to whether available capability improves team outcomes.",
+      "authors": [
+        "Nachiket Kotalwar",
+        "Rohini Das",
+        "Carolyn Rose"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.HC"
+      ],
+      "published": "2026-06-16T19:08:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.18413v3",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "studies human-AI collaboration structure using Collaborative Gym",
+      "llm_evidence_cn": "使用Collaborative Gym研究人机协作结构",
+      "llm_evidence": "使用Collaborative Gym研究人机协作结构",
+      "canonical_evidence": "使用Collaborative Gym研究人机协作结构",
+      "llm_tldr_en": "Simulates shared-workspace human-AI teams to study how collaboration structure affects performance, finding that adding collaborators without coordination can hurt, and proposing scaffolding with shared memory and HITL gates.",
+      "llm_tldr_cn": "该论文针对人机协作中协调结构不足导致性能下降的问题，通过Collaborative Gym模拟共享工作空间的人机团队，在1,482个会话中变化团队组成和协作结构。研究发现缺乏协调结构时增加协作者反而降低性能，进而提出结合共享组记忆和模拟人在回路门控的协作支架，有效提升团队表现。揭示了协作结构设计对多智能体系统协同效率的关键影响。",
+      "llm_tldr": "该论文针对人机协作中协调结构不足导致性能下降的问题，通过Collaborative Gym模拟共享工作空间的人机团队，在1,482个会话中变化团队组成和协作结构。研究发现缺乏协调结构时增加协作者反而降低性能，进而提出结合共享组记忆和模拟人在回路门控的协作支架，有效提升团队表现。揭示了协作结构设计对多智能体系统协同效率的关键影响。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.22804v1",
+      "source": "arxiv",
+      "title": "CoVStream: Edge-Cloud Collaboration for Understanding of Long Video Streams",
+      "abstract": "Long, continuous video streams are an increasingly critical driver of multimedia intelligence. Existing efforts often handle long videos with a sample-encode-reason approach using large models. However, they overlook a crucial deployment fact: the stream is often produced by computationally constrained devices. This forces an untenable compromise: cloud offloading unlocks strong reasoning but incurs prohibitive bandwidth overhead, while on-device processing remains limited by edge hardware capacity. Therefore, we propose CoVStream, the first edge-cloud collaborative framework for understanding long video streams. The edge node distills raw video streams into compact visual features and semantic captions for transmission to the cloud, minimizing bandwidth costs, while the cloud server integrates this data into an entity graph and global visual context, activating the heavy reasoning model only when a user query arrives. Experiments on VideoMME-Long, LVBench, and RTV-Bench show that CoVStream reduces bandwidth usage by 87.6% while retaining 99.2% of the cloud baseline accuracy on LVBench.",
+      "authors": [
+        "Xu Liu",
+        "Guikun Chen",
+        "Zihao Yan",
+        "Kanzhi Wu",
+        "Wenguan Wang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-22T03:29:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.22804v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge-cloud collaborative framework for long video streams",
+      "llm_evidence_cn": "面向长视频流的边缘云协作框架",
+      "llm_evidence": "面向长视频流的边缘云协作框架",
+      "canonical_evidence": "面向长视频流的边缘云协作框架",
+      "llm_tldr_en": "Proposes CoVStream, the first edge-cloud collaborative framework for long video streams, balancing on-device processing and cloud offloading via compact feature distillation.",
+      "llm_tldr_cn": "针对长视频流分析中边缘设备计算受限与云端带宽开销大的矛盾，提出CoVStream边缘云协作框架。边缘节点将原始视频流蒸馏为紧凑视觉特征和语义描述传输至云端，在降低带宽的同时保持推理质量。实验表明该框架在多个视频理解任务上实现高效准确的推理。为边缘云协同AI系统提供了可行范例。",
+      "llm_tldr": "针对长视频流分析中边缘设备计算受限与云端带宽开销大的矛盾，提出CoVStream边缘云协作框架。边缘节点将原始视频流蒸馏为紧凑视觉特征和语义描述传输至云端，在降低带宽的同时保持推理质量。实验表明该框架在多个视频理解任务上实现高效准确的推理。为边缘云协同AI系统提供了可行范例。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.21416v1",
+      "source": "arxiv",
+      "title": "Bridging Design and Execution: A Visual Graph Editor for Edge and Cloud Workflows",
+      "abstract": "Designing modular applications for edge and cloud computing environments involves coordinating multiple computational kernels, shared data, and event-driven execution. This paper presents a domain-specific visual graph editor that enables users to model such applications using a unified interface. The editor supports three first-class abstractions: kernels, representing computational units; shared memory nodes, modeling distributed data; and event triggers, capturing execution dependencies. Users can construct graphs visually, configure node properties, and connect elements to define data and control flow. The resulting graphs are automatically serialized into machine-readable representations (JSON/XML) and can be passed to an execution API, bridging the gap between design-time modeling and runtime deployment. The editor's graph-based model improves reasoning about data sharing, execution order, and dependencies, particularly in distributed edge and cloud scenarios. To demonstrate its applicability, we discuss a federated learning workflow, where local training kernels interact with a shared global model through event-driven coordination. Compared to traditional workflow editors and general-purpose diagramming tools, the proposed system provides explicit execution semantics, modularity, and direct deployability. This work lays the foundation for visual orchestration of modular computation in distributed environments and offers extensibility for user-defined kernels, event types, and alternative execution backends, enabling future exploration of complex distributed applications.",
+      "authors": [
+        "Katarina-Glorija Grujić",
+        "Nikola Stanković",
+        "Maja Vukasović",
+        "Miloš Simić"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.SE"
+      ],
+      "published": "2026-06-19T13:34:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.21416v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "visual graph editor for edge and cloud workflows",
+      "llm_evidence_cn": "面向边缘和云工作流的可视化图形编辑器",
+      "llm_evidence": "面向边缘和云工作流的可视化图形编辑器",
+      "canonical_evidence": "面向边缘和云工作流的可视化图形编辑器",
+      "llm_tldr_en": "A visual graph editor for designing modular edge/cloud workflows, supporting kernels, shared memory, and event triggers, with automatic serialization for execution.",
+      "llm_tldr_cn": "边缘与云环境下的模块化应用设计面临协调复杂性问题。本文提出一个领域特定的可视化图编辑器，支持内核、共享内存和事件触发三种抽象，用户可直观构建数据和控制流图，并自动生成可执行的JSON/XML表示。该工具降低了边缘云工作流的设计门槛，并提供了统一接口。该工作直接支撑分布式边缘云代理系统的设计与部署。",
+      "llm_tldr": "边缘与云环境下的模块化应用设计面临协调复杂性问题。本文提出一个领域特定的可视化图编辑器，支持内核、共享内存和事件触发三种抽象，用户可直观构建数据和控制流图，并自动生成可执行的JSON/XML表示。该工具降低了边缘云工作流的设计门槛，并提供了统一接口。该工作直接支撑分布式边缘云代理系统的设计与部署。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.21963v1",
+      "source": "arxiv",
+      "title": "Holmes: Multimodal Agentic Diagnosis for Mixed-Language Mobile Crashes at Industrial Scale",
+      "abstract": "Diagnosing mobile crashes in ultra-large-scale industrial applications is a formidable challenge due to the sheer volume of code, the complexity of mixed-language environments, and the inability to reproduce failures locally. Traditional static analysis struggles with scalability, while existing LLM-based agents often rely on reproducible environments unavailable in post-mortem scenarios. We present Holmes, a multi-agent system that automates root cause analysis by synthesizing multimodal runtime signals--stack traces, logs, and thread states--to reconstruct failure contexts without reproduction. Holmes introduces a hierarchical Retrieve-Explore-Reason architecture that leverages low-level artifacts (e.g., registers, assembly) to bridge the semantic gap between open-source business logic and closed-source system frameworks. By dynamically compressing the search space using runtime clues, Holmes precisely navigates 70-million-line codebases to identify non-local defects. Evaluated on real-world crashes from WeChat, Holmes achieves 87.6% accuracy in function-level fault localization and reduces average investigation time by over 98% (to ~77 seconds), demonstrating its effectiveness in transforming labor-intensive debugging into an efficient verification workflow.",
+      "authors": [
+        "Jia Li",
+        "Wenyuan Ma",
+        "Ting Peng",
+        "Haibin Zheng",
+        "Yuetang Deng"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-06-20T09:31:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.21963v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent system for diagnosing mobile crashes",
+      "llm_evidence_cn": "用于诊断移动崩溃的多智能体系统",
+      "llm_evidence": "用于诊断移动崩溃的多智能体系统",
+      "canonical_evidence": "用于诊断移动崩溃的多智能体系统",
+      "llm_tldr_en": "Holmes is a multi-agent system that automates root cause analysis of mobile crashes by synthesizing multimodal runtime signals without reproduction.",
+      "llm_tldr_cn": "工业级移动应用崩溃诊断面临代码量大、环境复杂、不可复现等挑战。本文提出Holmes，一个多智能体系统，通过综合堆栈跟踪、日志、线程状态等多模态运行时信号，在不复现情况下重构失败上下文，实现自动根因分析。实验证明其有效性。",
+      "llm_tldr": "工业级移动应用崩溃诊断面临代码量大、环境复杂、不可复现等挑战。本文提出Holmes，一个多智能体系统，通过综合堆栈跟踪、日志、线程状态等多模态运行时信号，在不复现情况下重构失败上下文，实现自动根因分析。实验证明其有效性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.23255v1",
+      "source": "arxiv",
+      "title": "Wireless Personal Agent: Extending Wireless Intelligence from Networks to Terminals",
+      "abstract": "Wireless networks are evolving from connectivity-oriented infrastructures into intelligent and personalized service platforms. Existing wireless intelligence remains centered on network-side optimization, improving objectives such as throughput, latency, and coverage. Nevertheless, besides network performance, wireless intelligence also depends on user-perceived experience via application context, mobility routine, service cost, privacy preference, and long-term usage behavior. This article proposes WISPA, a Wireless Intelligent Self-evolving Personal Agent framework for automated terminal-side resource management based on large language model (LLM)-based agent. To overcome the resource constraints on terminals, WISPA decouples the latency-sensitive online resource execution from offline LLM agent reflection. In this way, a lightweight online executor makes deterministic resource decisions using interpretable preference parameters; While an offline LLM agent analyzes terminal-side traces, refines user profiles, and updates online preference parameters for subsequent decisions. At last, we demonstrate the practical applicability and benefits of WISPA for terminal-side resource allocations on a campus commute route. Numerical results show that WISPA learns user-specific connection styles and adapts access decisions as preferences change.",
+      "authors": [
+        "Jiedan Tan",
+        "Fang Liu",
+        "Jingwen Tong",
+        "Shengli Zhang",
+        "Jun Zhang",
+        "Wing Shing Wong"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-06-22T12:37:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.23255v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "wireless personal agent framework on terminals using LLM, decoupling latency for resource-constrained mobile devices",
+      "llm_evidence_cn": "基于LLM的终端无线个人代理框架，解耦延迟以适应资源受限的移动设备",
+      "llm_evidence": "基于LLM的终端无线个人代理框架，解耦延迟以适应资源受限的移动设备",
+      "canonical_evidence": "基于LLM的终端无线个人代理框架，解耦延迟以适应资源受限的移动设备",
+      "llm_tldr_en": "Proposes WISPA, a wireless intelligent self-evolving personal agent framework for terminal-side resource management using LLMs, decoupling latency to overcome resource constraints.",
+      "llm_tldr_cn": "该论文提出WISPA，一种基于LLM的无线智能自进化个人代理框架。用于自动终端侧资源管理，通过解耦延迟克服移动终端的资源限制。将无线智能从网络侧扩展到用户终端，实现个性化服务。",
+      "llm_tldr": "该论文提出WISPA，一种基于LLM的无线智能自进化个人代理框架。用于自动终端侧资源管理，通过解耦延迟克服移动终端的资源限制。将无线智能从网络侧扩展到用户终端，实现个性化服务。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.22296v1",
+      "source": "arxiv",
+      "title": "SCENIC: Semantic-Conditioned Edge-Aware Neural Framework for Structured IoT Command Generation",
+      "abstract": "Edge Internet of Things (IoT) agents are often constrained by memory capacity, privacy requirements, communication latency, and recurring inference cost. Current smart-home assistants commonly rely on API-level command interfaces or cloud-based language models that remain difficult to deploy on edge devices. This paper addresses edge IoT command generation as a many-to-one structured output task, where multiple natural-language instructions map to the same canonical command string for deterministic smart-home parsing. To support this setting, we propose Semantic-Conditioned Edge-Aware Neural Framework for Structured IoT Command Generation (SCENIC), an end-to-end framework covering model architecture selection, Smart Home Instruct data generation, triplet-loss contrastive supervised fine-tuning, pruning and quantization, and deployment-oriented export. We evaluate sub-0.2B-scale transformer backbones, which are, to the best of our knowledge, among the smallest language-model backbones studied for edge IoT structured command generation. On Smart Home Instruct-Bench, the strongest dense decoder-only row reaches 99.0% EM@1, while the encoder-decoder model retains stronger high-sparsity behavior. A representative pruned INT8 encoder-decoder export preserves 91.0% EM@1 and 99.0% EM@5 while reducing exported model size by 25.38%. TensorRT profiling of the NVIDIA 2:4 sparse encoder export further shows up to 1.8x encoder-component speedup, indicating that the selected encoder-decoder deployment path can retain structured command accuracy under edge-oriented compression while hardware acceleration evidence remains component-level. The SCENIC code and experimental artifacts are open sourced to support reproducibility.",
+      "authors": [
+        "Luke Ztz Hu",
+        "Hongbing Lang",
+        "Songping Mai"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-21T01:41:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.22296v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "edge-aware framework for IoT command generation on edge devices, relevant to edge-cloud collaboration",
+      "llm_evidence_cn": "面向边缘设备IoT命令生成的边缘感知框架，与边缘-云协作相关",
+      "llm_evidence": "面向边缘设备IoT命令生成的边缘感知框架，与边缘-云协作相关",
+      "canonical_evidence": "面向边缘设备IoT命令生成的边缘感知框架，与边缘-云协作相关",
+      "llm_tldr_en": "Proposes SCENIC, an edge-aware neural framework for IoT command generation that addresses memory, privacy, and latency constraints on edge devices using semantic conditioning.",
+      "llm_tldr_cn": "该论文提出SCENIC框架，用于边缘IoT命令生成。针对边缘设备内存、隐私和延迟约束，采用语义条件化端到端框架。在Smart Home基准上验证了在边缘设备上的有效性，为端云协同中的命令解析提供了方案。",
+      "llm_tldr": "该论文提出SCENIC框架，用于边缘IoT命令生成。针对边缘设备内存、隐私和延迟约束，采用语义条件化端到端框架。在Smart Home基准上验证了在边缘设备上的有效性，为端云协同中的命令解析提供了方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.20877v1",
+      "source": "arxiv",
+      "title": "Artificial collectives of specialists and generalists excel at different tasks",
+      "abstract": "Collective artificial intelligence, where multiple agents work on shared tasks, holds potential to solve expansive problems in fields from medicine to collective governance. But while prescriptive engineering solutions abound, we lack descriptive scientific understanding of artificial collectives, and therefore principles for how to design resource efficient multi-agent systems. Through systematic experiments with optimizing agents, we characterize how agent interpretive abilities, rationality bounds, and task qualities interact to shape collective performance. Agents range from specialists, with narrow interpretive abilities, to generalists, with broad ones. Collectives of specialists correspond to sparse, centralized networks, while collectives of generalists correspond to dense, decentralized ones. We show that interpretive network properties have small performance effects on average (0.07 standard deviations of performance). However, for specific task qualities, these effects are 4.5 times larger (0.33 sd) and can reach much higher for certain task qualities (1.84 sd). This leads collectives of generalists to perform better on tasks that involve generating, choosing, and coordinating, while collectives of specialists with a few generalist mediators perform better on tasks that involve negotiating. Rationality bounds then moderate these relationships. At loose bounds, specialists outperform generalists through more effective sampling of high-dimensional decision spaces. At tight bounds, generalists outperform specialists through better gradient estimation. A fundamental trade-off between performance and convergence speed emerges at moderate bounds. These findings suggest that multi-agent design could benefit from matching interpretive networks to both task demands and agents' computational limits, with implications for the efficiency and energy costs of multi-agent systems.",
+      "authors": [
+        "John Meluso",
+        "Laurent Hébert-Dufresne",
+        "Christoph Riedl",
+        "H. Oliver Gao"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.SI",
+        "nlin.AO",
+        "physics.soc-ph"
+      ],
+      "published": "2026-06-18T19:08:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.20877v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent collective intelligence collaboration",
+      "llm_evidence_cn": "多智能体集体协作",
+      "llm_evidence": "多智能体集体协作",
+      "canonical_evidence": "多智能体集体协作",
+      "llm_tldr_en": "Studies how specialist vs generalist agents affect collective performance, offering design principles for multi-agent collaboration systems.",
+      "llm_tldr_cn": "现有集体人工智能缺乏对智能体解释能力与任务质量交互的系统性理解。该论文通过实验表征了专业型与通用型智能体在集体中的表现差异，发现专业型智能体形成稀疏集中式网络，而通用型形成密集分布式网络。结果为设计资源高效的多智能体协作系统提供了原则性指导。",
+      "llm_tldr": "现有集体人工智能缺乏对智能体解释能力与任务质量交互的系统性理解。该论文通过实验表征了专业型与通用型智能体在集体中的表现差异，发现专业型智能体形成稀疏集中式网络，而通用型形成密集分布式网络。结果为设计资源高效的多智能体协作系统提供了原则性指导。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.22496v1",
+      "source": "arxiv",
+      "title": "Enabling Cloud-Level Accuracy in Edge AI through IoT Data Preprocessing",
+      "abstract": "Large language models (LLMs) offer a natural-language interface for interpreting Internet of Things (IoT) sensor data in smart environments; however, cloud deployment introduces latency, privacy, and connectivity concerns. Local LLMs can reduce these limitations, but compact edge-deployable models often show weaker numerical reasoning when raw sensor readings are provided directly. This paper investigates whether prompt-side preprocessing can improve the accuracy-latency trade-off of local LLMs for environmental monitoring. We propose a structured prompt construction framework that transforms raw air-quality and thermal-comfort measurements into progressively enriched textual representations: raw sensor values, threshold-aware descriptions, and compact environmental summary flags. The approach is evaluated using indoor Raspberry Pi/BME680 datasets from Tampere University and outdoor air-quality datasets from Helsinki, Katowice, and Warsaw. We construct a binary LLM query dataset covering air quality, thermal comfort, and joint environmental conditions, and evaluate five local and five cloud LLMs across three prompt variants and two inference modes, with and without chain-of-thought prompting. Results show that prompt enrichment substantially improves local-model accuracy. In No-CoT mode, local accuracy increases from 50.9% to 81.7% indoors and from 63.7% to 89.3% outdoors from the raw to the most enriched prompt. Local No-CoT inference is the fastest configuration, with mean latency close to 0.22 s, while CoT substantially increases inference time. These findings suggest that lightweight prompt-side preprocessing can narrow the local--cloud performance gap and support low-latency IoT analytics in smart environments.",
+      "authors": [
+        "Aygün Varol",
+        "Katarzyna Kołodziej",
+        "Łukasz Sobczak",
+        "Michał Romaszewski",
+        "Przemysław Głomb",
+        "Naser Hossein Motlagh",
+        "Mirka Leino",
+        "Johanna Virkki"
+      ],
+      "primary_category": "cs.PF",
+      "categories": [
+        "cs.PF",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-21T13:35:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.22496v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "prompt-side preprocessing improves accuracy-latency trade-off for edge LLMs",
+      "llm_evidence_cn": "提示端预处理改善边缘LLM的精度-延迟权衡",
+      "llm_evidence": "提示端预处理改善边缘LLM的精度-延迟权衡",
+      "canonical_evidence": "提示端预处理改善边缘LLM的精度-延迟权衡",
+      "llm_tldr_en": "Investigates structured prompt construction to enhance edge-deployed LLM accuracy for IoT data, approaching cloud-level accuracy while keeping latency low.",
+      "llm_tldr_cn": "针对云端LLM部署的延迟和隐私问题，提出结构化提示构建框架，通过逐步丰富的文本表示提升边缘本地LLM在物联网环境监测中的数值推理能力。实验表明预处理后的提示能缩小边缘与云端模型精度差距。为边缘AI在资源受限设备上的应用提供了有效方案。",
+      "llm_tldr": "针对云端LLM部署的延迟和隐私问题，提出结构化提示构建框架，通过逐步丰富的文本表示提升边缘本地LLM在物联网环境监测中的数值推理能力。实验表明预处理后的提示能缩小边缘与云端模型精度差距。为边缘AI在资源受限设备上的应用提供了有效方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.22982v1",
+      "source": "arxiv",
+      "title": "Distilling Collaborative Dynamics into Latent Space for Implicit Coordination in Decentralized Multi-Agent Manipulation",
+      "abstract": "Multi-arm manipulation demands precise spatiotemporal coordination, yet many centralized approaches scale poorly as team size increases. To address this, we propose CLS-DP, a decentralized multi-agent framework that enables implicit coordination under partial observability without shared global views, explicit state information, or inter-agent communication. Under the centralized training and decentralized execution (CTDE) paradigm, CLS-DP distills privileged multi-agent dynamics into a latent space. At deployment, each agent infers a collaborative latent from its local RGB observation and a shared task instruction; it then conditions the diffusion denoising process on this latent. This design enables implicit coordination with a per-agent cost independent of team size. Across six RoboFactory benchmark tasks spanning two to four agents, CLS-DP achieves a 38% mean success rate, outperforming the best centralized baseline (20%) and a decentralized ablation without the collaborative latent (9%). It also maintains superior parameter efficiency across all agent configurations. Attribution maps show that an agent conditioned on the collaborative latent places high attribution on the joints and grippers of both itself and its teammates throughout execution. This suggests that the learned latent efficiently encodes collaborative dynamics from local observation, which facilitates implicit coordination in realistic settings characterized by partial observability.",
+      "authors": [
+        "Chanyoung Park",
+        "Minsung Yoon",
+        "Andrew Jeong",
+        "Sung-eui Yoon"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-22T08:03:10+00:00",
+      "link": "https://arxiv.org/pdf/2606.22982v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "decentralized multi-agent implicit coordination",
+      "llm_evidence_cn": "分散式多智能体隐式协调",
+      "llm_evidence": "分散式多智能体隐式协调",
+      "canonical_evidence": "分散式多智能体隐式协调",
+      "llm_tldr_en": "Proposes CLS-DP, a decentralized multi-agent framework using latent space distillation for implicit coordination without communication.",
+      "llm_tldr_cn": "集中式多臂协同方法在规模增大时扩展性差。该论文提出CLS-DP，一种基于潜在空间蒸馏的分散式多智能体框架，每个智能体从局部观测和共享指令推断协作潜变量，条件化扩散去噪过程实现隐式协调。实验表明该方法在部分可观测下无需通信即可有效协同。",
+      "llm_tldr": "集中式多臂协同方法在规模增大时扩展性差。该论文提出CLS-DP，一种基于潜在空间蒸馏的分散式多智能体框架，每个智能体从局部观测和共享指令推断协作潜变量，条件化扩散去噪过程实现隐式协调。实验表明该方法在部分可观测下无需通信即可有效协同。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.23017v1",
+      "source": "arxiv",
+      "title": "Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems",
+      "abstract": "Federated Learning (FL) enables privacy-preserving collaborative learning for Internet of Vehicles (IoV) scenarios, but the extreme heterogeneity of vehicular-edge-cloud resources severely limits system efficiency. While dynamic scheduling strategies can mitigate this issue, they introduce new trust concerns: how to verify that scheduling decisions are fair, and whether clients faithfully execute optimization instructions without disclosing private data? This paper proposes Nautilus, a verifiable and efficient federated learning framework. First, we design a multi-dimensional resource-aware scheduling algorithm that dynamically allocates compression ratios and training tasks based on vehicles bandwidth, latency, and computing power, significantly improving system training efficiency. Second, to address the trust deficit in the scheduling process, we introduce a Zero-Knowledge Proof (ZKP) mechanism that ensures the fairness of scheduling strategy generation and the compliance of client execution while preserving privacy. Experimental results demonstrate that the framework effectively reduces communication overhead and accelerates model convergence while maintaining system integrity.",
+      "authors": [
+        "Linyang Wu",
+        "Linpeng Jia",
+        "Hanwen Zhang",
+        "Tiantian Duan",
+        "Yi Sun"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-22T08:29:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.23017v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "edge-cloud collaborative federated learning framework",
+      "llm_evidence_cn": "端云协同的联邦学习框架",
+      "llm_evidence": "端云协同的联邦学习框架",
+      "canonical_evidence": "端云协同的联邦学习框架",
+      "llm_tldr_en": "Nautilus proposes a verifiable hierarchical federated learning framework for vehicular-edge-cloud systems with dynamic scheduling.",
+      "llm_tldr_cn": "车联网场景中，车辆-边缘-云资源异构性严重影响联邦学习效率，且动态调度引入信任问题。本文提出Nautilus，一个可验证的高效联邦学习框架，设计多维资源感知调度算法，动态分配压缩比和训练任务。实验证明其在效率和可验证性上的优势。",
+      "llm_tldr": "车联网场景中，车辆-边缘-云资源异构性严重影响联邦学习效率，且动态调度引入信任问题。本文提出Nautilus，一个可验证的高效联邦学习框架，设计多维资源感知调度算法，动态分配压缩比和训练任务。实验证明其在效率和可验证性上的优势。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "e",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.23664v1",
+      "source": "arxiv",
+      "title": "MAS-PromptBench: When Does Prompt Optimization Improve Multi-Agent LLM Systems?",
+      "abstract": "Multi-agent systems (MAS) offer a scalable path forward for agentic AI, comprising multiple LLM-based agents, each assigned a system prompt and a position within a workflow that governs inter-agent coordination and output aggregation. System prompts thus form a critical and accessible optimization surface: they specify agents' roles and behaviors, enabling system-level improvements without model finetuning. Although prompt optimization has shown substantial potential for single LLMs, extending it to MAS poses distinct challenges, notably an exponentially growing search space. It remains unclear whether, when, and by how much prompt optimization improves MAS performance, and how sensitive such gains are to system configuration. In this work, we systematically study system-prompt optimization across a broad range of MAS setups varying in task, workflow, communication protocol, and team size, benchmarking two prompt optimizers that naturally extend state-of-the-art single-agent methods. The results reveal its potential to unlock significant gains while exposing open challenges, characterizing when and how much prompt optimization helps across diverse MAS settings.",
+      "authors": [
+        "Juyang Bai",
+        "Laixi Shi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-06-22T17:48:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.23664v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent collaboration and prompt optimization",
+      "llm_evidence_cn": "多代理协作与提示优化",
+      "llm_evidence": "多代理协作与提示优化",
+      "canonical_evidence": "多代理协作与提示优化",
+      "llm_tldr_en": "MAS-PromptBench studies when prompt optimization improves multi-agent LLM systems, revealing that prompt tuning is effective for coordination but sensitive to workflow structure.",
+      "llm_tldr_cn": "多代理系统的提示优化效果尚不明确。本文系统研究了提示优化在多代理LLM系统中的有效性，发现提示优化可显著提升代理协作能力，但对工作流结构高度敏感。通过在多个多代理基准上的实验，提供了何时使用提示优化的指导。该工作为优化多代理协作提供了实用见解。",
+      "llm_tldr": "多代理系统的提示优化效果尚不明确。本文系统研究了提示优化在多代理LLM系统中的有效性，发现提示优化可显著提升代理协作能力，但对工作流结构高度敏感。通过在多个多代理基准上的实验，提供了何时使用提示优化的指导。该工作为优化多代理协作提供了实用见解。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

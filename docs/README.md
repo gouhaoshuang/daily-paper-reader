@@ -6,31 +6,55 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-22
-- 运行时间：2026-06-22 21:49:28 UTC
+- 最新运行日期：2026-06-23
+- 运行时间：2026-06-23 21:57:38 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：2
-- 速读区：1
+- 本次总论文数：11
+- 精读区：5
+- 速读区：6
 
 ### 今日简报（AI）
-1) 今日日报收录3篇论文，精读2篇8分工作：可穿戴健康问答与对话长期记忆。  
-2) 最值得关注《WEQA》的查询自适应推理和《CoreMem》的黎曼检索记忆方法，分别解决健康QA和记忆持久化难题。  
-3) 建议优先阅读这两篇精读论文，速读的《AdaSTORM》适合对动态图推理感兴趣者。
-- 详情：[/202606/22/README](/202606/22/README)
+1) 今日聚焦人机协作与边缘云协同，精读两篇9.0高分研究。  
+2) 最值得关注的方向：共享工作区人机协作协同效应、长视频流边缘云联合理解。  
+3) 推荐进一步了解速读中的IoT数据预处理方法，以低成本实现边缘AI云级精度。
+- 详情：[/202606/23/README](/202606/23/README)
 
 ### 精读区论文标签
-1. [WEQA: Wearable hEalth Question Answering with Query-Adaptive Agentic Reasoning](/202606/22/2606.18147v1-weqa-wearable-health-question-answering-with-query-adaptive-agentic-reasoning)  
+1. [Searching for Synergy in Shared Workspace Human-AI Collaboration](/202606/23/2606.18413v3-searching-for-synergy-in-shared-workspace-human-ai-collaboration)  
+   标签：评分：9.0/10、query:eca
+   evidence：使用Collaborative Gym研究人机协作结构
+2. [CoVStream: Edge-Cloud Collaboration for Understanding of Long Video Streams](/202606/23/2606.22804v1-covstream-edge-cloud-collaboration-for-understanding-of-long-video-streams)  
+   标签：评分：9.0/10、query:eca
+   evidence：面向长视频流的边缘云协作框架
+3. [Bridging Design and Execution: A Visual Graph Editor for Edge and Cloud Workflows](/202606/23/2606.21416v1-bridging-design-and-execution-a-visual-graph-editor-for-edge-and-cloud-workflows)  
    标签：评分：8.0/10、query:eca
-   evidence：面向可穿戴移动健康AI智能体的自适应查询框架
-2. [CoreMem: Riemannian Retrieval and Fisher-Guided Distillation for Long-Term Memory in Dialogue Agents](/202606/22/2606.18406v1-coremem-riemannian-retrieval-and-fisher-guided-distillation-for-long-term-memory-in-dialogue-agents)  
+   evidence：面向边缘和云工作流的可视化图形编辑器
+4. [Holmes: Multimodal Agentic Diagnosis for Mixed-Language Mobile Crashes at Industrial Scale](/202606/23/2606.21963v1-holmes-multimodal-agentic-diagnosis-for-mixed-language-mobile-crashes-at-industrial-scale)  
    标签：评分：8.0/10、query:eca
-   evidence：面向智能体的端云内存架构
+   evidence：用于诊断移动崩溃的多智能体系统
+5. [Wireless Personal Agent: Extending Wireless Intelligence from Networks to Terminals](/202606/23/2606.23255v1-wireless-personal-agent-extending-wireless-intelligence-from-networks-to-terminals)  
+   标签：评分：8.0/10、query:eca
+   evidence：基于LLM的终端无线个人代理框架，解耦延迟以适应资源受限的移动设备
 
 ### 速读区论文标签
-1. [AdaSTORM: Scaling LLM Reasoning on Dynamic Graphs via Adaptive Spatio-Temporal Multi-Agent Collaboration](/202606/22/2606.16328v1-adastorm-scaling-llm-reasoning-on-dynamic-graphs-via-adaptive-spatio-temporal-multi-agent-collaboration)  
+1. [SCENIC: Semantic-Conditioned Edge-Aware Neural Framework for Structured IoT Command Generation](/202606/23/2606.22296v1-scenic-semantic-conditioned-edge-aware-neural-framework-for-structured-iot-command-generation)  
    标签：评分：7.0/10、query:eca
-   evidence：自适应时空多智能体协作
+   evidence：面向边缘设备IoT命令生成的边缘感知框架，与边缘-云协作相关
+2. [Artificial collectives of specialists and generalists excel at different tasks](/202606/23/2606.20877v1-artificial-collectives-of-specialists-and-generalists-excel-at-different-tasks)  
+   标签：评分：6.0/10、query:eca
+   evidence：多智能体集体协作
+3. [Enabling Cloud-Level Accuracy in Edge AI through IoT Data Preprocessing](/202606/23/2606.22496v1-enabling-cloud-level-accuracy-in-edge-ai-through-iot-data-preprocessing)  
+   标签：评分：6.0/10、query:eca
+   evidence：提示端预处理改善边缘LLM的精度-延迟权衡
+4. [Distilling Collaborative Dynamics into Latent Space for Implicit Coordination in Decentralized Multi-Agent Manipulation](/202606/23/2606.22982v1-distilling-collaborative-dynamics-into-latent-space-for-implicit-coordination-in-decentralized-multi-agent-manipulation)  
+   标签：评分：6.0/10、query:eca
+   evidence：分散式多智能体隐式协调
+5. [Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems](/202606/23/2606.23017v1-nautilus-a-verifiable-hierarchical-federated-learning-framework-for-vehicular-edge-cloud-systems)  
+   标签：评分：6.0/10、query:eca
+   evidence：端云协同的联邦学习框架
+6. [MAS-PromptBench: When Does Prompt Optimization Improve Multi-Agent LLM Systems?](/202606/23/2606.23664v1-mas-promptbench-when-does-prompt-optimization-improve-multi-agent-llm-systems)  
+   标签：评分：6.0/10、query:eca
+   evidence：多代理协作与提示优化
 
 
 <div class="dpr-home-promo-card">
