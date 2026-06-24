@@ -6,55 +6,42 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-23
-- 运行时间：2026-06-23 21:57:38 UTC
+- 最新运行日期：2026-06-24
+- 运行时间：2026-06-24 21:45:44 UTC
 - 运行状态：成功
-- 本次总论文数：11
-- 精读区：5
-- 速读区：6
+- 本次总论文数：7
+- 精读区：0
+- 速读区：7
 
 ### 今日简报（AI）
-1) 今日聚焦人机协作与边缘云协同，精读两篇9.0高分研究。  
-2) 最值得关注的方向：共享工作区人机协作协同效应、长视频流边缘云联合理解。  
-3) 推荐进一步了解速读中的IoT数据预处理方法，以低成本实现边缘AI云级精度。
-- 详情：[/202606/23/README](/202606/23/README)
+今天速读7篇论文，重点关注计算机使用代理、技术报告和联邦学习框架方向。其中《Fara-1.5》、《Sakana Fugu》和《Nautilus》三篇评分最高（7.0/10），值得优先阅读。建议从这三篇入手，快速把握各自的核心创新与实验设计。
+- 详情：[/202606/24/README](/202606/24/README)
 
 ### 精读区论文标签
-1. [Searching for Synergy in Shared Workspace Human-AI Collaboration](/202606/23/2606.18413v3-searching-for-synergy-in-shared-workspace-human-ai-collaboration)  
-   标签：评分：9.0/10、query:eca
-   evidence：使用Collaborative Gym研究人机协作结构
-2. [CoVStream: Edge-Cloud Collaboration for Understanding of Long Video Streams](/202606/23/2606.22804v1-covstream-edge-cloud-collaboration-for-understanding-of-long-video-streams)  
-   标签：评分：9.0/10、query:eca
-   evidence：面向长视频流的边缘云协作框架
-3. [Bridging Design and Execution: A Visual Graph Editor for Edge and Cloud Workflows](/202606/23/2606.21416v1-bridging-design-and-execution-a-visual-graph-editor-for-edge-and-cloud-workflows)  
-   标签：评分：8.0/10、query:eca
-   evidence：面向边缘和云工作流的可视化图形编辑器
-4. [Holmes: Multimodal Agentic Diagnosis for Mixed-Language Mobile Crashes at Industrial Scale](/202606/23/2606.21963v1-holmes-multimodal-agentic-diagnosis-for-mixed-language-mobile-crashes-at-industrial-scale)  
-   标签：评分：8.0/10、query:eca
-   evidence：用于诊断移动崩溃的多智能体系统
-5. [Wireless Personal Agent: Extending Wireless Intelligence from Networks to Terminals](/202606/23/2606.23255v1-wireless-personal-agent-extending-wireless-intelligence-from-networks-to-terminals)  
-   标签：评分：8.0/10、query:eca
-   evidence：基于LLM的终端无线个人代理框架，解耦延迟以适应资源受限的移动设备
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [SCENIC: Semantic-Conditioned Edge-Aware Neural Framework for Structured IoT Command Generation](/202606/23/2606.22296v1-scenic-semantic-conditioned-edge-aware-neural-framework-for-structured-iot-command-generation)  
+1. [Fara-1.5: Scalable Learning Environments for Computer Use Agents](/202606/24/2606.20785v1-fara-15-scalable-learning-environments-for-computer-use-agents)  
    标签：评分：7.0/10、query:eca
-   evidence：面向边缘设备IoT命令生成的边缘感知框架，与边缘-云协作相关
-2. [Artificial collectives of specialists and generalists excel at different tasks](/202606/23/2606.20877v1-artificial-collectives-of-specialists-and-generalists-excel-at-different-tasks)  
+   evidence：用于训练计算机使用代理的可扩展数据流水线
+2. [Sakana Fugu Technical Report](/202606/24/2606.21228v2-sakana-fugu-technical-report)  
+   标签：评分：7.0/10、query:eca
+   evidence：动态编排LLM代理团队
+3. [Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems](/202606/24/2606.23017v2-nautilus-a-verifiable-hierarchical-federated-learning-framework-for-vehicular-edge-cloud-systems)  
+   标签：评分：7.0/10、query:eca
+   evidence：车辆边缘云协作联邦学习框架
+4. [Harness-MU: A Safe, Governed, and Effective Harness for Multi-User LLM Agents](/202606/24/2606.21856v1-harness-mu-a-safe-governed-and-effective-harness-for-multi-user-llm-agents)  
    标签：评分：6.0/10、query:eca
-   evidence：多智能体集体协作
-3. [Enabling Cloud-Level Accuracy in Edge AI through IoT Data Preprocessing](/202606/23/2606.22496v1-enabling-cloud-level-accuracy-in-edge-ai-through-iot-data-preprocessing)  
+   evidence：面向协作工作流的多用户LLM智能体治理框架
+5. [ESAA-Conversational: An Event-Sourced Memory Layer for Continuity, Handoff, and Curation Across Heterogeneous LLM Coding Agents](/202606/24/2606.23752v1-esaa-conversational-an-event-sourced-memory-layer-for-continuity-handoff-and-curation-across-heterogeneous-llm-coding-agents)  
    标签：评分：6.0/10、query:eca
-   evidence：提示端预处理改善边缘LLM的精度-延迟权衡
-4. [Distilling Collaborative Dynamics into Latent Space for Implicit Coordination in Decentralized Multi-Agent Manipulation](/202606/23/2606.22982v1-distilling-collaborative-dynamics-into-latent-space-for-implicit-coordination-in-decentralized-multi-agent-manipulation)  
+   evidence：异构编码代理的共享会话记忆
+6. [SkyChain Intelligence: A Blockchain-Secured Multi-Agent DRL Framework for Low-Altitude Embodied Artificial Intelligence](/202606/24/2606.24193v1-skychain-intelligence-a-blockchain-secured-multi-agent-drl-framework-for-low-altitude-embodied-artificial-intelligence)  
    标签：评分：6.0/10、query:eca
-   evidence：分散式多智能体隐式协调
-5. [Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems](/202606/23/2606.23017v1-nautilus-a-verifiable-hierarchical-federated-learning-framework-for-vehicular-edge-cloud-systems)  
+   evidence：低空计算网络中分布式多代理深度强化学习框架
+7. [ReM-MoA: Reasoning Memory Sustains Mixture-of-Agents Scaling](/202606/24/2606.24437v1-rem-moa-reasoning-memory-sustains-mixture-of-agents-scaling)  
    标签：评分：6.0/10、query:eca
-   evidence：端云协同的联邦学习框架
-6. [MAS-PromptBench: When Does Prompt Optimization Improve Multi-Agent LLM Systems?](/202606/23/2606.23664v1-mas-promptbench-when-does-prompt-optimization-improve-multi-agent-llm-systems)  
-   标签：评分：6.0/10、query:eca
-   evidence：多代理协作与提示优化
+   evidence：通过推理记忆维持混合代理架构的扩展能力
 
 
 <div class="dpr-home-promo-card">

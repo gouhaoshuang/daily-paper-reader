@@ -1,0 +1,312 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-24T21:41:23.849366+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.20785v1",
+      "source": "arxiv",
+      "title": "Fara-1.5: Scalable Learning Environments for Computer Use Agents",
+      "abstract": "Collecting computer use data from human demonstrations is expensive and slow, motivating the need for scalable generation strategies. This requires two key ingredients: environments in which agents can act and verifiers that can judge whether their demonstrations succeeded. We introduce FaraGen1.5, a scalable data pipeline for computer use agents composed of three modular components: environments, solvers, and verifiers. FaraGen1.5 uses both live websites and synthetic environments that faithfully simulate domains gated by authentication or that require irreversible actions. It employs a solver harness that can be powered by multiple models, including strong frontier models such as GPT-5.4, and also incorporates a user simulator to enable multi-turn rollouts. Finally, FaraGen1.5 scores the resulting trajectories with three complementary verifiers covering task correctness, efficiency, and critical-point adherence. Using data produced by this pipeline, we train Fara1.5, a family of native computer use agents (CUAs) at three scales built on Qwen3.5 (4B, 9B, and 27B). To train these models, we employ a supervised finetuning (SFT) recipe that carefully balances data from FaraGen1.5 for broad coverage, specific high-value tasks, and target model deficiencies in an iterative approach. Each model sets a new state of the art for its size class on browser-use benchmarks: Fara1.5-9B reaches 63.4% on Online-Mind2Web and 86.6% on WebVoyager, while Fara1.5-27B achieves 72.3% on Online-Mind2Web, which is competitive with much larger proprietary systems.",
+      "authors": [
+        "Ahmed Awadallah",
+        "Sahil Gupta",
+        "Yash Lara",
+        "Yadong Lu",
+        "Hussein Mozannar",
+        "Akshay Nambi",
+        "Zach Nussbaum",
+        "Yash Pandya",
+        "Aravind Rajeswaran",
+        "Corby Rosset",
+        "Alexey Taymanov",
+        "Luiz do Valle",
+        "Vibhav Vineet",
+        "Spencer Whitehead",
+        "Andrew Zhao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-18T17:53:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.20785v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Scalable data pipeline for training computer use agents",
+      "llm_evidence_cn": "用于训练计算机使用代理的可扩展数据流水线",
+      "llm_evidence": "用于训练计算机使用代理的可扩展数据流水线",
+      "canonical_evidence": "用于训练计算机使用代理的可扩展数据流水线",
+      "llm_tldr_en": "Introduces FaraGen1.5, a scalable data pipeline for computer use agents with modular environments, solvers, and verifiers, using live and synthetic websites plus user simulators.",
+      "llm_tldr_cn": "从人类演示收集计算机使用数据昂贵且缓慢，需要可扩展生成策略。本文提出FaraGen1.5，一个由环境、求解器和验证器组成的模块化数据流水线，利用真实网站和合成环境模拟需认证或不可逆操作的域。该流水线支持多模型求解器，包括GPT-5.4等前沿模型，并集成用户模拟器实现多轮 rollout。它为移动AI代理的训练提供了可扩展的数据生成方案，但未直接涉及边缘云。",
+      "llm_tldr": "从人类演示收集计算机使用数据昂贵且缓慢，需要可扩展生成策略。本文提出FaraGen1.5，一个由环境、求解器和验证器组成的模块化数据流水线，利用真实网站和合成环境模拟需认证或不可逆操作的域。该流水线支持多模型求解器，包括GPT-5.4等前沿模型，并集成用户模拟器实现多轮 rollout。它为移动AI代理的训练提供了可扩展的数据生成方案，但未直接涉及边缘云。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.21856v1",
+      "source": "arxiv",
+      "title": "Harness-MU: A Safe, Governed, and Effective Harness for Multi-User LLM Agents",
+      "abstract": "The increasing deployment of large language model (LLM) agents in collaborative workflows demands robust multi-user, multi-principal interaction mechanisms capable of enforcing access permissions, resolving authoritative conflicts, and preventing unauthorized data disclosure. However, a fundamental mismatch exists between the single-user training paradigm of contemporary LLMs and the hard constraints required for multi-principal governance, rendering probabilistic, prompt-based safeguards vulnerable under multi-turn adversarial interactions.Our key insight is that governance constraints -- who is authorized, what is restricted, and whose instructions take precedence -- are deterministic runtime variables that should be enforced by execution hooks rather than entrusted to the LLM. We present \\textbf{Harness-MU}, the first model-agnostic, zero-tuning infrastructure framework for multi-user LLM agents. By decoupling language generation from safety orchestration, Harness-MU guarantees unbreakable permission boundaries while maximizing compliant demand satisfaction. Across four frontier open-weight and proprietary models on the \\textit{Muses-Bench} benchmark, Harness-MU achieves the goal of privacy preservation across all access-control attacks, outperforming the standard baseline by 0.28--0.39 in utility score and improving instruction-following accuracy by up to 48.9 percentage points. Harness-MU advances the philosophy of \\textit{Harness Engineering}, establishing that systematic infrastructure is essential for solving LLM multi-principal governance challenges. The code and data are available at https://github.com/YuanJrShiuan/Harness-MulUser.",
+      "authors": [
+        "Wangxuan Fan",
+        "Xiaoyu Nie",
+        "Zhongxiang Dai"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-06-20T03:24:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.21856v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-user LLM agent governance harness for collaborative workflows",
+      "llm_evidence_cn": "面向协作工作流的多用户LLM智能体治理框架",
+      "llm_evidence": "面向协作工作流的多用户LLM智能体治理框架",
+      "canonical_evidence": "面向协作工作流的多用户LLM智能体治理框架",
+      "llm_tldr_en": "Harness-MU provides a safe, governed harness for multi-user LLM agents, enforcing access permissions and resolving authority conflicts via deterministic execution hooks.",
+      "llm_tldr_cn": "LLM智能体在多用户协作场景中面临权限管理、权威冲突和数据泄露风险。本文提出Harness-MU，通过确定性执行钩子强制执行治理约束，而非依赖概率性提示。该框架解决了单用户训练范式与多用户治理需求的不匹配，为多智能体协作提供了安全可控的运行环境。",
+      "llm_tldr": "LLM智能体在多用户协作场景中面临权限管理、权威冲突和数据泄露风险。本文提出Harness-MU，通过确定性执行钩子强制执行治理约束，而非依赖概率性提示。该框架解决了单用户训练范式与多用户治理需求的不匹配，为多智能体协作提供了安全可控的运行环境。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.21228v2",
+      "source": "arxiv",
+      "title": "Sakana Fugu Technical Report",
+      "abstract": "The capabilities of frontier Large Language Models (LLMs) continue to advance, with different providers increasingly specializing in distinct domains. This raises a natural next objective: how to combine the individual specializations of various LLMs into a collectively intelligent system. To this end, we report the development of Sakana Fugu, a family of orchestrator models that harness and amplify the capabilities of an LLM agent team. Fugu models are themselves language models trained to understand user queries and dynamically devise agentic scaffolds to solve them. Through these adaptive scaffolds, Fugu accesses performance beyond any individual LLM agent, achieving state-of-the-art results compared to other publicly accessible models across a range of challenging tasks, including SWE-Bench Pro, Terminal Bench, LiveCodeBench, GPQA-Diamond, Humanity's Last Exam, and CharXiv Reasoning. We release two models: Fugu, which balances performance with latency for everyday use, and Fugu-Ultra, which prioritizes answer quality on the hardest problems. We describe our training paradigm, which encompasses large-scale fine-tuning, evolutionary algorithms, and reinforcement learning approaches, along with the infrastructure and core design principles that turn these methods into a production system. We hope this report encourages further research into multi-agent systems and dynamic, query-adaptive agentic scaffolds as a path toward the next frontier of AI capabilities, accessed through collective intelligence.",
+      "authors": [
+        "Yujin Tang",
+        "Edoardo Cetin",
+        "Jinglue Xu",
+        "Qi Sun",
+        "Stefan Nielsen",
+        "Vincent Richard",
+        "Haruto Goda",
+        "Iaroslav Tymchenko",
+        "Nhan Nguyen",
+        "Hyunin Lee",
+        "Mari Ashiga",
+        "Shashank Kotyan",
+        "So Kuroki",
+        "Tarin Clanuwat"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-19T08:47:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.21228v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Dynamic orchestration of LLM agent teams",
+      "llm_evidence_cn": "动态编排LLM代理团队",
+      "llm_evidence": "动态编排LLM代理团队",
+      "canonical_evidence": "动态编排LLM代理团队",
+      "llm_tldr_en": "Presents Sakana Fugu, orchestrator models that dynamically devise agentic scaffolds to combine multiple LLMs, achieving SOTA on several benchmarks including SWE-Bench.",
+      "llm_tldr_cn": "不同LLM提供商各有专长，如何组合它们形成集体智能？本文报告了Sakana Fugu——一种编排器模型族，能理解用户查询并动态设计代理支架来解决任务。Fugu模型通过自适应支架超越任何单个LLM代理，在SWE-Bench等多个挑战性任务上达到顶尖水平。该方法展示了多代理协作编排的强大能力，可用于端云协同中跨边缘和云端代理的动态协调。",
+      "llm_tldr": "不同LLM提供商各有专长，如何组合它们形成集体智能？本文报告了Sakana Fugu——一种编排器模型族，能理解用户查询并动态设计代理支架来解决任务。Fugu模型通过自适应支架超越任何单个LLM代理，在SWE-Bench等多个挑战性任务上达到顶尖水平。该方法展示了多代理协作编排的强大能力，可用于端云协同中跨边缘和云端代理的动态协调。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23752v1",
+      "source": "arxiv",
+      "title": "ESAA-Conversational: An Event-Sourced Memory Layer for Continuity, Handoff, and Curation Across Heterogeneous LLM Coding Agents",
+      "abstract": "Software developers increasingly work with multiple LLM coding agents, switching among tools such as Codex, Grok, Claude Code, and other assistants as context windows fill, sessions end, or a particular agent becomes better suited to a subtask. Each agent, however, persists its conversation in a private and vendor-specific log. The result is conversational state drift: goals, decisions, open tasks, and rationales established with one agent are not reliably available when another agent takes over. This paper presents \\emph{ESAA-Conversational}, a domain specialization of Event-Sourcing Agent Architecture (ESAA)~\\cite{esaa} for shared conversational memory across heterogeneous agents. The method treats the visible conversation as a local event store: hooks and watchers capture visible turns, normalize them into an append-only \\texttt{activity.jsonl}, and deterministically project read models such as \\texttt{handoff.md}, \\texttt{state.md}, \\texttt{decisions.md}, and \\texttt{tasks.json}. Mechanical capture does not require LLM inference; agents use judgment only for explicit curation, recording durable decisions and conversational tasks through domain commands. The public v1.1.0 release implements a PowerShell CLI with \\texttt{init}, \\texttt{enable-hooks}, \\texttt{sync}, \\texttt{project}, \\texttt{verify}, \\texttt{context}, \\texttt{decide}, and \\texttt{task}; includes \\texttt{workspace\\_root} isolation and a write-path lockfile; and is distributed as a greenfield package with an empty public log. A self-referential case study with 570 development-lab events shows that heterogeneous agents can collaborate through a shared log without a direct agent-to-agent channel, while the public distribution preserves privacy by excluding the private conversational history.",
+      "authors": [
+        "Elzo Brito dos Santos Filho"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-06-22T01:02:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.23752v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Shared conversational memory for heterogeneous coding agents",
+      "llm_evidence_cn": "异构编码代理的共享会话记忆",
+      "llm_evidence": "异构编码代理的共享会话记忆",
+      "canonical_evidence": "异构编码代理的共享会话记忆",
+      "llm_tldr_en": "Proposes ESAA-Conversational, an event-sourced memory layer enabling continuity, handoff, and curation across different LLM coding agents, preventing conversational state drift.",
+      "llm_tldr_cn": "开发者常切换多个LLM编码代理，但每个代理保持私有会话日志，导致状态漂移。本文提出ESAA-会话式，一种事件溯源代理架构的专业化，为异构代理提供共享会话记忆层，确保目标、决策和任务在代理间连续传递。该方法可避免因上下文丢失导致的重复工作或错误。该记忆层可泛化至多代理协作系统，对端云协同中不同代理的记忆共享有参考价值。",
+      "llm_tldr": "开发者常切换多个LLM编码代理，但每个代理保持私有会话日志，导致状态漂移。本文提出ESAA-会话式，一种事件溯源代理架构的专业化，为异构代理提供共享会话记忆层，确保目标、决策和任务在代理间连续传递。该方法可避免因上下文丢失导致的重复工作或错误。该记忆层可泛化至多代理协作系统，对端云协同中不同代理的记忆共享有参考价值。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.23017v2",
+      "source": "arxiv",
+      "title": "Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems",
+      "abstract": "Federated Learning (FL) enables privacy-preserving collaborative learning for Internet of Vehicles (IoV) scenarios, but the extreme heterogeneity of vehicular-edge-cloud resources severely limits system efficiency. While dynamic scheduling strategies can mitigate this issue, they introduce new trust concerns: how to verify that scheduling decisions are fair, and whether clients faithfully execute optimization instructions without disclosing private data? This paper proposes Nautilus, a verifiable and efficient federated learning framework. First, we design a multi-dimensional resource-aware scheduling algorithm that dynamically allocates compression ratios and training tasks based on vehicles bandwidth, latency, and computing power, significantly improving system training efficiency. Second, to address the trust deficit in the scheduling process, we introduce a Zero-Knowledge Proof (ZKP) mechanism that ensures the fairness of scheduling strategy generation and the compliance of client execution while preserving privacy. Experimental results demonstrate that the framework effectively reduces communication overhead and accelerates model convergence while maintaining system integrity.",
+      "authors": [
+        "Linyang Wu",
+        "Linpeng Jia",
+        "Hanwen Zhang",
+        "Tiantian Duan",
+        "Yi Sun"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-22T08:29:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.23017v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "edge-cloud collaborative federated learning framework for vehicular systems",
+      "llm_evidence_cn": "车辆边缘云协作联邦学习框架",
+      "llm_evidence": "车辆边缘云协作联邦学习框架",
+      "canonical_evidence": "车辆边缘云协作联邦学习框架",
+      "llm_tldr_en": "Proposes Nautilus, a verifiable hierarchical federated learning framework for vehicular-edge-cloud systems with a multi-dimensional resource-aware scheduling algorithm.",
+      "llm_tldr_cn": "现有车辆边缘云联邦学习面临资源异构和信任问题。本文提出Nautilus，一种可验证的层次化联邦学习框架，设计多维度资源感知调度算法动态分配压缩比和训练任务。实验表明该框架在保证隐私的同时提升了系统效率，为边缘云协同学习提供了可信基础。",
+      "llm_tldr": "现有车辆边缘云联邦学习面临资源异构和信任问题。本文提出Nautilus，一种可验证的层次化联邦学习框架，设计多维度资源感知调度算法动态分配压缩比和训练任务。实验表明该框架在保证隐私的同时提升了系统效率，为边缘云协同学习提供了可信基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.24193v1",
+      "source": "arxiv",
+      "title": "SkyChain Intelligence: A Blockchain-Secured Multi-Agent DRL Framework for Low-Altitude Embodied Artificial Intelligence",
+      "abstract": "With the rapid development of the Low-Altitude Economy (LAE) ecosystem, Low-Altitude Embodied Artificial Intelligence (LAEAI) agents have become the core carriers of autonomous aerial services, thereby enabling dynamic Low-altitude Computility Networks (LACNets) for distributed computing resource sharing. However, resource-constrained LAEAI agents in decentralized LACNets face a fundamental trilemma of autonomy, security, and efficiency. Existing solutions primarily focus on either optimizing computational performance or enhancing security in isolation, failing to address the inherent trade-offs among trust, performance, and overhead in untrusted dynamic environments with malicious agents. To tackle this challenge, this paper proposes SkyChain Intelligence, a holistic framework that synergistically integrates agentic AI, consortium blockchain, and Multi-Agent Deep Reinforcement Learning (MADRL). We design a lightweight blockchain-based decentralized trust management system with a dynamic reputation mechanism and develop a hybrid-action-space MADDPG algorithm that embeds on-chain reputation scores into the reward function to jointly optimize offloading decisions, resource allocation, and drone 3D trajectories. Extensive simulations demonstrate that our framework outperforms state-of-the-art baselines in task completion latency and energy consumption, while achieving a 94.1% task completion rate in the baseline scenario and stable convergence within 300 training episodes. This work provides a viable path for building secure, autonomous, and efficient machine-to-machine computing ecosystems in the low-altitude domain.",
+      "authors": [
+        "Haoxiang Luo",
+        "Tianqi Jiang",
+        "Ruichen Zhang",
+        "Yinqiu Liu",
+        "Gang Sun",
+        "Hongfang Yu",
+        "Abbas Jamalipour",
+        "Dong In Kim"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.DC"
+      ],
+      "published": "2026-06-23T06:28:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.24193v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "distributed multi-agent DRL framework for low-altitude computility networks",
+      "llm_evidence_cn": "低空计算网络中分布式多代理深度强化学习框架",
+      "llm_evidence": "低空计算网络中分布式多代理深度强化学习框架",
+      "canonical_evidence": "低空计算网络中分布式多代理深度强化学习框架",
+      "llm_tldr_en": "Proposes SkyChain Intelligence, a blockchain-secured multi-agent DRL framework for decentralized resource sharing in low-altitude embodied AI networks.",
+      "llm_tldr_cn": "低空经济中，资源受限的LAEAI代理在去中心化网络中面临自主性、安全性与效率的三难困境。本文提出SkyChain Intelligence，结合区块链与多代理深度强化学习，在分布式低空计算网络（LACNets）中实现可信资源共享。通过智能合约与DRL优化，在动态恶意环境下平衡信任、性能与开销。该框架展示了分布式多代理协作的典型架构，与端云协同中的分布式边缘云代理架构具有相似理念。",
+      "llm_tldr": "低空经济中，资源受限的LAEAI代理在去中心化网络中面临自主性、安全性与效率的三难困境。本文提出SkyChain Intelligence，结合区块链与多代理深度强化学习，在分布式低空计算网络（LACNets）中实现可信资源共享。通过智能合约与DRL优化，在动态恶意环境下平衡信任、性能与开销。该框架展示了分布式多代理协作的典型架构，与端云协同中的分布式边缘云代理架构具有相似理念。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24437v1",
+      "source": "arxiv",
+      "title": "ReM-MoA: Reasoning Memory Sustains Mixture-of-Agents Scaling",
+      "abstract": "Mixture-of-Agents (MoA) architectures improve inference-time scaling by organizing multiple LLM agents into layered reasoning pipelines. However, existing MoA variants fail to sustain gains as depth increases, exhibiting degradation, early plateauing, or saturation. We propose ReM-MoA, a memory-augmented MoA framework that sustains scaling through two mechanisms: (1) a Ranked Reasoning Memory that persistently stores and ranks reasoning traces from all layers using a comparative Reviewer Agent, and (2) a Curated Diversified Memory Routing scheme that exposes different agents to distinct combinations of successful and failed traces, preserving exploration diversity while propagating high-quality reasoning. We further introduce an optional multi-domain Reviewer distillation pipeline that improves ranking quality through frontier-model supervision. Across five reasoning benchmarks spanning math, formal logic, code, knowledge, and commonsense, ReM-MoA consistently outperforms prior MoA variants across both depth and width scaling, and its advantage widens with depth, establishing structured cross-layer reasoning memory as a key missing mechanism for scalable multi-agent inference.",
+      "authors": [
+        "Heng Ping",
+        "Arijit Bhattacharjee",
+        "Peiyu Zhang",
+        "Shixuan Li",
+        "Wei Yang",
+        "Ali Jannesari",
+        "Nesreen Ahmed",
+        "Paul Bogdan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T11:14:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.24437v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "mixture-of-agents architecture with reasoning memory to sustain scaling",
+      "llm_evidence_cn": "通过推理记忆维持混合代理架构的扩展能力",
+      "llm_evidence": "通过推理记忆维持混合代理架构的扩展能力",
+      "canonical_evidence": "通过推理记忆维持混合代理架构的扩展能力",
+      "llm_tldr_en": "Proposes ReM-MoA, a memory-augmented mixture-of-agents framework that sustains scaling via ranked reasoning memory and curated diversified routing.",
+      "llm_tldr_cn": "混合代理（MoA）架构通过分层推理管线扩展智能，但随深度增加性能饱和甚至退化。本文提出ReM-MoA，引入排序推理记忆和策展多样化路由机制：前者持久存储并排序所有层的推理轨迹，后者使不同代理接触不同的成功与失败轨迹组合，保持探索多样性。该方法使MoA深度扩展时性能持续提升，避免了饱和问题。该架构可应用于端云协同中多级代理推理流水线的设计。",
+      "llm_tldr": "混合代理（MoA）架构通过分层推理管线扩展智能，但随深度增加性能饱和甚至退化。本文提出ReM-MoA，引入排序推理记忆和策展多样化路由机制：前者持久存储并排序所有层的推理轨迹，后者使不同代理接触不同的成功与失败轨迹组合，保持探索多样性。该方法使MoA深度扩展时性能持续提升，避免了饱和问题。该架构可应用于端云协同中多级代理推理流水线的设计。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
