@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-25",
+  "date": "2026-06-25",
+  "generated_at": "2026-06-25T20:42:50",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/25/2606.24437v1-rem-moa-reasoning-memory-sustains-mixture-of-agents-scaling",
+      "section": "quick",
+      "title_en": "ReM-MoA: Reasoning Memory Sustains Mixture-of-Agents Scaling",
+      "authors": "Heng Ping, Arijit Bhattacharjee, Peiyu Zhang, Shixuan Li, Wei Yang, Ali Jannesari, Nesreen Ahmed, Paul Bogdan",
+      "date": "2026-06-23",
+      "pdf": "https://arxiv.org/pdf/2606.24437v1",
+      "score": "7.0",
+      "evidence": "通过记忆增强的混合智能体框架提升多层推理流水线中的协作效果",
+      "tldr": "现有Mixture-of-Agents架构在增加深度时性能提升停滞或退化。本文提出ReM-MoA，通过排名推理记忆持久存储并排名各层推理轨迹，结合策展多样化路由方案保持探索多样性。在数学、逻辑、代码等五个推理基准上，ReM-MoA在深度和宽度扩展中均优于先前变体，且优势随深度扩大。该工作揭示了结构化跨层推理记忆是实现可扩展多代理推理的关键机制。",
+      "tags": "query:eca",
+      "abstract_en": "Mixture-of-Agents (MoA) architectures improve inference-time scaling by organizing multiple LLM agents into layered reasoning pipelines. However, existing MoA variants fail to sustain gains as depth increases, exhibiting degradation, early plateauing, or saturation. We propose ReM-MoA, a memory-augmented MoA framework that sustains scaling through two mechanisms: (1) a Ranked Reasoning Memory that persistently stores and ranks reasoning traces from all layers using a comparative Reviewer Agent, and (2) a Curated Diversified Memory Routing scheme that exposes different agents to distinct combinations of successful and failed traces, preserving exploration diversity while propagating high-quality reasoning. We further introduce an optional multi-domain Reviewer distillation pipeline that improves ranking quality through frontier-model supervision. Across five reasoning benchmarks spanning math, formal logic, code, knowledge, and commonsense, ReM-MoA consistently outperforms prior MoA variants across both depth and width scaling, and its advantage widens with depth, establishing structured cross-layer reasoning memory as a key missing mechanism for scalable multi-agent inference.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/25/2606.25553v1-latency-aware-service-placement-using-neural-combinatorial-optimisers-for-edge--cloud-systems",
+      "section": "quick",
+      "title_en": "Latency-Aware Service Placement using Neural Combinatorial Optimisers for Edge--Cloud Systems",
+      "authors": "Kimia Abedpour, Mohammadsadeq Garshasbi Herabad, Zheng Li, Javid Taheri",
+      "date": "2026-06-24",
+      "pdf": "https://arxiv.org/pdf/2606.25553v1",
+      "score": "7.0",
+      "evidence": "边缘-云系统延迟感知服务放置",
+      "tldr": "边缘-云系统中服务放置是NP难组合优化问题。本文提出EP-NCO，一种基于学习的延迟感知服务放置框架，使用双图模型和GNN学习结构嵌入，结合强化学习构建可行放置。仿真表明，相比元启发式算法，EP-NCO降低总响应时间46%-50%，支持大规模动态环境在线推理。",
+      "tags": "query:eca",
+      "abstract_en": "The growth of Internet of Things (IoT) applications and latency-sensitive services has increased the demand for efficient service placement across compute continuum platforms, such as edge--cloud systems. Modern applications are decomposed into interdependent microservices deployed over heterogeneous infrastructures, making placement under resource and network constraints an intractable NP-hard combinatorial optimisation problem. This study proposes a latency-aware Edge Placement Neural Combinatorial Optimiser (EP-NCO), a learning-based framework for service placement in compute continuum platforms. EP-NCO employs a dual-graph model to capture resource relationships and service dependencies within both computing infrastructure and application structure. Graph neural networks (GNNs) learn structural embeddings of infrastructure nodes and service components, whereas reinforcement learning policies construct feasible placements that account for execution latency, communication link delays, and bandwidth-sharing effects. Extensive simulations across multiple system scales demonstrate that EP-NCO consistently achieves high-quality placement decisions, reducing the total service response time by 46%--50% compared with metaheuristics (genetic algorithm and particle swarm optimisation) and by 25%--35% compared with controlled RL ablation baselines. Once trained, EP-NCO enables fast online inference, making it a practical solution for dynamic large-scale edge--cloud environments with hundreds of computing nodes, hosting thousands of applications, which is significantly beyond the capability of current scheduling systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

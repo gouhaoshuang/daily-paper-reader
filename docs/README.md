@@ -6,42 +6,31 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-24
-- 运行时间：2026-06-24 21:45:44 UTC
+- 最新运行日期：2026-06-25
+- 运行时间：2026-06-25 20:42:44 UTC
 - 运行状态：成功
-- 本次总论文数：7
+- 本次总论文数：2
 - 精读区：0
-- 速读区：7
+- 速读区：2
 
 ### 今日简报（AI）
-今天速读7篇论文，重点关注计算机使用代理、技术报告和联邦学习框架方向。其中《Fara-1.5》、《Sakana Fugu》和《Nautilus》三篇评分最高（7.0/10），值得优先阅读。建议从这三篇入手，快速把握各自的核心创新与实验设计。
-- 详情：[/202606/24/README](/202606/24/README)
+今天速读了两篇论文，分别关注混合智能体记忆推理扩展和边缘云延迟感知服务放置。
+
+最值得关注的是《ReM-MoA》提出的记忆机制如何支撑混合智能体规模化，以及《Latency-Aware Service Placement》用神经组合优化器解决边缘系统延迟问题。
+
+建议普通读者优先精读《ReM-MoA》了解智能体协作的持久记忆设计，或结合自身场景尝试边缘优化中的图网络方法。
+- 详情：[/202606/25/README](/202606/25/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Fara-1.5: Scalable Learning Environments for Computer Use Agents](/202606/24/2606.20785v1-fara-15-scalable-learning-environments-for-computer-use-agents)  
+1. [ReM-MoA: Reasoning Memory Sustains Mixture-of-Agents Scaling](/202606/25/2606.24437v1-rem-moa-reasoning-memory-sustains-mixture-of-agents-scaling)  
    标签：评分：7.0/10、query:eca
-   evidence：用于训练计算机使用代理的可扩展数据流水线
-2. [Sakana Fugu Technical Report](/202606/24/2606.21228v2-sakana-fugu-technical-report)  
+   evidence：通过记忆增强的混合智能体框架提升多层推理流水线中的协作效果
+2. [Latency-Aware Service Placement using Neural Combinatorial Optimisers for Edge--Cloud Systems](/202606/25/2606.25553v1-latency-aware-service-placement-using-neural-combinatorial-optimisers-for-edge--cloud-systems)  
    标签：评分：7.0/10、query:eca
-   evidence：动态编排LLM代理团队
-3. [Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems](/202606/24/2606.23017v2-nautilus-a-verifiable-hierarchical-federated-learning-framework-for-vehicular-edge-cloud-systems)  
-   标签：评分：7.0/10、query:eca
-   evidence：车辆边缘云协作联邦学习框架
-4. [Harness-MU: A Safe, Governed, and Effective Harness for Multi-User LLM Agents](/202606/24/2606.21856v1-harness-mu-a-safe-governed-and-effective-harness-for-multi-user-llm-agents)  
-   标签：评分：6.0/10、query:eca
-   evidence：面向协作工作流的多用户LLM智能体治理框架
-5. [ESAA-Conversational: An Event-Sourced Memory Layer for Continuity, Handoff, and Curation Across Heterogeneous LLM Coding Agents](/202606/24/2606.23752v1-esaa-conversational-an-event-sourced-memory-layer-for-continuity-handoff-and-curation-across-heterogeneous-llm-coding-agents)  
-   标签：评分：6.0/10、query:eca
-   evidence：异构编码代理的共享会话记忆
-6. [SkyChain Intelligence: A Blockchain-Secured Multi-Agent DRL Framework for Low-Altitude Embodied Artificial Intelligence](/202606/24/2606.24193v1-skychain-intelligence-a-blockchain-secured-multi-agent-drl-framework-for-low-altitude-embodied-artificial-intelligence)  
-   标签：评分：6.0/10、query:eca
-   evidence：低空计算网络中分布式多代理深度强化学习框架
-7. [ReM-MoA: Reasoning Memory Sustains Mixture-of-Agents Scaling](/202606/24/2606.24437v1-rem-moa-reasoning-memory-sustains-mixture-of-agents-scaling)  
-   标签：评分：6.0/10、query:eca
-   evidence：通过推理记忆维持混合代理架构的扩展能力
+   evidence：边缘-云系统延迟感知服务放置
 
 
 <div class="dpr-home-promo-card">
