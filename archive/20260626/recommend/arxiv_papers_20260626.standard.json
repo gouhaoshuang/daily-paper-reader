@@ -1,0 +1,211 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-26T21:41:22.265346+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2606.22804v2",
+      "source": "arxiv",
+      "title": "CoVStream: Edge-Cloud Collaboration for Understanding of Long Video Streams",
+      "abstract": "Long, continuous video streams are an increasingly critical driver of multimedia intelligence. Existing efforts often handle long videos with a sample-encode-reason approach using large models. However, they overlook a crucial deployment fact: the stream is often produced by computationally constrained devices. This forces an untenable compromise: cloud offloading unlocks strong reasoning but incurs prohibitive bandwidth overhead, while on-device processing remains limited by edge hardware capacity. Therefore, we propose CoVStream, the first edge-cloud collaborative framework for understanding long video streams. The edge node distills raw video streams into compact visual features and semantic captions for transmission to the cloud, minimizing bandwidth costs, while the cloud server integrates this data into an entity graph and global visual context, activating the heavy reasoning model only when a user query arrives. Experiments on VideoMME-Long, LVBench, and RTV-Bench show that CoVStream reduces bandwidth usage by 87.6% while retaining 99.2% of the cloud baseline accuracy on LVBench.",
+      "authors": [
+        "Xu Liu",
+        "Guikun Chen",
+        "Zihao Yan",
+        "Kanzhi Wu",
+        "Wenguan Wang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-22T03:29:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.22804v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge-cloud collaboration framework",
+      "llm_evidence_cn": "边缘云协作框架",
+      "llm_evidence": "边缘云协作框架",
+      "canonical_evidence": "边缘云协作框架",
+      "llm_tldr_en": "CoVStream proposes edge-cloud collaboration for long video streams, distilling video features on edge to reduce bandwidth, enabling strong cloud reasoning while respecting edge constraints.",
+      "llm_tldr_cn": "现有长视频理解方法往往忽略边缘设备计算受限的部署现实，导致云卸载带宽过高或端侧处理能力不足。CoVStream提出首个边缘-云协作框架，在边缘节点将视频流蒸馏为紧凑视觉特征和语义描述再传输至云端，从而在降低带宽开销的同时利用云端大模型进行强推理。实验表明该方法在理解质量和效率上均优于纯端或纯云方案，为端云协同的智能代理系统提供了可行范例。",
+      "llm_tldr": "现有长视频理解方法往往忽略边缘设备计算受限的部署现实，导致云卸载带宽过高或端侧处理能力不足。CoVStream提出首个边缘-云协作框架，在边缘节点将视频流蒸馏为紧凑视觉特征和语义描述再传输至云端，从而在降低带宽开销的同时利用云端大模型进行强推理。实验表明该方法在理解质量和效率上均优于纯端或纯云方案，为端云协同的智能代理系统提供了可行范例。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.21666v1",
+      "source": "arxiv",
+      "title": "Hallucination as Context Drift: Synchronization Protocols for Multi-Agent LLM Systems",
+      "abstract": "Multi-agent LLM systems routinely produce hallucinated outputs that cannot be explained by model deficiencies alone. A significant class of these failures arises not from model incapacity but from context drift: the divergence of internal knowledge states between concurrent agents. When agents enter a collaborative task with mismatched or stale representations of shared world state, their joint reasoning produces contradictions that manifest as hallucination. We define the Context Divergence Score (CDS), a lightweight scalar metric quantifying knowledge-state discrepancy between agent pairs across spatial, temporal, and task dimensions, and propose the Shared State Verification Protocol (SSVP), which lets agents periodically exchange compressed state summaries and flag high-divergence conditions before joint reasoning. We evaluate SSVP across two domains (multi-agent travel and software project planning) using Claude Haiku. In controlled experiments (n=30 per condition, travel; n=10, software) across 8 scenarios, naive full-broadcast synchronization increases hallucination rate by 34% above the no-sync baseline (HR: 0.658 vs. 0.492, p=0.0022, d=1.18), a contamination effect from propagating erroneous agent states. SSVP avoids this failure mode while showing modest, consistent reduction (HR: 0.463, d=0.30) and achieves significantly lower hallucination than full-broadcast (p=0.0005, d=1.47) using 58% fewer API calls. The contamination effect does not replicate in the software domain, where all conditions converge to low HR (<0.2), confirming it is specific to tasks where one erroneous shared belief cascades across evaluation dimensions. Our results reframe hallucination mitigation as a distributed systems problem and establish context synchronization as a first-class primitive in multi-agent LLM design.",
+      "authors": [
+        "Carson Rodrigues"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.MA"
+      ],
+      "published": "2026-06-19T18:17:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.21666v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent collaboration context drift synchronization",
+      "llm_evidence_cn": "多智能体协作中的上下文漂移同步",
+      "llm_evidence": "多智能体协作中的上下文漂移同步",
+      "canonical_evidence": "多智能体协作中的上下文漂移同步",
+      "llm_tldr_en": "Proposes a context divergence score and shared state verification protocol to mitigate hallucination from context drift in multi-agent LLM collaboration.",
+      "llm_tldr_cn": "该论文指出多智能体LLM系统产生幻觉的一个重要原因是智能体间上下文漂移导致的知识状态不一致，并提出上下文发散得分（CDS）和共享状态验证协议（SSVP）让智能体定期交换信息以保持一致性，实验表明该方法有效减少因协作引发的幻觉，为多智能体协作系统的鲁棒性提供了新思路。",
+      "llm_tldr": "该论文指出多智能体LLM系统产生幻觉的一个重要原因是智能体间上下文漂移导致的知识状态不一致，并提出上下文发散得分（CDS）和共享状态验证协议（SSVP）让智能体定期交换信息以保持一致性，实验表明该方法有效减少因协作引发的幻觉，为多智能体协作系统的鲁棒性提供了新思路。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.21445v1",
+      "source": "arxiv",
+      "title": "AutoRAS: Learning Robust Agentic Systems with Primitive Representations",
+      "abstract": "The automated design of agentic systems offers a promising pathway for scaling large language models (LLMs) beyond single-agent reasoning. While prior work has advanced task performance through handcrafted or automatically generated multi-agent workflows, robustness is often treated as an afterthought, leaving systems vulnerable to external adversaries and internal failures. We propose AutoRAS, a framework for the Automated design of Robust Agentic Systems. AutoRAS formulates system design as generating a sequence of symbolic primitives that jointly encode structural connectivity and behavioral actions, and learns to optimize this sequence using execution-derived safety signals and flow-based sequence-level objectives. Extensive experiments show that AutoRAS achieves the best performance in both vanilla and adversarial settings, with the smallest performance degradation under attacks. Further analyses demonstrate strong transferability, stable optimization behavior, stability across primitive sets, and favorable cost trade-offs. Our code is available at $\\href{https://github.com/guohezuy/AutoRAS}{\\text{this https URL}}$.",
+      "authors": [
+        "Yang Yue",
+        "Xuancheng Zhu",
+        "Yuyang Ma",
+        "Guoshun Nan",
+        "Zihan Dou",
+        "Jingru Shan",
+        "Congyu Guo",
+        "Ji Zhang",
+        "Hua Wang",
+        "Jingfeng Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-19T14:05:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.21445v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "automated design of robust multi-agent workflows",
+      "llm_evidence_cn": "自动化设计鲁棒多智能体工作流",
+      "llm_evidence": "自动化设计鲁棒多智能体工作流",
+      "canonical_evidence": "自动化设计鲁棒多智能体工作流",
+      "llm_tldr_en": "Proposes AutoRAS for automated design of robust agentic systems by learning symbolic primitives that encode structure and behavior, using safety signals and flow-based objectives.",
+      "llm_tldr_cn": "该论文针对多智能体系统鲁棒性不足的问题，提出AutoRAS框架，将系统设计转化为符号原语序列优化，利用执行安全信号和序列级目标学习鲁棒的结构和行为，实验证明在多种任务上提升了系统鲁棒性，为自动化构建可靠多智能体系统提供了通用方法。",
+      "llm_tldr": "该论文针对多智能体系统鲁棒性不足的问题，提出AutoRAS框架，将系统设计转化为符号原语序列优化，利用执行安全信号和序列级目标学习鲁棒的结构和行为，实验证明在多种任务上提升了系统鲁棒性，为自动化构建可靠多智能体系统提供了通用方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.23026v1",
+      "source": "arxiv",
+      "title": "A Stackelberg Framework for Resource-Aware LLM Agents: Learning, Repair, and Conditional Guarantees",
+      "abstract": "Large language model (LLM) agents increasingly operate as multi-turn systems that must allocate context, prompt verbosity, and tool access under finite computational budgets. Static thresholds are simple, but they are brittle under heterogeneous tasks and evolving session states. We formulate resource governance as a contextual Stackelberg game: a controller commits to a quality target and a cost incentive, while an executor responds with resource actions over context, prompting, and tool usage. We learn a conditional response model, optimize a leader policy against that model, and repair the resulting policy using real-API calibration and projection onto an empirically selected action set. For the restricted game, we establish conditional guarantees for equilibrium existence, follower-response stability, safe-set projection, and transfer from a surrogate environment to the real environment under bounded value error. The primary real-API experiment comprises 300 evaluated turns. Relative to a conservative baseline, the selected repaired controller reduces mean token cost by 17.4% (Welch $p=0.022$), while the measured quality difference is not statistically significant ($p=0.44$). The theoretical results are conditional and the experiments do not estimate their regret or transfer constants; consequently, the evidence establishes a promising repaired operating point, not a certified real-system equilibrium.",
+      "authors": [
+        "Baoxun Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-22T08:38:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.23026v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "resource-aware LLM agents for mobile-like constraints",
+      "llm_evidence_cn": "面向移动端资源约束的LLM智能体管理",
+      "llm_evidence": "面向移动端资源约束的LLM智能体管理",
+      "canonical_evidence": "面向移动端资源约束的LLM智能体管理",
+      "llm_tldr_en": "Formulates resource governance in LLM agents as a Stackelberg game, learning a policy for context, prompting, and tool usage under budget constraints.",
+      "llm_tldr_cn": "该论文针对LLM智能体在有限计算预算下的资源分配问题，提出基于Stackelberg博弈的治理框架：控制器承诺质量目标和成本激励，执行器回应资源动作，通过条件响应模型学习和策略修复实现自适应管理，实验在异构任务上展示优于静态阈值的效率，为移动或边缘环境中的智能体部署提供了轻量级资源管理方案。",
+      "llm_tldr": "该论文针对LLM智能体在有限计算预算下的资源分配问题，提出基于Stackelberg博弈的治理框架：控制器承诺质量目标和成本激励，执行器回应资源动作，通过条件响应模型学习和策略修复实现自适应管理，实验在异构任务上展示优于静态阈值的效率，为移动或边缘环境中的智能体部署提供了轻量级资源管理方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25389v1",
+      "source": "arxiv",
+      "title": "Offline Multi-agent Continual Cooperation via Skill Partition and Reuse",
+      "abstract": "Extracting skills from multi-agent offline dataset improves learning efficiency via sharing task-invariant coordination skills among tasks. In settings where tasks occur sequentially and the space of skills grows exponentially, existing approaches that rely on heuristically designed and fixed-sized skill libraries struggle to resolve the problem of distributional shift and interference, facing catastrophic forgetting and plasticity loss. To address this problem and endow agents with the ability to continually discover and reuse coordination skills in open-environment, we propose COMAD, a principled framework for Continual Offline Multi-agent Skill Discovery via Skill Partition and Reuse. We first discover skills from mixed multi-agent behavior data with an auto-encoder to transform coordination knowledge into reusable coordination skills. Then we construct a skill-augmented policy learning objective with multi-head architectures, explicitly guiding the advantage function with reusable skills identified via a density-based reusability estimator. Theoretical analysis shows our method approximates the optimum of a continual skill discovery problem. Empirical results across diverse MARL benchmarks show that COMAD continually expands its skill library to mitigate interference, achieving superior forward and backward transfer for task streams compared to multiple baselines.",
+      "authors": [
+        "Yuchen Xiao",
+        "Lei Yuan",
+        "Ruiqi Xue",
+        "Tieyue Yin",
+        "Yang Yu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-24T04:40:21+00:00",
+      "link": "https://arxiv.org/pdf/2606.25389v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Multi-agent continual cooperation via skill partition and reuse",
+      "llm_evidence_cn": "多智能体持续协作与技能重用",
+      "llm_evidence": "多智能体持续协作与技能重用",
+      "canonical_evidence": "多智能体持续协作与技能重用",
+      "llm_tldr_en": "Proposes COMAD framework for offline multi-agent continual skill discovery and reuse to address catastrophic forgetting and plasticity loss in sequential tasks.",
+      "llm_tldr_cn": "针对多智能体离线数据中技能发现与重用的问题，提出COMAD框架，通过技能划分与重用在持续任务序列中缓解灾难性遗忘和塑性损失。实验表明该方法能有效共享跨任务不变的协调技能，提升学习效率。",
+      "llm_tldr": "针对多智能体离线数据中技能发现与重用的问题，提出COMAD框架，通过技能划分与重用在持续任务序列中缓解灾难性遗忘和塑性损失。实验表明该方法能有效共享跨任务不变的协调技能，提升学习效率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

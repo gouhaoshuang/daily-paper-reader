@@ -6,31 +6,37 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-25
-- 运行时间：2026-06-25 20:42:44 UTC
+- 最新运行日期：2026-06-26
+- 运行时间：2026-06-26 21:45:07 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：0
-- 速读区：2
+- 本次总论文数：5
+- 精读区：1
+- 速读区：4
 
 ### 今日简报（AI）
-今天速读了两篇论文，分别关注混合智能体记忆推理扩展和边缘云延迟感知服务放置。
-
-最值得关注的是《ReM-MoA》提出的记忆机制如何支撑混合智能体规模化，以及《Latency-Aware Service Placement》用神经组合优化器解决边缘系统延迟问题。
-
-建议普通读者优先精读《ReM-MoA》了解智能体协作的持久记忆设计，或结合自身场景尝试边缘优化中的图网络方法。
-- 详情：[/202606/25/README](/202606/25/README)
+今日聚焦长篇视频理解与多智能体协作，精选5篇论文，其中边缘-云协同框架《CoVStream》获9.0高分。  
+核心看点：边缘-云联合分析长视频流应对实时需求，多智能体LLM的上下文漂移与资源感知策略也值得细读。  
+建议关注边缘-云技术的工程落地，同时梳理多智能体系统中的同步协议与资源分配方案。
+- 详情：[/202606/26/README](/202606/26/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [CoVStream: Edge-Cloud Collaboration for Understanding of Long Video Streams](/202606/26/2606.22804v2-covstream-edge-cloud-collaboration-for-understanding-of-long-video-streams)  
+   标签：评分：9.0/10、query:eca
+   evidence：边缘云协作框架
 
 ### 速读区论文标签
-1. [ReM-MoA: Reasoning Memory Sustains Mixture-of-Agents Scaling](/202606/25/2606.24437v1-rem-moa-reasoning-memory-sustains-mixture-of-agents-scaling)  
+1. [Hallucination as Context Drift: Synchronization Protocols for Multi-Agent LLM Systems](/202606/26/2606.21666v1-hallucination-as-context-drift-synchronization-protocols-for-multi-agent-llm-systems)  
    标签：评分：7.0/10、query:eca
-   evidence：通过记忆增强的混合智能体框架提升多层推理流水线中的协作效果
-2. [Latency-Aware Service Placement using Neural Combinatorial Optimisers for Edge--Cloud Systems](/202606/25/2606.25553v1-latency-aware-service-placement-using-neural-combinatorial-optimisers-for-edge--cloud-systems)  
+   evidence：多智能体协作中的上下文漂移同步
+2. [A Stackelberg Framework for Resource-Aware LLM Agents: Learning, Repair, and Conditional Guarantees](/202606/26/2606.23026v1-a-stackelberg-framework-for-resource-aware-llm-agents-learning-repair-and-conditional-guarantees)  
    标签：评分：7.0/10、query:eca
-   evidence：边缘-云系统延迟感知服务放置
+   evidence：面向移动端资源约束的LLM智能体管理
+3. [Offline Multi-agent Continual Cooperation via Skill Partition and Reuse](/202606/26/2606.25389v1-offline-multi-agent-continual-cooperation-via-skill-partition-and-reuse)  
+   标签：评分：7.0/10、query:eca
+   evidence：多智能体持续协作与技能重用
+4. [AutoRAS: Learning Robust Agentic Systems with Primitive Representations](/202606/26/2606.21445v1-autoras-learning-robust-agentic-systems-with-primitive-representations)  
+   标签：评分：6.0/10、query:eca
+   evidence：自动化设计鲁棒多智能体工作流
 
 
 <div class="dpr-home-promo-card">
