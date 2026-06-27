@@ -6,37 +6,30 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-26
-- 运行时间：2026-06-26 21:45:07 UTC
+- 最新运行日期：2026-06-27
+- 运行时间：2026-06-27 20:26:47 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：1
-- 速读区：4
+- 本次总论文数：3
+- 精读区：0
+- 速读区：3
 
 ### 今日简报（AI）
-今日聚焦长篇视频理解与多智能体协作，精选5篇论文，其中边缘-云协同框架《CoVStream》获9.0高分。  
-核心看点：边缘-云联合分析长视频流应对实时需求，多智能体LLM的上下文漂移与资源感知策略也值得细读。  
-建议关注边缘-云技术的工程落地，同时梳理多智能体系统中的同步协议与资源分配方案。
-- 详情：[/202606/26/README](/202606/26/README)
+今日聚焦三篇智能体研究论文，分别涉及低延迟调度、交互协议编程与操作系统级智能体框架。最值得关注的是《SwarmX》和《Kiko》两篇（均7.0分），前者解决智能体系统的实时调度优化，后者探索用编程语言定义智能体间交互规范。建议普通读者优先阅读这两篇，了解当前智能体系统在延迟控制和协议化交互上的前沿思路。
+- 详情：[/202606/27/README](/202606/27/README)
 
 ### 精读区论文标签
-1. [CoVStream: Edge-Cloud Collaboration for Understanding of Long Video Streams](/202606/26/2606.22804v2-covstream-edge-cloud-collaboration-for-understanding-of-long-video-streams)  
-   标签：评分：9.0/10、query:eca
-   evidence：边缘云协作框架
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Hallucination as Context Drift: Synchronization Protocols for Multi-Agent LLM Systems](/202606/26/2606.21666v1-hallucination-as-context-drift-synchronization-protocols-for-multi-agent-llm-systems)  
+1. [SwarmX: Agentic Scheduling for Low-Latency Agentic Systems](/202606/27/2606.21401v1-swarmx-agentic-scheduling-for-low-latency-agentic-systems)  
    标签：评分：7.0/10、query:eca
-   evidence：多智能体协作中的上下文漂移同步
-2. [A Stackelberg Framework for Resource-Aware LLM Agents: Learning, Repair, and Conditional Guarantees](/202606/26/2606.23026v1-a-stackelberg-framework-for-resource-aware-llm-agents-learning-repair-and-conditional-guarantees)  
+   evidence：面向低延迟边缘云系统的智能体调度
+2. [Kiko: Programming Agents to Enact Interaction Protocols](/202606/27/2606.26156v1-kiko-programming-agents-to-enact-interaction-protocols)  
    标签：评分：7.0/10、query:eca
-   evidence：面向移动端资源约束的LLM智能体管理
-3. [Offline Multi-agent Continual Cooperation via Skill Partition and Reuse](/202606/26/2606.25389v1-offline-multi-agent-continual-cooperation-via-skill-partition-and-reuse)  
-   标签：评分：7.0/10、query:eca
-   evidence：多智能体持续协作与技能重用
-4. [AutoRAS: Learning Robust Agentic Systems with Primitive Representations](/202606/26/2606.21445v1-autoras-learning-robust-agentic-systems-with-primitive-representations)  
+   evidence：多智能体协作协议编程模型
+3. [AOHP: An Open-Source OS-Level Agent Harness for Personalized, Efficient and Secure Interaction](/202606/27/2606.23449v1-aohp-an-open-source-os-level-agent-harness-for-personalized-efficient-and-secure-interaction)  
    标签：评分：6.0/10、query:eca
-   evidence：自动化设计鲁棒多智能体工作流
+   evidence：面向Android的开源操作系统级智能体框架
 
 
 <div class="dpr-home-promo-card">

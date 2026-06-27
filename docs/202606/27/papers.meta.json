@@ -1,0 +1,54 @@
+{
+  "label": "2026-06-27",
+  "date": "2026-06-27",
+  "generated_at": "2026-06-27T20:26:53",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202606/27/2606.21401v1-swarmx-agentic-scheduling-for-low-latency-agentic-systems",
+      "section": "quick",
+      "title_en": "SwarmX: Agentic Scheduling for Low-Latency Agentic Systems",
+      "authors": "Yeqi Huang, Yanwei Ye, Guomin Chen, Wenhao Su, Bin Gong, Jialian Li, Zhan Lu, Yangshen Deng, Xuan Sun, Le Xu, Luo Mai",
+      "date": "2026-06-19",
+      "pdf": "https://arxiv.org/pdf/2606.21401v1",
+      "score": "7.0",
+      "evidence": "面向低延迟边缘云系统的智能体调度",
+      "tldr": "Agentic AI应用的多步推理和工具调用带来复杂调度挑战，其延迟高度依赖提示语义，传统调度器无法应对。本文提出SwarmX，采用调度特定神经预测器捕获提示、设备、运行时等特征，并将其分布预测集成到路由和缩放组件，实现尾延迟感知调度。在近千GPU集群和128GPU测试平台上，与最先进调度器相比，尾延迟降低高达61.5%，相同SLO下吞吐量提升2倍。SwarmX是首个为代理工作流设计的低延迟调度系统，显著提升系统效率。",
+      "tags": "query:eca",
+      "abstract_en": "Agentic AI applications compose multiple model calls and tool executions, creating new scheduling challenges for GPU-CPU clusters. Their inference time and model-call structure often depend on prompt semantics, making conventional scheduling approaches ineffective for low-latency serving. This paper presents SwarmX, a system that implements agentic scheduling for low-latency agentic applications. SwarmX uses scheduling-specific neural predictors to capture prompt, device, runtime, and target-model features; exposes distributional predictions to routers and scalers for tail-aware decisions; and provides mechanisms for predictor training and online adaptation. These predictors and mechanisms are integrated into a scheduler-agent framework that provides a common substrate for integration with existing scheduling and model-serving infrastructure. We evaluate SwarmX using production deployment (nearly one thousand GPUs and one million CPU cores) and controlled experiments on a 128-GPU testbed. Across multi-agent code generation, deep research, and multimodal agentic workflows, SwarmX reduces tail latency by up to 61.5% compared to state-of-the-art schedulers and sustains up to 2x the throughput of production schedulers under the same SLO.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/27/2606.26156v1-kiko-programming-agents-to-enact-interaction-protocols",
+      "section": "quick",
+      "title_en": "Kiko: Programming Agents to Enact Interaction Protocols",
+      "authors": "Samuel H. Christie, Munindar P. Singh, Amit K. Chopra",
+      "date": "2026-06-23",
+      "pdf": "https://arxiv.org/pdf/2606.26156v1",
+      "score": "7.0",
+      "evidence": "多智能体协作协议编程模型",
+      "tldr": "多智能体系统需要基于协议交互并去中心化决策，但现有编程模型缺乏对决策的充分抽象。Kiko提出基于协议的编程模型，通过决策者组件让程序员从有效决策集中选择并发送兼容消息。该模型完全抽象底层通信服务，支持实用决策模式，使开发者专注业务逻辑。提供操作语义证明Kiko智能体协议兼容且能实现任意协议执行。",
+      "tags": "query:eca",
+      "abstract_en": "Realizing a multiagent system involves implementing member agents who interact based on a protocol while making decisions in a decentralized manner. Current programming models for agents offer poor abstractions for decision making and fail to adequately bridge an agent's internal decision logic with its public decisions.   We present Kiko, a protocol-based programming model for agents. To implement an agent, a programmer writes one or more decision makers, each of which chooses from among a set of valid decisions and makes mutually compatible decisions on what messages to send. By completely abstracting away the underlying communication service and by supporting practical decision-making patterns, Kiko enables agent developers to focus on business logic. We provide an operational semantics for Kiko and establish that Kiko agents are protocol compliant and able to realize any protocol enactment.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/27/2606.23449v1-aohp-an-open-source-os-level-agent-harness-for-personalized-efficient-and-secure-interaction",
+      "section": "quick",
+      "title_en": "AOHP: An Open-Source OS-Level Agent Harness for Personalized, Efficient and Secure Interaction",
+      "authors": "Shanhui Zhao, Jiacheng Liu, Guohong Liu, Jichao Yan, Jialei Ye, Yuhao Yang, Hao Wen, Shizuo Tian, Yizhen Yuan, Yuxuan Chen, Yunxin Liu, Ju Ren, Ya-Qin Zhang, Chao Huang, Yao Guo, Yuanchun Li",
+      "date": "2026-06-22",
+      "pdf": "https://arxiv.org/pdf/2606.23449v1",
+      "score": "6.0",
+      "evidence": "面向Android的开源操作系统级智能体框架",
+      "tldr": "现有操作系统以应用为中心，缺乏对AI agent的原生支持，导致执行开销和安全风险。AOHP作为开源OS级agent harness，基于AOSP将agent视为一等公民，引入个性化服务组合、高效接口和安全信息流机制。实验表明，在关键任务中任务完成率提升21.12%，token成本降低51.55%，安全合规性增强。该工作为agent原生OS提供了开放测试床，推动高效安全的人机交互新范式。",
+      "tags": "query:eca",
+      "abstract_en": "AI agents are driving a new software paradigm, with the ability to autonomously call tools, extract information, manage memory, and complete tasks that span applications and data sources. Most existing end-user operating systems, however, are designed for application-centric workflows and offer little native support for AI agents. This mismatch limits the wider adoption of agents and leads to execution overhead and safety risks when running agents on conventional systems. While the concept of agent-native operating systems is emerging, the research community lacks an open testbed to explore the architectural primitives desired for agent-mediated interaction. We present AOHP (Android Open Harness Project), an OS-level agent harness built on the Android Open Source Project (AOSP). The core design principle of AOHP is to treat agents as first-class OS actors, enabling adaptive user interfaces and agent-friendly runtime environments. AOHP preserves the mature Android software and hardware ecosystem while introducing three agent-oriented system mechanisms: personalized service composition, efficient agent interfaces, and secure information flow. Based on preliminary experiments on challenging tasks covering key capabilities of OS agents, AOHP shows clear advantages in task completion (+21.12% completion rate), execution cost (-51.55% token cost), and security-policy compliance.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
