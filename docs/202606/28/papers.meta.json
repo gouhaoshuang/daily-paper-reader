@@ -1,0 +1,69 @@
+{
+  "label": "2026-06-28",
+  "date": "2026-06-28",
+  "generated_at": "2026-06-28T21:10:27",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202606/28/2606.25514v1-unlocking-model-potentials-through-adaptive-multi-agent-scaffolding-for-efficient-issue-resolution",
+      "section": "quick",
+      "title_en": "Unlocking Model Potentials Through Adaptive Multi-Agent Scaffolding for Efficient Issue Resolution",
+      "authors": "Yang Chen, Aliya Ahmad, Yiheng Zhou, Reyhaneh Jabbarvand",
+      "date": "2026-06-24",
+      "pdf": "https://arxiv.org/pdf/2606.25514v1",
+      "score": "7.0",
+      "evidence": "去中心化多智能体协作问题解决",
+      "tldr": "解决复杂软件问题需要长程工作流，但现有共享上下文易导致信息退化和中毒。本文提出icat-agent，一种去中心化多智能体框架，采用事件驱动消息传递替代共享上下文，并根据问题质量自适应调整流程。在SWE-bench测试中，icat-agent一致优于多个基线，提升3.6-18.5%的同时降低平均成本1.18美元。该工作证明了稳健的智能体框架能显著释放固定模型的潜在能力，结合最强模型在SWE-bench Pro上达到67.4%，刷新最佳纪录。",
+      "tags": "query:eca",
+      "abstract_en": "Resolving issues with ambiguous and incomplete descriptions, particularly concerning complex bugs, requires a sophisticated, long-horizon workflow. Agents must navigate codebases to locate the root cause, reproduce the failure, implement a fix, and validate the resulting patch. Inefficient context management, thereby, can lead to rapid context degradation and context poisoning, preventing successful resolution. We propose icat-agent, a decentralized, multi-agent scaffolding that replaces shared context with synchronous, event-based message passing. Utilizing a rubric-based issue quality check, icat-agent strategically pivots its workflow: it initiates parallel patching and validation for well-defined issues, while deploying preliminary exploration for low-quality ones. A comprehensive evaluation of icat-agent on SWE-bench Verified and SWE-bench Pro demonstrates that it consistently outperforms prominent baselines across all difficulty levels, including SWE-agent, mini-SWE-agent, and Claude Code, while using the same underlying models, improving by 3.6-8.4% on SWE-bench Verified and 6.3-18.5% on SWE-bench Pro. icat-agent is also computationally efficient, reducing the average cost by $1.18 per instance compared with the multi-agent Claude Code baseline. Our findings reveal that a robust scaffold such as icat-agent unlocks substantial latent capability within a fixed model, with the same backbone resolving markedly more issues under icat-agent than under existing scaffolds. icat-agent +GPT-5.4-xhigh resolves 67.4% of SWE-bench Pro problems, outperforming the current best result on SWE-bench Pro (59.10%, mini-SWE-agent+GPT-5.4-xhigh) by 8.3 percentage points.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/28/2606.27233v1-bridging-talk-and-thought-understanding-dialogue-dynamics-across-collaborative-problem-solving-contexts",
+      "section": "quick",
+      "title_en": "Bridging Talk and Thought: Understanding Dialogue Dynamics Across Collaborative Problem-Solving Contexts",
+      "authors": "Zhengyuan Liu, Stella Xin Yin, Min-Yen Kan, Nancy F. Chen",
+      "date": "2026-06-25",
+      "pdf": "https://arxiv.org/pdf/2606.27233v1",
+      "score": "7.0",
+      "evidence": "协作问题解决中的对话分析",
+      "tldr": "在协作问题解决中，人机与多智能体对话的动态理解至关重要。现有分析方法存在局限，我们提出一个概念框架，采用分层两层编码方案，整合认知/非认知问题解决与元认知调节机制。在九个跨领域数据集上验证，发现元认知调节是区分深度协作的关键因素。该框架为优化协作伙伴关系提供了新视角。",
+      "tags": "query:eca",
+      "abstract_en": "We present a conceptual framework for analyzing dialogue in collaborative problem-solving contexts, with an emphasis on the emerging dynamics of human-AI and multi-agent collaboration. As intelligent systems become active agents capable of autonomous reasoning and strategic cooperation, understanding the dialogic interaction during collaborative problem solving is increasingly important for optimizing and evaluating such partnerships. Our framework addresses key limitations in current analytical approaches through a hierarchical two-layer coding scheme that integrates cognitive and non-cognitive problem solving with metacognitive regulatory mechanisms. We demonstrate its effectiveness and generalizability across nine datasets spanning multiple domains, and provide insights into how humans and agents coordinate their knowledge, skills, and efforts to solve complex problems, showing in particular that metacognitive regulation can be an essential discriminator of deeper collaboration.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/28/2606.21955v1-from-ran-control-to-agentic-intelligence-architecture-and-vision-for-energy-efficient-ai-ran",
+      "section": "quick",
+      "title_en": "From RAN Control to Agentic Intelligence: Architecture and Vision for Energy Efficient AI-RAN",
+      "authors": "Sabrine Aroua, Alexis I. Aravanis, Ilias Chatzistefanidis, Hamza Abbar, Anh-Khoa Dang, Anastasios Giovanidis, Salah-Eddine El Ayoubi, Stephane Senecal, Martha Vlachou Konchylaki, Navid Nikaein",
+      "date": "2026-06-20",
+      "pdf": "https://arxiv.org/pdf/2606.21955v1",
+      "score": "6.0",
+      "evidence": "分布式AI原生RAN边缘架构",
+      "tldr": "未来6G分布式AI原生RAN面临严峻能耗挑战，现有O-RAN策略驱动缺乏自适应节能协调，AI-RAN也缺乏高效编排机制。本文提出代理AI原生RAN架构，利用语义意图抽象和LLM驱动协调实现自适应编排与冲突解决。通过AI-for-RAN和AI-on-RAN用例展示资源效率提升和能耗显著降低。该架构为可持续6G网络铺平了道路。",
+      "tags": "query:eca",
+      "abstract_en": "Future 6G networks will rely on highly distributed, AI-native Radio Access Networks (RANs), where communication and AI workloads share a common infrastructure. This evolution, combined with increasing deployment density and continuous AI processing, is expected to significantly increase RAN energy consumption. While Open RAN (O-RAN) introduces a programmable and modular control framework through the RAN Intelligent Controller (RIC) and Service Management and Orchestration (SMO), current approaches remain largely policy-driven, limiting adaptive energy-aware coordination across multiple applications. In parallel, AI-RAN promotes the convergence of AI and RAN infrastructures through AI-for-RAN, AI-on-RAN, and AI-and-RAN paradigms, yet efficient mechanisms to jointly orchestrate performance, latency, and energy remain an open challenge. This article proposes an agentic AI-native RAN architecture that bridges O-RAN's structured control with AI-RAN's unified vision. Leveraging semantic intent abstraction and Large Language Model (LLM)-driven coordination, the framework enables adaptive orchestration, conflict resolution, and energy-aware multi-objective optimization across heterogeneous workloads. Through representative AI-for-RAN and AI-on-RAN use cases, we show how such coordination can improve resource efficiency and reduce operational energy consumption, paving the way toward sustainable 6G networks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/28/2606.23017v3-nautilus-a-verifiable-hierarchical-federated-learning-framework-for-vehicular-edge-cloud-systems",
+      "section": "quick",
+      "title_en": "Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems",
+      "authors": "Linyang Wu, Linpeng Jia, Hanwen Zhang, Tiantian Duan, Yi Sun",
+      "date": "2026-06-22",
+      "pdf": "https://arxiv.org/pdf/2606.23017v3",
+      "score": "6.0",
+      "evidence": "边缘云协作的联邦学习框架",
+      "tldr": "车联网联邦学习面临资源极端异构和动态调度带来的信任问题。Nautilus框架通过多维资源感知调度算法动态分配压缩比与训练任务，并引入零知识证明机制确保调度公平与执行合规。实验表明该方法降低了通信开销并加速收敛，同时保证了系统完整性。该工作为异构边缘-云协同学习提供了隐私保护下的可验证解决方案。",
+      "tags": "query:eca",
+      "abstract_en": "Federated Learning (FL) enables privacy-preserving collaborative learning for Internet of Vehicles (IoV) scenarios, but extreme heterogeneity of vehicular-edge-cloud resources severely limits system efficiency. Dynamic scheduling strategies mitigate this issue but introduce new trust concerns: verifying fair scheduling decisions and faithful client execution of compression instructions without privacy leakage remains an open challenge. We propose Nautilus, a verifiable efficient federated learning framework. First, a multi-dimensional resource-aware scheduling algorithm dynamically allocates compression ratios and training tasks based on vehicle bandwidth, latency and computing power, improving training efficiency. Second, a Zero-Knowledge Proof (ZKP) mechanism ensures scheduling fairness and execution compliance while preserving privacy. Experiments show the framework reduces communication overhead and accelerates convergence with guaranteed system integrity.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

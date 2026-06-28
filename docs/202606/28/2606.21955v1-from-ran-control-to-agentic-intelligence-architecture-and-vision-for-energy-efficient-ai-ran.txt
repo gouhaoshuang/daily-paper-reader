@@ -1,0 +1,349 @@
+Title: From RAN Control to Agentic Intelligence: Architecture and Vision for Energy Efficient AI-RAN
+
+URL Source: https://arxiv.org/pdf/2606.21955v1
+
+Published Time: Tue, 23 Jun 2026 01:35:01 GMT
+
+Number of Pages: 9
+
+Markdown Content:
+> 1
+
+# From RAN Control to Agentic Intelligence: Architecture and Vision for Energy Efficient AI-RAN 
+
+Sabrine Aroua ∗, Alexis I. Aravanis †, Ilias Chatzistefanidis ‡, Hamza Abbar §† , Anh-Khoa Dang ∗, Anastasios Giovanidis ∗, Salah-Eddine El Ayoubi †, Stephane Senecal §, Martha Vlachou Konchylaki ∗, Navid Nikaein ‡∗ Ericsson Research, France 
+
+† Laboratory of Signals and Systems (L2S), Universite Paris-Saclay, CentraleSupelec, CNRS, France 
+
+‡ BubbleRAN, France 
+
+§ Orange Innovation, France 
+
+Abstract —Future 6G networks will rely on highly distributed, AI-native Radio Access Networks (RANs), where communica-tion and AI workloads share a common infrastructure. This evolution, combined with increasing deployment density and continuous AI processing, is expected to significantly increase RAN energy consumption. While Open RAN (O-RAN) introduces a programmable and modular control framework through the RAN Intelligent Controller (RIC) and Service Management and Orchestration (SMO), current approaches remain largely policy-driven, limiting adaptive energy-aware coordination across mul-tiple applications. In parallel, AI-RAN promotes the convergence of AI and RAN infrastructures through AI-for-RAN, AI-on-RAN, and AI-and-RAN paradigms, yet efficient mechanisms to jointly orchestrate performance, latency, and energy remain an open challenge. This article proposes an agentic AI-native RAN architecture that bridges O-RAN’s structured control with AI-RAN’s unified vision. Leveraging semantic intent abstraction and Large Language Model (LLM)-driven coordination, the frame-work enables adaptive orchestration, conflict resolution, and energy-aware multi-objective optimization across heterogeneous workloads. Through representative AI-for-RAN and AI-on-RAN use cases, we show how such coordination can improve resource efficiency and reduce operational energy consumption, paving the way toward sustainable 6G networks. 
+
+I. I NTRODUCTION 
+
+The transition toward 6G is driving the convergence of communication, computing, and artificial intelligence (AI) within increasingly distributed radio access networks (RANs) [1]. Beyond connectivity, future networks are expected to in-herently support AI-driven optimization and edge intelligence, leveraging shared cloud-native infrastructures that tightly in-tegrate radio and compute resources. This evolution is shaped by two complementary architec-tural visions. The first is O-RAN, which promotes openness and modularity through the disaggregation of RAN functions and standardized interfaces [2]. The second is AI-RAN, which pushes this evolution further by embedding AI as an integral network capability, enabling tighter integration between com-munication and computing functionalities [3]. Despite their different design philosophies, both paradigms expose two fundamental challenges for future AI-native RAN systems. The first is orchestration complexity, arising from the increasing distribution and heterogeneity of control and workload entities. In O-RAN, intelligence is fragmented across rApps and xApps operating over distinct control loops, often with limited global visibility, which may result in suboptimal or even conflicting decisions. In AI-RAN, the convergence of communication and AI workloads introduces deep coupling between radio and compute resources, significantly increasing system interdependencies. As a result, coordinating network behavior across multiple layers, objectives, and timescales becomes substantially more complex, requiring new forms of global and adaptive orchestration [4]. The second challenge is energy efficiency, which is rapidly becoming a defining constraint for future RAN design. Today, the RAN already accounts for nearly 70–80% of total mobile network energy consumption [5], and this share is expected to grow further with the increasing presence of AI workloads at the edge. Consequently, energy is no longer a secondary optimization metric but a first-class design objective that must be jointly considered with performance, latency, and scalability. Addressing these challenges requires a shift from static policy-based control toward semantic and intent-driven orches-tration capable of jointly managing communication, computa-tion, and energy resources. In future AI-native RANs, opera-tors will increasingly express objectives at a high level, such as minimizing energy consumption, prioritizing specific AI services, or enforcing sustainability policies, while expecting the network to autonomously determine the appropriate control actions. Such requirements become even more critical in AI-RAN environments, where resources must be dynamically shared between traditional communication services and AI workloads executing on the RAN infrastructure. Intent-driven networking offers a promising abstraction to bridge this gap. Rather than directly configuring net-work parameters, operators and service providers can ex-press desired outcomes through semantic intents and Service Level Agreements (SLAs). Beyond conventional performance-oriented SLAs, future networks may introduce sustainability-
+
+> arXiv:2606.21955v1 [cs.NI] 20 Jun 2026 2
+
+aware service models, such as ”Green” SLAs, where users voluntarily accept bounded QoS degradation during critical energy-saving periods [6]. Similarly, AI-centric SLAs may define resource prioritization policies for latency-sensitive AI applications deployed on the RAN infrastructure. These semantic abstractions provide a common language through which heterogeneous objectives can be translated into network actions. Transforming high-level intents into coordinated network behavior remains challenging in highly distributed and dy-namic environments. Recent advances in Large Language Models (LLMs) provide new opportunities to address this challenge. Beyond natural language understanding, LLMs are capable of interpreting semantic objectives, identifying suitable control strategies, coordinating distributed network functions, and adapting decisions based on evolving opera-tional conditions [7]. When combined with autonomous agents and digital twins, LLMs can enable closed-loop orchestration mechanisms that continuously optimize network operation while minimizing deployment risks. Importantly for operators, LLMs enable intuitive intent abstraction at the SMO level (e.g., relax QoS constraints adhering to energy-efficient ”Green” SLAs) and their translation into policies and RIC actions, while providing interpretable justifications for the resulting trade-offs, thereby strengthening trust in autonomous O-RAN control. Motivated by this vision, we propose the Energy-Aware Agentic RAN Control (E-ARC) architecture, an agentic frame-work designed to bridge the AI-for-RAN and AI-on-RAN paradigms while paving the way toward the broader AI-and-RAN vision advocated by the AI-RAN Alliance [3]. E-ARC introduces an LLM-based supervisory agent that interprets operator’s semantic intents and SLA abstractions, selects and orchestrates appropriate rApps, leverages Digital Twin agents to safely optimize their configuration prior to deployment, and continuously monitors their operational impact through autonomous lifecycle management. By jointly considering communication performance, AI workload requirements, and energy efficiency objectives, E-ARC enables coordinated op-timization across the IoT–Edge–Cloud–RAN continuum. The main contributions of this article are as follows:  
+
+> •
+
+We implement, an LLM-driven agentic architecture that leverages semantic SLA abstractions, autonomous rea-soning, Digital Twin-assisted offline parametrization, and closed-loop rApp lifecycle management to orchestrate energy-aware network behavior.  
+
+> •
+
+We present two representative use cases where rApps are deployed autonomously by the agent in the case of: AI-for-RAN, where users subscribing to Green SLAs agree to bounded QoS degradation during energy-critical periods that are identified by the operators energy saving intent; and AI-on-RAN, where the RAN is exposed as an edge computing platform, enabling joint optimization of communication and compute resources under common energy constraints that are identified by the computing platforms requirements at the launch of the latter. The remainder of this article is organized as follows. Section II reviews the evolution of intelligent RAN control through O-RAN and AI-RAN paradigms. Section III presents the proposed E-ARC architecture. Section IV details the AI-for-RAN and AI-on-RAN use cases with a focus on energy-aware service differentiation and edge AI execution. Section V concludes the article and discusses open research challenges. II. I NTELLIGENT RAN C ONTROL : O-RAN AND AI-RAN PARADIGMS 
+
+The evolution of intelligent RAN control has been largely driven by two complementary initiatives outlined in Fig. 1. O-RAN introduced disaggregated control over open, vendor in-dependent architectures, while the AI-RAN Alliance expanded this vision by promoting the convergence of communication and AI workloads on shared infrastructures. Together, these paradigms establish the technological foundations for AI-native networks, but also expose new orchestration challenges that motivate the need for semantic and autonomous control mechanisms through the use of agentic intelligence. 
+
+A. O-RAN Alliance: Programmable and Disaggregated RAN Control 
+
+Introduced by the O-RAN Alliance in 2018, the O-RAN architecture promotes an open and disaggregated RAN design in which control functions are distributed across multiple timescales [2]. Central to this architecture is the Service Man-agement and Orchestration (SMO) framework, which hosts and orchestrates two complementary control entities:  
+
+> •
+
+the Non-Real-Time RAN Intelligent Controller (Non-RT RIC) , hosted within the SMO and responsible for long-term optimization, policy management, and lifecycle or-chestration through rApps;  
+
+> •
+
+the Near-Real-Time RAN Intelligent Controller (Near-RT RIC) , deployed as a separate function closer to the RAN and orchestrated by the SMO, which enables faster control loops through xApps and directly influences radio operations such as scheduling, mobility management, and resource allocation. In this setup, rApps and xApps are developed to optimize specific objectives and interact through predefined policies under limited global coordination. As a result, system-wide optimization becomes increasingly difficult when multiple -potentially conflicting - objectives /intents, and operational constraints must be considered simultaneously. Furthermore, edge applications hosted on the RAN are interfaced to the SMO through an enrichment database, providing application-level objectives and status for each application, making the global orchestration increasingly complex. 
+
+B. AI-RAN Alliance: AI-Native Infrastructure 
+
+Building on the programmability introduced by O-RAN, the AI-RAN Alliance outlined in 2024 a new generation of infras-tructures where communication and AI services are jointly executed and orchestrated over shared resources [3]. Rather than treating AI solely as a tool for network optimization, AI-RAN positions the RAN itself as a platform capable of both 3O-RAN 
+
+(2018) 
+
+## AI-RAN 
+
+(2024) 
+
+Service Management and 
+
+Orchestration  
+
+> Non Real
+> Time RIC ...
+
+O-RAN Network Functions  
+
+> Near Real
+> Time RIC RU/DU/...
+
+Infrastructure  
+
+> O-Cloud ...
+
+Open Interfaces 
+
+> O1/A1/E2/...
+
+Management, Control, and 
+
+Orchestration  
+
+> RAN Workload
+> Orchestrator ...
+
+Workloads (AI and RAN) 
+
+> AI for RAN
+> Apps
+> AI on RAN
+> Apps
+> RU/DU/...
+
+Infrastructure  
+
+> O-Cloud ...
+
+## E-ARC 
+
+AI-RAN Agentic Controller   
+
+> Semantic Coordination Agen t:
+> 1) Flexible SLA (semantic
+> abstraction)
+> 2) Offline experimentation ( Digital
+> Twin)
+> 3) Agentic rApp deployment
+> and lifecycle management
+> (Configuration, Deployment &
+> Monitoring Agent)
+> 4) Agentic Controlled Energy
+> Efficiency
+
+## AI-RAN O-RAN 
+
+From O-RAN to AI-RAN: 
+
+Toward Energy-Aware Agentic Coordination with E-ARC 
+
+Fig. 1. E-ARC provides an agentic coordination layer building upon the O-RAN and AI-RAN architectures. O-RAN introduced disaggregated network control and AI-RAN coupled communication and AI workloads, with both generating complex coordination and energy challenges. E-ARC addresses this by integrating network telemetry and AI workload context, enabling intent-driven, predictive, and energy-aware agentic decision-making, achieving energy savings while respecting SLA defined QoS. 
+
+consuming and hosting AI services. This AI-RAN vision is commonly structured around three complementary paradigms:  
+
+> •
+
+AI-for-RAN : AI techniques are used to optimize net-work operation, including mobility management, traffic prediction, resource allocation, and energy-efficient RAN control.  
+
+> •
+
+AI-on-RAN : AI applications are deployed directly on the RAN infrastructure, transforming the network edge into a distributed computing platform capable of host-ing latency-sensitive AI services such as Generative AI, LLMs, and Vision-Language Models.  
+
+> •
+
+AI-and-RAN : ultimately, communication services and AI workloads are jointly orchestrated over shared compute and radio resources, enabling unified optimization of net-work performance, infrastructure utilization, and service delivery. Although often presented separately, these paradigms are inherently interconnected. AI-for-RAN functions consume computational resources to optimize network operation, while AI-on-RAN applications compete for the same infrastructure resources to execute AI workloads. Consequently, decisions made in one domain directly impact the other. The ultimate AI-and-RAN vision therefore requires orchestration mechanisms capable of jointly managing communication objectives, AI service requirements, and infrastructure constraints within a unified control framework. 
+
+C. Semantic Agentic RAN Orchestration 
+
+Intent-driven networking introduces an important abstrac-tion by allowing operators to express desired outcomes rather than low-level configurations [7]. Nevertheless, current intent frameworks primarily translate intents into policies and offer limited support for continuous reasoning, conflict handling, or dynamic adaptation when objectives evolve over time. Within O-RAN, programmable control through distributed rApps and xApps has demonstrated promising gains in traffic management, resource allocation, and network automation [8]. Nevertheless, coordination across applications remains largely decentralized and policy-based [9], providing limited support for coordinating multiple applications pursuing potentially conflicting objectives. As the number of deployed intelligent functions grows, managing interactions among them becomes increasingly complex. AI-RAN architectures further increase this complexity by introducing AI workloads as first-class consumers of RAN resources [10], [11]. Resource allocation decisions must now 4
+
+jointly account for communication performance, AI service re-quirements, infrastructure utilization, and energy consumption. Existing orchestration frameworks generally rely on prede-fined optimization objectives and static coordination policies, limiting their ability to adapt to highly dynamic operating conditions. Energy efficiency represents a particularly challenging ex-ample of this problem. Recent studies suggest that current networks are frequently provisioned beyond the actual Quality of Experience (QoE) requirements perceived by users [6]. This observation motivates the concept of Green SLAs, where users explicitly accept bounded QoS degradation in exchange for more sustainable network operation. At the same time, AI-on-RAN services may introduce AI-priority service agreements requiring temporary access to significant computational re-sources. Reconciling such heterogeneous objectives requires orchestration mechanisms capable of understanding intent se-mantics, evaluating system-wide trade-offs, and autonomously coordinating control actions across multiple domains. These observations reveal a fundamental gap between cur-rent O-RAN programmability and the AI-and-RAN vision pro-moted by the AI-RAN Alliance. While existing architectures provide the necessary control points, they lack a semantic coordination layer capable of jointly orchestrating AI-for-RAN and AI-on-RAN services according to high-level operational objectives. To address this gap, we introduce an agentic orchestration paradigm within the proposed E-ARC architecture, outlined in Fig. 1 and presented in the next section, in which semantic intents are interpreted by an autonomous LLM supervising agent capable of reasoning over communication requirements, AI workload demands, SLA constraints, and energy objectives. Coupled with digital twin agents for offline parametrization of rApps and dedicated agents for configuring and deploying the rApps this approach allows for autonomous deployment, optimization, and lifecycle management of RAN intelligence continuously adapting decisions based on observed network conditions. III. E NERGY -A WARE AGENTIC RAN C ONTROL (E-ARC) The Energy-Aware Agentic RAN Control (E-ARC) archi-tecture introduces a supervisory LLM agent that acts as a semantic coordination layer between operator intents, SLA abstractions, AI service requirements, and underlying RAN control functions. 
+
+A. General paradigm 
+
+The E-ARC follows the agentic graph paradigm introduced in MX-AI [12], where operator intents are handled by cooper-ating agents deployed at the SMO/R1 layer and connected to monitoring and deployment tools. In contrast to direct LLM actuation, E-ARC exposes only structured and validated actions to the agents, such as selecting an energy-efficiency rApp, configuring its meta-parameters, invoking Digital Twin validation, and preparing the final RIC-side deployment. This design also follows the symbiotic-agent principle [13], where the LLM does not replace deterministic control logic. Instead, the LLM performs semantic coordination, while external op-timizers, rApps, and Digital Twins compute or validate the concrete control actions. 
+
+B. System Architecture 
+
+As illustrated in Fig. 2, the E-ARC extends the O-RAN framework with an agentic coordination layer, residing at the SMO, composed of the Semantic Coordination (SC) agent, the Digital Twin (DT) agent, and the Configuration, Deployment and Monitoring (CDM) agent. 
+
+The LLM based SC agent: constitutes the central decision-making entity of E-ARC. Its primary responsibility is to trans-form semantic objectives into orchestration decisions, prioritiz-ing and resolving conflicts among intents to identify candidate rApps capable of achieving the desired prioritized objectives and to determine how the rApps should be combined. Instead of directly modifying network parameters, the supervisor gen-erates orchestration requests that are subsequently validated and optimized by downstream agents. 
+
+The DT Agent: is invoked by the SC agent before any rApp is deployed in the network, to evaluate its expected impact and optimal parameters. The DT reproduces the relevant network environment and executes offline experimentation to identify potential operational parameters for the selected rApp. This process enables exploration of the rApp config-uration space without risking service degradation in the live network. For each candidate deployment, the DT evaluates network performance, resource utilization, QoS indicators, and energy consumption under different parameter settings. This offline experimentation reduces significantly the risks associated with autonomous network control. The resulting configuration recommendations are returned to the LLM SC agent that subsequently forwards them to the deployment framework. 
+
+The CDM Agent: is responsible for receiving feedback from the SC agent regarding the finally selected rApps and translates these orchestration decisions into operational ac-tions. The agent configures the selected rApps according to the parameters identified by the Digital Twin and selected by the SC and deploys them through the Non-RT RIC framework. During operation, and throughout each rApp’s lifecycle it continuously monitors the behavior of each deployed rApp using network KPIs, service metrics, and energy indicators. When performance deviations or changing network conditions are detected, the agent informs the SC that triggers reconfigu-ration procedures, asking the Manager to terminate previously deployed rApps. 
+
+C. Closed-Loop Learning and Adaptation 
+
+E-ARC operates as a continuous closed-loop orchestration system that integrates a) network telemetry from the RAN infrastructure with b) system-level information and intents (provided by the operator) and c) application-level information (stored at the enrichment dataset) as illustrated in Fig. 3. Network-side telemetry inputs include metrics such as Physi-cal Resource Block (PRB) utilization, number of connected 5
+
+users, and QoS indicators, which capture traffic load and resource usage. These runtime observations collected from deployed rApps are fed back to both the DT and SC agents. The Digital Twin uses these observations to improve the fidelity of future sim-ulations, while the Semantic Coordination agent incorporates operational feedback into subsequent orchestration decisions. This feedback loop enables the architecture to continuously refine its understanding of the relationship between intents, deployed actions, and observed outcomes. In addition, application-level inputs related to workload intensity, latency requirements, and energy consumption of AI services deployed at the edge are stored at the enrichment dataset. The enrichment dataset is populated by each AI application’s controller residing at the AI factory (i.e. the GPU farm) where each AI application is running. This is a fundamental part of the E-ARC architecture, being particularly critical in AI-on-RAN scenarios, where the SC agent (residing in the SMO as shown in Fig. 2 (i.e. in the cloud)) collects each AI application’s specific information from the enrichment dataset that has been collected by the AI application controller that resides in the AI farm at the RAN edge. This allows for the SC in the cloud to collect information from all applications on the edge, along with the network telemetry info from the deployed rApps, providing a unified view of the system across communication, computation, and energy domains, as detailed in the workflow of E-ARC in Figure 3. IV. E NERGY -D RIVEN ORCHESTRATION USE CASES 
+
+To illustrate the capabilities of E-ARC, we consider two representative AI-native RAN scenarios corresponding to the emerging AI-for-RAN and AI-on-RAN paradigms. While both scenarios target energy-aware operation under QoE con-straints, they fundamentally differ in the nature of the work-loads being orchestrated and in the level of cross-domain coordination required. The presented results are obtained from sector-level carrier steering evaluation over a one-month operational trace with 15-minute orchestration intervals. The considered deployment consists of a five-carrier sector configuration, where one an-chor carrier remains continuously active to guarantee coverage, while additional carriers provide elastic capacity and can be dynamically activated or deactivated according to network conditions. See [14] and [15] for more details on the evaluation methodology. 
+
+A. AI-for-RAN: Predictive Energy-Aware Sector Steering 
+
+In the AI-for-RAN scenario, intelligence is primarily used to optimize RAN operation itself. The workload is driven by mobile traffic demand, and the orchestration objective consists of minimizing RAN energy consumption while preserving network performance and service continuity. 
+
+Example Intent: ”Reduce RAN energy consumption by more than 15% while preserving full coverage and maintaining throughput satisfaction above 95%.” 
+
+To achieve this objective, the E-ARC deploys a prediction-based sector steering rApp [14] that proactively determines RU/DU  Core CU UEs    
+
+> Near-RT RIC
+> E2
+> Non-RT RIC
+> A1
+> SMO
+> xApps xApps
+> xApps rApps
+> E-ARC Architecture
+> SC
+> CDM DT
+> Human
+> Operator
+> H2A
+> R1
+> O1
+> Agentic Coordination
+> Layer
+> Legend
+> H2A: Human to Agent
+> SC: Semantic Coordination agent
+> DT: Digital Twin
+> CDM: Configuration, Deployment & Monitoring Agent
+> Fig. 2. E-ARC in the O-RAN framework.
+
+the minimum set of carriers required to accommodate future traffic demand without violating QoS constraints, exploiting any leeway provided by Green SLA users. Instead of reacting, the rApp anticipates traffic evolution and adapts the radio configuration accordingly. Candidate orchestration strategies are evaluated prior to deployment by the SC based on the feedback of the DT. The DT simulates traffic evolution and validates network feasibility along with the impact of each sector steering strategy on energy consumption and operational KPIs. Subsequently, the SC agent selects the set of parameters and commands the CDM to configure and deploy the rApp with parameters including prediction horizons, sector load thresholds, and energy-saving aggressiveness levels. As a result, only DT validated config-urations are enforced in the live network, enabling safe and closed-loop optimization. 
+
+Performance Insights: Fig. 4 shows that the deployed AI-for-RAN rApp achieved the energy savings objective of 15% while respecting the QoS degradation objective of 95%. In particular, the configuration where traffic is steered away from sectors when the sector load over the nominal sector load Toff 
+
+drops less than 20% and is steered back to sectors when the sector load Ton is more than 30% , achieves an energy gain of 19 .61% compared to the baseline without sector steering, 6Digital Twin 
+
+> Digital Twin & Constraint validation
+
+Operator 
+
+Intent Prompt   
+
+> Goal: e.g.,Reduce RAN energy consumption while
+> preserving sector capacity and user experience.
+> Available rApps:
+> Predictive Energy-Aware Sector Steering,
+> UX-aware DRL-based rApp
+> Action: Generate an orchestration plan with
+> required inputs, outputs, and constraints.
+
+Semantic Coordination 
+
+Agent 
+
+> SC
+> DT Edge Infrastructure
+> Evaluates options, estimates energy savings
+> and KPI impact, and prepares R/X/App
+> deployment and configuration
+> CDM
+
+AI Factory 
+
+> Models, training pipelines,
+> evaluation & monitoring
+
+rApp (RIC):    
+
+> Predictive Energy-Aware Sector Steering,
+> UX-aware DRL-based rApp
+> A2A A2A
+> Intent/ LLM Path
+> Validation Path
+> Control/ Execution Path
+> Steering & support Path
+> H2A Human To agent Interface
+> A2A Agent To agent Interface
+> Legend
+
+Enrichment Dataset: 
+
+AI on RAN specifications 
+
+> Configuration, Deployment
+> & Monitoring Agent
+
+RAN Infrastructure 
+
+> H2A
+
+Fig. 3. End-to-end intent-driven orchestration for E-ARC 
+
+while maintaining full coverage and a 95 .82% QoS satisfaction with respect to throughput. 
+
+B. AI-on-RAN: QoE-Driven Orchestration for Edge AI Ser-vices 
+
+The AI-on-RAN scenario introduces a fundamentally dif-ferent orchestration challenge. Here, the RAN no longer acts solely as a communication infrastructure, but also as an edge computing platform hosting AI-native services such as XR applications, real-time inference pipelines, and interactive generative AI workloads. In this context, user demand simultaneously drives both ra-dio traffic and AI workload execution, creating strong coupling between communication load, AI inference processing, and energy consumption. 
+
+Example Intent: ”Minimize overall system energy con-sumption while preserving QoE and latency constraints for connected users and maintaining service continuity when edge AI applications are launched.” 
+
+The objective is therefore to minimize energy usage while preserving network-wide user experience, including latency and QoE guarantees for users when resource intensive AI applications are launched. Unlike AI-for-RAN, decisions must consider both network and application-level constraints. To address this challenge, E-ARC deploys a User eX-perience (UX)-aware DRL-based rApp [15] that combines RAN telemetry (e.g., PRB utilization, user distribution) with contextual information retrieved from the enrichment dataset, including AI workload characteristics, latency constraints, and QoE targets. Unlike conventional energy-saving approaches based solely on radio KPIs, the proposed rApp reasons jointly over com-munication and computation domains to determine energy-optimal operating points. Depending on system conditions, the orchestration engine may deactivate underutilized carriers, redistribute users across neighboring carriers, or adapt resource allocation policies while preserving acceptable user experience for all users. The SC agent exposes high-level intents such as QoE targets and energy-saving policies, allowing operators to dynamically tune orchestration behavior according to service priorities. Candidate actions are validated through the DT input, which 7                                   
+
+> TABLE I E-ARC INTENT -TO -ORCHESTRATION ACCURACY OVER 50 OPERATOR INTENTS . A CCURACY MEASURES WHETHER THE MODEL CORRECTLY MAPS THE OPERATOR INTENT TO THE FULL E-ARC WORKFLOW ,INCLUDING SCA ROUTING , DT/EE INVOCATION ,RAPP SELECTION ,AND VALID CONFIGURATION GENERATION .
+> Model Class Example Backend E-ARC Action Accuracy Inference Time GPU VRAM
+> Cloud LLM GPT-4.1 / GPT-4.1-mini 85–95% ∼1.0–1.1 s Cloud Large local SLM Llama/Qwen 70B-class 60–75% ∼1.5–1.8 s ∼42 GB Medium local SLM 8B-class 40–55% ∼0.35–0.7 s ∼5 GB Small local SLM 3B-class 25–40% ∼0.16–0.3 s ∼2 GB Very small local SLM 1B-class 0–15% <0.2 s ∼1–2 GB
+
+jointly evaluates network behavior and application-level per-formance and estimates the resulting QoE–energy trade-offs. Only decisions that guarantee QoE preservation for all users and satisfy application-level constraints are selected by the SC agent and applied by the CDM agent. 
+
+Performance Insights: Fig. 4 shows that the deployed UX-aware DRL rApp achieves significant energy savings while preserving the target QoE profile. With the strict UX-95 profile, where 95% of sessions must meet the QoE requirement at each interval, the system saves around 15% energy and satisfies the UX profile for 96 .5% of daily intervals. With the more relaxed UX-90 profile, energy savings increase to up to 18% , while the corresponding UX profile is satisfied for 98 .8% . In both cases, coverage satisfaction remains above 
+
+99% , demonstrating E-ARC’s ability to balance energy effi-ciency, coverage, and QoE guarantees. 
+
+C. Agentic and Digital-Twin Evaluation 
+
+We further evaluate E-ARC from an operational perspective, focusing on whether the SC agent can correctly understand operator intents and trigger the appropriate coordination work-flow. Unlike generic observability benchmarks, this evaluation targets E-ARC-specific prompts, such as reducing RAN en-ergy consumption under QoS constraints, validating candidate actions in the DT, invoking the CDM agent, and configuring the proper rApp for deployment. We use a set of 50 operator intents covering four action classes: (i) intent interpretation and constraint extraction, (ii) routing to the DT or CDM agents, (iii) rApp selection and configuration, and (iv) preparation of validated deployment actions. A response is considered correct only if the complete orchestration path is valid, including the selected agent, the selected tool, and the generated configuration fields. Therefore, the reported accuracy is stricter than simple intent classifica-tion. The results in Table I show that E-ARC benefits from capable LLMs when the intent requires multi-step reason-ing. Cloud LLMs provide the highest accuracy because they can better interpret abstract energy goals, extract constraints, and select the proper sequence of agents and tools. Large local SLMs remain useful for private deployments, but their accuracy decreases when prompts require several dependent decisions, such as configuring the rApp and deciding whether DT validation is mandatory. Medium and small SLMs are attractive in terms of latency and GPU footprint, but they require stronger templates, constrained outputs, and additional validators to avoid wrong routing or incomplete configurations. Table II summarizes the validation overhead introduced by the Digital Twin layer. The trace-driven simulator is used as a lightweight first step to explore several candidate rApp configurations, such as carrier activation thresholds, prediction horizons, and QoS limits. This stage is suitable for quickly filtering the design space before selecting a small number of promising actions. BubbleRAN MX-DT is then used as a higher-fidelity pre-deployment full-stack Digital Twin, where the selected scenario is executed on a full-stack RAN en-vironment including RIC/SMO components and service-level configurations. Although this validation requires a few minutes per scenario, parallel replicas allow multiple scenarios to be evaluated within the same time window. Therefore, the Digital Twin overhead remains acceptable for the non-real-time loop targeted by E-ARC, while providing an important safety layer before enforcing actions on the live RAN. Overall, the evaluation supports the proposed positioning of E-ARC. Agentic intelligence provides semantic understanding and cross-domain coordination, while rApps, optimizers, and Digital Twins provide deterministic execution and validation. This separation allows LLMs and SLMs to improve RAN operation without exposing the live network to unvalidated decisions. 
+
+D. Toward Unified AI-RAN Orchestration 
+
+The two use cases highlight the evolution of intelligent RAN control from network-centric optimization toward fully AI-native orchestration. In AI-for-RAN, optimization remains primarily traffic-driven and focuses on adaptive radio resource provisioning. In contrast, AI-on-RAN introduces tightly cou-pled communication and computation workloads, requiring orchestration decisions that jointly consider network state, edge AI execution, user experience, and energy consumption. Across both scenarios, E-ARC consistently enables:  
+
+> •
+
+Intent-driven orchestration through the SCA,  
+
+> •
+
+Predictive and safe validation through the Digital Twin,  
+
+> •
+
+QoE-aware energy optimization through the CDM agent. Importantly, the AI-on-RAN scenario enforces stricter con-straints, where QoE guarantees must be preserved for users while optimizing energy consumption, highlighting the need for coordinated reasoning across communication, computation, and application domains. Overall, the presented results demonstrate that E-ARC en-ables substantial energy savings (15–20%) while preserving QoE guarantees, validating its effectiveness for both network-centric and application-centric AI-native RAN deployments. 8
+
+TABLE II DIGITAL TWIN VALIDATION OPTIONS USED IN E-ARC BEFORE APPLYING ENERGY -AWARE CONTROL ACTIONS TO THE RAN. 
+
+Validation Option Role in E-ARC Typical Runtime Scalability Main Benefit 
+
+Trace-driven simulator Evaluates many candidate rApp profiles over traffic traces, includ-ing carrier ON/OFF thresholds, prediction horizons, and QoS lim-its. Seconds to minutes per batch. High; many configurations can be explored quickly. Fast design-space explo-ration. Full-stack digital twin Deploys a full-stack Digital Twin with realistic RAN, RIC/SMO, and service components. A few minutes per scenario. Parallel replicas allow several sce-narios to be validated within a few minutes. Realistic pre-deployment validation. Live RAN execution Applies only the validated config-uration through the RIC/rApp con-trol loop. Non-real-time control timescale. Limited by operational safety con-straints. Final enforcement and feedback. All ON Sector          
+
+> Ton = 30
+> Toff = 10
+> Sector
+> Ton = 30
+> Toff = 20
+> DRL
+> UX-95
+> DRL
+> UX-90
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Percentage (%)
+> Baseline
+> AI-for-RAN:
+> Predictive Energy-Aware Sector Steering
+> AI-on-RAN:
+> UX-aware DRL-based rApp
+> Energy gain Coverage satisfaction Throughput sat. UX-95 sat. UX-90 sat. 5th/95th percentile
+> 0.00
+> 16.66
+> 19.61
+> 15.01
+> 18.23
+
+Fig. 4. Representative KPI feedback from the two LLM-orchestrated energy-efficiency rApps. The All-ON configuration is used as the reference, with no energy saving. The AI-for-RAN profiles correspond to prediction-based sector steering and report energy gain, coverage satisfaction, and throughput satisfaction. The AI-on-RAN profiles correspond to the UX-aware DRL-based rApp and report energy gain, coverage satisfaction, and QoE satisfaction, where UX is used as the operational measure of QoE. The whiskers denote the 5th–95th percentile range. 
+
+V. C ONCLUSION 
+
+In this paper, we proposed a novel agentic RAN orchestra-tion framework, E-ARC, that enables the achievement of the AI-RAN vision within the O-RAN framework. Our framework inter-operates three agents, namely Semantic Coordination, Digital Twin and Configuration, Deployment & Monitoring agents. These agents interpret operator and application in-tents, select candidate rApp activation with corresponding parameters, test them offline using the DT and deploy them while continuously monitoring their performances in a closed loop. Energy management is central in this architecture, as the main operational challenge in the AI-RAN framework is to reconcile the AI-for-RAN that struggles to limit network resource activation to achieve energy conservation, and the AI-on-RAN that targets to use RAN processing resources for AI application needs, increasing the energy footprint. We illustrated through two typical AI-for-RAN and AI-on-RAN use cases, that E-ARC is able to reach in an agentic, autonomous manner the required network and AI application targets while ensuring substantial energy savings. ACKNOWLEDGMENT 
+
+This research work was supported by the French gov-ernment, in the framework of the France 2030 program (INTENTION-6G project). REFERENCES [1] N. A. Khan and S. Schmid, “Ai-ran in 6g networks: State-of-the-art and challenges,” IEEE Open Journal of the Communications Society , vol. 5, pp. 294–311, 2023. [2] O-RAN Alliance, “O-ran: Towards an open and smart ran,” O-RAN Alliance, White Paper, Oct. 2018. [3] “Ai-ran architecture overview and component definitions,” AI-RAN Alliance, White Paper. [4] “Ai-on-ran: Enabling monetizable differentiated connectivity for ai,” AI-RAN Alliance, Working Group 3 White Paper, 2025. [5] GSMA, “Mobile net zero: State of the industry on climate action 2023,” 2023. [Online]. Available: https://www.gsma.com/ betterfuture/wp-content/uploads/2023/02/Mobile-Net-Zero-%E2%80% 93-State-of-the-Industry-on-Climate-Action-2023.pdf [6] T. Hoßfeld, M. Varela, L. Skorin-Kapov, and P. E. Heegaard, “A greener experience: Trade-offs between qoe and co 2 emissions in today’s and 6g networks,” IEEE communications magazine , vol. 61, no. 9, pp. 178–184, 2023. [7] A. Mekrache, A. Ksentini, and C. Verikoukis, “Intent-based management of next-generation networks: An llm-centric approach,” Ieee Network ,vol. 38, pp. 29–36, 2024. [8] M. A. Habib, H. Zhou, P. E. Iturria-Rivera, Y. Ozcan, M. Elsayed, M. Bavand, R. Gaigalas, and M. Erol-Kantarci, “Machine learning-enabled traffic steering in o-ran: A case study on hierarchical learning approach,” IEEE Communications Magazine , vol. 63, 2025. [9] S. D’Oro, L. Bonati, M. Polese, and T. Melodia, “Orchestran: Net-work automation through orchestrated intelligence in the open ran,” in 
+
+IEEE INFOCOM 2022-IEEE Conference on Computer Communications .IEEE, 2022, pp. 270–279. [10] M. Polese, N. Mohamadi, S. D’Oro, L. Bonati, and T. Melodia, “Beyond connectivity: An open architecture for ai-ran convergence in 6g,” IEEE Communications Magazine , 2026. 9
+
+[11] S. D. A. Shah, M. A. Gregory, M. Hafeez, and S. A. R. Zaidi, “Enabling multi-operator ai-ran coexistence through federated edge orchestration,” 
+
+IEEE Communications Standards Magazine , 2026. [12] I. Chatzistefanidis, A. Leone, A. Yaghoubian, M. Irazabal, S. Nas-sim, L. Bariah, M. Debbah, and N. Nikaein, “Mx-ai: Agentic ob-servability and control platform for open and ai-ran,” arXiv preprint arXiv:2508.09197 , 2025. [13] I. Chatzistefanidis and N. Nikaein, “Symbiotic agents: A novel paradigm for trustworthy agi-driven networks,” Computer Networks , p. 111749, 2025. [14] H. Abbar, I. Hadj-Kacem, M. Drissi, and S.-E. Elayoubi, “Farsighted Carrier Shutdown: Forecast-Driven RAN Energy Control under Telemetry Lag,” in 2026 IEEE 104th Vehicular Technology Conference (VTC2026-Fall) . IEEE Vehicular Technology Society, Sep. 2026. [Online]. Available: https://hal.science/hal-05627005 [15] A.-K. Dang, H. Khalif´ e, M. Sintorn, S. Rovedakis, and S. Secci, “Data-driven energy optimization in mobile networks with user experience guarantees,” in IEEE INFOCOM 2025 - IEEE Conference on Computer Communications , 2025, pp. 1–10.
