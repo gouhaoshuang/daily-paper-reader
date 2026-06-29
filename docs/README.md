@@ -6,35 +6,34 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-28
-- 运行时间：2026-06-28 21:10:19 UTC
+- 最新运行日期：2026-06-29
+- 运行时间：2026-06-29 20:46:29 UTC
 - 运行状态：成功
-- 本次总论文数：4
+- 本次总论文数：3
 - 精读区：0
-- 速读区：4
+- 速读区：3
 
 ### 今日简报（AI）
-1) 今日推荐4篇论文，聚焦多智能体协作、对话动力学与AI-RAN架构，其中两篇收获7.0高分。  
-2) 最值得关注的方向：自适应多智能体脚手架可高效解决复杂问题；对话与思考的桥接能揭示协作问题解决中的认知动态。  
-3) 建议优先精读两篇7分论文，深入理解智能体协作与对话推理的最新突破。
-- 详情：[/202606/28/README](/202606/28/README)
+今日速读3篇论文，聚焦多智能体协同、元数据交换与人机协作可视化。
+
+其中《Data Facts》提出结构化数据交换的元数据模式，《HiLSVA》探索人机协作科学可视化，《LLawCo》建模多智能体行为规律，均值得关注。
+
+建议普通读者可从多智能体系统的元数据规范与人机交互设计入手，拓展对协同智能的理解。
+- 详情：[/202606/29/README](/202606/29/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Unlocking Model Potentials Through Adaptive Multi-Agent Scaffolding for Efficient Issue Resolution](/202606/28/2606.25514v1-unlocking-model-potentials-through-adaptive-multi-agent-scaffolding-for-efficient-issue-resolution)  
-   标签：评分：7.0/10、query:eca
-   evidence：去中心化多智能体协作问题解决
-2. [Bridging Talk and Thought: Understanding Dialogue Dynamics Across Collaborative Problem-Solving Contexts](/202606/28/2606.27233v1-bridging-talk-and-thought-understanding-dialogue-dynamics-across-collaborative-problem-solving-contexts)  
-   标签：评分：7.0/10、query:eca
-   evidence：协作问题解决中的对话分析
-3. [From RAN Control to Agentic Intelligence: Architecture and Vision for Energy Efficient AI-RAN](/202606/28/2606.21955v1-from-ran-control-to-agentic-intelligence-architecture-and-vision-for-energy-efficient-ai-ran)  
+1. [Data Facts: A Metadata Schema for Structured Data Exchange in the NANDini Multi-Agent Ecosystem](/202606/29/2606.26211v1-data-facts-a-metadata-schema-for-structured-data-exchange-in-the-nandini-multi-agent-ecosystem)  
    标签：评分：6.0/10、query:eca
-   evidence：分布式AI原生RAN边缘架构
-4. [Nautilus: A Verifiable Hierarchical Federated Learning Framework for Vehicular-Edge-Cloud Systems](/202606/28/2606.23017v3-nautilus-a-verifiable-hierarchical-federated-learning-framework-for-vehicular-edge-cloud-systems)  
+   evidence：多智能体生态系统中结构化数据交换实现高效协作
+2. [HiLSVA: Design and Evaluation of a Human-in-the-Loop Agentic System for Scientific Visualization](/202606/29/2606.26614v1-hilsva-design-and-evaluation-of-a-human-in-the-loop-agentic-system-for-scientific-visualization)  
    标签：评分：6.0/10、query:eca
-   evidence：边缘云协作的联邦学习框架
+   evidence：人机协同的多智能体协作可视化系统
+3. [LLawCo: Learning Laws of Cooperation for Modeling Embodied Multi-Agent Behavior](/202606/29/2606.28182v1-llawco-learning-laws-of-cooperation-for-modeling-embodied-multi-agent-behavior)  
+   标签：评分：6.0/10、query:eca
+   evidence：学习合作法则以对齐多智能体行为
 
 
 <div class="dpr-home-promo-card">

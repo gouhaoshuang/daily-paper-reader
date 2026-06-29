@@ -1,0 +1,138 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-29T20:45:02.035866+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.26211v1",
+      "source": "arxiv",
+      "title": "Data Facts: A Metadata Schema for Structured Data Exchange in the NANDini Multi-Agent Ecosystem",
+      "abstract": "NANDini (Networked Agents Natural Distillation of Interconnected Nodal Intelligence) envisions an automated ecosystem where intelligent agents independently create, process, and exchange data to drive decisions at scale. Realizing this vision requires infrastructure beyond agent discovery and communication: agents must be able to advertise, evaluate, and verify the datasets they hold.   Current protocols, including NANDA for federated registry and A2A and MCP for inter-agent messaging, address identity and communication but provide no mechanism for structured data exchange. Existing enterprise data-sharing frameworks, such as IDS-RAM, Gaia-X, and Ocean Protocol, assume human-in-the-loop governance that is incompatible with autonomous, real-time agent interactions.   We introduce Data Facts, a core NANDini concept: a lightweight JSON metadata schema that bridges agent discovery and data access through a single pointer, `data_facts_url`, added to an existing Agent Facts registry record. The linked document encodes dataset identity, access tier, whether public, semi-private, or private, endpoint, a time-to-live for freshness validation, and a SHA-256 integrity checksum.   For private and semi-private data, we implement a three-layer security pipeline: JWT authentication, capability-scoped gateway authorization, and an A2A credential delegation protocol. Across 840 decision-making evaluations, data-informed agents achieve 100% accuracy versus 35.2% without data access (p < 0.001); TTL enforcement reduces stale-data errors from 37.6% to 8.8%; checksum verification achieves 100% corruption detection at all injection rates; and the security pipeline blocks all 46 forgery attempts with zero data leakage.",
+      "authors": [
+        "Jin Gao",
+        "Maria Gorskikh",
+        "Pradyumna Chari",
+        "Brittany Box",
+        "Mukul Kemla",
+        "Pratik Behera",
+        "Abhishek Mehta",
+        "Ramesh Raskar"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-06-24T17:35:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.26211v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent ecosystem for structured data exchange enabling collaboration",
+      "llm_evidence_cn": "多智能体生态系统中结构化数据交换实现高效协作",
+      "llm_evidence": "多智能体生态系统中结构化数据交换实现高效协作",
+      "canonical_evidence": "多智能体生态系统中结构化数据交换实现高效协作",
+      "llm_tldr_en": "Introduces Data Facts metadata schema for structured data exchange in the NANDINI multi-agent ecosystem, enabling agents to advertise and verify datasets for autonomous collaboration.",
+      "llm_tldr_cn": "针对多智能体系统中结构化数据交换缺失的问题，提出Data Facts元数据模式，使智能体能够发布、评估和验证数据集，为自主协作提供基础设施支持，推动大规模自动化决策。",
+      "llm_tldr": "针对多智能体系统中结构化数据交换缺失的问题，提出Data Facts元数据模式，使智能体能够发布、评估和验证数据集，为自主协作提供基础设施支持，推动大规模自动化决策。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.26614v1",
+      "source": "arxiv",
+      "title": "HiLSVA: Design and Evaluation of a Human-in-the-Loop Agentic System for Scientific Visualization",
+      "abstract": "Large language model (LLM) agents enable natural language interaction for scientific visualization (SciVis). Still, prior systems have essentially prioritized autonomy over human analytical control, thereby limiting transparency and human oversight. We present HiLSVA, a human-in-the-loop agentic system that supports mixed-initiative SciVis workflows. HiLSVA integrates a plan-first multi-agent architecture with explicit human oversight, stepwise provenance tracking, and learn-at-test-time adaptation from user feedback. The system supports fluid handoff between humans and agents through both natural language and direct manipulation of visualizations, while sandboxed execution ensures safe, reproducible workflows. In doing so, HiLSVA reframes agentic SciVis as a collaborative process that augments, rather than replaces, human analytical reasoning. We evaluate HiLSVA through representative case studies and a controlled user study with twelve participants of varying expertise across multiple autonomy settings. Results show that mixed-initiative interaction improves task completion, user control, and workflow transparency across different levels of user expertise, while revealing a tradeoff between execution efficiency and human oversight. These findings highlight the importance of human-centered design in agentic SciVis and guide the development of future collaborative visualization systems. We encourage readers to explore our demo video, case studies, and source code at https://hilsva.github.io/.",
+      "authors": [
+        "Kuangshi Ai",
+        "Patrick Phuoc Do",
+        "Chaoli Wang"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI",
+        "cs.GR"
+      ],
+      "published": "2026-06-25T05:19:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.26614v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "human-in-the-loop multi-agent collaboration for visualization",
+      "llm_evidence_cn": "人机协同的多智能体协作可视化系统",
+      "llm_evidence": "人机协同的多智能体协作可视化系统",
+      "canonical_evidence": "人机协同的多智能体协作可视化系统",
+      "llm_tldr_en": "HiLSVA is a human-in-the-loop agentic system with plan-first multi-agent architecture, enabling mixed-initiative scientific visualization workflows through natural language and direct manipulation.",
+      "llm_tldr_cn": "现有科学可视化系统优先自主性，缺乏人类监督与透明度。本文提出HiLSVA，一种人机协同的多智能体系统，采用规划优先架构，支持人类逐步监督、溯源追踪和测试时学习。通过自然语言和直接操作实现人类与智能体间的流畅切换，沙盒执行确保安全可复现。该系统提升了可视化工作流的透明度和可控性。",
+      "llm_tldr": "现有科学可视化系统优先自主性，缺乏人类监督与透明度。本文提出HiLSVA，一种人机协同的多智能体系统，采用规划优先架构，支持人类逐步监督、溯源追踪和测试时学习。通过自然语言和直接操作实现人类与智能体间的流畅切换，沙盒执行确保安全可复现。该系统提升了可视化工作流的透明度和可控性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.28182v1",
+      "source": "arxiv",
+      "title": "LLawCo: Learning Laws of Cooperation for Modeling Embodied Multi-Agent Behavior",
+      "abstract": "Embodied agents operating in decentralized and partially observable environments have attracted growing attention in recent years. However, existing large language model (LLM)-based agents often exhibit behaviors that are misaligned with their partners or inconsistent with the environment state, leading to inefficient cooperation and poor task success. To address this challenge, we propose a novel framework, Learning Laws of Cooperation (LLawCo), that enables embodied agents to autonomously align with both their partners and task objectives. Our framework allows agents to reflect on past failures to extract misaligned behavioral patterns, which are used to derive high-level behavioral laws, such as \"Talk when necessary\" and \"Wait for partner.\" These laws are explicitly incorporated into the agents' chains of thought via supervised fine-tuning, aligning their reasoning with task requirements and the behavior of other agents. To evaluate our approach, we introduce PARTNR-Dialog, a large-scale multi-agent communicative and cooperative planning benchmark built on the PARTNR environment. Experiments on existing tasks and our new benchmark demonstrate significant improvements in cooperative efficiency and task success rates. Across four backbone LLMs, our method achieves average success rate improvements of 4.5% on the PARTNR-Dialog benchmark and 6.8% on the TDW-MAT benchmark over state-of-the-art open-source communicative agent frameworks. See the LLawCo project page for details: https://www.merl.com/research/highlights/LLawCo",
+      "authors": [
+        "Qinhong Zhou",
+        "Chuang Gan",
+        "Anoop Cherian"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CV",
+        "cs.RO"
+      ],
+      "published": "2026-06-26T15:26:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.28182v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "learning cooperation laws for multi-agent alignment",
+      "llm_evidence_cn": "学习合作法则以对齐多智能体行为",
+      "llm_evidence": "学习合作法则以对齐多智能体行为",
+      "canonical_evidence": "学习合作法则以对齐多智能体行为",
+      "llm_tldr_en": "Proposes LLawCo for embodied agents to learn behavioral laws from past failures, enabling autonomous alignment with partners and task objectives for efficient cooperation.",
+      "llm_tldr_cn": "针对LLM驱动的具身智能体在协作中行为不协调的问题，提出LLawCo框架，让智能体从失败中提取行为规律（如'必要时沟通'），实现自主对齐合作伙伴和任务目标，在部分可观测环境中显著提升协作效率。",
+      "llm_tldr": "针对LLM驱动的具身智能体在协作中行为不协调的问题，提出LLawCo框架，让智能体从失败中提取行为规律（如'必要时沟通'），实现自主对齐合作伙伴和任务目标，在部分可观测环境中显著提升协作效率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

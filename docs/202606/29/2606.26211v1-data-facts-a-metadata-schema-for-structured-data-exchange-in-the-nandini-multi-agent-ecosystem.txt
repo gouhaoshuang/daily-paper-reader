@@ -1,0 +1,245 @@
+Title: Data Facts: A Metadata Schema for Structured Data Exchange in the NANDini Multi-Agent Ecosystem
+
+URL Source: https://arxiv.org/pdf/2606.26211v1
+
+Published Time: Fri, 26 Jun 2026 00:06:09 GMT
+
+Number of Pages: 10
+
+Markdown Content:
+# Data Facts: A Metadata Schema for Structured Data Exchange in the NANDini Multi-Agent Ecosystem 
+
+# Jin Gao, Maria Gorskikh, Pradyumna Chari, Brittany Box, Mukul Kemla, Pratik Behera, Abhishek Mehta, Ramesh Raskar 
+
+Abstract 
+
+NANDini (Networked Agents Natural Dis-tillation of Interconnected Nodal Intelligence) envisions an automated ecosystem where intelli-gent agents independently create, process, and exchange data to drive decisions at scale. Real-izing this vision requires infrastructure beyond agent discovery and communication: agents must be able to advertise, evaluate, and ver-ify the datasets they hold. Current protocols (NANDA for federated registry, A2A and MCP for inter-agent messaging) address identity and communication but provide no mechanism for structured data exchange. Existing Enterprise data-sharing frameworks (IDS-RAM, Gaia-X, Ocean Protocol) assume human-in-the-loop gov-ernance incompatible with autonomous, real-time agent interactions. We introduce Data Facts , a core NANDini concept: a lightweight JSON metadata schema that bridges agent dis-covery and data access via a single pointer (data_facts_url ) added to an existing Agent Facts registry record. The linked document en-codes dataset identity, access tier (public, semi-private, or private), endpoint, a time-to-live for freshness validation, and a SHA-256 integrity checksum. For private and semi-private data, we implement a three-layer security pipeline: JWT authentication, capability-scoped gateway au-thorization, and an A2A credential delegation protocol. Across 840 decision-making evalua-tions, data-informed agents achieve 100% ac-curacy versus 35.2% without data access ( p < 
+
+0.001 ); TTL enforcement reduces stale-data er-rors from 37.6% to 8.8%; checksum verification achieves 100% corruption detection at all injec-tion rates; and the security pipeline blocks all 46 forgery attempts with zero data leakage. 
+
+# 1 Introduction 
+
+In a world of autonomous agents numbering in the hundreds of billions, the data-to-decision lifecycle must evolve into a continuous, distributed process. NANDini (Networked Agents Natural Distillation of Interconnected Nodal Intelligence) [ 18 ] envisions a planetary-scale ecosystem in which agents generate data, refine information, extract insights, and take ac-tion in response to human needs. Realizing this vision requires infrastructure that goes beyond agent iden-tity and communication to include a structured data layer through which agents can exchange, interpret, and distill information across large-scale networks. Current agent infrastructure addresses discovery and messaging. The NANDA Index [ 15 ] provides a federated registry in which agents publish Agent Facts documents encoding identity, endpoints, and capabilities. Protocols such as Google A2A [ 6] and Anthropic MCP [ 2] standardize inter-agent messaging and tool invocation across vendors. Together, these mechanisms enable agents to discover each other and exchange tasks. However, they provide no mechanism for advertising, evaluating, or verifying the datasets held by participating agents. An agent seeking data from a peer must rely on hard-coded endpoint knowl-edge or ad-hoc probing; no machine-readable layer exists to describe what a dataset contains, when it was last refreshed, whether it has been tampered with, or what credentials are required. Prior work addresses data exchange at the orga-nizational level. IDS-RAM [ 14 ], Gaia-X [ 4], and the Dataspace Protocol [ 8] define governance frame-works for enterprise-to-enterprise sharing; Ocean Pro-tocol [ 12 ] introduces a blockchain-based marketplace for data NFTs. These systems assume human-in-the-loop governance, heavyweight connector infrastruc-ture, and negotiation cycles that do not compose with the lightweight, autonomous agent interactions that NANDini targets. W3C DCAT [ 1], PROV [ 9], and DID [ 17 ] provide vocabulary for cataloging, prove-nance, and identity but no runtime mechanism for agents to act on that vocabulary at query time. Ta-ble 1 positions Data Facts against this prior work. We propose Data Facts , a core concept within the NANDini framework: a JSON metadata schema that extends Agent Facts with a single new field, 
+
+data_facts_url , pointing to an externally hosted document describing a dataset. The design main-1
+
+> arXiv:2606.26211v1 [cs.CR] 24 Jun 2026
+
+tains a strict separation of concerns. Agent Facts retain their existing lightweight registry role as a reg-istry for agent identity, endpoints, and capabilities, while dataset metadata evolves independently and is resolved only when data is requested. For private data, access is protected through a three-layer secu-rity pipeline consisting of JWT-based authentication, capability-scoped authorization enforced through a mediating gateway, and an A2A negotiation proto-col for scoped, time-bound credential delegation. By standardizing how agents describe and verify datasets, Data Facts operationalizes NANDini’s commitment to data accuracy within autonomous multi-agent ecosys-tems. 
+
+Evaluation scope. We report five experiments: discovery overhead, freshness enforcement, integrity verification, security pipeline evaluation, and data-informed decision quality. Decision-making experi-ments use counter-intuitive business queries designed to expose agents that reason from training priors rather than querying live data. The security evalua-tion examines 13 attack categories. We do not claim the schema is optimal for all agent architectures, nor that the security pipeline addresses every possible threat model. 
+
+Contributions: 
+
+1. NANDini data layer: Data Facts, a core NANDini concept providing a lightweight JSON metadata schema for agent-held datasets, integrating with Agent Facts via a single URL pointer with three-tier access semantics ( "public" , "semi_private" ,
+
+"private" ). 2. Security pipeline: JWT authentication, capability-scoped gateway authorization, and an A2A cre-dential delegation protocol for multi-agent private data access. 3. Empirical validation: 840 decision-making evalua-tions showing 100% data-informed accuracy versus 35.2% without data access; freshness and integrity experiments; and adversarial security evaluation blocking all 46 forgery attempts across 206 private-access trials. 
+
+# 2 The NANDini Initiative 
+
+NANDini (Networked Agents Natural Distillation of Interconnected Nodal Intelligence) [ 18 ] is an open research initiative addressing a fundamental question: in a future dominated by intelligent agents, what will happen to the data-to-decision life-cycle? The initiative responds to the emergence of agentic systems of intelligence, where agents serve not only as task executors but as the primary source of data generation, curation, and consumption. NANDini builds upon MIT’s NANDA architec-ture [ 15 ], extending early registry and discovery frame-works into a comprehensive ecosystem for autonomous agent data exchange. While NANDA provides the foundational layer for federated agent discovery via AgentFacts, NANDini extends this foundation to ad-dress three interconnected research domains: knowl-edge distillation across agent networks, model context protocols for structured access to tools and data, and 
+
+large-scale agentic systems of intelligence capable of operating autonomously at scale. Central to the NANDini vision is the principle that reliable decision-making in autonomous systems de-pends on accurate and verifiable data. This principle motivates the initiative’s core technical contributions, including Data Facts : a standardized mechanism through which agents can advertise, evaluate, and ver-ify the datasets they hold. Data Facts bridges the gap between agent discovery (addressed by NANDA) and agent communication (addressed by A2A and MCP) by introducing a structured data exchange layer that enables agents to make informed, data-driven deci-sions autonomously. The initiative is committed to being open, trans-parent, and capable of operating at planetary scale, targeting an emerging landscape in which unprece-dented investment in AI infrastructure intersects with the $1.3 trillion enterprise software market through autonomous agent ecosystems. 
+
+# 3 Related Work 
+
+Agent infrastructure. The NANDA Index [ 15 ], which serves as NANDini’s foundational discovery layer, provides a federated registry where agents reg-ister with AgentFacts documents encoding identity, endpoints, and capabilities, but no dataset state. A survey of registry designs [ 16 ] confirms that NANDA AgentFacts, A2A Agent Cards, and MCP mcp.json 
+
+descriptors all omit dataset-level metadata. Google A2A [ 6] and Anthropic MCP [ 2] standardize inter-agent communication and tool invocation respectively; a survey of these protocols [ 7] notes that all address communication while leaving data description to appli-cation logic. Data Facts, as a NANDini core concept, fills this gap with a single data_facts_url pointer in AgentFacts, resolving dataset metadata externally without inflating the registry. 
+
+Data exchange and cataloging. Enterprise frame-works define richer metadata but assume organi-zational governance. IDS-RAM [ 14 ], Gaia-X [ 4], and DSP [ 8] target sovereign inter-organizational 2Table 1: Comparison of related systems across four properties relevant to autonomous agent data exchange. 
+
+✓ = fully supported; ◦ = partial or vocabulary only; — = not addressed.                                       
+
+> System Dataset discovery Freshness signaling Integrity verification Tiered access control
+> NANDA AgentFacts [15] ————A2A Agent Cards [6] ————MCP mcp.json [2] ————IDS-RAM [14] ◦—◦✓
+> Gaia-X / DSP [4, 8] ◦——✓
+> Ocean Protocol [12] ◦—✓✓
+> W3C DCAT [1] ✓◦——W3C PROV [9] —◦——
+> NANDini Data Facts (ours) ✓✓✓✓
+
+sharing via certified connectors and negotiation cy-cles; Ocean Protocol [ 12 ] introduces blockchain-based data NFTs with Compute-to-Data. None compose with lightweight, real-time agent interactions. W3C DCAT [ 1 ] provides RDF vocabulary for federated cat-alog discovery; W3C PROV [ 9] covers data lineage; W3C DID [ 17 ] underpins our JWT authentication pipeline. These standards supply rich catalog vocabu-lary but do not define machine-enforceable freshness or integrity fields actionable at agent query time. 
+
+Data valuation and quality. Ghorbani and Zou [ 5]formalize Data Shapley for equitable attribution of training data value; extensions address federated set-tings [ 19 ] and market pricing [ 20 ]. Complementary lines of work develop task-agnostic valuation via sta-tistical divergence between buyer and seller distribu-tions [ 13 , 10 ] and federated data acquisition without la-beled validation sets [ 11 ]. All of this literature assumes data is already accessible and prices or selects contri-butions post-hoc. Batini et al. [ 3] survey data quality dimensions including timeliness and integrity as core axes. Data Facts externalizes two of these, freshness via ttl_seconds and integrity via checksum_sha256 ,as declarative fields agents verify before ingestion, in-stantiating data quality primitives at the discovery layer rather than in governance pipelines. 
+
+# 4 Agentic Data Infrastructure 
+
+Figure 1 shows the NANDini Data Facts architecture as two coordinated layers: an agent layer and a data-owner layer . User requests are interpreted by the LLM and executed through skills/tools. Agents expose iden-tity and endpoint metadata through AgentFacts (via the NANDA registry), while dataset access metadata is exposed through a DataFacts pointer (the NAN-Dini data exchange layer). On the data-owner side, each provider runs a gateway service in front of its database, together 
+
+Figure 1: NANDini Data Facts architecture: agent layer (discovery, communication) and data-owner layer (gateway enforcement, capability delegation). 3with control-plane tables for confidential access state, including grants , delegations , agent_keys , and 
+
+audit_log . The gateway is the trust boundary: it verifies tokens, checks delegated scope and trust con-ditions, validates inputs, and only then allows access to actual data. Overall, the architecture realizes the NANDini vi-sion of minimal, decentralized infrastructure for agent-driven data access by separating discovery, authoriza-tion, and execution, thereby enabling secure access to data and reliable exchange across multi-agent systems. 
+
+# 4.1 Data Facts Schema Design 
+
+Integration with AgentFacts. Data Facts extends the NANDA AgentFacts record with a single optional field, data_facts_url , which points to an externally hosted JSON document describing the agent’s dataset. The registry stores only a pointer, while the metadata document is resolved on demand. This design pre-serves the registry’s lightweight structure: the existing 
+
+/register and /list endpoints require no structural changes, and agents that do not expose datasets incur no additional overhead. A consumer agent’s discovery workflow therefore proceeds as follows: (1) query the registry ( GET /list ), (2) extract data_facts_url from the re-turned AgentFacts record, (3) fetch the Data Facts document over HTTP(S), (4) validate freshness and integrity locally, and (5) access the dataset endpoint. Steps 3–5 are performed by the consumer without further interaction with the registry. 
+
+Schema. 
+
+The Data Facts document is a lightweight JSON object with a small evidence subobject. Table 2 lists all fields. Required fields cover the four properties identified in Section 3: dataset identity ( dataset_id ,
+
+dataset_description ), access tier ( access_type ), the resolvable dataset endpoint ( endpoint ), fresh-ness (ttl_seconds , evidence.last_updated ), and integrity ( evidence.checksum_sha256 ). Op-tional fields ( evidence.source , update_frequency ,
+
+data_owner ) carry provenance and human-readable cadence information. 
+
+Freshness Enforcement. 
+
+A consumer agent computes staleness as: 
+
+∆t = tnow − tlast_updated 
+
+and rejects the dataset if ∆t > ttl_seconds . The TTL is set by the producing agent to reflect its actual update cadence; a finance feed agent updating every ten minutes would set ttl_seconds = 600 . This check is performed client-side from the Data Facts document, requiring neither a round-trip to the producer nor a query to the registry. 
+
+Integrity Verification. 
+
+The evidence.checksum_sha256 field contains the SHA-256 digest of the dataset at the time of the last update. After fetching data from endpoint , the con-sumer recomputes the digest and compares it against the stored value. A mismatch indicates either corrup-tion in transit or a stale checksum resulting from an update cycle that has not yet refreshed the Data Facts document. In both cases the consumer can reject the data or re-fetch. 
+
+Access Control. 
+
+Semi-private capabilities are discoverable; pri-vate are not. When access_type is "public" ,the consumer accesses endpoint directly. When 
+
+access_type is "semi_private" or "private" , ac-cess follows a three-layer pipeline: (i) the consumer presents credentials to obtain a JWT scoped to the requested dataset capability, (ii) the JWT is for-warded to a capability-scoped gateway that enforces per-dataset ACLs, and (iii) the gateway proxies re-quests; endpoint always points to the gateway. 
+
+# 4.2 Gateway and Database-Side Infras-tructure 
+
+The Data Layer Gateway serves as the enforcement boundary between agents and heterogeneous storage engines. Rather than exposing database-native pro-tocols directly, each backend is fronted by a gateway service as an adapter layer. This separation keeps agent-to-agent negotiation and capability semantics stable even when execution targets differ across rela-tional, document, object, vector, cache, search, graph, or time-series systems. 
+
+Gateway behavior and trust enforcement. Arequest entering the gateway is processed through a single verification path before any data operation is executed. The gateway validates JWT signatures against registered public keys, extracts capability and operation claims, and checks expiry and revocation state. For delegated credentials, it also verifies dele-gation lineage, confirms that the underlying grant remains active, and enforces scope consistency so delegated operations cannot exceed delegated rights. In credential-pass mode, token binding is enforced by matching caller identity to the credential bind-ing claim, preventing credential reuse by unintended agents. After identity and delegation checks, the gateway applies replay protection through JTI tracking, op-tional per-agent rate limiting, and operation-level au-thorization against active capability grants. Request arguments are then validated against traversal and injection patterns and constrained by backend-specific scope guards such as bucket or collection allow-lists. 4Table 2: Data Facts schema fields.                    
+
+> Field Semantics and constraints
+> Required
+> dataset_id Stable identifier for the dataset
+> dataset_description Human-readable description
+> access_type "public" |"semi_private" |"private" endpoint HTTP(S) gateway URL where data is served (never the producer’s raw end-point)
+> evidence.last_updated ISO 8601 timestamp of last data update
+> evidence.checksum_sha256 SHA-256 hex digest of the dataset (64 chars)
+> ttl_seconds Cache validity window; must be >0
+> Optional
+> evidence.source Provenance label (e.g. API name)
+> update_frequency Human-readable update cadence
+> data_owner Agent identifier of the data provider
+
+Only after these controls have been satisfied does the gateway dispatch the request to the backend adapter and persist an audit record containing principal, ca-pability, action, success state, and result cardinality. 
+
+Execution paths. The architecture supports two op-erational paths with the same enforcement model. In A2A proxy mode, a requester sends a negotiated query to the data owner, and the owner executes locally be-fore returning results over A2A. In credential-pass mode, the requester presents a delegated credential directly to the owner gateway at /query . Although the transport differs, authorization, validation, and auditing are enforced in the same gateway pipeline. 
+
+Database-side control plane. Security state is materialized in control-plane tables, including grants 
+
+for capability authorization, agent_keys for signa-ture verification, token_revocations for invalidated credentials, delegations for credential lineage and revocation, and audit_log for access evidence. Data payloads remain in backend-native stores and are ac-cessed through adapter-specific query handlers. This control-plane/data-plane separation keeps governance introspectable and auditable without coupling policy state to application data schemas. 
+
+# 4.3 Multi-Agent Data Exchange and Negotiation 
+
+Data Facts uses a capability-based A2A negotiation protocol ( negotiation.* messages/tools). Agents first discover shareable capabilities, then request au-thorization, and finally query data through delegated access. 
+
+Public: Capabilities are discoverable and do not re-quire credentials. Agent B calls negotiate_discover 
+
+and receives public capability entries. If Agent B calls 
+
+negotiate_request_access for a public capability, Agent A returns a public-access acknowledgment (no credential) together with available query names. 
+
+Semi-Private: Capabilities are discoverable but credential-gated. After discovery, Agent B sends 
+
+negotiate_request_access . Agent A either (i) auto-approves and issues a delegated credential (trusted requester) or (ii) returns a pending request for manual approval. Agent B then queries data us-ing negotiate_use_credential (A2A proxy), or op-tionally negotiate_use_credential_direct (direct gateway mode). 
+
+Private: Capabilities are not discoverable via in-quiry. Agent B requests a private credential via 
+
+negotiate_request_private_credential (with a known capability ID). Agent A issues a short- lived credential only to trusted agents; untrusted requests are denied. After credential issuance, Agent B uses 
+
+negotiate_use_credential to execute queries. 
+
+# 5 Experiments 
+
+We evaluate Data Facts across five experiments tar-geting the four schema primitives and overall deci-sion quality. Experiments 5.1–5.3 validate the public-access path; Experiment 5.4 validates the private-access pipeline; Experiment 5.5 measures the down-stream effect on agent decision accuracy. 
+
+# 5.1 Discovery Overhead 
+
+Setup. We compare two retrieval conditions at 
+
+N ∈ { 50 , 200 } simulated agent queries. The baseline 
+
+condition is a single-step direct GET to a known dataset endpoint, representing hard-coded endpoint coupling. 5Table 3: Discovery overhead: baseline (direct, 1 step) vs. Data Facts treatment (3 steps).           
+
+> Condition NMean TTD (s)
+> Baseline 50 0.120 Treatment 50 0.380 Baseline 200 0.130 Treatment 200 0.400
+
+The treatment condition executes the full Data Facts path: registry lookup, data_facts_url resolution, and dataset fetch (three steps). The primary met-rics are time-to-first-data (TTD) and retrieval success rate. 
+
+Results. Both conditions achieve 100% retrieval success at all scales (Table 3). The treatment path incurs a fixed overhead of approximately 260–270 ms, corresponding to two additional HTTP round-trips. Latency remains stable as N scales from 50 to 200, confirming that overhead is bounded and does not grow with query volume. 
+
+# 5.2 Freshness Enforcement 
+
+Setup. A periodically updated dataset is queried under TTL windows of 60 s, 300 s, and 600 s. Baseline agents apply no staleness check; treatment agents reject data when tnow − tlast _updated > ttl_seconds .The outcome metric is decision error rate: the fraction of queries producing an incorrect downstream decision attributable to stale data consumption. 
+
+Results. We label a request positive if the dataset is stale ( ∆t > ttl_seconds ). A detection is correct if stale data is rejected. Decision error rate counts cases where stale data is accepted (false negatives). Without Data Facts, the decision error rate is 37.6% uniformly across all three TTL values: the agent has no mecha-nism to detect staleness regardless of the configured window. With Data Facts, the error rate drops to 8.8% and stale-data detection reaches 76.6% (confu-sion matrix: TP = 312, TN = 144, FP = 0, FN = 44). TTL window size (60–600 s) has no differential effect; the staleness pattern is independent of window mag-nitude, and the results are identical across all three TTL conditions. The binary presence of ttl_seconds 
+
+determines whether detection occurs at all. The resid-ual 8.8% error represents cases where data is fresh by TTL but has changed within the validity window, an irreducible bound set by the producer’s update cadence rather than the schema. 
+
+# 5.3 Integrity Verification 
+
+Setup. Payload corruption is injected at rates span-ning 1%–50%. Two hundred independent trials are run per corruption level. Baseline agents ingest pay-loads without validation; treatment agents recom-pute the SHA-256 digest and compare it against 
+
+evidence.checksum_sha256 , rejecting on mismatch. 
+
+Results. Treatment agents detect 100% of corrupted payloads at every non-zero corruption level, with zero silent failures. Baseline agents detect 0% of corrupted payloads regardless of severity. The result holds at 1% corruption: even minimal byte-level modification is reliably caught. The checksum field provides all-or-nothing detection, not probabilistic detection. 
+
+# 5.4 Security Pipeline 
+
+Setup. A semi-private dataset is stored in Post-greSQL behind a JWT-gated capability gateway (HS256 signing). Access requires a credential negotia-tion step that issues a scoped token. We evaluate four authentication scenarios (valid credentials; missing, empty, and bare-bearer headers), three TTL bound-ary conditions (immediate use; post-expiry; boundary precision at t = TTL ±ϵ), and 46 adversarial attempts across six categories: wrong signing key; six syntactic garbage-token variants; altered dataset_id claims with valid signatures; impersonation; privilege esca-lation; and replay (206 total authentication trials; 29 infrastructure-only tests, all n = 20 ). 
+
+Results. Valid-credential access succeeds in 20/20 trials with mean fetch latency 2,372 ms and 100% SHA-256 checksum verification. All unauthorized access at-tempts return HTTP 401 with no unauthorized reads observed in our tests across all authentication scenar-ios. TTL enforcement is exact: 45/45 trials classify tokens correctly on both sides of the expiry boundary, with 10/10 correct boundary-precision decisions. All 46 adversarial attempts are blocked (100% block rate, 0 data leaks), including altered-claim tokens carrying a valid signature but a modified dataset_id . This last result confirms that claim validation is required in addition to signature verification; signature-only JWT validation would pass these tokens. Gateway JWT verification incurs 48.6 ms per request, against 259.2 ms for OAuth2 and 110.5 ms for SPIFFE mTLS, while enforcing per-dataset capability scoping that API-key schemes cannot provide. Two behaviors are documented as v1 limitations: token reuse within the validity window is permitted by design in stateless JWT, and tokens are not bound to caller identity. Both are structural properties of stateless JWT and are addressable via a revocation registry and audience binding in a subsequent revision. 
+
+# 5.5 Data-Informed Decision Quality 
+
+Setup. We measure whether the Data Facts access pipeline produces a statistically significant improve-6Table 4: Decision scenarios ranked by self-decide diffi-culty (pooled n = 60 per scenario). near_parity is not reliably answerable from priors without database access.         
+
+> Scenario Self-decide (% correct)
+> upgrade_pool 91.7%
+> tier_majority 76.7%
+> tier_gap 50.0%
+> premium_combined 18.3%
+> bronze_dominance 6.7%
+> smallest_tier 3.3%
+> near_parity 0.0%
+
+Figure 2: Decision quality on data-driven questions with increasing difficulty. ment in agent decision accuracy on queries not an-swerable from LLM training priors. Seven binary decision scenarios are drawn from a PostgreSQL ta-ble with ground-truth distribution Gold : 5, Silver : 6, Bronze : 9. Each scenario requires exact counts the LLM cannot reliably estimate from priors; the suite spans the full difficulty range from near-certain self-decide success to 0% (Table 4). Agents operate in two modes: self-decide (LLM answers from priors alone) and data-informed (LLM queries the database via the Data Facts pipeline before answering). Three topologies vary infrastructure depth: 1-agent (direct JWT gateway), 2-agent (one A2A credential delega-tion hop), and 3-agent (two-hop A2A relay chain). The factorial design yields 7 × 2 × 3 × 20 = 840 evalu-ations; all LLM calls use gpt-5-nano. 
+
+Results. Data-informed agents achieve 100% ac-curacy (420/420) across all scenarios and all three topologies, with a pooled 95% Wilson CI lower bound 
+
+≈ 99% (p < 0.001 against the null hypothesis that data access does not improve accuracy). Self-decide accuracy is 35.2% (148/420), 95% CI [30.9%, 39.8%]. Per-topology self-decide accuracy is 34.3%, 35.0%, and 36.4% for 1-, 2-, and 3-agent topologies respec-tively; the overlapping confidence intervals confirm that topology has no effect on baseline LLM reasoning. The data-informed access chain succeeds in 420/420 tool-call executions with zero authentication failures, protocol errors, or integrity violations across all three topologies. The near_parity scenario achieves 0/60 self-decide accuracy: the question requires |5 − 6| = 1 , which is inaccessible from training priors regardless of model capability. It functions as a discriminative control confirming that certain query types are not reliably answerable from priors without database access. A secondary latency finding (Table 5) shows that data-informed p95 latency is lower than self-decide p95 in all topologies, with the gap widening with infrastructure depth (3-agent: 29.8 s vs. 75.4 s). With-out ground truth, the LLM incurs deliberation cost on counter-intuitive queries, producing verbose com-pletions that dominate tail latency. The structured prompt constraining the agent to lead with its answer reduces completion length; the resulting output-token saving outweighs the database round-trip at the p95 tail. 
+
+# 6 Discussion 
+
+The five experiments collectively validate each re-quired field in the Data Facts schema (and by ex-tension the NANDini data exchange layer) and quan-tify the conditions under which these fields provide measurable benefits for the NANDini data exchange layer. 
+
+Schema field necessity. The discovery experiment establishes that the external-pointer design imposes bounded, predictable overhead (260 ms, two HTTP round-trips) independent of query volume and recov-erable through TTL-aware caching. The freshness experiment demonstrates that ttl_seconds is a nec-essary field: without it, agents cannot distinguish stale from current data regardless of the window con-figured, because the check itself cannot be performed. The residual 8.8% post-TTL error is irreducible at the schema layer and is set by the producer’s update cadence. The integrity experiment establishes that 
+
+evidence.checksum_sha256 is not an optional audit aid: silent corruption is a property of the unchecked baseline at every corruption rate, and even 1% byte-level corruption propagates undetected without the field. We chose SHA-256 over lighter alternatives such as CRC32 or BLAKE3 because its collision resistance properties are well-established in security contexts and its computational cost is negligible relative to the network round-trips already required by the pipeline. 7Table 5: Latency by topology and mode (seconds). ∆mean is data-informed minus self-decide mean latency (negative indicates data-informed is faster).                         
+
+> p50 (s) p95 (s) ∆mean
+> Topology Self Data Self Data 1-Agent 14.8 18.2 46.8 27.7 −1.2s2-Agent 25.3 17.8 52.7 23.3 −8.5s3-Agent 34.9 20.9 75.4 29.8 −11 .6s
+
+Together, these results confirm the design choice to require freshness and integrity fields rather than mark them optional. 
+
+Security design. The security results demonstrate that the three-layer pipeline (JWT issuance, gate-way claim enforcement, A2A delegation) functions as a strict binary gate. The salient finding is that claim validation is necessary in addition to signature validation: tokens carrying a valid signature but an altered dataset_id are correctly rejected, a property that signature-only JWT verification does not provide. The two v1 limitations (stateless token reuse, absent identity binding) are structural properties of stateless JWT and are independent of the Data Facts schema; both have established mitigations available in the next revision. 
+
+Decision quality and topology independence. 
+
+The 0/60 result on near_parity isolates a class of query that is not reliably answerable from priors with-out database access, independent of model capability. The consistency of data-informed accuracy (100%) and self-decide accuracy (34–36%) across all three topologies confirms that the A2A credential delega-tion chain, including the two-hop relay, introduces no information loss and no accuracy penalty relative to direct gateway access. The latency inversion at p95 suggests a broader principle: on counter-intuitive queries, data access does not merely improve accu-racy but also reduces latency by eliminating the LLM deliberation that hard questions induce. 
+
+Implications for NANDini. These results validate a key premise of the NANDini initiative: that au-tonomous agents require a structured data layer to make reliable decisions. The observed accuracy gap (100% vs. 35.2%) demonstrates that agent identity and communication protocols alone are insufficient. Without a mechanism to discover, verify, and access datasets, agents default to reasoning from training pri-ors, leading to unreliable outcomes on data-dependent queries. Data Facts provides the missing link between NANDini’s discovery infrastructure (NANDA) and its vision of autonomous, data-driven agent ecosystems operating at planet scale. 
+
+# 7 Conclusion 
+
+Data Facts, a core concept of the NANDini initiative, addresses a structural gap in current agent infrastruc-ture. While agents can discover one another through NANDA and communicate via A2A and MCP, no machine-readable mechanism currently exists for ad-vertising, evaluating, or verifying the datasets held by participating agents. Data Facts resolves this gap by introducing a lightweight pointer—added to an exist-ing AgentFacts record—that allows dataset identity, freshness, integrity, and access tier to be resolved on demand. This approach avoids modifications to reg-istry protocols and prevents inflation of registration payloads, thereby operationalizing NANDini’s vision of autonomous, data-driven agent ecosystems. Across 840 decision-making evaluations, data-informed agents achieve 100% accuracy on counter-intuitive queries where self-deciding agents achieve 35.2%; TTL en-forcement reduces stale-data errors from 38% to 9%; SHA-256 checksums detect 100% of corruption events across all injection rates; and the security pipeline blocks all 46 forgery attempts with zero data leakage. 
+
+Limitations. All decision-making evaluations use a single model (gpt-5-nano) and a binary classifica-tion format; therefore, the results may not general-ize to open-ended queries or other model families. The ground-truth database is static; dynamic envi-ronments with high update rates may erode TTL enforcement effectiveness beyond the 8.8% residual error observed in this study. Additionally, the v1 se-curity pipeline does not bind tokens to caller identity, allowing intercepted tokens to be reused within their TTL window. 
+
+Future work. Immediate protocol extensions include token revocation, audience binding, and short-lived credential exchange to address the identity-binding limitation. The current schema supports only single-dataset documents; introducing a catalog endpoint that lists multiple datasets per agent would reduce round-trips in data-rich deployments. Within the broader NANDini roadmap, we plan to extend Data Facts along two axes. First, integration with knowl-edge distillation pipelines, another NANDini research 8domain, which would enable agents to advertise not only raw datasets but also distilled knowledge artifacts with associated provenance and quality guarantees. Second, integration with W3C DCAT federation and PROV lineage fields would enable Data Facts docu-ments to participate in broader data governance work-flows without requiring schema changes, advancing NANDini’s goal of open, transparent, and planet-scale agent data infrastructure. 
+
+# References 
+
+[1] Riccardo Albertoni, David Browning, Simon Cox, Alejandra Gonzalez Beltran, Andrea Perego, and Peter Winstanley. Data catalog vocabulary (DCAT) — version 2. W3C recommendation, World Wide Web Consortium, February 2020. [2] Anthropic. Introducing the model context proto-col. Anthropic Blog, November 2024. [3] Carlo Batini, Cinzia Cappiello, Chiara Fran-calanci, and Andrea Maurino. Methodologies for data quality assessment and improvement. ACM Computing Surveys , 41(3):16:1–16:52, 2009. [4] Gaia-X AISBL. Gaia-X: Technical architecture. Technical report, Gaia-X European Association for Data and Cloud, 2021. [5] Amirata Ghorbani and James Zou. Data shapley: Equitable valuation of data for machine learn-ing. In Proceedings of the 36th International Conference on Machine Learning , volume 97 of 
+
+Proceedings of Machine Learning Research , pages 2242–2251. PMLR, 2019. [6] Google. Announcing the Agent2Agent (A2A) protocol. Google Developers Blog, April 2025. [7] Aafaq Hussain, Junaid Qadir, et al. A survey of agent interoperability protocols: Model Context Protocol (MCP), Agent Communication Proto-col (ACP), Agent-to-Agent Protocol (A2A), and Agent Network Protocol (ANP). arXiv preprint arXiv:2505.02279 , 2025. [8] International Data Spaces Association. Datas-pace protocol specification. Technical report, IDSA, 2023. [9] Timothy Lebo, Satya Sahoo, Deborah McGuin-ness, Khalid Belhajjame, James Cheney, David Corsar, Daniel Garijo, Stian Soiland-Reyes, Stephan Zednik, and Jun Zhao. PROV-O: The PROV ontology. W3C recommendation, World Wide Web Consortium, April 2013. [10] Charles Lu, Mohammad Mohammadi Amiri, and Ramesh Raskar. Private data measurements for decentralized data markets. In ICLR 2024 Work-shop on Data-centric Machine Learning Research (DMLR): Harnessing Momentum for Science ,2024. [11] Charles Lu, Baihe Huang, Sai Praneeth Karim-ireddy, Praneeth Vepakomma, Michael Jordan, and Ramesh Raskar. DAVED: Data acquisition via experimental design for data markets. In Ad-vances in Neural Information Processing Systems ,volume 37, 2024. [12] Trent McConaghy. Ocean protocol: Tools for the Web3 data economy. In Handbook on Blockchain ,volume 194 of Springer Optimization and Its Ap-plications . Springer, 2022. [13] Mohammad Mohammadi Amiri, Frederic Berdoz, and Ramesh Raskar. Fundamentals of task-agnostic data valuation. In Proceedings of the AAAI Conference on Artificial Intelligence , vol-ume 37, pages 9226–9234, 2023. [14] Boris Otto, Sebastian Steinbuß, Andreas Teuscher, and Steffen Lohmann. International data spaces: Reference architecture for the digi-tization of industries. In Designing Data Spaces: The Ecosystem Approach to Competitive Advan-tage . Springer, 2019. [15] Ramesh Raskar, Pradyumna Chari, John Zinky, Mahesh Lambe, Jared James Grogan, Sichao Wang, Rajesh Ranjan, Rekha Singhal, Shailja Gupta, et al. Beyond DNS: Unlocking the internet of AI agents via the NANDA in-dex and verified AgentFacts. arXiv preprint arXiv:2507.14263 , 2025. [16] Aditi Singh, Abul Ehtesham, Ramesh Raskar, Mahesh Lambe, Pradyumna Chari, Jared James Grogan, Abhishek Singh, and Saket Kumar. Evo-lution of AI agent registry solutions: Centralized, enterprise, and distributed approaches. arXiv preprint arXiv:2508.03095 , 2025. [17] Manu Sporny, Dave Longley, Markus Sabadello, Drummond Reed, Orie Steele, and Christopher Allen. Decentralized identifiers (DIDs) v1.0. W3C recommendation, World Wide Web Consortium, July 2022. [18] Tresata. NANDini: Networked agents natural distillation of interconnected nodal intelligence. Tresata AI Blog, 2025. 9[19] Suyi Wei, Yongxin Tong, Zimu Zhou, and Tian-shu Song. Efficient and fair data valuation for hor-izontal federated learning. In Federated Learning: Privacy and Incentive , pages 139–152. Springer, 2020. [20] Jiayao Zhang, Yunshu Bi, Meng Cheng, Ji Liu, Kui Ren, Qiang Sun, Yuncheng Wu, Yang Cao, Raul Castro Fernandez, and Haifeng Xu. A survey on data markets. arXiv preprint arXiv:2411.07267 , 2024. 10

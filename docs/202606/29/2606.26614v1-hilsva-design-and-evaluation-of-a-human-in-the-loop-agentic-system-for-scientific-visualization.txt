@@ -1,0 +1,663 @@
+Title: HiLSVA: Design and Evaluation of a Human-in-the-Loop Agentic System for Scientific Visualization
+
+URL Source: https://arxiv.org/pdf/2606.26614v1
+
+Published Time: Fri, 26 Jun 2026 00:37:58 GMT
+
+Number of Pages: 12
+
+Markdown Content:
+# HiLSVA: Design and Evaluation of a Human-in-the-Loop Agentic System for Scientific Visualization 
+
+Kuangshi Ai , Patrick Phuoc Do , and Chaoli Wang 
+
+Abstract —Large language model (LLM) agents enable natural language interaction for scientific visualization (SciVis). Still, prior systems have essentially prioritized autonomy over human analytical control, thereby limiting transparency and human oversight. We present HiLSVA, a human-in-the-loop agentic system that supports mixed-initiative SciVis workflows. HiLSVA integrates a plan-first multi-agent architecture with explicit human oversight, stepwise provenance tracking, and learn-at-test-time adaptation from user feedback. The system supports fluid handoff between humans and agents through both natural language and direct manipulation of visualizations, while sandboxed execution ensures safe, reproducible workflows. In doing so, HiLSVA reframes agentic SciVis as a collaborative process that augments, rather than replaces, human analytical reasoning. We evaluate HiLSVA through representative case studies and a controlled user study with twelve participants of varying expertise across multiple autonomy settings. Results show that mixed-initiative interaction improves task completion, user control, and workflow transparency across different levels of user expertise, while revealing a tradeoff between execution efficiency and human oversight. These findings highlight the importance of human-centered design in agentic SciVis and guide the development of future collaborative visualization systems. We encourage readers to explore our demo video, case studies, and source code at https://hilsva.github.io/ .
+
+Index Terms —Scientific visualization, LLM agents, human–agent collaboration, human-centered computing 
+
+1 INTRODUCTION 
+
+Advances in large language models (LLMs) have made complex hu-man–computer interactions more intuitive and accessible. They have reshaped general computer use by enabling conversational agents to assist with everyday tasks such as file management, email drafting, and troubleshooting [6, 29, 75, 81]. In web navigation, LLM agents can search, filter, and summarize online content, assisting users in making decisions or even completing tasks such as booking tickets on their behalf [36, 40]. Beyond these broad applications, LLMs are transforming domains that once demanded specialized expertise. In software engineering, they can generate code, explain concepts, and aid debugging, lowering barriers for both novices and experts [33, 41]. In visualization, they bridge the gap between analytical intent and imple-mentation, allowing users to state goals in natural language and obtain executable workflows [43, 84]. Building on this trajectory, autonomous LLM-driven agents now enable natural-language instructions to be translated directly into sophisticated visualizations. In scientific visualization (SciVis), several recent systems exemplify this paradigm as we witness the shift from generative AI [71] to agentic AI. ChatVis [52] introduces an iterative LLM agent that generates and refines ParaView Python scripts through retrieval-augmented prompting and error-driven feedback, thereby improving the robustness of code generation. ParaView-MCP [42] adopts the model context protocol 
+
+(MCP) to directly connect multimodal LLMs with ParaView’s Python API, enabling seamless collaboration among the user, agent, and vi-sualization environment. Beyond direct tool control, NLI4VolVis [5] advances natural language interaction for volumetric data by combining LLM multi-agents, editable 3D Gaussian splatting [68], and seman-tic segmentation, supporting open-vocabulary querying and real-time scene editing. VizGenie [11] introduces a self-improving framework that dynamically generates, validates, and integrates new visualization modules, enabling adaptive, feature-based exploration. These systems illustrate an emerging class of LLM-based SciVis agents , which can be broadly defined as AI agents that interpret user intent expressed in nat-ural language and autonomously interact with visualization pipelines 
+
+• The authors are with the Department of Computer Science and Engineering, University of Notre Dame, Notre Dame, IN 46556, USA. E-mail: {kai, mdo23, chaoli.wang}@nd.edu. Manuscript received xx xxx. 202x; accepted xx xxx. 202x. Date of Publication xx xxx. 202x; date of current version xx xxx. 202x. For information on obtaining reprints of this article, please send e-mail to: reprints@ieee.org. Digital Object Identifier: xx.xxxx/TVCG.202x.xxxxxxx 
+
+to produce outputs aligned with user-specified analysis goals [2, 15]. However, existing works tend to emphasize autonomy and task com-pletion, often sidelining the central role of human analysts. As Dhanoa et al. [15] argued, visualization is fundamentally human-centered, em-phasizing reasoning, interpretability, and accountability rather than automation alone. The critical challenge is not simply to build more autonomous SciVis agents, but to balance human analytical control, en-compassing how analysts delegate, coordinate, and verify agent actions, with machine autonomy. This balance requires allowing humans to de-cide when to grant or withdraw initiative, maintaining transparency into agents’ reasoning processes, and preserving authority over interpreta-tion and decision-making. After all, the goal of SciVis is not automation for its own sake, but to empower people to conduct scientific analysis, derive meaningful insights, and make informed decisions. Recent work in other domains highlights the promise of human-in-the-loop agentic systems . Senoner et al. [56] showed that explainable AI enhances performance in real-world collaboration tasks, underscor-ing the value of interpretability. HULA [63] is a human-in-the-loop software framework that enables practitioners to refine plans and code iteratively, aligning automation with developer expertise. Magentic-UI [48] is an open-source platform that offers mechanisms such as co-planning, co-tasking, and action approval, emphasizing human–agent interaction over task completion. Motivated by these insights, we propose HiLSVA ( Human-in-the-Loop Scientific Visualization A gentic System), designed to bridge the gap between autonomous visualization agents and the inherently human-centered goals of SciVis. HiLSVA is grounded in the principle that automation should amplify, rather than replace, human analytical capabilities [58]. By combining mixed-initiative interaction with robust agentic infrastructure, our system seeks to enhance both efficiency and transparency in human–AI collaboration for SciVis. Specifically, HiLSVA makes the following contributions: 
+
+Human-centered collaboration through oversight, provenance, and safe execution. Grounded in principles of mixed-initiative inter-action [27], HiLSVA introduces fine-grained mechanisms that enable shared initiative between users and agents while preserving human au-thority throughout the SciVis workflow. The system supports joint plan-ning and execution , where users and agents collaboratively construct explicit, stepwise plans that must be reviewed and approved before execution. During execution, HiLSVA treats the user as a human-in-the-loop user proxy , enabling seamless intervention through natural language or direct manipulation of visualization tools, with fluid hand-off between human and agent control. It further provides stepwise 
+
+> arXiv:2606.26614v1 [cs.HC] 25 Jun 2026
+
+control and provenance tracking , recording execution steps, software states, and visualization outputs to support undo, comparison of alterna-tive trajectories, and reuse of validated workflows. To ensure reliability and safety, all agent actions are performed within sandboxed execution environments that enforce session isolation and require explicit user approval for critical or irreversible operations. In addition, learn-at-test-time with human-in-the-loop feedback enables HiLSVA to detect uncertainty, proactively query users for clarification, and incorporate feedback into a dynamic knowledge base that adapts across tasks. 
+
+Domain-adapted integration with SciVis pipelines. Rather than relying on slow, error-prone GUI-based control used by general-purpose agents [6, 81], HiLSVA leverages MCP to integrate directly with SciVis engines via specialized, tool-aware agents. It incorporates a ChatVis-style code agent [52] for robust generation and iterative refinement of visualization scripts, as well as a ParaView agent built on ParaView-MCP [42] for reliable, parameterized interaction with the visualization engine. These agents provide a modular integration layer that ensures efficient, reproducible execution and allows HiLSVA to adapt to diverse visualization pipelines without altering the overall system design. 
+
+Comprehensive evaluation across autonomy levels and partic-ipant expertise. We evaluate HiLSVA through selected case studies and a user study examining system behavior across different levels of user involvement. Twelve participants interacted with three autonomy modes in a controlled, balanced setup, ensuring that each participant experienced all modes across tasks, followed by a final task with free-mode selection. The results indicate a clear tradeoff, where higher automation improves execution efficiency, while increased human in-volvement enhances control and oversight. Our study further investi-gates how participants with varying levels of expertise, from novices to domain scientists and SciVis experts, interact with and benefit from the system. Across all expertise levels, users were able to complete non-trivial SciVis tasks with HiLSVA support. Post-study feedback indicates strong perceived usability, transparency, and support for it-erative refinement, suggesting that HiLSVA effectively supports users with diverse backgrounds, including novices. These contributions establish HiLSVA as a practical and extensible system for human-in-the-loop SciVis. By foregrounding user agency, adaptability, and transparency, HiLSVA advances the design of SciVis agents that empower people to derive meaningful insights and scientific analysis rather than being sidelined by automation. 
+
+2 RELATED WORK 
+
+LLM agents have enabled new opportunities for SciVis through nat-ural language interaction, workflow automation, and domain-specific analysis. Existing systems have explored autonomous SciVis pipelines, visualization-specific agents, and human-agent collaboration. As shown in Table 1, however, these capabilities are often studied in isolation. HiLSVA instead centers sustained human participation, combining domain-adapted SciVis agents with human oversight, mixed-initiative interaction, provenance-aware workflows, safe execution, and learn-at-test-time (LTT) adaptation from human feedback. These capabilities position agentic SciVis as a human-centered process in which autonomy supports, rather than replaces, human reasoning and exploration.                                                         
+
+> Table 1: Comparison of representative agentic systems.
+> method SciVis adaptation human oversight mixed-initiative workflow provenance safe execution LTT with human feedback Magentic-UI [48] ✗✓✓✗✓✗
+> Cocoa [21] ✗✓✓✗✗✗
+> CowPilot [32] ✗✓✗✗✗✗
+> VizGenie [11] ✓✗✗✗✗✓
+> NLI4VolVis [5] ✓✗✓✗✗✗
+> InferA [65] ✓✗✗✓✓✗
+> SASAV [61] ✓✗✗✗✗✗
+> AI VIS co-scientist [46] ✓✓✗✓✗✗
+> HiLSVA (ours) ✓✓✓✓✓✓
+
+2.1 LLM-Based Agents 
+
+General-purpose agents. General-purpose LLM agents aim to operate across diverse environments with minimal task-specific engineering. Recent surveys identify reasoning, planning, tool use, memory, and reflection as core capabilities of such systems [44, 76]. Key advances include API and external-tool use [53, 55], interaction with operating systems and GUIs [75, 83], search-based reasoning with backtrack-ing [35, 80], and self-reflection for iterative refinement [50]. These capabilities allow LLMs to move beyond single-step text generation toward long-horizon, tool-grounded problem solving. More recently, self-evolving agents have explored continual adaptation beyond static tool chains. For example, SEAgent [62] studies autonomous software learning through curriculum-driven exploration, while Fang et al. [20] survey broader mechanisms and challenges for lifelong agentic systems. 
+
+Visualization agents. Visualization agents adapt general agentic capabilities to tasks where visual feedback, iterative refinement, and domain-specific evaluation are central. MatPlotAgent [78] combines query understanding, code generation, and visual feedback for scientific plotting, while LIDA [16] employs a grammar-agnostic pipeline for data summarization, goal exploration, and visualization specification. AVA [43] and IntuiTF [72] further demonstrate how multimodal feed-back can guide low-level visualization parameter optimization. Other systems emphasize collaborative, tool-grounded, or multi-agent work-flows: ChatVis [52] iteratively generates and refines ParaView scripts through dialogue, CoDA [13] coordinates specialized agents for visual-ization specification and validation, and ParaView-MCP [42] connects LLMs to ParaView through MCP-based structured tool calls. Similar domain-specific systems have been developed for bioimage visualiza-tion and topological data analysis, such as BioImage-Agent [47] and TopoPilot [24]. Furthermore, SciVisAgentSkills [4] explores reusable agent skills for improving general-purpose coding agents across SciVis tools. Vonderhorst et al. [70] compared how different agent interaction paradigms affect multi-step SciVis task performance. While these ap-proaches demonstrate the promise of LLMs for visualization creation, refinement, and automation, they primarily focus on agent capabil-ity, tool integration, or output generation rather than sustained human oversight throughout SciVis workflows. 
+
+2.2 Human–Agent Collaboration 
+
+Reintroducing humans into the decision loop challenges the pursuit of full automation, often introducing additional effort and coordination costs. However, empirical evidence suggests that pairing humans with agents can yield significant productivity gains compared to human-only workflows. For example, randomized controlled trials of GitHub Copi-lot have shown that developers complete programming tasks over 50% faster with AI assistance [51]. Meanwhile, studies warn that improve-ments in an AI system’s standalone accuracy do not always translate into better team performance: model updates can break established user expectations, leading to incompatibility between human mental models and machine behavior [7, 9]. Communication remains another open challenge, as humans and agents must align on intent, interpretability, and appropriate levels of human oversight to collaborate effectively [8]. 
+
+Multi-agent collaboration. Multi-agent systems provide one route for scaling coordination. Classical work emphasized robustness, mod-ularity, and division of labor as the main benefits of distributed agents [60, 66]. Modern approaches bring these ideas into the LLM era, enabling specialized agents to converse, plan, and solve problems col-lectively. Frameworks such as AutoGen [74] exemplify this paradigm, while recent surveys synthesize emerging methods for communication, specialization, and joint problem solving, along with open challenges in evaluation and safety [25, 64]. 
+
+Mixed-initiative systems. Beyond coordination among artificial agents, an equally important strand of research emphasizes the role of humans as integral members of the team. Horvitz’s principles for mixed-initiative interfaces [27] advocate balancing automation with user control, supporting uncertainty handling, dialogue, and smooth handoffs between humans and agents. Shneiderman and Maes [58] em-phasized that the central design tension is not between automation and control, but rather how to delegate effectively while preserving clarity, responsibility, and human judgment. Empirical work further demon-strates that interpretability enhances collaboration: explainable AI systems with visual explanations enable users to better understand and oversee model behavior, thereby improving joint task performance com-pared to black-box models [56]. In visualization specifically, Dhanoa et al. [15] argued that full automation is neither realistic nor desirable; Web Browser 
+
+> ParaView GUI
+> Code Environment
+> Shared Workspace
+> Docker Containers Sandboxed
+> Execution
+> Environments
+
+(d)  
+
+> Tool Agents
+> ParaView Agent
+> Code Agent
+> File Surfer
+> Web Surfer
+> Human-in-the-Loop Control
+> Natural Language Prompt Direct Manipulation
+> Self-Improving Agent
+> Orchestrator
+> Knowledge
+> Repository
+> Stepwise Control
+> Provenance Tracking
+> Step Outcomes
+> GUI Control
+> Feedback
+> Request
+> Guidance
+> Human User
+> Learn-at-Test-Time
+> with Human Feedback
+
+(e) 
+
+> Mixed-Initiative
+> Agentic Architecture
+
+(a) 
+
+> Stepwise Control &
+> Provenance Tracking
+
+(c) 
+
+> Specialized
+> Visualization
+> Agents
+
+(b)                    
+
+> Assign Tasks
+> •Reflects on execution steps
+> •Request human feedback
+> •Updates knowledge
+> •Undo, branching, and reuse steps
+> •Store actions, visualization outputs,
+> and software states
+> •Step-by-step plans
+> •User editing and approval
+> •Constructs plans
+> •Delegates steps to agents
+> •Monitor execution
+> •Direct control via MCP
+> •Parameterized execution
+> •SciVis Python code generation
+> •RAG-based enhancement
+> •Iterative error correction
+> •File inspection
+> •Data loading and transformation
+> •Browser interaction via GUI control
+> •Online information retrieval
+
+Fig. 1: Overview of HiLSVA. (a) An orchestrator interprets user intent, constructs explicit stepwise plans, and coordinates specialized agents with bidirectional human–agent interaction. (b) Specialized visualization agents execute SciVis actions via direct API calls or GUI control and report execution outcomes to the orchestrator. (c) Workflows are represented as editable steps, planned and executed actions, software states, and visualization outputs, with these recorded to support undo, branching, and reuse. (d) Tool interactions run in isolated Docker containers, enabling safe, parallel execution across sessions. (e) A self-improving agent reflects on execution outcomes, assesses uncertainty, queries users when needed, and updates a knowledge repository during inference. 
+
+visualization remains fundamentally human-centered, designed to am-plify reasoning and support open-ended sensemaking rather than to replace human agency. 
+
+LLM-based collaboration systems. A growing line of work ex-plores how LLM agents can share initiative with humans in open-ended tasks. Cocoa [21] introduces a co-planning interface in which both the human and the agent decide on task decomposition upfront; however, the collaboration remains static, as dynamic handoffs or replanning are not supported. CowPilot [32] focuses on web navigation, providing pause, resume, and override capabilities that let humans recover from agent errors, yet lacks structured co-tasking or proactive negotiation beyond corrections. HULA [63] targets human-in-the-loop software development, demonstrating the benefits of pairing LLM agents with developers for code refinement, but its scope is restricted to a nar-row task domain. Magentic-UI [48] advances the state of the art with fine-grained, mixed-initiative interaction: humans and agents can dy-namically exchange control of subtasks, replan mid-execution, and jointly approve critical actions. 
+
+Human–agent collaboration in SciVis. SciVis poses unique chal-lenges for collaboration, as tasks are open-ended, visually grounded, and difficult to specify completely in advance. Recent agentic SciVis systems have explored different ways to reduce this interaction burden. VizGenie [11] dynamically generates and validates visualization scripts to extend system functionality, while NLI4VolVis [5] supports natural language interaction, open-vocabulary querying, and real-time editing for volume visualization. TexGS-VolVis [67] further enables expressive scene editing through textured Gaussian splatting. Zhang et al. [82] study semantic alignment for natural-language-driven flow visualiza-tion. InferA [65] supports multi-agent exploration of cosmological ensemble data. More recent systems also push toward increasingly autonomous workflows: SASAV [61] performs self-directed scientific analysis and visualization through automated data profiling, knowledge retrieval, and parameter exploration for visualization, while AI VIS co-scientist [46] studies an end-to-end agent harness for generating visual analysis applications from high-level task descriptions. These systems demonstrate the growing capabilities of LLM-based agents for SciVis, but primarily emphasize natural-language interaction, au-tonomous execution, or domain-specific analysis. 
+
+2.3 Evaluating Human–Agent Collaboration 
+
+Measuring the effectiveness of human–agent teams requires going beyond outcome metrics to capture process, interaction quality, and consistency. Collaborative Gym [57] provides a modular environment for benchmarking human-agent teaming, while τ-bench [79] evaluates tool-augmented agents through multi-turn interactions with humans and APIs under domain-specific constraints. Fragiadakis et al. [22] further argued that evaluation should integrate both quantitative and qualitative measures to assess interpretability, transparency, and the quality of collaboration. Extending this perspective to visualization, Ai et al. [2] emphasized systematic evaluation of agentic SciVis systems, and SVLAT [17] further highlights the importance of rigorously assessing human understanding and interpretation capabilities in SciVis. Building on these insights and the human-centered nature of SciVis workflows, we evaluate HiLSVA along three axes: (1) autonomous vs. human-in-the-loop operation to assess mixed-initiative benefits, (2) the effect of user expertise on interaction patterns and outcomes, and (3) case studies that illustrate system behavior in realistic SciVis scenar-ios. Unlike fully automated benchmarks such as NL2SciVis [45] and SciVisAgentBench [3], human-in-the-loop studies inherently involve participants with different backgrounds and expertise levels, making large-scale reproducible benchmark-style evaluation difficult. There-fore, we focus on controlled user studies and qualitative analyses that capture the collaborative nature of human–agent SciVis workflows. 
+
+3 OUR APPROACH 
+
+We implement HiLSVA on top of Magentic-UI [48], which provides the general mixed-initiative infrastructure used for planning, execution, and action approval. As illustrated in Figure 1, HiLSVA extends this foundation with SciVis-specific capabilities, including specific agent de-signs, provenance-aware execution with human oversight, multimodal visualization control via MCP tool calls, generated scripts, and direct user interaction, sandboxed environments, and test-time adaptation via human feedback. This section details these design choices across mixed-initiative agentic architecture, mechanisms for human oversight and safe execution, LTT adaptation, and interactive interface design. Although the current implementation centers on ParaView, the architec-ture is designed to support multiple SciVis backends. In Figure 2, we highlight the key mixed-initiative capabilities of HiLSVA. (c) Stepwise Rollback: Revert to any        
+
+> previous workflow step to inspect,
+> branch, or revise the visualization
+> (a) Joint Planning: Collaboratively create
+> and approve step-by-step plans
+> (b) Action Guards: Require explicit review
+> and approval for critical actions
+> (d) Interactive Execution: Interrupt and guide the task execution
+> using the visualization engine GUI directly or through chat
+> (e) Autonomy Control: Adjust the level of system
+> autonomy and user involvement during task execution
+> (f1) Knowledge Retrieval: Relevant guidance from expert knowledge,
+> prior agent experience, and accumulated human feedback
+> (f2) Self-Reflection & Human Feedback: Evaluate outcomes, detect
+> uncertainty, and query the user to improve subsequent decisions
+> (f) Learn-at-Test-Time (LTT): Adapt agent behavior during execution
+> via self-reflection and human feedback
+
+Fig. 2: Key mixed-initiative capabilities of HiLSVA. The system supports (a) collaborative planning, (b) guarded execution, (c) stepwise rollback, (d) interactive user steering, (e) autonomy control, and (f) LTT adaptation through retrieval, reflection, and human feedback. 
+
+3.1 Mixed-Initiative Agentic Architecture 
+
+Multi-agentic system design and orchestration. HiLSVA adopts a multi-agent architecture centered around a lead orchestrator that coordinates a set of specialized sub-agents. These include a web surfer 
+
+for browser-based information seeking, a code agent for generating and executing Python and shell scripts to manipulate SciVis tools, a 
+
+file surfer for file inspection and transformation, a ParaView agent 
+
+that directly controls the ParaView GUI via an MCP server, and a 
+
+self-improving agent that supports test-time learning through human feedback. These agents were selected to support backend-agnostic SciVis workflows. The orchestrator interprets user intent, constructs an explicit plan, assigns each step to an appropriate agent, tracks execution progress, and generates the final response to the user. The ParaView agent and code agent provide standard interfaces to visualization soft-ware, enabling the architecture to be extended to different backends, while the remaining agents extend the system with external information access and experience-driven adaptation. The system follows a plan-first workflow. Upon receiving a task, the orchestrator synthesizes a stepwise plan, with each step assigned to a specific agent. Rather than relying on multi-turn dialogue for refinement, HiLSVA exposes the plan as an editable artifact. Users may reorder steps, add or remove actions, or modify step instructions before execution, enabling precise and low-effort control over the planning stage (Figure 2(a)). Execution begins only after the user approves the plan. Once execution starts, HiLSVA operates in a mixed-initiative manner. At each step, the orchestrator monitors execution status, deter-mines whether the step has been completed, and may revise instructions or trigger replanning when necessary. Before executing a step, the or-chestrator may invoke the self-improving agent to retrieve relevant domain knowledge from an external knowledge base. After each step, the self-improving agent can reflect on outcomes and, when appropriate, solicit additional human guidance to refine subsequent actions. 
+
+Specialized visualization agents. In our current implementation, HiLSVA runs ParaView [1] inside isolated Docker environments, ensur-ing reproducible and safe execution. We selected ParaView because it is one of the most comprehensive and widely adopted SciVis platforms, providing a rich set of visualization and analysis capabilities while uniquely supporting multiple interaction modalities on the same visual-ization instance, including MCP tool calls, generated Python scripts, and direct GUI manipulation by the user, enabling seamless handoff between human and agent control. The code agent in HiLSVA adopts techniques similar to ChatVis [52], including structured prompt decomposition, retrieval-augmented gen-eration (RAG) over documentation and code examples, and iterative error checking with feedback-driven refinement until executable visu-alization scripts are produced. This design enables robust generation and correction of SciVis code scripts that involve complex tool APIs. To support reliable tool interaction, the ParaView agent interfaces with the visualization engine via ParaView-MCP [42]. The MCP server provides a higher-level, function-oriented abstraction over ParaView’s Python API, enabling the agent to invoke visualization operations via parameterized function calls rather than low-level scripting. The architecture itself is backend-agnostic. Visualization tools are encapsulated within sandboxed containers and accessed through spe-cialized agents. Consequently, other domain-specific visualization envi-ronments can be integrated without changing the overall system design. Examples include VMD [31] for molecular visualization, napari [59] for bioimage visualization, and TTK [69] for topology analysis. If corre-sponding MCP servers or tool interfaces (e.g., GMX-VMD-MCP [19], BioImage-Agent [47], TopoPilot [24]) are available, they can be incor-porated as additional specialized agents within the existing framework. 
+
+3.2 Human Oversight, Provenance, and Safe Execution 
+
+Human-in-the-loop user proxy. The user is treated as a first-class participant in the multi-agent team, and the orchestrator may delegate specific steps to the user as part of the shared execution process. During execution, HiLSVA supports mixed-initiative co-execution [21, 32, 48]. Users may intervene at any time through natural-language instructions or direct interaction with the visualization environment, such as ad-justing transfer functions or camera parameters when visual intent is difficult to specify in words. After intervention, users can return control to the agent, enabling fluid handoff between manual and automated execution (Figure 2(d)). Initiative also flows in the opposite direction: when the orchestrator or a specialized agent detects ambiguity, devia-tion from the approved plan, or insufficient confidence to proceed, the system proactively queries the user for clarification. Moreover, HiLSVA enforces explicit user approval for critical or potentially irreversible actions, such as executing generated code or sensitive SciVis tool calls (Figure 2(b)). Users can also adjust the level of system autonomy, balancing agent autonomy and human intervention (Figure 2(e)). 
+
+Stepwise control and provenance tracking. Reproducibility and accountability are fundamental requirements in scientific research and are closely tied to provenance [23]. Provenance provides a structured record of how results are produced, enabling interpretation, verification, and reuse of computational workflows. Prior work in visualization and data analysis has demonstrated the value of provenance for supporting sensemaking, reflection, and responsible system behavior [10, 49, 73]. HiLSVA provides fine-grained, stepwise control through an explicit workflow representation, allowing users to revisit and revise their anal-ysis as it unfolds. For each execution step, the system records both 
+
+prospective provenance (the planned sequence of actions) and retrospec-tive provenance (the executed actions, software states, and visualization outputs). Users can select any prior step to restore the corresponding state, modify the remaining plan from there, and continue execution along the updated workflow plan (Figure 2(c)). In addition to tracking individual executions, HiLSVA supports storing and reusing complete workflow plans. After a task is completed, users may choose to save the validated plan along with its associated execution provenance. Saved plans can be replayed on the original task, used as guidance for new tasks, or automatically retrieved by the orchestrator. Unlike plan-level retrieval, this workflow reuse is stateful. Users can restore an arbitrary step within a saved workflow together with the corresponding visualization software state, inspect intermediate results, branch from that point, and continue execution with revised instructions. This enables provenance-aware reuse and refinement of entire SciVis workflows rather than only reusing planning artifacts. 
+
+Sandboxed execution environments. HiLSVA employs plug-and-play sandboxed execution to ensure safety and reproducibility. Each dialogue session runs within its own isolated Docker environment for the visualization engine (i.e., ParaView), code execution, web browsing, and file access. These containers share a controlled workspace mapped to the local file system, enabling coordinated interaction among agents while preventing unintended side effects across sessions. HiLSVA also supports parallel execution of multiple tasks, allowing users to safely experiment with different settings without compromising the host system. Users can switch between active sessions, each backed by an independent ParaView Docker instance, with a session status indicator that indicates whether user input is required. 
+
+3.3 LTT with Human-in-the-Loop Feedback 
+
+LTT refers to a model’s ability to adapt its behavior during inference after deployment. For LLMs, common LTT mechanisms include in-context or few-shot learning [12, 18], RAG [38], and, more recently, test-time fine-tuning [30]. In the context of agentic systems, self-learning agents aim to improve autonomously through interaction with their environment [20, 62]. HiLSVA builds on this line of work by explicitly incorporating humans into the test-time learning loop [26], enabling agents to adapt through structured self-reflection and targeted human feedback during task execution (Figure 2(f)). 
+
+Problem formulation. HiLSVA follows a plan-first-then-execute workflow. For a given task, the agent team executes a sequence of steps 
+
+S = ( s1, s2, . . . , sN ), where each step corresponds to a dynamically evolving environment E = ( e1, e2, . . . , eN ). To complete step si, the agents perform a sequence of actions ai ∈ A . The environment state ei
+
+includes the visualization engine state, auxiliary tool states, intermedi-ate files, and relevant knowledge retrieved from an external repository. To operate effectively in this changing environment, the agent team maintains an internal state Θ and receives guidance from a human user 
+
+H within a predefined interaction budget B.
+
+LTT. During execution of step si, the agent team maintains an inter-nal state θi ∈ Θ and follows a decision policy π : E × Θ → A , which produces actions ai = π(ei, θi). We model LTT as an update of the in-ternal state after each step θi+1 = f (θi, ei, ai, ri; qi, hi), where ri denotes the agent’s self-reflection after completing step si, qi is a clarification query posed to the user, and hi is the corresponding human feedback. 
+
+Knowledge updating with human feedback. In HiLSVA, the inter-nal state of the agent team is instantiated as a vector-based knowledge repository Ri, i.e., θi ≈ Ri. Each knowledge item is represented by a natural language caption and indexed using a BERT-based embedding of that caption. The initial repository R1 is seeded with general SciVis knowledge, and is incrementally augmented with insights derived from prior task executions and human feedback. Before executing step si, relevant knowledge items are retrieved from 
+
+Ri and incorporated into the environment state ei to guide agent actions. Retrieval is based on a composite score defined as score = wvalid ·
+
+ssemantic · sconfidence · srecency , where wvalid ∈ { 0, 1} denotes a validity weight indicating whether an item is considered outdated, ssemantic is the cosine similarity between the BERT embedding of the step description for si and the embedding of the knowledge caption, and sconfidence ∈
+
+[0, 1] reflects the reliability of the knowledge item. Knowledge derived from human feedback is assigned a confidence score of 1, while insights obtained through self-reflection receive confidence scores graded by the self-improving agent based on its assessment of action reliability and execution outcomes. The recency score is defined as an exponential decay, srecency = exp (−λ · ∆t), where ∆t is the normalized time since the item’s last validation and λ is a decay rate. Certain foundational knowledge items (e.g., core SciVis principles) are marked as non-expiring and assigned a recency score of 1. After executing step si, the self-improving agent performs a self-reflection to assess execution quality, assigns a confidence score, and summarizes any ambiguities requiring clarification as a query qi. Each query incurs a cost c(qi) > 0 , set uniformly to 1 in our experiments for simplicity. In principle, different query types could be assigned different costs depending on their cognitive or interaction burden. If the confidence score falls below a predefined threshold and the accumulated cost satisfies ∑ij=1 c(q j) ≤ B, the agent requests human feedback hi =
+
+H (ei, ai, qi). The knowledge repository is then updated according to Ri+1 = g(Ri, ri, qi, hi), where the update function g constitutes the core of the LTT function f . g stores both self-reflection summaries and human feedback as new knowledge items, along with associated metadata including timestamps, confidence scores, and LLM-generated captions. These metadata are subsequently used to support informed retrieval in future steps. 
+
+Self-improving agent and user expertise. LTT with human feed-back in HiLSVA is implemented via retrieval-based adaptation rather than model weight updates or architectural changes. A dedicated self-improving agent observes all actions and environment states, performs confidence assessment and self-reflection after each execution step, and decides whether to request human input. Validated insights and self-reflections are stored as natural-language knowledge items asso-ciated with confidence and recency scores. These knowledge items are retrieved to enable adaptation through accumulated experience and human feedback. This mechanism can be disabled to support abla-tion studies that quantify its impact on task performance. HiLSVA is designed to collaborate with users of varying expertise levels, includ-ing non-experts, domain experts, and SciVis experts; accordingly, our evaluation examines how user expertise influences interaction patterns, collaboration dynamics, and outcome quality. Mixed-Initiative            
+
+> Chat Widget
+> (a)
+> Real-time Visualization
+> Engine & Web Browser
+> (c)
+> Workflow Monitor Panel (b)
+> Plan Gallery &
+> Knowledge Base
+> (d)
+> Fig. 3: Overview of the HiLSVA interface. (a) Mixed-initiative chat widget
+> for natural language planning, step refinement, and uncertainty prompts. (b) Workflow monitor panel that displays execution progress and step status, and supports clickable state transitions for returning to prior steps. (c) Real-time visualization engine and web browser , where the agent’s actions and user interventions directly operate on the ParaView rendering environment. (d) Plan gallery and knowledge base that accumulate validated workflows and learned experience to support provenance-aware reuse and LTT adaptation.
+
+3.4 Interactive Interface 
+
+HiLSVA provides an interface that tightly couples planning, execution, and visualization. The interface consists of three primary components: a mixed-initiative chat widget for natural-language interaction, a work-flow monitor panel for tracking execution progress and provenance, and a real-time visualization engine and a web browser . As shown in Figure 3, these components operate in synchrony to support collabo-rative SciVis workflows. The mixed-initiative chat widget serves as the primary interaction channel for user–agent interaction. Through chat, users can specify tasks, inspect and edit execution plans, approve or reject actions, review generated code, and provide feedback in re-sponse to agent self-reflection. The workflow monitor panel exposes the current execution state as a stepwise process. Users can inspect progress, undo completed steps, and return to prior states using the recorded provenance. In parallel, the visualization engine and the web browser update in real time as agents interact with external tools. Users may intervene directly by taking control of the GUI at any point, then seamlessly resume automated execution. In addition to these core components, HiLSVA includes a plan gallery and a knowledge base 
+
+that present previously saved workflows, accumulated knowledge, and their associated provenance, as well as a session monitor sidebar that allows users to manage multiple concurrent task sessions and view their execution status. 
+
+4 RESULTS AND EVALUATION 
+
+This section presents our approach to analyzing and evaluating HiLSVA. We combine structured case studies, a controlled user study followed by surveys and interviews, and multimodal analysis integrating benchmark-driven quantitative metrics and qualitative evaluations. Together, these methods enable a comprehensive investigation of how mixed-initiative agentic systems can support data exploration, visualization construction, and scientific analysis. For the backbone LLM, we adopt GPT-5.2 for the orchestrator and Claude-Sonnet-4.6 for the other tool agents. The Institutional Review Board at our University approved the user study conducted in this work. Before accessing the study materials, all participants reviewed and signed an informed consent form. They received an explanation of the study’s objectives and procedures, and consent was documented by completing a hard-copy consent form. 
+
+4.1 SciVis Stages and Case Study Design 
+
+Our evaluation is structured around three canonical SciVis stages: data exploration , data visualization , and scientific insight , which guide us in designing case studies of increasing analytic complexity. In the 
+
+data exploration stage, users familiarize themselves with unfamiliar multidimensional datasets by selecting visualization techniques, identi-fying salient structures, and determining how to begin analysis. This aligns with our basic action tasks , which test HiLSVA’s reliability in executing foundational operations such as loading data, adjusting views, filtering, and generating renderings. The data visualization 
+
+stage focuses on developing iterative, mixed-initiative workflows to address analytical questions. Here, both user and agent collaborate through planning, refinement, and clarification. This corresponds to our visualization workflow tasks , which require multi-step reasoning, coordinated pipeline construction, and negotiation to isolate regions of interest, refine transfer functions, or generate comparative views. Finally, the scientific insight stage focuses on moving beyond direct visualization of raw data to derive, compare, and interpret scientifi-cally meaningful features. This parallels our scientific analysis tasks ,which involve analysis-driven, open-ended objectives such as comput-ing derived quantities, identifying structural patterns, and extending workflows across different simulation conditions. HiLSVA’s adaptive behavior and the ability to reuse previously learned workflows are particularly critical at this stage. By aligning evaluation stages with progressively complex task classes, we systematically examine when and how human–agent collaboration enhances analytic reasoning. 
+
+4.2 Case Studies 
+
+We present five case studies of varying complexities to showcase HiLSVA’s capabilities. These include two basic action tasks (foot and hurricane), two visualization workflow tasks (tornado and combus-tion), and one scientific analysis task (half-cylinder). For brevity, the case studies begin after a visualization strategy has been selected. In practice, HiLSVA supports co-planning to help users identify suitable visualization and analysis techniques from high-level goals. 
+
+Foot. The dataset is a CT scan of a human foot with a resolution of 125 ×255 ×183. We use this example to illustrate a basic action task. As shown in Figure 4, the user first requests an initial isosurface visualization to reveal bone structures while distinguishing bone from surrounding skin and soft tissue. The HiLSVA orchestrator generates a plan that loads the dataset, extracts isosurfaces that separate bone from surrounding tissue, and assigns colors to highlight anatomical structures. After the plan is approved, the ParaView agent executes these steps and produces an initial isosurface visualization. “Load the Foot dataset 
+
+> (125 ×255 ×183 grid, float32).
+> Use isosurface rendering to
+> separate skin/soft tissue from bone.
+> Render bones in white and skin/soft
+> tissue in warm orange.”
+> ParaView Agent
+> Generated isosurfaces at 85
+> (skin/soft tissue, warm orange)
+> and 140 (bone, white).
+> “The metatarsals are
+> visible, but the
+> phalanges are only
+> partially visible.”
+> (The user compares the
+> isosurface rendering
+> with the anatomy
+> reference and takes
+> control of the ParaView
+> GUI to perform fine-
+> grained adjustments to
+> the isovalues and
+> camera view.)
+> Plan Edit &
+> Approval Planning
+> Orchestrator Plan
+> 1. Load the Foot dataset.
+> 2. Extract an isosurface at value
+> 85 for skin and soft tissue,
+> colored warm orange.
+> 3. Extract an isosurface at value
+> 140 for bones, colored white.
+> Web Browser
+> Found a labeled human foot
+> anatomy image showing the
+> metatarsals and phalanges
+> and saved it as a reference.
+> “Download a labeled
+> human foot anatomy
+> image from the internet for
+> reference and save it to
+> /workspace/foot/
+> anatomy.png. ”
+> ParaView GUI
+> Final visualization
+> refined by the user.
+
+Fig. 4: Case study of the foot (basic action task). HiLSVA generates an initial isosurface visualization, retrieves an anatomy reference from the web, and supports user-driven refinement through direct GUI interaction. 
+
+Next, the user asks HiLSVA to download a labeled anatomy image of the human foot showing the metatarsals and phalanges. The web surfer retrieves this reference from the internet, providing anatomical context that is not directly available from the raw visualization. By comparing the current isosurface with the anatomical reference, the user observes that the metatarsals are clearly visible, whereas the pha-langes are only partially visible. Further refinement through natural language alone would require specifying detailed parameters, such as precise isovalues or camera adjustments, which can be cumbersome. Instead, HiLSVA’s mixed-initiative interaction allows the user to di-rectly control the ParaView GUI and make fine-grained adjustments to the visualization. Through this interactive refinement, the user quickly improves the isosurface rendering and makes the anatomical structures more clearly visible. This example demonstrates how HiLSVA sup-ports data exploration through iterative visualization refinement and contextual information retrieval. “I have a Hurricane Isabel temperature   
+
+> dataset (500 ×500 ×100 grid, float32). I would
+> like to visualize the volumetric data using a
+> horizontal slice along the z-axis to examine
+> the hurricane structure. Please apply a preset
+> colormap to visualize the slice.”
+> ParaView Agent
+> A horizontal slice was
+> created at z = 49.5, and
+> the “Color to Warm”
+> colormap was applied.
+> Plan Edit &
+> Approval Planning
+> Orchestrator Plan
+> 1. Load the Hurricane dataset.
+> 2. Create a horizontal slice at z =
+> 49.5 along the z-axis.
+> 3. Apply the preset colormap
+> “Color to Warm.”
+> ParaView Agent
+> Created a histogram of the
+> sliced data.
+> Value range: −37 to −23.
+> ParaView Agent
+> Added black contour lines
+> with linearly sampled
+> values from -37 to -23.
+> “The visualization does
+> not clearly reveal the
+> hurricane structure.
+> Please add black contour
+> lines on top of the slice. ”
+> Orchestrator Replan
+> 1. Compute a histogram
+> of the sliced data to
+> determine the value
+> range.
+> 2. Generate linearly
+> sampled contour lines
+> within this range and
+> render them in black.
+
+Fig. 5: Case study of the hurricane (basic action task). HiLSVA first con-structs a horizontal slice of the temperature field, then analyzes the data distribution and overlays contour lines to better reveal the temperature distribution. 
+
+Hurricane. The dataset is an atmospheric simulation of Hurricane Isabel with a resolution of 500 ×500 ×100. In this example, we use the temperature field at a single time step to examine the hurricane structure. We use this example to demonstrate a basic action task supported by HiLSVA. As shown in Figure 5, the user first requests a visualization of the hurricane by creating a horizontal slice along the z-axis and applying a preset colormap. The HiLSVA orchestrator generates a plan that loads the dataset, extracts a horizontal slice at z = 49 .5, and applies the preset Color to Warm colormap. After plan approval, the ParaView agent executes these steps and produces an initial slice visualization. However, the resulting image does not clearly reveal the hurricane structure. The user therefore asks the system to overlay contour lines on the slice to highlight the temperature distribution better. In response, the orchestrator first computes a histogram of the sliced data to determine the value range, then generates contour lines using linearly sampled values within this range. The ParaView agent executes these steps and overlays black contour lines on the slice, making the hurricane’s structure and temperature gradients more clearly visible. This example illustrates how HiLSVA supports exploratory analysis by refining visual representations to reveal salient temperature structures. 
+
+Tornado. The dataset is a vector field representing a simulated tor-nado, with a resolution of 64 ×64 ×64. We use it to show a visualization workflow task supported by HiLSVA. As shown in Figure 6, the user first specifies basic requirements and asks the system to load the dataset. The user then requests a streamline visualization using ParaView’s 
+
+Stream Tracer filter with a Point Cloud seeding strategy. However, the user is uncertain about the optimal parameter configuration, includ-ing the seeding sphere center, radius, and maximum streamline length, and therefore wishes to explore alternative settings. “Load the Tornado dataset (float, little endian…). Set the  
+
+> background to light gray. Create streamlines using the Stream
+> Tracer filter with Point Cloud seeding strategy, and explore seed
+> placement to obtain an optimal visualization. Perform three trials,
+> varying only one parameter per step (seeding sphere center,
+> radius, or maximum streamline length). After completing the three
+> trials, ask me for clarification.”
+> ParaView Agent
+> “Three trials are complete. Please select the preferred result or
+> request further refinement. ”
+> Trial 1: center [31.5, 31.5,
+> 31.5], radius 10, max
+> length 512.
+> Trial 2: center [31.5, 31.5,
+> 47.5], radius 10, max
+> length 512.
+> Trial 3: center [31.5, 31.5,
+> 31.5], radius 20, max
+> length 512.
+> “Trial 2 looks the best.
+> Please proceed to add
+> arrow glyphs to the
+> original vector field. ”
+> Go back to Trial 2.
+> Retrieve from Knowledge Base
+> Expert knowledge: arrow glyphs
+> should be oriented by the velocity
+> vector and scaled by velocity
+> magnitude.
+> ParaView Agent
+> “Glyphs added and scaled by
+> velocity magnitude. ”
+> Plan Edit &
+> Approval
+> Planning
+> Orchestrator Plan
+> 1. Load Tornado data and set light gray background.
+> 2. Stream Tracer Trial 1: center [31.5, 31.5, 31.5], radius 10,
+> max length 512.
+> 3. Trial 2: center [31.5, 31.5, 47.5], others unchanged.
+> 4. Trial 3: center reset, radius 20.
+> 5. Show results and request user selection or refinement.
+> Self Reflection
+> Are the current visualization results satisfactory?
+> Are there additional parameters that could
+> improve the visualization?
+> ParaView Agent
+> “Tube radius updated from 0.1 to
+> 0.25. Final visualization saved. ”
+> “Yes, please make the stream tubes
+> wider. Save the final visualization to
+> /workspace/tornado.png. ”Request Guidance from Human
+> For streamline visualization, I can also adjust the
+> tube radius to improve visual clarity. Would you
+> like me to increase the tube radius?
+> I can also save the result as a screenshot.
+
+Fig. 6: Case study of the tornado (visualization workflow task). HiLSVA explores parameters for visualizing streamlines, supports rolling back to the selected trial, and adds knowledge-guided glyph visualization. 
+
+In response, the HiLSVA orchestrator generates a five-step plan. The workflow begins by loading the dataset and setting the background color. The system then performs three parameter trials. Trial 1 places the seeding sphere at the volume’s center [31.5, 31.5, 31.5] (the data extent is [0, 63]) with radius 10 and maximum streamline length 512. Trial 2 shifts the seeding sphere’s center to [31.5, 31.5, 47.5] while keeping other parameters fixed. Trial 3 moves the seeding sphere’s center back to the volume’s center and increases its radius to 20. HiLSVA presents the resulting visualizations and prompts the user to select the preferred configuration or request further refinement. After inspecting the results, the user identifies Trial 2 as optimal and requires no further tuning. Using HiLSVA’s provenance-aware workflow monitor, the user can instantly restore the ParaView state corresponding to Trial 2 with a single click. All parameters and render-ing states are faithfully recovered. Building on the selected streamline visualization, the user next requests a Glyph filter on the original vector field using arrow glyphs. The self-improving agent consults the knowl-edge repository and retrieves expert guidance indicating that glyphs should be oriented by the velocity vector and scaled by velocity mag-nitude. Guided by this knowledge, the orchestrator generates a new plan and instructs the ParaView agent to produce colored arrow glyphs scaled by velocity magnitude using the same color map. After generating the glyph visualization, the self-improving agent performs a self-reflection step to evaluate the results and identify pa-rameters that could further improve clarity. It suggests adjusting the streamline tube radius and asks the user for confirmation. The user agrees and requests wider stream tubes. The ParaView agent then ap-plies a Tube filter and increases the tube radius from 0.1 to 0.25, and saves the final visualization. Finally, the user may optionally preserve the workflow for future reuse. HiLSVA stores not only the stepwise plan but also the full prove-nance record, including ParaView states and intermediate visualization snapshots. These artifacts can be reloaded in later sessions or referred to in other sessions. This case demonstrates how mixed-initiative inter-action helps users evaluate alternatives and refine visualization designs. 
+
+Combustion. The dataset is a multivariate, time-varying simulation of turbulent reacting flow. In this example, we use two scalar variables: 
+
+mixfrac , representing the mixture fraction of fuel and oxidizer, and 
+
+Y_OH , the mass fraction of the hydroxyl radical, a commonly used indicator of reaction zones in combustion. We use a downsampled version of the dataset containing 33 timesteps, with a resolution of 240 ×360 ×60. As shown in Figure 7, the user first requests visualiza-tion of the time-varying Y_OH variable and asks the system to export the animation as a video. The HiLSVA orchestrator generates a plan comprising three steps: determining the number of timesteps in the dataset, loading the time-varying Y_OH field, and performing volume rendering using the previously used colormap before exporting the ani-mation. To determine the number of timesteps, the file surfer inspects the directory structure and identifies 33 raw data files corresponding to individual timesteps. 
+
+Fig. 7: Case study of the combustion (visualization workflow task). HiLSVA visualizes the time-varying Y_OH scalar field using volume ren-dering, exports an animation, and then loads the mixfrac scalar field to generate an isosurface visualization across all timesteps. 
+
+Before visualization, the self-improving agent retrieves a previously learned configuration from the knowledge repository, suggesting the use of a dedicated colormap for volume rendering. This configuration was learned from prior interactions with the user and stored as reusable knowledge, enabling HiLSVA to adapt visualization parameters to user-specific preferences. Guided by this retrieved knowledge, the ParaView agent loads all timesteps of the Y_OH field and performs volume rendering across the sequence. The resulting frames are then exported as a video at the requested frame rate. After the animation is generated, the user requests further analysis using another variable in the dataset, mixfrac , which shares the same temporal resolution. The user asks the system to load the time-varying field and extract an isosurface with an isovalue of 0.4. The ParaView agent loads the 33 mixfrac timesteps, generates an isosurface visual-ization for each, and exports the animation as an image sequence. This example highlights how HiLSVA supports iterative workflow refine-ment for multivariate, time-varying datasets. 
+
+Half-cylinder. The dataset is a small ensemble of numerical simula-tions of incompressible 3D flow around a half-cylinder. Each ensemble member corresponds to a different Reynolds number, and the simula-tions were resampled from adaptive unstructured grids onto a regular grid. In this example, we use a single timestep from the Reynolds number Re = 640 case on a regular grid of 640 ×240 ×80. We use this example to demonstrate a scientific analysis task supported by HiLSVA. Unlike the previous workflow-oriented examples, this case focuses on analysis-driven exploration. Users are not required to know specific vortex-identification techniques, such as the Q-criterion or 
+
+λ2 in advance. Instead, users may begin with high-level goals, such as exploring flow structures or identifying regions of complex behav-ior. Through co-planning and iterative dialogue, HiLSVA can propose candidate analysis strategies, explain their purpose, and execute the cor-responding workflow. Domain experts may choose to specify particular analysis methods directly, which can further accelerate the process, but such knowledge is not required to initiate the analysis. “Load the half-cylinder vector field                      
+
+> dataset (float32, 640x240x80, 3
+> components per point).
+> First, add a Glyph filter using arrow
+> glyphs to visualize vector field.”
+> Code Agent
+> I have created the Q-criterion computation
+> script. Do you approve running it?
+> “Now load the Q-criterion field and
+> choose a suitable transfer function
+> to show only the vortex regions. Use
+> the Turbo colormap with range 0 to
+> 0.025. For the opacity map, set
+> value 0 to opacity 0, value 0.002 to
+> opacity 0.5, and value 0.025 to
+> opacity 1.”
+> ParaView Agent
+> Added a new layer using the Turbo colormap to
+> highlight regions with Q > 0.
+> Plan Edit &
+> Approval
+> Planning
+> Orchestrator Plan
+> 1. Create a Python script to compute the Q-
+> criterion for the half-cylinder dataset.
+> 2. Run the script and save the output as a raw
+> scalar field with the same dimensions as the input.
+> ParaView Agent
+> Glyph visualization created with 2500 sample
+> points and a scale factor of 15. “This visualization does not reveal the
+> flow structure clearly. Let us create a
+> script to compute the Q-criterion over
+> the vector field, which:
+> 1. Computes: Q = ½(|| Ω|| ²- || S|| ²) where
+> S=½(J+Jᵀ), Ω=½(J-Jᵀ), and J=
+> velocity gradient tensor;
+> 2. Saves the result as a scalar field;
+> 3. Vortex criterion: Q > 0.”
+> Console Output
+> Computing Q ...
+> Q stats: min=-1.407e-01 max=1.676e-01
+> mean=-7.040e-06
+> Voxels with Q > 0: 3540510 / 12288000
+> (28.81%)
+> Output written to /workspace/half-
+> cylinder_qcriterion.raw
+> File Surfer
+> The file /workspace/half-
+> cylinder_qcriterion.raw exists.
+> “Good. Now create another script to compute
+> λ₂over the original data, which:
+> 1. Computes: λ₂(second eigenvalue of S²+Ω²).
+> 2. Saves the result as a scalar field.
+> 3. Vortex criterion: λ₂< 0.”
+> Load the λ₂field and add three
+> isosurfaces at -1e-4, -1e-3, and -1e-2
+> to identify vortex structures, and
+> generate a screenshot. Also generate
+> a screenshot of the Q-criterion volume
+> rendering.”
+> λ₂isosurface rendering
+> Layer 1: isovalue -1e-4, yellow, opacity 0.3
+> Layer 2: isovalue -1e-3, red, opacity 0.5
+> Layer 3: isovalue -1e-2, blue, opacity 1.0
+> ParaView Agent
+> Both visualizations were generated and saved as screenshots.
+> Q-criterion volume rendeing
+> “The current visualization shows the
+> vorticity structure for Reynolds number
+> Re = 640. Now help me explore how
+> Reynolds number influences vorticity.
+> Please compute the Q-criterion and λ₂
+> in batch for the other datasets with
+> different Reynolds numbers.”
+> ...
+> Self Reflection
+> Knowledge learned from prior executions: for
+> vortex identification, use scripts to compute the
+> Q-criterion and visualize regions with Q > 0
+> using volume rendering.
+> Learning Saved to the Knowledge Base
+> Execution
+> Approval
+> Retrieve from Knowledge Base
+> Agent learning: “for vortex
+> identification, use scripts to compute
+> the Q-criterion and then use volume
+> rendering to show regions with Q > 0.”
+> Code Agent
+> Similar to Q-criterion computation, I
+> created another script to compute λ₂.
+
+Fig. 8: Case study of the half-cylinder (scientific analysis task). HiLSVA begins with a glyph-based visualization of the vector field, then computes and visualizes the Q-criterion and λ2 fields to reveal vortex structures. The system further saves this successful workflow as reusable knowledge and supports extending the analysis to additional Reynolds numbers. 
+
+As shown in Figure 8, the user first requests a glyph-based visualiza-tion of the vector field using arrow glyphs. The ParaView agent then loads the dataset and generates the initial glyph visualization. However, the resulting visualization does not clearly reveal the underlying flow structures. Rather than stopping at this initial rendering, the user asks the system to help identify vortex regions through more scientifically meaningful analysis. This shift from direct depiction to derived-field analysis exemplifies a characteristic of scientific analysis tasks: the goal is not only to visualize the data but also to uncover latent structures that support interpretation. In response, HiLSVA generates a plan to compute the Q-criterion, asks for approval before executing the gen-erated script, and saves the resulting scalar field. The script computes 
+
+Q = 12
+
+ ∥ΩΩΩ∥2 − ∥ S∥2, where S = 12 (J + J⊤) and ΩΩΩ = 12 (J − J⊤) are the symmetric and antisymmetric parts of the velocity gradient ten-sor J. The ParaView agent then loads the computed Q-criterion field and applies volume rendering with a user-specified transfer function to highlight regions with Q > 0, revealing coherent vortex structures much more clearly than the initial glyph rendering. Next, the user asks HiLSVA to analyze the flow further using the λ2
+
+method, another vortex identification measure. Similar to the previous step, the system generates and executes a second script to compute 
+
+λ2 from the original vector field, saves the result as a scalar field, and loads it into ParaView. The ParaView agent then creates three isosurfaces at different negative isovalues to visualize vortex structures at multiple strengths. Compared with the Q-criterion volume rendering, the λ2 visualization offers an alternative perspective on the organization and relative intensity of vortical flow features. Together, these two visualizations of derived fields provide complementary evidence for interpreting the wake structure behind the half-cylinder. This case study also highlights HiLSVA’s mixed-initiative and self-improving capabilities during scientific analysis. After computing the Q-criterion and visualizing regions with Q > 0, HiLSVA summarizes this successful workflow through self-reflection and stores it as reusable knowledge. When the user later requests the λ2 analysis, the system retrieves this prior experience on vortex identification to guide the subsequent workflow, reducing the need for the user to specify each intermediate step manually. After both visualizations are generated, the user can compare their results and decide how to proceed. Finally, after obtaining the Q-criterion and λ2 visualizations for the 
+
+Re = 640 case, the user asks the system to extend the same analysis to the other data with different Reynolds numbers. HiLSVA can there-fore apply these computations in batch, although we do not show the additional results here due to space limitations. Overall, this example illustrates how HiLSVA supports scientific analysis by going beyond di-rect visualization of raw data and enabling users to derive, validate, and compare scientifically meaningful flow features. As a mixed-initiative system, HiLSVA supports human-guided scientific analysis rather than autonomous scientific discovery. Assessing whether such workflows lead to discoveries requires longitudinal studies with domain scientists and remains an important direction for future work. 
+
+4.3 User Study 
+
+Experiment setup. We conducted a controlled user study with 12 participants under the University’s IRB protocol. To examine how HiLSVA supports users with different mental models and prior expe-rience, we recruited participants across three expertise levels: three SciVis experts, four domain scientists with familiarity with scientific datasets but limited experience with visualization tools, and five novices with neither domain nor visualization expertise. Each participant used HiLSVA on a workstation equipped with an NVIDIA RTX 5090 GPU and two 32-inch displays at 3840 ×2160 resolution. All participants completed the full study and received $30 compensation. Two authors administered the study sessions, while all tasks were completed inde-pendently by the participants. Throughout the study, HiLSVA logged user-agent interactions and workflow plans and generated visualizations for subsequent quantitative and qualitative analyses. To evaluate the effect of human involvement, we studied three au-tonomy configurations with increasing degrees of mixed initiative: (1) full-autonomous mode, in which the system executed with minimal user intervention; (2) half-autonomous mode without LTT, in which participants could provide guidance but the self-improving component was disabled; and (3) mixed-initiative mode with LTT enabled, in which the system could retrieve prior knowledge, reflect on uncertainty, and proactively solicit user feedback. Because these modes vary in both hu-man involvement and the availability of LTT, our study does not isolate the independent effect of LTT. Since LTT depends on user feedback to accumulate and retrieve knowledge, a controlled ablation would also require standardizing user interactions, which we leave to future work. For the first three tasks (hurricane, foot, and tornado), each partici-pant was assigned a different autonomy mode for each case, ensuring that each participant experienced all three modes exactly once. We further balanced assignments across participants so that each mode was explored the same number of times. For the fourth task (combustion), participants were allowed to choose their preferred autonomy setting, enabling us to observe which level of control they naturally favored after gaining experience with the system. We did not include the half-cylinder case in the user study because interpreting the Q-criterion and 
+
+λ2-based vortex identification requires substantial domain knowledge in flow analysis, which could be difficult for novice participants to understand reliably. 
+
+Tasks and procedure. The study followed a four-phase workflow: introduction, exploration, task execution, and post-task survey. In the introduction phase, participants watched a short demonstration of HiLSVA using the entropy field from the Richtmyer–Meshkov insta-bility simulation. They were introduced to the main interface and its interaction mechanisms. In the exploration phase, they were given time to freely interact with the system on the same dataset, ask ques-tions, and become comfortable with the workflow before beginning the recorded task session. In the task execution phase, participants completed four visualiza-tion tasks spanning both basic operations and more complex workflow construction. The hurricane case involves slice-based scalar field vi-sualization, histogram inspection, and contour refinement. The focus of the foot case is on isosurface rendering, external anatomy reference retrieval, and visualization refinement for clearer bone identification. The tornado case examines vector field visualization through iterative streamline exploration, trial selection, rollback, and glyph-based refine-ment. The combustion case involves time-varying multivariate analysis, including timestep identification, volume rendering, and animation of the Y_OH field, as well as isosurface animation of the mixfrac field. In all tasks, participants also answered several interpretation questions about the resulting visualizations, allowing us to assess both task com-pletion and understanding of the data. After completing the interactive tasks, participants filled out a post-study questionnaire covering background, usability, interpretability, perceived transparency, and the quality of human–agent collaboration. The questionnaire was designed as a task-specific instrument to eval-uate key design goals of HiLSVA. It captures participants’ subjective perceptions of system transparency, rather than providing a compre-hensive evaluation of trust calibration. These survey responses, along with the recorded interaction logs and videos, were used to support our qualitative analysis of how users with varying levels of expertise engaged with HiLSVA across different autonomy settings. The detailed user study protocol is provided in the supplementary material. 
+
+Table 2: User study results. Time is reported in minutes. The first three tasks use balanced assignments across autonomy modes (FA: full-auto, HA: half-auto, MI: mixed-initiative). In Task 4 (combustion), participants selected their preferred mode, and we report the chosen mode and its execution time. The last row reports mean ±std.                                                                                                                       
+
+> Pcp. Expertise Exp. Time Comp. Time FA Time HA Time MI Time Task 4 Time Task 4 Mode Q&A Accuracy P1 expert 15 67 13 22 24 8MI 12 / 12 P2 scientist 947 6915 17 MI 12 / 12 P3 novice 755 18 12 13 12 HA 11 / 12 P4 novice 10 38 7714 10 HA 12 / 12 P5 novice 541 10 13 10 8FA 12 / 12 P6 expert 437 911 98FA 12 / 12 P7 novice 14 37 10 10 98MI 11 / 12 P8 expert 751 11 16 14 10 FA 12 / 12 P9 scientist 527 7686FA 12 / 12 P10 scientist 10 54 10 15 13 16 FA 12 / 12 P11 scientist 451 10 11 18 12 FA 12 / 12 P12 novice 536 7815 6FA 11 / 12 —7.92 ±3.75 45.08 ±11.03 9.83 ±3.27 11.67 ±4.44 13.50 ±4.46 10.08 ±3.58 —11.75 ±0.45 / 12
+
+Task performance. As summarized in Table 2, HiLSVA supported strong task performance across all 12 participants: all participants completed the study, and accuracy on the domain-specific interpretation questions averaged 11.75 out of 12. For the first three tasks, we ensured that each task was explored the same number of times under each autonomy mode, enabling a fair comparison of execution time. Under this controlled setup, execution time was lowest in the full-auto mode (9.83 ± 3.27 min), followed by half-auto mode ( 11 .67 ± 4.44 min), and highest in mixed-initiative mode ( 13 .50 ± 4.46 min). Because each participant experienced all three modes, we tested these differences with a Friedman test, which was not significant ( χ2(2) = 5.09 , p =
+
+0.078 , Kendall’s W = 0.19 [34]); Holm-corrected pairwise Wilcoxon tests likewise showed no significant pair, though full-auto versus mix-initiative had a large effect size (Cliff’s δ = −0.51 [14]). We therefore interpret the monotonic increase in mean execution time not as a reliable speed difference, but as a tradeoff between oversight and efficiency, where greater user involvement incurs additional interaction time while enabling verification and intervention. Task performance also did not differ significantly across expertise levels. Grouping participants into SciVis experts ( n = 3), domain experts ( n = 4), and non-experts ( n = 5), Kruskal-Wallis tests showed no significant group differences in task completion time ( H = 0.92 ,
+
+p = 0.63 ) or exploration time ( H = 0.28 , p = 0.87 ), and accuracy on embedded domain-interpretation questions was uniformly high ( 100% ,100% , and 95% for the three groups). HiLSVA thus enables non-experts to achieve expert-comparable performance, and we observed no data hallucinations (fabricated values or non-existent fields) in the logged sessions. Participants’ autonomy choices in the final task further show that no single interaction style is universally optimal. After experiencing all three autonomy settings in the earlier tasks, participants were allowed to choose their preferred mode for the final combustion task: seven selected full-autonomous mode, two selected half-autonomous mode, and three selected mixed-initiative mode. Many participants preferred greater automation once they became familiar with the system, likely valuing efficiency for a task they felt the agent could handle reliably. At the same time, a notable subset of participants still preferred modes that preserved greater human control. 
+
+Additional results. Results on the post-study questionnaire and participant feedback are provided in Appendix A. 
+
+5 LIMITATIONS AND FUTURE WORK 
+
+While HiLSVA presents a novel way to human-in-the-loop SciVis, sev-eral limitations remain. First, reliance on external LLM APIs introduces latency, despite partial mitigation through parallel execution in different virtual environments. Second, although LTT and a dynamic knowledge base enable adaptation, performance remains dependent on the quality of user feedback. In specialized scientific domains, relevant knowl-edge is often tacit or difficult to express in natural language, limiting effective learning. Incorporating curated domain-specific knowledge could further support complex workflows such as feature extraction. We also note that HiLSVA’s adaptation is retrieval-based, which ac-cumulates and reuses structured knowledge rather than improving the model, and our study does not isolate its gains from those attributable to increased human involvement. Stronger self-improvement could come from self-evolving agents that discover new designs [28], edit their own code [54], or harness-level optimization [37], which we leave to future work. Finally, our user study ( N = 12 ) is powered to detect large within-subject effects but not fine-grained between-group or interaction effects; expertise-stratified and interaction results are therefore descrip-tive and indicative. Larger-scale, longitudinal studies with domain scientists are needed to confirm these patterns. Future work will extend HiLSVA along three directions. First, while the current implementation focuses on ParaView because it provides a rich set of SciVis capabilities and supports MCP tool calls, gener-ated scripts, and direct GUI manipulation within a shared visualization session, the overall architecture is backend-agnostic. We plan to inte-grate additional visualization and analysis tools to improve generality, including domains such as molecular dynamics, astrophysics, fluid simulation, and bioimage processing. Second, we aim to enhance learn-ing through better uncertainty modeling, multimodal grounding, and long-term personalization. Prior work highlights the importance of uncertainty-aware interaction in human–agent communication [7, 8], as well as the role of multimodal human feedback in disambiguating user intent [39, 77]. Third, we will expand support for non-expert users through recommendation-based analysis assistance, collaborative multi-user environments, and online deployment. By leveraging prior workflows, domain knowledge, and retrieved examples, HiLSVA could proactively suggest candidate analysis strategies with explanations and expected outcomes, allowing users to select and refine appropriate workflows. 
+
+6 CONCLUSIONS 
+
+We have presented HiLSVA, a human-in-the-loop agentic system that repositions SciVis as a collaborative process between humans and LLM agents. Through a mixed-initiative agentic architecture, stepwise provenance tracking, and LTT adaptation, HiLSVA enables transparent, controllable, and interactive workflows that support both automation and human oversight. Our evaluation demonstrates that users at all levels of expertise, including novices, can complete non-trivial SciVis tasks with the system, while mixed-initiative interaction provides a flex-ible balance between efficiency and control. These findings highlight the importance of designing agentic systems that augment human rea-soning rather than replace it. We believe that HiLSVA offers a practical foundation for future human-centered SciVis systems and opens new directions for integrating transparent, collaborative AI into complex scientific workflows. ACKNOWLEDGMENTS 
+
+This research was supported in part by the U.S. National Science Foun-dation through grants IIS-2101696, OAC-2104158, and IIS-2401144, and the U.S. Department of Energy through grant DE-SC0023145. The authors thank the anonymous reviewers for their insightful comments. 
+
+REFERENCES 
+
+[1] J. P. Ahrens, B. Geveci, and C. C. Law. ParaView: An end-user tool for large-data visualization. In C. D. Hansen and C. R. Johnson, eds., The Visualization Handbook , chap. 36, pp. 717–731. Academic Press, 2004. doi: 10.1016/B978-012387582-2/50038-1 4[2] K. Ai, H. Miao, Z. Li, C. Wang, and S. Liu. An evaluation-centric paradigm for scientific visualization agents. In Proc. IEEE VIS & GenAI , 2025. doi: 
+
+10.48550/arXiv.2509.15160 1, 3 [3] K. Ai, H. Miao, K. Tang, N. Gorski, J. Sun, G. Liu et al. SciVisAgent-Bench: A benchmark for evaluating scientific data analysis and visualiza-tion agents. arXiv preprint arXiv:2603.29139 , 2026. doi: 10.48550/arXiv. 2603.29139 3[4] K. Ai, H. Miao, K. Tang, S. Liu, and C. Wang. SciVisAgentSkills: Design and evaluation of agent skills for scientific data analysis and visualization. 
+
+arXiv preprint arXiv:2606.05525 , 2026. doi: 10.48550/arXiv.2606.05525 2[5] K. Ai, K. Tang, and C. Wang. NLI4VolVis: Natural language interaction for volume visualization via multi-LLM agents and editable 3D Gaussian splatting. IEEE Trans. Vis. Comput. Graph. , 32(1):46–56, 2026. doi: 10. 1109/TVCG.2025.3633888 1, 2, 3 [6] Anthropic. Introducing computer use, a new Claude 3.5 Son-net, and Claude 3.5 Haiku. https://www.anthropic.com/news/ 3-5-models-and-computer-use . 1, 2 [7] G. Bansal, B. Nushi, E. Kamar, D. S. Weld, W. S. Lasecki, and E. Horvitz. Updates in human-AI teams: Understanding and addressing the perfor-mance/compatibility tradeoff. In Proc. AAAI , pp. 2429–2437, 2019. doi: 
+
+10.1609/aaai.v33i01.33012429 2, 9 [8] G. Bansal, J. W. Vaughan, S. Amershi, E. Horvitz, A. Fourney, H. Mozan-nar et al. Challenges in human-agent communication. arXiv preprint arXiv:2412.10380 , 2024. doi: 10.48550/arXiv.2412.10380 2, 9 [9] G. Bansal, T. Wu, J. Zhou, R. Fok, B. Nushi, E. Kamar et al. Does the whole exceed its parts? the effect of AI explanations on complementary team performance. In Proc. ACM CHI , pp. 81:1–81:16, 2021. doi: 10. 1145/3411764.3445717 2[10] L. Bavoil, S. Callahan, P. Crossno, J. Freire, C. Scheidegger, C. Silva et al. VisTrails: enabling interactive multiple-view visualizations. In Proc. IEEE VIS , pp. 135–142, 2005. doi: 10.1109/VISUAL.2005.1532788 4[11] A. Biswas, T. L. Turton, N. R. Ranasinghe, S. Jones, B. Love, W. Jones et al. VizGenie: Toward self-refining, domain-aware workflows for next-generation scientific visualization. IEEE Trans. Vis. Comput. Graph. ,32(1):1021–1031, 2026. doi: 10.1109/TVCG.2025.3634655 1, 2, 3 [12] T. B. Brown, B. Mann, N. Ryder, M. Subbiah, J. Kaplan, P. Dhariwal et al. Language models are few-shot learners. In Proc. NeurIPS , pp. 1877–1901, 2020. 5 [13] Z. Chen, J. Chen, S. Ö. Arik, M. Sra, T. Pfister, and J. Yoon. CoDA: Agentic systems for collaborative data visualization. arXiv preprint arXiv:2510.03194 , 2025. doi: 10.48550/arXiv.2510.03194 2[14] N. Cliff. Dominance statistics: Ordinal analyses to answer ordinal ques-tions. Psychological Bulletin , 114(3):494–509, 1993. doi: 10.1037/0033 -2909.114.3.494 9[15] V. Dhanoa, A. Wolter, G. M. León, H.-J. Schulz, and N. Elmqvist. Agentic visualization: Extracting agent-based design patterns from visualization systems. IEEE Comput. Graph. Appl. , 45(6):89–90, 2025. doi: 10.1109/ MCG.2025.3607741 1, 2 [16] V. Dibia. LIDA: A tool for automatic generation of grammar-agnostic visualizations and infographics using large language models. In Proc. ACL: System Demonstrations , pp. 113–126, 2023. doi: 10.18653/v1/2023. acl-demo.11 2[17] P. P. Do, K. Tang, K. Ai, and C. Wang. SVLAT: Scientific visualization literacy assessment test. arXiv preprint arXiv:2603.19000 , 2026. doi: 10. 48550/arXiv.2603.19000 3[18] Q. Dong, L. Li, D. Dai, C. Zheng, J. Ma, R. Li et al. A survey on in-context learning. In Proc. EMNLP , pp. 1107–1128, 2024. doi: 10.18653/v1/2024. emnlp-main.64 5[19] EgT. GMX-VMD-MCP: MCP service for GROMACS and VMD molec-ular dynamics simulations and visualization. https://github.com/ egtai/gmx-vmd-mcp , 2025. 4 [20] J. Fang, Y. Peng, X. Zhang, Y. Wang, X. Yi, G. Zhang et al. A com-prehensive survey of self-evolving AI agents: A new paradigm bridg-ing foundation models and lifelong agentic systems. arXiv preprint arXiv:2508.07407 , 2025. doi: 10.48550/arXiv.2508.07407 2, 5 [21] K. Feng, K. Pu, M. Latzke, T. August, P. Siangliulue, J. Bragg et al. Cocoa: Co-planning and co-execution with AI agents. arXiv preprint arXiv:2412.10999 , 2024. doi: 10.48550/arXiv.2412.10999 2, 3, 4 [22] G. Fragiadakis, C. Diou, G. Kousiouris, and M. Nikolaidou. Evaluating human-AI collaboration: A review and methodological framework. arXiv preprint arXiv:2407.19098 , 2024. doi: 10.48550/arXiv.2407.19098 3[23] J. Freire, D. Koop, E. Santos, and C. T. Silva. Provenance for computa-tional tasks: A survey. IEEE Comput. Sci. Eng. , 10(3):11–21, 2008. doi: 
+
+10.1109/MCSE.2008.79 4[24] N. Gorski, S. Liu, and B. Wang. TopoPilot: Reliable conversational workflow automation for topological data analysis and visualization. arXiv preprint arXiv:2603.25063 , 2026. doi: 10.48550/arXiv.2603.25063 2, 4 [25] T. Guo, X. Chen, Y. Wang, R. Chang, S. Pei, N. V. Chawla et al. Large language model based multi-agents: A survey of progress and challenges. In Proc. IJCAI , pp. 8048–8057, 2024. doi: 10.24963/ijcai.2024/890 2[26] Y. He, R. Li, A. Chen, Y. Liu, Y. Chen, Y. Sui et al. Enabling self-improving agents to learn at test time with human-in-the-loop guidance. In Proc. EMNLP: Industry Track , pp. 1625–1653, 2025. doi: 10.18653/v1/ 2025.emnlp-industry.115 5[27] E. Horvitz. Principles of mixed-initiative user interfaces. In Proc. ACM CHI , pp. 159–166, 1999. doi: 10.1145/302979.303030 1, 2 [28] S. Hu, C. Lu, and J. Clune. Automated design of agentic systems. In Proc. ICLR , vol. 2025, pp. 21344–21377, 2025. doi: 10.48550/arXiv.2408.08435 9[29] X. Hu, T. Xiong, B. Yi, Z. Wei, R. Xiao, Y. Chen et al. OS Agents: A survey on MLLM-based agents for computer, phone and browser use. In 
+
+Proc. ACL , pp. 7436–7465, 2025. doi: 10.18653/v1/2025.acl-long.369 1[30] J. Hübotter, S. Bongni, I. Hakimi, and A. Krause. Efficiently learning at test-time: Active fine-tuning of LLMs. arXiv preprint arXiv:2410.08020 ,2024. doi: 10.48550/arXiv.2410.08020 5[31] W. Humphrey, A. Dalke, and K. Schulten. VMD: Visual molecular dynam-ics. J. Mol. Graph. , 14:33–38, 1996. doi: 10.1016/0263-7855(96)00018-5 
+
+4[32] F. Huq, Z. Z. Wang, F. F. Xu, T. Ou, S. Zhou, J. P. Bigham et al. CowPilot: A framework for autonomous and human-agent collaborative web naviga-tion. In Proc. ACL: System Demonstrations , pp. 163–172, 2025. doi: 10. 18653/v1/2025.naacl-demo.17 2, 3, 4 [33] H. Jin, L. Huang, H. Cai, J. Yan, B. Li, and H. Chen. From LLMs to LLM-based agents for software engineering: A survey of current, challenges and future. arXiv preprint arXiv:2408.02479 , 2024. doi: 10.48550/arXiv. 2408.02479 1[34] M. G. Kendall and B. Babington Smith. The problem of m rankings. 
+
+The Annals of Mathematical Statistics , 10(3):275–287, 1939. doi: 10. 1214/aoms/1177732186 9[35] J. Y. Koh, S. McAleer, D. Fried, and R. Salakhutdinov. Tree search for language model agents. arXiv preprint arXiv:2407.01476 , 2024. doi: 10. 48550/arXiv.2407.01476 2[36] H. Lai, X. Liu, I. L. Iong, S. Yao, Y. Chen, P. Shen et al. AutoWebGLM: A large language model-based web navigating agent. In Proc. ACM KDD ,pp. 5295–5306, 2024. doi: 10.1145/3637528.3671620 1[37] Y. Lee, R. Nair, Q. Zhang, K. Lee, O. Khattab, and C. Finn. Meta-harness: End-to-end optimization of model harnesses. arXiv preprint arXiv:2603.28052 , 2026. doi: 10.48550/arXiv.2603.28052 9[38] P. Lewis, E. Perez, A. Piktus, F. Petroni, V. Karpukhin, N. Goyal et al. Retrieval-augmented generation for knowledge-intensive NLP tasks. In 
+
+Proc. NeurIPS , pp. 9459–9474, 2020. 5 [39] T. Li, G. Li, J. Zheng, P. Wang, and Y. Li. MUG: Interactive multimodal grounding on user interfaces. In Proc. ACL Findings , pp. 231–251, 2024. doi: 10.18653/v1/2024.findings-eacl.17 9[40] J. Liu, J. Hao, C. Zhang, and Z. Hu. WEPO: Web element preference optimization for LLM-based web navigation. In Proc. AAAI , pp. 26614– 26622, 2025. doi: 10.1609/aaai.v39i25.34863 1[41] J. Liu, K. Wang, Y. Chen, X. Peng, Z. Chen, L. Zhang et al. Large language model-based agents for software engineering: A survey. arXiv preprint arXiv:2409.02977 , 2024. doi: 10.48550/arXiv.2409.02977 1[42] S. Liu, H. Miao, and P.-T. Bremer. ParaView-MCP: An autonomous visualization agent with direct tool use. In Proc. IEEE VIS (Short Papers) ,pp. 61–65, 2025. doi: 10.48550/arXiv.2505.07064 1, 2, 4 [43] S. Liu, H. Miao, Z. Li, M. Olson, V. Pascucci, and P.-T. Bremer. AVA: towards autonomous visualization agents through visual perception-driven decision-making. Comput. Graph. Forum , 43(3):e15093, 2024. doi: 10. 1111/cgf.15093 1, 2 [44] T. Masterman, S. Besen, M. Sawtell, and A. Chao. The landscape of emerging AI agent architectures for reasoning, planning, and tool calling: A survey. arXiv preprint arXiv:2404.11584 , 2024. doi: 10.48550/arXiv.2404 .11584 2[45] M. Mathai, M. Han, J. Knowles, V. A. Mateevitsi, S. Rizzi, and H. Childs. NL2SciVis: A benchmark for natural language to scientific visualization. In Proc. EuroVis (Short Papers) , 2026. doi: 10.2312/evs.20261017 3[46] H. Miao, Z. Li, K. Ai, K. Tang, C. Wang, P.-T. Bremer et al. Toward AI VIS co-scientists: A general and end-to-end agent harness for solving complex data visualization tasks. arXiv preprint arXiv:2605.21825 , 2026. doi: 10.48550/arXiv.2605.21825 2, 3 [47] H. Miao and S. Liu. BioImage-Agent. https://github.com/LLNL/ bioimage-agent . 2, 4 [48] H. Mozannar, G. Bansal, C. Tan, A. Fourney, V. Dibia, J. Chen et al. Magentic-UI: Towards human-in-the-loop agentic systems. arXiv preprint arXiv:2507.22358 , 2025. doi: 10.48550/arXiv.2507.22358 1, 2, 3, 4 [49] A. Narechania, S. Guo, E. Koh, A. Endert, and J. Hoffswell. Utilizing provenance as an attribute for visual data analysis: A design probe with provenancelens. IEEE Trans. Vis. Comput. Graph. , 31(10):8452–8465, 2025. doi: 10.1109/TVCG.2025.3571708 4[50] J. Pan, Y. Zhang, N. Tomlin, Y. Zhou, S. Levine, and A. Suhr. Au-tonomous evaluation and refinement of digital agents. arXiv preprint arXiv:2404.06474 , 2024. doi: 10.48550/arXiv.2404.06474 2[51] S. Peng, E. Kalliamvakou, P. Cihon, and M. Demirer. The impact of AI on developer productivity: Evidence from GitHub Copilot. arXiv preprint arXiv:2302.06590 , 2023. doi: 10.48550/arXiv.2302.06590 2[52] T. Peterka, T. Mallick, O. Yildiz, D. Lenz, C. Quammen, and B. Geveci. ChatVis: Large language model agent for generating scientific visualiza-tions. In Proc. IEEE LDAV , pp. 22–32, 2025. doi: 10.1109/LDAV68558.2025 .00007 1, 2, 4 [53] Y. Qin, S. Liang, Y. Ye, K. Zhu, L. Yan, Y. Lu et al. ToolLLM: Facilitating large language models to master 16000+ real-world APIs. In Proc. ICLR ,2023. doi: 10.48550/arXiv.2307.16789 2[54] M. Robeyns, M. Szummer, and L. Aitchison. A self-improving coding agent. arXiv preprint arXiv:2504.15228 , 2025. doi: 10.48550/arXiv.2504. 15228 9[55] T. Schick, J. Dwivedi-Yu, R. Dessi, R. Raileanu, M. Lomeli, E. Hambro et al. Toolformer: Language models can teach themselves to use tools. In 
+
+Proc. NeurIPS , pp. 68539–68551, 2023. doi: 10.5555/3666122.3669119 2[56] J. Senoner, S. Schallmoser, B. Kratzwald, S. Feuerriegel, and T. Netland. Explainable AI improves task performance in human–AI collaboration. 
+
+Sci. Rep. , 14(1):31150, 2024. doi: 10.1038/s41598-024-82501-9 1, 2 [57] Y. Shao, V. Samuel, Y. Jiang, J. Yang, and D. Yang. Collaborative Gym: A framework for enabling and evaluating human-agent collaboration. arXiv preprint arXiv:2412.15701 , 2024. doi: 10.48550/arXiv.2412.15701 3[58] B. Shneiderman and P. Maes. Direct manipulation vs. interface agents. 
+
+Interactions , 4(6):42–61, 1997. doi: 10.1145/267505.267514 1, 2 [59] N. Sofroniew, T. Lambert, G. Bokota, J. Nunez-Iglesias, P. Sobolewski, A. Sweet et al. napari: A multi-dimensional image viewer for Python, 2025. doi: 10.5281/zenodo.3555620 4[60] P. Stone and M. Veloso. Multiagent systems: A survey from a machine learning perspective. Auton. Robots , 8(3):345–383, 2000. doi: 10.1023/A: 1008942012299 2[61] J. Sun, D. Lenz, T. Peterka, and H. Yu. SASAV: Self-directed agent for scientific analysis and visualization. arXiv preprint arXiv:2604.03406 ,2026. doi: 10.48550/arXiv.2604.03406 2, 3 [62] Z. Sun, Z. Liu, Y. Zang, Y. Cao, X. Dong, T. Wu et al. SEAgent: Self-evolving computer use agent with autonomous learning from experience. 
+
+arXiv preprint arXiv:2508.04700 , 2025. doi: 10.48550/arXiv.2508.04700 2, 5[63] W. Takerngsaksiri, J. Pasuksmit, P. Thongtanunam, C. Tantithamtha-vorn, R. Zhang, F. Jiang et al. Human-in-the-loop software development agents. In Proc. IEEE/ACM ICSE: SEIP , pp. 342–352, 2025. doi: 10. 1109/MSR66628.2025.00112 1, 3 [64] Y. Talebirad and A. Nadiri. Multi-Agent Collaboration: Harnessing the power of intelligent LLM agents. arXiv preprint arXiv:2306.03314 , 2023. doi: 10.48550/arXiv.2306.03314 2[65] J. Z. Tam, P. Grosset, D. Banesh, N. Ramachandra, T. L. Turton, and J. Ahrens. InferA: A smart assistant for cosmological ensemble data. In 
+
+Proc. ACM/IEEE SC Workshops , pp. 20–28, 2025. doi: 10.1145/3731599. 3767342 2, 3 [66] M. Tambe. Implementing agent teams in dynamic multiagent envi-ronments. Appl. Artif. Intell. , 12(2-3):189–210, 1998. doi: 10.1080/ 088395198117820 2[67] K. Tang, K. Ai, J. Han, and C. Wang. TexGS-VolVis: Expressive scene editing for volume visualization via textured Gaussian splatting. IEEE Trans. Vis. Comput. Graph. , 32(1):933–943, 2026. doi: 10.1109/TVCG.2025. 3634643 3[68] K. Tang, S. Yao, and C. Wang. iVR-GS: Inverse volume rendering for ex-plorable visualization via editable 3D Gaussian splatting. IEEE Trans. Vis. Comput. Graph. , 31(6):3783–3795, 2025. doi: 10.1109/TVCG.2025.3567121 
+
+1[69] J. Tierny, G. Favelier, J. A. Levine, C. Gueunet, and M. Michaux. The topology toolkit. IEEE Trans. Vis. Comput. Graph. , 24(1):832–842, 2017. doi: 10.1109/TVCG.2017.2743938 4[70] J. Vonderhorst, K. Ai, H. Miao, S. Liu, and C. Wang. Exploring LLM agent designs and interaction modalities for scientific visualization. arXiv preprint arXiv:2604.27996 , 2026. doi: 10.48550/arXiv.2604.27996 2[71] C. Wang and J. Han. DL4SciVis: A state-of-the-art survey on deep learning for scientific visualization. IEEE Trans. Vis. Comput. Graph. ,29(8):3714–3733, 2023. doi: 10.1109/TVCG.2022.3167896 1[72] Y. Wang, B. Pan, K. Wang, H. Liu, J. Mao, Y. Liu et al. IntuiTF: MLLM-guided transfer function optimization for direct volume rendering. arXiv preprint arXiv:2506.18407 , 2025. doi: 10.48550/arXiv.2506.18407 2[73] K. Werder, B. Ramesh, and R. S. Zhang. Establishing data provenance for responsible artificial intelligence systems. ACM Trans. Manag. Inf. Syst. ,13(2):22:1–22:33, 2022. doi: 10.1145/3503488 4[74] Q. Wu, G. Bansal, J. Zhang, Y. Wu, B. Li, E. Zhu et al. AutoGen: Enabling next-gen LLM applications via multi-agent conversations. arXiv preprint arXiv:2308.08155 , 2023. doi: 10.48550/arXiv.2308.08155 2[75] Z. Wu, C. Han, Z. Ding, Z. Weng, Z. Liu, S. Yao et al. OS-Copilot: Towards generalist computer agents with self-improvement. arXiv preprint arXiv:2402.07456 , 2024. doi: 10.48550/arXiv.2402.07456 1, 2 [76] Z. Xi, W. Chen, X. Guo, W. He, Y. Ding, B. Hong et al. The rise and potential of large language model based agents: A survey. Sci. China Inf. Sci. , 68(2):121101, 2025. doi: 10.1007/s11432-024-4222-0 2[77] Y. Yang, A. G. Zhang, S. Oney, and A. Y. Wang. SPARK: Real-time mon-itoring of multi-faceted programming exercises. In Proc. IEEE VL/HCC ,pp. 81–92, 2025. doi: 10.1109/VL-HCC65237.2025.00018 9[78] Z. Yang, Z. Zhou, S. Wang, X. Cong, X. Han, Y. Yan et al. MatPlotAgent: Method and evaluation for LLM-based agentic scientific data visualization. In Proc. ACL Findings , pp. 11789–11804, 2024. doi: 10.18653/v1/2024. findings-acl.701 2[79] S. Yao, N. Shinn, P. Razavi, and K. Narasimhan. τ-bench: A benchmark for tool-agent-user interaction in real-world domains. arXiv preprint arXiv:2406.12045 , 2024. doi: 10.48550/arXiv.2406.12045 3[80] S. Yao, D. Yu, J. Zhao, I. Shafran, T. Griffiths, Y. Cao et al. Tree of Thoughts: Deliberate problem solving with large language models. In 
+
+Proc. NeurIPS , pp. 11809–11822, 2023. doi: 10.5555/3666122.3666639 2[81] C. Zhang, H. Huang, C. Ni, J. Mu, S. Qin, S. He et al. UFO2: The desktop agentOS. arXiv preprint arXiv:2504.14603 , 2025. doi: 10.48550/arXiv.2504 .14603 1, 2 [82] W. Zhang and J. Tao. Automatic semantic alignment of flow pattern repre-sentations for exploration with large language models. IEEE Trans. Vis. Comput. Graph. , 32(1):835–845, 2026. doi: 10.1109/TVCG.2025.3634650 3[83] Z. Zhang and A. Zhang. You only look at screens: Multimodal chain-of-action agents. In Proc. ACL Findings , pp. 3132–3149, 2024. doi: 10. 18653/v1/2024.findings-acl.186 2[84] Y. Zhao, J. Wang, L. Xiang, X. Zhang, Z. Guo, C. Turkay et al. LightVA: Lightweight visual analytics with LLM agent-based task planning and execution. IEEE Trans. Vis. Comput. Graph. , 31(9):6162–6177, 2024. doi: 
+
+10.1109/TVCG.2024.3496112 1A ADDITIONAL USER STUDY RESULTS 
+
+Quantitative results. We evaluated the accessibility and perceived effectiveness of HiLSVA through a post-study questionnaire. After completing the tasks, all participants provided ratings on a 1–5 Likert scale for 14 questions, along with qualitative feedback on the system’s strengths, challenges, and potential improvements (see the supplemen-tary material). The aggregated results are shown in Figure 1. Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 
+
+> Questions
+> 0
+> 2
+> 4
+> 6
+> 8
+> 10
+> 12
+> Response Count
+> score
+> 1
+> 2
+> 3
+> 4
+> 5
+> 1
+> 2
+> 3
+> 4
+> 5
+> Mean Score (1-5)
+> mean ± std 4.67
+> ±0.47
+> 3.92
+> ±1.11
+> 4.50
+> ±0.65
+> 4.58
+> ±0.64
+> 4.67
+> ±0.47
+> 4.75
+> ±0.60
+> 4.83
+> ±0.37
+> 4.92
+> ±0.28
+> 4.92
+> ±0.28
+> 5.00
+> ±0.00
+> 4.67
+> ±0.62
+> 4.50
+> ±0.76
+> 4.50
+> ±0.65
+> 4.83
+> ±0.37
+
+Fig. 1: Survey responses to 14 post-study questions, along with mean scores (on a 1–5 scale) and standard deviations. 
+
+Overall, participants reported highly positive experiences with the system, with an average score of 4.66 across all questions. Collapsing the two expert groups ( n = 7 ), experts rated the system slightly lower than non-experts ( 4.51 vs. 4.87 ; Mann-Whitney p = 0.080 , Cliff’s 
+
+δ = −0.63 ), consistent with non-experts benefiting more from agent assistance while expert users judged it more critically. Ratings of efficiency and overall effectiveness were consistently strong, with Q1 (task efficiency) receiving 4.67 ±0.47. The system’s integration and learnability were also well received, with Q3 (system integration) at 4.50 ±0.65 and Q4 (ease of learning) at 4.58 ±0.64, indicating that participants quickly understood and adopted the workflow. Several questions focused on human-agent interaction and control. Participants expressed a strong sense of control over the workflow, with Q6 (ability to review and approve actions) rated at 4.75 ±0.60 and Q7 (ability to adjust autonomy levels) at 4.83 ±0.37. Transparency-related aspects received some of the highest scores in the study, including Q8 (clarity of system feedback, 4.92 ±0.28), Q9 (usefulness of stepwise provenance for understanding system behavior, 4.92 ±0.28), and Q10 (ability to revisit previous steps, 5.00 ±0.00). These results suggest that the system’s stepwise planning and provenance-tracking mechanisms effectively supported users’ understanding and oversight. The mixed-initiative design was also positively evaluated. Partici-pants rated the combination of natural-language interaction and direct manipulation highly (Q11, 4.67 ±0.62) and agreed that the system could recognize uncertainty and appropriately request guidance (Q12, 4.50 ±0.76). In addition, Q13 (benefit from accumulated knowledge) received 4.50 ±0.65, indicating that the LTT mechanism was notice-able and useful during interaction. The overall interface usability was similarly strong, with Q14 rated at 4.83 ±0.37. The lowest score was observed for Q2 (ability to complete tasks without assistance), with 3.92 ±1.11. The larger variance suggests dif-fering expectations across participants, particularly between experts and novices. This is expected, as the four tasks involve non-trivial SciVis techniques that are challenging without prior experience. De-spite this, all participants completed the tasks with high accuracy when the system provided support. This aligns with HiLSVA’s design goal as a collaborative system, where human involvement remains integral while the agent lowers barriers to complex visualization workflows. 
+
+Qualitative feedback. Participants across all levels of expertise pro-vided insightful feedback on the strengths and limitations of HiLSVA. A common theme among all groups was the value of human–agent collaboration . Several participants highlighted the system’s ability to support iterative refinement, with a SciVis expert highlighting “ the way that user and agent can work together to refine the visualization ,” and a domain scientist emphasizing the usefulness of step-by-step planning for first-time users. Another frequently mentioned strength was the system’s interactivity and controllability . Domain scientists emphasized that the system is “controllable for visualization through text description ,” highlighting the value of expressing visualization intent without requiring detailed knowledge of visualization software or scripting. Participants also highlighted the mixed-initiative interaction, particularly the agent’s ability to request guidance when uncertain, described as “ a very cool feature .” In addition, users appreciated the integration of multiple in-teraction mechanisms, including both code-based execution and direct tool control through MCP. They also valued the system’s autonomous capabilities, particularly its ability to integrate external tools and infor-mation sources within a unified workflow, reducing context switching and supporting iterative refinement. Despite these strengths, participants reported challenges related to 
+
+latency and system responsiveness . Multiple users noted that the system could be slow sometimes, with comments such as “ LLM takes too long to respond ” and “ the latency issue makes the visualization procedure pretty long .” In addition, several participants mentioned issues with system stability, including GUI inconsistencies and occasional crashes. Feedback also revealed opportunities for improving information pre-sentation . Some expert users found the system outputs overly verbose, noting that “ output always contains too much information without high-lighting ,” and suggested mechanisms to prioritize critical information. Novice users, on the other hand, expressed a need for more guidance, including clearer explanations of visualization concepts and domain-specific terminology. While tasks that require greater analysis and domain knowledge can benefit from stronger human oversight, novice users may still prefer higher autonomy levels because they lack the expertise to guide the workflow. Finally, participants suggested improvements to workflow efficiency and usability , including better session management, voice interaction, and more expert-curated default settings. In particular, several novice users requested presets derived from expert knowledge to effectively create visualizations without requiring domain expertise. These observations reveal several practical limitations and opportuni-ties for improvement. Latency was primarily associated with planning and external LLM response times. GUI inconsistencies were caused by known synchronization limitations in ParaView that would require backend-level modifications to address fully. Conflicting operations typically caused occasional crashes, although the containerized archi-tecture enables straightforward session recovery. User feedback on verbose outputs motivated a redesign that suppresses intermediate rea-soning and tool-calling traces in favor of concise analytical results. Finally, the differing needs of novice and expert users suggest oppor-tunities for adaptive guidance, recommendations, and expert-derived presets that better support complex analytical tasks.
