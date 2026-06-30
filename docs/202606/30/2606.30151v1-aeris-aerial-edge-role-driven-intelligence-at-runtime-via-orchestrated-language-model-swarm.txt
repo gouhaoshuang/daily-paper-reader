@@ -1,0 +1,304 @@
+Title: AERIS: Aerial-Edge Role-Driven Intelligence at Runtime via Orchestrated Language-Model Swarm
+
+URL Source: https://arxiv.org/pdf/2606.30151v1
+
+Published Time: Tue, 30 Jun 2026 02:33:17 GMT
+
+Number of Pages: 10
+
+Markdown Content:
+> 1
+
+# AERIS: Aerial-Edge Role-Driven Intelligence at Runtime via Orchestrated Language-Model Swarms 
+
+Jiabin Lou, Haopeng Wang, Xinyu Liu, Yu Zhang, Rongye Shi, and Wenjun Wu 
+
+Abstract —Integrating large language models into robotic sys-tems holds promise for enhancing autonomy, yet practical de-ployment remains constrained by strict heartbeat-constrained scheduling and limited computational power. We propose AERIS: an edge deployment framework for aerial platforms. It organizes dedicated small language models combined with lightweight per-ception and control modules into roles that can be instantiated at runtime, and dynamically rebinds them across different executors as resources change, thereby pushing intelligent capabilities to the edge. AERIS achieves long-horizon instruction decomposi-tion through an attention–subgoal alignment mechanism, which involves annotating the currently active instruction step in mes-sages, thereby progressively approaching long-term objectives. We evaluate AERIS on a high-fidelity UAV Vision-and-Language Navigation benchmark. Under a heartbeat-timed execution mech-anism, AERIS maintains a stable perception–decision–control loop between a low-frequency planner and a high-frequency controller, supporting real-time closed-loop operation. We further validate its deployability through two real-world experiments focused on planning and fast response. A demonstration video is provided in the supplementary materials. 
+
+Index Terms —Aerial edge autonomy, small language models, dynamic role orchestration, unmanned aerial vehicles, vision-and-language navigation. 
+
+I. I NTRODUCTION 
+
+Large language models (LLMs) have shown promising potential in robotics, such as understanding natural-language instructions, reasoning about current states, and adapting to previously unseen environments [1]. Compared with conven-tional robotic systems that rely on fixed task interfaces or predefined rules, language models provide a more natural form of human–robot interaction and enable robots to make use of richer semantic information for complex decision making. However, deploying these capabilities in real robotic sys-tems remains challenging. First, robots operate within a strict 
+
+This work has been submitted to the IEEE for possible publication. Copyright may be transferred without notice, after which this version may no longer be accessible. This work was supported in part by the National Key Research and Development Program of China under Grant 2025YFF1505704, in part by the State Key Laboratory of Complex and Critical Software Environment under Grant SKLCCSE, in part by the National Natural Science Foundation of China under Grant 62306023, and in part by the Beijing Nova Program under Grant 20240484490. Corresponding author: Wenjun Wu. 
+
+Jiabin Lou is with the School of Computer Science and Engineering, Bei-hang University, Beijing 100191, China, and also with Hangzhou International Innovation Institute, Beihang University, Hangzhou 311115, China (e-mail: loujiabin@buaa.edu.cn). Haopeng Wang, Rongye Shi, and Wenjun Wu are with the School of Arti-ficial Intelligence, Beihang University, Beijing 100191, China, and also with Hangzhou International Innovation Institute, Beihang University, Hangzhou 311115, China (e-mails: {by2442216, shirongye, wwj09315 }@buaa.edu.cn). Xinyu Liu and Yu Zhang are with the School of Artificial Intelli-gence, Beihang University, Beijing 100191, China (e-mails: {liuxy0109, stevezhang }@buaa.edu.cn). 
+
+perception–decision–control loop, and additional latency in-troduced by high-level reasoning may disrupt synchronization with low-level control, thereby affecting operational safety. Second, LLM inference is computationally expensive, making long-term stable deployment difficult on resource-constrained platforms. Third, robots often operate under unstable wireless connectivity, and continuous reliance on cloud models can further weaken real-time responsiveness and reliability. These challenges are particularly pronounced in aerial mis-sions [2]. For example, in inspection or search-and-rescue scenarios, an operator may issue a multi-step natural-language instruction such as “fly along the road, turn left after passing the red-roofed building, and hover near the bridge.” To com-plete such tasks, a UAV must not only interpret landmarks, action order, and intermediate objectives in the instruction, but also determine the currently relevant instruction content from continuously changing onboard visual observations and promptly convert high-level semantic outputs into executable control commands. Such instructions usually consist of a sequence of local actions and landmark constraints, while the UAV may encounter viewpoint changes, occlusions, and envi-ronmental variations during flight. It therefore needs to infer task progress from ongoing observations and adjust subsequent motion accordingly. Consequently, long-horizon UAV naviga-tion depends not only on natural-language understanding, but also on stable coupling between semantic decision making and low-level control in dynamic environments. Existing approaches often address only part of these re-quirements. Cloud-hosted or large-scale models can provide strong semantic understanding and reasoning capabilities, but they are difficult to use reliably for real-time closed-loop operation under communication fluctuation, limited compu-tation, and strict timing constraints. Lightweight end-to-end vision–language policies can be efficient at inference time, yet their intermediate decisions are usually implicit in latent representations, making it difficult to expose clear interfaces for runtime validation, modular coordination, and adaptive resource scheduling [3]. For aerial-edge systems, a key chal-lenge is therefore to organize natural-language instruction understanding, visual environment perception, high-level se-mantic decision making, and low-level flight control into a continuously operating system under constrained resources and real-time requirements. The semantic layer must maintain valid decisions as the environment evolves, the control layer must preserve flight stability at a higher frequency, and the overall system must remain responsive under dynamically changing edge resources. To address these challenges, this paper introduces Aerial-
+
+> arXiv:2606.30151v1 [cs.RO] 29 Jun 2026 2
+
+Fig. 1: Overview of AERIS. The perception layer converts onboard observations into a typed state St; the semantic layer outputs a schema-constrained decision Dt. A Communication Hub routes and validates messages, performs instruction-step attention–subgoal alignment (ATT), and binds Dt into executable control commands. An orchestration engine instantiates roles on heterogeneous edge executors and updates role–executor bindings at runtime. 
+
+Edge Role-driven Intelligence at runtime via orchestrated language-model Swarms (AERIS), a role-driven framework for aerial-edge autonomy. AERIS organizes specialized small language models (SLMs), lightweight perception modules, and control modules into runtime roles, coordinates their interactions through schema-constrained message passing, and employs an attention–subgoal alignment mechanism to track the currently active instruction step. To cope with dynamic edge resources, AERIS maintains a runtime role mapping table and dynamically rebinds roles across executors according to load and latency while preserving the high-level workflow. In this way, AERIS integrates natural-language understand-ing, visual landmark perception, semantic decision making, and high-rate control within a unified runtime framework, enabling language-driven autonomy to operate more reliably on resource-constrained UAV platforms. We evaluate AERIS on long-horizon UAV Vision-and-Language Navigation tasks to examine its joint capability in semantic understanding, landmark grounding, and real-time closed-loop execution, and further conduct real-world UAV experiments to demonstrate deployability under practical constraints. In summary, our contributions are:  
+
+> •
+
+We propose AERIS, a role-driven aerial-edge framework that decomposes LLM-based autonomy into specialized runtime roles with hub-mediated, schema-constrained communication and stepwise grounding;  
+
+> •
+
+We develop a dynamic orchestration mechanism with run-time re-binding to maintain responsiveness under com-pute and network variability; and  
+
+> •
+
+We present a comprehensive evaluation protocol that jointly reports navigation performance and system-level reliability, complemented by real-world validation. II. R ELATED WORKS 
+
+A. LLM-Enabled Embodied Robotics 
+
+LLMs have been increasingly used as high-level decision makers that translate natural-language goals into executable action sequences for robots. Early systems couple LLM plan-ning with affordance checking or tool execution, enabling grounded task completion under open-vocabulary instructions (e.g., SayCan [4], Code-as-Policies [5]). Beyond purely sym-bolic planning, vision-language-action (VLA) and embodied foundation models integrate multimodal perception and action prediction to improve generalization and robustness, such as RT-2 [6]. More recent works further push towards general-ist, reusable VLA policies and open ecosystems, including Octo [7], supported by large-scale real-robot datasets such as DROID [8]. In parallel, efficiency-aware VLA designs have emerged to better match on-robot resource budgets, e.g., dynamic inference mechanisms in DeeR-VLA [9]. Despite this progress, most prior work still targets planning with relatively loose control rates or relies on substantial compute; addressing hard real-time constraints and stable closed-loop execution on resource-limited platforms remains less explored. 
+
+B. Language model-based Aerial Autonomy 
+
+Language model-based aerial autonomous systems also introduce additional challenges, such as long-range navi-gation planning in large-scale outdoor environments, high-complexity three-dimensional spatial decision-making, and perception uncertainties caused by rapid motion. In this area, AerialVLN [10] establishes a city-scale VLN benchmark, 3
+
+extending continuous VLN evaluation from ground agents to aerial. Subsequent efforts, such as CityNavAgent [11] and OPENUAV [12], further explore aerial navigation with stronger world modeling or agentic reasoning. At the visual grounding level, related multimedia research has also explored region-level language grounding, such as CLIP-based adapta-tion for visual grounding [13], which is complementary to instruction-following navigation but does not address closed-loop aerial execution. However, existing work largely empha-sizes planning ability and is mostly evaluated in simulation, while methods designed for edge execution under tight latency budgets remain relatively unexplored. 
+
+C. Edge-Optimized Language Models 
+
+Deploying LLM capabilities on the edge typically requires systematic compression and inference acceleration to meet tight memory and latency budgets. Recent post-training quanti-zation methods enable low-bit inference while preserving gen-eration quality (e.g., SpQR [14], SpinQuant [15]). For long-context workloads, the KV cache often becomes the dominant memory bottleneck, and techniques such as KIVI [16] re-duce cache footprint with tuning-free low-bit quantization. At the kernel level, attention implementations improve hardware utilization and reduce memory traffic, e.g., FlashAttention-3 [17]. At the decoding level, multi-token generation frame-works such as Medusa [18] reduce per-token latency. For embodied autonomy, these techniques are most effective when co-designed with a system architecture that explicitly budgets computation across perception, reasoning, and control. Our approach follows this principle by designing an edge-oriented multi-scale model stack and orchestration mechanism that can adaptively trade accuracy for timeliness during runtime. 
+
+D. LLM-Based Multi-Agent Systems 
+
+LLM-based multi-agent systems decompose complex prob-lems into multiple interactive agents with specialized roles, enabling collaborative reasoning, planning, reflection, and task execution through language-mediated communication. Rep-resentative frameworks such as CAMEL [19] and AutoA-gents [20] show that role specialization and agent-to-agent dialogue can support complex problem solving more effec-tively than a single monolithic language model. In particu-lar, AutoAgents moves from predefined agents toward task-adaptive agent generation, where expert agents are dynami-cally instantiated and coordinated according to the current task. Recent studies further shift the focus from individual agent capabilities to role construction, communication structures, and adaptive collaboration mechanisms in LLM-based multi-agent systems: ProAgent [21] uses LLMs to infer teammates’ intentions and adapt cooperative behavior, MacNet [22] stud-ies large-scale agent collaboration through structured interac-tion topologies, and COLLAB-LLM [23] strengthens scalable multi-agent collaboration from the perspectives of communi-cation protocols, hierarchical role architectures, and dynamic task graphs. These studies suggest that the key advantage of LLM-based multi-agent systems lies not only in task decomposition, but also in exposing interpretable intermediate roles and communication traces that can support inspection, debugging, and iterative refinement. LLM-based multi-agent coordination has also been extended to embodied intelligence and multi-robot systems. RoCo [24] enables multiple robots to discuss task strategies, generate subtask plans, and refine waypoint-level actions using environ-mental feedback. Other studies compare centralized, decentral-ized, and hybrid LLM planning structures for scalable multi-robot collaboration [25], and language-model-based agents have also been used to automate multi-agent reinforcement learning pipelines for drone swarm policy training, as in Agents Trainer [26]. However, most existing LLM-based multi-agent and multi-robot systems still focus on high-level task reasoning, simulation-level coordination, or offline policy generation. Their “roles” are usually logical participants in the reasoning process rather than runtime units under strict timing constraints. Therefore, real-world deployment of LLMs in multi-robot systems remains limited by latency, communi-cation robustness, scalability, and environmental uncertainty. III. M ETHODOLOGY 
+
+AERIS is an aerial-edge role-driven intelligence platform that orchestrates language-model swarms at runtime. As shown in Fig. 1, AERIS integrates three key components:  
+
+> •
+
+Edge-optimized model stack for low-latency UAV percep-tion, decision and control (see Sec. III-A),  
+
+> •
+
+Dynamic Role Orchestration that maintains a runtime role-executor map adaptively under resource variation (see Sec. III-B), and  
+
+> •
+
+Communication Hub which performs instruction-aware message arbitration and subgoal alignment (see Sec. III-C). Together, these components enable the stable closed-loop execution of AERIS at the aerial edge and we conduct ex-periments primarily on a closed-loop UAV VLN benchmark within a runtime decision cycle (see Sec. III-D). 
+
+Fig. 2: Edge-optimized model stack in AERIS. Percep-tion maps observation history X0: t to a typed state St =
+
+⟨ ¯St, I t, C t, O t⟩; semantic reasoning Rψ maps (St, G, M t−1)
+
+to a schema-constrained decision Dt; a high-rate controller executes Dt between semantic heartbeats. 4
+
+TABLE I: Minimal typed state contract St consumed by the semantic layer.                  
+
+> Block Type Contents Bound
+> ¯StText Scene summary Max length
+> ItList Top-kdetections kCtList Top-kinstruction cues kOtGrid Ego-frame occupancy Fixed grid
+
+A. Edge-Optimized Model Stack 
+
+To satisfy the latency requirements of perception and control in aerial-edge scenarios, AERIS adopts a three-layer model stack (Fig. 2). Each layer is specialized and can be instantiated with compact models to trade off latency and accuracy. 
+
+Perception Layer. After the UAV acquires observational data 
+
+X0: t(e.g., FPV RGB image sequences), the perception layer encodes these data into a structured state with comprehensive information, defined by the following equation: 
+
+ϕθ : X0: t 7 → St, St :=   ¯St, I t, C t, O t
+
+, (1) Here, ¯St denotes the global semantic feature summary, It
+
+captures instance-level semantic information, Ct represents task-relevant key cues, and Ot corresponds to the volumet-ric voxel occupancy state. To keep this perception–decision interface explicit, Table I summarizes the minimum typed contract consumed by the semantic layer. The contract fixes the required fields, data types, and bounded representations, allowing different perception variants to be exchanged without changing downstream parsing or control binding. As illustrated in Table II, we establish a pool of lightweight models containing three variants for each perception function. This design enables real-time deployment under heterogeneous edge computing resource environments. Detailed perception-model acquisition, training, and compression schemes are provided in Appendix A. 
+
+Semantic Reasoning Layer. The reasoning layer consumes the typed state St, mission context G, and a short-horizon semantic memory Mt−1, and outputs a structured decision: 
+
+Rψ : (St, G, Mt−1) 7 → Dt. (2) 
+
+Dt is decoded in a typed, schema-constrained format, which makes the interface to downstream execution stable and ver-ifiable. Table III lists the minimal decision fields consumed by the Communication Hub and controller. We instantiate Rψ
+
+with compact instruction-tuned SLM variants consistent with the model pool in Table II; all variants share the same schema and are trained with supervised instruction tuning, parameter-efficient adaptation [34], [35], and post-training quantization for edge deployment. Detailed semantic training and alignment objectives are provided in Appendix B. 
+
+Control Layer. The control layer executes Dt at a higher frequency than the semantic cycle and realizes SLM-issued directives via reinforcement-learning (RL) policies. Given waypoints or sub-mission commands, the RL controller maps them to autopilot-compatible setpoints. Operating at a higher rate enables rapid compensation for sensing noise and newly emerging obstacles, maintaining flight stability. Even when high-level decisions remain unchanged for multiple cycles, the RL layer continues closed-loop safety control, preserving safe and smooth motion under intermittent semantic updates. 
+
+B. Dynamic Role Orchestration 
+
+Fig. 3 illustrates how these role abstractions are used across three stages: offline role selection, edge orchestration, and runtime adaptation. Before deployment, AERIS organizes the models already available at the edge into an executable role pool R = {ri}. The role context module filters task descrip-tions and related constraints, selects the roles compatible with the current mission, and extracts the task-specific requirements that guide subsequent orchestration. 
+
+Fig. 3: Dynamic role orchestration in AERIS. An offline LLM-generated role-based workflow and the embodied role pool provide semantic context for the orchestration engine, which maintains a runtime role map to update role–executor bindings. When a mission begins, the orchestration engine receives the pre-constructed role context and initializes a workflow based on the selected roles. Specifically, AERIS generates the workflow through a single offline call to the LLM, thereby defining the execution sequence of roles and the information flow paths. Based on the initial measurement results of the established workflow and the status of the executors, the orchestration engine performs the initial binding operation: selecting appropriate nodes from the executor set E = {ej }
+
+to match corresponding hosting executors for each role in the role set R, thereby obtaining the initial runtime role mapping π0 : R → E . During the task execution process, the runtime mapping will clearly identify the hosting executor corresponding to each role instance. As the load and latency conditions fluctuate dynamically, the orchestration engine will update πt, only re-binding the minimum number of roles, and migrating the running processes of these roles among the edge executors, while maintaining the stability of the workflow structure unchanged. This dynamic re-binding method can not only completely preserve the original structure of the workflow, but also effectively enhance the robustness of the downstream closed-loop collaboration, ensuring the overall operational stability. 
+
+C. Communication Hub 
+
+The Communication Hub is the runtime middleware that bridges high-level instruction reasoning and low-level exe-cution. It provides schema-aware message passing and im-plements an attention–subgoal alignment mechanism (ATT) 5
+
+TABLE II: Perception layer model pool used to construct the typed state St.
+
+Function Model A Model B Model C Output 
+
+Image-to-Text OpenELM-0.89B Gemma-2.4B Phi-2-3.1B Caption Object detection YOLOv8-n [27] RT-DETR R50 [28] PP-YOLOE-s [29] Class & Bbox VLN cue extraction † Qwen2.5-0.5B Gemma-2.4B Phi-2-3.1B keypoints 3D occupancy OccWorld [30] NeMo [31] OCC-VO [32] Occupancy Grid    
+
+> Notes. Common input for all rows is RGB frames/sequences. †VLN additionally requires natural-language instructions. The Image-to-Text and VLN rows use models trained with the TinyLLaVA Factory [33] framework; the family prefix is omitted in cells for brevity.
+
+TABLE III: Minimal decision schema Dt consumed by the hub and controller. 
+
+Field Type Meaning Constraint 
+
+at Enum Action mode Fixed set 
+
+gt Vec3 Target waypoint In bounds 
+
+ψt Scalar Target yaw [−π, π ]
+
+vt Scalar Target speed [0 , v max ]
+
+ht Scalar Target altitude [hmin , h max ]
+
+rt Scalar Acceptance radius [0 , r max ]ˆst Int Active step 1 ≤ ˆst ≤ Lγt Scalar Confidence [0 , 1] 
+
+to keep communications aligned with the currently active instruction step. Instead of treating attention as an internal feature of a reasoning model, we realize ATT in the hub as an arbitration operator η that annotates each outgoing message with a compact focus context. 
+
+Fig. 4: Illustration of the ATT mechanism in the Commu-nication Hub. ATT computes attention weights αt over the segmented instruction subgoals based on the agent’s state St,identifies the most relevant subgoal, and annotates outgoing messages with this context. 
+
+ATT Mechanism. As illustrated in Fig. 4, given the current state St and a set of H instruction subgoals G = {gi}Hi=1 , the hub computes subgoal relevance scores 
+
+et,i = fatt (St, g i), (3) where fatt is a lightweight compatibility function. These relevance scores {et,i }Hi=1 are normalized into an attention distribution αt = ( αt, 1, . . . , α t,H ) via 
+
+αt,i = exp( et,i )
+
+PHj=1 exp( et,j ) , i = 1 , . . . , H. (4) and the active subgoal index is selected as 
+
+i∗ 
+
+> t
+
+= arg max  
+
+> i
+
+αt,i . (5) The arbitration operator η annotates each outgoing message with i∗ 
+
+> t
+
+and can optionally prioritize latency-critical mes-sages that are most relevant to the active step. This yields an interpretable attention trace and provides a direct signal for stepwise instruction-following evaluation (e.g., ASR in Sec. IV-B). 
+
+Validation, Binding, and Additional Hub Services. Beyond ATT-based arbitration, the Communication Hub also serves as the runtime boundary between semantic reasoning and low-level execution. Given the schema-constrained decision Dt
+
+produced by the semantic layer, the hub first checks whether it satisfies the decision schema in Table III. Let SD denote the set of schema-valid decisions. The validation rule is 
+
+Valid( Dt) = I[Dt ∈ S D ] , (6) where required-field presence, data types, and numerical ranges are checked deterministically. When available, the hub further applies conservative feasibility checks derived from the typed state St, such as occupancy-aware rejection or clamping of unsafe waypoint, speed, and altitude fields. A valid decision is then bound to executable control targets, including waypoint, yaw, speed, altitude, and controller mode. If Dt is invalid or the semantic cycle misses its heartbeat deadline, the hub rejects the candidate output and reuses the last valid decision, thereby preventing malformed semantic outputs from directly affecting the high-rate controller. In addition, the hub maintains topic-based publish/subscribe rout-ing, ordered message delivery, an executor resource registry, telemetry filtering, and code-execution utilities for grounding high-level decisions into low-level actuator commands. 
+
+D. Benchmarks 
+
+Environment and observations. We adopt the AerialVLN benchmark [10], a city-scale UAV VLN task built on Unreal Engine. Each VLN episode is defined by a natural-language instruction l paired with a reference trajectory. The agent receives egocentric RGB observations and must navigate by grounding language to visual landmarks without access to privileged maps or goal coordinates. 
+
+Dataset splits and augmentation. We follow the standard AerialVLN protocol and use its official Train, Validation-Unseen (VU), and Test-Unseen (TU) splits. Models are trained on Train, hyperparameters are tuned on VU, and results are 6
+
+Fig. 5: Representative scenes in the VLN benchmark. Be-yond the original urban environments, we add additional open-area scenes, resulting in diverse layouts spanning both dense city structures and wide-open spaces under varied lighting conditions. reported on both VU and TU. To broaden environmental diversity beyond the official scene collection, we additionally introduce a set of Unreal Engine scenes. As illustrated in Fig. 5, the added scenes span diverse open-area terrains (e.g., forests and deserts), complementing the original dense urban layouts and providing more distinctive landmarks. This expansion reduces reliance on a single urban style and enables a stricter evaluation of landmark-driven, stepwise ATT ground-ing in unseen environments. For difficulty analysis, we treat the original urban scenes as Dense Airspace and the newly added scenes as Open Airspace. IV. E XPERIMENTS 
+
+A. Experimental Setup 
+
+Implementations. All simulation experiments were carried out in accordance with the VLN evaluation scheme described. AERIS employs a fixed heartbeat scheduling mechanism: the semantic stack generates decisions Dt that comply with the schema constraints every 2 seconds, while the 50 HZ controller tracks the instructions in real time. If a cycle misses the deadline, the system will automatically reuse the previous decision, thereby decoupling the high-level delay from the low-level flight safety. 
+
+Baselines. We compare against: (i) Random, a non-learning policy that uniformly samples feasible actions from the same action interface; (ii) Seq2Seq [36], an instruction-conditioned encoder–decoder trained for stepwise action prediction; (iii) 
+
+CMA [37], a cross-modal attention agent that fuses language and visual features for navigation decisions; and (iv) LAG [10], which uses look-ahead signals to improve long-horizon action selection. All baselines are trained and evaluated with the same observation interfaces and stopping rule as AERIS. 
+
+Evaluation metrics. Following the standard VLN evaluation protocol [37], we adopt Success Rate (SR), Oracle Success Rate (OSR), and Navigation Error (NE). SR counts the pro-portion of all test episodes where the final stopping position is within a success radius τ =20 m of the target. OSR measures the proportion of episodes that enter the 20 m-neighborhood of the target at any point during execution. NE is the Euclidean distance between the final position and the goal position. To go beyond terminal-only evaluation of ”only evaluating terminal accuracy”, we additionally introduce the Normalized Dynamic Time Warping (nDTW) [38] to measure similarity between the executed and the reference trajectory. We also report Success weighted by Path Length (SPL) [39], which evaluates navigation efficiency conditioned on success: 
+
+SPL = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+Si · li
+
+max( pi, l i) , (7) where Si ∈ { 0, 1} indicates success under radius τ , li is the shortest path distance from the start point to the target, and pi
+
+is the actual path length. Finally, we introduce the Attention-weighted Success Rate (ASR), which judges the completion of subgoals through the attention trace: 
+
+ASR = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+ci
+
+Ki
+
+, (8) where Ki is the number of subgoals in episode i, and ci ∈
+
+[0 , K i] is the number of completed subgoals inferred from the attention trace (ranging from 0 to Ki). For methods that do not produce attention traces, ASR is not applicable and is denoted as “–”. 
+
+B. Main Results 
+
+Table IV reports VLN results of AERIS against standard baselines and human pilots on VU and TU splits, with break-downs by full, open and dense airspace. 
+
+Overall Performance. Across all splits and airspace densities, AERIS outperforms all baselines, with the largest gains in SR and OSR, demonstrating more reliable long-horizon instruc-tion following and goal reaching in unseen environments. All methods degrade in Dense Airspace due to increased clutter, occlusions, and weaker long-range landmark cues; however, AERIS preserves a clear advantage, indicating stronger robust-ness of the closed-loop stack under challenging perceptual and interaction conditions. 
+
+Path quality (NE, nDTW). In addition to simply evaluating system performance based on task success or failure, AERIS achieves higher trajectory fidelity of the flight trajectory throughout the entire task execution process. It can stably re-duce the NE, which means that the final target positioning will be more accurate. At the same time, it significantly improves nDTW, indicating that the trajectory alignment throughout the flight process has also been optimized. This performance advantage is particularly evident in dense airspace where obstacle obstructions and environmental noise will cause the positioning deviation to increase. 
+
+Path efficiency (SPL). AERIS improves not only the goal-reaching ability but also path efficiency, achieving consis-tently higher SPL than all baselines. This indicates that, 7
+
+TABLE IV: VLN performance comparison on VU and TUwith breakdowns by Full/Open/Dense airspaces.                                                                                                                                                                                                                                          
+
+> Method Split NE/m ↓SR/% ↑OSR/% ↑nDTW/% ↑SPL/% ↑ASR/% ↑
+> Full Open Dense Full Open Dense Full Open Dense Full Open Dense Full Open Dense Full Open Dense Random VU 149.7 136.8 167.2 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 –––
+> Seq2Seq VU 218.9 200.0 244.5 2.3 2.7 1.8 11.7 13.6 9.1 30.4 35.1 24.0 1.0 1.2 0.7 –––
+> CMA VU 172.1 157.3 192.3 3.2 3.7 2.5 16.0 18.6 12.4 34.4 39.7 27.2 1.5 1.8 1.1 –––
+> LAG VU 127.9 116.9 142.9 5.1 5.9 4.0 10.5 12.2 8.2 27.5 31.7 21.8 2.7 3.3 1.9 –––
+> Human VU 19.1 17.9 20.7 81.7 85.5 76.5 84.7 89.4 78.4 95.5 95.3 95.8 69.9 75.2 62.7 92.2 93.6 90.3 Ours VU 79.4 72.6 88.7 25.8 29.8 20.4 44.3 51.6 34.4 64.9 74.9 51.3 15.0 18.5 10.2 83.1 88.4 76.0 Random TU 148.5 136.2 165.2 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 –––
+> Seq2Seq TU 214.6 196.9 238.7 2.2 2.4 1.9 9.4 10.3 8.1 31.8 34.9 27.6 0.9 1.1 0.7 –––
+> CMA TU 178.5 163.8 198.5 3.9 4.3 3.4 13.1 14.4 11.4 35.9 39.4 31.1 1.9 2.2 1.5 –––
+> LAG TU 128.3 117.7 142.7 4.5 4.9 3.9 11.6 12.7 10.1 28.9 31.7 25.1 2.3 2.6 1.8 –––
+> Ours TU 85.4 78.3 95.0 20.5 22.5 17.7 31.8 34.9 27.6 66.0 72.5 57.2 11.4 13.5 8.5 73.6 78.5 67.0
+
+when successful, trajectories are typically shorter and more direct rather than exhibiting prolonged detours. The advantage persists across airspace densities: although SPL decreases for all methods in Dense Airspace due to obstacle avoidance and occlusions, AERIS maintains a clear margin. 
+
+Human upper bound (ASR vs. SR). We treat human tra-jectories as an empirical upper bound, as they are reference demonstrations flown by human operators rather than gen-erated by a deployable autonomous policy. Compared with human pilots, AERIS is much closer in ASR than in SR, since ASR credits subgoal completion even in failed episodes while SR is purely binary. The remaining gap is mainly due to limited online recovery after losing the active subgoal: when a landmark is missed or alignment drifts, AERIS often struggles to re-localize and re-anchor progress, whereas human pilots typically recover by actively exploring viewpoints and exploiting contextual cues. 
+
+C. Additional studies 
+
+Runtime cost and execution reliability. Fig. 6 analyzes the runtime cost and closed-loop reliability of the AERIS system in the heartbeat timing mode. Here, we set the running frequency of the semantic stack to 0.5 HZ, which corresponds to a 2s heartbeat cycle budget. The black peaks in the figure represent the moments when instructions are submitted; simultaneously, the underlying controller runs at a frequency of 50 HZ. 
+
+Fig. 6: Heartbeat-timed timing trace. Gray bars show CT with stage breakdown: Perception (blue), Reasoning (orange), Routing (pink), and Binding (green). Black spikes mark heart-beat commits; the 2 s budget is used to judge overruns. During each heartbeat cycle, we recorded the cycle time (CT), which is the total delay from the start of the instruction to its submission, and calculated the execution error rate (EER). As shown in Table V, the cycle time increases as the complexity of the scenario increases: compared to open airspace, the average cycle time in dense airspace is longer, making it more prone to timeouts and heartbeat synchroniza-tion errors. This impact directly reflects the increase in the execution error rate. Therefore, during the execution of long-duration navigation tasks, even a few invalid cycles can have a significant impact on the temporal stability. TABLE V: Timing and reliability under a 2 s heartbeat. 
+
+Split CT (s) mean ±std / P95 EER (%) 
+
+Open Airspace 1.31 ±0.18 / 1.64 0.4 Full 1.42 ±0.20 / 1.78 1.9 Dense Airspace 1.63 ±0.28 / 2.06 2.8 
+
+Ablation studies. We quantify the contribution of each core component via controlled ablations on the AerialVLN Test-Unseen split under consistent experimental configurations. We consider four variants: No-ATT disables hub-side ATT mechanism; Single-SLM replaces the role-adaptive compact SLM stack with a single fixed SLM variant; No-DS eliminates dynamic re-binding scheme; and Zero-shot removes task-specific alignment and applies generic models. Table VI indicates that the complete AERIS achieves the best performance in terms of navigation quality and runtime reliability. In contrast, all the variants show varying degrees of decline. No-ATT causes the largest drop and the most severe timing failures, indicating that the sub-goal instruction focusing is critical for stable long-horizon progress. Zero-shot substantially harms grounding and trajectory fidelity, supporting the necessity for task-specialized alignment to translate instructions into executable decisions. Single-SLM yields a consistent but moderate degradation and higher EER, suggesting that the multi-scale stack better balances reasoning capacity and responsiveness. No-DS primarily impacts timing stability with relatively smaller changes in navigation metrics, implying that dynamic scheduling mainly improves robustness under variable load. Overall, the ablations indicate that AERIS requires (i) hub-side step alignment for instruction-consistent coordination, (ii) task-aligned compact reasoning for grounded decisions, and (iii) dynamic re-binding for timing robustness. 8
+
+Fig. 7: Qualitative rollouts with AERIS. Top: a successful instruction-following trajectory with representative subgoals. Bottom: a failure case where the UAV eventually collides, illustrating error accumulation under challenging visual con-ditions. 
+
+Fig. 8: VLN visualization in simulation. Sampled first-person frames are annotated with the active instruction step emitted by the Communication Hub, illustrating stepwise grounding and progress over a long-horizon trajectory. TABLE VI: Ablation results on the VLN Test-Unseen split (Full).                                                 
+
+> Method (Variant) CT (s) ↓EER (%) ↓NE ↓SR ↑OSR ↑nDTW ↑SPL ↑ASR ↑
+> AERIS (Full) 1.42 ±0.20 1.9 85.4 20.5% 31.8% 66.0 11.4% 73.6% – No-ATT 4.55 ±1.48 12.5 120.0 5.0% 10.8% 52.0 2.7% –– Single-SLM 1.65 ±0.32 4.8 99.7 17.1% 28.4% 61.5 9.3% 65.0% – No-DS 1.60 ±0.34 5.1 90.1 18.3% 30.3% 64.0 9.9% 70.2% – Zero-shot 2.35 ±0.32 7.4 135.3 3.3% 5.5% 33.0 1.2% 35.4%
+
+Visualizations of success and failure cases. Fig. 7 presents qualitative examples of the AERIS system executing instruc-tions, contrasting a successful task execution and a failed one. In the successful scenario, AERIS follows the instructions, completing a series of subtasks in an orderly manner: taking off, then approaching a landmark building, turning left to the lake, and finally landing in the court area. Even as the viewing angle changes constantly during flight, the UAV’s flight path remains smooth and consistent. This shows that by updating intermediate goals in real time, the system can steadily drive the task forward. In the failed case, the UAV completes the initial steps smoothly, but after entering a narrow corridor with complex visual conditions, its flight path gradually drifts away from the intended route. As localization and control errors accumulate over time, the UAV eventually flies toward an obstacle and collides with it. 
+
+Instruction-step visualization in simulation. Fig. 8 com-plements the trajectory-level rollouts with first-person frames from a simulated VLN episode in Unreal Engine and AirSim. The sampled frames are annotated with the active instruction step emitted by the Communication Hub, showing the pro-gression through takeoff, heading calibration, road following, turning toward the lake, entering the sports field, and final landing. This visualization provides process-level evidence that the typed perception state, schema-constrained decision, and hub-side step alignment remain synchronized throughout a long-horizon rollout. V. R EAL -W ORLD VALIDATION 
+
+To examine whether AERIS can sustain stable closed-loop autonomy in physical settings, we conduct two real-world experiments targeting complementary capabilities: (i) stepwise instruction execution over long-horizon tasks, and (ii) time-sensitive coordination for multi-UAV formation flight. 
+
+Physical VLN in Sandbox Environment. To evaluate in-struction alignment and dynamic planning for long-horizon, multi-step execution, we build a tabletop-scale controlled sand-box environment. Instead of using bulky and costly physical landmarks, we deploy lightweight billboard-style signs as subgoal markers. This design provides a step-alignment signal analogous to our attention–subgoal tracking while significantly reducing experimental cost. During the experiment, AERIS runs on an on-site ground station, and the UAV streams real-time first-person-view (FPV) video to the station, enabling closed-loop perception, instruction-conditioned decision mak-ing, and command generation. Fig. 9 presents a representative first-person rollout from this sandbox deployment. Billboard cues placed along the route provide explicit visual guidance, and the sequence shows stage-triggered behaviors such as river following, turning, and flying above the tunnel while preserving the same typed interface and schema-constrained outputs used in simulation. 
+
+Multi-UAV Formation Flight Experiment. To validate real-time responsiveness and coordinated control, we deploy a swarm of micro-UAVs equipped with short-range wireless communication. High-level orchestration is centrally executed on the on-site ground station, while each UAV independently runs a high-frequency onboard tracking controller to stabilize its own flight. We issue formation tasks to the swarm via natural language and dynamically adjust the formation geome-try on demand during maneuvering, testing both coordination latency and robustness under practical wireless and sensing constraints. Figs. 10 and 11 illustrate the formation experiment at the workflow and execution levels, respectively. Fig. 10 shows the AERIS pipeline from language instruction and API context to code generation, simulation validation, and physical 9
+
+Fig. 9: Physical VLN rollout with in-scene cues. A first-person sequence from the sandbox experiment guided by billboard cues placed along the route. The rollout illustrates step-triggered behaviors under explicit visual guidance while preserving schema-constrained, directly executable decisions. 
+
+Fig. 10: Real-world formation pipeline of AERIS. Given a natural-language instruction and an API-level code context, the Communication Hub produces schema-constrained formation parameters and executable code. The program is validated in simulation, deployed on physical UAVs, and iteratively refined via feedback-driven fault diagnosis when runtime errors occur. deployment, while Fig. 11 presents the indoor flight sequence from initialization to landing. Additional real-world footage is provided in the accompanying demo video. VI. C ONCLUSION 
+
+This paper presented AERIS, a role-driven aerial-edge framework for language-model-assisted autonomy under real-time UAV constraints. Rather than treating the language model as a monolithic planner, AERIS decomposes perception, semantic decision making, communication, and control into runtime roles with typed interfaces. The edge-optimized model stack provides structured scene states and schema-constrained decisions; the Communication Hub validates and grounds these decisions through attention–subgoal alignment; and the dynamic orchestration mechanism re-binds roles across het-erogeneous executors as resource conditions change while preserving a stable workflow. Together, these designs connect high-level instruction understanding with executable low-level control without relying on continuous cloud access. 
+
+Fig. 11: Real-world formation sequence visualization. Key frames sampled from an indoor multi-UAV flight illustrate the evolution of the team configuration over time, including ini-tialization, spread-out hover, stabilized hover, reconfiguration, boundary-aligned formation, and return to neutral. Experiments on the AerialVLN benchmark show that AERIS improves long-horizon instruction following while maintaining bounded cycle time and low execution error under heartbeat-timed operation. The ablation results further indicate that system performance depends on the joint effect of task-aligned compact models, hub-side subgoal alignment, and runtime role re-binding, rather than on any single component alone. Real-world sandbox and multi-UAV experiments pro-vide additional evidence that the role-driven abstraction can be deployed under practical sensing, communication, and control constraints. Despite these improvements, the results also reveal the remaining limitations of AERIS. The system still falls short of human-level robustness when visual landmarks are missed, accumulated deviations cause subgoal drift, or dense envi-ronments weaken long-range visual cues. These failure cases suggest that a stable runtime pipeline alone is insufficient for robust long-horizon navigation. Future work will focus on ex-plicit recovery and backtracking roles, stronger re-localization under occlusion, and more reliable subgoal tracking in dense or visually ambiguous environments. REFERENCES [1] R. Mon-Williams, G. Li, R. Long, W. Du, and C. G. Lucas, “Embodied large language models enable robots to complete complex tasks in unpredictable environments,” Nature Machine Intelligence , vol. 7, pp. 592–601, 2025. [2] J. Lou, R. Shi, Y. Lin, Q. Wang, and W. Wu, “TALKER: A task-activated language model based knowledge-extension reasoning system,” IEEE Robotics and Automation Letters , vol. 10, no. 2, pp. 1026–1033, 2025. [3] M. Das, Z. Hussain, and M. Nawaz, “Latency-aware benchmarking of large language models for natural-language robot navigation in ROS 2,”                  
+
+> Sensors , vol. 26, no. 2, p. 608, 2026. [4] M. Ahn, A. Brohan, N. Brown, Y. Chebotar, O. Cortes, B. David, C. Finn, C. Fu, K. Gopalakrishnan, K. Hausman, et al. , “Do as i can, not as i say: Grounding language in robotic affordances,” in Proceedings of the 6th Conference on Robot Learning , ser. Proceedings of Machine Learning Research, vol. 205. PMLR, 2022. [5] J. Liang, W. Huang, F. Xia, P. Xu, K. Hausman, B. Ichter, P. Florence, and A. Zeng, “Code as policies: Language model programs for embodied control,” in Proceedings of the IEEE International Conference on Robotics and Automation , 2023, pp. 9493–9500. [6] B. Zitkovich, T. Yu, S. Xu, P. Xu, T. Xiao, F. Xia, J. Wu, P. Wohlhart, S. Welker, A. Wahid, et al. , “RT-2: Vision-language-action models transfer web knowledge to robotic control,” in Proceedings of the Conference on Robot Learning , ser. Proceedings of Machine Learning Research, vol. 229. PMLR, 2023, pp. 2165–2183. 10
+
+[7] Octo Model Team, D. Ghosh, H. Walke, K. Pertsch, et al. , “Octo: An open-source generalist robot policy,” in Proceedings of Robotics: Science and Systems , 2024. [8] A. Khazatsky, K. Pertsch, S. Nair, A. Balakrishna, et al. , “DROID: A large-scale in-the-wild robot manipulation dataset,” in Proceedings of Robotics: Science and Systems , 2024. [9] Y. Yue, Y. Wang, B. Kang, Y. Han, S. Wang, S. Song, J. Feng, and G. Huang, “DeeR-VLA: Dynamic inference of multimodal large language models for efficient robot execution,” in Advances in Neural Information Processing Systems , 2024. [Online]. Available: https://openreview.net/forum?id=PBmIq4Z9tq [10] S. Liu, H. Zhang, Y. Qi, P. Wang, Y. Zhang, and Q. Wu, “Aeri-alVLN: Vision-and-language navigation for UAVs,” in Proceedings of the IEEE/CVF International Conference on Computer Vision , 2023, pp. 15 384–15 394. [11] W. Zhang, C. Gao, S. Yu, R. Peng, B. Zhao, Q. Zhang, J. Cui, X. Chen, and Y. Li, “CityNavAgent: Aerial vision-and-language navigation with hierarchical semantic planning and global memory,” in Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics , 2025, pp. 31 292–31 309. [12] X. Wang, D. Yang, Z. Wang, H. Kwan, J. Chen, W. Wu, H. Li, Y. Liao, and S. Liu, “Towards realistic UAV vision-language navigation: Platform, benchmark, and methodology,” CoRR ,vol. abs/2410.07087, 2024, arXiv:2410.07087. [Online]. Available: https://arxiv.org/abs/2410.07087 [13] L. Xiao, X. Yang, F. Peng, M. Yan, Y. Wang, and C. Xu, “CLIP-VG: Self-paced curriculum adapting of CLIP for visual grounding,” IEEE Transactions on Multimedia , vol. 26, pp. 4334–4347, 2024. [14] T. Dettmers, R. A. Svirschevski, V. Egiazarian, D. Kuznedelev, E. Frantar, S. Ashkboos, A. Borzunov, T. Hoefler, and D.-A. Alistarh, “SpQR: A sparse-quantized representation for near-lossless LLM weight compression,” in Proceedings of the International Conference on Learning Representations , 2024. [Online]. Available: https://openreview.net/forum?id=Q1u25ahSuy [15] Z. Liu, C. Zhao, I. Fedorov, B. Soran, D. Choudhary, R. Krishnamoorthi, V. Chandra, Y. Tian, and T. Blankevoort, “SpinQuant: LLM quantization with learned rotations,” in Proceedings of the International Conference on Learning Representations , 2025. [Online]. Available: https://openreview.net/forum?id=ogO6DGE6FZ [16] Z. Liu, J. Yuan, H. Jin, S. Zhong, Z. Xu, V. Braverman, B. Chen, and X. Hu, “KIVI: A tuning-free asymmetric 2bit quantization for KV cache,” in Proceedings of the 41st International Conference on Machine Learning , 2024. [17] J. Shah, T. Dao, et al. , “FlashAttention-3: Fast and accurate attention with asynchrony and low precision,” in Advances in Neural Information Processing Systems , 2024. [Online]. Available: https://arxiv.org/abs/2407.08608 [18] T. Cai, Y. Li, Z. Geng, H. Peng, J. D. Lee, D. Chen, and T. Dao, “Medusa: Simple LLM inference acceleration framework with multiple decoding heads,” in Proceedings of the 41st International Conference on Machine Learning , 2024. [19] G. Li, H. A. A. K. Hammoud, H. Itani, D. Khizbullin, and B. Ghanem, “CAMEL: Communicative agents for “mind” exploration of large lan-guage model society,” in Advances in Neural Information Processing Systems , vol. 36, 2023, pp. 51 991–52 008. [20] G. Chen, S. Dong, Y. Shu, G. Zhang, J. Sesay, B. F. Karlsson, J. Fu, and Y. Shi, “AutoAgents: A framework for automatic agent generation,” in Proceedings of the Thirty-Third International Joint Conference on Artificial Intelligence , 2024, pp. 21–28. [21] C. Zhang et al. , “ProAgent: Building proactive cooperative agents with large language models,” in Proceedings of the AAAI Conference on Artificial Intelligence , vol. 38, no. 16, 2024, pp. 17 591–17 599. [22] C. Qian et al. , “Scaling large-language-model-based multi-agent collaboration,” in Proceedings of the International Conference on Learning Representations , 2025. [Online]. Available: https://openreview. net/forum?id=K3n5jPkrU6 [23] E. Albaroudi et al. , “COLLAB-LLM: A communication-centric role-based framework for scalable multi-agent LLM collaboration,” Asian Journal of Research in Computer Science , vol. 19, no. 1, pp. 152–185, 2026. [24] Z. Mandi, S. Jain, and S. Song, “RoCo: Dialectic multi-robot collaboration with large language models,” CoRR , vol. abs/2307.04738, 2023, arXiv:2307.04738. [Online]. Available: https://arxiv.org/abs/2307. 04738 [25] Y. Chen et al. , “Scalable multi-robot collaboration with large language models: Centralized or decentralized systems?” in Proceedings of the IEEE International Conference on Robotics and Automation , 2024. [26] J. Lou, R. Shi, H. Wang, M.-M. Yu, Y. Wang, Q. Wang, and W. Wu, “Agents trainer: Automatically training multi-agent reinforcement learn-ing models for drone swarm using language model-based agents,” 
+
+IEEE Transactions on Automation Science and Engineering , 2026, early access/forthcoming; verify final volume, issue, and pages before final proof. [27] Ultralytics, “Ultralytics YOLOv8 documentation,” https: //docs.ultralytics.com/models/yolov8/, 2023, accessed: 2026-05-12. [28] Y. Zhao, W. Lv, S. Xu, J. Wei, G. Wang, Q. Dang, Y. Liu, and J. Chen, “DETRs beat YOLOs on real-time object detection,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ,2024, pp. 16 965–16 974. [29] S. Xu, X. Wang, W. Lv, Q. Chang, C. Cui, K. Deng, G. Wang, Q. Dang, S. Wei, Y. Du, and B. Lai, “PP-YOLOE: An evolved version of YOLO,” CoRR , vol. abs/2203.16250, 2022, arXiv:2203.16250. [Online]. Available: https://arxiv.org/abs/2203.16250 [30] W. Zheng, W. Chen, Y. Huang, B. Zhang, Y. Duan, and J. Lu, “Occ-World: Learning a 3D occupancy world model for autonomous driving,” in Proceedings of the European Conference on Computer Vision , 2024, pp. 55–72. [31] Z. Huang, J. Zhang, and E. Ohn-Bar, “Neural volumetric world models for autonomous driving,” in Proceedings of the European Conference on Computer Vision , 2024, pp. 195–213. [32] H. Li, Y. Duan, X. Zhang, H. Liu, J. Ji, and Y. Zhang, “OCC-VO: Dense mapping via 3D occupancy-based visual odometry for autonomous driving,” in Proceedings of the IEEE International Conference on Robotics and Automation , 2024, pp. 17 961–17 967. [33] J. Jia, Y. Hu, X. Weng, Y. Shi, M. Li, X. Zhang, B. Zhou, Z. Liu, J. Luo, L. Huang, and J. Wu, “TinyLLaVA Factory: A modularized codebase for small-scale large multimodal models,” CoRR , vol. abs/2405.11788, 2024. [Online]. Available: https://arxiv.org/abs/2405.11788 [34] E. J. Hu, Y. Shen, P. Wallis, Z. Allen-Zhu, Y. Li, S. Wang, L. Wang, and W. Chen, “LoRA: Low-rank adaptation of large language models,” in Proceedings of the International Conference on Learning Representations , 2022. [Online]. Available: https: //openreview.net/forum?id=nZeVKeeFYf9 [35] T. Dettmers, A. Pagnoni, A. Holtzman, and L. Zettlemoyer, “QLoRA: Efficient finetuning of quantized LLMs,” in Advances in Neural Infor-mation Processing Systems , vol. 36, 2023, pp. 10 088–10 115. [36] P. Anderson, Q. Wu, D. Teney, J. Bruce, M. Johnson, N. S¨ underhauf, I. Reid, S. Gould, and A. van den Hengel, “Vision-and-language navigation: Interpreting visually-grounded navigation instructions in real environments,” in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition , 2018, pp. 3674–3683. [37] J. Krantz, E. Wijmans, A. Majumdar, D. Batra, and S. Lee, “Beyond the nav-graph: Vision-and-language navigation in continuous environments,” CoRR , vol. abs/2004.02857, 2020, arXiv:2004.02857. [Online]. Available: https://arxiv.org/abs/2004.02857 [38] G. I. Magalhaes, V. Jain, A. Ku, E. Ie, and J. Baldridge, “General evaluation for instruction conditioned navigation using dynamic time warping,” in NeurIPS Workshop on Visually Grounded Interaction and Language , 2019. [Online]. Available: https://arxiv.org/abs/1907.05446 [39] P. Anderson, A. X. Chang, D. S. Chaplot, A. Dosovitskiy, S. Gupta, V. Koltun, J. Kosecka, J. Malik, R. Mottaghi, M. Savva, and A. R. Zamir, “On evaluation of embodied navigation agents,” CoRR ,vol. abs/1807.06757, 2018, arXiv:1807.06757. [Online]. Available: https://arxiv.org/abs/1807.06757

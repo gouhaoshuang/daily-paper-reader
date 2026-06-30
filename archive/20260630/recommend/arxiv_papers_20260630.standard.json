@@ -1,0 +1,210 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-30T20:52:27.104992+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.30151v1",
+      "source": "arxiv",
+      "title": "AERIS: Aerial-Edge Role-Driven Intelligence at Runtime via Orchestrated Language-Model Swarm",
+      "abstract": "Integrating large language models into robotic systems holds promise for enhancing autonomy, yet practical deployment remains constrained by strict heartbeat-constrained scheduling and limited computational power. We propose AERIS: an edge deployment framework for aerial platforms. It organizes dedicated small language models combined with lightweight perception and control modules into roles that can be instantiated at runtime, and dynamically rebinds them across different executors as resources change, thereby pushing intelligent capabilities to the edge. AERIS achieves long-horizon instruction decomposition through an attention-subgoal alignment mechanism, which involves annotating the currently active instruction step in messages, thereby progressively approaching long-term objectives. We evaluate AERIS on a high-fidelity UAV Vision-and-Language Navigation benchmark. Under a heartbeat-timed execution mechanism, AERIS maintains a stable perception-decision-control loop between a low-frequency planner and a high-frequency controller, supporting real-time closed-loop operation. We further validate its deployability through two real-world experiments focused on planning and fast response. A demonstration video is provided in the supplementary materials.",
+      "authors": [
+        "Jiabin Lou",
+        "Haopeng Wang",
+        "Xinyu Liu",
+        "Yu Zhang",
+        "Rongye Shi",
+        "Wenjun Wu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-29T11:28:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.30151v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge deployment framework for aerial platforms with dynamic role rebinding",
+      "llm_evidence_cn": "面向空中平台的边缘部署框架，支持动态角色重绑定",
+      "llm_evidence": "面向空中平台的边缘部署框架，支持动态角色重绑定",
+      "canonical_evidence": "面向空中平台的边缘部署框架，支持动态角色重绑定",
+      "llm_tldr_en": "AERIS proposes an edge deployment framework for aerial platforms that organizes small language models into roles, dynamically rebinds them across executors, and achieves long-horizon instruction decomposition via attention-subgoal alignment.",
+      "llm_tldr_cn": "将大语言模型集成到机器人系统中面临实时调度和算力限制。本文提出AERIS，一个面向空中平台的边缘部署框架，将专用小语言模型与轻量感知控制模块组织为可运行时实例化的角色，并根据资源变化动态重绑定执行器，从而将智能推向边缘。通过注意力-子目标对齐机制实现长时指令分解。该工作直接实现了边缘云协同AI智能体的思想，尤其适合移动/空中平台。",
+      "llm_tldr": "将大语言模型集成到机器人系统中面临实时调度和算力限制。本文提出AERIS，一个面向空中平台的边缘部署框架，将专用小语言模型与轻量感知控制模块组织为可运行时实例化的角色，并根据资源变化动态重绑定执行器，从而将智能推向边缘。通过注意力-子目标对齐机制实现长时指令分解。该工作直接实现了边缘云协同AI智能体的思想，尤其适合移动/空中平台。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.28958v1",
+      "source": "arxiv",
+      "title": "When Latent Agents Lie: KV-Cache Integrity in Multi-Agent LLM Collaboration",
+      "abstract": "LLM agents can share more than text. In some systems, an agent can send a short visible message while also passing its full KV-cache state to another model. This hidden state can help the final model combine evidence from several agents, but it is also hard to inspect. A visible message may look harmless even if the hidden state has been changed.   We study this problem in a multi-agent question-answering setup. Specialists each see part of the evidence, send a short commitment, and pass full KV-cache state to a coordinator. In clean runs, this latent collaboration improves over a matched text-only version. On transformed HiddenBench with Qwen3-4B, it reaches EM/F1 of 0.338/0.486, compared with 0.231/0.369 for text collaboration. Qwen3-8B and HotPotQA runs show the same direction of improvement.   The problem appears when one specialist is malicious. Some false visible commitments can steer answers. More seriously, changing the hidden KV state can collapse performance even when the visible commitment still looks plausible. A verifier that checks only text misses this failure mode. Simple magnitude checks catch some obvious corruptions, but adaptive attacks can evade them while still damaging the final answer.   The most reliable fix we find is not to guess whether hidden state looks normal, but to protect it in transport. We implement an HMAC-SHA256 manifest that binds the specialist, session, model, visible commitment, tensor metadata, and payload digest. It accepts all 774 honest replayed payloads and rejects all 295 recorded tampered payloads. The main lesson is that full-KV latent memory can be useful, but it should be treated as a security-sensitive object, not as ordinary internal model state.",
+      "authors": [
+        "Luís Brito",
+        "Carlos Baquero"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-06-27T15:00:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.28958v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent LLM collaboration with KV-cache sharing",
+      "llm_evidence_cn": "多智能体LLM协作与KV缓存共享",
+      "llm_evidence": "多智能体LLM协作与KV缓存共享",
+      "canonical_evidence": "多智能体LLM协作与KV缓存共享",
+      "llm_tldr_en": "Studies latent collaboration via KV-cache in multi-agent QA; shows improvement over text-only but reveals integrity risks.",
+      "llm_tldr_cn": "该论文研究了多智能体LLM协作中通过KV缓存传递隐藏状态的问题。在问答场景中，专家智能体传递KV缓存给协调器，实现了比纯文本协作更好的性能。同时揭示了隐藏状态可能被篡改的安全隐患。这项工作展示了隐式协作的潜力与风险。",
+      "llm_tldr": "该论文研究了多智能体LLM协作中通过KV缓存传递隐藏状态的问题。在问答场景中，专家智能体传递KV缓存给协调器，实现了比纯文本协作更好的性能。同时揭示了隐藏状态可能被篡改的安全隐患。这项工作展示了隐式协作的潜力与风险。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.28514v1",
+      "source": "arxiv",
+      "title": "GPTNT: Benchmarking Real-Time Collaboration Between Multimodal Agents on Keep Talking And Nobody Explodes",
+      "abstract": "Multimodal models are increasingly deployed to solve tasks collaboratively with humans or other artificial agents. Existing benchmarks show that these models possess many of the required component capabilities, but the conditions that coincide in collaboration, including time pressure, information asymmetry, and imperfect communication, are usually studied in isolation. We introduce GPTNT, a benchmark built on the cooperative video game Keep Talking and Nobody Explodes, in which two agents must coordinate to defuse procedurally generated bomb puzzles against a live countdown. One agent can see and manipulate the bomb but does not have the defusal instructions; the other has the instructions but cannot see or manipulate the bomb. Neither agent can succeed alone: success requires effective and efficient communication. Unlike turn-based proxies, GPTNT requires agents to act asynchronously and communicate in real time. GPTNT is designed to separate collaboration from reliance on memorized solutions: the instruction manual, the partner, or both can be withheld to isolate what a model derives in the moment from what it already knows. We show that GPTNT poses a substantial challenge for state-of-the-art systems: none of the closed- or open-source models we test defuses a single bomb in real time, a bar that human players clear. Through controlled experiments, we identify critical weaknesses in state tracking, efficient action under time pressure, ambiguity handling, and error recovery. We release GPTNT as a benchmark for collaborative performance that current evaluations leave unmeasured. Because it runs on the real game, GPTNT benefits from procedural generation and inherits a living modding community, allowing the benchmark to evolve as models improve rather than being solved once and retired.",
+      "authors": [
+        "Amit Parekh",
+        "Sabrina McCallum",
+        "Kareem Al-Hasan",
+        "Malvina Nikandrou",
+        "Alessandro Suglia",
+        "Ioannis Konstas"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-26T18:09:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.28514v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "real-time collaboration benchmark between multimodal agents",
+      "llm_evidence_cn": "多模态智能体实时协作基准测试",
+      "llm_evidence": "多模态智能体实时协作基准测试",
+      "canonical_evidence": "多模态智能体实时协作基准测试",
+      "llm_tldr_en": "GPTNT introduces a benchmark for real-time collaboration between multimodal agents using the cooperative game Keep Talking and Nobody Explodes, testing time pressure, information asymmetry, and imperfect communication.",
+      "llm_tldr_cn": "多模态模型协作能力评测缺少时间压力和不对称信息等综合因素。本文基于合作游戏“保持通话无人爆炸”构建GPTNT基准，两个智能体需协同拆弹：一个可视可操作但无说明书，另一个有说明书但无法操作。该基准为评估智能体在实时、信息不对称下的协作表现提供了标准化平台。",
+      "llm_tldr": "多模态模型协作能力评测缺少时间压力和不对称信息等综合因素。本文基于合作游戏“保持通话无人爆炸”构建GPTNT基准，两个智能体需协同拆弹：一个可视可操作但无说明书，另一个有说明书但无法操作。该基准为评估智能体在实时、信息不对称下的协作表现提供了标准化平台。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.29026v1",
+      "source": "arxiv",
+      "title": "Preventing Error Propagation in Multi-Agent AI through Runtime Monitoring",
+      "abstract": "Multi-agent AI systems can improve answer selection by allowing different language models to exchange reasoning traces, revise initial predictions, and support a final decision. However, such communication may also introduce reliability risks: reasoning from one agent can correct another agent's mistake, but it can also mislead an agent that was initially correct. This paper studies reliable multi-agent AI communication through reasoning exchange and runtime answer revision. We develop a framework in which agents first answer multiple-choice questions independently, then share reasoning traces and revise their decisions. We conduct numerical experiments where we evaluate whether this process improves accuracy, produces more positive than negative answer transitions, and remains effective across domains such as cybersecurity, networking, and general knowledge. The results help identify when multi-agent reasoning improves reliability and when it may propagate errors.",
+      "authors": [
+        "Shahnewaz Karim Sakib",
+        "Anindya Bijoy Das"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.ET"
+      ],
+      "published": "2026-06-27T17:44:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.29026v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent AI collaboration and runtime monitoring",
+      "llm_evidence_cn": "多智能体AI协作与运行时监控",
+      "llm_evidence": "多智能体AI协作与运行时监控",
+      "canonical_evidence": "多智能体AI协作与运行时监控",
+      "llm_tldr_en": "This paper studies reliable multi-agent AI communication through reasoning exchange and runtime answer revision, proposing a framework to prevent error propagation in collaborative agent systems.",
+      "llm_tldr_cn": "多智能体AI系统通过交换推理轨迹和修正初始预测可提高准确性，但通信也可能引入可靠性风险。本文提出一个运行时监控框架，让智能体先独立回答，再共享推理并修正决策，通过数值实验评估该过程对准确性的影响。该工作直接关注多智能体协作中的错误传播问题，为构建可靠的多智能体协作系统提供了方法支撑。",
+      "llm_tldr": "多智能体AI系统通过交换推理轨迹和修正初始预测可提高准确性，但通信也可能引入可靠性风险。本文提出一个运行时监控框架，让智能体先独立回答，再共享推理并修正决策，通过数值实验评估该过程对准确性的影响。该工作直接关注多智能体协作中的错误传播问题，为构建可靠的多智能体协作系统提供了方法支撑。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.30189v1",
+      "source": "arxiv",
+      "title": "DAIN: Dynamic Agent-Based Interaction Network for Efficient and Collaborative Multimodal Reasoning",
+      "abstract": "Current multimodal fusion approaches, particularly those based on static Mixture-of-Experts (MoE) architectures, often struggle to provide the adaptive and efficient collaborative reasoning required by complex real-world applications. We introduce the Dynamic Agent-based Interaction Network (DAIN), which reconceptualizes multimodal fusion as a dynamic, multi-agent collaborative process. DAIN employs a context-aware Meta-Controller that dynamically schedules sparse activation of specialized interaction agents and orchestrates compressed inter-agent communication for consensus-building. The framework is guided by a multi-objective loss function that jointly optimizes task accuracy, agent specialization, and operational efficiency through sparse activation and communication regularization. Comprehensive evaluations across five diverse benchmarks -- ADNI, MIMIC-IV, MM-IMDB, CMU-MOSI, and ENRICO -- establish DAIN as a new state-of-the-art, delivering significant performance improvements including a 2.6\\% accuracy gain on ADNI. Ablation studies verify the critical roles of both dynamic scheduling and agent communication. Furthermore, DAIN offers enhanced interpretability by exposing context-dependent agent roles and collaboration patterns while maintaining computational efficiency through sample-wise sparse agent activation. Our work demonstrates the promise of dynamic, agent-based paradigms for multimodal reasoning.",
+      "authors": [
+        "Xinxin Chen",
+        "Yuchen Li",
+        "Zihan Wang",
+        "Haoyu Zhang",
+        "Ruixin Liu",
+        "Mingyuan Zhao"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-29T12:04:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.30189v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "dynamic multi-agent collaborative reasoning framework",
+      "llm_evidence_cn": "动态多智能体协作推理框架",
+      "llm_evidence": "动态多智能体协作推理框架",
+      "canonical_evidence": "动态多智能体协作推理框架",
+      "llm_tldr_en": "DAIN reimagines multimodal fusion as a dynamic multi-agent collaboration process, using a context-aware Meta-Controller to schedule specialized agents and compress inter-agent communication for efficiency.",
+      "llm_tldr_cn": "该论文针对静态混合专家架构在多模态融合中缺乏自适应协作的问题，提出动态智能体交互网络DAIN，将多模态融合重新建模为动态多智能体协作过程，通过上下文感知的元控制器动态调度稀疏激活的专业智能体并压缩智能体间通信以达成共识，在多目标损失函数引导下同时优化任务准确率、智能体专业化和运行效率。",
+      "llm_tldr": "该论文针对静态混合专家架构在多模态融合中缺乏自适应协作的问题，提出动态智能体交互网络DAIN，将多模态融合重新建模为动态多智能体协作过程，通过上下文感知的元控制器动态调度稀疏激活的专业智能体并压缩智能体间通信以达成共识，在多目标损失函数引导下同时优化任务准确率、智能体专业化和运行效率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
