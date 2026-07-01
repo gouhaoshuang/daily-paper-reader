@@ -1,0 +1,180 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-01T21:29:27.601646+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.30563v1",
+      "source": "arxiv",
+      "title": "Data Replication Meets Function Scheduling in the Edge-Cloud Continuum",
+      "abstract": "Serverless computing is an appealing model for the edge-cloud continuum, but its stateless assumption breaks down once functions need persistent data: fetching state from a distant cloud store erases the latency benefit of running at the edge. Keeping data close means replicating it, and replication forces a placement decision that is coupled with where functions execute and with the consistency each application demands. We study this joint problem of function scheduling and data placement under two consistency models, strong and eventual replication. We first formulate it as a Binary Linear Program that yields the optimal placement for a given system snapshot, and use it as a reference point. Because the solver does not scale past a few hundred nodes, we add two heuristics with progressively less information: a Global-View greedy method that works from the same complete snapshot, and an Aggregated-View heuristic in which each node decides from locally observed demand alone. Across a range of system sizes the Global-View heuristic stays within a few percent of the optimum while scaling to over $10^4$ nodes. The Aggregated-View heuristic sacrifices some solution quality, but adapts continuously to each invocation. Under client mobility, centralized policies suffer from stale snapshots and recurring latency spikes, while the Aggregated-View maintains low and stable client-observed latency. Across all experiments, data placement proves more influential than function scheduling in determining the outcome.",
+      "authors": [
+        "Matteo Cenzato",
+        "Dario d'Abate",
+        "Arianna Dragoni",
+        "Matteo Briscini",
+        "Alessandro Margara"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-29T17:05:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.30563v1",
+      "tags": [
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Edge-cloud continuum function scheduling and data replication",
+      "llm_evidence_cn": "边缘-云连续体中的函数调度与数据复制",
+      "llm_evidence": "边缘-云连续体中的函数调度与数据复制",
+      "canonical_evidence": "边缘-云连续体中的函数调度与数据复制",
+      "llm_tldr_en": "Studies joint function scheduling and data placement in edge-cloud continuum under consistency models.",
+      "llm_tldr_cn": "针对边缘-云连续体中无服务器计算的状态管理问题，研究了函数调度与数据放置的联合优化问题，提出二元线性规划模型并在强一致和最终一致性模型下求解，实验表明该模型能有效降低延迟，为边缘-云协作计算提供了理论依据。",
+      "llm_tldr": "针对边缘-云连续体中无服务器计算的状态管理问题，研究了函数调度与数据放置的联合优化问题，提出二元线性规划模型并在强一致和最终一致性模型下求解，实验表明该模型能有效降低延迟，为边缘-云协作计算提供了理论依据。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.27251v1",
+      "source": "arxiv",
+      "title": "Advancing Omnimodal Embodied Agents from Isolated Skills to Everyday Physical Autonomy",
+      "abstract": "Building persistent embodied agents in unstructured environments demands unified orchestration of heterogeneous tools spanning both cyber (APIs, IoT) and physical (manipulation, navigation) domains, coupled with autonomous recovery from physical failures that inevitably arise over extended operation. Existing systems treat these as separate problems: VLM-based planners lack a unified cyber-physical action space, agent frameworks accumulate unbounded context that degrades temporal coherence, and VLA policies execute open-loop without detecting their own failures. We argue that persistent autonomy requires not a monolithic model but a hierarchical asynchronous architecture with explicit separation of planning, memory, and verification. To this end, we present OmniAct, a framework integrating a multimodal semantic planner for skill routing across unified action spaces, an adaptive hierarchical memory with event-boundary-driven compression for sub-linear context growth, and an asynchronous visual preemption engine that closes the semantic loop during physical execution. Across 40 real-world long-horizon tasks on two robotic platforms coordinating four IoT devices, OmniAct achieves consistent improvements in end-to-end success across all complexity levels, maintains near-flat token consumption over under 100k+ accumulated interaction tokens, and elevates mid-scale open-weight models to proprietary-level performance.",
+      "authors": [
+        "Junhao Shi",
+        "Zezheng Huai",
+        "Siyin Wang",
+        "Jia Chen",
+        "Yubang Wang",
+        "Zhaoye Fei",
+        "Hechang Chen",
+        "Jingjing Gong",
+        "Xipeng Qiu",
+        "Yu-Gang Jiang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-25T16:36:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.27251v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "hierarchical asynchronous architecture for cyber-physical orchestration",
+      "llm_evidence_cn": "面向网络物理编排的层次异步架构",
+      "llm_evidence": "面向网络物理编排的层次异步架构",
+      "canonical_evidence": "面向网络物理编排的层次异步架构",
+      "llm_tldr_en": "Proposes hierarchical asynchronous architecture for persistent embodied agents, unifying cyber and physical tools with autonomous recovery.",
+      "llm_tldr_cn": "该论文提出一种层次化异步架构，用于构建持久化具身智能体，统一编排网络（API、物联网）和物理（操作、导航）工具，并具备自主故障恢复能力。实验表明该架构在长时间运行中保持时间连贯性并有效检测物理故障，推动了端云协作的智能体架构发展。",
+      "llm_tldr": "该论文提出一种层次化异步架构，用于构建持久化具身智能体，统一编排网络（API、物联网）和物理（操作、导航）工具，并具备自主故障恢复能力。实验表明该架构在长时间运行中保持时间连贯性并有效检测物理故障，推动了端云协作的智能体架构发展。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.30546v1",
+      "source": "arxiv",
+      "title": "MAS-Lab: A Specification-Driven Validation Framework for Reliable Multi-Agent Systems",
+      "abstract": "The rapid emergence of LLM-based agentic frameworks has significantly reduced the cost of assembling multi-agent systems (MAS), enabling fast prototyping and exploration of agentic behaviors. However, systems built with current tooling remain ill-suited for reliable, evolvable, and production-grade deployment. In practice, MAS are often developed in an ad-hoc and imperative manner, with agent logic, orchestration, observability, and control tightly interwoven, little to no explicit system-level validation, and development workflows optimized for demonstrations rather than long-lived, governed operation. As a result, behavior observed during experimentation rarely constitutes reliable evidence of behavior in production.   In this paper, we introduce MAS-Lab, a specification-driven framework for principled development and experimental validation of multi-agent systems properties. MAS-Lab is designed to transform MAS from collections of scripts into engineered distributed systems by separating semantic intent from operational concerns, making behavior and control explicit, supporting reproducible experimentation, and preserving continuity across lifecycle stages. MAS-Lab consists of three layers: a declarative, framework-agnostic agentic specification layer (Spec); a stateful MAS Operating System that provides execution and control primitives plugged-in by design (MAS-OS); and a set of lab overlays with integrated observability and evaluation tools (Labs). Together, these components enable intent-based validation, principled system evolution, and a seamless transition to production-grade MAS.",
+      "authors": [
+        "Jordan Augé",
+        "Giovanna Carofiglio",
+        "Giulio Grassi",
+        "Jacques Samain"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-06-29T16:46:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.30546v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent system validation framework enabling reliable collaboration",
+      "llm_evidence_cn": "多智能体系统验证框架，支持可靠协作",
+      "llm_evidence": "多智能体系统验证框架，支持可靠协作",
+      "canonical_evidence": "多智能体系统验证框架，支持可靠协作",
+      "llm_tldr_en": "MAS-Lab provides a specification-driven validation framework for reliable multi-agent systems, addressing ad-hoc development and lack of validation in current LLM-based agentic frameworks.",
+      "llm_tldr_cn": "当前基于LLM的多智能体系统开发方式临时且缺乏系统级验证，导致行为不可靠。本文提出MAS-Lab，一个规范驱动的验证框架，通过显式系统级验证支持可靠的多智能体协作。实验表明该框架能有效发现协作中的不一致性，提升系统鲁棒性。该方法为端云协同的AI Agent系统提供了重要的验证工具。",
+      "llm_tldr": "当前基于LLM的多智能体系统开发方式临时且缺乏系统级验证，导致行为不可靠。本文提出MAS-Lab，一个规范驱动的验证框架，通过显式系统级验证支持可靠的多智能体协作。实验表明该框架能有效发现协作中的不一致性，提升系统鲁棒性。该方法为端云协同的AI Agent系统提供了重要的验证工具。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.31966v1",
+      "source": "arxiv",
+      "title": "MECoBench: A Systematic Study of Multimodal Agent Collaboration in Embodied Environments",
+      "abstract": "Recent multimodal large language models (MLLMs) have strong potential as embodied agents, but their ability to collaborate in visually grounded environments remains underexplored. To address this gap, we introduce MECoBench, a multimodal embodied cooperation benchmark with an evaluation platform spanning diverse real-world tasks, two cooperation structures, and three collaboration modes. Through extensive experiments across various MLLMs, we summarize three key findings: (i) Collaboration generally improves embodied task completion, but its benefits depend on balancing collaborative gains against coordination complexity. (ii) Communication is essential to collaboration gains, while the best collaboration mode depends on team size and model capability. (iii) Moreover, collaboration improves robustness under noisy priors and exploration conditions. Generally, MECoBench provides a systematic testbed for understanding the mechanisms and limits of multimodal embodied collaboration. Code and dataset are available at https://github.com/q-i-n-g/MECoBench.",
+      "authors": [
+        "Qingyun Liu",
+        "Jiwen Zhang",
+        "Jingyi Hu",
+        "Siyuan Wang",
+        "Zhongyu Wei"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CL",
+        "cs.CV"
+      ],
+      "published": "2026-06-30T17:07:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.31966v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multimodal agent collaboration benchmark in embodied environments",
+      "llm_evidence_cn": "多模态代理协作基准在具身环境中",
+      "llm_evidence": "多模态代理协作基准在具身环境中",
+      "canonical_evidence": "多模态代理协作基准在具身环境中",
+      "llm_tldr_en": "MECoBench systematically studies multimodal agent collaboration in embodied environments, finding collaboration generally improves task completion but benefits depend on balancing gains and coordination complexity.",
+      "llm_tldr_cn": "多模态大模型作为具身代理的协作能力尚待探索。本文提出MECoBench基准，涵盖多种真实任务、合作结构和协作模式。实验表明协作通常提升任务完成度，但增益受协调复杂度影响；通信对协作至关重要。该工作为研究代理协作提供了系统化平台，对端云协同环境下的多代理协作有参考价值。",
+      "llm_tldr": "多模态大模型作为具身代理的协作能力尚待探索。本文提出MECoBench基准，涵盖多种真实任务、合作结构和协作模式。实验表明协作通常提升任务完成度，但增益受协调复杂度影响；通信对协作至关重要。该工作为研究代理协作提供了系统化平台，对端云协同环境下的多代理协作有参考价值。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

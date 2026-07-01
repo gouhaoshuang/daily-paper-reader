@@ -6,37 +6,34 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-30
-- 运行时间：2026-06-30 20:58:08 UTC
+- 最新运行日期：2026-07-01
+- 运行时间：2026-07-01 21:33:23 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：2
+- 本次总论文数：4
+- 精读区：1
 - 速读区：3
 
 ### 今日简报（AI）
-今日聚焦多智能体协作的安全性与实时推理，精读2篇高分论文。  
-最值关注《AERIS》中的模型群运行时编排，以及《Latent Agents Lie》揭露的KV缓存完整性漏洞。  
-下一步建议优先关注多智能体系统的运行时监控与安全对齐方案。
-- 详情：[/202606/30/README](/202606/30/README)
+今日聚焦边缘-云连续体中数据复制与函数调度的协同优化，同时覆盖具身智能、多智能体系统验证与多模态协作等前沿方向。
+精读推荐《Data Replication Meets Function Scheduling in the Edge-Cloud Continuum》（8.0分），该研究为分布式系统资源管理提供了实用视角；速读中《MECoBench》等系统化研究多模态智能体协作，值得关注。
+建议优先阅读精读论文，掌握边缘-云协同的调度思路；后续可深入速读论文了解具身智能体与多智能体验证的具体方法。
+- 详情：[/202607/01/README](/202607/01/README)
 
 ### 精读区论文标签
-1. [AERIS: Aerial-Edge Role-Driven Intelligence at Runtime via Orchestrated Language-Model Swarm](/202606/30/2606.30151v1-aeris-aerial-edge-role-driven-intelligence-at-runtime-via-orchestrated-language-model-swarm)  
-   标签：评分：9.0/10、query:eca
-   evidence：面向空中平台的边缘部署框架，支持动态角色重绑定
-2. [When Latent Agents Lie: KV-Cache Integrity in Multi-Agent LLM Collaboration](/202606/30/2606.28958v1-when-latent-agents-lie-kv-cache-integrity-in-multi-agent-llm-collaboration)  
+1. [Data Replication Meets Function Scheduling in the Edge-Cloud Continuum](/202607/01/2606.30563v1-data-replication-meets-function-scheduling-in-the-edge-cloud-continuum)  
    标签：评分：8.0/10、query:eca
-   evidence：多智能体LLM协作与KV缓存共享
+   evidence：边缘-云连续体中的函数调度与数据复制
 
 ### 速读区论文标签
-1. [GPTNT: Benchmarking Real-Time Collaboration Between Multimodal Agents on Keep Talking And Nobody Explodes](/202606/30/2606.28514v1-gptnt-benchmarking-real-time-collaboration-between-multimodal-agents-on-keep-talking-and-nobody-explodes)  
-   标签：评分：7.0/10、query:eca
-   evidence：多模态智能体实时协作基准测试
-2. [Preventing Error Propagation in Multi-Agent AI through Runtime Monitoring](/202606/30/2606.29026v1-preventing-error-propagation-in-multi-agent-ai-through-runtime-monitoring)  
-   标签：评分：7.0/10、query:eca
-   evidence：多智能体AI协作与运行时监控
-3. [DAIN: Dynamic Agent-Based Interaction Network for Efficient and Collaborative Multimodal Reasoning](/202606/30/2606.30189v1-dain-dynamic-agent-based-interaction-network-for-efficient-and-collaborative-multimodal-reasoning)  
-   标签：评分：7.0/10、query:eca
-   evidence：动态多智能体协作推理框架
+1. [Advancing Omnimodal Embodied Agents from Isolated Skills to Everyday Physical Autonomy](/202607/01/2606.27251v1-advancing-omnimodal-embodied-agents-from-isolated-skills-to-everyday-physical-autonomy)  
+   标签：评分：6.0/10、query:eca
+   evidence：面向网络物理编排的层次异步架构
+2. [MAS-Lab: A Specification-Driven Validation Framework for Reliable Multi-Agent Systems](/202607/01/2606.30546v1-mas-lab-a-specification-driven-validation-framework-for-reliable-multi-agent-systems)  
+   标签：评分：6.0/10、query:eca
+   evidence：多智能体系统验证框架，支持可靠协作
+3. [MECoBench: A Systematic Study of Multimodal Agent Collaboration in Embodied Environments](/202607/01/2606.31966v1-mecobench-a-systematic-study-of-multimodal-agent-collaboration-in-embodied-environments)  
+   标签：评分：6.0/10、query:eca
+   evidence：多模态代理协作基准在具身环境中
 
 
 <div class="dpr-home-promo-card">

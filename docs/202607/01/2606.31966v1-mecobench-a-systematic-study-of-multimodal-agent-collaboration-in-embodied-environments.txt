@@ -1,0 +1,1926 @@
+Title: MECoBench: A Systematic Study of Multimodal Agent Collaboration in Embodied Environments
+
+URL Source: https://arxiv.org/pdf/2606.31966v1
+
+Published Time: Wed, 01 Jul 2026 01:38:46 GMT
+
+Number of Pages: 27
+
+Markdown Content:
+## MECoBench: A Systematic Study of Multimodal Agent Collaboration in Embodied Environments 
+
+Qingyun Liu 1∗, Jiwen Zhang 1∗, Jingyi Hu 1, Siyuan Wang 3†, Zhongyu Wei 1,2 †
+
+> 1
+
+Fudan University, 2Shanghai Innovation Institute, 3The Chinese University of Hong Kong 
+
+{qyliu25,jiwenzhang21,jyhu25}@m.fudan.edu.cn siyuanwang@cuhk.edu.hk, zywei@fudan.edu.cn 
+
+Abstract 
+
+Recent multimodal large language models (MLLMs) have strong potential as embodied agents, but their ability to collaborate in vi-sually grounded environments remains under-explored. To address this gap, we introduce MECoBench, a multimodal embodied cooper-ation benchmark with an evaluation platform spanning diverse real-world tasks, two cooper-ation structures, and three collaboration modes. Through extensive experiments across various MLLMs, we summarize three key findings: (i) Collaboration generally improves embodied task completion, but its benefits depend on bal-ancing collaborative gains against coordination complexity. (ii) Communication is essential to collaboration gains, while the best collabora-tion mode depends on team size and model ca-pability. (iii) Moreover, collaboration improves robustness under noisy priors and exploration conditions. Generally, MECoBench provides a systematic testbed for understanding the mech-anisms and limits of multimodal embodied col-laboration. Code and dataset are available at 
+
+https:/github.com/q-i-n-g/MECoBench .
+
+1 Introduction 
+
+Recent multimodal large language models (MLLMs) (Anthropic, 2026; OpenAI, 2026; Google DeepMind, 2026a) have demonstrated strong vision-language understanding and rea-soning capabilities, making them promising foundations for embodied agents in interactive environments (Mu et al., 2023; Szot et al., 2025). While most existing MLLM-based studies focus on single-agent embodied intelligence (Yang et al., 2025; Liu et al., 2025; Zhang et al., 2025b), many real-world tasks such as household assistance require multiple agents to cooperate (Sycara, 1998), as shown in Figure 1. Previous works 
+
+> *
+
+Equal contribution. 
+
+> †
+
+Corresponding author. Single Agent       
+
+> 3-Agent Team
+> Explored by agent
+> Unexplored
+> Explored by agent 0
+> Explored by agent 1
+> Explored by agent 2
+> Goal : Find and put 2 forks, two water -
+> glass and 1 wineglass on kitchen table
+> ✅
+> ❌
+> 60 steps
+> Team step Thr .
+> 60
+> 18
+> stuck in
+> middle 1/5
+> Task progress
+> 5/5
+> Task progress
+
+Figure 1: An illustration of realistic scenarios , where cross-modal multi-agent collaboration significantly im-proves the efficiency compared with single-agent. 
+
+on pure language-based multi-agent frame-work (Schmidgall et al., 2025; Hong et al., 2024) have proved that such cooperation could improve efficiency and overcome individual capability limits. However, the potential of multi-agent collaboration under multimodal embodied settings remains an underexplored area. Answering this is non-trivial, because embod-ied multi-agent collaboration differs fundamen-tally from text-based collaboration. Existing multi-agent benchmarks rely on textual task descriptions, shared symbolic states, or pre-processed observa-tions, reducing collaboration to plan coordination or dialogue (Zhu et al., 2025; Sun et al., 2025; Zhang et al., 2024a; Yang et al., 2026; Agashe et al., 2025). By contrast, embodied agents must coordi-nate from partial, dynamically changing visual ob-servations while exploring environments, resolving perceptual inconsistencies, avoiding spatial con-flicts, and acting under physical constraints (Shrid-har et al., 2020). This tightly couples percep-1
+
+> arXiv:2606.31966v1 [cs.MA] 30 Jun 2026
+
+Table 1: Comparison with related benchmarks. Multimodal: Whether agents receive multimodal observations rather than text-only observations. Collaboration structure ( Structure ): I and D denote independent and interde-pendent collaboration. Collaboration mode ( Collab. ): I, C, and D denote isolated, centralized, and decentralized collaboration. Communication medium ( Comm. ): T and V denote textual and visual communication. “–” indicates no explicit inter-agent communication.                                                                               
+
+> Benchmark Env. Multimodal Team size Structure Collab. Comm. #Test cases
+> FurnMove (Jain et al., 2020) 3D ✓Fixed (2) DD–1,000 CoELA (Zhang et al., 2024a) 3D ×Fixed (2) IDT44 RoCoBench (Mandi et al., 2024) 3D ×Fixed (2–3) I/D DT6VillagerBench (Dong et al., 2024) 3D ×Variable (2–3) I/D C–225 PARTNR (Chang et al., 2025) 3D ×Fixed (2) IC/D –1,000 TeamCraft (Long et al., 2024) 3D ✓Variable (2–4) I/D C/D –950 Collab-Overcooked (Sun et al., 2025) 2D ×Fixed (2) DDT30 MineCollab (White et al., 2025) 3D ×Variable (2–5) IDT184 COOP 2(Yang et al., 2026) 2D ×Variable (3/6) I/D I/C/D T36
+> MECoBench 3D ✓Variable (1–5) I/D I/C/D T/V 192
+
+tion, exploration, communication, and coordina-tion, leading to failure modes and emergent be-haviors that text-based benchmarks cannot cap-ture (Feng et al., 2026). Therefore, it is valuable to systematically study MLLM-based multi-agent collaboration in embodied settings, calling for a new benchmark that supports visually grounded interaction and diverse cooperation patterns. To address this gap, we introduce MECoBench, a multimodal embodied co operation benchmark together with an evaluation platform for systemati-cally analyzing visually grounded embodied multi-agent cooperation. MECoBench contains diverse embodied tasks covering eight types of common real-world activities, and introduces two coopera-tion structures to support realistic evaluation. In parallel cooperation, agents can work on differ-ent subtasks simultaneously, whereas in space-constrained sequential cooperation, agents must co-ordinate in a chained manner to complete the task. Beyond task construction, our platform supports controlled variation along multiple dimensions, in-cluding collaboration mode, team size and explo-ration difficulty. This design enables fine-grained analysis of not only whether collaboration helps, but also when, why, and through which mecha-nisms it improves embodied task solving. Based on MECoBench, our work aims to an-swer three research questions progressively: (i) To what extent does multi-agent collaboration bene-fit MLLMs on embodied tasks, and how does this benefit change as the team size scales? (ii) How do different collaboration modes and communica-tion mechanisms shape collaboration outcomes? (iii) Does collaboration remain effective and ro-bust under challenging information conditions? To answer these questions, we evaluate a wide range of MLLMs across model families and parameter scales, and obtain the following findings: • Multi-agent collaboration generally improves embodied task completion, but its benefits de-pend on balancing gains against coordination complexity. Most MLLMs exhibit basic collabo-rative capability and benefit from a second agent participation. As the team grows further, how-ever, performance saturates and then degrades, forming an inverted-U trend and indicating that moderate team sizes provide the best trade-off between parallelism and coordination overhead. Encouragingly, larger teams remain more robust as task complexity increases. • Communication is the key driver of collab-oration gains, and the best mode is contin-gent on both team size and model capability. 
+
+Removing communication consistently degrades performance, with substantially larger drops on sequential tasks and larger teams. Centralized coordination is most effective in small teams but saturates earlier than decentralized coordination as the team scales. Beyond textual messaging, shared memory yields more efficient collabora-tion and benefits loosely coupled parallel tasks, while vision-augmented leadership improves co-ordination efficiency—provided the leader model is capable enough to leverage visual input. • Collaboration further enhances robustness un-der challenging information conditions. Two-agent collaboration still improves task comple-tion when location priors are removed and agents must explore from scratch, and yields its largest 2Goal State                       
+
+> Agents move freely in all rooms Agent 1: kitchen, bedroom
+> Agent 2: bathroom, living room
+> Parallel Collaboration
+> Structure
+> Task template
+> Work at desk :mouse, mug,
+> cellphone and keyboard on
+> the desk
+> Legal placement
+> Surface :coffee table, sofa …
+> Container : cabinet, fridge, bookshelf,
+> microwave, …
+> Scene assets
+> 8different apartments
+> living room/kitchen/
+> bedroom/ bathroom
+> Goal sampling
+> 1mouse, 0 cellphone,
+> 1 keyboard, 2 mug Task Scene
+> Initial Scene Task Goal Object Location
+
+Task Scene Grounding 1
+
+Task Configuration 2 Kitchen living room 
+
+> Sequential
+
+Figure 2: Data construction pipeline of MECoBench . Each task is first grounded from a high-level task into a concrete scene, then set collaboration configuration for parallel or sequential execution. 
+
+relative gains under noisy priors, showing that multi-agent teams can compensate for mislead-ing information through communication and dis-tributed exploration. Available task information further amplifies the benefits of collaboration. 
+
+2 MECoBench 
+
+To investigate MLLM-based multi-agent collab-oration under embodied settings, we propose 
+
+MECoBench , a comprehensive benchmark with an interactive evaluation platform. MECoBench is built upon VirtualHome (Puig et al., 2018), a re-alistic household simulator covering a wide range of everyday scenarios, and spans different collabo-ration structures, variable team sizes, diverse col-laboration modes and communication mechanisms. Table 1 compares MECoBench with existing em-bodied multi-agent collaboration benchmarks. 
+
+2.1 Benchmark Construction 
+
+To cover common real-world activities, we define eight semantic task templates (detailed definition in Table 4), including five adapted from WAH (Puig et al., 2021) and three newly designed. Beyond semantic diversity, we introduce two collaboration structure to capture different forms of spatial ac-cessibility in the real world. In the parallel setting, all agents can freely access all rooms and complete subgoals independently and concurrently, model-ing cases where individuals operate in a shared space. In the sequential setting, agents are assigned to disjoint room zones, making inter-agent object transfers necessary and reflecting situations where individuals have access to different regions and must coordinate across spatial boundaries. The final task is constructed through a two-stage pipeline shown in Figure 2. In the scene grounding stage, we firstly sample subgoals from a task tem-isolated centralized  
+
+> broadcast discuss
+> decentralized
+> one as leader no comm
+
+Figure 3: Illustration of four protocols under three collaboration modes .
+
+plate, and then randomly place the selected goal objects at legal initial locations. We define a broad range of surfaces and containers to enable diverse and realistic object distributions (listed in Table 5). After a task scene is instantiated, we further as-sign its collaboration structure. Under sequential settings, the apartment is partitioned into disjoint room zones based on the initial locations of task objects and their target goal locations, and different zones are assigned to different agents. Overall, MECoBench consists of 96 tasks, each evaluated under both parallel and sequential setups, yielding 192 test cases in total. Each task contains 2–7 subgoals. The scenes are uniformly distributed over both the number of subgoals and the eight task templates to ensure balanced task complexity and scenario diversity. Details of construction and statistic are in Appendix A. 
+
+2.2 Evaluation Platform 
+
+The platform supports a flexible number of agents and provides three collaboration modes with four basic protocols to enable systematic evaluation. 
+
+Collaboration Mode To analyze how different coordination structures shape multi-agent perfor-mance, we design three collaboration modes im-plemented with four protocols as summarized in Figure 3. The isolated mode disables communi-cation , requiring agents to act independently. The 
+
+decentralized mode enables peer-level coordina-tion through broadcast or discussion . In broadcast, 3Place pudding, cupcake, 
+
+> juice and wine on the
+> coffee table
+
+Initialize                    
+
+> Agent 0Agent 1Agent 2
+> Legal action
+> Observation
+> 90 °
+> 1.8m
+> 90 °
+> front
+> right left
+> back
+> Hand occupy
+> Task progress
+> walk, grab, open, close, put
+> on/ inside, handover, wait
+> Object
+> appearance
+> Object
+> location
+> No comm
+> Broadcast
+> Leader
+> Discuss
+> I'll check the bedroom
+> cabinet for the pudding
+> I'll open the fridge to
+> check juice and wine….
+> I’ll go to the kitchen to
+> check the table …
+> Communicate
+> Open the grey fridge
+> Walk to the wooden
+> cabinet near the bed
+> walk to kitchen
+> ✅❌
+> success fail
+> living room
+> bedroom
+> kitchen
+> Init location
+> Memory
+> Room exploration
+> Task object record
+> Comm. summary
+> Global info
+> Shared memory
+> block
+
+1 /4   
+
+> null
+> Action exec
+> Agent location
+
+Virtual Home      
+
+> History
+> Action trajectory
+> Dialogue window
+> [walk] [grab] …
+> Width: 10 rounds
+
+1
+
+1 1
+
+2 3
+
+4
+
+4 
+
+> Think & Act
+> [walk]<kitchen>(11)
+> Feedback 12
+
+Figure 4: Overall workflow of evaluation. Agents receive task goals and prior information, perceive the environ-ment, communicate under different protocols, reason with history and memory, and execute actions with feedback. 
+
+each agent shares one message with all others be-fore action; in discussion, agents communicate se-quentially and can continue for another round when consensus is not reached. The centralized mode assigns one agent as leader to aggregate worker reports and assign actions to the team. 
+
+Evaluation Pipeline As illustrated in Figure 4, we formulate the evaluation as an iterative observe– communicate–act workflow. At the beginning of each task, the environment is initialized with the task scene graph and N agents. Each agent is placed in its assigned initial room with the pro-vided task goal G, the available prior informa-tion I, and the shared action space A (see Ap-pendix B.3). At each timestep t, each agent i
+
+obtains a panoramic environment observation Oit
+
+from its first-person view. To support long-horizon execution over dozens of steps, the agent reasons not only over its current observation Oit, but also over its action history hia,t , recent dialogue history 
+
+hd,t , self-maintained memory M it , and initial infor-mation I. Depending on the chosen collaboration protocol P , each agent i first generates the commu-nication message cit as 
+
+cit = Pi(Oit, h ia,t , h d,t , M it , G, I ). (1) The messages from all agents form the communi-cation context Ct = {c1 
+
+> t
+
+, c 2 
+
+> t
+
+, . . . , c Nt }. After com-munication, each agent generates its next action conditioned on the current communication context: 
+
+ait = πi(Oit, C t, h ia,t , M t, G, I, A ), (2) where πi denotes the action policy of agent i. The selected actions are executed in simulator, which returns execution feedback Ft and resulting envi-ronment changes. Finally, the feedback is used to update the history and memory. This workflow con-tinues until the task is completed or the maximum number of steps is reached. 
+
+3 Experiment Setup 
+
+3.1 Implementation Details 
+
+For parallel tasks, we compare single-agent and two-agent execution under the same effective 60-step budget, defined as the total number of steps across all agents. Thus, for an n-agent team, each agent is allocated 60/n steps. For sequential tasks, we use a fixed two-agent setup with an 80-step budget. Unless otherwise specified, we use the broadcast collaboration protocol in all multi-agent settings. By default, we provide the task object appear-ance and possible location list to agents as the prior information I at initialization. Since MECoBench focuses on collaboration rather than object search, this prior reduces localization difficulty and better isolates cooperative ability. More detials are in Appendix B.1. 
+
+3.2 Evaluation Metrics 
+
+We evaluate multi-agent collaboration from three aspects: (1) Effectiveness : Success Rate (SR) , de-fined as the proportion of successful cases, and 4Completion Rate (CR) , defined as the average frac-tion of completed subgoals across cases. (2) Effi-ciency : Step-CR AUC (AUC) , measuring the area under the completion-rate curve over equivalent steps, and Average Token Cost per Step . (3) Col-laboration quality : Division of Labor (DOL) , Con-flict Action Rate (CAR) , and Handover Failure Rate (HFR) . DOL measures the distribution of subgoal completion across agents, calculated as 
+
+si = count i
+
+P 
+
+> j
+
+count j
+
+, DOL = 1 − P 
+
+> i
+
+s2
+
+> i
+
+1 − 1
+
+> n
+
+. (3) where n > 1 is the number of agents, and si de-notes the fraction of subgoals completed by agent 
+
+i among all completed subgoals. CAR measures the average fraction of conflicting actions between agents, such as grabbing or opening the same ob-ject. HFR measures the average fraction of failed handovers in sequential tasks. 
+
+3.3 Evaluated Models 
+
+We evaluate a diverse set of both closed-source and open-source models. The closed-source mod-els include state-of-art model GPT-5.4 (OpenAI, 2026), Gemini-3.1-Pro (Google DeepMind, 2026a), and GPT-5-mini (OpenAI, 2025) The open-source models include Qwen3-VL (Bai et al., 2025), Qwen3.5 (Qwen Team, 2026), Gemma4 (Google DeepMind, 2026b), InternVL 3.5 (Wang et al., 2025), Llama4 (Meta AI, 2025) and GLM 4.6V (Team et al., 2025), covering model sizes from 8B to 235B parameters. Appendix B.2 lists all models evaluated. 
+
+4 Will Multi-agent Collaboration Benefit Embodied Task Completion? 
+
+4.1 Do Models Know How To Collaborate? Can models collaborate when collaboration is necessary? We compare the model performance under single- and two-agent settings, using paral-lel single-agent and sequential two-agent results as proxies for individual and collaborative ability, respectively. As demonstrated in Figure 5, single-agent performance on parallel tasks correlates posi-tively with two-agent collaboration performance on sequential tasks, while the sequential success rates are generally lower. This suggests that spatial con-straints make collaboration harder than individual execution, while most models still exhibit basic collaborative capability . Among these models, GPT-5.4 and GPT-5-mini achieve the best overall 0.00 0.20 0.40 0.60 0.80 1.00  
+
+> Parallel 1-agent SR
+> 0.00
+> 0.20
+> 0.40
+> 0.60
+> 0.80
+> Sequential 2-agent SR
+> Q25 Q75
+> Q25
+> Q75
+
+Figure 5: Comparison of model performance between parallel single-agent and sequential two-agent set-tings. Dashed lines indicate quartile thresholds. gpt-5-mini  
+
+> gpt-5.4
+> gemini-3.1-pro
+> qwen3-8b-vl
+> qwen3-32b-vl
+> qwen3-235b-vl
+> qwen3.5-9b
+> qwen3.5-27b
+> gemma4-26b
+> gemma4-31b
+> internvl-3.5-38b
+> internvl-3.5-241b
+> llama-4
+> glm-4.6v
+> glm-4.6v-flash
+> 10
+> 0
+> 10
+> 20
+> Percentage Points  Closed source Open source
+> SR gain (positive)
+> SR gain (negative)
+> CR gain (positive)
+> CR gain (negative)
+
+Figure 6: Performance change from 1-agent to 2-agent under parallel settings. Bars show the absolute change in SR and CR (percentage points) 
+
+performance, and Gemma4 series performs partic-ularly well on collaboration tasks. In contrast, In-ternVL3.5 performs well individually but struggles to cooperate, revealing a gap between individual execution and group collaboration. 
+
+Can models benefit from collaboration when it is optional? Compared with single agent, Fig-ure 6 shows that most models benefit from the participation of a second agent . The improve-ment is particularly large for weak and mid-level models, likely because their single-agent baselines leave more room for gains. Notably, InternVL3.5 series exhibits a clear performance drop, further confirming its weakness in multi-agent coordina-tion. Detailed results and analyses are provided in Appendix D.1. 
+
+4.2 Do More Agents Always Help? 
+
+To investigate this, we increase the number of agents from one to five under parallel settings with fixed effective step budget. Results are shown in Figure 7(a), where collaboration performance generally follows an inverted-U-shaped trend :adding agents initially improves performance, but further scaling leads to saturation and then degra-dation. Overall, moderate team sizes strike the best 5(a) (b) Figure 7: Team size scaling effect. (a) Performance curve of different team size. (b) SR of Qwen3-32B-VL versus the #objects, with fitted trend lines for different team sizes. 
+
+balance between collaboration benefits and costs. We further analyze the effect of task complexity using object count as a proxy. Figure 7(b) shows that success rates decline with increasing object count, due to longer trajectories and greater plan-ning difficulty (see Appendix D.6 for full results across all models and task conditions). Neverthe-less, multi-agent settings maintain more robust performance under high-complexity tasks , high-lighting the value of collaboration in complex em-bodied scenarios. 
+
+4.3 How Do Agents Collaborate? 
+
+We delve deeper into fine-grained collaborative be-haviors to understand how agents collaborate in practice. These behaviors are identified from the agents’ communication and action trajectories us-ing keyword-based matching rules, and are orga-nized into three categories, as reported in Table 2. Examples are provided in Appendix E.1. 
+
+Information Sharing Agents share their in-tended plans ( Info-Plan ), current locations ( Info-Loc ), and detected task-relevant objects ( Info-Obj ). 
+
+Plan and location sharing are frequent and con-sistently beneficial , while object discovery report-ing shows mixed effects. 
+
+Task Coordination Action-level delegation ( Act-Del ) issues concrete executable requests, such as asking another agent to grab, check, or place, and brings the strongest gains in both parallel and se-quential tasks. In contrast, task assignment ( Task-Assign ) provides coarser responsibility divisions, such as assigning rooms, areas, or subtasks, and offers only marginal benefit in parallel tasks while hurting sequential ones. More specific and action-able communication is easier to translate into successful execution. Alignment and Correction Coordination query (Coord-Q. ) refers to questions that synchronize 
+
+Table 2: Fine-grained collaborative behaviors across all models. Freq. denotes the percentage of cases con-taining each behavior. ∆SR and ∆CR are percentage-point differences between cases with and without the behavior.                                                  
+
+> Behav. Parallel Sequential Freq. ∆SR ∆CR Freq. ∆SR ∆CR
+> Info-Plan 75.6% +4.6 ↑+2.8 ↑86.3% +16.9 ↑+18.0 ↑
+> Act-Del. 57.1% +12.2 ↑+7.7 ↑54.3% +13.1 ↑+19.2 ↑
+> Info-Loc. 47.3% +9.1 ↑+6.9 ↑68.0% +7.6 ↑+13.3 ↑
+> Info-Obj. 25.9% +5.0 ↑+3.9 ↑16.3% -6.7 ↓-1.6 ↓
+> Coord-Q. 17.6% -10.1 ↓-1.8 ↓48.5% -15.5 ↓-6.7 ↓
+> Correct. 16.9% -6.7 ↓+1.6 ↑6.9% -11.3 ↓+7.7 ↑
+> Task-Assign 15.7% +1.9 ≈+2.9 ↑8.5% -11.5 ↓-4.9 ↓
+
+teammates’ states or locations. It occurs more often in sequential tasks where object transfer re-quires repeated position checks and serves as an indicator of task and coordination difficulty. Cor-rect. denotes behavioral correction through self-reflection or peer feedback. Despite its negative SR correlation, it consistently improves CR in both settings, suggesting that correction serves as an error-recovery mechanism that improves task progress even when full success is unrecoverable. 
+
+More analysis provided in Appendix E.1. 
+
+5 What Makes Multi-agent Collaboration Effective? 
+
+We answer this question along two dimensions: 
+
+collaboration mode and communication mecha-nism . We first examine which collaboration mode is most effective. We then study the role of com-munication by testing whether it is necessary and whether alternative mechanisms further improve collaboration. 
+
+5.1 Which Collaboration Mode Works Best? Two-Agent Collaboration. We compare differ-ent collaboration modes beyond basic broadcast mechanism. As shown in Figure 8(a), leader-based collaboration achieves the best overall performance for most models, suggesting that centralized col-laboration helps small teams allocate tasks and avoid spatial conflicts . However, GPT-5.4 remains competitive with simple broadcast communication, indicating that stronger models may rely less on structured collaboration mode. 
+
+Scaling to Larger Teams. We further examine how collaboration modes scale with team size on parallel tasks. Figure 8(b) illustrates that central-ized coordination is effective in small teams but sat-urates as team size increases, while decentralized 6(a) (b) Figure 8: Comparison of collaboration modes. (a) Performance profiles in 2-agent setup on parallel and sequential tasks. (b) SR and CR trends with increasing team size under decentralized broadcast and centralized leader-based. (a) (b)    
+
+> Figure 9: Ablation study on communication. (a) Per-formance change when remove communication. (b) Performance across different team sizes.
+
+coordination becomes more competitive by avoid-ing the bottleneck of relying on a single leader to aggregate information and assign actions. More-over, under centralized coordination, model capa-bility matters, as Qwen3-32B-VL benefits from three agents, whereas Qwen3-8B-VL peaks at two agents and then degrades. Therefore, the best col-laboration mode depends on both team size and model capability . Full results across all metrics and team sizes are provided in Appendix D.3. 
+
+5.2 Is Communication Necessary? 
+
+We ablate communication from the broadcast proto-col under both parallel and sequential settings. As shown in Figure 9, disabling communication con-sistently degrades performance across models, with a much larger drop on sequential tasks. When the number of agents grows, the gap between commu-nication and no communication widens. These re-sults indicate that communication is essential for effective collaboration , especially when tasks re-quire stronger coordination or involve larger teams. More details in Appendix D.2. (a) (b)  
+
+> Figure 10: Comparison between broadcast and shared-memory . (a) Relative changes in effectiveness and efficiency over broadcast of Qwen3-VL. (b) Aver-age completion progress over steps under broadcast and shared-memory of Qwen3-32B-VL.
+
+5.3 Is Textual Communication Enough? 
+
+While explicit textual communication is essential, it may be insufficient for embodied collaboration, where agents must share evolving task states and visually grounded observations. We therefore ex-plore two alternative communication mechanisms: 
+
+shared memory and vision-augmented leadership .
+
+Shared memory leads to efficient and effective collaboration. In shared memory, agents skip ex-plicit message exchange and coordinate through a shared memory block. As shown in Figure 10, this mechanism improves the performance and greatly reduces token consumption, indicating more effi-cient collaboration (absolute results in Figure 31). It consistently improves success rate on parallel tasks, but degrades on sequential tasks, where precise timing and spatial alignment may still re-quire explicit communication. Nevertheless, shared memory accelerates early progress, reducing more conflicts than broadcast under smaller step budgets. 
+
+Vision-augmented leadership helps when the leader is capable. To give the leader more grounded context, in vision-augmented leader-worker collaboration, we allow workers to send 7Gemma4-31B    
+
+> Qwen3-32B-VL
+> 82
+> 84
+> 86
+> 88
+> 90
+> 92
+> Score (%)
+> 86.5
+> 83.3
+> 89.6
+> 82.3
+> 3.12pp
+> 1.04pp
+> Success Rate (SR)
+> Gemma4-31B
+> Qwen3-32B-VL
+> 92
+> 94
+> 96
+> 98
+> 100
+> 96.4
+> 93.8
+> 97.4
+> 92.0
+> 1.04pp
+> 1.74pp
+> Completion Rate (CR)
+> Gemma4-31B
+> Qwen3-32B-VL
+> 70
+> 72
+> 74
+> 76
+> 78
+> 73.6
+> 70.6
+> 75.0
+> 71.2
+> 1.37pp
+> 0.58pp
+> AUC
+> leader (text only) leader-mm (+visual) Gemma4-31B Qwen3-32B-VL
+
+Figure 11: Comparison in leader-based collaboration with and without visual augmentation. 
+
+both textual reports and current visual observations to the leader. As shown in Figure 11, additional visual information improves AUC for both models, while its impact on SR and CR varies across mod-els. This difference may stem from models’ differ-ent abilities to effectively use visual cues. Models with stronger visual capabilities (Gemma4-31B), benefit from the additional visual input, whereas weaker models (Qwen3-32B-VL) drop. 
+
+6 Is Multi-Agent Collaboration Robust? 
+
+We examine robustness from two perspectives: the sensitivity of collaboration to imperfect prior infor-mation, and the failure modes that arise under col-laboration. Additional prior information ablations and mixed-model team experiments are deferred to Appendix D.4 and D.5. 
+
+6.1 Does Collaboration Remain Effective Under Imperfect Information? 
+
+At initialization, we provide all task-relevant object locations in the prior information I, which is hard to obtain in real scenarios. Therefore, we further investigate the collaboration under two realistic set-tings: (1) Missing location priors : object locations are removed from the prior information, requiring agents to find targets through visual search. (2) 
+
+Noisy location priors : an additional 30% false ob-ject locations are injected into the provided prior information. We extend the effective step budget to 80 steps to allow sufficient search, and apply parallel settings with basic broadcast protocol. As shown in Figure 12, two-agent collaboration improves the success rate and reduces the conflicts, indicating that collaboration remains useful when task information is incomplete. When the number of agents is further increased, a similar inverted-U-shaped trend emerges, as shown in Figure 13(a), while performance remains more stable on com-plex tasks. Moreover, Table 3 demonstrates that collaboration achieves the largest relative perfor-0.0 0.1 0.2 0.3 0.4          
+
+> Success Rate (SR)
+> gpt-5-mini
+> qwen3-8b-vl
+> qwen3-32b-vl
+> qwen3-235b-vl
+> qwen3.5-9b
+> gemma4-31b
+> internvl-3.5-38b
+> internvl-3.5-241b
+> llama4
+> +2.1
+> -1.0
+> +4.4
+> +16.5
+> +0.0
+> -1.0
+> +6.2
+> +4.2
+> -2.1
+> 0.0 0.2 0.4 0.6 0.8
+> Completion Rate (CR)
+> +6.1
+> +3.7
+> +7.7
+> +21.1
+> +6.8
+> +2.8
+> +10.4
+> +1.5
+> +1.7
+> 1-agent 2-agent gain loss Closed source Open source
+
+Figure 12: Performance change under parallel set-tings without prior location information. (a) (b) 
+
+Figure 13: Team size scaling effect without prior lo-cation information. (a) Performance curve of different team size. (b) SR of Qwen3-32B-VL versus the #ob-jects, with fitted trend lines for different team sizes. Table 3: Performance under noisy and incomplete task information. We compare three settings: noisy location priors ( W/ Noise ), clean location priors ( W/o Noise ), and no location priors ( W/o Loc. ). Each cell reports relative SR gain on top, with the corresponding 1-agent SR → 2-agent SR shown below. 
+
+Model W/ Noise W/o Noise W/o Loc. 
+
+GPT-5-mini +8.22% 
+
+> 76.04 →82.29
+
++1.16% 
+
+> 90.62 →91.67
+
++6.47% 
+
+> 32.29 →34.38
+
+Qwen3-32B +28.83% 
+
+> 54.17 →69.79
+
++28.57% 
+
+> 58.33 →75.00
+
++18.88% 
+
+> 21.88 →26.04
+
+Qwen3.5-9B +4.01% 
+
+> 78.12 →81.25
+
++3.52% 
+
+> 85.42 →88.54
+
++0.00% 
+
+> 29.17 →29.17
+
+mance gains when the information contains noise, suggesting that agents can compensate for mislead-ing information through communication and dis-tributed exploration. These results together validate that multi-agent collaboration is robust to insuf-ficient and noisy information .
+
+6.2 Where Does Collaboration Break Down? 
+
+We identify two major failure modes in multi-agent collaboration. These failures suggest that robust multi-agent embodied collaboration requires con-flict resolution and belief verification mechanisms. Examples and more statistics in Appendix F. 
+
+Multiple agents can introduce conflicts , includ-ing duplicate grabs, repeated labor, and redundant exploration. Although communication mitigates these conflicts for most models, InternVL3.5-241B still exhibits the highest duplicate-grab rates among 82-agent setup of 21.9%, partly explaining its per-formance drop in Figure 6. This also explains why performance drop with large team size: for Qwen3-32B-VL, scaling to five agents increases duplicate grabs to 57.4%. 
+
+Hallucinated beliefs can propagate across agents. When one agent falsely believes the task is complete and broadcasts it, the team may stop prematurely. Although rare (1%-1.5%), such hallu-cinated completion is highly destructive, causing a 73.7% SR drop in parallel tasks and a 40.9% drop in sequential tasks. Object confusion can similarly cause agents to skip unfinished subtasks. 
+
+7 Related Work 
+
+Multi-Agent System Inspired by human soci-ety, multi-agent systems (MAS) have been stud-ied as a way to improve task efficiency and effec-tiveness (Stone and Veloso, 2000). Recent work has explored LLM-based MAS across diverse do-mains, including automated research (Schmidgall et al., 2025; Su et al., 2025), programming (Hong et al., 2024; Islam et al., 2025), medical decision-making (Fan et al., 2025b; Chen et al., 2025), and social simulation (Piao et al., 2025). Other stud-ies further examine their scalability and emergent collaborative behaviors (Qian et al., 2025; Chen et al., 2024). Although recent work has begun to explore embodied multi-agent scenarios (Zhang et al., 2025a; Liu et al., 2024), multimodal embod-ied collaboration remains underexplored (Yu et al., 2024). 
+
+Embodied Agent Recent studies have explored LLM- or MLLM-based embodied agents for a wide range of tasks, including object manipulation (Yang et al., 2024; Mon-Williams et al., 2025), naviga-tion (Zhang et al., 2024b), complex perception-interaction tasks (Szot et al., 2024), and embodied human-AI collaboration (Chang et al., 2025). Sev-eral benchmarks have also been proposed to evalu-ate embodied agents across diverse environments and capabilities (Deitke et al., 2022; Savva et al., 2019; Yang et al., 2025; Cheng et al., 2025). How-ever, these benchmarks predominantly focus on single-agent settings, providing limited support for studying collaboration among multiple embodied agents. 
+
+Embodied Multi-Agent Collaboration Bench-marks Several benchmarks have been pro-posed to evaluate embodied multi-agent collabo-ration (Kang et al., 2025; Puig et al., 2021; Jain et al., 2020; Carroll et al., 2019; Agashe et al., 2025). Many are built on 2D games (Sun et al., 2025; Yang et al., 2026), offering limited sup-port for physical interaction and spatial reasoning. Existing 3D benchmarks often convert visual ob-servations into textual descriptions (Zhang et al., 2024a; Mandi et al., 2024; Chang et al., 2025; Dong et al., 2024; White et al., 2025), decoupling visual grounding and exploration from collabora-tive decision-making and overlooking behaviors unique to multimodal embodied interaction. Some recent benchmarks support multimodal observa-tions (Kang et al., 2025; Fan et al., 2025a; Zha et al., 2026), but mainly evaluate visual question answering or offline reasoning rather than closed-loop interaction. TeamCraft (Long et al., 2024) takes an initial step toward evaluating embodied MLLM collaboration, but does not systematically study how communication mechanisms, coordina-tion modes, and team size shape collaboration. 
+
+8 Conclusion 
+
+We empirically investigate how MLLM-based agents collaborate in embodied environments by constructing MECoBench, a multimodal embodied cooperation benchmark. Through controlled exper-iments and analyses, our results demonstrate that effective coordination can substantially improve both task performance and efficiency. By system-atically examining collaboration modes and com-munication mechanisms, we reveal how these fac-tors shape collaborative performance. We further evaluate collaboration under noisy and incomplete prior information, demonstrating its robustness in more challenging settings. Beyond aggregate per-formance, we identify emergent collaborative be-haviors and failure patterns, explaining both the benefits of collaboration and the new challenges it introduces. Overall, our study provides a deeper understanding of MLLM-based embodied collabo-ration and introduces a benchmark for evaluating the collaborative capabilities of future MLLMs. 
+
+Limitations 
+
+In this work, we propose MECoBench and con-duct systematic experiments to study cooperative behaviors of MLLM-based agents in embodied en-vironments. Our analysis reveals several non-trivial patterns in multi-agent collaboration, but there re-main several limitations for future work. 9Expanding tasks and scenarios. MECoBench and corresponding evaluation platform is currently built on VirtualHome, an indoor simulator focused on household scenarios. As a result, our tasks are mainly limited to everyday indoor activities and ob-ject interactions. Future work can extend the bench-mark to more diverse environments, such as open-world or outdoor scenes, and incorporate broader task types such as navigation and long-horizon ex-ploration. 
+
+Data scale. MECoBench contains 96 cases from 8 task types under two major task setups. This scale is sufficient for controlled evaluation and for revealing key collaboration patterns, but it remains relatively small compared with the diversity and complexity of real-world embodied tasks. Future work can expand the number of task instances, ob-ject categories, scene layouts, and collaboration requirements. 
+
+Agent scaling. Due to spatial constraints in the environment and the complexity of task execution, our experiments scale the team size up to 5 agents. Larger teams and more complex tasks are therefore left unexplored. 
+
+References 
+
+Saaket Agashe, Yue Fan, Anthony Reyna, and Xin Eric Wang. 2025. LLM-coordination: Evaluating and analyzing multi-agent coordination abilities in large language models. In Findings of the Association for Computational Linguistics: NAACL 2025 , pages 8053–8072, Albuquerque, New Mexico. Association for Computational Linguistics. Anthropic. 2026. Claude Opus 4.7 System Card. 
+
+https://www.anthropic.com/system-cards .System card PDF available at https: //cdn.sanity.io/files/4zrzovbb/website/ 037f06850df7fbe871e206dad004c3db5fd50340. pdf . Accessed May 23, 2026. Shuai Bai, Yuxuan Cai, Ruizhe Chen, Keqin Chen, Xionghui Chen, Zesen Cheng, Lianghao Deng, Wei Ding, Chang Gao, Chunjiang Ge, Wenbin Ge, Zhi-fang Guo, Qidong Huang, Jie Huang, Fei Huang, Binyuan Hui, Shutong Jiang, Zhaohai Li, Mingsheng Li, and 45 others. 2025. Qwen3-vl technical report. 
+
+Preprint , arXiv:2511.21631. Micah Carroll, Rohin Shah, Mark Ho, Tom Griffiths, Sanjit Seshia, Pieter Abbeel, and Anca Dragan. 2019. On the utility of learning about humans for human-ai coordination. In Advances in Neural Information Processing Systems , volume 32. Curran Associates, Inc. Matthew Chang, Gunjan Chhablani, Alexander Clegg, Mikael Dallaire Cote, Ruta Desai, Michal Hlavac, Vladimir Karashchuk, Jacob Krantz, Roozbeh Mot-taghi, Priyam Parashar, Siddharth Patki, Ishita Prasad, Xavier Puig, Akshara Rai, Ram Ramrakhya, Daniel Tran, Joanne Truong, John Turner, Eric Undersander, and Tsung-Yen Yang. 2025. Partnr: A benchmark for planning and reasoning in embodied multi-agent tasks. In International Conference on Learning Rep-resentations , volume 2025, pages 65205–65268. Weize Chen, Yusheng Su, Jingwei Zuo, Cheng Yang, Chenfei Yuan, Chi-Min Chan, Heyang Yu, Yaxi Lu, Yi-Hsin Hung, Chen Qian, Yujia Qin, Xin Cong, Ruobing Xie, Zhiyuan Liu, Maosong Sun, and Jie Zhou. 2024. Agentverse: Facilitating multi-agent collaboration and exploring emergent behaviors. In 
+
+International Conference on Learning Representa-tions , volume 2024, pages 20094–20136. Xi Chen, Huahui Yi, Mingke You, WeiZhi Liu, Li Wang, Hairui Li, Xue Zhang, Yingman Guo, Lei Fan, Gang Chen, Qicheng Lao, Weili Fu, Kang Li, and Jian Li. 2025. Enhancing diagnostic capability with multi-agents conversational large language models. npj Digital Medicine , 8(1):159. Zhili Cheng, Yuge Tu, Ran Li, Shiqi Dai, Jinyi Hu, Shengding Hu, Jiahao Li, Yang Shi, Tianyu Yu, Weize Chen, Lei Shi, and Maosong Sun. 2025. Em-bodiedeval: Evaluate multimodal llms as embodied agents. Preprint , arXiv:2501.11858. Matt Deitke, Eli VanderBilt, Alvaro Herrasti, Luca Weihs, Kiana Ehsani, Jordi Salvador, Winson Han, Eric Kolve, Aniruddha Kembhavi, and Roozbeh Mot-taghi. 2022. Procthor: Large-scale embodied ai us-ing procedural generation. In Advances in Neural Information Processing Systems , volume 35, pages 5982–5994. Curran Associates, Inc. Yubo Dong, Xukun Zhu, Zhengzhe Pan, Linchao Zhu, and Yi Yang. 2024. VillagerAgent: A graph-based multi-agent framework for coordinating complex task dependencies in Minecraft. In Findings of the Asso-ciation for Computational Linguistics: ACL 2024 ,pages 16290–16314, Bangkok, Thailand. Associa-tion for Computational Linguistics. Xianzhe Fan, Xuhui Zhou, Chuanyang Jin, Kolby Not-tingham, Hao Zhu, and Maarten Sap. 2025a. Somi-tom: Evaluating multi-perspective theory of mind in embodied social interactions. In Advances in Neural Information Processing Systems , volume 38. Curran Associates, Inc. Zhihao Fan, Lai Wei, Jialong Tang, Wei Chen, Wang Siyuan, Zhongyu Wei, and Fei Huang. 2025b. AI hospital: Benchmarking large language models in a multi-agent medical interaction simulator. In Pro-ceedings of the 31st International Conference on Computational Linguistics , pages 10183–10213, Abu Dhabi, UAE. Association for Computational Linguis-tics. 
+
+10 Zhaohan Feng, Ruiqi Xue, Lei Yuan, Yang Yu, Ning Ding, Meiqin Liu, Bingzhao Gao, Jian Sun, Xinhu Zheng, and Gang Wang. 2026. Multi-agent embod-ied ai: advances and future directions. Science China Information Sciences , 69(5):151202. Google DeepMind. 2026a. Gemini 3.1 Pro Model Card. https://deepmind.google/models/ model-cards/gemini-3-1-pro/ . Published February 2026. Accessed May 23, 2026. Google DeepMind. 2026b. Gemma 4 model card. https://ai.google.dev/gemma/docs/ core/model_card_4 . Accessed: 2026-05-26. Sirui Hong, Mingchen Zhuge, Jonathan Chen, Xiawu Zheng, Yuheng Cheng, Jinlin Wang, Ceyao Zhang, zili wang, Steven Yau, Zijuan Lin, Liyang Zhou, Chenyu Ran, Lingfeng Xiao, Chenglin Wu, and Jür-gen Schmidhuber. 2024. Metagpt: Meta program-ming for a multi-agent collaborative framework. In 
+
+International Conference on Learning Representa-tions , volume 2024, pages 23247–23275. Md. Ashraful Islam, Mohammed Eunus Ali, and Md Rizwan Parvez. 2025. CodeSim: Multi-agent code generation and problem solving through simulation-driven planning and debugging. In Find-ings of the Association for Computational Linguistics: NAACL 2025 , pages 5128–5154, Albuquerque, New Mexico. Association for Computational Linguistics. Unnat Jain, Luca Weihs, Eric Kolve, Ali Farhadi, Svet-lana Lazebnik, Aniruddha Kembhavi, and Alexan-der Schwing. 2020. A cordial sync: Going beyond marginal policies for multi-agent embodied tasks. In Computer Vision – ECCV 2020 , pages 471–490, Cham. Springer International Publishing. Li Kang, Xiufeng Song, Heng Zhou, Yiran Qin, Jie Yang, Xiaohong Liu, Philip Torr, LEI BAI, and Zhen-fei Yin. 2025. Viki - r: Coordinating embodied multi-agent cooperation via reinforcement learning. In 
+
+Advances in Neural Information Processing Systems ,volume 38. Curran Associates, Inc. Woosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Sheng, Lianmin Zheng, Cody Hao Yu, Joseph E. Gonzalez, Hao Zhang, and Ion Stoica. 2023. Effi-cient memory management for large language model serving with pagedattention. In Proceedings of the ACM SIGOPS 29th Symposium on Operating Systems Principles .Xiao Liu, Tianjie Zhang, Yu Gu, Iat Long Iong, Song XiXuan, Yifan Xu, Shudan Zhang, Hanyu Lai, Jiadai Sun, Xinyue Yang, Yu Yang, Zehan Qi, Shuntian Yao, Xueqiao Sun, Siyi Cheng, Qinkai Zheng, Hao Yu, Hanchen Zhang, Wenyi Hong, and 9 others. 2025. Visualagentbench: Towards large multimodal models as visual foundation agents. In The Thirteenth Inter-national Conference on Learning Representations .Xinzhu Liu, Di Guo, Xinyu Zhang, and Huaping Liu. 2024. Heterogeneous embodied multi-agent collab-oration. IEEE Robotics and Automation Letters ,9(6):5377–5384. Qian Long, Zhi Li, Ran Gong, Ying Nian Wu, Demetri Terzopoulos, and Xiaofeng Gao. 2024. Teamcraft: A benchmark for multi-modal multi-agent systems in minecraft. Preprint , arXiv:2412.05255. Zhao Mandi, Shreeya Jain, and Shuran Song. 2024. Roco: Dialectic multi-robot collaboration with large language models. In 2024 IEEE International Con-ference on Robotics and Automation (ICRA) , pages 286–299. Meta AI. 2025. Llama 4: Model cards and prompt formats. https://www.llama.com/docs/ model-cards-and-prompt-formats/llama4/ .Accessed: 2026-05-26. Ruaridh Mon-Williams, Gen Li, Ran Long, Wenqian Du, and Christopher G. Lucas. 2025. Embodied large language models enable robots to complete complex tasks in unpredictable environments. Nature Ma-chine Intelligence , 7(4):592–601. Yao Mu, Qinglong Zhang, Mengkang Hu, Wenhai Wang, Mingyu Ding, Jun Jin, Bin Wang, Jifeng Dai, Yu Qiao, and Ping Luo. 2023. Embodiedgpt: Vision-language pre-training via embodied chain of thought. In Advances in Neural Information Processing Sys-tems , volume 36, pages 25081–25094. Curran Asso-ciates, Inc. OpenAI. 2025. Gpt-5 mini model. https: //developers.openai.com/api/docs/models/ gpt-5-mini . Accessed: 2026-05-26. OpenAI. 2026. Gpt-5.4 thinking sys-tem card. https://openai.com/index/ gpt-5-4-thinking-system-card/ . Accessed: 2026-05-26. Jinghua Piao, Yuwei Yan, Jun Zhang, Nian Li, Junbo Yan, Xiaochong Lan, Zhihong Lu, Zhiheng Zheng, Jing Yi Wang, Di Zhou, Chen Gao, Fengli Xu, Fang Zhang, Ke Rong, Jun Su, and Yong Li. 2025. Agentsociety: Large-scale simulation of llm-driven generative agents advances understanding of human behaviors and society. Available at SSRN. Xavier Puig, Kevin Ra, Marko Boben, Jiaman Li, Tingwu Wang, Sanja Fidler, and Antonio Torralba. 2018. Virtualhome: Simulating household activities via programs. In Proceedings of the IEEE Confer-ence on Computer Vision and Pattern Recognition (CVPR) .Xavier Puig, Tianmin Shu, Shuang Li, Zilin Wang, Yuan-Hong Liao, Joshua B. Tenenbaum, Sanja Fi-dler, and Antonio Torralba. 2021. Watch-and-help: A challenge for social perception and human-{ai} col-laboration. In International Conference on Learning Representations .Chen Qian, Zihao Xie, YiFei Wang, Wei Liu, Kunlun Zhu, Hanchen Xia, Yufan Dang, Zhuoyun Du, Weize Chen, Cheng Yang, Zhiyuan Liu, and Maosong Sun. 2025. Scaling large language model-based multi-agent collaboration. In International Conference 
+
+11 on Learning Representations , volume 2025, pages 41488–41505. Qwen Team. 2026. Qwen3.5: Towards native multi-modal agents. Manolis Savva, Abhishek Kadian, Oleksandr Maksymets, Yili Zhao, Erik Wijmans, Bhavana Jain, Julian Straub, Jia Liu, Vladlen Koltun, Jitendra Malik, Devi Parikh, and Dhruv Batra. 2019. Habitat: A platform for embodied ai research. In Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) .Samuel Schmidgall, Yusheng Su, Ze Wang, Ximeng Sun, Jialian Wu, Xiaodong Yu, Jiang Liu, Michael Moor, Zicheng Liu, and Emad Barsoum. 2025. Agent laboratory: Using LLM agents as research assistants. In Findings of the Association for Com-putational Linguistics: EMNLP 2025 , pages 5977– 6043, Suzhou, China. Association for Computational Linguistics. Mohit Shridhar, Jesse Thomason, Daniel Gordon, Yonatan Bisk, Winson Han, Roozbeh Mottaghi, Luke Zettlemoyer, and Dieter Fox. 2020. Alfred: A bench-mark for interpreting grounded instructions for ev-eryday tasks. In Proceedings of the IEEE/CVF Con-ference on Computer Vision and Pattern Recognition (CVPR) .Peter Stone and Manuela Veloso. 2000. Multiagent sys-tems: A survey from a machine learning perspective. 
+
+Autonomous Robots , 8(3):345–383. Haoyang Su, Renqi Chen, Shixiang Tang, Zhenfei Yin, Xinzhe Zheng, Jinzhe Li, Biqing Qi, Qi Wu, Hui Li, Wanli Ouyang, Philip Torr, Bowen Zhou, and Nanqing Dong. 2025. Many heads are better than one: Improved scientific idea generation by a LLM-based multi-agent system. In Proceedings of the 63rd Annual Meeting of the Association for Compu-tational Linguistics (Volume 1: Long Papers) , pages 28201–28240, Vienna, Austria. Association for Com-putational Linguistics. Haochen Sun, Shuwen Zhang, Lujie Niu, Lei Ren, Hao Xu, Hao Fu, Fangkun Zhao, Caixia Yuan, and Xiaojie Wang. 2025. Collab-overcooked: Benchmarking and evaluating large language models as collaborative agents. In Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing ,pages 4922–4951, Suzhou, China. Association for Computational Linguistics. Katia P Sycara. 1998. Multiagent systems. AI maga-zine , 19(2):79–79. Andrew Szot, Bogdan Mazoure, Omar Attia, Aleksei Timofeev, Harsh Agrawal, Devon Hjelm, Zhe Gan, Zsolt Kira, and Alexander Toshev. 2025. From multi-modal llms to generalist embodied agents: Methods and lessons. In Proceedings of the IEEE/CVF Con-ference on Computer Vision and Pattern Recognition (CVPR) , pages 10644–10655. Andrew Szot, Max Schwarzer, Harsh Agrawal, Bog-dan Mazoure, Rin Metcalf, Walter Talbott, Natalie Mackraz, R Devon Hjelm, and Alexander T Toshev. 2024. Large language models as generalizable poli-cies for embodied tasks. In The Twelfth International Conference on Learning Representations .V Team, Wenyi Hong, Wenmeng Yu, Xiaotao Gu, Guo Wang, Guobing Gan, Haomiao Tang, Jiale Cheng, Ji Qi, Junhui Ji, Lihang Pan, Shuaiqi Duan, Wei-han Wang, Yan Wang, Yean Cheng, Zehai He, Zhe Su, Zhen Yang, Ziyang Pan, and 69 others. 2025. Glm-4.5v and glm-4.1v-thinking: Towards versatile multimodal reasoning with scalable reinforcement learning. Preprint , arXiv:2507.01006. Weiyun Wang, Zhangwei Gao, Lixin Gu, Hengjun Pu, Long Cui, Xingguang Wei, Zhaoyang Liu, Linglin Jing, Shenglong Ye, Jie Shao, Zhaokai Wang, Zhe Chen, Hongjie Zhang, Ganlin Yang, Haomin Wang, Qi Wei, Jinhui Yin, Wenhao Li, Erfei Cui, and 56 others. 2025. Internvl3.5: Advancing open-source multimodal models in versatility, reasoning, and effi-ciency. Preprint , arXiv:2508.18265. Isadora White, Kolby Nottingham, Ayush Maniar, Max Robinson, Hansen Lillemark, Mehul Mahesh-wari, Lianhui Qin, and Prithviraj Ammanabrolu. 2025. Collaborating action by action: A multi-agent llm framework for embodied reasoning. Preprint ,arXiv:2504.17950. Hanqing Yang, Narjes Nourzad, Shiyu Chen, Marie Siew, Jingdi Chen, and Carlee Joe-Wong. 2026. Coop 2: Defining, observing, and repairing co-operation in llm multi-agent systems. Preprint ,arXiv:2603.00349. Rui Yang, Hanyang Chen, Junyu Zhang, Mark Zhao, Cheng Qian, Kangrui Wang, Qineng Wang, Teja Venkat Koripella, Marziyeh Movahedi, Man-ling Li, Heng Ji, Huan Zhang, and Tong Zhang. 2025. Embodiedbench: Comprehensive benchmark-ing multi-modal large language models for vision-driven embodied agents. In Forty-second Interna-tional Conference on Machine Learning .Yijun Yang, Tianyi Zhou, Kanxue Li, Dapeng Tao, Lu-song Li, Li Shen, Xiaodong He, Jing Jiang, and Yuhui Shi. 2024. Embodied multi-modal agent trained by an llm from a parallel textworld. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 26275–26285. Xianhao Yu, Jiaqi Fu, Renjia Deng, and Wenjuan Han. 2024. Mineland: Simulating large-scale multi-agent interactions with limited multimodal senses and phys-ical needs. Preprint , arXiv:2403.19267. Jirong Zha, Yuxuan Fan, Tianyu Zhang, Geng Chen, Yingfeng Chen, Chen Gao, and Xinlei Chen. 2026. Aircopbench: A benchmark for multi-drone collab-orative embodied perception and reasoning. In Pro-ceedings of the AAAI Conference on Artificial Intelli-gence , volume 40, pages 1507–1515. 
+
+12 Hongxin Zhang, Weihua Du, Jiaming Shan, Qinhong Zhou, Yilun Du, Joshua B Tenenbaum, Tianmin Shu, and Chuang Gan. 2024a. Building cooperative em-bodied agents modularly with large language models. In International Conference on Learning Representa-tions , volume 2024, pages 19373–19401. Hongxin Zhang, Zeyuan Wang, Qiushi Lyu, Zheyuan Zhang, Sunli Chen, Tianmin Shu, Behzad Dariush, Kwonjoon Lee, Yilun Du, and Chuang Gan. 2025a. Combo: Compositional world models for embodied multi-agent cooperation. In International Conference on Learning Representations , volume 2025, pages 49996–50019. Jiazhao Zhang, Kunyu Wang, Rongtao Xu, Gengze Zhou, Yicong Hong, Xiaomeng Fang, Qi Wu, Zhizheng Zhang, and He Wang. 2024b. Navid: Video-based vlm plans the next step for vision-and-language navigation. Robotics: Science and Systems .Shiduo Zhang, Zhe Xu, Peiju Liu, Xiaopeng Yu, Yuan Li, Qinghui Gao, Zhaoye Fei, Zhangyue Yin, Zux-uan Wu, Yu-Gang Jiang, and Xipeng Qiu. 2025b. Vlabench: A large-scale benchmark for language-conditioned robotics manipulation with long-horizon reasoning tasks. In Proceedings of the IEEE/CVF In-ternational Conference on Computer Vision (ICCV) ,pages 11142–11152. Kunlun Zhu, Hongyi Du, Zhaochen Hong, Xiaocheng Yang, Shuyi Guo, Zhe Wang, Zhenhailong Wang, Cheng Qian, Xiangru Tang, Heng Ji, and Jiaxuan You. 2025. MultiAgentBench : Evaluating the collabora-tion and competition of LLM agents. In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) ,pages 8580–8622, Vienna, Austria. Association for Computational Linguistics. 
+
+13 Table 4: Task templates used in our benchmark. Each task is defined by a set of target predicates, where ON(obj, rec) and IN(obj, rec) denote placing a surface on or inside a container, respectively. 
+
+Task Name Predicate Set 
+
+Self-caring ON(toothbrush, bathroomcounter), ON(toothpaste, bathroomcounter), ON(towel, bathroomcounter), ON(barsoap, bathroomcounter) Work on desk ON(keyboard, desk), ON(mouse, desk), ON(cellphone, desk), ON(mug, desk) Gaming setup ON(boardgame, coffeetable), ON(remotecontrol, coffeetable), ON(magazine, coffeetable), ON(toy, coffeetable), ON(book, coffeetable) Prepare afternoon tea ON(cupcake, coffeetable), ON(juice, coffeetable), ON(wine, coffeetable), ON(pudding, coffeetable), ON(apple, coffeetable) Wash dishes IN(plate, dishwasher), IN(waterglass, dishwasher), IN(wineglass, dishwasher), IN(cutleryfork, dishwasher) Prepare food ON(cupcake, kitchentable), ON(juice, kitchentable), ON(pancake, kitchentable), ON(poundcake, kitchentable), ON(wine, kitchentable), ON(pudding, kitchentable), ON(apple, kitchentable), ON(coffeepot, kitchentable) Put food inside fridge IN(cupcake, fridge), IN(juice, fridge), IN(pancake, fridge), IN(poundcake, fridge), IN(wine, fridge), IN(pudding, fridge), IN(apple, fridge) Setup dinner table ON(plate, kitchentable), ON(waterglass, kitchentable), ON(wineglass, kitchentable), ON(cutleryfork, kitchentable) 
+
+A MECoBench 
+
+This section presents detailed information about MECoBench, covering its task definitions, bench-mark statistics, and construction details. 
+
+A.1 Task definition 
+
+Table 4 shows the detailed templates of the eight task types designed for MECoBench. Self-caring ,
+
+work-on-desk , and gaming setup are three newly in-troduced types, while prepare afternoon tea , wash dishes , prepare food , put food inside the fridge ,and setup dinner table are modified from WAH. Figure 14 gives an example of final task goal of gaming setup. 
+
+A.2 Benchmark construction details 
+
+The construction of MECoBench tasks follows a two-step pipeline. In step one, task templates are instantiated into concrete scenes with randomized object placement and validated for feasibility. 
+
+Goal Sampling. For a given task type, we sam-ple subgoals from predefined object-count ranges, specifying the target objects, required counts, and optional room or surface constraints. To mitigate visibility issues such as occlusion, we add 0–2 re-dundant instances for each target object category Find and put 1 magazine on coffeetable . Possible locations: One       
+
+> magazine is on the cabinet, the cabinet is inside the bedroom.
+> Appearance: Glossy comic -style magazine with orange -and -blue
+> cover, vertical rectangular shape, bold white title text, and a blue
+> robotic hero illustration. coffeetable appearance: Square low
+> coffee table with light gray wood top, dark charcoal recessed base,
+> and a centered four -panel top divided by thin seams.; Find and put
+> 1 toy on coffeetable. Possible locations: One toy is on the
+> bathroomcounter, the bathroomcounter is inside the bathroom. /
+> One toy is on the sofa, the sofa is inside the kitchen. Appearance:
+> Colorful wooden toy truck with blue box body, green cab, yellow
+> base, and red wheels.; Find and put 1 book on coffeetable.
+> Possible locations: One book is on the kitchentable, the
+> kitchentable is inside the kitchen. Appearance: Purple hardcover
+> book with white front cover, Cisco Unity Connection title, gold
+> page edges, rectangular shape. ;Find and put 2 remotecontrols on
+> coffeetable. Possible locations: One remotecontrol is on the desk,
+> the desk is inside the bedroom. / One remotecontrol is on the
+> desk, the desk is inside the livingroom. / One remotecontrol is
+> inside the fridge, the fridge is inside the kitchen. Appearance:
+> Gray plastic TV remote, rounded rectangular shape, slightly
+> tapered ends, white button face with black and red buttons. ;Find
+> and put 1 boardgame on coffeetable. Possible locations: One
+> boardgame is on the sofa, the sofa is inside the livingroom. / One
+> boardgame is inside the fridge, the fridge is inside the kitchen.
+> Appearance: Square yellow board with dark gray play area, raised
+> center platform, and small red, yellow, green, and blue
+> tokens.;coffeetable is in livingroom.
+
+Figure 14: Example of task goal content. The goal spec-ifies target objects, their possible locations highlighted in blue, and appearance descriptions highlighted in or-ange. 
+
+during scene instantiation. For large objects that occupy more surface space, such as keyboards, boardgames, and magazines, the redundancy is lim-14 ited to 0–1 instance. 
+
+Scene Instantiation and Object Placement. 
+
+Once a template is sampled, the target objects are assigned to legal initial locations based on the pre-defined legal placement (Table 5). Objects are placed randomly while respecting constraints: • No object is placed on the same surfaces or containers that are reserved for other goal lo-cations. • Surface space is checked to ensure sufficient area for the object. • Containers are verified for available slots us-ing their bounding boxes. This procedure ensures that the initial scene is di-verse yet consistent with the task template.   
+
+> Table 5: Legal placement locations used for randomized object initialization in MECoBench.
+> Type Legal Locations
+> Container fridge, stove, dishwasher, microwave, cabinet, bookshelf Surface sofa, cabinet, bathroomcounter, nightstand, bench, bed, desk, tvstand, kitchencounter, coffeetable, stove, kitchentable
+
+Validation and Goal Specification. After place-ment, the VirtualHome environment is used to ver-ify scene feasibility: • The environment graph is updated to reflect the actual object positions. • Target object counts are checked to ensure that all task objects exist in the scene. • Predicates from the template are instantiated with the real node IDs in the scene. • Tasks failing these checks (e.g., insufficient instances or invalid placements) are discarded, and a new attempt is generated. 
+
+A.3 Benchmark Statistic 
+
+MECoBench involves 25 common everyday ob-jects, which are grouped into six categories: food and drinks, tableware, electronics, hygiene items, entertainment items, and office items. Figure 15 illustrates the correspondence between the eight task types and their associated object categories. 
+
+> Figure 15: Three-layer sunburst chart illustrating the composition of eight household tasks used in our evalu-ation. The inner ring represents the eight task types; the middle ring shows the objects involved in each task; the outer ring indicates the object category.
+> Figure 16: Data distribution grouped by task type and number of subgoals.
+
+Figure 16 shows the data distribution of MECoBench across different task types and task complexity levels, where task complexity is mea-sured by the number of involved objects. 
+
+B Evaluation 
+
+B.1 Evaluation Setup 
+
+Each observation view is rendered at 256 × 256 
+
+pixels, resulting in a four-view concatenated obser-vation of 256 × 1024 . The four views are arranged in the order: front, back, left, and right. Both hor-izontal and vertical fields of view are set to 90 ◦.The agent model height is 1.8 m, and the camera is mounted at the same height with a forward offset of 0.15 m relative to the agent’s position. The camera is pitched downward by 30 ◦ to capture more of the nearby surfaces and objects. Figure 17 shows an example of the resulting concatenated observation. 15 Table 6: Full names of MLLMs used in our evaluation.                                 
+
+> Model Name Creator Full Name / Identifier
+> GPT-5-mini OpenAI gpt-5.4-mini
+> GPT-5.4 OpenAI gpt-5.4
+> Gemini-3.1-Pro Google gemini-3.1-pro
+> Qwen3-8B-VL Qwen Qwen/Qwen3-VL-8B-Instruct
+> Qwen3-32B-VL Qwen Qwen/Qwen3-VL-32B-Instruct
+> Qwen3-235B-VL Qwen Qwen/Qwen3-VL-235B-A22B-Instruct
+> Qwen3.5-9B Qwen Qwen/Qwen3.5-9B
+> Qwen3.5-27B Qwen Qwen/Qwen3.5-27B
+> Gemma4-26B Google google/gemma-4-26b-it
+> Gemma4-31B Google google/gemma-4-31b-it
+> InternVL-3.5-38B OpenGVLab OpenGVLab/InternVL3_5-38B
+> InternVL-3.5-241B OpenGVLab OpenGVLab/InternVL3_5-241B-A28B
+> Llama-4 Scout Meta meta-llama/Llama-4-Scout-17B-16E-Instruct
+> GLM-4.6V Z.ai zai-org/GLM-4.6V
+> GLM-4.6V-Flash Z.ai zai-org/GLM-4.6V-Flash
+
+Figure 17: Example observation image. 
+
+For all evaluated models, we adopt the recom-mended generation configurations whenever avail-able. For closed-source models, we use the official APIs with their default generation settings. For open-source models, we follow the generation con-figurations specified in the corresponding model cards or vLLM (Kwon et al., 2023) documentation to ensure strong and reliable performance. 
+
+B.2 Model Versions 
+
+Table 6 summarizes the model versions and full identifiers used in our experiments. Proprietary models are accessed through their official APIs, while open-source models are locally deployed us-ing vLLM (Kwon et al., 2023). 
+
+B.3 Action Space 
+
+Table 7 lists the action space for agents when evalu-ation for both parallel and sequential tasks. Parallel tasks include basic navigation and object manip-ulation actions, while sequential tasks introduce cross-room handover actions. 
+
+Single-Agent Action Legality Each agent action must satisfy the following legality constraints: • Hand occupancy: Each agent can hold at most two objects. When both hands are occu-pied, the agent cannot execute grab or open .For put_* and handover , the object to be placed or handed over must already be held by the acting agent. • Visibility: The target objects of walk , grab ,and put_* actions must be visible in the agent’s current observation. • Container state: An agent cannot execute 
+
+open on a container that is already open. • Room accessibility: For walk_* , grab , and 
+
+put_* actions, the target must be located in one of the rooms accessible to the agent. • Invalid actions: Any action name not listed in Table 7 is considered invalid. 
+
+Multi-Agent Interaction Constraints When multiple agents act simultaneously, additional in-teraction constraints are applied: • Conflict resolution: The conflict set includes 
+
+grab and open . If multiple agents attempt the same conflict action on the same object at the same time, one agent is randomly selected as the winner , while the others remain idle. • Handover distance: A handover action is valid only when the giver and receiver are within 2 meters of each other. 16 Table 7: Action space for agents in MECoBench. Parallel tasks include basic navigation and object manipulation actions. Sequential tasks introduce cross-room handover actions. 
+
+Action Description Parameters 
+
+Parallel Task Actions 
+
+walk Move towards a visible object, furniture, or door object 
+
+walk_to_room Move directly to another room bedroom / livingroom / kitchen / bathroom 
+
+grab Pick up a visible and grabbable object object 
+
+open Open a container container 
+
+put_on Place the held object on a visible surface object (holding), surface 
+
+put_in Place the held object inside a visible container object (holding), container 
+
+Sequential Task Additional Actions 
+
+walk_to_door Move to a specific door in the environment topology door_id 
+
+handover Give a held object to another agent when close (<2m) object(holding), recipient agent name 
+
+receive Wait to receive an object none {      
+
+> "action": "grab",
+> "parameter_1": {"name": "juice",
+> "description": "Square beige
+> plastic juice bottle with purple cap
+> and label, Naked branding, fruit
+> graphics, rectangular sides."},
+> "parameter_2": null,
+> "room": null
+> }
+> [grab] <juice> (376)
+> {"id": "376", " class_name ":
+> "juice", " bbox ": […]},
+> {"id" :"378", " class_name ":
+> "wine", … },
+> …
+
+VLM Decoder 
+
+Figure 18: Example of action decoding and grounding. 
+
+B.4 Action Decoding and Grounding 
+
+Agents output semantic actions based on their ob-servation rather than executable simulator com-mands. Thus, each generated action is decoded and grounded before execution. Actions that do not require object grounding, such as receive ,
+
+walk_to_room/door , and handover , are resolved by rule-based mappings. For object-centric actions, including walk , grab , open , put_on , and put_in ,semantic object descriptions are grounded to con-crete simulator object identifiers. As shown in Fig. 18, the top panels present the agent’s first-person observation and generated se-mantic action. The decoder then uses visible object candidates, their bounding boxes, and metadata, together with both the original and bbox-annotated views, to select the target simulator ID and produce the final executable action. 
+
+C Core Prompt Templates 
+
+This section presents the core prompt templates designed for agents in the MECoBench evaluation platform. 
+
+C.1 Communicate Phase 
+
+Below we list prompts for broadcast, discuss and leader-based communication protocol (Fig-ure 19, 20, 21, 22, 23). You are an embodied agent in a 3D simulated environment. 
+
+At this stage, based on the current observation, memory, history, 
+
+and task goal, you must decide whether to send ONE helpful 
+
+message to other agents. 
+
+## Communication 
+
+Send a message if it is helpful for task progress and remain silent if 
+
+the message would be redundant, speculative, or misleading. 
+
+Your goal is to complete the task with the **smallest number of 
+
+action steps**. Therefore, avoid waiting or letting others wait. We 
+
+should all actively engage and search for tasks to contribute to. 
+
+The valid actions we can take are: $VALID_ACTIONS$. Each agent 
+
+can only perform one action at a time, and can hold at most two 
+
+objects at a time. \n
+
+### MESSAGE Output Format 
+
+- If silent, output exactly: 
+
+<NO_MESSAGE> 
+
+- Otherwise, output the message text ONLY. 
+
+## Output Format 
+
+[THINKING] 
+
+Brief reasoning for the message decision. 
+
+[MESSAGE] 
+
+<NO_MESSAGE> or message text 
+
+## Inputs 
+
+$INPUT_BLOCK$ 
+
+Figure 19: Broadcast protocol communication prompt. This module asks each agent to decide whether to send a concise, useful message before physical action planning. 
+
+17 You are an embodied agent in a 3D simulated environment. 
+
+This is the FIRST discussion round for the current step. 
+
+Based on the current observation, memory, dialogue, and task goal, 
+
+decide whether more discussion is needed before acting. 
+
+You are an embodied agent in a 3D simulated environment. 
+
+This is a FOLLOW -UP text -only discussion round for the current step. 
+
+Use the dialogue so far and your private local context from the first 
+
+round to decide whether more discussion is needed before acting. 
+
+## Discussion 
+
+You may send ONE helpful discussion message to the other agents. 
+
+Your goal is to complete the task with the **smallest number of 
+
+action steps**. Therefore, avoid waiting idly or letting others wait. 
+
+We should all actively engage and search for tasks to contribute to. 
+
+The valid actions we can take are: $VALID_ACTIONS$. Each agent 
+
+can only perform one action at a time, and can hold at most two 
+
+objects at a time. \n
+
+READY rules: 
+
+- Output <READY> if, from your perspective, no more discussion is 
+
+needed before agents take actions. 
+
+- Output <CONTINUE> if more discussion is still needed. \n
+
+MESSAGE rules: 
+
+- If you have nothing useful to add, output exactly <NO_MESSAGE>. 
+
+- Otherwise output one concise, task -relevant message. 
+
+- Do not fabricate visual facts. 
+
+## Output Format 
+
+[THINKING] 
+
+Brief reasoning for the discussion decision. 
+
+[READY] 
+
+<READY> or <CONTINUE> 
+
+[MESSAGE] 
+
+<NO_MESSAGE> or message text 
+
+[LOCAL_CONTEXT] 
+
+A short private visual grounding note for your own later text -only 
+
+discussion rounds. 
+
+## Inputs 
+
+$INPUT_BLOCK $Figure 20: Discussion protocol prompt. The first round prompt is highlighted in blue, and the follow-up rounds prompt is highlighted in orange. You are an embodied agent in a 3D simulated environment. 
+
+At this stage, you must send ONE report message to the leader 
+
+agent: $LEADER_NAME$ and wait for the leader's assignment. 
+
+Base the report on your current observation, memory, dialogue, 
+
+and task goal. 
+
+## Report 
+
+Report only task -relevant observations, status, useful feedback and 
+
+progress to the leader (Agent 0). 
+
+If any action fails, you should report the failure and possible reason 
+
+to the leader. \n
+
+MESSAGE rules: 
+
+- If you have nothing useful to report, output exactly 
+
+<NO_MESSAGE>. 
+
+- Otherwise output one concise report message to the leader. 
+
+- Do not invent visual facts. 
+
+## Output Format 
+
+[THINKING] 
+
+Brief reasoning for the report. 
+
+[MESSAGE] 
+
+<NO_MESSAGE> or message text 
+
+Figure 21: Centralized mode: worker report prompt. You are an embodied agent in a 3D simulated environment. 
+
+At this stage, you are acting as the leader for this step. 
+
+Based on your current observation, memory, dialogue, and the 
+
+workers' reports, 
+
+assign exactly ONE next -step instruction to each agent, including 
+
+yourself. 
+
+You have access to a combined image that shows every agent's 
+
+current observation views (your own view on top, followed by each 
+
+worker's view, each row labeled with the agent name). 
+
+Together with your memory, dialogue, and the workers' text 
+
+reports, use this shared visual information to assign exactly ONE 
+
+next -step instruction to each agent, including yourself. 
+
+## Assignment 
+
+You must output exactly one assignment for each agent in this list: 
+
+$AGENT_NAMES$ 
+
+Your goal is to complete the task with the **smallest number of 
+
+action steps**. Therefore, avoid letting any agent stay idle or wait 
+
+for other agents. \n
+
+Rules: 
+
+- Use the exact agent names from the list. 
+
+- Set "type" to "assignment" for every item. 
+
+- Give concise, actionable instructions for THIS step only. 
+
+- The valid actions we can take are: $VALID_ACTIONS$. Each agent 
+
+can only perform one action at a time, and can hold at most two 
+
+objects at a time. Get full use of all agents' actions and hands to 
+
+minimize the total number of action steps. 
+
+- Do not assign an agent to do multiple unrelated things in one 
+
+message. 
+
+- If the worker reports failure, you should assign a different action. 
+
+Do not let the worker retry the failed action if the environment has 
+
+not changed. 
+
+## Output Format 
+
+[THINKING] 
+
+Brief reasoning for the assignments. 
+
+[MESSAGES] 
+
+A JSON array like: 
+
+[
+
+{"receiver": "<exact agent name>", "type": "assignment", 
+
+"content": "..."} 
+
+]
+
+Figure 22: Centralized mode: leader assignment prompt. Text-only communication is highlighted in blue, and the vision-augmented is highlighted in orange. **Current memory:** \n $MEMORY$ 
+
+**Historical dialogue:** \n $HISTORICAL_DIALOGUE$ 
+
+**Current round dialogue:** \n $CURRENT_ROUND_DIALOGUE$ 
+
+**Successful actions history:** \n $ACTION_HISTORY$ 
+
+**Last action feedback:** \n $FEEDBACK$ 
+
+**The last action (executed vs intended):** \n $LAST_ACTION$ 
+
+**Current room:** \n You are now standing in the 
+
+$CURRENT_ROOM$. Most of your current observation images are in 
+
+this room. 
+
+**Holding objects:** \n $HOLDING_OBJECTS$ 
+
+**Task goal:** \n $TASK_GOAL$ 
+
+**Current completion progress:** \n $TASK _PROGRESS$ 
+
+Figure 23: Input block for communicate phase. 
+
+18 C.2 Act Phase 
+
+This section presents the prompts used for action decision-making, memory update and action de-coding (Figure 24, 25, 26, 27, 28, 29). You are an embodied agent in a 3D simulated environment. 
+
+At this stage, based on the current observation, memory, current 
+
+communication context, and task goal, 
+
+you must produce TWO outputs in order: 
+
+1) Decide the NEXT single physical action. 
+
+2) Update the memory. 
+
+You coordinate with other agents ONLY through a shared memory 
+
+object. There is no current -round dialogue in this mode. 
+
+At this stage, based on the current observation, shared memory, 
+
+previous action feedback, and task goal, 
+
+you must produce TWO outputs in order: 
+
+1) Decide the NEXT single physical action. 
+
+2) Update the shared memory with observed facts, your current 
+
+plan, and your own status. 
+
+## Physical Actions 
+
+$ACTION_RULES$ 
+
+## Memory Update 
+
+$MEMORY_RULES$ 
+
+## Output Format 
+
+[THINKING] 
+
+Brief reasoning for the next action. 
+
+[ACTION] 
+
+The JSON action object. Only one action block is allowed. 
+
+[THINKING] 
+
+Brief reasoning for the memory update. 
+
+[MEMORY] 
+
+The updated memory JSON. 
+
+Figure 24: Action and memory update prompt. Normal memory is highlighted in blue and shared memory is highlighted in orange. You are resolving object_ids for an action based on the class name 
+
+and descriptions. 
+
+You are given: 
+
+- An action with object names and descriptions. 
+
+- A list of visible candidate objects with ids and class names. 
+
+- A list of holding objects with ids and class names. 
+
+- Two images of the same views: 
+
+1) Raw RGB image. 
+
+2) Bbox -annotated image with class names and object_ids .
+
+Rules: 
+
+1. Only choose ids from candidates or holding_objects .
+
+2. Match by class name and description. ... 
+
+3. For put_in / put_on , parameter_ids [0] MUST be the held object, 
+
+parameter_ids [1] is the target container/surface. 
+
+4. If multiple candidates match, choose the best and most 
+
+reasonable fit ... 
+
+5. If the action is walk_to_room , return the room name in 
+
+parameter_ids .
+
+6. If unsure, choose the closest matching candidate rather than 
+
+returning null. 
+
+Output JSON only (no extra text): 
+
+{
+
+"action": "<action>", 
+
+"parameter_ids ": [<int>, <int>] OR [<int>] OR ["<room>"] OR [] 
+
+}
+
+Input JSON: 
+
+$RESOLVE_INPUT$ 
+
+Figure 25: Prompt for action decoder. ## Physical Actions 
+
+### Valid Actions 
+
+- put one object you are holding on a surface or into a container 
+
+- open an enclosure 
+
+- grab an object 
+
+- walk to something visible 
+
+- walk to another room (allowed rooms: $ALLOWED_ROOMS$ )\n
+
+### Interaction Rules 
+
+- When an action involves any object, specify the name and a clear 
+
+visual/location description. 
+
+- You may interact (walk to, grab, put, open) with objects ONLY 
+
+when they are currently visible. 
+
+- If the object is not visible, first walk to the room includes it. If still 
+
+occluded, walk to a nearby visible landmark (e.g., table/counter) 
+
+until the target becomes visible. 
+
+- You can hold at most TWO objects at the same time. If both 
+
+hands are full, put one object down before grabbing another 
+
+object or opening an enclosure. 
+
+- Do NOT repeat a failed action unless the environment has 
+
+changed. Do NOT repeating the same action consecutively. 
+
+- You may walk directly to any room using the room name except 
+
+the current one. \n
+
+## ACTION Output Format 
+
+Output a single JSON object, with no extra text: 
+
+{
+
+"action": "<one of: walk / walk_to_room / grab / put_in / put_on 
+
+/ open >", 
+
+"parameter_1": {"name": "<class name>", "description": "<short 
+
+description>"} | null, 
+
+"parameter_2": {"name": "<class name>", "description": "<short 
+
+description>"} | null, 
+
+"room": "< bedroom|livingroom|kitchen|bathroom >" | null 
+
+}\n
+
+Parameter rules: 
+
+- walk/open/grab: use "parameter_1" only. 
+
+- put_in /put_on : "parameter_1" = held object, "parameter_2" = 
+
+container/surface. 
+
+- walk_to_room : set "room" and set both parameters to null. 
+
+- Actions with no parameters: set "parameter_1", "parameter_2", 
+
+and "room" to null. 
+
+Figure 26: Action rules block. **Current memory:** \n $MEMORY$ 
+
+**Current round dialogue:** \n $CURRENT_ROUND_DIALOGUE$ 
+
+**Successful actions history:** \n $ACTION_HISTORY$ 
+
+**Last action feedback:** \n $FEEDBACK$ 
+
+**The last action (executed vs intended):** \n $LAST_ACTION$ 
+
+**Allowed rooms for you:** \n $ALLOWED_ROOMS$ 
+
+**Department topology:** \n $DEPARTMENT_TOPOLOGY$ 
+
+**Current room:** \n You are now standing in the 
+
+$CURRENT_ROOM$. Most of your current observation images are 
+
+in this room. 
+
+**Holding objects:** \n $HOLDING_OBJECTS$ 
+
+**Task goal:** \n $TASK_GOAL$ 
+
+**Current completion progress:** \n $TASK_PROGRESS$ 
+
+Figure 27: Input block for the act phase. For sequential tasks, the two additional parts are highlighted in blue. 
+
+19 ## Memory Update 
+
+### Rules: 
+
+- Store only task -relevant objects, containers, and target locations. 
+
+- Update memory using the current observation, executed actions, 
+
+feedback, and reliable messages from other agents. 
+
+- If new information conflicts with existing memory, correct the 
+
+memory to reflect the latest belief. 
+
+- Keep memory concise and consistent. Memory represents the 
+
+current belief state, not a full history. Do not invent objects. 
+
+- Use global.communication_summary to keep a concise running 
+
+summary of still -useful communication facts, assignments, and 
+
+commitments. Do not copy raw dialogue into it. \n
+
+### MEMORY Output format 
+
+{
+
+"livingroom ": { 
+
+"exploration": " unexplored|partially_explored|explored ", 
+
+"objects": [{"name": "...", "description": "...", "location": "...", 
+
+"status": "..."}], 
+
+"containers": [{"name": "...", "description": "...", "location": "...", 
+
+"status": " unchecked|checked|open|closed "}], 
+
+"notes": [] 
+
+}, 
+
+"kitchen": { ... }, 
+
+"bedroom": { ... }, 
+
+"bathroom": { ... }, 
+
+"global": { 
+
+"notes": [], 
+
+"agent_locations ": {"< agent_name >": "", ...}, 
+
+"communication_summary ": "” 
+
+}
+
+}Figure 28: Memory update rules block. 
+
+D Experiment Results 
+
+In this section, we provide detailed results for the experiments in Sections 4, 5, and 6, as well as some additional experimental results. 
+
+D.1 Performance of Different Models in Parallel and Sequential Tasks 
+
+Table 8 shows the detailed result of figure 5 and 6. Overall, GPT-5.4 achieves the best performance. GPT-5-mini and Gemma4-31B are the second-tier models, showing consistently strong results across the two collaboration structures. In addi-tion, Qwen3.5, Gemma4-26B, and Gemini-3.1-Pro also exhibit relatively strong performance. Qwen3-VL-32B and Qwen3-VL-235B fall into the middle-performance group, with relatively balanced results across parallel and sequential tasks. Qwen3-VL-8B is a relatively weak model, but its performance remains comparatively balanced between the two coordination structures. In contrast, InternVL-3.5 and GLM-4.6V struggle particularly on sequen-tial tasks, where precise collaboration is required. Finally, Llama-4-Scout and GLM-4.6V-Flash per-form poorly under both collaboration structures. 
+
+Model scaling effects. Overall, except for InternVL-3.5, larger models generally perform bet-## Shared Memory Update 
+
+Every agent reads and writes to this SAME memory object. You can 
+
+use this memory to coordinate with other agents. \n
+
+### Rules: 
+
+- Store only task -relevant objects, containers, and target locations. 
+
+- Update memory using the current observation and previous 
+
+action feedback. Do NOT record the action you are about to output 
+
+as completed yet. 
+
+- If new information conflicts with existing memory, correct the 
+
+memory to reflect the latest belief. 
+
+- Keep memory concise and consistent. Memory represents the 
+
+current belief state, not a full history. Do not invent objects. 
+
+- Keep agent_locations , agent_plans , agent_status , agent_holding ,
+
+task_progress , and claims updated so other agents can coordinate. 
+
+- Read shared memory before acting to avoid redundant 
+
+exploration and action conflicts. 
+
+- Prefer unassigned subtasks instead of repeating work another 
+
+agent is already doing. If all visible subtasks are claimed, deliver 
+
+any object you hold to its target, explore a different unchecked 
+
+place, or wait instead of duplicating the same target. 
+
+- Track multi -count goals by required, satisfied, and remaining 
+
+counts. Mark a subtask satisfied only when the environment 
+
+feedback or satisfied task list confirms the object is at the target. 
+
+- Use claims to reserve one concrete next subtask per agent, 
+
+including the object name, source location, target location, and 
+
+state: "planned", "holding", "delivering", or "done". 
+
+- Do not update or guess another agent's status, holdings, or 
+
+completed actions. \n
+
+### MEMORY Output format 
+
+{
+
+"livingroom ": { ... }, 
+
+"kitchen": { ... }, 
+
+"bedroom": { ... }, 
+
+"bathroom": { ... }, 
+
+"global": { 
+
+"notes": [], 
+
+"agent_locations ": {"< agent_name >": "", ...}, 
+
+"agent_plans ": {"< agent_name >": "", ...}, 
+
+"agent_status ": {"< agent_name >": "", ...}, 
+
+"agent_holding ": {"< agent_name >": [{"name": "...", "source": 
+
+"...", "target": "..."}], ...}, 
+
+"task_progress ": {"< goal_key >": {"required": 0, "satisfied": 0, 
+
+"remaining": 0}}, 
+
+"claims": [{"agent": "< agent_name >", "object": "...", "source": 
+
+"...", "target": "...", "state": " planned|holding|delivering|done "}], 
+
+"coordination_board ": ["", ...] 
+
+}
+
+}
+
+Figure 29: Shared memory update rules block. 
+
+ter within the same family. However, scaling tends to amplify existing task-specific patterns rather than change them. Some families remain balanced across parallel and sequential tasks, while others are consistently stronger in single-agent or par-allel settings, or particularly weak on sequential tasks requiring precise coordination. For exam-ple, Gemma4 benefits from scaling especially on sequential tasks, whereas InternVL-3.5 achieves stronger single-agent parallel performance at larger scale but degrades in sequential collaboration. This suggests that stronger individual capability does not necessarily translate into better communication and coordination. Based on model performance and cost-20 Table 8: Performance comparison under parallel and sequential normal settings. Avg. SR and Avg. CR denote the average SR and CR across parallel and sequential tasks under the 2-agent setup. Best results are shown in bold, and second-best results are underlined, respectively for 2-agent and 1-agent setup. 
+
+Model #Agents Parallel Task Sequential Task Avg. SR CR AUC SR CR AUC SR CR 
+
+Closed-source MLLMs 
+
+GPT-5-mini 1 0.906 0.974 0.793 – – – – –2 0.917 0.982 0.776 0.719 0.901 0.624 0.818 0.942 
+
+GPT-5.4 1 0.854 0.960 0.788 – – – – –2 0.896 0.969 0.731 0.771 0.914 0.655 0.834 0.942 
+
+Gemini-3.1-Pro 1 0.802 0.927 0.645 – – – – –2 0.771 0.937 0.606 0.573 0.824 0.472 0.672 0.881 
+
+Open-source MLLMs 
+
+Qwen3-8B-VL 1 0.354 0.620 0.419 – – – – –2 0.458 0.770 0.535 0.073 0.332 0.208 0.266 0.551 Qwen3-32B-VL 1 0.583 0.753 0.542 – – – – –2 0.802 0.934 0.694 0.365 0.620 0.393 0.584 0.777 Qwen3-235B-VL 1 0.656 0.855 0.648 – – – – –2 0.667 0.896 0.649 0.354 0.675 0.451 0.511 0.786 Qwen3.5-9B 1 0.854 0.924 0.721 – – – – –2 0.938 0.985 0.764 0.615 0.844 0.558 0.777 0.915 Qwen3.5-27B 1 0.844 0.950 0.760 – – – – –2 0.938 0.969 0.726 0.698 0.872 0.587 0.818 0.921 Gemma4-26B 1 0.760 0.867 0.636 – – – – –2 0.812 0.944 0.644 0.688 0.839 0.556 0.750 0.892 Gemma4-31B 1 0.833 0.921 0.703 – – – – –2 0.833 0.945 0.688 0.823 0.904 0.620 0.828 0.925 InternVL-3.5-38B 1 0.677 0.875 0.659 – – – – –2 0.594 0.830 0.553 0.135 0.429 0.280 0.365 0.630 InternVL-3.5-241B 1 0.833 0.946 0.728 – – – – –2 0.719 0.914 0.594 0.031 0.267 0.180 0.375 0.591 Llama-4 1 0.250 0.467 0.345 – – – – –2 0.250 0.543 0.380 0.042 0.225 0.163 0.146 0.384 GLM-4.6V 1 0.594 0.825 0.501 – – – – –2 0.719 0.895 0.600 0.010 0.283 0.188 0.365 0.589 GLM-4.6V-Flash 1 0.094 0.351 0.271 – – – – –2 0.125 0.456 0.316 0.000 0.090 0.060 0.063 0.273 
+
+effectiveness, we select Qwen3-VL-32B and Qwen3-VL-8B as two representative models for studying team-size scaling and related factors in subsequent experiments. For strong models, we conduct most experiments with GPT-5-mini and Gemma4-31B, and include GPT-5.4 when neces-sary. 
+
+Team size scaling effects. Table 9 shows the de-tailed result for Figure 7 (a) and 9(b). The re-sults show that: (1) Simply increasing the num-ber of agents does not necessarily improve per-formance. Without communication, adding more agents can even introduce disorder and redundant actions, leading to lower efficiency and worse task completion. However, when agents are allowed to communicate, multi-agent collaboration becomes more effective in coordinating actions and complet-ing tasks. (2) More agents are not always better. Qwen3-VL-32B benefits from additional agents 
+
+Table 9: Results on Parallel tasks for Qwen3-VL models with one to five agents. Comparison of performance with (broadcast) and without communication. The best results of both models are shown in bold. 
+
+#Ag. With comm. Without Comm. SR CR AUC SR CR AUC 
+
+Qwen3-VL-8B 
+
+1 0.354 0.620 0.419 0.354 0.620 0.419 
+
+2 0.458 0.770 0.535 0.271 0.546 0.339 3 0.521 0.837 0.558 0.396 0.655 0.411 4 0.469 0.794 0.501 0.323 0.642 0.409 5 0.458 0.794 0.468 – – –
+
+Qwen3-VL-32B 
+
+1 0.583 0.753 0.542 0.583 0.753 0.542 2 0.802 0.934 0.694 0.583 0.802 0.567 
+
+3 0.833 0.943 0.656 0.500 0.705 0.481 4 0.844 0.954 0.658 0.469 0.720 0.468 5 0.740 0.892 0.567 – – –
+
+21 Table 10: Success rate and completion rate by number of objects for Qwen3-VL models on Parallel tasks. Best results for each model are shown in bold, and second-best results are underlined. 
+
+Model #Objects 1 Agent 2 Agents 3 Agents 4 Agents 5 Agents SR CR SR CR SR CR SR CR SR CR 
+
+Qwen3-32B-VL 2 0.875 0.938 0.875 0.938 0.938 0.969 0.938 0.969 1.000 1.000 
+
+3 0.765 0.863 1.000 1.000 1.000 1.000 0.941 0.980 0.875 0.938 4 0.625 0.812 0.938 0.984 1.000 1.000 1.000 1.000 0.750 0.922 5 0.438 0.650 0.688 0.838 0.688 0.888 0.812 0.938 0.800 0.867 6 0.389 0.630 0.667 0.935 0.778 0.944 0.667 0.935 0.500 0.880 7 0.385 0.604 0.615 0.901 0.583 0.905 0.750 0.964 0.667 0.917 Qwen3-8B-VL 2 0.750 0.875 0.875 0.938 0.938 0.969 0.812 0.906 0.875 0.938 3 0.588 0.784 0.824 0.922 0.882 0.941 0.824 0.922 0.706 0.863 4 0.312 0.562 0.500 0.828 0.500 0.828 0.500 0.828 0.438 0.766 5 0.250 0.562 0.375 0.713 0.438 0.800 0.333 0.747 0.500 0.787 
+
+6 0.111 0.444 0.056 0.685 0.167 0.713 0.278 0.741 0.111 0.704 7 0.077 0.472 0.077 0.483 0.154 0.769 0.000 0.637 0.077 0.692 
+
+Table 11: Results for 2-agent broadcast and no-communication protocols on Parallel and Sequential tasks. NA indicates that no handover attempt was made. 
+
+Model Mode Parallel Task Sequential Task SR CR AUC CAR SR CR AUC HFR 
+
+Gemma4-31B Broadcast 0.833 0.945 0.689 0.019 0.823 0.904 0.620 0.322 No Comm 0.719 0.863 0.558 0.023 0.177 0.464 0.308 0.486 Qwen3-32B-VL Broadcast 0.802 0.934 0.694 0.020 0.365 0.620 0.393 0.294 No Comm 0.583 0.802 0.567 0.028 0.073 0.325 0.232 0.733 Qwen3.5-9B Broadcast 0.938 0.985 0.764 0.008 0.615 0.844 0.558 0.400 No Comm 0.865 0.939 0.680 0.036 0.062 0.325 0.231 0.903 Qwen3-8B-VL Broadcast 0.458 0.770 0.535 0.010 0.073 0.332 0.208 0.662 No Comm 0.274 0.552 0.342 0.017 0.042 0.182 0.132 NA 0 20 40 60        
+
+> Equivalent Steps
+> 0
+> 25
+> 50
+> 75
+> 100
+> CR (%)
+> 020 40 60
+> Equivalent Steps
+> 0
+> 25
+> 50
+> 75
+> 100
+> SR (%)
+> 1 Agent 2 Agent 3 Agent 4 Agent 5 Agent
+
+Figure 30: Task progress over steps for 1 to 5 agents under the broadcast protocol on the parallel task. Results are obtained with Qwen3-VL-32B. 
+
+up to four agents, while Qwen3-VL-8B reaches its best performance with three agents and drops afterward. This suggests that weaker models are more affected by coordination overhead. (3) Col-laboration can partially compensate for limited in-dividual model capability, but cannot fully remove the capability gap. With communication, three Qwen3-VL-8B agents approach the single-agent performance of Qwen3-VL-32B, but the final per-formance remains constrained by the underlying model capability. Table 10 shows the detailed re-sults in figure 7(b). This indicate that multi-agent collaboration is especially helpful for more com-plex tasks with more target objects. For 7-object tasks, the SR nearly doubles for both models: from 0.385 to 0.750 for Qwen3-VL-32B, and from 0.077 to 0.154 for Qwen3-VL-8B. A task progress com-prison of different team size shown in Figure 30. 
+
+D.2 Role of communication 
+
+Table 11 shows the detailed results in figure 9(a) when ablating communication from collaboration. Removing communication degrades both task per-formance and collaboration quality. In parallel tasks with a shared workspace, it generally in-creases CAR, indicating more conflicts actions be-tween agents. In sequential tasks, the impact is more severe, as agents fail to coordinate cross-region handovers, causing HFR to rise substan-tially. 
+
+D.3 Comparison of Different Collaboration Modes 
+
+Table 12 gives the detailed results of Figure 8(a). The results show that centralized collaboration gen-erally improves division of labor and task effi-22 Table 12: Results of different communication protocol under parallel and sequential tasks across models. Spatial Err denotes the frequency of spatial errors, where an agent attempts to move to a location outside its assigned region. Best results within each model are shown in bold, and cross-model best results are highlighted in yellow. 
+
+Model Mode Parallel Sequential SR CR AUC DOL Tokens CAR SR CR AUC Spatial Err Tokens HFR 
+
+Closed-source MLLMs 
+
+GPT-5.4 Broadcast 0.900 0.961 0.700 0.773 4331.9 0.015 0.767 0.904 0.640 0.017 7328.1 0.228 Discuss 0.767 0.932 0.730 0.717 6266.6 0.001 0.767 0.911 0.652 0.021 7619.3 0.177 
+
+Leader 0.784 0.934 0.752 0.883 6558.6 0.009 0.767 0.870 0.639 0.023 8085.5 0.223 
+
+Open-source MLLMs 
+
+Gemma4-31B Broadcast 0.833 0.945 0.689 0.794 5381.8 0.019 0.823 0.904 0.620 0.038 8042.4 0.322 Discuss 0.802 0.855 0.638 0.731 6852.5 0.001 0.812 0.922 0.625 0.025 8978.3 0.224 Leader 0.865 0.964 0.736 0.840 6863.0 0.003 0.854 0.963 0.652 0.016 8723.5 0.138 
+
+No Comm 0.719 0.863 0.558 0.706 3577.4 0.023 0.177 0.464 0.308 0.297 4539.7 0.486 Qwen3-32B-VL Broadcast 0.802 0.934 0.694 0.802 4682.0 0.020 0.365 0.620 0.393 0.166 6749.4 0.294 
+
+Discuss 0.808 0.929 0.694 0.818 6351.7 0.003 0.333 0.583 0.374 0.100 8324.3 0.304 Leader 0.833 0.938 0.706 0.855 5964.7 0.012 0.396 0.622 0.408 0.046 7516.5 0.378 No Comm 0.583 0.802 0.567 0.629 3017.7 0.028 0.073 0.325 0.232 0.451 3559.0 0.733 Qwen3-8B-VL Broadcast 0.458 0.770 0.535 0.676 4585.4 0.010 0.073 0.332 0.207 0.312 6788.2 0.662 Discuss 0.458 0.783 0.494 0.702 7206.1 0.011 0.021 0.283 0.195 0.319 8934.5 0.601 
+
+Leader 0.490 0.785 0.548 0.642 5701.5 0.005 0.052 0.332 0.227 0.223 7161.4 0.658 No Comm 0.274 0.552 0.342 0.357 3310.1 0.017 0.042 0.182 0.132 0.613 3475.1 NA 32B N=2 32B N=4 8B N=2 8B N=4              
+
+> 40%
+> 60%
+> 80%
+> 100%
+> Parallel
+> +8.3% +1.2%
+> +5.2% +6.2%
+> Success Rate (SR)
+> 32B N=2 32B N=4 8B N=2 8B N=4
+> 50%
+> 60%
+> 70%
+> 80%
+> +3.6%
+> +2.9%
+> +4.9%
+> +4.6%
+> AUC
+> 32B N=2 32B N=4 8B N=2 8B N=4
+> 4.0k
+> 4.5k
+> 5.0k
+> 5.5k
+> 6.0k
+> -0.3k
+> -0.8k
+> -0.7k
+> -1.4k
+> Token Consumption
+> 32B N=2 8B N=2
+> 20%
+> 40%
+> Sequential  -7.3%
+> +1.0%
+> 32B N=2 8B N=2
+> 20%
+> 30%
+> 40% +0.6%
+> +0.9%
+> 32B N=2 8B N=2
+> 4.0k
+> 5.0k
+> 6.0k
+> 7.0k -1.8k -2.5k
+> Broadcast Shared Memory
+
+Figure 31: Comparison of explicit broadcast and implicit shared memory protocol. The models are from the Qwen3-VL family. SR CR AUC   
+
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Score (%)
+> 49.0
+> 78.5
+> 54.8
+> 66.7
+> 90.5
+> 61.6
+> 83.3
+> 93.8
+> 85.5
+> All Weak (8B+8B) Strong Leader (32B+8B) All Strong (32B+32B)
+
+Figure 32: Effect of leader capability in centralized collaboration. The models are from the Qwen3-VL family. 0 20 40 60         
+
+> Equivalent Steps
+> 0
+> 25
+> 50
+> 75
+> 100
+> CR (%)
+> 020 40 60
+> Equivalent Steps
+> 0
+> 25
+> 50
+> 75
+> 100
+> SR (%)
+> 1 Agent No Comm Broadcast Discuss Leader Leader-MM
+
+Figure 33: Task progress over equivalent steps under different communication protocols on parallel tasks. Re-sults are obtained with Gemma4-31B. Leader-MM de-notes the vision-augmented leadership protocol. 
+
+ciency, reflected by higher DOL and AUC. In con-trast, the discuss protocol is more effective at re-ducing conflicts, leading to lower CAR. For weaker models, centralized collaboration also helps reduce spatial cognition errors in sequential tasks, sug-gesting that leader-based coordination can provide useful guidance when agents have limited planning or spatial reasoning ability. Figure 33 shows the comparison of task progress under single agent and different communication protocol in two-agent team. 
+
+Shared Memory. Figure 31 reports the absolute values of success rate, AUC, and token consump-tion for broadcast and shared memory, providing a more detailed version of Figure 10. 
+
+D.4 Mix Team: Strong Model as Leader. 
+
+We further investigate the role of leader in cen-tralized mode. As shown in Figure 32, using a 23 Table 13: Results under different prior-information settings on parallel tasks. Full prior includes both object appearance and location information. Without appearance removes object appearance description, without location removes prior location information, and no prior removes both. 
+
+Model Full Prior Without Appearance Without Location No Prior SR CR AUC SR CR AUC SR CR AUC SR CR AUC 
+
+GPT-5-mini 0.917 0.982 0.776 0.865 0.955 0.730 0.344 0.691 0.436 0.271 0.609 0.431 Gemma4-31B 0.833 0.945 0.688 0.833 0.937 0.662 0.229 0.589 0.347 0.302 0.570 0.356 Qwen3-32B-VL 0.802 0.934 0.694 0.802 0.923 0.655 0.260 0.591 0.365 0.344 0.688 0.456 
+
+Table 14: Results on parallel tasks without location information. Each cell reports SR/CR/AUC. Qwen-* is short for Qwen3-VL, Inter-* is short for InterVL3.5. 
+
+Model 1-Agent 2-Agent 
+
+Closed-source MLLMs 
+
+GPT-5-mini 0.323 / 0.630 / 0.436 0.344 / 0.691 / 0.436 
+
+Open-source MLLMs 
+
+Qwen-8B 0.031 / 0.162 / 0.103 0.021 / 0.199 / 0.101 Qwen-32B 0.219 / 0.520 / 0.344 0.260 / 0.591 / 0.365 Qwen-235B 0.115 / 0.389 / 0.264 0.271 / 0.581 / 0.332 Qwen3.5-9B 0.292 / 0.582 / 0.389 0.292 / 0.649 / 0.435 Gemma-31B 0.240 / 0.561 / 0.358 0.229 / 0.589 / 0.347 Intern-38B 0.010 / 0.146 / 0.087 0.073 / 0.253 / 0.144 Intern-241B 0.021 / 0.201 / 0.113 0.062 / 0.217 / 0.114 Llama-4 0.021 / 0.089 / 0.058 0.000 / 0.107 / 0.056 (a) (b) 
+
+Figure 34: Team size scaling effect without location prior. (a) SR and CR change as the number of agents increases. (b) SR versus the number of target objects, with fitted trend lines for different team sizes. 
+
+stronger leader improves the mixed team, but does not make it approach the all-strong setting. The mixed team nearly matches the all-strong team in CR, but its SR is only slightly above the average of the all-weak and all-strong teams, and its AUC is even below this average. This indicates that a strong leader mainly improves task coverage, but efficient and overall success still depends heavily on the worker’s capability. 
+
+D.5 Performance Under Imperfect Information. Missing location priors Table 14 reports de-tailed results under the no-prior-location setting on parallel tasks across different models. Fig-Full Prior w/o Appearance w/o Location No Prior 
+
+> 0.50
+> 0.60
+> 0.70
+> 0.80
+> 0.90
+> 1.00
+> Completion Rate (CR)
+> GPT-5-mini
+> Gemma4-31B
+> Qwen3-32B-VL
+
+Figure 35: Completion rate under different prior-information settings on parallel tasks. 
+
+ure 34 shows the team size scaling effect under stronger exploration demands, where prior loca-tion information is removed. Compared with the full-information setting, Qwen3-32B-VL exhibits a similar but weaker inverted-U-shaped trend, sug-gesting that moderate team scaling remains helpful. For Qwen3-8B-VL, SR remains low across team sizes, indicating a capability bottleneck. Moreover, when grouping cases by object count, larger teams still show a milder performance drop. More de-tailed results in Table 15. 
+
+Table 15: Results on Parallel tasks without location prior for Qwen3-VL models with one to four agents, under the broadcast protocol. The best results of each model is highlighted in bold. 
+
+Model #Agents SR CR AUC 
+
+Qwen3-8B-VL 1 0.031 0.162 0.103 2 0.021 0.199 0.101 3 0.094 0.298 0.168 
+
+4 0.062 0.307 0.163 Qwen3-32B-VL 1 0.219 0.520 0.344 2 0.260 0.591 0.365 3 0.292 0.657 0.404 
+
+4 0.219 0.608 0.374 
+
+Ablation on prior information To investigate how different types of prior information affect agent performance, we conduct an ablation study by removing object appearance descriptions and prior location information. As shown in fig-24 2 3 4 5 6 7                                          
+
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Performance (%)
+> Strong Models
+> GPT-5-mini
+> GPT-5.4
+> Qwen3.5-9B
+> Qwen3.5-27B
+> Gemma4-31B
+> 234567
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Middle Models
+> InternVL-241B
+> Gemini-3.1-Pro
+> Gemma4-26B
+> InternVL-38B
+> Qwen3-235B-VL
+> 234567
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Weak Models
+> GLM-4.6V
+> Qwen3-32B-VL
+> Qwen3-8B-VL
+> LLaMA-4
+> GLM-4.6V-Flash
+> 234567
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Performance (%)
+> Gemma4-31B
+> GPT-5.4
+> GPT-5-mini
+> Qwen3.5-27B
+> Gemma4-26B
+> 234567
+> 0
+> 20
+> 40
+> 60
+> 80
+> 100
+> Qwen3.5-9B
+> Gemini-3.1-Pro
+> Qwen3-235B-VL
+> Qwen3-32B-VL
+> InternVL-38B
+> 234567
+> 0
+> 10
+> 20
+> 30
+> 40
+> 50
+> Qwen3-8B-VL
+> LLaMA-4
+> InternVL-241B
+> GLM-4.6V
+> GLM-4.6V-Flash
+> 234567
+> Number of Objects
+> 0
+> 10
+> 20
+> 30
+> 40
+> 50
+> 60
+> 70
+> 80
+> Performance (%)
+> Qwen3.5-27B
+> GPT-5-mini
+> Qwen3.5-9B
+> Gemma4-31B
+> 234567
+> Number of Objects
+> 0
+> 10
+> 20
+> 30
+> 40
+> 50
+> 60
+> 70 Qwen3-32B-VL
+> Qwen3-235B-VL
+> Qwen3-8B-VL
+> 234567
+> Number of Objects
+> 0
+> 5
+> 10
+> 15
+> 20
+> 25
+> 30 InternVL-241B
+> LLaMA-4
+> InternVL-38B
+> Parallel Normal Sequential Normal Parallel No Location
+> Metric
+> SR
+> CR
+
+Figure 36: Performance by number of objects across task conditions and model groups. 
+
+ure 35, prior location information is critical for task completion, as it helps agents quickly locate target objects and reduces inefficient exploration. Removing location information leads to a sub-stantial performance drop across all models. In contrast, the effect of appearance descriptions is model-dependent: GPT-5-mini benefits from ap-pearance cues, Gemma4-31B shows only minor changes, and Qwen3-32B-VL performs worse with appearance-only priors than with no prior. A possi-ble reason is that models with weaker fine-grained visual grounding are more susceptible to mislead-ing appearance descriptions and may confuse visu-ally similar objects. Detailed results are reported in Table 13. 
+
+Table 16: Results on Parallel tasks with noise location prior cross models. 
+
+Model #Agents SR CR AUC 
+
+GPT-5-mini 1 0.760 0.902 0.719 2 0.823 0.950 0.709 Qwen3.5-9B 1 0.781 0.911 0.665 2 0.812 0.903 0.663 Qwen3-32B-VL 1 0.542 0.750 0.526 2 0.698 0.878 0.620 
+
+Noisy location priors. Table 16 reports detailed results on parallel tasks where 30% of the prior location information is noisy, comparing single-agent and two-agent settings. 
+
+D.6 Additional Performance Analysis 
+
+Figure 36 reports performance by the number of target objects across model groups. As each target object corresponds to a subgoal, a larger number of target objects indicates higher task complexity. Overall, both completion rate and success rate de-cline as task complexity increases. 
+
+E Emergent collaborative behavior 
+
+By analyzing the communication and action tra-jectories under the basic broadcast protocol, we identify several emergent collaborative behavior patterns. In addition to the analysis in Section 4.3, this section provides representative examples and further details. 
+
+E.1 Examples 
+
+Table 17 presents representative examples of col-laborative behaviors, with the relevant text spans highlighted in yellow. 
+
+E.2 Detailed Analysis Coordination Queries Indicate Collaboration Challenges. In the main text (Table 2), coordina-tion query correlates negatively with SR and CR. 25 Table 17: Examples of collaborative behaviors emerge in the agent interactions in MECoBench under broadcast protocol. 
+
+Category Behavior Example 
+
+Information Sharing Info-Plan “I will grab the two puddings and check the fridge for the wine. Could you go to the living room to find the cupcake?” 
+
+Info-Loc “I am in the bathroom and will head to the kitchen to look for the pudding and cupcake.” 
+
+Info-Obj “I see the cupcake on the desk. I will grab it and then head to the living room.” 
+
+Task Coordination Act-Del “Please go to the kitchen to grab the second apple, and then we can meet at the coffee table.” 
+
+Task-Assign “I’ll handle the kitchen and the bathroom.” 
+
+Alignment & Correction Coord-Q. State confirmation: “Do you have the cupcake and the second apple? If not, please check the fridge.” 
+
+Location confirmation: “I’m at door 287 holding the cupcake. Are you at door 287 and ready to receive? Please confirm.” 
+
+Correct. Self-correction: “I accidentally grabbed a waterglass instead of the wineglass. I will put it back and then get the wineglass.” 
+
+Peer-correction: “Agent 0, I see you’re holding milk, but we need the juice. Please drop the milk and grab the correct juice from the kitchen table.” 
+
+Table 18: Coordination queries are associated with harder coordination states. Q. denotes coordination query. 
+
+Task Group #Case Avg. SR Stuck Neg. #Obj. (%) (%) (%) 
+
+Parallel w/ Q. 370 4.70 64.6 8.4 11.1 w/o Q. 1727 4.35 74.7 2.0 4.5 Sequential w/ Q. 591 4.51 32.3 3.9 6.6 w/o Q. 627 4.30 47.8 1.6 3.2 
+
+Table 19: Overall and wrong-grab-conditional effects of correction. Corr. and WG denote correction and wrong grab. WG-Cond . denotes cases where at least one wrong grab happened. 
+
+Task Cond. Group SR CR #WG (%) (%) 
+
+Parallel Overall w/ Corr. 67.3 90.1 3.05 w/o Corr. 74.1 88.5 1.37 
+
+∆ −6.7 +1 .6 –WG w/ Corr. 61.1 88.3 3.79 w/o Corr. 66.2 87.0 2.84 Raw ∆ −5.1 +1 .3 –Adj. ∆ +2.4 +3.5 –Sequential Overall w/ Corr. 29.8 67.4 2.68 w/o Corr. 41.1 59.8 0.76 
+
+∆ −11 .3 +7 .7 –WG w/ Corr. 26.9 67.2 4.33 w/o Corr. 21.1 53.4 3.02 Raw ∆ +5 .8 +13 .8 –Adj. ∆ +11 .8 +15 .4 –
+
+To further investigate the underlying cause, we in-troduce two behavioral indicators of collaboration difficulty: negative report ( Neg. ), where an agent 
+
+Table 20: Correction effects in parallel tasks stratified by the number of wrong grabs. 
+
+#WG Group #Case SR CR ∆SR/CR (%) (%) 
+
+1 Corr. 70 82.9 95.2 +2 .2/ + 3 .7
+
+No Corr. 351 80.6 91.5 2 Corr. 53 69.8 89.3 −6.2/ − 1.5
+
+No Corr. 200 76.0 90.8 3 Corr. 44 68.2 91.9 +6 .9/ + 4 .1
+
+No Corr. 80 61.3 87.8 
+
+4+ Corr. 118 41.5 82.4 +7 .4/ + 6 .8
+
+No Corr. 208 34.1 75.6 Adjusted effect ∆SR/CR +2.4/ + 3.5
+
+reports failing to locate a target object at a specific location, and stuck , where an agent reports being stuck in middle. As shown in Table 18, cases with coordination query involve more objects on average and exhibit substantially higher stuck and negative report rate. This pattern holds across both task types, suggesting that coordination query serves as a reactive signal to genuine collaboration obstacles. 
+
+Correction Helps Recover from Errors Sec-tion 4.3 shows that correction correlates negatively with SR but positively with CR, suggesting a poten-tial role in error recovery. To examine this effect, we analyze its co-occurrence with wrong grabs (WGs), defined as actions that grasp task-irrelevant objects. Table 19 shows that episodes with cor-rection contain substantially more WGs than those without, indicating that correction is mainly trig-26 Table 21: Representative examples of multi-agent collaboration failure modes. 
+
+Failure Mode Subtype Representative Trace Excerpt Agent-induced Con-flict 
+
+Duplicate Grab Agent 1: “I found the wine on the coffee table. I will grab it and bring it to the living room.” 
+
+Agent 4: “I am grabbing the wine from the coffee table. I will take it to the living room.” 
+
+⇒ Both agents execute [grab] <wine> .
+
+Hallucinated Belief Propagation 
+
+False Completion “All items have been successfully placed on the bathroom counter. The task is complete.” 
+
+⇒ All agents execute [wait] until the end. Object Misidentifi-cation 
+
+Agent 3: “I have found and will now grab the wineglass from the bedroom cabinet.” 
+
+Agent 3 executes [grab] <dishbowl> (misidentifying dishbowl as wine-glass), then [put] <dishbowl> on the kitchentable. 
+
+Agent 0 & 2: “Agent 3 has already grabbed the wineglass—I will focus on the plate / waterglass.” 
+
+⇒ All agents stop searching for the actual wineglass. Task ends with 
+
+wineglass unsatisfied. 
+
+gered by execution errors. Since WG episodes with correction also exhibit greater error severity, direct comparison may underestimate its recovery ben-efit. We therefore stratify WG episodes by error count and compute a weighted adjusted effect using shared stratum weights for both groups (Table 20). After adjustment, correction consistently improves both SR and CR across task types, confirming its ef-fectiveness in error recovery. Stratum-level results further show larger gains under higher WG counts, suggesting that correction is especially useful when errors are more severe. 
+
+F Failure Mode Analysis 
+
+In this section, we provide additional examples and a more detailed analysis of the multi-agent collabo-ration failure modes presented in Section 6.2. 
+
+F.1 Examples 
+
+Table 21 presents representative examples of differ-ent failure modes. 
+
+F.2 Detailed Analysis 
+
+Table 22: Failure mode in collaboration. Freq. de-notes the fraction of episodes containing the behavior; 
+
+lift is the ratio of its rate in failed episodes to that in successful episodes. 
+
+Behavior Task Freq. Lift SR w/ ∆SR 
+
+Hallucinated Parallel 1.0% ∞ 0.0% −73.7 completion Sequential 1.5% ∞ 0.0% −40.9 Grab conflict Parallel 22.9% 1.5 × 71.4% −9.0 0 5 10 15 20 25 30 
+
+> Dup-Grab Rate (%)
+> qwen3.5-27b
+> gemini-3.1-pro
+> qwen3.5-9b
+> internvl-3.5-38b
+> gpt-5-mini
+> glm-4.6v
+> llama-4
+> gemma4-31b
+> gpt-5.4
+> gemma4-26b
+> qwen3-8b-vl
+> qwen3-235b-vl
+> qwen3-32b-vl
+> glm-4.6v-flash
+> internvl-3.5-241b
+> 3.1%
+> 4.2%
+> 8.3%
+> 11.5%
+> 11.5%
+> 12.5%
+> 14.6%
+> 15.6%
+> 16.7%
+> 17.7%
+> 17.7%
+> 18.8%
+> 18.8%
+> 19.8%
+> 21.9%
+> InternVL
+> GLM
+> GPT
+> Gemini
+> Qwen3-VL
+> Qwen3.5
+> Gemma
+> Llama
+
+Figure 37: Duplicate grab rate of different models in parallel task under 2-agent team and broadcast protocol. 
+
+Table 22 summarizes the occurrence frequency of different failure modes and their impact on suc-cess rate (SR), aggregated over all models and team sizes under the broadcast protocol. Figure 37 com-pares duplicate-grab rates across models in two-agent teams. 27

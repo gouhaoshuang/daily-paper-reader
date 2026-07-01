@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-01",
+  "date": "2026-07-01",
+  "generated_at": "2026-07-01T21:33:32",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/01/2606.30563v1-data-replication-meets-function-scheduling-in-the-edge-cloud-continuum",
+      "section": "deep",
+      "title_en": "Data Replication Meets Function Scheduling in the Edge-Cloud Continuum",
+      "authors": "Matteo Cenzato, Dario d'Abate, Arianna Dragoni, Matteo Briscini, Alessandro Margara",
+      "date": "2026-06-29",
+      "pdf": "https://arxiv.org/pdf/2606.30563v1",
+      "score": "8.0",
+      "evidence": "边缘-云连续体中的函数调度与数据复制",
+      "tldr": "边缘-云连续体中无服务器函数需持久数据，数据复制使函数调度与数据放置耦合。本文针对强一致性和最终一致性，建立二进制线性规划最优模型，并设计全局贪婪和聚合视图两种启发式。全局贪婪在万级节点下接近最优，聚合视图在移动场景中保持稳定低延迟。实验表明数据放置比函数调度影响更大。",
+      "tags": "query:eca",
+      "abstract_en": "Serverless computing is an appealing model for the edge-cloud continuum, but its stateless assumption breaks down once functions need persistent data: fetching state from a distant cloud store erases the latency benefit of running at the edge. Keeping data close means replicating it, and replication forces a placement decision that is coupled with where functions execute and with the consistency each application demands. We study this joint problem of function scheduling and data placement under two consistency models, strong and eventual replication. We first formulate it as a Binary Linear Program that yields the optimal placement for a given system snapshot, and use it as a reference point. Because the solver does not scale past a few hundred nodes, we add two heuristics with progressively less information: a Global-View greedy method that works from the same complete snapshot, and an Aggregated-View heuristic in which each node decides from locally observed demand alone. Across a range of system sizes the Global-View heuristic stays within a few percent of the optimum while scaling to over $10^4$ nodes. The Aggregated-View heuristic sacrifices some solution quality, but adapts continuously to each invocation. Under client mobility, centralized policies suffer from stale snapshots and recurring latency spikes, while the Aggregated-View maintains low and stable client-observed latency. Across all experiments, data placement proves more influential than function scheduling in determining the outcome.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/01/2606.27251v1-advancing-omnimodal-embodied-agents-from-isolated-skills-to-everyday-physical-autonomy",
+      "section": "quick",
+      "title_en": "Advancing Omnimodal Embodied Agents from Isolated Skills to Everyday Physical Autonomy",
+      "authors": "Junhao Shi, Zezheng Huai, Siyin Wang, Jia Chen, Yubang Wang, Zhaoye Fei, Hechang Chen, Jingjing Gong, Xipeng Qiu, Yu-Gang Jiang",
+      "date": "2026-06-25",
+      "pdf": "https://arxiv.org/pdf/2606.27251v1",
+      "score": "6.0",
+      "evidence": "面向网络物理编排的层次异步架构",
+      "tldr": "现有具身智能体将网络工具与物理技能分离处理，导致行动空间割裂、上下文无限增长及开环执行失败。本文提出OmniAct框架，通过多模态语义规划器统一动作路由、自适应分层记忆压缩上下文，以及异步视觉抢占引擎闭环监控物理执行。在两个机器人平台配合4个物联网设备的40项真实长时任务中，OmniAct显著提升端到端成功率且令牌消耗近恒定，使中等规模开源模型达到闭源水平。",
+      "tags": "query:eca",
+      "abstract_en": "Building persistent embodied agents in unstructured environments demands unified orchestration of heterogeneous tools spanning both cyber (APIs, IoT) and physical (manipulation, navigation) domains, coupled with autonomous recovery from physical failures that inevitably arise over extended operation. Existing systems treat these as separate problems: VLM-based planners lack a unified cyber-physical action space, agent frameworks accumulate unbounded context that degrades temporal coherence, and VLA policies execute open-loop without detecting their own failures. We argue that persistent autonomy requires not a monolithic model but a hierarchical asynchronous architecture with explicit separation of planning, memory, and verification. To this end, we present OmniAct, a framework integrating a multimodal semantic planner for skill routing across unified action spaces, an adaptive hierarchical memory with event-boundary-driven compression for sub-linear context growth, and an asynchronous visual preemption engine that closes the semantic loop during physical execution. Across 40 real-world long-horizon tasks on two robotic platforms coordinating four IoT devices, OmniAct achieves consistent improvements in end-to-end success across all complexity levels, maintains near-flat token consumption over under 100k+ accumulated interaction tokens, and elevates mid-scale open-weight models to proprietary-level performance.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/01/2606.30546v1-mas-lab-a-specification-driven-validation-framework-for-reliable-multi-agent-systems",
+      "section": "quick",
+      "title_en": "MAS-Lab: A Specification-Driven Validation Framework for Reliable Multi-Agent Systems",
+      "authors": "Jordan Augé, Giovanna Carofiglio, Giulio Grassi, Jacques Samain",
+      "date": "2026-06-29",
+      "pdf": "https://arxiv.org/pdf/2606.30546v1",
+      "score": "6.0",
+      "evidence": "多智能体系统验证框架，支持可靠协作",
+      "tldr": "当前基于LLM的多智能体系统（MAS）开发方式随意且命令式，缺乏显式系统级验证，导致实验行为无法可靠反映生产表现。为此提出MAS-Lab，一个规范驱动的验证框架，通过分离语义意图与操作关注点，将MAS从脚本集合转变为工程化分布式系统。框架包含声明式规范层Spec、有状态执行层MAS-OS和集成可观测性评估的实验室层Labs，支持意图验证、系统演化和平滑过渡到生产级部署。旨在提升MAS的可靠性、可演化性和生产适用性。",
+      "tags": "query:eca",
+      "abstract_en": "The rapid emergence of LLM-based agentic frameworks has significantly reduced the cost of assembling multi-agent systems (MAS), enabling fast prototyping and exploration of agentic behaviors. However, systems built with current tooling remain ill-suited for reliable, evolvable, and production-grade deployment. In practice, MAS are often developed in an ad-hoc and imperative manner, with agent logic, orchestration, observability, and control tightly interwoven, little to no explicit system-level validation, and development workflows optimized for demonstrations rather than long-lived, governed operation. As a result, behavior observed during experimentation rarely constitutes reliable evidence of behavior in production.   In this paper, we introduce MAS-Lab, a specification-driven framework for principled development and experimental validation of multi-agent systems properties. MAS-Lab is designed to transform MAS from collections of scripts into engineered distributed systems by separating semantic intent from operational concerns, making behavior and control explicit, supporting reproducible experimentation, and preserving continuity across lifecycle stages. MAS-Lab consists of three layers: a declarative, framework-agnostic agentic specification layer (Spec); a stateful MAS Operating System that provides execution and control primitives plugged-in by design (MAS-OS); and a set of lab overlays with integrated observability and evaluation tools (Labs). Together, these components enable intent-based validation, principled system evolution, and a seamless transition to production-grade MAS.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/01/2606.31966v1-mecobench-a-systematic-study-of-multimodal-agent-collaboration-in-embodied-environments",
+      "section": "quick",
+      "title_en": "MECoBench: A Systematic Study of Multimodal Agent Collaboration in Embodied Environments",
+      "authors": "Qingyun Liu, Jiwen Zhang, Jingyi Hu, Siyuan Wang, Zhongyu Wei",
+      "date": "2026-06-30",
+      "pdf": "https://arxiv.org/pdf/2606.31966v1",
+      "score": "6.0",
+      "evidence": "多模态代理协作基准在具身环境中",
+      "tldr": "多模态大语言模型虽具身智能潜力大，但协作能力未被系统评估。为此提出MECoBench基准，涵盖真实任务、两种合作结构与三种协作模式。实验发现：协作可提升任务完成度，但需平衡增益与协调成本；通信是协作增益关键，最佳模式取决于团队规模和模型能力；协作还能增强在噪声先验和探索条件下的鲁棒性。该基准为理解多模态具身协作机制与局限提供了系统性测试平台。",
+      "tags": "query:eca",
+      "abstract_en": "Recent multimodal large language models (MLLMs) have strong potential as embodied agents, but their ability to collaborate in visually grounded environments remains underexplored. To address this gap, we introduce MECoBench, a multimodal embodied cooperation benchmark with an evaluation platform spanning diverse real-world tasks, two cooperation structures, and three collaboration modes. Through extensive experiments across various MLLMs, we summarize three key findings: (i) Collaboration generally improves embodied task completion, but its benefits depend on balancing collaborative gains against coordination complexity. (ii) Communication is essential to collaboration gains, while the best collaboration mode depends on team size and model capability. (iii) Moreover, collaboration improves robustness under noisy priors and exploration conditions. Generally, MECoBench provides a systematic testbed for understanding the mechanisms and limits of multimodal embodied collaboration. Code and dataset are available at https://github.com/q-i-n-g/MECoBench.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

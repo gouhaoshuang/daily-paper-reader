@@ -1,0 +1,1305 @@
+Title: Data Replication Meets Function Scheduling in the Edge-Cloud Continuum
+
+URL Source: https://arxiv.org/pdf/2606.30563v1
+
+Published Time: Tue, 30 Jun 2026 02:37:56 GMT
+
+Number of Pages: 18
+
+Markdown Content:
+# Data Replication Meets Function Scheduling in the Edge-Cloud Continuum 
+
+## Matteo Cenzato a, Dario d’Abate a,∗, Arianna Dragoni a, Matteo Briscini a and Alessandro Margara a
+
+> a
+
+Politecnico di Milano, Milan, Italy 
+
+A R T I C L E I N F O 
+
+Keywords :Function-as-a-Service Edge-to-Cloud Continuum Function Scheduling Data Placement 
+
+A B S T R A C T 
+
+Serverless computing is an appealing model for the edge-cloud continuum, but its stateless assumption breaks down once functions need persistent data: fetching state from a distant cloud store erases the latency benefit of running at the edge. Keeping data close means replicating it, and replication forces a placement decision that is coupled with where functions execute and with the consistency each application demands. We study this joint problem of function scheduling and data placement under two consistency models, strong and eventual replication. We first formulate it as a Binary Linear Program that yields the optimal placement for a given system snapshot, and use it as a reference point. Because the solver does not scale past a few hundred nodes, we add two heuristics with progressively less information: a Global-View greedy method that works from the same complete snapshot, and an Aggregated-View heuristic in which each node decides from locally observed demand alone. Across a range of system sizes the Global-View heuristic stays within a few percent of the optimum while scaling to over 10 4 nodes. The Aggregated-View heuristic sacrifices some solution quality, but adapts continuously to each invocation. Under client mobility, centralized policies suffer from stale snapshots and recurring latency spikes, while the Aggregated-View maintains low and stable client-observed latency. Across all experiments, data placement proves more influential than function scheduling in determining the outcome. 
+
+## 1. Introduction 
+
+Cloud computing has long been the de facto target for deploying applications [6], offering managed environments with virtually unlimited resources. However, in recent years, the emergence of the edge-cloud continuum has fragmented the landscape of computing infrastructure [4]. Edge devices, deployed close to end users, enable lower latencies for applications that are sensitive to response times [20]. This is particularly relevant for domains such as autonomous driving and industrial IoT, where systems operate under strict low-latency constraints. One of the dominant programming paradigms proposed for the edge-cloud continuum, especially in academic pro-posals, is serverless computing [12], and in particular its Function-as-a-Service (FaaS) model, where developers de-compose their applications into functions, and managed run-times handle their scaling and placement across the available nodes. The FaaS model is inherently stateless [7]: in cloud environments, when applications require persistent state, this is delegated to external data stores co-located in the same data center [7]. When functions execute at the edge, accessing a remote cloud-hosted store incurs prohibitive latency, negating the benefits of edge deployment [20]. Removing this limitation gives rise to a challenging optimization problem. In stateful serverless, we must de-cide not only where to execute each function (i.e., function scheduling problem), but also where to place the data items 
+
+> ∗
+
+Corresponding author  
+
+> matteo.cenzato@mail.polimi.it
+
+(M. Cenzato);  
+
+> dario.dabate@polimi.it
+
+(D. d’Abate); arianna.dragoni@polimi.it (A. Dragoni); matteo.briscini@mail.polimi.it (M. Briscini);  
+
+> alessandro.margara@polimi.it
+
+(A. Margara) 
+
+> ORCID
+
+(s): 
+
+that functions access (i.e., data placement problem). Since multiple functions may access the same data items from different nodes, the placement of each data item involves a trade-off: placing it close to one consumer may penalize another. We refer to the combination of these two decisions as the placement problem .A natural approach to mitigate this trade-off is repli-cation : placing copies of data items on multiple nodes so that each function can access a nearby replica. However, replication introduces its own challenges. Additional repli-cas reduce read latency by bringing data closer to consumers, but updates must be propagated across all copies. Furthermore, different applications impose different con-sistency requirements on their data, ranging from strong guarantees that synchronize all replicas before serving any read, to weaker guarantees that allow replicas to diverge temporarily and converge over time. A placement framework must therefore account for these consistency semantics, as they fundamentally affect both the feasible placement space and the resulting latency. Existing approaches to function scheduling and data placement can be characterized along two dimensions. The first concerns what is modeled : some works focus exclu-sively on function scheduling, ignoring the data dependen-cies of the functions they schedule [24]; others consider data placement but treat consistency coarsely, without dis-tinguishing among different consistency models [11]. The second dimension concerns how decisions are made .Centralized approaches based on exact solvers [2] model the optimum but incur prohibitive computational overheads as the system grows. Faster alternatives reduce this cost through heuristics [18], which typically still rely on a global view of the system, whose collection is itself expensive in the 
+
+Cenzato et al.: Preprint submitted to Elsevier Page 1 of 18 
+
+> arXiv:2606.30563v1 [cs.DC] 29 Jun 2026 Replication Meets Scheduling
+
+edge-cloud continuum [1]. Decentralized heuristics [11, 5] avoid this requirement, at the price of operating on partial information. What is currently missing in the literature is, first, a rigorous formulation of the optimal placement baseline under heterogeneous consistency models, second, a study of how closely heuristics with progressively narrower information scope, from centralized to decentralized, can approximate this baseline under realistic edge-cloud condi-tions, and third, an assessment of whether the information advantage of a global view translates into better adaptivity when demand shifts at runtime, or whether a decentralized approach that reacts to each invocation individually can compensate for its narrower view. In this paper, we address this gap for the joint problem of function scheduling and data placement in the edge-cloud continuum, under two consistency models: strong replica-tion (SR) and eventual replication (ER). Our contributions are as follows: 
+
+• We formalize the joint placement problem and propose a Binary Linear Programming (BLP) model that jointly optimizes function scheduling and data replica placement under SR and ER. It serves as the theoretical benchmark against which the other approaches are evaluated. 
+
+• We propose a Global-View (GV) greedy heuristic that approximates the optimum efficiently, assuming the same complete, global snapshot of the system state as the BLP. 
+
+• To bypass the dual overhead of system-wide information collection and the subsequent scattering of placement de-cisions, we introduce an Aggregated-View (AV) heuristic. In this approach, each node operates on a local, partial view of the system state. 
+
+• We evaluate the three approaches and show that (i) GV closely tracks the BLP optimum at a fraction of its com-putational cost, scaling to system sizes the solver cannot handle; AV produces competitive latency through reactive replication, at the cost of higher storage, (ii) in realistic deployments, AV bypasses the gather-scatter communi-cation overhead of centralized approaches while deliver-ing competitive client-observed latency, and (iii) under dynamic workloads with shifting access patterns, AV’s per-invocation reactivity gives it a structural advantage, adapting continuously without the re-planning costs of centralized snapshots that quickly grow stale. The rest of the paper is organized as follows. §2 reviews related work. §3 formalizes the joint placement problem. §4 presents the BLP model. §5 describes GV. §6 introduces AV. §7 reports the empirical evaluation. §8 concludes the paper. 
+
+## 2. Related Work 
+
+In §1, we characterized existing approaches along two dimensions: what they model and how they make decisions. We use these dimensions to organize this section. First, however, we clarify our scope regarding stateful serverless. Some works [27, 28] use this term to refer to function chaining, where ephemeral data flows between stages of a workflow or pipeline. In this paper, we consider a different setting: functions access persistent shared state that survives across invocations. 
+
+Function scheduling without data placement. Several works optimize where to execute functions in the edge-cloud continuum without modeling their data dependencies. Cic-conetti et al. [5] address dynamic scheduling and offloading in IoT environments: each edge router decides autonomously where to send requests, using weighted averages of response times and information from an SDN controller. Vahabi et al. [24] formulate an Integer Linear Programming (ILP) problem that minimizes energy consumption for stateless function scheduling at the edge; the model requires global knowledge of all node capacities and power profiles, and is resolved using a centralized solver. Baresi et al. [2] formulate a Mixed Integer Linear Programming (MILP) for serverless placement on Multi-access Edge Computing (MEC) infras-tructure, where the topology is partitioned into communities and the problem is solved centrally within each one; the access to external data stores is not a decision variable but only a non-controllable component of the response time. Rausch et al. [18] extend the Kubernetes scheduler with a scoring function that includes data proximity among its criteria, but such proximity requires manual annotations from the developer, and data is not placed by the system. None of these works models data placement explicitly. In the edge-cloud continuum, where functions and their data may reside on different nodes, neglecting this coupling can result in significant latency penalties. 
+
+Joint function scheduling and data placement. Other works recognize that function scheduling and data placement are coupled. Nardelli et al. [11] jointly model function offload-ing and data migration: the offloading part is decentralized, with each node deciding based on local knowledge, while data migration assumes a logically centralized migrator. They explicitly leave replication out of their model. Puliafito et al. [16] formulate a centralized MILP that separates the problem into two sequential steps: first allocating stateful microservices whose state is bound to the container, then dis-patching invocations to stateless serverless functions whose state remains in the cloud. For the serverless part, data is not placed and replication is not considered. Smith et al. [21] build a platform that routes invocations to clusters holding the required data buckets and supports replication across clusters via asynchronous mirroring (MinIO), but the replication decisions are defined manually by the operator and no optimization model guides the placement. These works couple functions and data in the place-ment decision, but they either exclude replication or do not distinguish among different consistency semantics of the replicated data. 
+
+Consistency in stateful serverless. A few systems address consistency, but at the protocol level rather than as part of the placement model. Cloudburst [22] is a stateful FaaS   
+
+> Cenzato et al.: Preprint submitted to Elsevier Page 2 of 18 Replication Meets Scheduling
+
+platform built on Anna [26], a lattice-based distributed key-value store. Functions and data are co-located through lo-cal mutable caches, and replicas emerge implicitly from back pressure: when a node is overloaded, requests go to other nodes that fetch and cache the data. The platform provides repeatable read and causal consistency through distributed session protocols. While Cloudburst provides system-level consistency mechanisms, it does not incorpo-rate consistency constraints as a variable in the placement decision. Pfandzelter et al. [13, 14] go further in terms of consistency awareness. Their platform integrates FReD, a replication middleware that uses optimistic replication with version vectors and offers configurable client-centric guarantees (monotonic reads, read your writes, monotonic writes, write follows reads) per keygroup. This makes it the closest work to ours in terms of consistency support. However, the decision of where to replicate each keygroup is made manually by the application through an API, and data is replicated on all designated nodes regardless of access patterns or costs. Lambdata [23] avoids the problem by design: data is immutable, and a function that wants to modify a data item writes a new key and deletes the old one, so cache consistency never arises. LoLa [25] manages state migration at the edge with fine-grained locking and read/write separation, but again consistency is an operational mechanism, not a placement variable. While these systems implement sophisticated protocols and even allow configurable guarantees, they handle consis-tency either as an operational mechanism or through manual configuration. None integrates heterogeneous consistency semantics as a core dimension in an automated, joint place-ment optimization. 
+
+## 3. System Model and Problem Statement 
+
+This section presents the system model used throughout the paper. The model captures typical characteristics of edge-to-cloud environments, including a hierarchical node infrastructure (§3.1), stateful serverless functions that ac-cess potentially shared data (§3.2), and heterogeneous data consistency strategies (§3.3). Based on these elements, we formalize the placement problem (§3.4). 
+
+3.1. Infrastructure 
+
+We consider a set  = {1 , … , 𝑁 } of heterogeneous nodes spanning the edge-cloud continuum. A node 𝑗 ∈  is characterized by its computational speed 𝑠𝑝𝑒𝑒𝑑 𝑗 and storage capacity 𝑠𝑡𝑜𝑟 𝑗 .Edge-to-cloud deployments are usually arranged in lay-ered tiers: conventionally Cloud , Fog , and Edge , where each layer may comprise several logical levels [4]. Node density decreases from Edge to Cloud, and traffic typically aggregates uplink toward the root; we therefore model the infrastructure as a hierarchical tree where the Cloud is the root, a logical node with unlimited resources, possibly rep-resenting a data-center cluster. The remaining nodes form arbitrary subtrees rooted at the cloud, capturing deployments with any number of intermediate tiers between Cloud and Edge. Nodes are connected through the links of the tree. For every pair of nodes (𝑖, 𝑗 ), we denote by 𝑙𝑎𝑡 𝑖𝑗 the network latency between them, computed as the sum of the latencies of the links along the unique path connecting them in the tree, and by 𝑏𝑎𝑛 𝑖𝑗 their effective bandwidth, determined by the minimum bandwidth among the links on the same path. We assume symmetric channels, so 𝑙𝑎𝑡 𝑖𝑗 = 𝑙𝑎𝑡 𝑗𝑖 and 
+
+𝑏𝑎𝑛 𝑖𝑗 = 𝑏𝑎𝑛 𝑗𝑖 . Data retrieval from local storage is considered negligible with respect to network latency. 
+
+3.2. Application Model 
+
+Applications are composed of stateful serverless func-tions. In the FaaS model, functions have a two-level struc-ture: a function class defines the code and resource require-ments, and is registered on the platform once; invocations 
+
+are individual executions of that class, triggered by client requests. Running a function on a node requires the class to be deployed there first, which means that its runtime must be active and its code available locally. When multiple invocations of the same function converge on the same node, a single deployment serves them all. In our model, we abstract away the resource cost of deployment and focus ex-clusively on scheduling invocations and placing data. This is consistent with the serverless model, where cold-start costs are amortized across many invocations and the dominant latency component is data access. Similarly, we do not model per-node computational resource limits (CPU, memory), as the memory footprint of a function invocation depends on the runtime input and is difficult to bound statically. The dominant cost in our target scenario is data access latency, not compute contention. Let  = { 𝑓 1, … , 𝑓 𝐹 } denote the set of registered functions. Each function 𝑓 is characterized by a reference execution time 𝑟𝑒𝑓 𝑓 .End users ( clients ) invoke functions from anywhere in the hierarchy; the demand is captured by the invocation rate 
+
+𝜆 𝑓 ,𝑖 , which gives the rate at which function 𝑓 is invoked from node 𝑖 . We collect all pairs (𝑓 , 𝑖 ) with 𝜆 𝑓 ,𝑖 > 0 in the set:  = {( 𝑓 , 𝑖 ) ∈  ×  ∶ 𝜆 𝑓 ,𝑖 > 0} . Scheduling is per pair (𝑓 , 𝑖 ) ∈ , allowing invocations of the same registered function from different sources to be routed independently; when they converge on the same execution node, however, the function is deployed there only once. As data abstraction, we adopt the notion of collection .A collection in our model represents an opaque unit of state whose internal structure is managed by the application or by an external data store sitting above our placement layer. Concretely, a single collection may wrap a rich, composite data structure (e.g., documents, tables, or nested records). For instance, in a travel agency application a single col-lection might aggregate a customer’s flight bookings, ho-tel reservations, itinerary details, and loyalty information; a more normalized application might use smaller, finer-grained collections. Both designs are valid: what matters for the placement model is the collection as the atomic unit of replication, not its internal layout. Let  = {𝑐 1, … , 𝑐 𝐶 } denote the set of collections. Each collection 𝑐 has a known size 𝑠𝑖𝑧𝑒 𝑐 and a consistency   
+
+> Cenzato et al.: Preprint submitted to Elsevier Page 3 of 18 Replication Meets Scheduling
+
+strategy 𝑠𝑟 𝑐 , where 𝑠𝑟 𝑐 = 1 denotes strong replication (SR) and 𝑠𝑟 𝑐 = 0 denotes eventual replication (ER). Functions access the collections they require either lo-cally, when co-located on the same node, or remotely, by fetching data from another node at the cost of additional network latency. The set of collections accessed by each function, as well as the type of access (read or write), must be known statically for a given problem instance; in prac-tice, this information can be derived from static annotations provided by the developer [18] or automated code analy-sis [9]. The access relation is modeled through the parameter 
+
+𝑎𝑐𝑐𝑒𝑠𝑠 𝑐,𝑓 ; we write 𝑓 = { 𝑐 ∈  ∶ 𝑎𝑐𝑐𝑒𝑠𝑠 𝑐,𝑓 = 1} for the set of collections accessed by function 𝑓 . A function is classified as read-only (𝑟𝑒𝑎𝑑 𝑓 = 1 ) if all its accesses are reads, and as a writing function (𝑟𝑒𝑎𝑑 𝑓 = 0 ) if it performs at least a write access. 
+
+3.3. Consistency Strategies 
+
+Even within a single application, different collections may require different consistency guarantees. For instance, in a travel agency application, a collection tracking available seat counts must reflect every booking immediately: all replicas must agree before serving a new request to prevent overbooking, calling for strong consistency. A collection aggregating total searches per destination, by contrast, can tolerate temporarily divergent replicas, since missing one update violates no invariant and the value converges once updates propagate; it is therefore a natural candidate for eventual consistency. Accordingly, each collection is associ-ated with one of two consistency strategies, which determine how it can be replicated and accessed. We refer to collections managed under each strategy as SR collections (𝑠𝑟 𝑐 = 1 ) and 
+
+ER collections (𝑠𝑟 𝑐 = 0 ), respectively. 
+
+Strong Replication (SR). Under SR, collections can be repli-cated across multiple nodes while preserving a total order on write operations. We model this guarantee through a single-leader protocol [8]: one replica per collection is designated as the leader and serves all writes, while any replica can serve reads. Single-leader replication is the most widely adopted design for strongly consistent data 12 because it avoids the per-operation quorum overhead that character-izes multi-leader and leaderless alternatives, an overhead we seek to avoid in edge-to-cloud deployments. The leader propagates updates to followers asynchronously, outside the critical path of function invocations. The total order of updates is preserved because the unique path connecting any two nodes in the tree consists of FIFO communication channels, consistent with standard reliable networking as-sumptions in state replication [8]. We impose two constraints on functions that access SR collections. First, each function accesses at most one SR collection (alongside any number of ER collections). Second, a function that accesses an SR collection must execute on a node that holds a replica of that collection; specifically, a writing function must be co-located with the leader replica, so that write operations do 
+
+> 1https://etcd.io
+> 2https://tikv.org
+
+not incur an additional remote round-trip, while a read-only function requires any local replica. These constraints are motivated by the cost of cross-collection coordination in geo-distributed environments. In distributed databases, there is the problem of determining the scope of transactional guarantees when supporting mul-tiple consistency levels. To mitigate global coordination bottlenecks, many systems restrict the scope of atomic-ity. For example, Apache Cassandra 3 supports Lightweight Transactions (LWT) that provide linearizability, but only within a single partition; cross-partition transactions are not supported. More generally, offering strong consistency across independent, potentially geo-distributed collections would require global coordination protocols (e.g., two-phase commit), which impose a stop-the-world synchronization barrier that blocks all participants until every party has voted. In edge-to-cloud deployments, where network laten-cies between nodes can be orders of magnitude larger than within a single datacenter, such coordination is prohibitively expensive. Restricting each function to a single SR collec-tion eliminates the need for cross-collection coordination entirely, and co-location avoids a synchronous remote round-trip on the critical path of each invocation. 
+
+Eventual Replication (ER). Under ER, collections can be replicated without a designated leader. Any replica can serve both reads and writes, with updates propagating asyn-chronously and conflicts resolved through application-level policies (e.g., last-writer-wins, CRDTs [19]). Functions are free to access multiple ER collections within a single invocation, as conflicts will eventually be solved. Likewise, we relax the co-location requirement: a function may execute without local copies of all its ER collections, fetching missing ones from remote replicas at the cost of additional retrieval latency. 
+
+Fault tolerance. Across both strategies, at least one copy of each collection must exist at all times. Our model assumes that a copy of each collection always persists in the cloud, where storage is abundant, providing a baseline for disaster recovery. Beyond this assumption, fault tolerance is outside the scope of this work: we do not model node failures, leader re-election, or replica recovery, and focus exclusively on the placement problem under normal operating conditions. 
+
+3.4. Placement Problem 
+
+Given the infrastructure, the set of registered functions with their invocation statistics, and the set of collections with their consistency strategies and access relations, the place-ment problem consists of two coupled decisions: (1) data placement : on which nodes to place each collection and its replicas, and (2) invocation scheduling : on which node to execute each function invocation originated from a source node. These decisions are tightly connected: where collections are placed constrains where functions can run, and where   
+
+> 3https://cassandra.apache.org
+> Cenzato et al.: Preprint submitted to Elsevier Page 4 of 18
+
+Replication Meets Scheduling                                                                        
+
+> Symbol Description
+> Infrastructure
+> = {1 ,…, 𝑁 }Set of nodes
+> 𝑠𝑡𝑜𝑟 𝑖 Storage capacity of node 𝑖 𝑠𝑝𝑒𝑒𝑑 𝑖 Computational speed of node 𝑖 𝑙𝑎𝑡 𝑖𝑗 Network latency between nodes 𝑖 and 𝑗 𝑏𝑎𝑛 𝑖𝑗 Network bandwidth between nodes 𝑖 and 𝑗
+> Functions
+> = { 𝑓 1,…, 𝑓 𝐹 }Set of registered functions
+> 𝑟𝑒𝑓 𝑓 Reference execution time of function 𝑓 𝜆 𝑓 ,𝑖 Invocation rate of 𝑓 from node 𝑖
+> Function-source pairs: {( 𝑓 , 𝑖 ) ∈ ×∶𝜆 𝑓 ,𝑖 >0}
+> 𝑟𝑒𝑎𝑑 𝑓 = 1 if 𝑓 is read-only, 0if it writes
+> Collections
+> = { 𝑐 1,…, 𝑐 𝐶 }Set of data collections
+> 𝑠𝑖𝑧𝑒 𝑐 Size of collection 𝑐 𝑠𝑟 𝑐 = 1 if collection 𝑐 is SR, 0if ER
+> 𝑎𝑐𝑐𝑒𝑠𝑠 𝑐,𝑓 1if function 𝑓 accesses collection 𝑐
+> 𝑓 Collections accessed by 𝑓 :{𝑐 ∈∶𝑎𝑐𝑐𝑒𝑠𝑠 𝑐,𝑓 = 1}
+
+Table 1 
+
+Infrastructure and application parameters defining the place-ment problem. 
+
+functions run determines the cost of accessing remote col-lections (under ER). The primary goal is to minimize the expected invocation latency, which comprises the network delay between the client and the execution node, the function execution time, and, under ER, the cost of fetching collections that are not locally available. At the same time, replication must be kept under control: placing replicas on every node would trivially eliminate remote access latency, but at the cost of saturating the limited storage of edge nodes. The placement must there-fore balance data proximity against resource consumption, subject to the finite storage capacity of each node and the co-location requirements imposed by the chosen consistency strategy. The problem is defined by the infrastructure and appli-cation parameters summarized in Tab. 1. 
+
+## 4. Centralized Model 
+
+This section formalizes the placement problem (§3) as a BLP. Our formulation handles both SR and ER collections: the 𝑠𝑟 𝑐 parameter activates the appropriate constraints and latency terms. For convenience, we partition the collections accessed by function 𝑓 into SR  
+
+> 𝑓
+
+= { 𝑐 ∈ 𝑓 ∶ 𝑠𝑟 𝑐 = 1} 
+
+and ER  
+
+> 𝑓
+
+= { 𝑐 ∈ 𝑓 ∶ 𝑠𝑟 𝑐 = 0} , and define the global sets 
+
+SR and ER analogously. As discussed in §3.3, we require 
+
+|SR  
+
+> 𝑓
+
+| ≤ 1 for every 𝑓 . Similarly, we partition functions into read-only r = { 𝑓 ∈  ∶ 𝑟𝑒𝑎𝑑 𝑓 = 1} and writing 
+
+w = { 𝑓 ∈  ∶ 𝑟𝑒𝑎𝑑 𝑓 = 0} .
+
+4.1. Decision Variables and Auxiliary Indicators 
+
+The formulation uses four families of primary binary decision variables, which encode the placement, scheduling, leader election, and routing choices. The placement variable 𝑥 𝑐,𝑗 = 1 iff a replica of collec-tion 𝑐 is placed on node 𝑗 . The scheduling variable 𝑤 𝑓 ,𝑖,𝑗 = 1 
+
+iff the invocation of function 𝑓 from source 𝑖 is scheduled on node 𝑗 . The leader election variable 𝑙 𝑐,𝑗 = 1 iff node 𝑗 holds the leader replica of SR collection 𝑐 . The routing variable 
+
+𝑟 𝑓 ,𝑖,𝑐,𝑗,𝑎 = 1 iff the invocation of 𝑓 from 𝑖 , executing on 𝑗 ,fetches the missing ER collection 𝑐 from provider node 𝑎 .
+
+𝑥 𝑐,𝑗 ∈ {0 , 1} ∀ 𝑐 ∈ , 𝑗 ∈  (1) 
+
+𝑤 𝑓 ,𝑖,𝑗 ∈ {0 , 1} ∀ ( 𝑓 , 𝑖 ) ∈ , 𝑗 ∈  (2) 
+
+𝑙 𝑐,𝑗 ∈ {0 , 1} ∀ 𝑐 ∈ SR , 𝑗 ∈  (3) 
+
+𝑟 𝑓 ,𝑖,𝑐,𝑗,𝑎 ∈ {0 , 1} ∀ ( 𝑓 , 𝑖 ) ∈ , 𝑐 ∈ ER  
+
+> 𝑓
+
+, 𝑗 ∈  ,𝑎 ∈  ⧵ {𝑗 }
+
+(4) 
+
+One family of auxiliary binary decision variables (here-after auxiliary indicators ) is used to linearize logical depen-dencies. The miss indicator 𝑧 𝑓 ,𝑖,𝑐,𝑗 = 1 iff the invocation of 𝑓 
+
+from 𝑖 is scheduled on 𝑗 and ER collection 𝑐 is not lo-cally available. This indicator captures the nonlinear product 
+
+𝑤 𝑓 ,𝑖,𝑗 ⋅ (1 − 𝑥 𝑐,𝑗 ), linearized in §4.3. 
+
+𝑧 𝑓 ,𝑖,𝑐,𝑗 ∈ {0 , 1} ∀ ( 𝑓 , 𝑖 ) ∈ , 𝑐 ∈ ER  
+
+> 𝑓
+
+, 𝑗 ∈  (5) 
+
+4.2. Objective Function 
+
+The placement objective minimizes a weighted combi-nation of the rate-weighted total latency 𝑇 and the total storage footprint 𝑆 (6). Incorporating storage directly into the objective reflects the cost of replication. A formulation that minimizes latency alone is free to saturate every node’s storage as long as doing so yields any reduction, however marginal. The parameter 𝛼 ≥ 0 governs this latency–storage trade-off: at 𝛼 = 0 the model replicates as aggressively as node capacity allows; as 𝛼 grows, the cost of each additional replica is weighed more heavily, producing sparser place-ments. Both terms are normalized to the [0 , 1] range using their theoretical worst-case bounds, 𝑇 max and 𝑆 max . The rate-weighted total latency 𝑇 decomposes into an execution component 𝑇 exec and a retrieval component 𝑇 retr , both linear in the decision variables 𝑤 and 𝑟 :
+
+min 
+
+( 𝑇 𝑇 max + 𝛼 ⋅ 𝑆 𝑆 max 
+
+)
+
+, 𝑇 = 𝑇 exec + 𝑇 retr . (6) 
+
+We assume that invocation rates remain stationary over the optimization horizon. This is consistent with the timescale of placement decisions, which typically target aggregate traffic patterns rather than instantaneous fluctuations. Since the total invocation rate Λ = ∑(𝑓 ,𝑖 )∈  𝜆 𝑓 ,𝑖 is a positive constant for a given problem instance, minimizing the average latency 
+
+𝑇 ∕Λ is equivalent to minimizing the rate-weighted total 𝑇 .
+
+𝑇 exec aggregates per-invocation execution latency, weighted by the corresponding rate 𝜆 𝑓 ,𝑖 (7). The per-invocation la-tency 𝑡 exec  
+
+> 𝑓 ,𝑖,𝑗
+
+combines the round-trip network latency between source node 𝑖 and execution node 𝑗 with the on-node compu-tation time (8). Bandwidth is omitted: invocation payloads are assumed negligible compared to the collection data transferred during retrieval. 
+
+𝑇 exec = ∑
+
+> (𝑓 ,𝑖 )∈ 
+
+∑
+
+> 𝑗 ∈
+
+𝜆 𝑓 ,𝑖 ⋅ 𝑡 exec  
+
+> 𝑓 ,𝑖,𝑗
+
+⋅ 𝑤 𝑓 ,𝑖,𝑗 (7) 
+
+𝑡 exec  
+
+> 𝑓 ,𝑖,𝑗
+
+= 2 ⋅ 𝑙𝑎𝑡 𝑖,𝑗 + 𝑟𝑒𝑓 𝑓 
+
+𝑠𝑝𝑒𝑒𝑑 𝑗 
+
+∀ ( 𝑓 , 𝑖 ) ∈ , ∀ 𝑗 ∈  (8) 
+
+𝑇 retr aggregates per-fetch retrieval latency, again weighted by 𝜆 𝑓 ,𝑖 (9). The per-fetch cost is the round-trip latency 
+
+Cenzato et al.: Preprint submitted to Elsevier Page 5 of 18 Replication Meets Scheduling 
+
+plus the transfer time of the collection over the available bandwidth, and depends only on the link (𝑗, 𝑎 ) once 𝑗 is fixed (10). This component is non-zero only for ER accesses: SR collections are guaranteed to be locally available by the co-location constraints (§4.3). 
+
+𝑇 retr = ∑
+
+> (𝑓 ,𝑖 )∈ 
+
+∑
+
+> 𝑐 ∈ER
+> 𝑓
+
+∑
+
+> 𝑗 ∈
+
+∑
+
+> 𝑎 ∈
+> 𝑎 ≠𝑗
+
+𝜆 𝑓 ,𝑖 ⋅ 𝑡 retr  
+
+> 𝑐,𝑗,𝑎
+
+⋅ 𝑟 𝑓 ,𝑖,𝑐,𝑗,𝑎 (9) 
+
+𝑡 retr  
+
+> 𝑐,𝑗,𝑎
+
+= 2 ⋅ 𝑙𝑎𝑡 𝑗,𝑎 + 𝑠𝑖𝑧𝑒 𝑐 
+
+𝑏𝑎𝑛 𝑗,𝑎 
+
+∀ 𝑐 ∈ ER , 𝑗 ∈  , 𝑎 ≠ 𝑗 (10) 
+
+The worst-case rate-weighted latency 𝑇 max (11) as-sumes, for each (𝑓 , 𝑖 ), the most expensive execution node and, for each ER collection, the most expensive retrieval source. The total storage cost 𝑆 (12) aggregates the size of all replicas across all nodes, and its worst-case bound 𝑆 max 
+
+corresponds to replicating every collection on every node (13). 
+
+𝑇 max = ∑
+
+> (𝑓 ,𝑖 )∈ 
+
+𝜆 𝑓 ,𝑖 ⋅ max 
+
+> 𝑗 ∈
+
+⎛⎜⎜⎝
+
+𝑡 exec  
+
+> 𝑓 ,𝑖,𝑗
+
++ ∑
+
+> 𝑐 ∈ER
+> 𝑓
+
+max 
+
+> 𝑎 ∈
+> 𝑎 ≠𝑗
+
+𝑡 retr 
+
+> 𝑐,𝑗,𝑎
+
+⎞⎟⎟⎠
+
+(11) 
+
+𝑆 = ∑
+
+> 𝑐 ∈
+
+∑
+
+> 𝑗 ∈
+
+𝑠𝑖𝑧𝑒 𝑐 ⋅ 𝑥 𝑐,𝑗 (12) 
+
+𝑆 max = | | ⋅ ∑
+
+> 𝑐 ∈
+
+𝑠𝑖𝑧𝑒 𝑐 (13) 
+
+4.3. Constraints 
+
+The constraints fall into four groups: structural con-straints that apply to all collections, SR-specific constraints, ER-specific constraints, and resource constraints. 
+
+Structural constraints. Each invocation is scheduled on ex-actly one node (14); every collection has at least one replica (15). 
+
+∑
+
+> 𝑗 ∈
+
+𝑤 𝑓 ,𝑖,𝑗 = 1 ∀ ( 𝑓 , 𝑖 ) ∈  (14) 
+
+∑
+
+> 𝑗 ∈
+
+𝑥 𝑐,𝑗 ≥ 1 ∀ 𝑐 ∈  (15) 
+
+SR-specific constraints. Each SR collection has exactly one leader (16), co-located with a replica (17). Read-only in-vocations must execute where a replica exists (18); writing invocations must execute on the leader (19). 
+
+∑
+
+> 𝑗 ∈
+
+𝑙 𝑐,𝑗 = 1 ∀ 𝑐 ∈ SR (16) 
+
+𝑙 𝑐,𝑗 ≤ 𝑥 𝑐,𝑗 ∀ 𝑐 ∈ SR , 𝑗 ∈  (17) 
+
+𝑤 𝑓 ,𝑖,𝑗 ≤ 𝑥 𝑐,𝑗 ∀ ( 𝑓 , 𝑖 ) ∈  with 𝑓 ∈ r , 𝑐 ∈ SR  
+
+> 𝑓
+
+, 𝑗 ∈ 
+
+(18) 
+
+𝑤 𝑓 ,𝑖,𝑗 ≤ 𝑙 𝑐,𝑗 ∀ ( 𝑓 , 𝑖 ) ∈  with 𝑓 ∈ w, 𝑐 ∈ SR  
+
+> 𝑓
+
+, 𝑗 ∈ 
+
+(19) 
+
+ER-specific constraints. The miss indicator 𝑧 𝑓 ,𝑖,𝑐,𝑗 captures the product 𝑤 𝑓 ,𝑖,𝑗 ⋅(1− 𝑥 𝑐,𝑗 ). Since all variables are binary, we linearize it using standard McCormick envelopes [10] (20)– (22). On a miss, exactly one provider node must be selected (23), and only nodes holding a replica can serve as providers (24). 
+
+𝑧 𝑓 ,𝑖,𝑐,𝑗 ≤ 𝑤 𝑓 ,𝑖,𝑗 (20) 
+
+𝑧 𝑓 ,𝑖,𝑐,𝑗 ≤ 1 − 𝑥 𝑐,𝑗 (21) 
+
+𝑧 𝑓 ,𝑖,𝑐,𝑗 ≥ 𝑤 𝑓 ,𝑖,𝑗 + (1 − 𝑥 𝑐,𝑗 ) − 1 (22) 
+
+∑
+
+> 𝑎 ∈
+> 𝑎 ≠𝑗
+
+𝑟 𝑓 ,𝑖,𝑐,𝑗,𝑎 = 𝑧 𝑓 ,𝑖,𝑐,𝑗 (23) 
+
+𝑟 𝑓 ,𝑖,𝑐,𝑗,𝑎 ≤ 𝑥 𝑐,𝑎 (24) 
+
+∀ ( 𝑓 , 𝑖 ) ∈ , 𝑐 ∈ ER  
+
+> 𝑓
+
+, 𝑗 ∈  , 𝑎 ∈  ⧵ {𝑗 }.
+
+Resource constraints. The total size of replicas stored on a node cannot exceed its storage limit (25). 
+
+∑
+
+> 𝑐 ∈
+
+𝑠𝑖𝑧𝑒 𝑐 ⋅ 𝑥 𝑐,𝑗 ≤ 𝑠𝑡𝑜𝑟 𝑗 (25) 
+
+∀ 𝑗 ∈  .
+
+4.4. Model Size 
+
+All constraints and both objective components are linear in the decision variables, making the formulation a BLP with a weighted-sum objective. The routing variables 𝑟 𝑓 ,𝑖,𝑐,𝑗,𝑎 
+
+have five indices and dominate the model size with 𝑂 (|| ⋅
+
+|ER | ⋅ | |2) entries in the worst case. In practice, the number is significantly smaller: variables 𝑧 and 𝑟 are only instantiated for function-collection pairs where 𝑎𝑐𝑐𝑒𝑠𝑠 𝑐,𝑓 =1 and 𝑠𝑟 𝑐 = 0 , and each function typically accesses only a small subset of collections. The storage penalty 𝛼 ⋅ 𝑆 in the objective discourages excessive replication, allowing the solver to determine the appropriate replication degree as part of the optimization. 
+
+## 5. Global-View Heuristic 
+
+While the BLP formulation of §4 yields optimal solu-tions, its variable count grows as 𝑂 (|| ⋅ |ER | ⋅ | |2),making it impractical for large instances or for periodic reconfiguration. We propose a Global-View (GV) greedy heuristic that assumes a complete snapshot of the system state and exploits the hierarchical tree infrastructure to ap-proximate the optimum efficiently. The algorithm operates in two phases. Phase 1 estab-lishes a minimal feasible baseline: it places a single replica of every collection, elects a leader for each SR collection, and derives an initial scheduling and routing from the resulting replica set. Phase 2 then greedily expands the replica set, adding copies of both ER and SR collections wherever the latency savings outweigh the storage cost, using the same 𝛼 
+
+trade-off as the BLP objective (6). This separation reflects the structural asymmetry be-tween SR and ER collections identified in §3.3, which dic-tates how an added replica can help. For ER, every additional replica is an independent, additive benefit: a copy near a function that accesses it cuts the associated retrieval latency without affecting any other collection, so the only opposing factor is node capacity. For SR, the co-location constraints (19) make every write bind to a single leader; an added replica is therefore a read-only follower that can only shorten the execution path of read invocations, while the write workload remains pinned to the leader fixed in Phase 1. Each commit in Phase 2 is thus a locally optimal step that cannot 
+
+Cenzato et al.: Preprint submitted to Elsevier Page 6 of 18 Replication Meets Scheduling 
+
+Algorithm 1 Global-View Heuristic 
+
+Require: Parameters from Tab. 1 
+
+Ensure: Placement solution (𝑥, 𝑙, 𝑤, 𝑟 )
+
+Phase 1: Minimal Baseline  
+
+> 1:
+
+𝑥 ← PLACE COLLECTIONS ()  
+
+> 2:
+
+𝑙 ← PICK LEADERS (𝑥 ) 
+
+> 3:
+
+𝑤 ← SCHEDULE FUNCTIONS (𝑥, 𝑙 ) 
+
+> 4:
+
+𝑟 ← ROUTE FETCHES (𝑥, 𝑤 )
+
+Phase 2: Greedy Expansion  
+
+> 5:
+
+repeat  
+
+> 6:
+
+for all 𝑐 ∈  and 𝑗 ∈  s.t. 𝑥 𝑐,𝑗 = 0 do  
+
+> 7:
+
+𝑗 ef f ← ANCESTOR WITH CAPACITY (𝑗, 𝑠𝑖𝑧𝑒 𝑐 ) 
+
+> 8:
+
+if 𝑥 𝑐,𝑗 ef f = 1 then  
+
+> 9:
+
+𝑏𝑒𝑛𝑒𝑓 𝑖𝑡 𝑐,𝑗 ← −∞  
+
+> 10:
+
+else  
+
+> 11:
+
+Δ𝐿 𝑐,𝑗 ← ESTIMATE SAVINGS (𝑐, 𝑗 ef f , 𝑤 ) 
+
+> 12:
+
+𝑏𝑒𝑛𝑒𝑓 𝑖𝑡 𝑐,𝑗 ← Δ𝐿 𝑐,𝑗 − 𝛼 ⋅ 𝑠𝑖𝑧𝑒 𝑐  
+
+> 13:
+
+end if  
+
+> 14:
+
+end for  
+
+> 15:
+
+(𝑐 ∗, 𝑗 ∗) ← arg max 𝑐,𝑗 𝑏𝑒𝑛𝑒𝑓 𝑖𝑡 𝑐,𝑗  
+
+> 16:
+
+if 𝑏𝑒𝑛𝑒𝑓 𝑖𝑡 𝑐 ∗,𝑗 ∗ > 0 then  
+
+> 17:
+
+𝑗 ∗ef f ← ANCESTOR WITH CAPACITY (𝑗 ∗, 𝑠𝑖𝑧𝑒 𝑐 ∗ ) 
+
+> 18:
+
+𝑥 𝑐 ∗,𝑗 ∗ef f 
+
+← 1 
+
+> 19:
+
+𝑤 ← UPDATE SCHEDULING (𝑤, 𝑐 ∗) 
+
+> 20:
+
+𝑟 ← UPDATE ROUTING (𝑟, 𝑤 ) 
+
+> 21:
+
+end if  
+
+> 22:
+
+until 𝑏𝑒𝑛𝑒𝑓 𝑖𝑡 𝑐 ∗,𝑗 ∗ ≤ 0 
+
+> 23:
+
+return (𝑥, 𝑙, 𝑤, 𝑟 )
+
+worsen the placement of any other collection, nor disturb leader election. Feasibility is maintained throughout by offloading ex-cess storage demands up the tree to the root, which we model as a cloud with virtually infinite resources. Algorithm 1 gives the complete procedure. 
+
+Collection placement. Phase 1 places exactly one replica per collection. By default, the replica is placed at the cloud (the tree root): this covers every ER collection and every read-only SR collection. Starting at the root guarantees a feasible placement, and since Phase 2 replicates collections wherever beneficial, the greedy expansion then pulls copies toward the edge on demand. The only exception are SR collections that are subject to write operations. Because their leader is pinned for the entire run, we place their single replica where the write workload concentrates, namely on the node with the highest aggregate write pressure . For a node 𝑖 , it is defined as the sum of invocation rates 𝜆 𝑓 ,𝑖 over all writing functions 
+
+𝑓 ∈ w that access 𝑐 . When that node lacks residual storage, the replica is pushed up the tree until a node with sufficient capacity is found. This replica is the one promoted to leader in the next step. 
+
+Leader election. Among the replicas of each SR collection 
+
+𝑐 ∈ SR , we elect as leader the one whose host node 𝑖 has the highest aggregate write pressure ∑𝑓 ∈w∶ 𝑎𝑐𝑐𝑒𝑠𝑠 𝑐,𝑓 =1 𝜆 𝑓 ,𝑖 ,breaking ties by node index for determinism. Since every write must execute on the leader, placing it where the writers concentrate minimizes the latency of the write workload. In the baseline each written SR collection has a single replica, so this step merely confirms it as leader; the choice is made once and never revised, as the followers added in Phase 2 carry only read traffic. 
+
+Function scheduling. Each invocation (𝑓 , 𝑖 ) ∈  is assigned an execution node according to 𝑓 ’s consistency require-ments. If 𝑓 accesses an SR collection, the co-location con-straints of §4.3 fix the target: the nearest replica for reads, or the leader for writes. If 𝑓 depends only on ER collections, the algorithm targets the Lowest Common Ancestor (LCA) of the nearest replicas of each required collection. Executing there bounds the maximum topological distance to every required collection. By avoiding a deep placement on a single branch that would penalize accesses to other branches, the LCA provides the optimal compromise to minimize the retrieval contribution to 𝑇 retr before any replica is added in Phase 2. Functions with no data dependency are scheduled at the source node 𝑖 .
+
+Remote fetch routing. For each ER access missing at the execution node, the provider is selected as the nearest replica by hop count. 
+
+Greedy expansion. After the baseline, the algorithm itera-tively adds replicas one at a time, now for both ER and SR collections. Each iteration evaluates every candidate pair 
+
+(𝑐, 𝑗 ) where 𝑐 ∈  and 𝑗 ∈  does not yet host 𝑐 . If 𝑗 lacks capacity, the candidate walks up the tree to the first ancestor 
+
+𝑗 ef f with sufficient free storage; if 𝑗 ef f already holds 𝑐 , the candidate is discarded. For each viable candidate, the algorithm estimates the rate-weighted latency reduction Δ𝐿 𝑐,𝑗 that placing 𝑐 on 𝑗 ef f 
+
+would yield under the current scheduling, accounting for both the execution and retrieval components of the objec-tive. An ER replica shortens retrieval: each invocation (𝑓 , 𝑖 )
+
+that currently fetches 𝑐 remotely from provider 𝑎 saves the difference between 𝑡 retr  
+
+> 𝑐,𝑗,𝑎
+
+and the retrieval cost from 𝑗 ef f ,weighted by 𝜆 𝑓 ,𝑖 , while the execution node is unchanged. An 
+
+SR replica, by contrast, acts as a read follower: every read-only invocation (𝑓 , 𝑖 ) whose nearest replica becomes 𝑗 ef f 
+
+migrates its execution there, saving the corresponding differ-ence in execution cost 𝑡 exec , weighted by 𝜆 𝑓 ,𝑖 . As previously mentioned, SR writes are excluded from the estimate. Only positive savings are accumulated, so Δ𝐿 𝑐,𝑗 is a lower bound on the true improvement. The net benefit of the candidate is 
+
+Δ𝐿 𝑐,𝑗 −𝛼 ⋅𝑠𝑖𝑧𝑒 𝑐 , mirroring the trade-off in the BLP objective. The candidate (𝑐 ∗, 𝑗 ∗) with the highest positive benefit is committed; after each commit, invocations that access 𝑐 ∗
+
+are rescheduled to reflect the new replica set, and all remote fetches for the affected invocations are recomputed. The loop terminates when no candidate yields a positive net benefit. 
+
+Complexity. The baseline runs in 𝑂 (|| ⋅ || ⋅ | |). The greedy expansion performs at most || ⋅ | | iterations (one per possible replica location). Each iteration scans all || ⋅
+
+| | candidates and evaluates || invocations per candidate, giving a worst-case cost of 𝑂 (||2 ⋅ | |2 ⋅ ||) for the expansion. In practice the loop terminates early: once the 
+
+Cenzato et al.: Preprint submitted to Elsevier Page 7 of 18 Replication Meets Scheduling 
+
+marginal benefit drops to zero the remaining candidates are never evaluated. 
+
+## 6. Aggregated-View Heuristic 
+
+Both the centralized BLP (§4) and the GV heuristic (§5) solve the placement problem starting from a complete snapshot of the system state. Obtaining this information at runtime is impractical in the edge-cloud continuum, as it would require distributed snapshots. We therefore ask a different question: can per-node decisions, taken over only locally-available and aggregated information, track the same optimum without ever materializing a global view? Answering it affirmatively requires decomposing the place-ment problem along the structural asymmetry between SR and ER collections (§3.3), the same asymmetry the GV heuristic exploits, now under purely local information. The two concerns are independent, and we address them with complementary mechanisms. For an ER collection there is no leader and no co-location constraint: every replica is an independent, additive benefit, opposed only by node capacity. Placement is then a caching problem, one that each node drives reactively from the requests it already serves (§6.2.2). An SR collection breaks this independence: writes serialize at a single leader, so its position is contended, and the best spot depends on write demand aggregated across the tree that no node observes locally. We model this problem as a force equilibrium that settles at the barycenter of write traffic, while reads stay caching-like, served by followers placed near readers (§6.2.1). The remainder of this section operationalizes this idea. We first describe the local state each node maintains (§6.1), then the two runtime concerns it drives: data placement (§6.2) and function scheduling (§6.3). Fig. 1(a) shows how these compose into a single per-node loop, where the local state is consulted by scheduling and updated by placement as traffic is observed. 
+
+6.1. Local State 
+
+The heuristic operates on the same hierarchical infras-tructure of §3.1, which we treat explicitly as a tree. For a node 𝑗 ∈  , we write par( 𝑗 ) for its parent (undefined for the root, i.e. the cloud), ch( 𝑗 ) ⊆  for its set of children, and sub( 𝑗 ) ⊆  for the set of nodes in the subtree rooted at 
+
+𝑗 , with 𝑗 ∈ sub( 𝑗 ). All node-local decisions range over these three primitives only, never over the global node set  . Each node 𝑗 maintains a compact, incrementally updated local state , sufficient to take scheduling and placement decisions, illustrated for a small topology in Fig. 1(b). 
+
+Reachability table. For every collection 𝑐 ∈  that 𝑗 is aware of, 𝑗 stores a set of tags 
+
+𝜌 𝑗 (𝑐 ) ⊆ {𝗅𝗈𝖼𝖺𝗅 , 𝗎𝗉 } ∪ ch( 𝑗 ), (26) where the presence of each element indicates a known direction to reach a replica of 𝑐 . Specifically, 𝗅𝗈𝖼𝖺𝗅 ∈ 𝜌 𝑗 (𝑐 )
+
+indicates that a replica is available locally at node 𝑗 ; 𝑘 ∈
+
+𝜌 𝑗 (𝑐 ) ∩ ch( 𝑗 ) indicates that a replica is located in the subtree rooted at child node 𝑘 ; and 𝗎𝗉 ∈ 𝜌 𝑗 (𝑐 ) means that no replica is known within the subtree rooted at 𝑗 , so the collection is assumed to be reachable upstream, toward the cloud, which is consistent with the persistence of a copy at the root (§3.3). Since 𝜌 𝑗 (𝑐 ) is a set, it naturally accommodates scenarios where replicas are available simultaneously locally and/or across multiple distinct subtrees. For SR collections, 𝑗 additionally records the direction of the leader, 
+
+𝓁 𝑗 (𝑐 ) ∈ { 𝗅𝗈𝖼𝖺𝗅 , 𝗎𝗉 } ∪ ch( 𝑗 ), (27) since there is at most one active leader per collection. This metadata is updated incrementally as replicas are created or migrated, applying the same semantics as 𝜌 𝑗 (𝑐 ) to the leader’s direction. 
+
+Replica store. Each node 𝑗 maintains a set 𝑗 ⊆  of collections stored locally. For each collection 𝑐 ∈ 𝑗 , 𝑗 
+
+tracks its last-access timestamp 𝑡 last  
+
+> 𝑗
+
+(𝑐 ) and a flag indicating whether 𝑗 hosts the leader for 𝑐 . The latter implicitly defines a subset of local leaders 𝑗 ⊆ 𝑗 . This replica store maps to the reachability table: 𝗅𝗈𝖼𝖺𝗅 ∈ 𝜌 𝑗 (𝑐 ) ⇔ 𝑐 ∈ 𝑗 , and 
+
+𝓁 𝑗 (𝑐 ) = 𝗅𝗈𝖼𝖺𝗅 ⇔ 𝑐 ∈ 𝑗 . A node trivially derives its free storage capacity as 𝑠𝑡𝑜𝑟 free  
+
+> 𝑗
+
+= 𝑠𝑡𝑜𝑟 𝑗 − ∑𝑐 ∈𝑗 𝑠𝑖𝑧𝑒 𝑐 . When capacity is exhausted, the non-leader replicas 𝑗 ⧵𝑗 are the candidates for eviction (§6.2.3); leaders are exempt, being repositioned only by the proactive SR protocol (§6.2.1). 
+
+Traffic statistics. For each SR collection, 𝑗 continuously accumulates the read and write counts of the traffic that traverses it. The node implements an exponential decay mechanism: at regular intervals Δ𝑡 , the accumulated coun-ters are multiplied by a decay rate 𝛾 ∈ (0 , 1) . This naturally prioritizes recent traffic and smoothly phases out obsolete access patterns while strictly bounding the memory footprint to a single scalar per collection. These decayed metrics are aggregated bottom-up only when the SR data placement protocol runs (§6.2.1). 
+
+6.2. Data Placement 
+
+Data placement is a continuous adaptation: as function invocations arrive at nodes, each node observes the demand that traverses it and adjusts the position of replicas accord-ingly. Replicas are created where demand is strong and re-claimed when a node runs short of storage, the latter through a hierarchical eviction policy shared by both consistency models (§6.2.3). This asymmetry translates directly into two mechanisms. SR placement is proactive: a periodic protocol gathers the write demand aggregated across the tree and, from a balance of virtual forces, decides where the leader sits and how many followers to spawn (§6.2.1). ER placement is reactive: with no protocol to run, replicas emerge as a side effect of serving requests (§6.2.2). 
+
+6.2.1. Proactive Placement (SR) 
+
+Protocol. A periodic protocol supplies, epoch by epoch, the aggregated metrics that the SR placement conditions   
+
+> Cenzato et al.: Preprint submitted to Elsevier Page 8 of 18
+
+Replication Meets Scheduling        
+
+> Function Scheduling
+> Local State
+> 𝜌 𝑗 ,𝓁 𝑗 ,𝑗 , stats
+> Data Placement
+> Invocations 𝑓
+> consult
+> 𝜌 𝑗 ,𝓁 𝑗
+> record traffic
+> read traffic
+> update
+> 𝑗
+
+(a) Per-node adaptation loop 
+
+1
+
+2 3
+
+4 
+
+> 1
+> 𝑐 1
+> 𝑐 2
+> 2
+> 𝑐 1
+> 3
+> 𝑐 2
+
+★                           
+
+> 4
+> 𝑐 2
+> 𝑐 𝜌 𝓁
+> 𝑐 1{𝗅𝗈𝖼𝖺𝗅 ,2} –
+> 𝑐 2{𝗅𝗈𝖼𝖺𝗅 ,2,3} 3
+> 𝑐 𝜌 𝓁
+> 𝑐 1{𝗅𝗈𝖼𝖺𝗅 }–
+> 𝑐 2{4} 𝗎𝗉
+> 𝑐 𝜌 𝓁
+> 𝑐 1{𝗎𝗉 }–
+> 𝑐 2{𝗅𝗈𝖼𝖺𝗅 }𝗅𝗈𝖼𝖺𝗅
+> 𝑐 𝜌 𝓁
+> 𝑐 1{𝗎𝗉 }–
+> 𝑐 2{𝗅𝗈𝖼𝖺𝗅 }𝗎𝗉
+
+(b) Structural Local State 
+
+Figure 1: Example of the local state maintained by each node (b) and its tight coupling with runtime operations (a). The replica store ( 𝑗 ) maps to collection persisted onto nodes, while the reachability table ( 𝜌 𝑗 , 𝓁 𝑗 ) dictates the known directions to data. Invocations drive function scheduling by querying this local state, while the resulting traffic metrics and data misses concurrently feed back into the data placement and eviction loops. 
+
+𝑐   
+
+> 𝑗
+> writers
+> 𝜆 𝑊
+> readers
+> 𝜆 𝑅
+> 𝐹 elastic (𝜆 𝑊 , 𝑑 )
+> 𝐹 elastic (𝜆 𝑅 , 𝑑 )
+> 𝐹 buoyancy (𝑗 ) = 𝜇 𝑠𝑡𝑜𝑟 free
+> 𝑗
+> ⋅𝑠𝑖𝑧𝑒 𝑐
+
+(a) Virtual forces acting on a replica           
+
+> ★𝑗
+> 𝑘 𝑖
+> 𝐹 𝑊
+> ext ,𝑗 (inherited)
+> 𝐹 elastic
+> (𝜆 𝑊 𝑘 , 𝑙𝑎𝑡 𝑗𝑘 )
+> 𝐹 elastic
+> (𝜆 𝑊 𝑖 , 𝑙𝑎𝑡 𝑗𝑖 )
+> move leader to 𝑘 ?(31)
+> 𝐹 𝑊
+> ext ,𝑘 (32)
+> recurse
+
+(b) Recursive tension evaluation for leader delegation 
+
+Figure 2: Proactive data placement model for SR collections. (a) A replica is subject to opposing virtual forces: elastic forces pull it toward the read and write demand it serves, while a buoyant force expels it from nodes whose storage is nearly full. (b) Recursive evaluation for leader ( ★) delegation. Node 𝑗 weighs the elastic pull from a write-heavy child 𝑘 against opposing sibling forces and the tension 𝐹 𝑊  
+
+> ext ,𝑗
+
+inherited from above (31) . If the leader migrates, these opposing forces are folded into a single scalar (32) 
+
+handed to 𝑘 .
+
+consume; ER collections take no part, being purely reactive. Each epoch comprises three phases (Algorithm 2): a mea-surement phase ( Idle ), a bottom-up aggregation ( Gossip ), and a top-down decision ( Decision ). The two directions are dictated by how demand and information are distributed. Clients issue requests at every level of the hierarchy, each pulling the collections it accesses toward itself; summarizing these pulls is inherently bottom-up, so a node’s view of its subtree’s demand grows more complete the closer it sits to the root. Decisions flow the opposite way: they are taken where information is most complete and propagate downward, each node resolving its subtree and supplying every child the external context it cannot observe on its own. 
+
+Physical model. We reason about a single SR collection 𝑐 at a time: every demand aggregate and force introduced below is relative to 𝑐 , a dependence we leave implicit to lighten the notation. SR placement must jointly decide (1) where the single leader sits, and (2) how many followers to maintain. We model both as a balance of virtual forces (Fig. 2). Drawing on the spring analogy of Pietzuch et al. [15], the attraction between a replica and the demand it serves is an elastic force: the product of the request rate 𝜆 and the latency 𝑑 between them (28), where in our hierarchical infrastructure 𝑑 is exactly the network path latency 𝑙𝑎𝑡 . Since writes are served only by the leader whereas any replica serves reads, this elastic pull acts in two flavors: the write demand 𝜆 𝑊 draws the leader, while the read demand 𝜆 𝑅 
+
+draws the followers. Storage pressure is different in kind: 
+
+Cenzato et al.: Preprint submitted to Elsevier Page 9 of 18 Replication Meets Scheduling 
+
+Algorithm 2 Placement protocol cycle at node 𝑗 .
+
+Idle phase:  
+
+> 1:
+
+accumulate per-collection read/write counters for duration Δ𝑡 
+
+Gossip phase (bottom-up):  
+
+> 2:
+
+wait for the summary 𝑠 𝑘 from every child 𝑘 ∈ ch( 𝑗 ) 
+
+> 3:
+
+𝑠 𝑗 ← AGGREGATE (local counters, {𝑠 𝑘 }𝑘 ∈ch( 𝑗 ), storage util.)  
+
+> 4:
+
+if 𝑗 ≠ root then  
+
+> 5:
+
+send 𝑠 𝑗 to par( 𝑗 ) 
+
+> 6:
+
+end if Decision phase (top-down):  
+
+> 7:
+
+for all SR collections 𝑐 with 𝗅𝗈𝖼𝖺𝗅 ∈ 𝜌 𝑗 (𝑐 ) do  
+
+> 8:
+
+for all children 𝑖 ∈ ch( 𝑗 ) do  
+
+> 9:
+
+EVAL LEADER DELEGATION (𝑐, 𝑖 ) ⊳ Eq. (31)  
+
+> 10:
+
+EVAL FOLLOWER REPLICATION (𝑐, 𝑖 ) ⊳ Eq. (33)  
+
+> 11:
+
+if a replica is provisioned on a full node then  
+
+> 12:
+
+EVICT (⋅) ⊳ Algorithm 3  
+
+> 13:
+
+end if  
+
+> 14:
+
+end for  
+
+> 15:
+
+end for  
+
+> 16:
+
+send outcomes to each child 𝑖 ∈ ch( 𝑗 )
+
+it carries no notion of distance and depends only on node utilization, so a second spring is inadequate. We model it as a buoyant force that, like a fluid expelling an immersed body, grows with the collection size and with how full the host is (29); the constant 𝜇 aligns the storage and latency scales so the two forces are comparable. 
+
+𝐹 elastic (𝜆, 𝑑 ) = 𝜆 ⋅ 𝑑 (28) 
+
+𝐹 buoyancy (𝑗 ) = 𝜇 𝑠𝑡𝑜𝑟 free 
+
+> 𝑗
+
+⋅ 𝑠𝑖𝑧𝑒 𝑐 (29) 
+
+Force balance. A replica relocates only when the net force is favorable, so the configuration the protocol converges to is a 
+
+force equilibrium : the leader comes to rest at the barycenter of write traffic, while a follower materializes wherever read demand overcomes the local storage resistance, yielding the two conditions derived below. This is the same proximity-versus-storage tradeoff the BLP optimizes globally: where the BLP minimizes one global objective over latency and storage from a complete snapshot, each node here applies it locally and incrementally, settling at the resulting equilib-rium without ever materializing a global objective. 
+
+Demand aggregates. The placement conditions introduced below rely on the traffic aggregates supplied by the Gossip phase. For a node 𝑘 , we define the rate-weighted write and read demand that 𝑐 draws from the subtree of 𝑘 as: 
+
+𝜆 𝑊 𝑘 = ∑
+
+> 𝑖 ∈sub( 𝑘 )
+
+∑ 
+
+> 𝑓 ∈w
+> 𝑐 ∈𝑓
+
+𝜆 𝑓 ,𝑖 , 𝜆 𝑅 𝑘 = ∑
+
+> 𝑖 ∈sub( 𝑘 )
+
+∑ 
+
+> 𝑓 ∈r
+> 𝑐 ∈𝑓
+
+𝜆 𝑓 ,𝑖 ,
+
+(30) 
+
+Leader delegation. Moving the leader from node 𝑗 to a child node 𝑘 compares two elastic forces against each other (Fig. 2(b)): the pull from 𝑘 ’s write-heavy subtree favors the move, while the pull from every writer outside that subtree (𝑘 ’s siblings and all demand above 𝑗 ) opposes it. We call this latter aggregated force tension at 𝑗 , denoted 𝐹 𝑊  
+
+> ext ,𝑗
+
+. The leader migrates to 𝑘 when condition (31) holds: on the left, the net inward pull, i.e. the elastic force from 𝑘 minus the opposing sibling forces minus the inherited tension; on the right, the buoyancy cost of placing the replica one tier deeper, the extra hop that sibling writes must now travel, and a hysteresis threshold 𝜏 𝐿 preventing oscillation between adjacent placements. 
+
+𝐹 elastic (𝜆 𝑊 𝑘 , 𝑙𝑎𝑡 𝑗𝑘 ) − ∑
+
+> 𝑖 ∈ch( 𝑗 )
+> 𝑖 ≠𝑘
+
+𝐹 elastic (𝜆 𝑊 𝑖 , 𝑙𝑎𝑡 𝑗𝑖 ) − 𝐹 𝑊 
+
+> ext ,𝑗
+
+> 𝐹 buoyancy (𝑘 ) + ∑
+
+> 𝑖 ∈ch( 𝑗 )
+> 𝑖 ≠𝑘
+
+𝜆 𝑊 𝑖 ⋅ 𝑙𝑎𝑡 𝑗𝑘 + 𝜏 𝐿 (31) 
+
+If the leader moves, the same test repeats at node 𝑘 
+
+against its own children. For the condition to retain the same form at every depth, node 𝑘 needs a single tension scalar summarizing all write demand outside its subtree. Node 𝑗 
+
+constructs it by folding its sibling elastic forces and their hop penalties into the inherited 𝐹 𝑊  
+
+> ext ,𝑗
+
+, yielding the 𝐹 𝑊  
+
+> ext ,𝑘
+
+(32) that it hands down to 𝑘 (Fig. 2(b)). The recursion therefore propagates one tension value downward, and every delega-tion decision has identical structure regardless of depth. 
+
+𝐹 𝑊  
+
+> ext ,𝑘
+
+← ∑
+
+> 𝑖 ∈ch( 𝑗 )
+> 𝑖 ≠𝑘
+
+𝐹 elastic (𝜆 𝑊 𝑖 , 𝑙𝑎𝑡 𝑗𝑖 ) + ∑
+
+> 𝑖 ∈ch( 𝑗 )
+> 𝑖 ≠𝑘
+
+𝜆 𝑊 𝑖 ⋅ 𝑙𝑎𝑡 𝑗𝑘 + 𝐹 𝑊  
+
+> ext ,𝑗
+
+(32) 
+
+Follower replication. Followers serve reads near the edge. The decision is local to the candidate subtree, with no sibling term: node 𝑗 provisions a replica on child node 𝑘 when the read demand from 𝑘 ’s subtree overcomes the buoyancy there (33), with 𝜏 𝑅 a threshold. 
+
+𝐹 elastic (𝜆 𝑅 𝑘 , 𝑙𝑎𝑡 𝑗𝑘 ) > 𝐹 buoyancy (𝑘 ) + 𝜏 𝑅 (33) 
+
+6.2.2. Reactive Placement (ER) 
+
+ER placement reduces to a single always-copy policy. When a function executes on a node 𝑗 , missing one of its ER collections that collection is fetched from the nearest reach-able replica, located by following 𝜌 𝑗 (𝑐 ) through the reacha-bility table (§6.1); the serving replica then asynchronously spawns a fresh copy one hop closer to the consumer. A collection under sustained demand therefore migrates hop by hop toward the edge nodes that access it. Hierarchical eviction (§6.2.3) provides the opposing pull: copies that are large and rarely accessed are reclaimed first, drifting back toward higher tiers. 
+
+6.2.3. Hierarchical Eviction 
+
+Both consistency models replicate aggressively toward the edge and rely on a shared eviction mechanism to stay within node capacity (Algorithm 3). A node that must host a replica without enough room reclaims space by selecting the replica with the highest eviction priority 𝑠𝑖𝑧𝑒 𝑐 ⋅ (𝑡 −
+
+𝑡 last  
+
+> 𝑗
+
+(𝑐 )) , where 𝑡 is the current time: large, stale replicas are evicted first. The evicted replica is demoted to the parent, one at a time, until the incoming replica fits. Storage pressure therefore propagates upward one hop at a time, until it is absorbed by a node with spare capacity or by the cloud, 
+
+Cenzato et al.: Preprint submitted to Elsevier Page 10 of 18 Replication Meets Scheduling 
+
+Algorithm 3 Hierarchical eviction at node 𝑗 .                                                      
+
+> Require: Replica 𝑐 to host at 𝑗
+> 1: if 𝑐 ∈𝑗 then
+> 2: return
+> 3: end if
+> 4: while 𝑠𝑡𝑜𝑟 free
+> 𝑗 < 𝑠𝑖𝑧𝑒 𝑐 do
+> 5: 𝑒 ←arg max
+> 𝑟 ∈𝑗
+> 𝑠𝑖𝑧𝑒 𝑟 ⋅(𝑡 −𝑡 last
+> 𝑗 (𝑟 ))
+> 6: remove 𝑒 from 𝑗
+> 7: if sub( 𝑗 )holds no copy of 𝑒 then
+> 8: notify par( 𝑗 )to drop the reachability entry for 𝑒 via 𝑗
+> 9: end if
+> 10: send 𝑒 to par( 𝑗 )
+> 11: end while
+> 12: place 𝑐 in 𝑗 ;𝜌 𝑗 (𝑐 )←𝜌 𝑗 (𝑐 ) ∪ { 𝗅𝗈𝖼𝖺𝗅 }
+
+whose unlimited storage guarantees termination. A node that receives a replica it already holds discards the incoming copy as redundant. Eviction also keeps the local state of §6.1 consistent: when a replica leaves a node and no copy remains in its subtree, the node has its parent drop the stale reachability entry. 
+
+6.3. Function Scheduling 
+
+Given the continuous data placement mechanisms just described, the complementary task is to route incoming function invocations to the appropriate replicas. Routing follows a hop-by-hop discovery through the hierarchy: each node inspects its reachability table to determine whether it can serve the invocation locally or must forward it. The logic depends on the consistency model of the collections the function accesses. When a function accesses an SR collection, the stricter co-location constraint takes priority and dictates the route, regardless of any ER collections also accessed; we therefore treat SR first. 
+
+Scheduling under SR. When a function accesses an SR collection 𝑐 ∈ SR  
+
+> 𝑓
+
+, the collection’s location and the nature of the access dictate the scheduling decision (Algorithm 4). Routing operates via a strict matching: a writing invocation (𝑓 ∈ w) must reach the leader , while a read-only invoca-tion ( 𝑓 ∈ r ) can be served by any replica. The node first checks whether it can serve the invocation locally (holding the leader for a write, or any replica for a read), in which case execution proceeds immediately. Otherwise, it forwards the request toward the relevant direction: for writes toward 
+
+𝓁 𝑗 (𝑐 ), for reads toward 𝜌 𝑗 (𝑐 ). If the target lies outside sub( 𝑗 )
+
+(the direction is 𝗎𝗉 ), the invocation is delegated to par( 𝑗 ).
+
+Scheduling under ER. When a function accesses only ER collections, the scheduler routes the invocation toward the node that maximizes co-location with the required collec-tions (Algorithm 5). On arrival at 𝑗 , the node accepts the execution if it holds at least one required collection locally. Otherwise, it consults its reachability table and forwards the request toward the child whose subtree is known to contain the largest number of required collections; if none are reachable below, it delegates the request to par( 𝑗 ), as unknown collections are assumed to reside upstream. 
+
+Algorithm 4 Function scheduling under SR, at node 𝑗 .                                                                             
+
+> Require: Function 𝑓 accessing SR collection 𝑐 ∈SR
+> 𝑓 , arriving at
+> 𝑗
+> 1: if 𝑓 ∈wand 𝓁 𝑗 (𝑐 ) = 𝗅𝗈𝖼𝖺𝗅 then
+> 2: execute 𝑓 on 𝑗 ;return
+> 3: else if 𝑓 ∈rand 𝗅𝗈𝖼𝖺𝗅 ∈𝜌 𝑗 (𝑐 )then
+> 4: execute 𝑓 on 𝑗 ;return
+> 5: else if 𝑓 ∈wand 𝓁 𝑗 (𝑐 ) ∈ ch( 𝑗 )then
+> 6: forward 𝑓 to 𝓁 𝑗 (𝑐 );return
+> 7: else if 𝑓 ∈rand ∃𝑘 ∈ ch( 𝑗 ) ∶ 𝑘 ∈𝜌 𝑗 (𝑐 )then
+> 8: forward 𝑓 to any 𝑘 ∈𝜌 𝑗 (𝑐 ) ∩ ch( 𝑗 );return
+> 9: else
+> 10: forward 𝑓 to par( 𝑗 )
+> 11: end if
+
+Algorithm 5 Function scheduling under ER, at node 𝑗 .                                                           
+
+> Require: Function 𝑓 with required collections 𝑓 ⊆ER , arriving at 𝑗
+> 1: if ∃𝑐 ∈𝑓 ∶𝗅𝗈𝖼𝖺𝗅 ∈𝜌 𝑗 (𝑐 )then
+> 2: execute 𝑓 on 𝑗 ;return
+> 3: else if ∃𝑐 ∈𝑓 ,∃𝑘 ∈ ch( 𝑗 ) ∶ 𝑘 ∈𝜌 𝑗 (𝑐 )then
+> 4: 𝑘 ∗←arg max
+> 𝑘 ∈ch( 𝑗 )
+> |||{𝑐 ∈𝑓 ∶𝑘 ∈𝜌 𝑗 (𝑐 ) } |||
+> 5: forward 𝑓 to 𝑘 ∗;return
+> 6: else
+> 7: forward 𝑓 to par( 𝑗 )
+> 8: end if
+
+Once the function executes on a node that holds at least one required collection, any remaining collections are fetched from the nearest known replica (§6.2.2). 
+
+## 7. Evaluation 
+
+The evaluation asks whether BLP, GV, and AV offer a vi-able path from theoretical optimality to runtime deployment in edge-to-cloud settings. We first establish the practical limits of exact optimization, asking how far the BLP can scale before becoming intractable and how GV compares along the same dimensions (RQ1); we then exploit the tractable regime to measure how much solution quality GV and AV sacrifice relative to the optimum (RQ2). Since the BLP objective captures the cost of a placement decision but not the operational reality of enforcing it, we complement the analytic comparison with a measurement of the latency that clients actually observe under a static workload (RQ3) and under shifting access patterns (RQ4). 
+
+RQ1 To what extent do system dimensions (number of nodes, collections, functions) and consistency require-ments affect the scalability of the BLP in terms of solve time and memory footprint? How does GV scale along the same system dimensions? 
+
+RQ2 How closely do GV and AV approximate the quality of exact optimization of the BLP in terms of total latency and total storage? How do they compare to naive baselines?   
+
+> Cenzato et al.: Preprint submitted to Elsevier Page 11 of 18 Replication Meets Scheduling
+
+RQ3 Under a static workload, what client-observed latency do BLP, GV, AV, achieve in a realistic edge-to-cloud deployment? 
+
+RQ4 When access patterns shift over time, how does the client-observed latency of the same policies respond? 
+
+7.1. Experimental Setup 
+
+Our evaluation has two complementary needs. RQ1 and RQ2 assess scalability and solution quality on static prob-lem instances. BLP and GV produce placement decisions directly from the problem snapshot, and their cost is read from the optimizer’s own analytical objective. AV, being a runtime heuristic, requires a simulation to converge to a placement; its cost is then computed analytically using the same objective function, so that all three approaches are compared on the same metric (Section 7.2). RQ3 and RQ4 shift the perspective from decision quality to operational be-havior: all policies, including BLP and GV, are embedded in a discrete-event simulator that measures the latency clients actually experience, under a static workload for RQ3 and under a shifting one for RQ4. 
+
+Centralized Testbed. The centralized testbed is implemented in C++. It comprises the BLP model, implemented using the Concert Technology of IBM ILOG CPLEX 4, the GV heuris-tic, and the naive baselines. Given a generated problem instance, this testbed produces a placement and scheduling decision. A 600 s timeout is enforced on the BLP solver, and virtual memory is capped at 50 GB. 
+
+Simulator Testbed. We adopt a discrete-event simulator in Go 5 that embeds both centralized and decentralized policies. A set of workload generators continuously emit function invocations according to configurable arrival patterns. Each invocation specifies a source node, the set of accessed col-lections and their consistency requirements, and a reference execution time. The active policy processes each invocation by selecting an execution node and resolving data access; the simulator then records the resulting latency observed by clients. Centralized policies run the solver in a continuous loop. At each iteration, the solver reads the invocations that fall within a sliding window of the most recent 𝑊 seconds, discarding older entries, and estimates the invocation rates 
+
+𝜆 𝑓 ,𝑖 by dividing the observed counts by 𝑊 . It then computes a new placement plan and advances the simulation clock by the wall-clock solve time plus the cost of two tree traversals (gather and scatter), charged as the one-way latency from root to the deepest leaf. The gather traversal collects the current system state; the scatter distributes the resulting plan. Once the plan is applied, the solver immediately begins the next iteration, reading a window that now reflects the invoca-tions that arrived during the previous solve cycle. Invocation latency is computed analytically from the active plan: round-trip delay to the execution node, function execution time, 
+
+> 4https://www.ibm.com/products/ilog-cplex-optimization-studio
+> 5https://github.com/fschuetz04/simgo
+
+and, for ER collections not co-located with the function, the retrieval cost from the provider replica. Under AV, no global plan exists: placement and schedul-ing emerge from per-node decisions. Each node reacts to incoming invocations independently, routing them hop-by-hop through the hierarchy following the scheduling logic described in Section 6.3, while data placement evolves con-tinuously according to the protocol of Section 6.2. Latency is therefore measured end-to-end as each invocation traverses the simulated network, accumulating discovery, retrieval, execution, and return-path delays. 
+
+Machine Specifications. All experiments were conducted on a server equipped with a 16-core AMD Ryzen 9 9950X processor (32 threads) and 64 GB of DDR5 RAM, running Fedora Server 42. 
+
+Scenario Generation. All four research questions share a common scenario generation procedure and parameter set. RQ1 and RQ2 vary the problem dimensions (nodes, func-tions, collections) systematically; RQ3 and RQ4 fix the di-mensions at their default values and vary client mobility. To model a realistic edge-cloud scenario we instantiate a three-tier topology (cloud, fog, and edge), modeled as a balanced 
+
+𝑏 -ary tree of fixed depth 3. The default configuration uses branching factor 𝑏 = 10 , yielding one cloud root, 10 fog nodes, and 100 edge nodes (111 nodes total), consistent with the device-density ratios reported by Belcastro et al. [3]. When the number of nodes is varied (RQ1), the branching factor is adjusted to maintain exactly three tiers: 𝑏 is com-puted from | | = 1 + 𝑏 + 𝑏 2 so that the cloud–fog–edge structure is preserved regardless of scale. In the remainder of this section we use our own terminology (cloud, fog, edge) and map it once to theirs: cloud corresponds to cloud, fog to near-edge, and edge to far-edge. Both bandwidth and latency parameters are drawn from the per-tier characterization of Belcastro et al. [3], which assigns qualitative ranges to each layer of the continuum. For bandwidth the reported ranges are MBps–Gbps at the edge, Gbps at the fog, and Gbps– Tbps at the cloud; for latency they are 2–5 ms, 10–20 ms, and ≥ 20 ms, respectively. Because these ranges can span several orders of magnitude, we take the geometric mean of the range boundaries as a representative value for each tier (when a single value or a lower bound is given, that figure is used directly). Although the latency ranges stay within the same order of magnitude, we retain the geometric mean for methodological consistency. The procedure yields per-tier bandwidths of ≈ 90 Mbps (edge) and ≈ 1 Gbps (fog), and per-tier latencies of ≈ 3.2 ms (edge) and ≈ 14.1 ms (fog). Inter-tier link bandwidth is set to the minimum of the two endpoint capacities, while inter-tier latency is obtained as the sum of the endpoint values, giving: 0.011 MB/ms bandwidth and 17.3 ms latency for edge–fog links, and 0.125 MB/ms bandwidth and 34.1 ms latency for fog–cloud links. Storage capacity is expressed as a fraction of total collection size rather than in absolute terms. Normalizing storage to the aggregate collection footprint makes the result independent of absolute scale and directly transferable across deploy-ments of different size. Under this model, cloud nodes have   
+
+> Cenzato et al.: Preprint submitted to Elsevier Page 12 of 18 Replication Meets Scheduling
+
+unlimited capacity, fog nodes can host 50% of the total workload, and edge nodes are limited to 30%, calibrated against the data access pattern described below. Reference execution times are drawn from an exponential distribution with mean 279 ms, calibrated on empirical measurements from the EdgeFaaSBench suite [17], which reports end-to-end latencies for stateful serverless functions on constrained IoT hardware (Raspberry Pi 4 and Jetson Nano). We se-lect the four application-level benchmarks whose access pattern is compatible with serverless functions operating on persistent state: image processing, speech-to-text, im-age classification (CPU), and object detection (CPU); we exclude sentiment analysis as less representative of typical edge workloads. Only warm-start measurements are retained to isolate function execution from platform initialization overhead. Averaging the warm-start latencies across the four benchmarks and both devices yields an empirical mean of 
+
+≈ 837 ms. Since these measurements target low-power ARM cores (Cortex-A72), while our fog tier models centralized edge servers equipped with server-grade processors (e.g., Intel Xeon E5), we apply a hardware correction factor. Comparative single-thread benchmarks 6 indicate a ∼ 3× 
+
+performance advantage of Xeon over Cortex-A72 cores. Scaling the empirical mean by this factor yields the reference execution time of 837∕3 ≈ 279 ms at the fog tier. Processing speed is modeled as a per-tier factor normalized to the fog baseline ( 1× ): cloud nodes operate at 1.1× and edge nodes at 0.9× , reflecting a moderate ∼10% performance gradient between adjacent tiers. This calibration reflects that server-grade processors across cloud and edge tiers have comparable single-thread performance; the cloud advantage lies in horizontal scalability rather than per-core speed. The resulting ±10% gradient ensures that the placement decision is driven primarily by network topology and data locality rather than by compute asymmetry. 
+
+Workload Generation. 
+
+The state accessed by the chosen benchmarks from [17] consists of image frames or audio snippets. Consequently, we model collection sizes using an exponential distribution with a mean of 1 MB. This reflects the natural variance of such payloads in constrained environments, and ensures that the edge-fog bandwidth (90 Mbps) does not become an artificial bottleneck. The data access pattern is generated by mapping each function to a subset of collections. Specifi-cally, each function accesses between 1 and 2 ER collections, drawn uniformly (yielding a maximum local working set of 
+
+≈ 2 MB). Conversely, functions accessing SR collections are constrained to access exactly one collection. The specific collections assigned to each function are sampled uniformly from the available pool. To model data mutations, 80% of the generated functions are designated as read-only and 20% as writing functions. This state characterization directly justifies the 30% edge storage capacity defined earlier: in an instance comprising 10 collections (yielding a total work-load footprint of ≈ 10 MB, as evaluated in Section 7.2), a 
+
+> 6CPU Benchmark: ARM Cortex-A72 vs Intel Xeon E5-2643
+
+30% capacity equates to exactly 3 MB of local storage. This guarantees that an edge node is provisioned to accommodate the maximum working set of a single function execution without triggering immediate cache thrashing. To generate the invocation traffic, we simulate 100 virtual clients during scenario construction. Each virtual client selects a function according to a Zipf distribution with skew 1.2, a source node with tier-weighted probability (70% edge, 30% fog), and an invocation rate drawn from an exponential distribution with mean 0.1 req/s. When multiple virtual clients select the same (function, node) pair, their rates accumulate into a single entry of the invocation-rate matrix 𝜆 𝑓 ,𝑖 . Each active pair becomes one client in the simulator, inheriting the aggregated rate. Finally, all collections are initially placed at the cloud node, reflecting a cold start from a centralized deployment. 
+
+7.2. Scalability of Exact and Greedy Optimization 
+
+To answer RQ1, we evaluate how BLP and GV scale as we independently vary the number of nodes | |, functions 
+
+| |, and collections ||. For each dimension we scale one parameter while holding the other two fixed at the default values ( | | = 13 , | | = 10 , || = 10 ). The node sweep uses | | ∈ {13 , 111 , 1057 , 10101} , corresponding to branching factors 𝑏 ∈ {3 , 10 , 32 , 100} with a fixed tree depth of 3. A fixed depth ensures that the three-tier structure (and its associated network and speed parameters) remains invariant across the sweep, isolating the effect of scale from changes in topology shape. Functions and collections are swept over {10 , 100 , 1000 , 10000} . We further vary the con-sistency mix of the workload: ER (only eventually-replicated collections), SR (only strongly-replicated), and MIX (50/50). The entire sweep is repeated for three settings of the latency– storage trade-off, 𝛼 ∈ {1 , 0.1, 0.01} . Since both terms of the objective are normalized, 𝛼 = 1 weighs storage and latency equally; we do not go beyond this value, as we are not interested in regimes where storage dominates latency, but only in those where it counts as much as, or less than, latency. Each resulting configuration is solved with 10 different random seeds; we report the median and interquartile range (IQR) of total wall-clock execution time in Fig. 3a, whereas maximum Resident Set Size (RSS) is reported in Fig. 3b; missing markers either exceeded the 50 GB memory cap or the 600 s timeout. 
+
+Results. We report results for 𝛼 = 1 ; varying 𝛼 does not affect solve time or memory, as expected: 𝛼 only rescales one term of the objective without altering the constraint structure or the size of the search space. Across all three dimensions, MIX consistently requires the longest solve time for both BLP and GV. This is expected, as the interaction between SR placement constraints and ER replication freedom enlarges the effective search space. Functions are the least demanding dimension for both BLP and GV. Each additional function introduces scheduling variables, but scheduling decisions are independent of one another: where one function executes does not constrain where another can run. BLP solves all configurations within 0.6 s (MIX), 0.4 s (ER), and 0.1 s (SR).   
+
+> Cenzato et al.: Preprint submitted to Elsevier Page 13 of 18
+
+Replication Meets Scheduling 0           
+
+> 4
+> 8
+> 12
+> 16
+> Time (s)
+> 0
+> 80
+> 160
+> 240
+> 320
+> 0.00
+> 0.15
+> 0.30
+> 0.45
+> 10 110 210 310 4
+> | |
+> 0.00
+> 0.05
+> 0.10
+> 0.15
+> 0.20
+> Time (s)
+> 10 110 210 310 4
+> ||
+> 0.0
+> 0.4
+> 0.8
+> 1.2
+> 1.6
+> 10 110 210 310 4
+> ||
+> 0.0000
+> 0.0025
+> 0.0050
+> 0.0075
+> BLP GV
+> SR
+> MIX
+> ER
+
+(a) Solve time ( 𝛼 = 1 )0.0            
+
+> 0.8
+> 1.6
+> 2.4
+> Max RSS (GB)
+> 0
+> 6
+> 12
+> 18
+> 24
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 10 110 210 310 4
+> | |
+> 0.0110
+> 0.0115
+> 0.0120
+> 0.0125
+> 0.0130
+> Max RSS (GB)
+> 10 110 210 310 4
+> ||
+> 0.0
+> 1.5
+> 3.0
+> 4.5
+> 10 110 210 310 4
+> ||
+> 0.0112
+> 0.0120
+> 0.0128
+> 0.0136
+> BLP GV
+> SR
+> MIX
+> ER
+
+(b) Maximum RSS ( 𝛼 = 1 )
+
+Figure 3: Scalability of BLP and GV across problem dimensions. 
+
+GV is consistently faster: 0.20 s (MIX), 0.08 s (SR), and be-low 0.01 s (ER). Collections, by contrast, are harder to scale. Each additional collection adds | | placement variables (𝑥 𝑐,𝑗 ) together with storage and consistency constraints that couple it to every other collection on the same node. BLP exhibits high variance under MIX, with a median of ≈ 2 s but IQR peaks near 16 s at 10 4 collections. This variability arises because the random assignment of SR and ER labels to collections produces instances of uneven difficulty: seeds where the SR/ER split creates tighter interactions between placement and routing take disproportionately longer, as the branch-and-bound search explores more nodes before con-verging. SR instances also reach ≈ 2 s but with narrow IQR, confirming that the uniform constraint structure of a single consistency model leads to more predictable solver behavior. ER remains below 1 s, as the absence of leader constraints simplifies the feasible region. GV follows the same ordering but at much lower absolute values: MIX reaches 0.26 s with modest variability, SR 0.18 s, and ER ≈ 0.01 s. Nodes are the most demanding dimension, as the number of decision variables grows quadratically: the scheduling variable 𝑤 𝑓 ,𝑖,𝑗 
+
+and the network parameter matrices (latency, bandwidth) scale with | |2. BLP fails to complete at | | = 10101 
+
+for any consistency mix. SR survives to | | = 1057 thanks to its reduced variable count, which keeps memory within the cap. However, at that scale the remaining free variables still produce a search space that exceeds the 600 s timeout. ER and MIX fail earlier ( | | = 111 ) because without co-location pruning, the full variable set exhausts the 50 GB memory cap before the solver can even begin the search. GV scales to | | = 10101 for all consistency mixes. MIX is the most expensive (120–240 s, median 160 s), followed by SR ( ≈ 60 s). ER is remarkably cheap ( ≈ 0.16 s), because without leader constraints the greedy evaluation of each can-didate replica reduces to a simple fetch-distance comparison. The memory footprint (Fig. 3b) mirrors these trends. BLP memory is dominated by the CPLEX representation of the constraint matrix. When scaling functions, SR is lightest (≈ 0.2 GB at 10 4) because co-location constraints eliminate variables at formulation time; ER and MIX are comparable at ≈ 0.5 GB. When scaling collections, the ordering inverts above || = 100 : SR surpasses ER ( ≈ 2.4 GB vs. ≈ 0.4 GB) because each SR collection introduces leader-election vari-ables and linking constraints whose count grows linearly with ||. When scaling nodes, ER and MIX hit the memory cap at | | = 111 (24 GB), while SR reaches only ≈ 0.3 GB, confirming the variable pruning discussed above. GV mem-ory is negligible by comparison. When scaling nodes, the dominant cost is the | |2 hop-count matrix ( ≈ 4.5 GB at 
+
+10 4 nodes), independent of consistency mix. When scaling functions or collections, memory stays below 0.014 GB. 
+
+Cenzato et al.: Preprint submitted to Elsevier Page 14 of 18 Replication Meets Scheduling 10 1 10 2 10 3 10 4               
+
+> 0
+> 10
+> 20
+> 30
+> T Diff (%)
+> = 1.0
+> 10 110 210 310 4
+> 20
+> 0
+> 20
+> S Diff (%)
+> 10 110 210 310 4
+> 10
+> 0
+> 10
+> 20
+> 30
+> T Diff (%)
+> = 0.1
+> 10 110 210 310 4
+> 0
+> 10
+> 20
+> 30
+> S Diff (%)
+> 10 110 210 310 4
+> | |
+> 20
+> 10
+> 0
+> 10
+> 20
+> 30
+> T Diff (%)
+> = 0.01
+> 10 110 210 310 4
+> | |
+> 0
+> 10
+> 20
+> 30
+> S Diff (%)
+> GV-ER
+> GV-MIX
+> GV-SR
+> AV-ER
+> AV-MIX
+> AV-SR
+> CD-ER
+> CD-MIX
+> CD-SR
+> CO-ER
+> CO-MIX
+> CO-SR
+
+Figure 4: 𝑇 and 𝑆 difference relative to BLP when scaling collections. 
+
+7.3. Solution Approximation 
+
+To answer RQ2, we reuse the same problem instances as RQ1, but instead of their scaling behavior we now examine the quality of the placement each policy produces. We eval-uate GV and AV against the BLP optimum, complementing the comparison with two naive baselines that ignore parts of the problem structure. For each policy we measure the rate-weighted total latency 𝑇 and the total storage cost 𝑆 .A Cloud-only (CO ) policy places a single replica of every collection at the cloud, schedules every invocation there, and elects the cloud as leader for all SR collections. It represents the canonical FaaS deployment, with compute and data co-located within the data center. A Cloud-data (CD ) policy retains CO data placement but executes ER-only invocations at the edge (walking upward in the tree to the first ancestor with sufficient capacity if needed); SR invocations are forced to the cloud by co-location, and every ER access from a non-cloud node triggers a remote fetch from the cloud. CD captures the naive extension of FaaS to the edge, where compute follows the user, but data stays centralized. For GV, AV, CO, and CD we report the percentage difference on 𝑆 
+
+and 𝑇 relative to the BLP optimum on the same instance. 
+
+Results. We focus on the collection sweep (Fig. 4) as the most representative scenario: collections compete for finite node storage, and the effect of 𝛼 is clearly visible. The function sweep produces qualitatively similar trends that do not vary significantly with | | or 𝛼 , and the node sweep is incomplete beyond | | = 1057 due to BLP memory limits. Across all scenarios, the storage overhead of GV and AV relative to BLP is large at small || and converges toward zero as 
+
+|| grows. The additional replicas placed by these policies depend on the number of accessed collections, which is bounded by the function access pattern, not by ||. Not accessed collections are treated identically by all policies and cancel out in the difference, so the constant absolute surplus shrinks as a percentage of the linearly growing baseline. When latency and storage are weighted equally (𝛼 = 1 ), replication is expensive and the optimal strategy is conservative. Under ER, GV produces the same placement as CO: all data at the cloud, all execution at the cloud. This is a consequence of the scenario: with storage penalized at full weight, the greedy expansion finds no candidate whose latency savings exceed 𝛼 ⋅size 𝑐 , so no replica is added beyond the cloud baseline. BLP, by contrast, can jointly optimize placement and scheduling to find modest improvements (T diff ≈ 12% for CO/GV at || = 10 ). AV achieves lower latency than both (T diff below 10%), because its always-copy mechanism places replicas reactively regardless of storage cost. This comes at a high storage premium ( ≈ 250% 
+
+at || = 10 ), which diminishes as || grows for the reason discussed above. CD is consistently the worst performer in latency (T diff up to 95%), confirming that pushing compute to the edge without co-locating data is counterproductive: every ER access triggers a remote fetch from the cloud. Under SR, the picture changes. GV improves on BLP by 
+
+≈ 5% in latency at small ||, because the greedy expansion effectively places SR follower replicas on fog nodes closer to readers, an optimization that the BLP also finds but at higher computational cost. AV matches this latency gain while using less storage than GV, because the SR force model naturally limits replication. CO and CD produce identical placements under SR (both are forced to the cloud by co-location), incurring ≈ 15 –18% higher latency. Under MIX, GV achieves near-optimal latency at small || (median at 0%, IQR up to 10%), with performance stabilizing around 
+
++10% at || = 10 4. The wider IQR at small scale reflects the sensitivity to the random SR/ER split: some seeds produce favorable collection–function assignments that GV exploits well, others less so. AV tracks a few percentage points above GV in latency, with a similar storage trajectory. 
+
+Cenzato et al.: Preprint submitted to Elsevier Page 15 of 18 Replication Meets Scheduling 0 50 100 150 200         
+
+> Simulated time (s)
+> 10 0
+> Latency (s)
+> ER
+> 050 100 150 200
+> Simulated time (s)
+> MIX
+> 050 100 150 200
+> Simulated time (s)
+> SR
+> BLP 0.2s
+> BLP 0.5s
+> GV
+> AV
+
+(a) Static workload 0 50 100 150 200         
+
+> Simulated time (s)
+> 10 0
+> Latency (s)
+> ER
+> 050 100 150 200
+> Simulated time (s)
+> MIX
+> 050 100 150 200
+> Simulated time (s)
+> SR
+> BLP 0.2s
+> BLP 0.5s
+> GV
+> AV
+
+(b) Mobile workload (round-robin) 
+
+Figure 5: Client-observed latency comparison across different access patterns. 
+
+As 𝛼 decreases from 1 to 0.01, storage becomes cheaper in the objective, and all policies replicate more aggressively. At 𝛼 = 0 .01 , GV and AV both achieve latency within a few percentage points of BLP across all consistency mixes, with AV consistently matching or slightly outperforming GV. The cost is paid in storage: at || = 10 , GV reaches 
+
++303% (ER) and +223% (SR), while AV reaches +328% 
+
+(ER) and +112% (SR). These surpluses follow the same convergence pattern discussed above. The baselines degrade as 𝛼 shrinks, because BLP now invests in replicas that CO and CD cannot match. At || = 10 4, CO incurs 15 –25% 
+
+higher latency across all mixes, and CD reaches +99% for ER, confirming that centralized data with edge compute becomes increasingly suboptimal as the placement budget relaxes. P
+
+7.4. Client-Observed Latency under Static Workload 
+
+To answer RQ3, we deploy all policies in the simulator under a static workload with | | = 111 , | | = 100 ,and || = 100 , using the scenario parameters described in Section 7.1. Clients invoke a given function at a constant rate from a fixed node throughout the simulation. Centralized policies use the sliding window described in Section 7.1 with 𝑊 = 32 s. AV uses an identical 32 s idle duration between protocol epochs. The value is derived from the client arrival process: with the workload configuration described above, a 32 s observation window guarantees that at least 70% of all clients have emitted at least one invocation. The BLP solver is evaluated under per-iteration timeouts of 0.2 and 0.5 s; in each case the best incumbent solution found within the budget is adopted, regardless of its optimality gap. Each simulation runs for 240 s of simulated time. 
+
+Results. Fig. 5a shows the median per-bin latency over time, with bins of 12 s. All centralized policies exhibit an initial cold-start transient: the first solver iteration operates on an empty or near-empty sliding window, producing a suboptimal placement that penalizes the first few bins. Once the window fills, the placement stabilizes and latency settles to its steady-state level. AV does not suffer this transient. Its reactive placement begins adapting from the first invocation, converging within the first epoch. At steady state, BLP with 0.2 s and 0.5 s timeouts produce nearly indistinguishable latency across all consistency mixes, suggesting that the solver finds a good incumbent quickly and the additional budget yields diminishing returns. Under ER and MIX, AV achieves lower median latency than all centralized policies, because always-copy progressively co-locates the accessed collections with the requesting edge nodes, eliminating re-mote fetches. Under SR, all policies converge to comparable latency, as the co-location constraint limits the placement space. GV matches BLP under ER and MIX but exhibits periodic latency spikes under SR. . 
+
+7.5. Adaptivity to Mobile Clients 
+
+To answer RQ4, we reuse the deployment, workload, and policy configuration of Section 7.4 with mobile clients replacing the static ones. We introduce a cyclic mobility pattern (round-robin) to model typical user routines, such as commuting between a fixed set of locations. For each client, we randomly assign a predefined sequence of 𝑁 
+
+Cenzato et al.: Preprint submitted to Elsevier Page 16 of 18 Replication Meets Scheduling 
+
+waypoints (with 𝑁 chosen uniformly between 2 and 4) from all available nodes within its native tier (edge or fog). The client periodically relocates to the next node in its sequence. The movement interval is fixed at 30 s, comparable to the sliding-window size 𝑊 = 32 s, so that each re-planning cycle is likely to span a client relocation. Mobility is the distinguishing factor of this experiment. Centralized policies observe demand through a sliding window of the most recent 
+
+𝑊 seconds; when clients move within a window, the rate estimates blend old and new locations, and the resulting placement reflects a demand distribution that no longer exists. AV, by contrast, reacts to each invocation individually and therefore adapts continuously. We expect this structural advantage to manifest as a lower and more stable latency under mobility. 
+
+Results. Fig. 5b shows the median latency over time under round-robin mobility. BLP exhibits recurring latency spikes in all three scenarios, most pronounced under ER and MIX. Each spike corresponds to a period during which the active plan is stale: the solver produces a placement optimized for a demand distribution that has already shifted. Under SR the spikes are smaller in amplitude, because the co-location constraint limits how far the placement can deviate from the true optimum even with outdated rate estimates. GV tracks a pattern similar to BLP, as both share the same sliding-window estimation and gather-scatter overhead. Under ER, GV achieves latency comparable to both BLP variants with fewer spikes, suggesting that the heuristic is less sensitive to window noise for ER placement decisions. Under MIX, GV and BLP produce similar latency profiles, including comparable spikes. Under SR, however, GV performs worse than the other centralized policies on average, with a persis-tently elevated baseline. This may indicate that the greedy SR placement, which fixes the leader based on the initial write-pressure snapshot, does not adapt well when the writer population shifts due to mobility; the BLP, by contrast, can re-elect the leader at each iteration. AV achieves the lowest and most stable latency across all three consistency mixes. Under ER and MIX, AV settles after a brief initial transient and maintains a flat profile throughout. This is a direct conse-quence of its per-invocation reactivity: when a client moves to a new node, the always-copy mechanism begins pulling replicas toward the new location from the first invocation, and the hop-by-hop scheduling routes requests through the hierarchy without waiting for a global re-plan. Under SR, AV converges equally quickly, as the force model routes writers to the leader and readers to the nearest follower independently of client movement. 
+
+## 8. Conclusions 
+
+This paper addressed the joint problem of function scheduling and data placement in the edge-cloud continuum under two consistency models: strong replication (SR) and eventual replication (ER). We proposed three approaches with progressively narrower information scope: a Binary Linear Programming (BLP) model that computes the opti-mal placement given a complete system snapshot, a Global-View (GV) greedy heuristic that operates on the same snapshot but at a fraction of the computational cost, and an Aggregated-View (AV) decentralized protocol in which each node makes placement and scheduling decisions based on locally observed demand. Our evaluation showed that exact optimization via BLP is practical only for small-scale instances, failing beyond a few hundred nodes due to memory and time constraints. GV scales to over 10 4
+
+nodes while staying within a few percentage points of the BLP optimum in both latency and storage, confirming that a greedy heuristic with global visibility can effectively replace the solver for offline placement. AV trades analytical opti-mality for runtime responsiveness: under static workloads, it matches or outperforms centralized policies in client-observed latency, particularly under ER and MIX, where its always-copy mechanism progressively co-locates data with requesting nodes. Under SR, the co-location constraint narrows the placement space and all policies converge to comparable performance. The most distinctive result emerges under mobility. When clients relocate faster than the centralized re-planning cycle, BLP and GV suffer from stale rate estimates that produce suboptimal placements. AV, reacting to each invocation individually, adapts continuously and maintains the lowest and most stable latency across all consistency mixes. This confirms that a decentralized approach sacrificing global optimality for per-invocation reactivity can outperform centralized policies when demand shifts at runtime. Finally, the naive baselines confirm that data placement is essential: separating compute from data consistently degrades performance, as shown across all experiments in Section 7.3. Several directions remain open. First, our model assumes static knowledge of function-to-collection access patterns; extending it to discover or learn these dependencies at run-time would broaden the applicability of the framework. Second, scenarios with heavily loaded edge nodes may ben-efit from incorporating compute budgets into the placement decision; how to characterize function memory footprints accurately enough to make such budgets actionable remains an open question. Finally, we plan to integrate the AV protocol into a serverless platform, bridging the gap between the simulated evaluation presented here and an operational deployment in the edge-cloud continuum. 
+
+## CRediT authorship contribution statement 
+
+Matteo Cenzato: Conceptualization, Methodology, Writ-ing - review and editing. Dario d’Abate: Conceptualiza-tion, Methodology, Software, Validation, Formal analysis, Investigation, Visualization, Writing - original draft, Writ-ing - review and editing. Arianna Dragoni: Conceptual-ization, Methodology, Supervision, Writing - review and editing. Matteo Briscini: Conceptualization, Methodology. 
+
+Alessandro Margara: Conceptualization, Formal analysis,   
+
+> Cenzato et al.: Preprint submitted to Elsevier Page 17 of 18
+
+Replication Meets Scheduling 
+
+Validation, Resources, Funding acquisition, Supervision, Writing - review and editing. 
+
+## References 
+
+[1] Ascigil, O., Tasiopoulos, A.G., Phan, T.K., Sourlas, V., Psaras, I., Pavlou, G., 2022. Resource provisioning and allocation in function-as-a-service edge-clouds. TSC 15. [2] Baresi, L., Hu, D.Y.X., Quattrocchi, G., Terracciano, L., 2024. NEP-TUNE: A comprehensive framework for managing serverless func-tions at the edge. TAAS 19. [3] Belcastro, L., Marozzo, F., Orsino, A., Talia, D., Trunfio, P., 2026. Navigating the edge-cloud continuum: A state-of-practice survey. IEEE Access 14. [4] Bittencourt, L.F., Rodrigues-Filho, R., Spillner, J., De Turck, F., Santos, J., da Fonseca, N.L., Rana, O., Parashar, M., Foster, I., 2025. The computing continuum: Past, present, and future. Comp. Science Review 58. [5] Cicconetti, C., Conti, M., Passarella, A., 2021. A decentralized framework for serverless edge computing in the internet of things. TNSM 18. [6] Gannon, D., Barga, R., Sundaresan, N., 2017. Cloud-native applica-tions. Cloud Comp. 4. [7] Jonas, E., Schleier-Smith, J., Sreekanti, V., Tsai, C.C., Khandelwal, A., Pu, Q., Shankar, V., Menezes Carreira, J., Krauth, K., Yadwadkar, N., Gonzalez, J., Popa, R.A., Stoica, I., Patterson, D.A., 2019. Cloud Programming Simplified: A Berkeley View on Serverless Computing. Technical Report UCB/EECS-2019-3. [8] Kleppmann, M., 2017. Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems. O’Reilly Media, Inc. [9] Li, Q., Kraft, P., Cafarella, M., Çağatay Demiralp, Graefe, G., Kozyrakis, C., Stonebraker, M., Suresh, L., Yu, X., Zaharia, M., 2023. R3: Record-replay-retroaction for database-backed applica-tions. Proc. VLDB Endow. 16. [10] McCormick, G.P., 1976. Computability of global solutions to fac-torable nonconvex programs. Mathematical Programming 10. [11] Nardelli, M., Russo, G.R., 2024. Function offloading and data migration for stateful serverless edge computing, in: ICPE, ACM. [12] Nastic, S., Rausch, T., Scekic, O., Dustdar, S., Gusev, M., Koteska, B., Kostoska, M., Jakimovski, B., Ristov, S., Prodan, R., 2017. A server-less real-time data analytics platform for edge computing. Internet Comp. 21. [13] Pfandzelter, T., Bermbach, D., 2023. Enoki: Stateful distributed FaaS from edge to cloud, in: MiddleWEdge, ACM. [14] Pfandzelter, T., Japke, N., Schirmer, T., Hasenburg, J., Bermbach, D., 2023. Managing data replication and distribution in the fog with FReD. Software: Practice and Experience 53. [15] Pietzuch, P., Ledlie, J., Shneidman, J., Roussopoulos, M., Welsh, M., Seltzer, M., 2006. Network-aware operator placement for stream-processing systems, in: ICDE, IEEE. [16] Puliafito, C., Cicconetti, C., Conti, M., Mingozzi, E., Passarella, A., 2023. Balancing local vs. remote state allocation for micro-services in the cloud-edge continuum. Perv. and Mobile Comp. 93. [17] Rajput, K.R., Kulkarni, C.D., Cho, B., Wang, W., Kim, I.K., 2022. Edgefaasbench: Benchmarking edge devices using serverless comput-ing, in: 2022 IEEE EDGE. [18] Rausch, T., Rashed, A., Dustdar, S., 2021. Optimized container scheduling for data-intensive serverless edge computing. FGCS 114. [19] Shapiro, M., Preguiça, N., Baquero, C., Zawirski, M., 2011. Conflict-free replicated data types, in: SSS, Springer-Verlag, Berlin, Heidel-berg. [20] Shi, W., Cao, J., Zhang, Q., Li, Y., Xu, L., 2016. Edge computing: Vision and challenges. IoT Jour. 3. [21] Smith, C.P., Jindal, A., Chadha, M., Gerndt, M., Benedict, S., 2022. FaDO: FaaS functions and data orchestrator for multiple serverless edge-cloud clusters, in: ICFEC, IEEE. [22] Sreekanti, V., Wu, C., Lin, X.C., Schleier-Smith, J., Gonzalez, J.E., Hellerstein, J.M., Tumanov, A., 2020. Cloudburst: Stateful functions-as-a-service. VLDB 13. [23] Tang, Y., Yang, J., 2020. Lambdata: Optimizing serverless computing by making data intents explicit, in: CLOUD, IEEE. [24] Vahabi, S., Righetti, F., Vallati, C., Tonellotto, N., 2023. Energy-efficient resource management for real-time applications in faas edge computing platforms, in: UCC, ACM. [25] Wen, Y., Xu, G., Wang, J., Hao, W., 2024. Low-latency state management for real-time tasks in edge serverless, in: ISPA, IEEE. [26] Wu, C., Faleiro, J., Lin, Y., Hellerstein, J., 2018. Anna: A kvs for any scale, in: ICDE. [27] Xu, Z., Zhou, L., Liang, W., Xia, Q., Xu, W., Ren, W., Ren, H., Zhou, P., 2023. Stateful serverless application placement in MEC with function and state dependencies. ToC 72. [28] Yu, M., Cao, T., Wang, W., Chen, R., 2023. Following the data, not the function: Rethinking function orchestration in serverless computing, in: NSDI, USENIX Association. 
+
+Cenzato et al.: Preprint submitted to Elsevier Page 18 of 18
