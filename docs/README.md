@@ -6,34 +6,38 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-01
-- 运行时间：2026-07-01 21:33:23 UTC
+- 最新运行日期：2026-07-02
+- 运行时间：2026-07-02 21:34:53 UTC
 - 运行状态：成功
-- 本次总论文数：4
-- 精读区：1
+- 本次总论文数：6
+- 精读区：3
 - 速读区：3
 
 ### 今日简报（AI）
-今日聚焦边缘-云连续体中数据复制与函数调度的协同优化，同时覆盖具身智能、多智能体系统验证与多模态协作等前沿方向。
-精读推荐《Data Replication Meets Function Scheduling in the Edge-Cloud Continuum》（8.0分），该研究为分布式系统资源管理提供了实用视角；速读中《MECoBench》等系统化研究多模态智能体协作，值得关注。
-建议优先阅读精读论文，掌握边缘-云协同的调度思路；后续可深入速读论文了解具身智能体与多智能体验证的具体方法。
-- 详情：[/202607/01/README](/202607/01/README)
+今日日报精读两篇高分论文，聚焦多智能体系统高效通信与移动设备AI安全攻防。最值得关注的两大方向：QueenBee Planner通过技能演进通信拓扑实现token高效多智能体协作，以及移动端AI系统攻防全景综述。建议优先精读这两篇9.0分论文，深入理解前沿技术趋势与安全挑战。
+- 详情：[/202607/02/README](/202607/02/README)
 
 ### 精读区论文标签
-1. [Data Replication Meets Function Scheduling in the Edge-Cloud Continuum](/202607/01/2606.30563v1-data-replication-meets-function-scheduling-in-the-edge-cloud-continuum)  
+1. [QueenBee Planner: Skill-Evolving Communication Topologies for Token-Efficient LLM Multi-Agent Systems](/202607/02/2606.27492v1-queenbee-planner-skill-evolving-communication-topologies-for-token-efficient-llm-multi-agent-systems)  
+   标签：评分：9.0/10、query:eca
+   evidence：多智能体通信拓扑学习以促进协作
+2. [SoK: Attack and Defense Landscape of Mobile On-device AI Systems](/202607/02/2607.00362v1-sok-attack-and-defense-landscape-of-mobile-on-device-ai-systems)  
+   标签：评分：9.0/10、query:eca
+   evidence：移动端AI系统安全综述
+3. [The Organizational Behavior of Agentic AI: Collective Intelligence in Human-Agent Workflows](/202607/02/2606.30986v1-the-organizational-behavior-of-agentic-ai-collective-intelligence-in-human-agent-workflows)  
    标签：评分：8.0/10、query:eca
-   evidence：边缘-云连续体中的函数调度与数据复制
+   evidence：人机工作流中的集体智能与组织行为
 
 ### 速读区论文标签
-1. [Advancing Omnimodal Embodied Agents from Isolated Skills to Everyday Physical Autonomy](/202607/01/2606.27251v1-advancing-omnimodal-embodied-agents-from-isolated-skills-to-everyday-physical-autonomy)  
+1. [GBC: Gradient-Based Connections for Optimizing Multi-Agent Systems](/202607/02/2606.28187v1-gbc-gradient-based-connections-for-optimizing-multi-agent-systems)  
+   标签：评分：7.0/10、query:eca
+   evidence：提出基于梯度的多智能体系统优化方法，通过细粒度信用分配改进协作
+2. [Design and Implementation of Agentic Orchestrations and Orchestration of Agents](/202607/02/2606.31518v1-design-and-implementation-of-agentic-orchestrations-and-orchestration-of-agents)  
    标签：评分：6.0/10、query:eca
-   evidence：面向网络物理编排的层次异步架构
-2. [MAS-Lab: A Specification-Driven Validation Framework for Reliable Multi-Agent Systems](/202607/01/2606.30546v1-mas-lab-a-specification-driven-validation-framework-for-reliable-multi-agent-systems)  
+   evidence：提供了智能体编排选项的分类框架，与分布式智能体架构相关
+3. [Semantic-based Internet of Embodied Intelligence: Visions and Frontiers](/202607/02/2607.00342v1-semantic-based-internet-of-embodied-intelligence-visions-and-frontiers)  
    标签：评分：6.0/10、query:eca
-   evidence：多智能体系统验证框架，支持可靠协作
-3. [MECoBench: A Systematic Study of Multimodal Agent Collaboration in Embodied Environments](/202607/01/2606.31966v1-mecobench-a-systematic-study-of-multimodal-agent-collaboration-in-embodied-environments)  
-   标签：评分：6.0/10、query:eca
-   evidence：多模态代理协作基准在具身环境中
+   evidence：具身智能互联网中基于语义通信的多智能体协作
 
 
 <div class="dpr-home-promo-card">

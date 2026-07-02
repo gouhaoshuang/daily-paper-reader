@@ -1,0 +1,189 @@
+Title: Semantic-based Internet of Embodied Intelligence: Visions and Frontiers
+
+URL Source: https://arxiv.org/pdf/2607.00342v1
+
+Published Time: Thu, 02 Jul 2026 00:23:12 GMT
+
+Number of Pages: 7
+
+Markdown Content:
+> 1
+
+# Semantic-based Internet of Embodied Intelligence: Visions and Frontiers 
+
+Yaheng Wang, Rui Meng, Member, IEEE, Xiaodong Xu, Senior Member, IEEE, Yiming Liu, Member, IEEE, 
+
+Feiliang Song, Linyuan Hu, Huishi Song, Lexi Xu, Senior Member, IEEE, Tony Q. S. Quek, Fellow, IEEE, 
+
+and Ping Zhang, Fellow, IEEE 
+
+Abstract —Recent advances in generative artificial intelligence (AI) and embodied intelligence (EI) enable autonomous agents to interact with the physical world. However, scaling these systems into networks of multiple agents, namely the Internet of EI (IoEI), faces critical bottlenecks. These include the overhead of massive multimodal data transmission and the decoupling of logical reasoning from physical constraints. To address these challenges, we envision the Semantic-based IoEI (SIoEI), which leverages semantic information as a unified metric throughout the agent lifecycle. We systematically define four key dimensions of EI: perception, intelligence, control, and communication. We further elaborate how semantic empowerment revolutionizes environ-mental perception, cognition and task planning, action generation and robust control, and communication and networking. We also present a case study to verify that, the semantic-empowered end-to-end process significantly improves channel robustness and reduces end-to-end latency for EI. Finally, we outline critical open research directions for the SIoEI paradigm. 
+
+Index Terms —Embodied AI, internet of intelligence, generative AI, semantic communication 
+
+I. I NTRODUCTION 
+
+In recent years, breakthroughs in generative artificial intel-ligence (AI), such as large language models (LLMs) and gen-erative diffusion models, have reshaped the digital landscape. However, these models excel only at processing symbols and statistical patterns in the virtual world, lacking genuine 
+
+This work was supported in part by the National Key R&D Program of China under Grant 2025YFF0514404; in part by the National Natural Science Foundation of China under Grant 62501066 and under Grant U24B20131; and in part by the S&T Program of Hebei under Grant 262X0405D. (Correspond-ing author: Rui Meng and Xiaodong Xu.) 
+
+Yaheng Wang is with the State Key Laboratory of Networking and Switch-ing Technology, Beijing University of Posts and Telecommunications, Beijing 100876, China, and also with the ZGC Institute of Ubiquitous-X Innovation and Applications, Beijing 100083, China (e-mail: wangyaheng@bupt.edu.cn). Rui Meng and Xiaodong Xu are with the State Key Laboratory of Network-ing and Switching Technology, Beijing University of Posts and Telecommu-nications, Beijing 100876, China, and also with the Satellite Internet Testing Center, Xiong’an Aerospace Information Research Institute, Xiong’an 070001, China (e-mail: buptmengrui@bupt.edu.cn; xuxiaodong@bupt.edu.cn). Yiming Liu, Feiliang Song, Linyuan Hu, and Ping Zhang are the State Key Laboratory of Networking and Switching Technology, Beijing Uni-versity of Posts and Telecommunications, Beijing 100876, China (e-mail: liuyiming@bupt.edu.cn; songfeiliang@bupt.edu.cn; hulinyuan@bupt.edu.cn; pzhang@bupt.edu.cn). Huishi Song is with the ZGC Institute of Ubiquitous-X Innovation and Applications, Beijing 100083, China (e-mail: songhuishi@zgc-xnet.com). Lexi Xu is with the Research Institute, China United Network Communica-tions Corporation, Beijing 100048, China (e-mail: xulx29@chinaunicom.cn). Tony. Q. S. Quek is with the Singapore University of Technology and Design, Singapore 487372, and also with the Department of Electronic Engineering, Kyung Hee University, Yongin 17104, South Korea (e-mail: tonyquek@sutd.edu.sg). 
+
+perception and interaction capabilities in the physical world. To bridge this gap, embodied intelligence (EI) integrates AI algorithms into physical entities such as robots and drones, enabling them to perceive, act, and learn, and has quickly be-come the next frontier in AI evolution [1]. When tasks require the collaboration of hundreds or thousands of heterogeneous robots or sensors, the need for universal connectivity catalyzes the emergence of the Internet of EI (IoEI) [2]. Nevertheless, IoEI faces two critical challenges. First, trans-mitting massive multimodal raw data, including images, point clouds, and audio, overloads radio access networks and hinders real-time collaboration [3]. Second, traditional AI lacks under-standing of physical properties and causal relationships, often producing decisions that violate physical laws. In response, semantic communication conveys task-relevant semantic infor-mation among embodied agents instead of raw data, drastically reducing data volume while preserving task meaning [4], [5]. This brings the following enhancements to the four core dimensions of IoEI:  
+
+> •
+
+Environment Perception Dimension: Instead of merely acquiring data, the system obtains structured semantic descriptions of scenes that support reasoning, providing input for subsequent planning.  
+
+> •
+
+Cognition and Task Planning Dimension: High-level goals are decomposed into subtasks via semantic rules rather than rule-based or statistical learning, making plan-ning more physically plausible and robust to uncertainty.  
+
+> •
+
+Action Generation and Control Dimension: Intentional decisions can directly and flexibly influence low-level actions, while the current physical state is simultaneously fed back as semantic information.  
+
+> •
+
+Communication and Network Coordination Dimen-sion: Even under bandwidth constraints and harsh chan-nel conditions, embodied agents can maintain efficient and reliable collaboration. Despite the disruptive potential of semantic-based IoEI (SIoEI), it remains an emerging field with major challenges. Semantic features and models trained in simulation may mis-match real physical systems. Semantic extraction or reasoning modules may generate erroneous information that propagates across the network, causing abnormal behavior. In unstructured environments, semantic decisions may lack strict physical safety boundaries, leading to collisions or falls. This paper systematically analyzes how semantics can be applied in SIoEI. Our main contributions are as follows.                       
+
+> arXiv:2607.00342v1 [eess.SP] 1 Jul 2026 2
+> TABLE I: Four-Dimensional Comparison Between Traditional Paradigms and SIoEI
+> Dimension Traditional Paradigm SIoEI Key Implication
+> Perception Passively acquires raw multimodal data, while physical attributes and task affor-dances remain weakly represented. Integrates multimodal sensory inputs with proprio-ception and action feedback, transforming fragmented data into semantic objects with physical attributes and affordance information [6]. From passive data acquisition to task-driven environmental understanding. Intelligence Relies on statistical correlations in sym-bolic or textual spaces, lacking physical grounding and causal feedback. Grounds reasoning in generative world models and physical common sense, enabling agents to predict environmental and network dynamics before execution [7]. From disembodied symbolic reasoning to physically grounded behavioral reasoning. Control Depends on accurate models and prede-fined trajectories, showing limited adapt-ability in unstructured environments. Maps task intentions and action symbols into exe-cutable motor policies, supporting dexterous manip-ulation, compliant control, and self-correction [8]. From trajectory tracking to intention-guided adaptive exe-cution. Communication Focuses on raw data transmission, causing bandwidth pressure and weak coupling with task execution. Transmits task-relevant semantic information, action tokens, and intent representations through joint seman-tic coding and network coordination [9], [10]. From syntactic information delivery to pragmatic intent-action synergy.
+> •
+
+We propose the vision of SIoEI and define its four key dimensions, including perception, intelligence, control, and communication, that distinguish it from traditional disembodied AI.  
+
+> •
+
+We systematically analyze how semantics empowers the four phases of IoEI, from environmental perception and task planning to action generation and network coordina-tion, and we introduce the SIoEI concept by extending EI to systematic clusters of the IoEI.  
+
+> •
+
+We present a case study and discuss future opportunities and challenges in this emerging field. II. F OUR -D IMENSIONAL COMPARISON UNDER SEMANTIC 
+
+EMPOWERMENT 
+
+The IoEI achieves a paradigmatic leap from information interconnection to the interconnection of intent and action. Traditional architectures face severe challenges when handling embodied tasks, including decoupled perception and action, the logic-physics barrier, and bandwidth crises caused by mas-sive multimodal data. This section analyzes the fundamental differences between IoEI and traditional paradigms across four dimensions, as summarized in Tab. I. The comparison shows that semantics connect heterogeneous agents and bridge the digital-physical gap. Specifically, perception shifts from passive sensing to task-driven understanding, intelligence from symbolic reasoning to physically grounded behavioral reason-ing, control from trajectory tracking to intention-guided adap-tive execution, and communication from syntactic delivery to pragmatic intent-action synergy. 
+
+A. Perception Dimension 
+
+Traditional sensor-based perception objectively measures the physical world and treats targets as static data sources. This passive, disembodied paradigm provides only shallow representations stripped of physical attributes such as mass or friction, and it remains decoupled from the agent’s state. In contrast, embodied perception focuses on multimodal rep-resentation and action affordance. By coupling propriocep-tion and exteroception, agents actively change poses to ver-ify interactive attributes. Semantic empowerment transforms fragmented multimodal data into unified, high-level semantic objects embedded with physical causality [6], achieving task-driven intentional perception and overcoming the lack of physical common sense in traditional sensors. 
+
+B. Intelligence Dimension 
+
+Traditional LLMs derive intelligence from statistical mod-eling of static text and lack authentic experience of physical laws. Although they excel at language understanding and reasoning, they remain isolated from sensory feedback and physical causality. Conversely, EI emphasizes that intelligence evolves through dynamic interaction within the perception-action loop. It utilizes multimodal foundation models for end-to-end semantic mapping of sensory inputs and employs gen-erative diffusion models as world models [7] to predict envi-ronmental dynamics, network states, and action consequences before execution. Semantic empowerment anchors high-level logical reasoning onto physical common sense, realizing a leap from symbolic intelligence to behavioral intelligence. 
+
+C. Control Dimension 
+
+Traditional control relies on analytical geometry and clas-sical mechanics to perform high-precision trajectory tracking in structured environments. This rigid paradigm treats actu-ators as pure execution mechanisms dependent on precise environmental priors and easily fails under unstructured per-turbations. Embodied control moves toward semantic policy generation and dexterous manipulation [8]. It couples low-level motor drives with high-level cognitive intentions, forming affordance-oriented interaction logic. Semantic empowerment maps discrete action symbols into continuous physical torques and introduces whole-body coordination and compliant con-trol. This endows the system with physical adaptability, cross-scene generalization, and self-healing abilities. 
+
+D. Communication Dimension 
+
+Traditional communication follows Shannon’s theory, pur-suing lossless bit restoration. This decoupled paradigm ignores the behavioral impact of data on the physical world, causing bandwidth bottlenecks and failing to guarantee the ultra-low latency and high reliability required for embodied co-ordination. In contrast, embodied communication shifts from 3
+
+> Fig. 1: Representative semantic-empowered technologies across the four EI dimensions: including environmental perception, cognition and task planning, action generation and robust control, and communication and networking.
+
+syntactic transmission to pragmatic synergy. It is embedded in the perception-action loop and transmits task intents via action tokens rather than full raw data. Through joint source-channel semantic coding [9], [10], discrete action symbols become noise-resilient semantic vectors. This deep fusion dy-namically allocates resources based on task urgency, enabling heterogeneous clusters to reach intent consensus and reliable collaboration under extreme channel conditions. III. S EMANTIC EMPOWERMENT ACROSS FOUR 
+
+DIMENSIONS OF EMBODIED INTELLIGENCE 
+
+The core advantage of SIoEI lies in using semantic informa-tion as a unified metric throughout the agent-physical world interaction lifecycle. This section explores how semantics empowers perception, cognition, control, and communication. By constructing an end-to-end semantic closed loop, SIoEI reduces computational and communication redundancy while enhancing generalization and operational stability in unstruc-tured environments, achieving a breakthrough from syntactic data processing to pragmatic task execution. Technical details are given in Fig. 1. 
+
+A. Environmental Perception 
+
+Environmental perception is the starting point for embod-ied agents to interact with the physical world, transforming fragmented sensor data into structured semantic information. 
+
+1) Multi-modal Perception and Data Fusion: Semantic empowerment enables deep integration of full-sensory envi-ronmental representations. Cross-modal semantic alignment associates visual features, LiDAR point clouds, and tactile feedback within a unified latent semantic space [6], enabling understanding of physical attributes beyond geometry. The perception system can then label affordances during perception to directly guide subsequent actions. A semantic-driven at-tention mechanism dynamically adjusts sensor sampling rates and weights based on task priority, reducing data processing pressure while ensuring critical information acquisition. 
+
+2) 3D Semantic Mapping and Localization: By integrating semantic labels into Simultaneous Localization and Mapping, SIoEI constructs dynamic semantic maps with logical topolog-ical relationships [11]. Topological semantic modeling parti-tions physical space into functionally defined areas, enhancing global path planning efficiency. Stable semantic landmarks assist localization and mitigate long-term drift. Dynamic object semantic filtering identifies and predicts the intentions of pedestrians or vehicles, removing temporary occlusions during map construction to ensure map purity and reliability. 
+
+3) Fine-grained Object Recognition and Attribute Under-standing: Semantics empowers perception to transcend simple category recognition and delve into physical attributes and in-teractive relationships. Open-vocabulary semantic recognition [12] allows agents to identify unseen objects by associating unknown visual features with known concepts via language models. Spatial relationship semanticization extracts relative positional semantics to support complex logic tasks. Phys-ical state monitoring semantics perceive real-time dynamic changes as task-triggering signals, enabling a leap from static observation to state-closed-loop interaction. 
+
+B. Cognition and Task Planning 
+
+Cognition and task planning is the central control unit of EI, responsible for high-level logical reasoning and transforming 4             
+
+> TABLE II: Semantic-Empowered Technologies and Methods Across Four Dimensions of SIoEI
+> Dimension Technologies Methods
+> Environmental Perception Multi-modal Perception and Data Fusion Align visual, LiDAR, tactile, and language features into a shared semantic space with task-driven sensor attention [6]. 3D Semantic Mapping and Localization Build semantic maps and scene graphs; identify affordances and open-vocabulary objects [11], [12]. Fine-grained Object Recognition and Attribute Understanding Identify unseen objects via language models; extract spatial relationships and physical-state monitoring semantics [12]. Cognition and Task Planning Semantic Parsing of Natural Language Instructions Parse vague instructions into executable primitives and infer implicit steps [8]. Hierarchical Semantic Decomposition of Long-horizon Tasks Decompose large-scale goals into standardized action units and verify logical dependencies [8]. Knowledge Base Retrieval via Commonsense Reasoning Use commonsense knowledge for conflict detection and cross-domain knowledge transfer [13]. Generative Diffusion Models for Environmental and Network Prediction Predict channel states, traffic patterns, and environmental evo-lution to support robust planning and semantic transmission [7]. Action Generation and Robust Control Agentic AI for Action Skill Generation and Precision Manip-ulation Decompose high-level intentions into executable actions and adapt manipulation policies through feedback-driven agentifi-cation [14]. Semantic-oriented Dynamic Safety Avoidance Set dynamic safety thresholds, predict interaction intent, and perform compliant correction. Sim-to-Real Transfer Extract invariant semantic features; map sensor inputs to control tokens via end-to-end semantic modeling. Communication and Networking Coordination Multi-Agent Swarm Intelligence Collaboration Align task semantics among agents and dispatch semantic instructions rather than raw data [2]. Cross-Device Knowledge Sharing and Continual Learning Build semantic experience pools and exchange model param-eters under privacy constraints. Semantic-based Resource Scheduling Allocate resources by semantic importance and channel con-ditions; compress content semantics on demand [9], [10].
+
+vague human intentions into executable, logically complete task blueprints. 
+
+1) Semantic Parsing of Natural Language Instructions: Se-mantic empowerment maps unstructured instructions to logical primitives. An intent completion mechanism infers implicit steps for underspecified commands, while contextual disam-biguation uses environmental perception to resolve pronoun references or polysemous terms. 
+
+2) Hierarchical Semantic Decomposition of Long-horizon Tasks: For complex long-horizon tasks, semantic empower-ment ensures continuity of action sequences. A semantic prim-itive library decomposes large-scale goals into standardized action units, enhancing plan reusability. The SayCan scheme proposed in [8] synergizes LLM semantic planning with affordance-based execution probabilities of low-level skills, ensuring logical coherence. Logical dependency verification checks temporal constraints between steps, and task-progress semantic anchoring supports precise recovery after interrup-tions or unexpected environmental changes. 
+
+3) Knowledge Base Retrieval via Commonsense Reasoning: 
+
+Integrating large-scale external semantic knowledge allows agents to possess human-like commonsense judgment. In-tuitive semantic heuristics use prior knowledge to narrow search spaces and improve efficiency. The PaLM-E model proposed in [13] embeds multimodal perception data directly into the language model latent space, enabling cross-domain knowledge transfer and leveraging internet-scale data for novel physical tasks. Dynamic semantic conflict detection identifies states that violate physical common sense in real time and triggers immediate re-planning. 
+
+4) World Models and Environmental Evolution Prediction: 
+
+Semantic empowerment gives agents foresight to anticipate action consequences. Generative diffusion models [7] can syn-thesize network states, channel evolution, and environmental dynamics, enabling agents to evaluate candidate plans before physical execution. This predictive capability supports robust resource orchestration and semantic transmission in SIoEI, and it provides a foundation for multi-agent collaboration. 
+
+C. Action Generation and Robust Control 
+
+Action generation and robust control transforms thought into action, focusing on precision, safety, and adaptability in com-plex physical environments. Through semantic empowerment, the control process advances from numerical computation to logic-driven execution. 
+
+1) Action Skill Generation and Precision Manipulation: 
+
+Semantic empowerment endows low-level actions with phys-ical common sense, moving from pure geometric modeling to intent-driven action selection. Agentic AI [14] enables agents to decompose high-level intentions into executable manipulation actions, select appropriate tools or policies, and refine motor skills through environmental feedback. This improves manipulation success for heterogeneous objects in unstructured environments. Action symbolic control encapsu-lates instructions into semantic symbols such as place gently, 5
+
+and tactile semantic closed-loop feedback enables precision adjustment and dynamic force correction. 
+
+2) Semantic-oriented Dynamic Safety Avoidance: During execution, semantic information provides a hierarchical refer-ence for safety assurance. Target-category semantic avoidance sets dynamic safety thresholds based on obstacle levels, al-lowing robots to adjust avoidance margins for different risk sources. Interaction intent prediction captures pedestrian-robot interactive semantics through attention mechanisms, enabling precise pre-judgment and proactive avoidance. Path semantic compliance checks ensure trajectories follow situational rules, while semanticized anomaly correction identifies execution deviations and triggers real-time compliant control compen-sation, enabling intelligent self-healing. 
+
+3) Sim-to-Real Transfer: As a unified metric, semantics bridges the Sim-to-Real transfer gap. Semantic feature invari-ance extracts shared features across virtual and real domains, reducing the impact of lighting or material differences on policy transfer. It maps sensor inputs directly to control semantic tokens through end-to-end semantic modeling, by-passing cumulative latency from multiple format conversions in layered architectures. This fusion enables real-time semantic comparison between execution status and expected goals, reduces invalid communication, supports semantic fault retries, and ensures robust physical operations. 
+
+D. Communication and Networking Coordination 
+
+Communication and networking coordination connects iso-lated embodied agents through the network to achieve resource complementarity, knowledge sharing, and task synchroniza-tion, serving as the key for SIoEI to advance toward large-scale socialized operations. 
+
+1) Multi-Agent Swarm Intelligence Collaboration: Seman-tic empowerment addresses coordination challenges caused by device heterogeneity. A semantic consensus alignment mechanism ensures that all agents maintain consistent se-mantic understanding of the same task goal [2]. Distributed semantic decision distribution dispatches high-level semantic instructions rather than raw data, greatly reducing bandwidth requirements. A lightweight distributed semantic communica-tion framework jointly designs feature extraction and receiver networks to meet IoT power and latency constraints, enhancing task-oriented information delivery. Heterogeneous collabora-tive semantic protocols enable different robot types to achieve seamless synergy through unified interfaces. 
+
+2) Cross-Device Knowledge Sharing and Continual Learn-ing: Through cloud networks, agents can accumulate expe-rience globally. Semantic experience pools transform learned skills into searchable semantic libraries. A federated semantic learning framework enables skill evolution by exchanging model parameters while protecting privacy. An information-bottleneck-driven variant establishes an optimal trade-off be-tween semantic compression rates and task execution accuracy, achieving efficient distributed semantic model collaboration with extremely low communication overhead. Incremental semantic updates synchronize only newly emerging semantic objects, realizing on-demand dynamic knowledge acquisition. 
+
+3) Semantic-based Resource Scheduling: Semantic em-powerment achieves precise matching between communica-tion resources and task requirements. Semantic slicing au-tomatically allocates network priorities based on business urgency. Advanced physical-layer receiver technologies can also reshape semantic resource scheduling. Onboard Rydberg atomic quantum receivers, for example, have been shown to enhance ground-satellite direct access and sensitivity [15], offering a reliable foundation for semantic transmission over challenging space-air-ground links and supporting dynamic resource scheduling. Combined with semantic-aware routing, the system selects optimal paths based on content semantic importance. When bandwidth is limited, on-demand semantic compression transmits only critical semantic features, reducing unnecessary raw pixel transmissions and ensuring low latency and high reliability for critical task semantics. IV. C ASE STUDY : S EMANTIC COMMUNICATION AND 
+
+CONTROL FOR ROBOTIC MANIPULATION 
+
+A. Motivations 
+
+Current research on EI often assumes idealized perception and overlooks the communication bottleneck between sensors and controllers. When raw visual observations travel over bandwidth-limited wireless channels, conventional bit-level compression and channel coding introduce severe latency and reconstruction failures at low SNR, degrading closed-loop control. 
+
+B. The presented scheme 
+
+In SIoEI systems that tightly couple perception, communica-tion, and cognition, communication is part of the control loop rather than mere data transport. As illustrated in Fig. 2, the presented Joint Semantic Cognition-Communication-Control (JSCCC) scheme closes this gap by embedding semantic ex-traction, transmission, and decision making into a single end-to-end pipeline. Specifically, it converts observations into com-pact semantic representations through a semantic extractor. A semantic codec transports them under channel constraints, and a semantic controller maps the decoded semantics directly to actuator commands, eliminating separate reconstruction and object-detection stages. 
+
+C. Simulation Results and Analysis 1) Comparative Schemes:  
+
+> •
+
+The baseline scheme uses JPEG compression followed by LDPC channel coding. The received image is re-constructed and fed into a hand-crafted vision-based geometric reaching (VGR) controller that outputs joint commands for the UR5 arm.  
+
+> •
+
+The SemComm scheme processes the same image input with a SwinJSCC semantic codec and transmits task-relevant semantic features over the physical channel. The receiver decodes the semantic vector and sends it to the same VGR controller, bypassing conventional image reconstruction. 6  
+
+> Fig. 2: Block diagrams of the three embodied-agent communication pipelines. (a) Baseline (JPEG+LDPC+VGR). (b) SemComm (SwinJSCC+VGR). (c) JSCCC.
+> Fig. 3: Task success rate of the three schemes across SNR =5, 10, 20, 30 dB.
+
+2) Simulation Parameters: As shown in Fig. 2, a 6-DoF UR5 arm grasps a colored block on a tabletop from the view of a fixed 512 × 512 RGB camera. A trial is successful when the end-effector stops within 5 cm of the target center. We compare the three schemes at SNR = 5, 10, 20, 30 dB, with 47 random seeds for each. 
+
+D. Results and Analysis 1) Task Success Rate: We measured the task success rate of the three schemes under SNR = 5, 10, 20, 30 dB, as shown in Fig. 3. The JSCCC framework achieved 100% success at all tested SNRs because it transmits compact, task-relevant semantic features. The SemComm scheme also maintained high success, whereas the Baseline succeeded only at high SNR and collapsed to 0% at 10 dB and below. This cliff-edge behavior reflects the fragility of bit-level reconstruction. 
+
+2) End-to-End Latency: We also measured the end-to-end latency of the three schemes under the same SNR values, as shown in Fig. 4. JSCCC and SemComm substantially reduced   
+
+> Fig. 4: End-to-end latency of the three schemes across SNR =5, 10, 20, 30 dB.
+
+latency relative to the Baseline because semantic transmission avoids heavy channel coding and pixel-level reconstruction. These results show that semantic-empowered communication improves both robustness and timeliness in closed-loop robotic control. 
+
+E. Lessons Learned 
+
+The robotic manipulation case study reveals both the strengths and the limits of JSCCC under bandwidth-limited and low-SNR conditions. On the strength side, JSCCC main-tained high success across all tested SNRs and significantly reduced end-to-end latency. This gain arises because semantic features are naturally robust to channel degradation, and the tight coupling of perception, communication, and control avoids pixel-level redundant transmission with low control utility. By contrast, the Baseline scheme, which relies on bit-level reconstruction, collapsed rapidly below 10 dB. This gap indicates that traditional decoupled communication-control 7
+
+architectures cannot meet the closed-loop reliability required by embodied intelligence. On the limitation side, the experiments remain in simula-tion. The task involves a single arm reaching for a simple block, the camera pose is fixed, and the semantic extractor is assumed to be accurate. These idealized conditions differ from real-world scenarios. In practice, semantic extraction er-rors, dynamic occlusions, multi-agent coordination, and more complex manipulation tasks would all narrow the effective operating range of JSCCC. Moreover, the experiments do not systematically evaluate safety constraints, fault recovery, or energy trade-offs. Extending JSCCC to real robot platforms and establishing quantifiable safety boundaries are therefore important directions for future work. V. C ONCLUSION 
+
+This paper proposes the SIoEI, which treats semantic in-formation as a unified metric throughout the lifecycle of perception, intelligence, control, and communication. Through four-dimensional comparison, we explain how semantic em-powerment advances EI from passive data acquisition, dis-embodied symbolic reasoning, rigid trajectory tracking, and syntactic information transmission toward task-driven envi-ronmental understanding, physically grounded behavioral rea-soning, intention-guided adaptive execution, and pragmatic intent-action synergy. By unifying semantics across the agent lifecycle, SIoEI offers a principled path toward scalable, resilient, and intent-aware multi-agent embodied systems. The case study further shows that the JSCCC framework main-tains 100% success at low SNR while substantially reducing end-to-end latency, whereas traditional bit-level transmission collapses quickly as the channel degrades. Nevertheless, SIoEI remains at an early stage. Domain gaps between simulation and real systems may cause semantic features and policies to fail during transfer, so more robust Sim-to-Real mechanisms are needed. Errors from semantic extraction and reasoning modules may amplify across the network, calling for verifiable safety boundaries and fault-tolerant mechanisms. Semantic consensus protocols, dynamic resource scheduling, and privacy-preserving knowledge shar-ing in multi-agent scenarios still require deeper investigation. Finally, standardized semantic ontologies, benchmarks, and large-scale experimental platforms will be essential for moving SIoEI from theoretical vision to practical deployment. REFERENCES [1] J. Duan, S. Yu, H. L. Tan, H. Zhu, and C. Tan, “A survey of embodied ai: From simulators to research tasks,” IEEE Transactions on Emerging Topics in Computational Intelligence , vol. 6, no. 2, pp. 230–244, 2022. [2] M. Kountouris and N. Pappas, “Semantics-empowered communication for networked intelligent systems,” IEEE Communications Magazine ,vol. 59, no. 6, pp. 96–102, 2021. [3] R. Meng, Z. Huang, J. Yan, M. Sun, Y. Liu, C. Feng, X. Xu, Z. Zhang, S. Gao, P. Zhang et al. , “Semantic radio access networks: Architecture, state-of-the-art, and future directions,” IEEE Transactions on Cognitive Communications and Networking , vol. 12, pp. 7076–7097, 2026. [4] P. Zhang, R. Meng, X. Xu, Y. Wang, Z. Huang, Y. Liu, R. Zhang, Y. Liu, H. Tong, H. Song et al. , “Towards semantic-based agent communication networks: Vision, technologies, and challenges,” arXiv preprint arXiv:2603.24328 , 2026. [5] H. Xie, Z. Qin, G. Y. Li, and B.-H. Juang, “Deep learning enabled semantic communication systems,” IEEE transactions on signal pro-cessing , vol. 69, pp. 2663–2675, 2021. [6] A. Radford, J. W. Kim, C. Hallacy, A. Ramesh, G. Goh, S. Agarwal, G. Sastry, A. Askell, P. Mishkin, J. Clark et al. , “Learning transferable visual models from natural language supervision,” in Proceedings of the 38th International Conference on Machine Learning (ICML) , 2021, pp. 8748–8763. [7] D. Fan, R. Meng, X. Xu, Y. Liu, G. Nan, C. Feng, S. Han, S. Gao, B. Xu, D. Niyato et al. , “Generative diffusion models for wireless networks: Fundamental, architecture, and state-of-the-art,” IEEE Communications Surveys & Tutorials , vol. 28, pp. 5632–5677, 2026. [8] M. Ahn, A. Brohan, N. Brown, Y. Chebotar, O. Cortes, B. David, C. Finn, C. Fu, K. Gopalakrishnan, K. Hausman et al. , “Do as i can, not as i say: Grounding language in robotic affordances,” in Proceedings of the 11th International Conference on Learning Representations (ICLR) ,2023. [9] E. Bourtsoulatze, D. B. Kurka, and D. G¨ und¨ uz, “Deep joint source-channel coding for wireless image transmission,” IEEE Transactions on Cognitive Communications and Networking , vol. 5, no. 3, pp. 567–579, 2019. [10] J. Dai, S. Wang, K. Tan, Z. Si, X. Liu, K. Li, and Z. Ping, “Nonlinear transform source-channel coding for semantic communications,” IEEE Journal on Selected Areas in Communications , vol. 40, no. 8, pp. 2300– 2316, Aug. 2022. [11] A. Rosinol, M. Abate, Y. Chang, and L. Carlone, “Kimera: From SLAM to spatial perception with 3D dynamic scene graphs,” The International Journal of Robotics Research , vol. 40, no. 12–14, pp. 1510–1546, 2021. [12] X. Gu, T.-Y. Lin, W. Kuo, and Y. Cui, “Open-vocabulary object detection via vision and language knowledge distillation,” in Proceedings of the 10th International Conference on Learning Representations (ICLR) ,2022. [13] D. Driess, F. Xia, M. S. M. Sajjadi, C. Lynch, A. Chowdhery, B. Ichter, A. Wahid, J. Tompson, Q. Vuong, T. Yu et al. , “PaLM-E: An embodied multimodal language model,” in Proceedings of the 40th International Conference on Machine Learning (ICML) , 2023, pp. 8469–8488. [14] R. Zhang, G. Liu, Y. Liu, C. Zhao, J. Wang, Y. Xu, D. Niyato, J. Kang, Y. Li, S. Mao et al. , “Toward edge general intelligence with agentic ai and agentification: Concepts, technologies, and future directions,” IEEE Communications Surveys & Tutorials , vol. 28, pp. 4285–4318, 2026. [15] Q. Peng, T. Gong, Z. Song, Q. Luo, Z. Lin, P. Xiao, and C. Yuen, “Enhanced ground–satellite direct access via onboard rydberg atomic quantum receivers,” IEEE Wireless Communications , vol. 33, no. 3, pp. 23–30, 2026.
