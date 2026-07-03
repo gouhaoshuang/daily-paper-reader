@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-03",
+  "date": "2026-07-03",
+  "generated_at": "2026-07-03T21:07:37",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/03/2606.29483v1-fog-computing-and-large-language-models-a-vision-for-the-mutual-beneficiaries",
+      "section": "deep",
+      "title_en": "Fog Computing and Large Language Models: A vision for the mutual beneficiaries",
+      "authors": "Satish Narayana Srirama",
+      "date": "2026-06-28",
+      "pdf": "https://arxiv.org/pdf/2606.29483v1",
+      "score": "9.0",
+      "evidence": "雾计算与大语言模型协同的边缘云",
+      "tldr": "雾计算利用近端资源解决云端物联网的延迟、网络负载和隐私问题，而大语言模型（LLMs）的云端部署同样面临这些挑战。本文提出在雾基础设施上优化LLMs，通过参数量化、剪枝和低秩适配等方法降低资源需求。同时，LLMs的代码生成能力可助力雾计算应用的动态部署。两者相互促进，为边缘智能和高效物联网提供新思路。",
+      "tags": "query:eca",
+      "abstract_en": "Fog computing utilizes proximal computational resources for sensor data processing and actuation, and addresses the latency, network load, and privacy issues of cloud-centric Internet of Things. On the other hand, Large Language Models (LLMs) are a type of deep learning AI models, which are trained on enormous text data, that perform various natural language processing tasks such as translation, question answering, text summarization, and code generation. LLMs are generally cloud-centric, requiring abundant GPU memory and computing capabilities, again face the same issues that led to fog computing. This pushes the necessity for LLM support in the proximity on fog infrastructure, requiring LLM optimizations such as parameter-weight quantization, pruning, low-rank adaptation etc. Meanwhile, fog computing also gets benefit from LLM's ability for code generation, in the dynamic deployment of fog-based applications. The paper addresses how both fog computing and LLMs can be mutual beneficiaries, discussing the state-of-the-art and future research scope.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/03/2606.27929v1-when-multi-robot-systems-meet-agentic-aitowards-embodied-collective-intelligence",
+      "section": "quick",
+      "title_en": "When Multi-Robot Systems Meet Agentic AI:Towards Embodied Collective Intelligence",
+      "authors": "Yuxuan Yan, Yuanyuan Jia, Qianqian Yang",
+      "date": "2026-06-26",
+      "pdf": "https://arxiv.org/pdf/2606.27929v1",
+      "score": "7.0",
+      "evidence": "多机器人协作与分布式自主AI实现具身集体智能",
+      "tldr": "多机器人系统面临从共享地图、任务分配转向共享具身agent循环状态的挑战。提出具身集体智能（ECI）框架，通过共感知、共行动和共演化实现团队共享世界上下文、任务进度和技能经验。导航案例研究表明，新加入机器人可从合并的团队记忆中获益。该框架为具身多智能体智能提供新方向，并为可度量部分奠定实验基础。",
+      "tags": "query:eca",
+      "abstract_en": "Embodied AI is increasingly becoming agentic, shifting robots from perception--control pipelines towards closed-loop systems that can retrieve context, deliberate during execution, monitor feedback, and refine future behavior. In parallel, robotics research has also moved from single-robot autonomy towards multi-robot systems, driven by the need for wider sensing, distributed action, heterogeneous capabilities, and fault tolerance. As AI agents move from single-agent use towards multi-agent collaboration, robotics faces a parallel challenge: robot teams must move beyond sharing maps, task assignments, and datasets towards sharing the state produced by embodied agent loops. This article explores Embodied Collective Intelligence (ECI), a future multi-robot paradigm in which a robot team accumulates and uses world context, task progress, and skill experience as shared resources. Specifically, we first review how embodied AI is becoming agentic and how multi-robot cooperation has evolved. We then present Embodied Collective Intelligence through Co-Perception, Co-Action, and Co-Evolution. Finally, we use an illustrative navigation study to examine one concrete component of the concept: shared world-memory inheritance. The study shows that a newly added robot can benefit from merged team memory, but it is not intended as a full evaluation of the ECI framework. Taken together, the review and conceptual framework motivate Embodied Collective Intelligence as a direction for embodied multi-agent intelligence, while the case study grounds one measurable part of the concept.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/03/2606.28217v1-towards-value-constrained-credit-assignment-in-fully-delegated-ai-cooperatives",
+      "section": "quick",
+      "title_en": "Towards Value-Constrained Credit Assignment in Fully Delegated AI Cooperatives",
+      "authors": "Young Yoon, Jimin Kim, Soyeon Park",
+      "date": "2026-06-26",
+      "pdf": "https://arxiv.org/pdf/2606.28217v1",
+      "score": "6.0",
+      "evidence": "AI合作社中的信用分配与多智能体协作",
+      "tldr": "针对全委托AI合作社中人类代理贡献异质价值约束下的奖励分配问题，提出价值条件信用分配框架。通过遍历学习（TL）基板实现价值条件梯度过滤、在线边际贡献信号与累积收入结算，仅对通过委托人价值集筛选的更新赋予信用。该方法避免了联邦学习聚合带来的质量损失，提供更精细的归因路径，在数据估值、联邦贡献估计与多元对齐等方面具有优势。",
+      "tags": "query:eca",
+      "abstract_en": "We propose a framework for reward allocation in fully delegated AI cooperatives where humans are represented by agents that contribute data and participate in model updates under heterogeneous value constraints. The key idea is to credit only those updates that remain admissible after screening them against each principal's value profile. We formulate value-conditioned gradient filtering, online marginal contribution signals, and cumulative revenue settlement within a traversal learning (TL) substrate. TL is especially attractive here because it performs decentralized backpropagation without the quality loss associated with aggregation-centric distributed learning and, we argue, offers a finer attribution substrate than FedAvg-style federated learning by preserving explicit traversal and gradient paths. The framework is positioned against data valuation, federated contribution estimation, personalized federated learning, and pluralistic alignment.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/03/2606.31564v1-ace-pluggable-adaptive-context-elasticizer-across-agents",
+      "section": "quick",
+      "title_en": "ACE: Pluggable Adaptive Context Elasticizer across Agents",
+      "authors": "Ning Liao, Zihao Long, Xiaoxing Wang, Xue Yang, Yaoming Wang, Ziyuan Zhuang, Xunliang Cai, Rongxiang Weng, Junchi Yan",
+      "date": "2026-06-30",
+      "pdf": "https://arxiv.org/pdf/2606.31564v1",
+      "score": "6.0",
+      "evidence": "跨智能体的即插即用自适应上下文管理，与多智能体和长轨迹任务相关",
+      "tldr": "针对基于LLM的代理在长轨迹任务中固定上下文窗口的局限，现有截断与摘要方法存在不可逆问题。本文提出ACE，一个即插即用的自适应上下文弹性化模块，通过无损消息维护层存储原始与压缩信息，并利用上下文编排层基于当前状态动态决定每个历史步骤的类型（原始、抽象或丢弃），实现可逆上下文管理。在ReAct、DeepAgent等四个框架上的实验表明，ACE一致优于截断与摘要基线，带来稳定性能提升。",
+      "tags": "query:eca",
+      "abstract_en": "The increasing complexity of agentic tasks has led to rapidly growing trajectory lengths, which poses significant challenges for large language model (LLM) based agents with fixed context windows. Existing context management techniques, such as truncation and summarization, suffer from inherent inflexibility and irreversibility: once information is discarded or compressed, it cannot be recovered even when it becomes critically relevant in later decision steps. To address these limitations, we propose the Adaptive Context Elasticizer (ACE), a plug-and-play module that elastically orchestrates historical step information into the agent's context at each decision step. ACE maintains a lossless message maintenance layer that stores both raw messages and compressed abstractions for each historical step, while a context orchestration layer adaptively assigns each step an elastic type as raw, abstract, or drop, at every decision step based on the current task state. This reversible design ensures that the main LLM always receives a compact yet information-rich context. We adapt ACE to four diverse agent frameworks, including ReAct, DeepAgent, WebThinker, and MiroFlow, without training or architectural modifications. Experiments show that ACE consistently outperforms truncation and summarization baselines, and brings consistent performance gains across all four agent frameworks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,172 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-03T21:05:21.951105+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.29483v1",
+      "source": "arxiv",
+      "title": "Fog Computing and Large Language Models: A vision for the mutual beneficiaries",
+      "abstract": "Fog computing utilizes proximal computational resources for sensor data processing and actuation, and addresses the latency, network load, and privacy issues of cloud-centric Internet of Things. On the other hand, Large Language Models (LLMs) are a type of deep learning AI models, which are trained on enormous text data, that perform various natural language processing tasks such as translation, question answering, text summarization, and code generation. LLMs are generally cloud-centric, requiring abundant GPU memory and computing capabilities, again face the same issues that led to fog computing. This pushes the necessity for LLM support in the proximity on fog infrastructure, requiring LLM optimizations such as parameter-weight quantization, pruning, low-rank adaptation etc. Meanwhile, fog computing also gets benefit from LLM's ability for code generation, in the dynamic deployment of fog-based applications. The paper addresses how both fog computing and LLMs can be mutual beneficiaries, discussing the state-of-the-art and future research scope.",
+      "authors": [
+        "Satish Narayana Srirama"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-06-28T16:27:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.29483v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "fog computing LLM collaborative edge cloud",
+      "llm_evidence_cn": "雾计算与大语言模型协同的边缘云",
+      "llm_evidence": "雾计算与大语言模型协同的边缘云",
+      "canonical_evidence": "雾计算与大语言模型协同的边缘云",
+      "llm_tldr_en": "Presents vision of integrating LLMs with fog computing to address latency, network, and privacy issues, proposing optimizations like quantization for deployment on fog nodes.",
+      "llm_tldr_cn": "当前大语言模型高度依赖云中心，面临延迟、网络负载和隐私问题，而这正是雾计算所擅长的领域。本文提出将LLM优化部署在雾节点上的愿景，通过参数量化、模型压缩等技术使LLM在边缘运行。该方案有望实现端云协同，兼具云的计算能力和边缘的实时性。为边缘云协同AI智能体系统提供了基础设施思路。",
+      "llm_tldr": "当前大语言模型高度依赖云中心，面临延迟、网络负载和隐私问题，而这正是雾计算所擅长的领域。本文提出将LLM优化部署在雾节点上的愿景，通过参数量化、模型压缩等技术使LLM在边缘运行。该方案有望实现端云协同，兼具云的计算能力和边缘的实时性。为边缘云协同AI智能体系统提供了基础设施思路。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.27929v1",
+      "source": "arxiv",
+      "title": "When Multi-Robot Systems Meet Agentic AI:Towards Embodied Collective Intelligence",
+      "abstract": "Embodied AI is increasingly becoming agentic, shifting robots from perception--control pipelines towards closed-loop systems that can retrieve context, deliberate during execution, monitor feedback, and refine future behavior. In parallel, robotics research has also moved from single-robot autonomy towards multi-robot systems, driven by the need for wider sensing, distributed action, heterogeneous capabilities, and fault tolerance. As AI agents move from single-agent use towards multi-agent collaboration, robotics faces a parallel challenge: robot teams must move beyond sharing maps, task assignments, and datasets towards sharing the state produced by embodied agent loops. This article explores Embodied Collective Intelligence (ECI), a future multi-robot paradigm in which a robot team accumulates and uses world context, task progress, and skill experience as shared resources. Specifically, we first review how embodied AI is becoming agentic and how multi-robot cooperation has evolved. We then present Embodied Collective Intelligence through Co-Perception, Co-Action, and Co-Evolution. Finally, we use an illustrative navigation study to examine one concrete component of the concept: shared world-memory inheritance. The study shows that a newly added robot can benefit from merged team memory, but it is not intended as a full evaluation of the ECI framework. Taken together, the review and conceptual framework motivate Embodied Collective Intelligence as a direction for embodied multi-agent intelligence, while the case study grounds one measurable part of the concept.",
+      "authors": [
+        "Yuxuan Yan",
+        "Yuanyuan Jia",
+        "Qianqian Yang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-06-26T10:21:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.27929v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-robot collaboration and distributed agentic AI for embodied collective intelligence",
+      "llm_evidence_cn": "多机器人协作与分布式自主AI实现具身集体智能",
+      "llm_evidence": "多机器人协作与分布式自主AI实现具身集体智能",
+      "canonical_evidence": "多机器人协作与分布式自主AI实现具身集体智能",
+      "llm_tldr_en": "Explores Embodied Collective Intelligence (ECI) where multi-robot systems integrate agentic AI loops for distributed collaboration, sharing state and context across heterogeneous robots.",
+      "llm_tldr_cn": "随着具身AI向智能体化和多机器人方向发展，机器人团队需超越传统任务分配，共享具身代理循环产生的状态。本文提出Embodied Collective Intelligence概念，探讨如何将分布式智能体架构应用于多机器人系统，实现宽感知、分布式动作和容错协作。该研究为端云协同多代理系统提供了理论框架和设计思路，有利于推动分布式边缘云代理架构的发展。",
+      "llm_tldr": "随着具身AI向智能体化和多机器人方向发展，机器人团队需超越传统任务分配，共享具身代理循环产生的状态。本文提出Embodied Collective Intelligence概念，探讨如何将分布式智能体架构应用于多机器人系统，实现宽感知、分布式动作和容错协作。该研究为端云协同多代理系统提供了理论框架和设计思路，有利于推动分布式边缘云代理架构的发展。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.28217v1",
+      "source": "arxiv",
+      "title": "Towards Value-Constrained Credit Assignment in Fully Delegated AI Cooperatives",
+      "abstract": "We propose a framework for reward allocation in fully delegated AI cooperatives where humans are represented by agents that contribute data and participate in model updates under heterogeneous value constraints. The key idea is to credit only those updates that remain admissible after screening them against each principal's value profile. We formulate value-conditioned gradient filtering, online marginal contribution signals, and cumulative revenue settlement within a traversal learning (TL) substrate. TL is especially attractive here because it performs decentralized backpropagation without the quality loss associated with aggregation-centric distributed learning and, we argue, offers a finer attribution substrate than FedAvg-style federated learning by preserving explicit traversal and gradient paths. The framework is positioned against data valuation, federated contribution estimation, personalized federated learning, and pluralistic alignment.",
+      "authors": [
+        "Young Yoon",
+        "Jimin Kim",
+        "Soyeon Park"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.DC",
+        "cs.MA"
+      ],
+      "published": "2026-06-26T16:08:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.28217v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "credit assignment in AI cooperatives with multi-agent collaboration",
+      "llm_evidence_cn": "AI合作社中的信用分配与多智能体协作",
+      "llm_evidence": "AI合作社中的信用分配与多智能体协作",
+      "canonical_evidence": "AI合作社中的信用分配与多智能体协作",
+      "llm_tldr_en": "Proposes value-constrained credit assignment for fully delegated AI cooperatives where agents contribute data under heterogeneous value constraints, using traversal learning for decentralized backpropagation.",
+      "llm_tldr_cn": "在全委托AI合作社中，人类由代表他们的代理参与数据贡献和模型更新，但需满足各异的价值约束。本文提出价值条件梯度过滤和在线边际贡献信号，结合遍历学习实现去中心化反向传播。该方法在保证价值约束的前提下实现了更精细的信用分配。该工作为端云协同中多利益相关方协作提供了可行的激励机制，有助于构建公平高效的协作代理系统。",
+      "llm_tldr": "在全委托AI合作社中，人类由代表他们的代理参与数据贡献和模型更新，但需满足各异的价值约束。本文提出价值条件梯度过滤和在线边际贡献信号，结合遍历学习实现去中心化反向传播。该方法在保证价值约束的前提下实现了更精细的信用分配。该工作为端云协同中多利益相关方协作提供了可行的激励机制，有助于构建公平高效的协作代理系统。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.31564v1",
+      "source": "arxiv",
+      "title": "ACE: Pluggable Adaptive Context Elasticizer across Agents",
+      "abstract": "The increasing complexity of agentic tasks has led to rapidly growing trajectory lengths, which poses significant challenges for large language model (LLM) based agents with fixed context windows. Existing context management techniques, such as truncation and summarization, suffer from inherent inflexibility and irreversibility: once information is discarded or compressed, it cannot be recovered even when it becomes critically relevant in later decision steps. To address these limitations, we propose the Adaptive Context Elasticizer (ACE), a plug-and-play module that elastically orchestrates historical step information into the agent's context at each decision step. ACE maintains a lossless message maintenance layer that stores both raw messages and compressed abstractions for each historical step, while a context orchestration layer adaptively assigns each step an elastic type as raw, abstract, or drop, at every decision step based on the current task state. This reversible design ensures that the main LLM always receives a compact yet information-rich context. We adapt ACE to four diverse agent frameworks, including ReAct, DeepAgent, WebThinker, and MiroFlow, without training or architectural modifications. Experiments show that ACE consistently outperforms truncation and summarization baselines, and brings consistent performance gains across all four agent frameworks.",
+      "authors": [
+        "Ning Liao",
+        "Zihao Long",
+        "Xiaoxing Wang",
+        "Xue Yang",
+        "Yaoming Wang",
+        "Ziyuan Zhuang",
+        "Xunliang Cai",
+        "Rongxiang Weng",
+        "Junchi Yan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-30T12:20:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.31564v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "plug-and-play adaptive context management across agents, relevant to multi-agent and long-trajectory tasks",
+      "llm_evidence_cn": "跨智能体的即插即用自适应上下文管理，与多智能体和长轨迹任务相关",
+      "llm_evidence": "跨智能体的即插即用自适应上下文管理，与多智能体和长轨迹任务相关",
+      "canonical_evidence": "跨智能体的即插即用自适应上下文管理，与多智能体和长轨迹任务相关",
+      "llm_tldr_en": "ACE: a plug-and-play module that elastically orchestrates historical step information into agent context, enabling lossless context management.",
+      "llm_tldr_cn": "本文提出自适应上下文弹性器ACE，一种即插即用模块，可在智能体决策步骤中弹性编排历史信息。ACE维护无损消息层，保留原始与压缩摘要，解决了截断和摘要的不可逆问题，提升长轨迹任务性能。",
+      "llm_tldr": "本文提出自适应上下文弹性器ACE，一种即插即用模块，可在智能体决策步骤中弹性编排历史信息。ACE维护无损消息层，保留原始与压缩摘要，解决了截断和摘要的不可逆问题，提升长轨迹任务性能。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
