@@ -1,0 +1,209 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-04T21:06:43.576550+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.28781v1",
+      "source": "arxiv",
+      "title": "HyphaeDB: A Living Knowledge Topology for Agent-First Memory",
+      "abstract": "Every existing vector database and agent memory framework treats memory as passive storage that agents query explicitly. No system propagates knowledge between agents through the memory layer itself. We introduce HyphaeDB, an agent-native memory infrastructure that reinterprets the Hierarchical Navigable Small World (HNSW) graph topology the data structure at the core of every modern vector database not as a search optimization, but as a communication fabric for multi-agent AI systems. In HyphaeDB, agents are nodes in the vector space with persistent positions, knowledge propagates via a gossip protocol through the graph's neighbor structure with energy-based attenuation, and emergent behaviors contradiction detection, pattern crystallization, and consensus formation arise from the combination of topology, propagation dynamics, and local interaction rules. We present the architecture built on three primitives (knowledge nodes, topology edges, and memory diffs), a multi-layer abstraction hierarchy with promotion via emergent consensus, and theoretical analysis grounding the system in small-world network theory, epidemic broadcast protocols, and swarm intelligence. We provide a reference implementation on PostgreSQL with pgvector and describe a concrete deployment in Swarm-Driven Development, a multi-agent software engineering methodology. HyphaeDB represents, to our knowledge, the first system to combine navigable small world topology with gossip-based knowledge propagation for multi-agent coordination.",
+      "authors": [
+        "Krishna Halaharvi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-06-27T07:15:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.28781v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent knowledge propagation via memory infrastructure",
+      "llm_evidence_cn": "通过记忆基础设施实现多智能体知识传播",
+      "llm_evidence": "通过记忆基础设施实现多智能体知识传播",
+      "canonical_evidence": "通过记忆基础设施实现多智能体知识传播",
+      "llm_tldr_en": "Proposes HyphaeDB, an agent-native memory infrastructure that allows knowledge to propagate between agents via a gossip protocol on the HNSW graph, enabling emergent collaborative behaviors.",
+      "llm_tldr_cn": "现有向量数据库将记忆视为被动存储。HyphaeDB重新诠释HNSW图拓扑为多智能体通信结构，智能体作为图节点通过gossip协议传播知识，实现矛盾检测、模式结晶和共识形成等涌现行为。该框架为多智能体协作提供了全新的记忆层基础设施。",
+      "llm_tldr": "现有向量数据库将记忆视为被动存储。HyphaeDB重新诠释HNSW图拓扑为多智能体通信结构，智能体作为图节点通过gossip协议传播知识，实现矛盾检测、模式结晶和共识形成等涌现行为。该框架为多智能体协作提供了全新的记忆层基础设施。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.00333v1",
+      "source": "arxiv",
+      "title": "(A)I Sees What You Don't: Exploiting New Attack Surfaces in Third-Party Mobile Agents",
+      "abstract": "Third-party mobile agents powered by Vision-Language Models (VLMs) have emerged as a promising paradigm for automating smartphone interactions. These agents act as high-privilege decision-makers, perceiving device states through screenshots and executing actions via VLM reasoning, transforming how an agent app interacts with the environment (i.e., other apps or the OS). Correspondingly, this transformation introduces new attack surfaces or transforms benign/harmless interfaces into exploitable ones for mobile devices. In this paper, we summarize key differences between third-party mobile agent apps and general apps when interacting with the environment, analyze the security posture of agents, and identify two unique attack surfaces compared to general mobile apps: the Screen Perception Attack Surface, which exploits the gap between human and machine vision, and the Misused Channel Attack Surface, which intercepts or manipulates the agent's execution pipeline. We design and implement seven concrete attacks, from subliminal text injection and invisible pixel zone exploitation to screenshot tampering and host PC command injection. Our evaluation of five popular mobile agent frameworks demonstrates that a malicious app can hijack agent actions and achieve arbitrary command execution even without any privilege permissions, while remaining visually indistinguishable to users. These findings reveal a fundamental trust mismatch in autonomous agent design and highlight the urgent need for perception-aware security models on multi-tenant platforms.",
+      "authors": [
+        "Zidong Zhang",
+        "Zhentao Xie",
+        "Wenrui Diao",
+        "Jianliang Wu"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-07-01T02:17:19+00:00",
+      "link": "https://arxiv.org/pdf/2607.00333v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "security analysis of third-party mobile agents",
+      "llm_evidence_cn": "第三方移动智能体安全分析",
+      "llm_evidence": "第三方移动智能体安全分析",
+      "canonical_evidence": "第三方移动智能体安全分析",
+      "llm_tldr_en": "This paper identifies new attack surfaces in third-party mobile agents powered by VLMs, analyzing their unique security posture and vulnerabilities.",
+      "llm_tldr_cn": "本文聚焦于基于视觉语言模型（VLM）的第三方移动智能体，揭示了这类新型智能体应用带来的独特攻击面。通过与普通应用对比，分析了智能体在与环境交互时的安全态势，并识别出两个新的攻击面。这项工作对移动AI智能体的安全部署具有重要警示意义。",
+      "llm_tldr": "本文聚焦于基于视觉语言模型（VLM）的第三方移动智能体，揭示了这类新型智能体应用带来的独特攻击面。通过与普通应用对比，分析了智能体在与环境交互时的安全态势，并识别出两个新的攻击面。这项工作对移动AI智能体的安全部署具有重要警示意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.01425v1",
+      "source": "arxiv",
+      "title": "Agent4cs: A Multi-agent System for Code Summarization in Large Hierarchical Codebases",
+      "abstract": "Understanding large, complex codebases, especially those with obfuscated structures and incomplete documentation, remains a significant challenge. Existing code summarization solutions often rely on a single language model or coding assistant like Claude Code, and treat source code as flat text, underutilizing the rich interdependencies and hierarchical information within a repository. To address these shortcomings, we propose Agent4cs - a multi-agent framework that summarizes large codebases in a bottom-up fashion, where a summarization agent focuses on producing robust summaries; a keyword-extraction agent proactively identifies critical information from subfolders; and a quality-assurance agent iteratively refines the outputs for readability, coherence, and completeness. Evaluated on 7 frontier models, Agent4cs improves semantic consistency across all folder levels by average 8% compared to two structured prompting baselines with code segments. Furthermore, extensive evaluation on real-world datasets demonstrates up to 38% gains in normalized keyword coverage rate over the same baselines.",
+      "authors": [
+        "Yongjian Tang",
+        "Ezgi Sarikayak",
+        "Doruk Tuncel",
+        "Jie M. Zhang",
+        "Thomas Runkler"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-01T19:41:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.01425v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent system for code summarization",
+      "llm_evidence_cn": "用于代码摘要的多智能体系统",
+      "llm_evidence": "用于代码摘要的多智能体系统",
+      "canonical_evidence": "用于代码摘要的多智能体系统",
+      "llm_tldr_en": "Proposes Agent4cs, a multi-agent framework that summarizes large codebases using specialized agents for summarization, keyword extraction, and quality assurance, improving on flat-text approaches.",
+      "llm_tldr_cn": "针对现有代码摘要方法将代码视为扁平文本、忽略层次化结构的局限，提出Agent4cs多智能体框架。该框架包含摘要、关键词提取和质量保证三个专用智能体，以自底向上方式协作生成高质量摘要。实验表明该方法能有效处理复杂代码库，提升摘要的准确性和完整性。",
+      "llm_tldr": "针对现有代码摘要方法将代码视为扁平文本、忽略层次化结构的局限，提出Agent4cs多智能体框架。该框架包含摘要、关键词提取和质量保证三个专用智能体，以自底向上方式协作生成高质量摘要。实验表明该方法能有效处理复杂代码库，提升摘要的准确性和完整性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.31564v1",
+      "source": "arxiv",
+      "title": "ACE: Pluggable Adaptive Context Elasticizer across Agents",
+      "abstract": "The increasing complexity of agentic tasks has led to rapidly growing trajectory lengths, which poses significant challenges for large language model (LLM) based agents with fixed context windows. Existing context management techniques, such as truncation and summarization, suffer from inherent inflexibility and irreversibility: once information is discarded or compressed, it cannot be recovered even when it becomes critically relevant in later decision steps. To address these limitations, we propose the Adaptive Context Elasticizer (ACE), a plug-and-play module that elastically orchestrates historical step information into the agent's context at each decision step. ACE maintains a lossless message maintenance layer that stores both raw messages and compressed abstractions for each historical step, while a context orchestration layer adaptively assigns each step an elastic type as raw, abstract, or drop, at every decision step based on the current task state. This reversible design ensures that the main LLM always receives a compact yet information-rich context. We adapt ACE to four diverse agent frameworks, including ReAct, DeepAgent, WebThinker, and MiroFlow, without training or architectural modifications. Experiments show that ACE consistently outperforms truncation and summarization baselines, and brings consistent performance gains across all four agent frameworks.",
+      "authors": [
+        "Ning Liao",
+        "Zihao Long",
+        "Xiaoxing Wang",
+        "Xue Yang",
+        "Yaoming Wang",
+        "Ziyuan Zhuang",
+        "Xunliang Cai",
+        "Rongxiang Weng",
+        "Junchi Yan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-30T12:20:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.31564v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "context management across multiple agents",
+      "llm_evidence_cn": "跨智能体的上下文管理",
+      "llm_evidence": "跨智能体的上下文管理",
+      "canonical_evidence": "跨智能体的上下文管理",
+      "llm_tldr_en": "Proposes ACE, a pluggable module that elastically manages context across agents, maintaining lossless message storage to avoid irreversible information loss in long trajectories.",
+      "llm_tldr_cn": "随着智能体任务日益复杂，轨迹长度骤增超出固定上下文窗口。现有截断和摘要方法不可逆。ACE（自适应上下文弹性器）作为即插即用模块，在每一步维护无损消息存储，根据相关性动态将历史信息弹性融入当前上下文，支持跨智能体场景。",
+      "llm_tldr": "随着智能体任务日益复杂，轨迹长度骤增超出固定上下文窗口。现有截断和摘要方法不可逆。ACE（自适应上下文弹性器）作为即插即用模块，在每一步维护无损消息存储，根据相关性动态将历史信息弹性融入当前上下文，支持跨智能体场景。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.02186v1",
+      "source": "arxiv",
+      "title": "UA-ChatDev: Uncertainty-Aware Multi-Agent Collaboration for Reliable Software Development",
+      "abstract": "Software development is a complex task that demands cooperation among agents with diverse roles. Large language models (LLMs) have enabled autonomous multi-agent software development frameworks that leverage role-based collaboration to automate requirements analysis, coding, testing, and refinement. However, existing approaches typically assume that intermediate agent outputs are equally reliable, leaving them vulnerable to hallucination propagation, where incorrect decisions generated in early development phases are transferred to downstream agents and negatively impact final software quality. To address this challenge, we propose UA-ChatDev, an uncertainty-aware multi-agent software development framework that integrates uncertainty quantification into agent interactions. It introduces a lightweight uncertainty estimation mechanism based on token-level log probabilities to assess the confidence of agent responses and employs phase-aware threshold calibration to selectively trigger retrieval-based verification when uncertainty exceeds acceptable levels. Extensive experiments on the SRDD benchmark demonstrate that UA-ChatDev consistently outperforms existing single-agent and multi-agent software development frameworks across completeness, executability, consistency, and overall quality metrics. Further ablation studies and communication analyses verify that uncertainty-aware interactions enhance code execution reliability.",
+      "authors": [
+        "Temitayo Olamilekan Ogunsusi",
+        "Lijun Qian",
+        "Xishuang Dong"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-02T13:56:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.02186v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "uncertainty-aware multi-agent collaboration",
+      "llm_evidence_cn": "不确定性感知的多智能体协作",
+      "llm_evidence": "不确定性感知的多智能体协作",
+      "canonical_evidence": "不确定性感知的多智能体协作",
+      "llm_tldr_en": "Proposes UA-ChatDev, an uncertainty-aware multi-agent framework for reliable software development that mitigates hallucination propagation.",
+      "llm_tldr_cn": "该论文提出UA-ChatDev，一种不确定性感知的多智能体软件协作开发框架，通过集成不确定性估计来阻断幻觉传播，提升最终软件质量。",
+      "llm_tldr": "该论文提出UA-ChatDev，一种不确定性感知的多智能体软件协作开发框架，通过集成不确定性估计来阻断幻觉传播，提升最终软件质量。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

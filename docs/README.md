@@ -6,34 +6,39 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-03
-- 运行时间：2026-07-03 21:07:29 UTC
+- 最新运行日期：2026-07-04
+- 运行时间：2026-07-04 21:09:06 UTC
 - 运行状态：成功
-- 本次总论文数：4
-- 精读区：1
+- 本次总论文数：5
+- 精读区：2
 - 速读区：3
 
 ### 今日简报（AI）
-今日精读一篇雾计算与大语言模型互惠愿景论文，并速读多机器人智能体协作、AI合作社信用分配及自适应上下文扩展三篇。  
-最值得关注的是雾计算与LLM的协同潜力（9分），以及多机器人系统与智能体AI结合带来的具身集体智能探索。  
-建议优先精读高分的雾计算论文，了解其如何赋能边缘AI，后续可关注智能体间协作与信用分配机制。
-- 详情：[/202607/03/README](/202607/03/README)
+今日精读两篇高分论文，分别聚焦Agent记忆知识拓扑与移动Agent新攻击面，速读关注代码摘要与协作开发可靠性。
+
+最值得关注的方向：Agent原生记忆架构（HyphaeDB）与第三方移动Agent的安全隐患（(A)I Sees What You Don't），均为8.0高分。
+
+建议下一步深入阅读HyphaeDB的实时拓扑构建方法，并检查自身Agent系统中是否存在未隔离的第三方调用风险。
+- 详情：[/202607/04/README](/202607/04/README)
 
 ### 精读区论文标签
-1. [Fog Computing and Large Language Models: A vision for the mutual beneficiaries](/202607/03/2606.29483v1-fog-computing-and-large-language-models-a-vision-for-the-mutual-beneficiaries)  
-   标签：评分：9.0/10、query:eca
-   evidence：雾计算与大语言模型协同的边缘云
+1. [HyphaeDB: A Living Knowledge Topology for Agent-First Memory](/202607/04/2606.28781v1-hyphaedb-a-living-knowledge-topology-for-agent-first-memory)  
+   标签：评分：8.0/10、query:eca
+   evidence：通过记忆基础设施实现多智能体知识传播
+2. [(A)I Sees What You Don't: Exploiting New Attack Surfaces in Third-Party Mobile Agents](/202607/04/2607.00333v1-ai-sees-what-you-dont-exploiting-new-attack-surfaces-in-third-party-mobile-agents)  
+   标签：评分：8.0/10、query:eca
+   evidence：第三方移动智能体安全分析
 
 ### 速读区论文标签
-1. [When Multi-Robot Systems Meet Agentic AI:Towards Embodied Collective Intelligence](/202607/03/2606.27929v1-when-multi-robot-systems-meet-agentic-aitowards-embodied-collective-intelligence)  
+1. [Agent4cs: A Multi-agent System for Code Summarization in Large Hierarchical Codebases](/202607/04/2607.01425v1-agent4cs-a-multi-agent-system-for-code-summarization-in-large-hierarchical-codebases)  
    标签：评分：7.0/10、query:eca
-   evidence：多机器人协作与分布式自主AI实现具身集体智能
-2. [Towards Value-Constrained Credit Assignment in Fully Delegated AI Cooperatives](/202607/03/2606.28217v1-towards-value-constrained-credit-assignment-in-fully-delegated-ai-cooperatives)  
+   evidence：用于代码摘要的多智能体系统
+2. [UA-ChatDev: Uncertainty-Aware Multi-Agent Collaboration for Reliable Software Development](/202607/04/2607.02186v1-ua-chatdev-uncertainty-aware-multi-agent-collaboration-for-reliable-software-development)  
+   标签：评分：7.0/10、query:eca
+   evidence：不确定性感知的多智能体协作
+3. [ACE: Pluggable Adaptive Context Elasticizer across Agents](/202607/04/2606.31564v1-ace-pluggable-adaptive-context-elasticizer-across-agents)  
    标签：评分：6.0/10、query:eca
-   evidence：AI合作社中的信用分配与多智能体协作
-3. [ACE: Pluggable Adaptive Context Elasticizer across Agents](/202607/03/2606.31564v1-ace-pluggable-adaptive-context-elasticizer-across-agents)  
-   标签：评分：6.0/10、query:eca
-   evidence：跨智能体的即插即用自适应上下文管理，与多智能体和长轨迹任务相关
+   evidence：跨智能体的上下文管理
 
 
 <div class="dpr-home-promo-card">
