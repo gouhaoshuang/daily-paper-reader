@@ -6,39 +6,38 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-04
-- 运行时间：2026-07-04 21:09:06 UTC
+- 最新运行日期：2026-07-05
+- 运行时间：2026-07-05 21:12:16 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：2
-- 速读区：3
+- 本次总论文数：6
+- 精读区：1
+- 速读区：5
 
 ### 今日简报（AI）
-今日精读两篇高分论文，分别聚焦Agent记忆知识拓扑与移动Agent新攻击面，速读关注代码摘要与协作开发可靠性。
-
-最值得关注的方向：Agent原生记忆架构（HyphaeDB）与第三方移动Agent的安全隐患（(A)I Sees What You Don't），均为8.0高分。
-
-建议下一步深入阅读HyphaeDB的实时拓扑构建方法，并检查自身Agent系统中是否存在未隔离的第三方调用风险。
-- 详情：[/202607/04/README](/202607/04/README)
+今日推荐6篇论文，聚焦多智能体LLM系统与智能网络架构。最值得精读的是《BOUNDARY_SYNC》，深入分析多智能体通信中的表征耦合问题。普通读者可从精读文章入手，理解多智能体协作中的关键机制。
+- 详情：[/202607/05/README](/202607/05/README)
 
 ### 精读区论文标签
-1. [HyphaeDB: A Living Knowledge Topology for Agent-First Memory](/202607/04/2606.28781v1-hyphaedb-a-living-knowledge-topology-for-agent-first-memory)  
+1. [BOUNDARY_SYNC: Measuring Communication-Induced Representational Coupling in Multi-Agent LLM Systems](/202607/05/2607.01600v1-boundarysync-measuring-communication-induced-representational-coupling-in-multi-agent-llm-systems)  
    标签：评分：8.0/10、query:eca
-   evidence：通过记忆基础设施实现多智能体知识传播
-2. [(A)I Sees What You Don't: Exploiting New Attack Surfaces in Third-Party Mobile Agents](/202607/04/2607.00333v1-ai-sees-what-you-dont-exploiting-new-attack-surfaces-in-third-party-mobile-agents)  
-   标签：评分：8.0/10、query:eca
-   evidence：第三方移动智能体安全分析
+   evidence：测量多智能体大语言模型通信中的表征耦合
 
 ### 速读区论文标签
-1. [Agent4cs: A Multi-agent System for Code Summarization in Large Hierarchical Codebases](/202607/04/2607.01425v1-agent4cs-a-multi-agent-system-for-code-summarization-in-large-hierarchical-codebases)  
+1. [Mixture of Debaters: Learn to Debate at Architectural Level in Multi-Agent Reasoning](/202607/05/2606.29425v1-mixture-of-debaters-learn-to-debate-at-architectural-level-in-multi-agent-reasoning)  
    标签：评分：7.0/10、query:eca
-   evidence：用于代码摘要的多智能体系统
-2. [UA-ChatDev: Uncertainty-Aware Multi-Agent Collaboration for Reliable Software Development](/202607/04/2607.02186v1-ua-chatdev-uncertainty-aware-multi-agent-collaboration-for-reliable-software-development)  
+   evidence：动态多智能体辩论框架实现协作推理
+2. [From Signals to Structure: How Memory Architecture Drives Language Emergence in LLM Agents](/202607/05/2607.00233v1-from-signals-to-structure-how-memory-architecture-drives-language-emergence-in-llm-agents)  
    标签：评分：7.0/10、query:eca
-   evidence：不确定性感知的多智能体协作
-3. [ACE: Pluggable Adaptive Context Elasticizer across Agents](/202607/04/2606.31564v1-ace-pluggable-adaptive-context-elasticizer-across-agents)  
+   evidence：研究两个智能体如何协作发明共享语言，直接关于协作
+3. [Evolving Intelligent Complex Systems via Intellicise Networks: Architecture, Technologies, and Pathways](/202607/05/2607.00316v1-evolving-intelligent-complex-systems-via-intellicise-networks-architecture-technologies-and-pathways)  
+   标签：评分：7.0/10、query:eca
+   evidence：面向智能复杂系统的跨域分布式智能网络架构
+4. [Harvesting AI Computation at the Edge via Generic Approximation](/202607/05/2606.29518v1-harvesting-ai-computation-at-the-edge-via-generic-approximation)  
    标签：评分：6.0/10、query:eca
-   evidence：跨智能体的上下文管理
+   evidence：在边缘收割AI计算资源
+5. [SLM, LLM or Agentic AI? Toward Intelligent UAV-Enabled WPT Systems in Low-Altitude Economy Networks](/202607/05/2607.00255v1-slm-llm-or-agentic-ai-toward-intelligent-uav-enabled-wpt-systems-in-low-altitude-economy-networks)  
+   标签：评分：6.0/10、query:eca
+   evidence：涉及移动无人机和智能体AI框架，与移动AI智能体相关
 
 
 <div class="dpr-home-promo-card">
