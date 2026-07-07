@@ -1,0 +1,291 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-07T21:15:38.854747+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2607.04219v1",
+      "source": "arxiv",
+      "title": "Agentic IoT: Architectures, Applications, and Challenges Toward the Internet of Agents",
+      "abstract": "The integration of AI into Internet of Things (AIoT) systems has gradually transformed them from passive data collection infrastructures into intelligent systems capable of anomaly detection, predictive maintenance, classification, forecasting, and optimization. However, most existing solutions still rely on task-specific models that infer from sensor data; thus, system-wide capabilities such as real-time reasoning, adaptive planning, autonomous coordination, learning, tool use, and contextual decision-making remain limited. This paper examines Agentic IoT as a next-generation cognitive IoT paradigm that integrates the perception, reasoning, planning, learning, and action capabilities of autonomous AI agents with cyber-physical systems. Agentic IoT aims to transform IoT from data-centric sensing and inference infrastructures into distributed cognitive agent ecosystems operating across the device/edge-fog-cloud continuum. The paper first grounds this transition as a paradigm shift and positions Agentic IoT in relation to AIoT, edge intelligence, multi-agent systems, and the Internet of Agents. It then systematically reviews current studies, presents a holistic architectural framework, discusses domain-specific application potential, and identifies key technical, operational, and research challenges together with future research directions.",
+      "authors": [
+        "Rümeysa Hilal Sevinç",
+        "Bahaeddin Türkoğlu",
+        "İbrahim Kök"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA",
+        "cs.NI"
+      ],
+      "published": "2026-07-05T10:24:20+00:00",
+      "link": "https://arxiv.org/pdf/2607.04219v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "integrates AI agents with IoT and cyber-physical systems toward edge-cloud collaboration",
+      "llm_evidence_cn": "将AI智能体与物联网及信息物理系统融合，面向端云协作",
+      "llm_evidence": "将AI智能体与物联网及信息物理系统融合，面向端云协作",
+      "canonical_evidence": "将AI智能体与物联网及信息物理系统融合，面向端云协作",
+      "llm_tldr_en": "Examines Agentic IoT as a next-generation cognitive IoT paradigm that integrates autonomous AI agents with cyber-physical systems, enabling real-time reasoning, adaptive planning, and autonomous coordination.",
+      "llm_tldr_cn": "论文分析现有AIoT系统依赖任务特定模型、缺乏系统级智能的局限，提出Agentic IoT范式，将自主AI智能体的感知、推理、规划、学习与行动能力融入信息物理系统，实现端云协同的认知物联网。",
+      "llm_tldr": "论文分析现有AIoT系统依赖任务特定模型、缺乏系统级智能的局限，提出Agentic IoT范式，将自主AI智能体的感知、推理、规划、学习与行动能力融入信息物理系统，实现端云协同的认知物联网。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.04215v1",
+      "source": "arxiv",
+      "title": "Anytime Plug-and-Play Control with Contract-Based Distributed MPC",
+      "abstract": "A central challenge in many mobile multi-robot applications is that communication topologies are inherently time-varying. Agents may enter or exit the network and such changes cannot generally be restricted a priori. This work introduces a distributed multi-agent control algorithm based on local communication that supports anytime agent joining and leaving the communication network without centralized coordination. The method scales efficiently with the number of agents by relying on a distance-based neighbor definition and on contracts derived from predicted trajectories. The resulting contract constraints guarantee collision avoidance and constraint satisfaction. We validate the proposed method in an autonomous multi-agent driving scenario, demonstrating effective collision avoidance in high-speed, dynamic environments with agents moving in opposite directions, in both simulated and real-world experiments.",
+      "authors": [
+        "Sabrina Bodmer",
+        "Danilo Saccani",
+        "Melanie N. Zeilinger",
+        "Andrea Carron"
+      ],
+      "primary_category": "math.OC",
+      "categories": [
+        "math.OC",
+        "cs.RO"
+      ],
+      "published": "2026-07-05T10:06:49+00:00",
+      "link": "https://arxiv.org/pdf/2607.04215v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "distributed multi-agent control for mobile robots",
+      "llm_evidence_cn": "移动机器人分布式多智能体控制",
+      "llm_evidence": "移动机器人分布式多智能体控制",
+      "canonical_evidence": "移动机器人分布式多智能体控制",
+      "llm_tldr_en": "Proposes an anytime plug-and-play distributed MPC algorithm for mobile multi-robot systems that supports dynamic agent joining and leaving via contract-based constraints, validated in autonomous driving scenarios.",
+      "llm_tldr_cn": "针对移动多机器人系统中通信拓扑动态变化的问题，提出了一种基于本地通信的分布式模型预测控制算法，通过契约约束支持任意时刻的智能体加入和离开，无需集中协调，并在自主多智能体驾驶场景中验证了避碰和约束满足能力。",
+      "llm_tldr": "针对移动多机器人系统中通信拓扑动态变化的问题，提出了一种基于本地通信的分布式模型预测控制算法，通过契约约束支持任意时刻的智能体加入和离开，无需集中协调，并在自主多智能体驾驶场景中验证了避碰和约束满足能力。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.02975v1",
+      "source": "arxiv",
+      "title": "Evaluating Generative Agents with Actions Grounded in Socially Distributed Task Environments using Incognita",
+      "abstract": "Effective agency in social environments depends on when an agent seeks knowledge, when it acts, and whether its actions are justified by acquired information. Existing grounded benchmarks provide executable actions, persistent state, and verifiable outcomes, while social simulation environments provide rich interaction among language agents. We study an evaluation setting that combines these requirements. We define socially distributed task environments as interactive environments where task-relevant knowledge is partitioned across role-isolated participants and consequential actions are accessible only through them. Communication serves as exploration over role-partitioned knowledge, while grounded action serves as exploitation over environment state. We introduce Incognita, a Concordia-based framework that separates social interaction from grounded execution. The evaluated agent routes messages to a user or specialist entities; specialists mediate admissible operations; a deterministic sub-environment executes accepted operations over a canonical state; and an offline evaluator scores outcomes with inherited rewards. Incognita-Retail transforms tau-bench retail into a multi-entity environment while preserving final-state reward semantics. We evaluate three generative agent models on 18 tasks stratified by social breadth, with 540 trials. Progress appears in reward and behavior: success rises from 0 percent to 8.9 percent and 17.2 percent, while premature finalization falls from 100 percent to 87 percent and 58 percent. Stronger models elicit more hidden knowledge, contact more entities, and attempt more grounded writes, yet reliability remains low. These findings show that socially distributed task environments expose behavior before reliable success, including knowledge elicitation, source selection, grounded action attempts, and premature completion belief.",
+      "authors": [
+        "Dan C. Hsu",
+        "Luke Lu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-03T05:34:21+00:00",
+      "link": "https://arxiv.org/pdf/2607.02975v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "evaluates agents in socially distributed task environments with grounded actions",
+      "llm_evidence_cn": "在社会分布式任务环境中评估智能体协作",
+      "llm_evidence": "在社会分布式任务环境中评估智能体协作",
+      "canonical_evidence": "在社会分布式任务环境中评估智能体协作",
+      "llm_tldr_en": "Defines socially distributed task environments where knowledge is partitioned across roles and actions are grounded, and proposes Incognita for evaluating generative agents in such settings.",
+      "llm_tldr_cn": "针对现有基准缺乏社会分布式任务环境的问题，定义了知识角色分区、动作可执行的社会分布式任务环境，并提出Incognita评估框架，用于评测智能体在何时寻求知识、何时行动以及行动是否合理。",
+      "llm_tldr": "针对现有基准缺乏社会分布式任务环境的问题，定义了知识角色分区、动作可执行的社会分布式任务环境，并提出Incognita评估框架，用于评测智能体在何时寻求知识、何时行动以及行动是否合理。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.03181v1",
+      "source": "arxiv",
+      "title": "Teaming Up with AI: Coordination and Cooperation",
+      "abstract": "Successful diffusion of AI in the workforce hinges on the economic value that AI brings to human endeavors. Bringing AI into the workforce is more than deploying a powerful new technology -- it is launching a new form of collaboration. Each human worker is now endowed with a team of AI agents; work can be delegated to these agents, and the role of the human shifts towards managing and monitoring. How can we maximize the economic value from collaboration with AI in the workforce? How can we make it a \"true\" collaboration that empowers human workers rather than replacing them?   We take an approach that combines the fields of theoretical computer science and economics, highlighting the potential of algorithmic tools grounded in economic principles to improve the effectiveness of human-AI collective work. We consider two tiers of tools: (1) tools for better coordination, via algorithmic management of interdependencies; (2) tools for better cooperation, via contractual incentive alignment. We show how a principled approach based on algorithmic and economic research enhances both coordination and cooperation, charting a pathway for future research to inform AI markets.",
+      "authors": [
+        "Nicole Immorlica",
+        "Inbal Talgam-Cohen"
+      ],
+      "primary_category": "cs.GT",
+      "categories": [
+        "cs.GT",
+        "cs.AI"
+      ],
+      "published": "2026-07-03T10:38:00+00:00",
+      "link": "https://arxiv.org/pdf/2607.03181v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "economic framework for human-AI collaboration and coordination",
+      "llm_evidence_cn": "基于经济学原理的人类-AI协作框架",
+      "llm_evidence": "基于经济学原理的人类-AI协作框架",
+      "canonical_evidence": "基于经济学原理的人类-AI协作框架",
+      "llm_tldr_en": "This paper combines theoretical computer science and economics to maximize economic value from human-AI collaboration, treating AI agents as a team for each human worker.",
+      "llm_tldr_cn": "将AI引入劳动力不仅仅是部署新技术，更是启动新型协作。论文结合理论计算机科学和经济学，将每位人类工作者视为配备一支AI智能体团队，工作可委托给智能体，人类转向管理与监督。通过算法工具和经济原则，最大化人机协作的经济价值。对端云协同场景中的人类-AI协作模式设计有启发意义。",
+      "llm_tldr": "将AI引入劳动力不仅仅是部署新技术，更是启动新型协作。论文结合理论计算机科学和经济学，将每位人类工作者视为配备一支AI智能体团队，工作可委托给智能体，人类转向管理与监督。通过算法工具和经济原则，最大化人机协作的经济价值。对端云协同场景中的人类-AI协作模式设计有启发意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.04329v1",
+      "source": "arxiv",
+      "title": "HAS-Bench: Evaluating LLM-Based Human-Agent Systems under Configurable Human Participation",
+      "abstract": "Large language models increasingly operate in settings where humans are active collaborators rather than passive task providers. We introduce HAS-Framework, a graph-based framework that represents humans and LLM-powered agents as first-class participants with explicit roles, permissions, communication paths, and action authority. Building on this framework, HAS-Bench evaluates Human-Agent Systems under configurable human participation across agency levels, interaction channels, and persona policies. The benchmark measures both task outcomes and process-level collaboration behavior, including clarification quality, feedback utilization, control calibration, safety, initiative, and interaction cost. Experiments across six domains show that human participation can substantially improve task completion and failure recovery, but the gains depend on when, how, and by whom human input is exercised.",
+      "authors": [
+        "Yaozu Wu",
+        "Wei-Chieh Huang",
+        "Jizhou Guo",
+        "Dongyuan Li",
+        "Renhe Jiang",
+        "Henry Peng Zou",
+        "Chunyu Miao",
+        "Shanghao Li",
+        "Weizhi Zhang",
+        "WeiWei Ye",
+        "Yankai Chen",
+        "Meng Zhang",
+        "Xue Liu",
+        "Philip S. Yu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-05T14:23:27+00:00",
+      "link": "https://arxiv.org/pdf/2607.04329v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "benchmark for human-agent collaboration with configurable human participation",
+      "llm_evidence_cn": "可配置人类参与的人机协作评测基准",
+      "llm_evidence": "可配置人类参与的人机协作评测基准",
+      "canonical_evidence": "可配置人类参与的人机协作评测基准",
+      "llm_tldr_en": "HAS-Bench introduces a graph-based framework and benchmark for evaluating human-agent systems under configurable human participation, measuring both task outcomes and process-level collaboration behavior.",
+      "llm_tldr_cn": "大型语言模型越来越多地用于人类主动协作的场景。论文提出HAS-Framework，一种基于图的框架，将人类和LLM智能体作为一等参与者，并构建HAS-Bench评测基准。该基准支持配置人类参与程度，测量任务结果和协作行为（澄清质量、反馈利用等）。跨6个领域的实验展示了框架的有效性。对端云协同中的人机协作环节有直接参考价值。",
+      "llm_tldr": "大型语言模型越来越多地用于人类主动协作的场景。论文提出HAS-Framework，一种基于图的框架，将人类和LLM智能体作为一等参与者，并构建HAS-Bench评测基准。该基准支持配置人类参与程度，测量任务结果和协作行为（澄清质量、反馈利用等）。跨6个领域的实验展示了框架的有效性。对端云协同中的人机协作环节有直接参考价值。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.03953v1",
+      "source": "arxiv",
+      "title": "The Remarkable Effectiveness of Providing AI Agents with Natural Language Tools: A Replication Study Validating NLT Performance Across 14 Models",
+      "abstract": "This study independently replicates and extends the Natural Language Tools (NLT) framework of Johnson et al.~(2025), which questions the use of structured tool calling in large language model (LLM) agentic systems. We evaluated NLT across 14 models and 8,560 trials, adding newer frontier, reasoning, and open-weight models to the original set. The results confirm the core findings and add detail. NLT improves tool-calling accuracy by 14.9 percentage points overall (62.3\\% versus 47.4\\% structured) and reduces critical errors by 93\\% (51 versus 755 errors). The gains depend on model capability: models without native tool calling, reasoning models, and smaller models gain substantially (+24.0pp to +43.1pp), while heavily optimized frontier models (GPT-5, Gemini 2.5 Pro) show smaller or reversed advantages. This matches recent analyses of reinforcement-learning-optimized tool use (Martinez, 2025). NLT also cuts token usage by 25.2\\%. The reliability and efficiency advantages compound in recursive agentic workflows, where agents chain many tool calls across sub-agents: a structured failure triggers retries, fallback routing, and coordination overhead, while NLT avoids most of that cost at the source. This work makes three contributions: (1) the first independent validation of NLT using open-source tooling, (2) evidence that model capability moderates NLT's advantages (Chen et al., 2025; Zhang et al., 2025), and (3) a measurement of NLT's reliability benefit (93\\% fewer errors), its most deployment-relevant property given the known fragility of structured tool calling. NLT is a practical alternative to structured tool calling, especially for production systems that value reliability over parseability.",
+      "authors": [
+        "Alexander Somma",
+        "Isabelle Plante",
+        "Fred Premji"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-07-04T16:59:12+00:00",
+      "link": "https://arxiv.org/pdf/2607.03953v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "AI agent with natural language tools",
+      "llm_evidence_cn": "AI Agent使用自然语言工具",
+      "llm_evidence": "AI Agent使用自然语言工具",
+      "canonical_evidence": "AI Agent使用自然语言工具",
+      "llm_tldr_en": "Replicates and extends NLT framework showing NL tool use improves LLM agent tool-calling accuracy by 14.9 points, relevant to general AI agent capability.",
+      "llm_tldr_cn": "传统AI Agent依赖结构化工具调用，但泛化性受限。本文复现并扩展了自然语言工具（NLT）框架，在14个模型和8560次试验中验证其效果。结果表明NLT将工具调用准确率提升14.9个百分点（62.3%对47.4%），关键错误减少93%。该工作为移动AI Agent提供更鲁棒的工具使用范式，但未涉及边缘协同。",
+      "llm_tldr": "传统AI Agent依赖结构化工具调用，但泛化性受限。本文复现并扩展了自然语言工具（NLT）框架，在14个模型和8560次试验中验证其效果。结果表明NLT将工具调用准确率提升14.9个百分点（62.3%对47.4%），关键错误减少93%。该工作为移动AI Agent提供更鲁棒的工具使用范式，但未涉及边缘协同。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.04391v1",
+      "source": "arxiv",
+      "title": "Memory-Orchestrated Semantic System (MOSS): An Auditable Agentic Memory Architecture",
+      "abstract": "Long-term memory remains a structural weakness of AI agents. The dominant approach, retrieval-augmented generation (RAG), relies on embedding-based similarity search, which is opaque by construction, difficult to audit, and bounded by the theoretical limits of vector representations. We present the Memory-Orchestrated Semantic System (MOSS), an agentic memory architecture in which the agent drives retrieval over a structured relational database. MOSS is model-agnostic, storage-agnostic, and API-agnostic: it runs on any relational engine, connects to any LLM provider (or to deterministic non-LLM processes), and deploys on any infrastructure, local or cloud. Its retrieval execution is symbolic and reproducible (once a query is formulated, no LLM participates in the retrieval loop) and every step of the system, from indexing to answer formulation, is logged and inspectable, making MOSS auditable by construction. Rather than imposing an external ontology, MOSS derives its conceptual vocabulary from the corpus itself. We report on a longitudinal deployment unique in the agentic-memory literature: a year of continuous production over an individual scholar's working corpus--a conversational corpus reaching back to October 2024 (some 44 million tokens, retroactively indexed) comprising 110,183 segments, alongside 163,494 catalogued documents, 569 inductively derived concepts, 322,662 concept annotations, and eleven metadata graphs totaling approximately five million relations--across four successive infrastructure generations. While the present case is that of a single researcher, the architecture is in no way specific to one person: it serves a team, an institution, or any entity that accumulates knowledge over time. We argue that auditable, sovereign, structurally unbounded memory is a precondition for AI agents intended to accompany a person or an organization over years rather than sessions.",
+      "authors": [
+        "Serge Lacasse",
+        "Jérémie Hatier",
+        "Alex Baker"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-07-05T16:35:19+00:00",
+      "link": "https://arxiv.org/pdf/2607.04391v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agentic memory architecture deployable on any infrastructure including cloud and local",
+      "llm_evidence_cn": "可部署于任意基础设施（含云端和本地）的智能体记忆架构",
+      "llm_evidence": "可部署于任意基础设施（含云端和本地）的智能体记忆架构",
+      "canonical_evidence": "可部署于任意基础设施（含云端和本地）的智能体记忆架构",
+      "llm_tldr_en": "Introduces MOSS, an auditable agentic memory architecture that uses structured relational databases for retrieval, model-agnostic and deployable on any infrastructure including local and cloud.",
+      "llm_tldr_cn": "为解决AI智能体长期记忆弱且RAG不可审计的问题，提出MOSS架构，让智能体自主驱动结构化数据库检索，支持任意云或本地部署，符号化且可重现。",
+      "llm_tldr": "为解决AI智能体长期记忆弱且RAG不可审计的问题，提出MOSS架构，让智能体自主驱动结构化数据库检索，支持任意云或本地部署，符号化且可重现。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
