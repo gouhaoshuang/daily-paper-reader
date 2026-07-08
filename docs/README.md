@@ -6,41 +6,40 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-07
-- 运行时间：2026-07-07 21:21:14 UTC
+- 最新运行日期：2026-07-08
+- 运行时间：2026-07-08 21:09:51 UTC
 - 运行状态：成功
-- 本次总论文数：7
+- 本次总论文数：6
 - 精读区：2
-- 速读区：5
+- 速读区：4
 
 ### 今日简报（AI）
-今日聚焦物联网智能体架构与分布式控制，精读Agentic IoT与即插即用MPC两篇高分论文。值得关注的方向是物联网向智能体网络演进的技术挑战，以及基于合约的分布式控制如何实现实时协同。建议普通读者优先精读《Agentic IoT》以把握行业趋势，其次关注HAS-Bench中的人机系统评估方法。
-- 详情：[/202607/07/README](/202607/07/README)
+1) 今日6篇论文聚焦多智能体协作与人机交互，两篇高分精读分别探讨故障感知主动代理和部分可观测下的联合决策。  
+2) 最值得关注的方向：多用户协作中的主动故障预警（ProACT，9.0分）与有限信息下的 deliberative 协作机制（9.0分），是提升群体智能鲁棒性的关键。  
+3) 建议优先精读这两篇高分论文，理解如何设计能主动识别中断并协调的多智能体系统，再结合速读中的面向工作流的代理层与人机反思架构拓展实际应用。
+- 详情：[/202607/08/README](/202607/08/README)
 
 ### 精读区论文标签
-1. [Agentic IoT: Architectures, Applications, and Challenges Toward the Internet of Agents](/202607/07/2607.04219v1-agentic-iot-architectures-applications-and-challenges-toward-the-internet-of-agents)  
+1. [ProACT: Towards Breakdown-Aware Proactive Agent in Multi-User Collaboration](/202607/08/2607.03730v1-proact-towards-breakdown-aware-proactive-agent-in-multi-user-collaboration)  
    标签：评分：9.0/10、query:eca
-   evidence：将AI智能体与物联网及信息物理系统融合，面向端云协作
-2. [Anytime Plug-and-Play Control with Contract-Based Distributed MPC](/202607/07/2607.04215v1-anytime-plug-and-play-control-with-contract-based-distributed-mpc)  
-   标签：评分：8.0/10、query:eca
-   evidence：移动机器人分布式多智能体控制
+   evidence：面向多用户协作的主动智能体框架
+2. [LLM Agents for Deliberative Collaboration: A Study on Joint Decision Making Under Partial Observability](/202607/08/2607.06157v1-llm-agents-for-deliberative-collaboration-a-study-on-joint-decision-making-under-partial-observability)  
+   标签：评分：9.0/10、query:eca
+   evidence：审慎协作联合决策
 
 ### 速读区论文标签
-1. [Evaluating Generative Agents with Actions Grounded in Socially Distributed Task Environments using Incognita](/202607/07/2607.02975v1-evaluating-generative-agents-with-actions-grounded-in-socially-distributed-task-environments-using-incognita)  
-   标签：评分：7.0/10、query:eca
-   evidence：在社会分布式任务环境中评估智能体协作
-2. [HAS-Bench: Evaluating LLM-Based Human-Agent Systems under Configurable Human Participation](/202607/07/2607.04329v1-has-bench-evaluating-llm-based-human-agent-systems-under-configurable-human-participation)  
-   标签：评分：7.0/10、query:eca
-   evidence：可配置人类参与的人机协作评测基准
-3. [Teaming Up with AI: Coordination and Cooperation](/202607/07/2607.03181v1-teaming-up-with-ai-coordination-and-cooperation)  
+1. [Holonic Active Distillation for Scalable Multi-Agent Learning in Multi-Sensor Systems](/202607/08/2606.31578v1-holonic-active-distillation-for-scalable-multi-agent-learning-in-multi-sensor-systems)  
    标签：评分：6.0/10、query:eca
-   evidence：基于经济学原理的人类-AI协作框架
-4. [The Remarkable Effectiveness of Providing AI Agents with Natural Language Tools: A Replication Study Validating NLT Performance Across 14 Models](/202607/07/2607.03953v1-the-remarkable-effectiveness-of-providing-ai-agents-with-natural-language-tools-a-replication-study-validating-nlt-performance-across-14-models)  
+   evidence：面向分布式系统的可扩展多智能体学习
+2. [A Workflow-Aware Serving Layer for Agentic Applications](/202607/08/2607.02942v1-a-workflow-aware-serving-layer-for-agentic-applications)  
    标签：评分：6.0/10、query:eca
-   evidence：AI Agent使用自然语言工具
-5. [Memory-Orchestrated Semantic System (MOSS): An Auditable Agentic Memory Architecture](/202607/07/2607.04391v1-memory-orchestrated-semantic-system-moss-an-auditable-agentic-memory-architecture)  
+   evidence：面向智能体应用的工作流感知服务层，支持异构后端，与端云协同AI智能体相关
+3. [Human-Centric Reflective Architecture for Human-AI Collaborative Decision-Making](/202607/08/2607.03025v1-human-centric-reflective-architecture-for-human-ai-collaborative-decision-making)  
    标签：评分：6.0/10、query:eca
-   evidence：可部署于任意基础设施（含云端和本地）的智能体记忆架构
+   evidence：人机协作决策框架
+4. [Collective Cognition in Hybrid Groups: A Network Science Synthesis](/202607/08/2607.05593v1-collective-cognition-in-hybrid-groups-a-network-science-synthesis)  
+   标签：评分：6.0/10、query:eca
+   evidence：混合人机群体中的集体认知
 
 
 <div class="dpr-home-promo-card">

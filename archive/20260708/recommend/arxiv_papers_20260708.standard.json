@@ -1,0 +1,248 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-08T21:05:10.828198+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2607.03730v1",
+      "source": "arxiv",
+      "title": "ProACT: Towards Breakdown-Aware Proactive Agent in Multi-User Collaboration",
+      "abstract": "Conversational agents are increasingly embedded in human collaborative work, yet they remain fundamentally passive and reactive: they respond to explicit user requests rather than proactively recognizing moments when a team would benefit from timely intervention as human collaborators often do. This reactive design substantially limits the use of agents as active participants in multi-user collaboration, where disagreements, ambiguous goals, forgotten constraints, underspecified plans, discussion loops, and imbalanced participation can gradually undermine group progress. To move agents from passive assistants toward active participants in multi-user collaboration, we introduce ProACT, a breakdown-aware agent framework grounded in theories of common ground, collaborative planning, and coordination work. ProACT observes the speaker-attributed conversation history, determines whether the current turn contains a collaboration breakdown requiring intervention, decides whether the agent should stay silent or speak, and, when speaking is needed, routes the case to a targeted collaboration skill. We further introduce the first multi-user collaboration benchmark for evaluating proactive agents across project planning, product design, research collaboration, logistics, education, and resource-constrained decision making. Across 3,244 turn-level examples and five LLM backbones, ProACT consistently improves collaborative appropriateness, non-interruptiveness, conciseness, and judged intervention quality over direct chat.",
+      "authors": [
+        "Shu Yang",
+        "Difei Xu",
+        "Jiaxin Pei",
+        "Di Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-07-04T06:36:06+00:00",
+      "link": "https://arxiv.org/pdf/2607.03730v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Proactive agent framework for multi-user collaboration",
+      "llm_evidence_cn": "面向多用户协作的主动智能体框架",
+      "llm_evidence": "面向多用户协作的主动智能体框架",
+      "canonical_evidence": "面向多用户协作的主动智能体框架",
+      "llm_tldr_en": "Introduces ProACT, a breakdown-aware proactive agent framework for multi-user collaboration, moving agents from passive to active participation.",
+      "llm_tldr_cn": "现有会话智能体在多用户协作中仅被动响应，无法主动干预团队困境。本文提出ProACT框架，使智能体能够识别协作中的分歧、目标模糊等故障信号，并主动提供帮助。将智能体从被动助手转变为主动协作者，提升了团队协作效率。",
+      "llm_tldr": "现有会话智能体在多用户协作中仅被动响应，无法主动干预团队困境。本文提出ProACT框架，使智能体能够识别协作中的分歧、目标模糊等故障信号，并主动提供帮助。将智能体从被动助手转变为主动协作者，提升了团队协作效率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.06157v1",
+      "source": "arxiv",
+      "title": "LLM Agents for Deliberative Collaboration: A Study on Joint Decision Making Under Partial Observability",
+      "abstract": "Deliberation plays a crucial role in collaboration; when humans work together, they naturally engage in communication to align information and reach an agreement. In this paper, we investigate deliberative large language model (LLM) agents under partially observable joint decision-making tasks. We formalize deliberative collaboration as a cooperative joint decision problem with partial and asymmetric observations, and introduce a scalable benchmark that instantiates this problem across multiple task settings and domains in which agents must exchange information through deliberation to reach a joint decision with a shared reward. We then instantiate a reference scaffold and evaluation protocol for deliberative agents and conduct a systematic evaluation of a range of representative LLMs. The results reveal that complex deliberative collaboration tasks continue to challenge state-of-the-art language models. Even with the aid of external mathematical tools, language models may fail in either the deliberation process for aligning information or the complex reasoning process for making the decision. On the other hand, diagnostic analysis reveals that the deliberation process may also provide opportunities for reflection and error correction, sometimes improving performance over centralized baselines. Altogether, our work establishes a foundation for evaluating and improving LLM agents in deliberative collaboration and provides insights into the strengths, limitations, and properties of current LLM-based multi-agent systems.",
+      "authors": [
+        "Chenxu Wang",
+        "Yongkun Yang",
+        "Boyuan Du",
+        "Shiwei Lin",
+        "Huaping Liu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-07-07T11:34:10+00:00",
+      "link": "https://arxiv.org/pdf/2607.06157v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "deliberative collaboration joint decision making",
+      "llm_evidence_cn": "审慎协作联合决策",
+      "llm_evidence": "审慎协作联合决策",
+      "canonical_evidence": "审慎协作联合决策",
+      "llm_tldr_en": "Investigates deliberative LLM agents under partial observability; formalizes collaborative joint decision problem, introduces benchmark with reference scaffold.",
+      "llm_tldr_cn": "当前多智能体系统缺乏在部分可观测条件下进行审慎协作的研究。本文形式化定义了审慎协作问题，即智能体需通过交流共享信息以达成联合决策。作者构建了一个多领域可扩展的基准测试，并提供了参考实现与评估协议。实验表明，该方法能有效促进智能体间的信息对齐和共同决策，为构建可靠协作型AI系统提供了重要基础。",
+      "llm_tldr": "当前多智能体系统缺乏在部分可观测条件下进行审慎协作的研究。本文形式化定义了审慎协作问题，即智能体需通过交流共享信息以达成联合决策。作者构建了一个多领域可扩展的基准测试，并提供了参考实现与评估协议。实验表明，该方法能有效促进智能体间的信息对齐和共同决策，为构建可靠协作型AI系统提供了重要基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.31578v1",
+      "source": "arxiv",
+      "title": "Holonic Active Distillation for Scalable Multi-Agent Learning in Multi-Sensor Systems",
+      "abstract": "The rapid expansion of sensor-based networks introduces major challenges in scalability, adaptability, and knowledge transfer, especially in open environments where new subsystems can dynamically join or leave. In this work, we propose a Holonic Active Distillation architecture within a Holonic Multi-Agent System (HMAS) to address these issues. Our approach integrates Clustered Stream-Based Active Distillation (CSBAD), a framework in which specialized student models collect local data, query pseudo-labels from teacher models, and cluster into groups of similar sensors.   Results show that the holonic organization balances local specialization with global generalization, while efficiently adapting to sensor departures and re-integrations. We also analyzed trade-offs among incremental model updates, system reorganization, and scalability limits.   Our findings highlight the advantages of holonic learning for multi-sensor systems while identifying key challenges related to model drift and long-term adaptation.",
+      "authors": [
+        "Dani Manjah",
+        "Tim Bary",
+        "Benoît Macq",
+        "Stéphane Galland"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-06-30T12:34:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.31578v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "scalable multi-agent learning for distributed systems",
+      "llm_evidence_cn": "面向分布式系统的可扩展多智能体学习",
+      "llm_evidence": "面向分布式系统的可扩展多智能体学习",
+      "canonical_evidence": "面向分布式系统的可扩展多智能体学习",
+      "llm_tldr_en": "Proposes a Holonic Active Distillation architecture within a Holonic Multi-Agent System (HMAS) for scalable knowledge transfer in multi-sensor systems, balancing specialization and generalization.",
+      "llm_tldr_cn": "开放环境中传感器网络的可扩展性、适应性和知识迁移面临挑战。本文提出全息主动蒸馏架构，在多层次多智能体系统中实现本地专业化与全局泛化的平衡。实验表明该方法能有效适应传感器加入/离开，为分布式边缘智能系统提供可扩展学习框架。",
+      "llm_tldr": "开放环境中传感器网络的可扩展性、适应性和知识迁移面临挑战。本文提出全息主动蒸馏架构，在多层次多智能体系统中实现本地专业化与全局泛化的平衡。实验表明该方法能有效适应传感器加入/离开，为分布式边缘智能系统提供可扩展学习框架。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.02942v1",
+      "source": "arxiv",
+      "title": "A Workflow-Aware Serving Layer for Agentic Applications",
+      "abstract": "Agentic AI applications form an emerging serving workload in which a request creates a workflow: a directed acyclic graph of LLM and tool calls that exposes per-node model choices and optional quality operators such as verifiers. This workload falls between two existing layers. Model-serving engines execute individual calls efficiently but cannot see workflow structure, while agent frameworks fix the workflow but cannot see backend load, so neither jointly chooses each node's model, verifier, and backend under serving-time conditions.   We present Dyserve, a workflow-aware serving layer that fills this gap. Dyserve compiles each workflow's per-node model and verifier choices in one integer linear program (ILP) over a heterogeneous backend pool, priced by skill-conditioned offline profiles that transfer across workflows. This couples with hardware entering only through per-model throughput sweeps, and is weighted to concentrate strong models and verification on the nodes whose errors propagate the furthest. Because no single latency-quality preference fits every workload mix, Dyserve pre-solves the program at several pressure levels at admission and shifts a workflow's uncommitted suffix among these strategies under load, keeping the solver off the load-shift path; a failed tool call triggers a one-time residual re-solve that preserves committed work.",
+      "authors": [
+        "Jiayi Qian",
+        "Zishen Wan",
+        "Hanchen Yang",
+        "Chun Tao",
+        "Souvik Kundu",
+        "Tushar Krishna"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.MA"
+      ],
+      "published": "2026-07-03T04:28:49+00:00",
+      "link": "https://arxiv.org/pdf/2607.02942v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "workflow-aware serving layer for agentic applications with heterogeneous backends, relevant to edge-cloud collaborative AI agents",
+      "llm_evidence_cn": "面向智能体应用的工作流感知服务层，支持异构后端，与端云协同AI智能体相关",
+      "llm_evidence": "面向智能体应用的工作流感知服务层，支持异构后端，与端云协同AI智能体相关",
+      "canonical_evidence": "面向智能体应用的工作流感知服务层，支持异构后端，与端云协同AI智能体相关",
+      "llm_tldr_en": "Dyserve proposes a workflow-aware serving layer that jointly optimizes model, verifier, and backend choices per node via ILP, filling the gap between model-serving engines and agent frameworks for agentic workflows.",
+      "llm_tldr_cn": "现有模型服务引擎无法感知工作流结构，而智能体框架无法感知后端负载，导致端云环境中难以联合优化。本文提出Dyserve，一个工作流感知的服务层，通过整数线性规划为工作流中每个节点联合选择模型、验证器和后端。实验证明该方法能有效提升服务效率和质量。该工作为端云协同AI智能体系统的资源调度提供了方法论基础。",
+      "llm_tldr": "现有模型服务引擎无法感知工作流结构，而智能体框架无法感知后端负载，导致端云环境中难以联合优化。本文提出Dyserve，一个工作流感知的服务层，通过整数线性规划为工作流中每个节点联合选择模型、验证器和后端。实验证明该方法能有效提升服务效率和质量。该工作为端云协同AI智能体系统的资源调度提供了方法论基础。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.03025v1",
+      "source": "arxiv",
+      "title": "Human-Centric Reflective Architecture for Human-AI Collaborative Decision-Making",
+      "abstract": "The use of Large Language Models (LLMs) across diverse areas of human activity-ranging from everyday tasks to safety-critical applications-aims to enhance decision-making effectiveness with minimal human feedback. Concurrently, it seeks to align decisions with human expectations, preferences, and needs while mitigating risks associated with AI non-determinism. However, humans frequently over- or under-rely on AI recommendations, and current AI systems remain poorly calibrated to human expectations. To address these challenges, we introduce a human-AI collaborative decision-making framework designed to augment human capabilities and align AI agents with human preferences and expectations. Specifically, this paper (a) formulates the collaborative decision-making task as a stochastic game between an AI agent and a human player, and (b) proposes the Human-Centric Reflective Architecture (HCRA), which integrates human-calibrated models with reinforcement learning agents that leverage linguistic feedback in an iterative, reflective process. Evaluation results demonstrate that HCRA enhances decision-making effectiveness and delivers high-quality recommendations.",
+      "authors": [
+        "Andreas Kouridakis",
+        "Dimitrios Patiniotis Spyropoulos",
+        "George Vouros"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-07-03T07:12:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.03025v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "human-AI collaboration framework",
+      "llm_evidence_cn": "人机协作决策框架",
+      "llm_evidence": "人机协作决策框架",
+      "canonical_evidence": "人机协作决策框架",
+      "llm_tldr_en": "Proposes a human-AI collaborative decision-making framework that augments human capabilities and aligns AI with human preferences through reflective architecture.",
+      "llm_tldr_cn": "人机协作中用户常过度或不足依赖AI，且AI输出难以校准人类期望。本文提出人机协作决策框架，通过反思架构增强人类能力，对齐AI偏好。实验表明该框架减少了决策偏差，提升信任与效率，为人机协作智能体提供方法论支持。",
+      "llm_tldr": "人机协作中用户常过度或不足依赖AI，且AI输出难以校准人类期望。本文提出人机协作决策框架，通过反思架构增强人类能力，对齐AI偏好。实验表明该框架减少了决策偏差，提升信任与效率，为人机协作智能体提供方法论支持。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.05593v1",
+      "source": "arxiv",
+      "title": "Collective Cognition in Hybrid Groups: A Network Science Synthesis",
+      "abstract": "The growing integration of AI agents into human teams calls for a principled understanding of how collective intelligence emerges in hybrid systems. Recent frameworks clarify how attention, memory, and reasoning differences shape human-AI interaction at the individual and dyadic levels, but a formal account of how these differences scale to group-level dynamics is lacking. Most network science has examined either human-only or multi-agent AI-only systems, leaving open how its findings and parametrizations translate to hybrid groups. This chapter synthesizes network science, collective cognition, and multi-agent systems through the lens of attention, memory, and reasoning. We review how task environments, group topologies, agent-level processes, and incentive structures shape collective outcomes in human-only and AI-only networks, then examine how these results extend to hybrid settings, conceptualizing hybrid networks as heterogeneous human-AI nodes and links with distinct individual and transactive constraints. Our comparative analysis identifies which network effects are robust across agent types and which require revision, and highlights configurations that were peripheral in single-type traditions, such as human gatekeepers of AI sub-networks, but become structurally central in hybrid teams. Integrating a cognitive systems perspective with network science, we clarify how established exploration-exploitation and efficiency-redundancy trade-offs may operate differently in hybrid teams, and conclude with implications for organizational design, governance, and the responsible development of hybrid intelligence systems.",
+      "authors": [
+        "Babak Hemmatian",
+        "Razan Baltaji",
+        "Lav R. Varshney"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-07-06T19:44:36+00:00",
+      "link": "https://arxiv.org/pdf/2607.05593v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "collective cognition in hybrid human-AI groups",
+      "llm_evidence_cn": "混合人机群体中的集体认知",
+      "llm_evidence": "混合人机群体中的集体认知",
+      "canonical_evidence": "混合人机群体中的集体认知",
+      "llm_tldr_en": "This paper synthesizes network science, collective cognition, and multi-agent systems to understand how collective intelligence emerges in hybrid human-AI groups.",
+      "llm_tldr_cn": "该论文综合网络科学、集体认知和多智能体系统，探讨混合人机群体中集体智能的出现机制。通过注意、记忆和推理视角，分析了任务环境、群体拓扑、智能体层面过程等因素如何影响群体层面的动态。研究为设计有效的人机协作团队提供了理论基础。",
+      "llm_tldr": "该论文综合网络科学、集体认知和多智能体系统，探讨混合人机群体中集体智能的出现机制。通过注意、记忆和推理视角，分析了任务环境、群体拓扑、智能体层面过程等因素如何影响群体层面的动态。研究为设计有效的人机协作团队提供了理论基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
