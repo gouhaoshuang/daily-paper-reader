@@ -6,40 +6,37 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-08
-- 运行时间：2026-07-08 21:09:51 UTC
+- 最新运行日期：2026-07-09
+- 运行时间：2026-07-09 21:09:02 UTC
 - 运行状态：成功
-- 本次总论文数：6
+- 本次总论文数：5
 - 精读区：2
-- 速读区：4
+- 速读区：3
 
 ### 今日简报（AI）
-1) 今日6篇论文聚焦多智能体协作与人机交互，两篇高分精读分别探讨故障感知主动代理和部分可观测下的联合决策。  
-2) 最值得关注的方向：多用户协作中的主动故障预警（ProACT，9.0分）与有限信息下的 deliberative 协作机制（9.0分），是提升群体智能鲁棒性的关键。  
-3) 建议优先精读这两篇高分论文，理解如何设计能主动识别中断并协调的多智能体系统，再结合速读中的面向工作流的代理层与人机反思架构拓展实际应用。
-- 详情：[/202607/08/README](/202607/08/README)
+今日精读2篇高价值论文，速读聚焦Agent循环与边缘安全，整体关注弹性多设备LLM推理与AI-人类共创。  
+最值得看的是《Voltron》的弹性多设备LLM推理方案（9.0分）和《Two-player Alternate Uses Test》的交互式共创测试床（8.0分）。  
+建议优先精读这两篇高分论文，把握边缘智能与AI协作前沿；速读可留意Agent无限循环的潜在风险。
+- 详情：[/202607/09/README](/202607/09/README)
 
 ### 精读区论文标签
-1. [ProACT: Towards Breakdown-Aware Proactive Agent in Multi-User Collaboration](/202607/08/2607.03730v1-proact-towards-breakdown-aware-proactive-agent-in-multi-user-collaboration)  
+1. [Voltron: Enabling Elastic Multi-Device Execution of LLM Inference for Empowered Edge Intelligence](/202607/09/2607.07046v1-voltron-enabling-elastic-multi-device-execution-of-llm-inference-for-empowered-edge-intelligence)  
    标签：评分：9.0/10、query:eca
-   evidence：面向多用户协作的主动智能体框架
-2. [LLM Agents for Deliberative Collaboration: A Study on Joint Decision Making Under Partial Observability](/202607/08/2607.06157v1-llm-agents-for-deliberative-collaboration-a-study-on-joint-decision-making-under-partial-observability)  
-   标签：评分：9.0/10、query:eca
-   evidence：审慎协作联合决策
+   evidence：边缘多设备弹性LLM推理，支撑协作式边缘云AI智能体系统
+2. [Two-player Alternate Uses Test: A Controlled Testbed for Interactive Human-AI and Human-Human Co-Creation](/202607/09/2607.07522v1-two-player-alternate-uses-test-a-controlled-testbed-for-interactive-human-ai-and-human-human-co-creation)  
+   标签：评分：8.0/10、query:eca
+   evidence：人机共同创作协作的可控测试平台
 
 ### 速读区论文标签
-1. [Holonic Active Distillation for Scalable Multi-Agent Learning in Multi-Sensor Systems](/202607/08/2606.31578v1-holonic-active-distillation-for-scalable-multi-agent-learning-in-multi-sensor-systems)  
+1. [When Agents Do Not Stop: Uncovering Infinite Agentic Loops in LLM Agents](/202607/09/2607.01641v1-when-agents-do-not-stop-uncovering-infinite-agentic-loops-in-llm-agents)  
    标签：评分：6.0/10、query:eca
-   evidence：面向分布式系统的可扩展多智能体学习
-2. [A Workflow-Aware Serving Layer for Agentic Applications](/202607/08/2607.02942v1-a-workflow-aware-serving-layer-for-agentic-applications)  
+   evidence：研究智能体协作工作流中的无限循环问题
+2. [Agentic-SecPBFT: Agentic AI-Driven Proactive Security Framework for Wireless PBFT Consensus in Mobile Ad-Hoc Networks](/202607/09/2607.03269v1-agentic-secpbft-agentic-ai-driven-proactive-security-framework-for-wireless-pbft-consensus-in-mobile-ad-hoc-networks)  
    标签：评分：6.0/10、query:eca
-   evidence：面向智能体应用的工作流感知服务层，支持异构后端，与端云协同AI智能体相关
-3. [Human-Centric Reflective Architecture for Human-AI Collaborative Decision-Making](/202607/08/2607.03025v1-human-centric-reflective-architecture-for-human-ai-collaborative-decision-making)  
+   evidence：针对移动自组网的多智能体系统，与移动AI智能体需求一致
+3. [Entropy-Guided Tensor Compression for Multimodal Federated Learning on Edge Devices](/202607/09/2607.06651v1-entropy-guided-tensor-compression-for-multimodal-federated-learning-on-edge-devices)  
    标签：评分：6.0/10、query:eca
-   evidence：人机协作决策框架
-4. [Collective Cognition in Hybrid Groups: A Network Science Synthesis](/202607/08/2607.05593v1-collective-cognition-in-hybrid-groups-a-network-science-synthesis)  
-   标签：评分：6.0/10、query:eca
-   evidence：混合人机群体中的集体认知
+   evidence：边缘设备多模态压缩，与边缘云协作相关
 
 
 <div class="dpr-home-promo-card">

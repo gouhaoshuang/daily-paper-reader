@@ -1,0 +1,216 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-09T21:06:12.827327+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2607.07046v1",
+      "source": "arxiv",
+      "title": "Voltron: Enabling Elastic Multi-Device Execution of LLM Inference for Empowered Edge Intelligence",
+      "abstract": "Large language models (LLMs) are widely used in intelligent services due to their remarkable capability in generative tasks. Typically, LLM-based services process the inference requests of the users in a centralized data center. Unfortunately, such centralized execution has limitations for end-users, such as increased response latency with communication overhead and privacy leakage risk. To alleviate the aforementioned limitations, there have been increasing pushes to execute LLM inference locally on user-end devices. However, the limited resources of a single edge device impose restrictions on achievable accuracy of LLMs. To overcome the issue, we first propose to leverage multiple user-end devices available at the edge for LLM inference, enabling the execution of larger models. Specifically, we propose Voltron, a novel on-device LLM inference framework that elastically utilizes multiple user-end devices for LLM inference execution while adapting to diverse real-world edge environments. In our evaluation, Voltron achieves up to 16.5% higher accuracy than state-of-the-art LLMs that can be executed on a single edge device, satisfying user QoS requirements.",
+      "authors": [
+        "Chanwoo Cho",
+        "Wooseok Kim",
+        "Yonglak Son",
+        "Young Seo Lee",
+        "Young Geun Kim"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-07-08T06:23:04+00:00",
+      "link": "https://arxiv.org/pdf/2607.07046v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "elastic multi-device LLM inference at edge, enabling collaborative edge cloud AI agent system",
+      "llm_evidence_cn": "边缘多设备弹性LLM推理，支撑协作式边缘云AI智能体系统",
+      "llm_evidence": "边缘多设备弹性LLM推理，支撑协作式边缘云AI智能体系统",
+      "canonical_evidence": "边缘多设备弹性LLM推理，支撑协作式边缘云AI智能体系统",
+      "llm_tldr_en": "Proposes Voltron for elastic multi-device execution of LLM inference across edge devices, reducing latency and privacy risks while improving accuracy for edge intelligence.",
+      "llm_tldr_cn": "集中式LLM推理存在延迟高和隐私风险，而单边缘设备资源有限。本文提出Voltron系统，利用多个边缘设备协同执行LLM推理，实现弹性扩展。通过智能模型划分和调度，兼顾准确性与响应速度。实验表明在保证推理质量的同时显著降低延迟。该方法为边缘云协作AI智能体系统提供了高效推理基础。",
+      "llm_tldr": "集中式LLM推理存在延迟高和隐私风险，而单边缘设备资源有限。本文提出Voltron系统，利用多个边缘设备协同执行LLM推理，实现弹性扩展。通过智能模型划分和调度，兼顾准确性与响应速度。实验表明在保证推理质量的同时显著降低延迟。该方法为边缘云协作AI智能体系统提供了高效推理基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.07522v1",
+      "source": "arxiv",
+      "title": "Two-player Alternate Uses Test: A Controlled Testbed for Interactive Human-AI and Human-Human Co-Creation",
+      "abstract": "Controlled research on AI ideation typically compares independent agents, while field studies of human-AI collaboration sacrifice experimental control. We introduce a controlled, two-player extension of the Alternate Uses Test (AUT) that enables comparison of human-human and human-AI co-creation under matched interactive conditions, alongside calibrated non-interactive baselines. The platform supports decomposition of performance into three typically confounded factors: participant traits, partner perceptions, and content dynamics. An in-person pilot (N = 62) demonstrates its utility. Under matched time limits, originality with a GPT-4 partner is statistically equivalent to that with a human partner. Approach motivation (BAS Drive) moderates whether interactive partnership benefits originality, and self-reported cognitive outsourcing predicts lower originality specifically in human-human dyads. Prior exposure to highly creative ideas improves later performance, suggesting a \"seeding\" intervention. We release the platform, code, and dataset as a shared testbed for controlled studies of human-AI co-creation.",
+      "authors": [
+        "Babak Hemmatian",
+        "Anita Keshmirian",
+        "Yijun Lin",
+        "Shravan Ramamoorthy",
+        "Maryam Jahadakbar",
+        "Eli Khuri-Reid",
+        "Jingtong Wang",
+        "Sarah Hadjarab",
+        "Sindre Veum",
+        "Pranav Gupta",
+        "Deepak Somaya",
+        "Lav R. Varshney"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-07-08T15:17:26+00:00",
+      "link": "https://arxiv.org/pdf/2607.07522v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "controlled testbed for human-AI co-creation collaboration",
+      "llm_evidence_cn": "人机共同创作协作的可控测试平台",
+      "llm_evidence": "人机共同创作协作的可控测试平台",
+      "canonical_evidence": "人机共同创作协作的可控测试平台",
+      "llm_tldr_en": "Introduces a controlled two-player extension of the Alternate Uses Test to compare human-AI and human-human co-creation, showing GPT-4 partner equals human in originality.",
+      "llm_tldr_cn": "现有AI创意研究中，独立智能体对比缺乏交互控制，而实地研究牺牲实验控制。本文提出双人交替用途测试的受控扩展，支持在同交互条件下比较人机与人际共创，并解构绩效的影响因素。62人试点表明，在时间匹配限制下，GPT-4搭档的原创性与人类搭档相当。",
+      "llm_tldr": "现有AI创意研究中，独立智能体对比缺乏交互控制，而实地研究牺牲实验控制。本文提出双人交替用途测试的受控扩展，支持在同交互条件下比较人机与人际共创，并解构绩效的影响因素。62人试点表明，在时间匹配限制下，GPT-4搭档的原创性与人类搭档相当。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.01641v1",
+      "source": "arxiv",
+      "title": "When Agents Do Not Stop: Uncovering Infinite Agentic Loops in LLM Agents",
+      "abstract": "LLM agents increasingly rely on iterative execution to solve tasks through planning, tool use, state updates, and agent collaboration. While this design enables flexible automation, it also creates a new class of failures: an agent may repeatedly execute model calls, tools, workflow transitions, or agent handoffs when the feedback path is not effectively bounded. We call this problem Infinite Agentic Loops (IALs). IALs are not ordinary programming loops; they arise from the interaction between agent logic, framework semantics, runtime observations, and termination mechanisms. Such failures can amplify a single request into long running model and tool execution, causing cost exhaustion, model denial of service, context growth, and repeated external side effects. We propose IAL-Scan, a static analysis tool for detecting IAL failures in real-world LLM agent projects. IAL-Scan abstracts heterogeneous agent code into a framework independent Agent IR, builds an Agentic Loop Dependence Graph (ALDG) to recover explicit and framework induced feedback paths, and checks whether these paths can repeatedly reach costly or state growing operations without an effective bound. We evaluate IAL-Scan on 6,549 LLM agent repositories. It reports 74 potential findings, among which manual review confirms 68 IAL failures across 47 projects, achieving 91.9% precision.",
+      "authors": [
+        "Xinyi Hou",
+        "Shenao Wang",
+        "Yanjie Zhao",
+        "Haoyu Wang"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-07-02T03:14:27+00:00",
+      "link": "https://arxiv.org/pdf/2607.01641v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "studies infinite loops in agent collaboration workflows",
+      "llm_evidence_cn": "研究智能体协作工作流中的无限循环问题",
+      "llm_evidence": "研究智能体协作工作流中的无限循环问题",
+      "canonical_evidence": "研究智能体协作工作流中的无限循环问题",
+      "llm_tldr_en": "Identifies and categorizes infinite agentic loops in LLM agents arising from agent collaboration, framework semantics, and termination mechanisms, causing cost and performance issues.",
+      "llm_tldr_cn": "基于大语言模型的智能体常因规划、工具调用和智能体协作中的反馈回路未有效约束而产生无限循环。本文定义了该问题，分析其根因，并展示了其导致成本耗尽、服务拒绝等严重后果。该工作揭示了协作场景下智能体可靠性的关键隐患，为设计鲁棒协作系统提供了指导。",
+      "llm_tldr": "基于大语言模型的智能体常因规划、工具调用和智能体协作中的反馈回路未有效约束而产生无限循环。本文定义了该问题，分析其根因，并展示了其导致成本耗尽、服务拒绝等严重后果。该工作揭示了协作场景下智能体可靠性的关键隐患，为设计鲁棒协作系统提供了指导。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.03269v1",
+      "source": "arxiv",
+      "title": "Agentic-SecPBFT: Agentic AI-Driven Proactive Security Framework for Wireless PBFT Consensus in Mobile Ad-Hoc Networks",
+      "abstract": "The standard Practical Byzantine Fault Tolerance (PBFT) protocol, designed for stable, wired environments, exhibits critical vulnerabilities when deployed in settings like mobile ad-hoc networks, thus making it susceptible to sophisticated threats such as Sybil attacks, Byzantine collusion, and message manipulation. Existing static defense mechanisms are ill-equipped to handle the intelligent and coordinated nature of these attacks. To address this challenge, this paper leverages the Agentic AI paradigm to build a distributed multi-agent system in which each consensus node is equipped with an intelligent agent. These agents employ a hierarchical Multi-Agent Deep Q-Network (MADQN) algorithm to learn and execute proactive security policies in real-time. By observing local network behavior, message consistency, and dynamically maintained reputation scores, the agents collaboratively identify suspicious behavior and recommend defensive actions under standard PBFT quorum and membership rules, thereby improving the integrity of the consensus process. We refer to the resulting framework as Agentic-SecPBFT. Then, we formally model key attack vectors and conduct extensive simulations. The results demonstrate that Agentic-SecPBFT reaches a 95.0% attack detection rate with a 1.8% false positive rate. Compared with mainstream PBFT variants, it achieves 3.1* higher throughput with 56% lower latency on average under 33% malicious nodes, offering a robust and adaptive security solution for decentralized wireless systems.",
+      "authors": [
+        "Haoxiang Luo",
+        "Yinqiu Liu",
+        "Ruichen Zhang",
+        "Guangyuan Liu",
+        "Gang Sun",
+        "Hongfang Yu",
+        "Zhu Han",
+        "Dong In Kim"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-07-03T12:37:54+00:00",
+      "link": "https://arxiv.org/pdf/2607.03269v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent system for mobile ad-hoc networks, aligns with mobile AI agent requirement",
+      "llm_evidence_cn": "针对移动自组网的多智能体系统，与移动AI智能体需求一致",
+      "llm_evidence": "针对移动自组网的多智能体系统，与移动AI智能体需求一致",
+      "canonical_evidence": "针对移动自组网的多智能体系统，与移动AI智能体需求一致",
+      "llm_tldr_en": "Proposes a multi-agent DQN framework for securing PBFT consensus in mobile ad-hoc networks, demonstrating proactive defense against attacks. Directly relevant to mobile AI agent systems, as it deploys intelligent agents at each node to learn and execute defense strategies, showing improved resilience against Sybil and collusion attacks.",
+      "llm_tldr_cn": "该论文针对移动自组网中PBFT共识协议面临的安全威胁，提出一种基于智能体AI的主动安全框架Agentic-SecPBFT。每个共识节点部署一个智能体，采用分层多智能体深度Q网络（MADQN）学习防御策略。实验表明该方法能有效抵御女巫攻击、拜占庭合谋等攻击，为移动网络中的AI智能体应用提供了新思路。该方法直接与移动AI智能体需求相关。",
+      "llm_tldr": "该论文针对移动自组网中PBFT共识协议面临的安全威胁，提出一种基于智能体AI的主动安全框架Agentic-SecPBFT。每个共识节点部署一个智能体，采用分层多智能体深度Q网络（MADQN）学习防御策略。实验表明该方法能有效抵御女巫攻击、拜占庭合谋等攻击，为移动网络中的AI智能体应用提供了新思路。该方法直接与移动AI智能体需求相关。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.06651v1",
+      "source": "arxiv",
+      "title": "Entropy-Guided Tensor Compression for Multimodal Federated Learning on Edge Devices",
+      "abstract": "Federated learning (FL) over mobile and edge devices increasingly involves multimodal models in which clients differ in both sensing capability and computational capacity. Existing update compression schemes typically apply uniform policies across layers and devices, without accounting for modality-specific differences in spectral structure and compressibility. We propose MESH-FL, an entropy-guided matrix product state (MPS) update-compression framework for modality-heterogeneous FL on resource-constrained devices. MESH-FL estimates the spectral entropy of each layer-wise update via truncated singular value decomposition and allocates MPS compression ranks adaptively across layers, modalities, and devices under per-client payload budgets. We show that higher spectral entropy necessitates a higher reconstruction rank under the majorization order on singular-value energy distributions. Building on this result, we prove that the proposed entropy-guided allocation solves a convex surrogate rank-allocation problem, preserves monotonicity under the exact payload model, and achieves convergence with an explicit compression-dependent error term. Experiments on a 15-node heterogeneous Raspberry Pi~4/5 cluster with modality-heterogeneous clients show that MESH-FL achieves up to $56.8\\times$ compression while surpassing the uncompressed FedAvg baseline in final accuracy by up to 2.01%, and reduces total transmitted data to reach convergence by up to $66\\times$.",
+      "authors": [
+        "Quoc Bao Phan",
+        "Tuy Tan Nguyen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-07T17:22:52+00:00",
+      "link": "https://arxiv.org/pdf/2607.06651v1",
+      "tags": [
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "edge device compression for multimodal learning, relevant to edge cloud collaboration",
+      "llm_evidence_cn": "边缘设备多模态压缩，与边缘云协作相关",
+      "llm_evidence": "边缘设备多模态压缩，与边缘云协作相关",
+      "canonical_evidence": "边缘设备多模态压缩，与边缘云协作相关",
+      "llm_tldr_en": "Proposes MESH-FL, an entropy-guided compression framework for multimodal federated learning on edge, adapting compression per layer, modality, and device under budget.",
+      "llm_tldr_cn": "边缘设备上的联邦学习面临多模态模型的压缩挑战。本文提出MESH-FL，基于谱熵估计自适应分配张量压缩秩，在预算约束下优化通信效率。该方法在保持模型精度的同时显著降低传输开销，对边缘云协同智能体系统中的高效通信具有重要启发意义。",
+      "llm_tldr": "边缘设备上的联邦学习面临多模态模型的压缩挑战。本文提出MESH-FL，基于谱熵估计自适应分配张量压缩秩，在预算约束下优化通信效率。该方法在保持模型精度的同时显著降低传输开销，对边缘云协同智能体系统中的高效通信具有重要启发意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
