@@ -1,0 +1,268 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-10T21:03:49.518854+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2607.08013v1",
+      "source": "arxiv",
+      "title": "Collate: Collaborative Neural Network Learning for Latency-Critical Edge Systems",
+      "abstract": "Federated Learning (FL) empowers multiple clients to collaboratively learn a model, enlarging the training data of each client for high accuracy while protecting data privacy. However, when deploying FL in real-time edge systems, the heterogeneity of devices among systems has a severe impact on the performance of the inferred model. Existing optimizations on FL focus on improving the training efficiency but fail to speed up inference, especially when there is a latency constraint. In this work, we propose Collate, a novel training framework that collaboratively learns heterogeneous models to meet the latency constraints of multiple edge systems simultaneously. We design a dynamic zeroizing-recovering method to adjust each local model architecture for high accuracy under its latency constraint. A proto-corrected federated aggregation scheme is also introduced to aggregate all heterogeneous local models, satisfying the latency constraint of different systems with only one training process and maintaining high accuracy. Extensive experiments indicate that, compared to state-of-the-art methods and under a latency constraint, our extended models can improve the accuracy by 1.96% on average, and our shrunk models can also obtain a 3.09% accuracy improvement on average, with almost no extra training overhead. The related codes and data will be available at https://github.com/ntuliuteam/Collate",
+      "authors": [
+        "Shuo Huai",
+        "Di Liu",
+        "Hao Kong",
+        "Xiangzhong Luo",
+        "Weichen Liu",
+        "Ravi Subramaniam",
+        "Christian Makaya",
+        "Qian Lin"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.DC"
+      ],
+      "published": "2026-07-09T00:39:20+00:00",
+      "link": "https://arxiv.org/pdf/2607.08013v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "collaborative learning for latency-critical edge systems",
+      "llm_evidence_cn": "针对延迟关键边缘系统的协同学习",
+      "llm_evidence": "针对延迟关键边缘系统的协同学习",
+      "canonical_evidence": "针对延迟关键边缘系统的协同学习",
+      "llm_tldr_en": "Collate proposes a novel training framework that collaboratively learns heterogeneous models to meet latency constraints of multiple edge systems, using dynamic zeroizing-recovering to adjust local model architectures.",
+      "llm_tldr_cn": "联邦学习在实时边缘系统部署中存在设备异构性和延迟约束问题。本文提出Collate，一种协同学习框架，同时为多个边缘系统训练异构模型以满足各自延迟约束。核心是动态零化-恢复方法，在训练中调整局部模型架构。实验表明Collate在保证低延迟的同时不牺牲模型精度。该方法为边缘云协同场景下的模型部署提供了有效方案。",
+      "llm_tldr": "联邦学习在实时边缘系统部署中存在设备异构性和延迟约束问题。本文提出Collate，一种协同学习框架，同时为多个边缘系统训练异构模型以满足各自延迟约束。核心是动态零化-恢复方法，在训练中调整局部模型架构。实验表明Collate在保证低延迟的同时不牺牲模型精度。该方法为边缘云协同场景下的模型部署提供了有效方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.02942v1",
+      "source": "arxiv",
+      "title": "A Workflow-Aware Serving Layer for Agentic Applications",
+      "abstract": "Agentic AI applications form an emerging serving workload in which a request creates a workflow: a directed acyclic graph of LLM and tool calls that exposes per-node model choices and optional quality operators such as verifiers. This workload falls between two existing layers. Model-serving engines execute individual calls efficiently but cannot see workflow structure, while agent frameworks fix the workflow but cannot see backend load, so neither jointly chooses each node's model, verifier, and backend under serving-time conditions.   We present Dyserve, a workflow-aware serving layer that fills this gap. Dyserve compiles each workflow's per-node model and verifier choices in one integer linear program (ILP) over a heterogeneous backend pool, priced by skill-conditioned offline profiles that transfer across workflows. This couples with hardware entering only through per-model throughput sweeps, and is weighted to concentrate strong models and verification on the nodes whose errors propagate the furthest. Because no single latency-quality preference fits every workload mix, Dyserve pre-solves the program at several pressure levels at admission and shifts a workflow's uncommitted suffix among these strategies under load, keeping the solver off the load-shift path; a failed tool call triggers a one-time residual re-solve that preserves committed work.",
+      "authors": [
+        "Jiayi Qian",
+        "Zishen Wan",
+        "Hanchen Yang",
+        "Chun Tao",
+        "Souvik Kundu",
+        "Tushar Krishna"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.MA"
+      ],
+      "published": "2026-07-03T04:28:49+00:00",
+      "link": "https://arxiv.org/pdf/2607.02942v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "workflow-aware serving layer for agentic applications, relevant to optimizing execution of collaborative AI agents",
+      "llm_evidence_cn": "面向代理应用的感知工作流的服务层，适用于优化协作AI Agent的执行",
+      "llm_evidence": "面向代理应用的感知工作流的服务层，适用于优化协作AI Agent的执行",
+      "canonical_evidence": "面向代理应用的感知工作流的服务层，适用于优化协作AI Agent的执行",
+      "llm_tldr_en": "Dyserve optimizes per-node model and verifier choices for agentic workflow DAGs using ILP, bridging model-serving and agent frameworks.",
+      "llm_tldr_cn": "该论文关注代理AI应用的工作负载，其中请求产生一个由LLM和工具调用组成的有向无环图工作流。现有系统无法同时感知工作流结构和后端负载。作者提出Dyserve，一个工作流感知的服务层，它通过整数线性规划为工作流每个节点选择最优模型、验证器和后端，从而提升效率和性能。",
+      "llm_tldr": "该论文关注代理AI应用的工作负载，其中请求产生一个由LLM和工具调用组成的有向无环图工作流。现有系统无法同时感知工作流结构和后端负载。作者提出Dyserve，一个工作流感知的服务层，它通过整数线性规划为工作流每个节点选择最优模型、验证器和后端，从而提升效率和性能。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.05155v1",
+      "source": "arxiv",
+      "title": "EdgeBench: Unveiling Scaling Laws of Learning from Real-World Environments",
+      "abstract": "Pretraining scaling laws reveal that model capability improves predictably with data and compute. But learning from real world environments after deployment remains far less understood. Analyzing roughly 38,000 hours of agent interaction with the environment across 134 real world tasks, we find, to the best of our knowledge, the first evidence that overall performance during environment learning follows a log-sigmoid scaling law with remarkably high precision, reaching R^2 = 0.998. Across model generations, we also find that agent learning speed roughly doubles every three months. This discovery stems from EdgeBench, a suite of 134 real world tasks with ultra-long horizons, spanning scientific discovery, software engineering, combinatorial optimization, professional knowledge work, formal mathematics, and interactive games. Each task sustains at least 12 hours of continuous agent operation under rich, multilevel feedback, and is built through substantial expert effort. We publicly release 51 tasks and our full evaluation framework to accelerate the study of how agents learn from real world experience.",
+      "authors": [
+        "Deyao Zhu",
+        "Xin Zhou",
+        "Shengling Qin",
+        "Xuekai Zhu",
+        "Hangliang Ding",
+        "Shu Zhong",
+        "Zixin Wen",
+        "Zhonglin Xie",
+        "Chenhui Gou",
+        "Linxuan Ren",
+        "Yueyang Wang",
+        "Junfeng Zhong",
+        "Rui Liu",
+        "Tian Gao",
+        "Yangguang Lin",
+        "Jingyuan Zhang",
+        "Maojia Song",
+        "Xuan Qi",
+        "Jinhong Wu",
+        "Chenyang Zhang",
+        "Yinzhu Piao",
+        "Ziru Niu",
+        "Hongbin Lin",
+        "Lingxiang Meng",
+        "Peng Tang",
+        "Chengyao Tang",
+        "Shanyu Wu",
+        "Huanyu Zheng",
+        "Yu Liu",
+        "Liya Zhu",
+        "He Wang",
+        "Ming Ding",
+        "Ziyu Wan",
+        "Hao Liu",
+        "Sibo Wang",
+        "Haotian Zhu",
+        "Xintian Zhang",
+        "Nan Chai",
+        "Yipeng Liu",
+        "Panhao Lai",
+        "Sihang Yuan",
+        "Zixin Su",
+        "Ge Zhang",
+        "Wangchunshu Zhou",
+        "Yantao Du",
+        "Wenhao Huang",
+        "Guang Shi"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-07-06T14:39:22+00:00",
+      "link": "https://arxiv.org/pdf/2607.05155v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "EdgeBench benchmark for real-world environment learning",
+      "llm_evidence_cn": "面向现实世界环境学习的EdgeBench基准",
+      "llm_evidence": "面向现实世界环境学习的EdgeBench基准",
+      "canonical_evidence": "面向现实世界环境学习的EdgeBench基准",
+      "llm_tldr_en": "Presents EdgeBench with 134 real-world tasks, revealing log-sigmoid scaling law for environment learning and doubling of learning speed every three months.",
+      "llm_tldr_cn": "该论文针对云际学习（部署后环境学习）缺乏理解的问题，构建了EdgeBench基准，包含134个长时域现实世界任务。通过分析约3.8万小时交互数据，发现性能遵循对数S形缩放规律，且代理学习速度每三个月翻倍。该发现为边缘环境下AI代理的学习效率提供了量化规律。",
+      "llm_tldr": "该论文针对云际学习（部署后环境学习）缺乏理解的问题，构建了EdgeBench基准，包含134个长时域现实世界任务。通过分析约3.8万小时交互数据，发现性能遵循对数S形缩放规律，且代理学习速度每三个月翻倍。该发现为边缘环境下AI代理的学习效率提供了量化规律。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.07729v1",
+      "source": "arxiv",
+      "title": "Collective Intelligence with Foundation Models",
+      "abstract": "As foundation models grow in scale and diversity, coordinating multiple models into cooperative reasoning systems offers a path toward safer, more reliable AI. This chapter presents a multi-agent framework where solver models generate independent drafts, each undergoes structured critique and revision by a critic agent, and an aggregator agent synthesizes a final consensus solution. A scoring module provides semantic, numerical, and procedural evaluation across all agents. Through ablation studies on a benchmark spanning calculus, physics, chemistry, biology, economics, optimization, statistics, and mathematics, we isolate the contributions of framework architecture versus model diversity. We compare four configurations: (1) Individual Baseline, (2) Homogeneous Framework using one shared model, (3) Redundant Homogeneous Solvers using multiple instances of the same model, and (4) Heterogeneous Framework with diverse specialized models. Results show that while framework structure and redundant sampling yield modest gains, model heterogeneity is the critical factor driving substantial performance improvements. The heterogeneous configuration achieves superior step-wise accuracy (0.64 vs. 0.54 for individual models; 2.3x improvement over homogeneous configurations) with reduced variance across categories and difficulty levels. Step-wise reasoning quality (correctness of intermediate steps, not just final answers) improves dramatically only with model diversity, showing that heterogeneous agents provide complementary error detection and reasoning refinement essential for explainability and auditability. We discuss architectural principles, evaluation methodology, and implications for Global Applied AI, showing how heterogeneous multi-agent coordination supports transparent, auditable, high-confidence decision-making across scientific and industrial domains.",
+      "authors": [
+        "J. de Curtò",
+        "I. de Zarzà"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-06T19:52:39+00:00",
+      "link": "https://arxiv.org/pdf/2607.07729v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent collaborative reasoning with critique and aggregation",
+      "llm_evidence_cn": "多代理协作推理与批评聚合",
+      "llm_evidence": "多代理协作推理与批评聚合",
+      "canonical_evidence": "多代理协作推理与批评聚合",
+      "llm_tldr_en": "Presents a multi-agent framework where solver models generate drafts, critic agents review, and aggregator synthesizes final consensus, evaluating on diverse benchmarks.",
+      "llm_tldr_cn": "基础模型协作可以提升可靠性和安全性。该论文提出多代理框架，包含生成、批评、聚合模块，在数学等多样领域进行消融研究。结果表明框架架构比模型多样性贡献更大，但多代理能提升一致性。该工作展示了集体智能的潜力，但与端云协同无直接关联。",
+      "llm_tldr": "基础模型协作可以提升可靠性和安全性。该论文提出多代理框架，包含生成、批评、聚合模块，在数学等多样领域进行消融研究。结果表明框架架构比模型多样性贡献更大，但多代理能提升一致性。该工作展示了集体智能的潜力，但与端云协同无直接关联。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.08662v1",
+      "source": "arxiv",
+      "title": "WebSwarm: Recursive Multi-Agent Orchestration for Deep-and-Wide Web Search",
+      "abstract": "Large language model (LLM)-based web search agents are transforming information seeking from simple factoid question answering into complex, deep-and-wide search and research-oriented tasks. A single ReAct-style agent is constrained by one long trajectory and limited context, making it difficult to handle depth and coverage simultaneously. Existing multi-agent systems improve search coverage through parallel execution and aggregation, but still exhibit clear limitations in recursive depth, collaboration adaptability, and evidence-grounded expansion. We propose WebSwarm, a progressive recursive delegation framework that jointly constructs task decomposition, recursive expansion, and agent collaboration during inference. WebSwarm dynamically instantiates agentic search nodes, each coupling a local objective with a search mode that specifies how the node should organize search and collaboration. Each node can either solve its objective itself or further delegate child nodes; after solving, it returns evidence and results upward, enabling parent nodes to further expand, revise, or aggregate the search process. To guide this process, WebSwarm first probes how task-relevant information is organized on the web to ground subsequent node expansion, and reuses process-level experience across homogeneous sibling nodes. Experiments on BrowseComp-Plus, WideSearch, DeepWideSearch, and GISA show that WebSwarm consistently outperforms single-agent and multi-agent baselines on deep, wide, and interleaved deep-and-wide tasks. Further analyses of ablation, task difficulty, web tool efficiency, and model generalization explain WebSwarm's effectiveness and provide insights for multi-agent search systems.",
+      "authors": [
+        "Xiaoshuai Song",
+        "Liancheng Zhang",
+        "Kangzhi Zhao",
+        "Yutao Zhu",
+        "Zhongyuan Wang",
+        "Guanting Dong",
+        "Jinghan Yang",
+        "Han Li",
+        "Kun Gai",
+        "Ji-Rong Wen",
+        "Zhicheng Dou"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-07-09T16:28:49+00:00",
+      "link": "https://arxiv.org/pdf/2607.08662v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "recursive multi-agent orchestration for deep web search",
+      "llm_evidence_cn": "递归多代理编排用于深度搜索",
+      "llm_evidence": "递归多代理编排用于深度搜索",
+      "canonical_evidence": "递归多代理编排用于深度搜索",
+      "llm_tldr_en": "Proposes WebSwarm, a progressive recursive delegation framework for deep-and-wide web search, enabling dynamic agent collaboration and task decomposition.",
+      "llm_tldr_cn": "现有搜索代理局限于单轨迹和有限上下文，难以同时实现深度和广度。WebSwarm提出渐进式递归委托框架，在推理过程中动态构建任务分解、递归扩展和代理协作。实验证明其在复杂搜索任务上优于单代理和现有多代理方法。这项工作推动了多代理协作在信息检索中的应用，但与边缘云协同主题关联较弱。",
+      "llm_tldr": "现有搜索代理局限于单轨迹和有限上下文，难以同时实现深度和广度。WebSwarm提出渐进式递归委托框架，在推理过程中动态构建任务分解、递归扩展和代理协作。实验证明其在复杂搜索任务上优于单代理和现有多代理方法。这项工作推动了多代理协作在信息检索中的应用，但与边缘云协同主题关联较弱。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
