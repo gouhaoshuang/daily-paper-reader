@@ -6,35 +6,34 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-10
-- 运行时间：2026-07-10 21:08:55 UTC
+- 最新运行日期：2026-07-11
+- 运行时间：2026-07-11 20:46:30 UTC
 - 运行状态：成功
-- 本次总论文数：5
+- 本次总论文数：4
 - 精读区：1
-- 速读区：4
+- 速读区：3
 
 ### 今日简报（AI）
-今日聚焦5篇论文，精读1篇边缘系统协同神经网络学习，速读涵盖智能体工作流与基础模型集体智能。最值得细读《Collate》8分，揭示延迟敏感边缘场景下的协作学习机制；速读中《A Workflow-Aware Serving Layer》和《Collective Intelligence》均7分，前者适配智能体应用，后者探索基础模型的群体智能。下一步可重点关注边缘智能与模型协作的交叉应用，如结合实时推理与多智能体协调。
-- 详情：[/202607/10/README](/202607/10/README)
+今日精读推荐一项“先竞争后合作”的AI教师课程设计，速读涵盖多智能体对话协议、研究软件工程协作对齐与多模态记忆增强推荐。
+最值得看的是精读论文（8.0分）：前沿AI教师构建可验证课程，使编程学生超越模仿；同时速读中《决策协议》与《Aleena》展示了多智能体协作的新机制。
+建议普通读者优先精读该文，理解如何通过竞争‑合作循环提升智能体教学效果，再速读其余三篇拓宽多智能体应用视野。
+- 详情：[/202607/11/README](/202607/11/README)
 
 ### 精读区论文标签
-1. [Collate: Collaborative Neural Network Learning for Latency-Critical Edge Systems](/202607/10/2607.08013v1-collate-collaborative-neural-network-learning-for-latency-critical-edge-systems)  
+1. [Compete Then Collaborate: Frontier AI Teachers Build a Verifiable Curriculum to Improve a Coding Student Beyond Imitation](/202607/11/2607.08255v1-compete-then-collaborate-frontier-ai-teachers-build-a-verifiable-curriculum-to-improve-a-coding-student-beyond-imitation)  
    标签：评分：8.0/10、query:eca
-   evidence：针对延迟关键边缘系统的协同学习
+   evidence：多教师协作训练学生模型
 
 ### 速读区论文标签
-1. [A Workflow-Aware Serving Layer for Agentic Applications](/202607/10/2607.02942v1-a-workflow-aware-serving-layer-for-agentic-applications)  
+1. [Decision Protocols in Multi-Agent Large Language Model Conversations](/202607/11/2607.05477v1-decision-protocols-in-multi-agent-large-language-model-conversations)  
    标签：评分：7.0/10、query:eca
-   evidence：面向代理应用的感知工作流的服务层，适用于优化协作AI Agent的执行
-2. [Collective Intelligence with Foundation Models](/202607/10/2607.07729v1-collective-intelligence-with-foundation-models)  
+   evidence：多智能体决策协议实现协作
+2. [Aleena: Alignment Agent for Research Software Engineering Collaborations](/202607/11/2607.08043v1-aleena-alignment-agent-for-research-software-engineering-collaborations)  
    标签：评分：7.0/10、query:eca
-   evidence：多代理协作推理与批评聚合
-3. [EdgeBench: Unveiling Scaling Laws of Learning from Real-World Environments](/202607/10/2607.05155v1-edgebench-unveiling-scaling-laws-of-learning-from-real-world-environments)  
+   evidence：研究软件协作中的对齐代理
+3. [Seeing and Reflecting: Multimodal Memory-Enhanced Agent Collaboration for Recommendation](/202607/11/2607.07108v1-seeing-and-reflecting-multimodal-memory-enhanced-agent-collaboration-for-recommendation)  
    标签：评分：6.0/10、query:eca
-   evidence：面向现实世界环境学习的EdgeBench基准
-4. [WebSwarm: Recursive Multi-Agent Orchestration for Deep-and-Wide Web Search](/202607/10/2607.08662v1-webswarm-recursive-multi-agent-orchestration-for-deep-and-wide-web-search)  
-   标签：评分：6.0/10、query:eca
-   evidence：递归多代理编排用于深度搜索
+   evidence：代理协作框架用于推荐
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-11",
+  "date": "2026-07-11",
+  "generated_at": "2026-07-11T20:46:39",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/11/2607.08255v1-compete-then-collaborate-frontier-ai-teachers-build-a-verifiable-curriculum-to-improve-a-coding-student-beyond-imitation",
+      "section": "deep",
+      "title_en": "Compete Then Collaborate: Frontier AI Teachers Build a Verifiable Curriculum to Improve a Coding Student Beyond Imitation",
+      "authors": "Miseong Shawn Kim",
+      "date": "2026-07-09",
+      "pdf": "https://arxiv.org/pdf/2607.08255v1",
+      "score": "8.0",
+      "evidence": "多教师协作训练学生模型",
+      "tldr": "多教师知识蒸馏常依赖有偏见的LLM评判，且模仿学习无法提升已有能力的学生。本文提出先竞争后协作框架，通过执行验证对Claude、Codex-GPT等四个前沿教师排名，再协同构建可验证课程训练Qwen2.5-Coder。结果表明模仿学习SFT降低学生性能，而将协作课程用于强化学习可提升竞赛题49%。贡献在于指出教师协作的价值是构建可验证环境让学生主动学习，而非合并答案模仿。",
+      "tags": "query:eca",
+      "abstract_en": "Large language models increasingly serve as teachers generating training data for smaller students. Prior multi-teacher knowledge distillation methods merge outputs without determining which frontier model teaches best, often relying on an LLM judge biased toward its own outputs. We introduce a compete-then-collaborate framework where four frontier AI teachers (Claude, Codex-GPT, Grok, Gemini) are ranked head-to-head by an execution-based judge (unit tests and stdin-stdout checks) with fairness controls, and then collaborate to build a verifiable curriculum for a student (Qwen2.5-Coder). We report three findings. (1) Under execution verification, all teachers solve standard problems near-perfectly after self-correction (99-100%) due to a saturation effect, but harder competition problems separate them (Gemini 77% > Claude 69% = Codex 69% > Grok 50%); however, the robust student-side results do not depend on teacher ranking. (2) Imitation (SFT) on verified solutions does not improve, and can degrade, an already-competent student at 7B and 32B (e.g., from 76.7% to 72.7% on MBPP-test, and 5.9% to 2.9% on competition problems). (3) Using the same collaborative curriculum as a reinforcement learning with verifiable rewards (RLVR) environment improves the student (from 5.9% to 8.8% peak on competition problems, a +49% relative gain), reversing SFT's direction. The value of AI-teacher collaboration lies not in pooling answers to imitate, but in jointly constructing a verifiable environment where the student learns by doing. We release a reproducible on-prem pipeline (NVIDIA GB10) with framework patches for running GRPO on a bleeding-edge stack.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/11/2607.05477v1-decision-protocols-in-multi-agent-large-language-model-conversations",
+      "section": "quick",
+      "title_en": "Decision Protocols in Multi-Agent Large Language Model Conversations",
+      "authors": "Lars Benedikt Kaesberg",
+      "date": "2026-07-06",
+      "pdf": "https://arxiv.org/pdf/2607.05477v1",
+      "score": "7.0",
+      "evidence": "多智能体决策协议实现协作",
+      "tldr": "大型语言模型面临收益递减和成本高的扩展挑战，多智能体系统通过任务分布式解决提升性能，但决策协议选择影响效率。本文提出MALLM框架，系统评估投票、共识和法官三种决策协议在多样任务上的表现。结果显示共识协议在知识密集型任务（如MMLU）中最佳，而投票和法官在逻辑型任务（如StrategyQA）更优，且增加回答多样性可提升决策质量。研究为多智能体LLM的决策协议选择提供了实证指导。",
+      "tags": "query:eca",
+      "abstract_en": "Improving the task performance of Large Language Models (LLMs) is essential, yet scaling these models faces significant challenges such as diminishing returns and high costs. Multi-Agent Systems (MAS) offer a promising solution by distributing tasks among specialized agents to improve the overall task performance. This can reduce training costs at the expense of increased test time due to the discussion and decision-making process. The decision protocol is a critical component of MAS because it specifies how multiple agents collaborate to create a final solution. This thesis introduces the Multi-Agent LLM (MALLM) framework, which implements and evaluates various decision protocols, namely voting, consensus, and judge decision mechanisms, to simulate multi-agent discussions for conversational task solving. Unlike previous work that used a single decision protocol or tested them on limited datasets, this study systematically examines their impact on a diverse set of tasks, ranging from knowledge-based datasets (MMLU, MMLU-Pro, GPQA) and logic-based datasets (StrategyQA, MuSR, Math-lvl-5, SQuAD 2.0). The results indicate that consensus protocols excel in knowledge-intensive domains while voting and judge protocols are more effective for logic-based tasks. Increasing response diversity through independent solution generation improves decision quality, while changes in information access during the decision process have minimal impact.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/11/2607.08043v1-aleena-alignment-agent-for-research-software-engineering-collaborations",
+      "section": "quick",
+      "title_en": "Aleena: Alignment Agent for Research Software Engineering Collaborations",
+      "authors": "Kshitij Dani, Cordero Core, Landung Setiawan, Carlos Garcia Jurado Suarez, Anshul Tambay, Vani Mandava, Anant Mittal",
+      "date": "2026-07-09",
+      "pdf": "https://arxiv.org/pdf/2607.08043v1",
+      "score": "7.0",
+      "evidence": "研究软件协作中的对齐代理",
+      "tldr": "研究软件协作中，决策信息常散落在Slack、会议、PR等不同平台，导致领域研究人员与研究软件工程师对项目意图、所有权和科学假设产生认知分歧。Aleena 利用GitHub作为统一协作平面，通过智能体将多模态交互转化为结构化记录，自动识别风险、跟踪未决问题并维护决策连续性。原型验证表明该方法能有效提升跨角色对齐与项目状态透明度，为研究软件工程提供可持续的协作代理方案。",
+      "tags": "query:eca",
+      "abstract_en": "Research software collaborations span meetings, informal chats, pull requests, and GitHub issues. A decision surfaced in a Slack thread, refined in a meeting, and implemented in a pull request can lose its original rationale across these artifacts, leaving domain researchers and research software engineers with divergent mental models of project intent, ownership, and scientific assumptions. We argue that alignment in research software engineering is a continuous lifecycle problem, and that agentic AI can support stakeholder alignment and project-state tracking without replacing human decision-making. We present Aleena, an open-source lifecycle alignment agent that uses GitHub as a shared collaboration surface, transforming multi-modal stakeholder interactions into structured project records that surface risks, track open questions, and preserve decision continuity. Grounded in university-based research software engineering center experiences, this paper presents the motivating problem, system design, prototype, and illustrative lifecycle scenarios for Aleena.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/11/2607.07108v1-seeing-and-reflecting-multimodal-memory-enhanced-agent-collaboration-for-recommendation",
+      "section": "quick",
+      "title_en": "Seeing and Reflecting: Multimodal Memory-Enhanced Agent Collaboration for Recommendation",
+      "authors": "Hao Cong, Huizu Lin, Zihan Wang, Chengkai Huang, Quan Z. Sheng, Lina Yao",
+      "date": "2026-07-08",
+      "pdf": "https://arxiv.org/pdf/2607.07108v1",
+      "score": "6.0",
+      "evidence": "代理协作框架用于推荐",
+      "tldr": "现有基于大语言模型的推荐代理受限于文本输入和粗粒度记忆，难以处理视觉证据和偏好漂移。为此提出MMEACR，一种多模态记忆增强的代理协作推荐框架，通过分离可解释推理与细粒度匹配的双轨记忆架构，以及属性引导的强化-反射机制，实现鲁棒且可解释的推荐。在三个真实场景上，MMEACR优于基线和LLM方法，尤其在视觉化推荐中提升显著。",
+      "tags": "query:eca",
+      "abstract_en": "Large language model (LLM)-based agentic recommender systems show promise in modeling user preferences through natural-language reasoning, yet they remain limited by text-centric inputs and coarse-grained memory updates, making agents prone to missing visual evidence, semantic noise, and preference drift. To address these limitations, we propose MMEACR, a Multimodal Memory-Enhanced Agent Collaboration framework for recommendation. MMEACR introduces a dual-track memory architecture that separates interpretable agent reasoning from fine-grained multimodal matching. In the reasoning track, collaborative User and Item Memory Agents maintain persistent multimodal memories and update them through an attribute-guided reinforcement-and-reflection mechanism. In the matching track, a decoupled multi-modal embedding memory is built from raw interaction narratives and item images to preserve detailed cross-modal signals beyond structured memory updates. The two tracks are integrated through weighted Reciprocal Rank Fusion to produce robust and interpretable rankings. Experiments on three real-world domains show that MMEACR achieves strong overall performance against competitive LLM-based and agent-based baselines, with notable gains in visually grounded recommendation scenarios.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
