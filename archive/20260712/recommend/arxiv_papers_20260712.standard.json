@@ -1,0 +1,96 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-12T20:50:00.555475+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.07989v1",
+      "source": "arxiv",
+      "title": "Who Broke the System? Failure Localization in LLM-Based Multi-Agent Systems",
+      "abstract": "Large language model (LLM) based multi-agent systems enable complex problem solving through coordinated reasoning and action, but their distributed structure also introduces new challenges in diagnosing system-level failures. When an execution fails, identifying which agent is responsible and at what point the trajectory first becomes irreversibly misdirected is difficult due to long-horizon interactions and tightly coupled agent behaviors. In this paper, we study the problem of failure localization in LLM-based multi-agent systems and present AgentLocate, a framework that attributes failures to both a specific agent and the earliest decisive step. AgentLocate combines an LLM-based judging mechanism with multi-perspective verification by independent evaluators, whose assessments are aggregated using a confidence-aware strategy. The resulting feedback is further used to adapt the judge through lightweight fine-tuning, improving attribution quality. We evaluate AgentLocate on two complementary benchmarks covering diverse tasks, agent configurations, and trajectory lengths. Experimental results show that AgentLocate consistently outperforms existing failure localization methods in identifying both responsible agents and failure steps, while remaining efficient in terms of token usage and running time.",
+      "authors": [
+        "Yufei Xia",
+        "Anjun Gao",
+        "Yueyang Quan",
+        "Zhuqing Liu",
+        "Minghong Fang"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.IR",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-07-08T23:33:49+00:00",
+      "link": "https://arxiv.org/pdf/2607.07989v1",
+      "tags": [
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent collaboration failure localization",
+      "llm_evidence_cn": "多智能体协作中的故障定位",
+      "llm_evidence": "多智能体协作中的故障定位",
+      "canonical_evidence": "多智能体协作中的故障定位",
+      "llm_tldr_en": "Proposes AgentLocate to attribute failures to specific agent and earliest decisive step in LLM-based multi-agent systems using judging and verification.",
+      "llm_tldr_cn": "大语言模型多智能体系统在协作中面临故障定位困难。本文提出AgentLocate框架，通过LLM判断与多视角验证，将故障归因于特定智能体及最早关键步骤。实验证明其能有效识别故障根源，提升系统调试效率。",
+      "llm_tldr": "大语言模型多智能体系统在协作中面临故障定位困难。本文提出AgentLocate框架，通过LLM判断与多视角验证，将故障归因于特定智能体及最早关键步骤。实验证明其能有效识别故障根源，提升系统调试效率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.07548v1",
+      "source": "arxiv",
+      "title": "Think Big, Search Small: Where Capacity Matters in Hierarchical Search Agents?",
+      "abstract": "Large language model based search agents increasingly adopt multi-agent architectures in which a main agent decomposes a complex question into sub-queries and dispatches them to parallel sub-agents. However, existing systems instantiate all roles from a single model of identical scale, leaving open how model capacity should be distributed across roles. We factorize hierarchical search into three roles: a delegation role responsible for task decomposition, an execution role responsible for retrieval and evidence extraction, and an answer generation role held fixed as a confound control. We then conduct controlled capacity sweeps along the delegation and execution axes on five multi-hop QA benchmarks. The experiments yield three findings. First, role factorization consistently outperforms a single-agent baseline, improving exact match from 4.5 to 8.6 points across six model scales. Second, capacity sensitivity is asymmetric: scaling the delegation backbone improves EM by ~11 points, whereas scaling the execution sub-agent moves EM by only ~2.6 points, identifying decomposition as the capability bottleneck. Third, a 1.7B-parameter executor trained via quality-filtered trajectory distillation matches a frontier sub-agent in accuracy while consuming 37% fewer sub-agent tokens, advancing the Pareto frontier. These results suggest a concrete recipe for building hierarchical search agents: concentrate capacity at delegation and downsize execution without sacrificing accuracy. Our code is available at https://github.com/QinnanCai0115/role-factorized-search.",
+      "authors": [
+        "Qinnan Cai",
+        "Yibo Zhao",
+        "Xiang Li"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-07-08T15:46:48+00:00",
+      "link": "https://arxiv.org/pdf/2607.07548v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent hierarchical search with role capacity distribution",
+      "llm_evidence_cn": "多智能体分层搜索中角色容量分配",
+      "llm_evidence": "多智能体分层搜索中角色容量分配",
+      "canonical_evidence": "多智能体分层搜索中角色容量分配",
+      "llm_tldr_en": "Investigates how to distribute model capacity across delegation and execution roles in hierarchical search agents, finding capacity allocation matters.",
+      "llm_tldr_cn": "多智能体搜索系统使用相同规模模型完成所有角色，容量分配不明确。本文分解层次搜索为委托、执行和生成角色，通过控制容量扫查发现：增大委托角色容量比执行角色更重要。在五个多跳QA基准上验证，为指导多智能体架构设计提供依据。",
+      "llm_tldr": "多智能体搜索系统使用相同规模模型完成所有角色，容量分配不明确。本文分解层次搜索为委托、执行和生成角色，通过控制容量扫查发现：增大委托角色容量比执行角色更重要。在五个多跳QA基准上验证，为指导多智能体架构设计提供依据。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

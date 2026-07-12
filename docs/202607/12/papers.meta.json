@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-12",
+  "date": "2026-07-12",
+  "generated_at": "2026-07-12T20:51:37",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/12/2607.07989v1-who-broke-the-system-failure-localization-in-llm-based-multi-agent-systems",
+      "section": "quick",
+      "title_en": "Who Broke the System? Failure Localization in LLM-Based Multi-Agent Systems",
+      "authors": "Yufei Xia, Anjun Gao, Yueyang Quan, Zhuqing Liu, Minghong Fang",
+      "date": "2026-07-08",
+      "pdf": "https://arxiv.org/pdf/2607.07989v1",
+      "score": "7.0",
+      "evidence": "多智能体协作中的故障定位",
+      "tldr": "LLM多智能体系统因长程交互与耦合行为，故障定位困难。提出AgentLocate框架，结合LLM评判与多视角验证，通过置信度感知聚合及轻量微调优化。实验表明其在责任智能体和失败步骤定位上优于现有方法，且token与时间成本高效。该工作首次系统解决该问题，贡献显著。",
+      "tags": "query:eca",
+      "abstract_en": "Large language model (LLM) based multi-agent systems enable complex problem solving through coordinated reasoning and action, but their distributed structure also introduces new challenges in diagnosing system-level failures. When an execution fails, identifying which agent is responsible and at what point the trajectory first becomes irreversibly misdirected is difficult due to long-horizon interactions and tightly coupled agent behaviors. In this paper, we study the problem of failure localization in LLM-based multi-agent systems and present AgentLocate, a framework that attributes failures to both a specific agent and the earliest decisive step. AgentLocate combines an LLM-based judging mechanism with multi-perspective verification by independent evaluators, whose assessments are aggregated using a confidence-aware strategy. The resulting feedback is further used to adapt the judge through lightweight fine-tuning, improving attribution quality. We evaluate AgentLocate on two complementary benchmarks covering diverse tasks, agent configurations, and trajectory lengths. Experimental results show that AgentLocate consistently outperforms existing failure localization methods in identifying both responsible agents and failure steps, while remaining efficient in terms of token usage and running time.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/12/2607.07548v1-think-big-search-small-where-capacity-matters-in-hierarchical-search-agents",
+      "section": "quick",
+      "title_en": "Think Big, Search Small: Where Capacity Matters in Hierarchical Search Agents?",
+      "authors": "Qinnan Cai, Yibo Zhao, Xiang Li",
+      "date": "2026-07-08",
+      "pdf": "https://arxiv.org/pdf/2607.07548v1",
+      "score": "6.0",
+      "evidence": "多智能体分层搜索中角色容量分配",
+      "tldr": "现有层级搜索代理将相同规模模型用于所有角色，造成容量浪费。本文将其分解为委托、执行、答案生成三角色，通过容量扫描实验发现委托是性能瓶颈，扩展委托可提升约11个EM点，而扩展执行仅提升2.6点。利用质量过滤轨迹蒸馏训练1.7B参数执行器，准确率匹配大模型且节省37% token。提出集中容量于委托、缩减执行的实用构建配方。",
+      "tags": "query:eca",
+      "abstract_en": "Large language model based search agents increasingly adopt multi-agent architectures in which a main agent decomposes a complex question into sub-queries and dispatches them to parallel sub-agents. However, existing systems instantiate all roles from a single model of identical scale, leaving open how model capacity should be distributed across roles. We factorize hierarchical search into three roles: a delegation role responsible for task decomposition, an execution role responsible for retrieval and evidence extraction, and an answer generation role held fixed as a confound control. We then conduct controlled capacity sweeps along the delegation and execution axes on five multi-hop QA benchmarks. The experiments yield three findings. First, role factorization consistently outperforms a single-agent baseline, improving exact match from 4.5 to 8.6 points across six model scales. Second, capacity sensitivity is asymmetric: scaling the delegation backbone improves EM by ~11 points, whereas scaling the execution sub-agent moves EM by only ~2.6 points, identifying decomposition as the capability bottleneck. Third, a 1.7B-parameter executor trained via quality-filtered trajectory distillation matches a frontier sub-agent in accuracy while consuming 37% fewer sub-agent tokens, advancing the Pareto frontier. These results suggest a concrete recipe for building hierarchical search agents: concentrate capacity at delegation and downsize execution without sacrificing accuracy. Our code is available at https://github.com/QinnanCai0115/role-factorized-search.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
