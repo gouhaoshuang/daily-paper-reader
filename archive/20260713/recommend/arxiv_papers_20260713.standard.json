@@ -1,0 +1,171 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-13T21:20:52.654525+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2607.09059v1",
+      "source": "arxiv",
+      "title": "ARCANA: A Reflective Multi-Agent Program Synthesis Framework for ARC-AGI-2 Reasoning",
+      "abstract": "We present ARCANA, a collaborative multi agent framework for solving ARC AGI 2 tasks under strict test time and hardware constraints. ARCANA decomposes each task into iterative perception, hypothesis generation, symbolic execution, and reflective refinement. A perceptual grounding agent builds object centric scene graphs from raw grids, a latent program policy proposes diverse DSL programs, a symbolic executor verifies candidates on demonstrations, and a reflective agent synthesizes failure driven feedback for the next turn. These agents communicate through a shared differentiable blackboard and are scheduled by a learned meta controller. The design combines structured program search with adaptive multi turn correction, improving reasoning efficiency and solution quality on challenging abstract transformation tasks.",
+      "authors": [
+        "Kunbo Zhang",
+        "Lei Fu",
+        "Zeyu Wang",
+        "Zijing Liu",
+        "Kejian Tong"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-10T03:03:42+00:00",
+      "link": "https://arxiv.org/pdf/2607.09059v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Collaborative multi-agent framework for program synthesis",
+      "llm_evidence_cn": "协作式多智能体程序合成框架",
+      "llm_evidence": "协作式多智能体程序合成框架",
+      "canonical_evidence": "协作式多智能体程序合成框架",
+      "llm_tldr_en": "ARCANA uses multiple specialized agents (perception, program proposal, executor, reflection) that collaborate via a shared blackboard to solve ARC-AGI-2 tasks, improving reasoning through iterative refinement. Demonstrates strong collaboration in multi-agent systems.",
+      "llm_tldr_cn": "针对严格时间和硬件约束下的ARC-AGI-2推理任务，本文提出ARCANA协作式多智能体框架。该框架将任务分解为感知、假设生成、符号执行和反思改进四个阶段，分别由专用智能体通过共享可微分黑板通信，并由元控制器调度。实验表明，该框架结合结构化程序搜索与自适应多轮纠错，提升了推理性能，展示了多智能体协作的有效性。",
+      "llm_tldr": "针对严格时间和硬件约束下的ARC-AGI-2推理任务，本文提出ARCANA协作式多智能体框架。该框架将任务分解为感知、假设生成、符号执行和反思改进四个阶段，分别由专用智能体通过共享可微分黑板通信，并由元控制器调度。实验表明，该框架结合结构化程序搜索与自适应多轮纠错，提升了推理性能，展示了多智能体协作的有效性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.09330v1",
+      "source": "arxiv",
+      "title": "Communication-Efficient Digital-Twin Coordination for Heterogeneous LLM Embodied Agents over Computing Power Networks",
+      "abstract": "Embodied agent teams powered by heterogeneous large language models (LLMs) are being widely deployed in physical artificial intelligence such as smart factories, warehouses, and service robotics. To enable collaboration among such an agent team, efficient coordination mechanisms that operate reliably under limited network resources are required. However, existing heterogeneous LLM-agent coordination frameworks that rely on multi-round natural-language-based conversations introduce three coupled challenges. First, inter-agent dialogue incurs communication overhead that grows rapidly with team size. Second, the quality of coordination is constrained by the heterogeneous capabilities of the agent team's LLMs. Third, agents may suffer from action delays due to iterative negotiation. To address these challenges, we propose LDT-Coord, a networked coordination framework built upon a lightweight digital twin (DT). Specifically, each agent independently selects its intended action and reports both the action decision and a structured temporal constraint over shared resources to the DT server, thereby decoupling coordination performance from natural-language reasoning ability. Then, DT executes a training-free, rule-based orchestrator algorithm to resolve cross-agent conflicts and returns coordination instructions to prevent such conflicts. To further reduce communication overhead, we formulate agent reporting control as a constrained partially observable Markov decision process (C-POMDP) and solve it with the PPO-Lagrangian algorithm. Simulation results show that LDT-Coord achieves a task success rate comparable to conventional coordination methods while reducing communication overhead by more than 70x and maintaining robustness under LLM heterogeneity.",
+      "authors": [
+        "Nuocheng Yang",
+        "Sihua Wang",
+        "Zihan Chen",
+        "Tony Q. S. Quek",
+        "Changchuan Yin"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-07-10T12:10:31+00:00",
+      "link": "https://arxiv.org/pdf/2607.09330v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "communication-efficient coordination for heterogeneous LLM embodied agents over computing power networks",
+      "llm_evidence_cn": "在计算网络上异构LLM具身代理的通信高效协调",
+      "llm_evidence": "在计算网络上异构LLM具身代理的通信高效协调",
+      "canonical_evidence": "在计算网络上异构LLM具身代理的通信高效协调",
+      "llm_tldr_en": "Proposes a digital-twin coordination mechanism for heterogeneous LLM embodied agents over computing power networks, addressing communication overhead and capability heterogeneity.",
+      "llm_tldr_cn": "该论文针对异构LLM具身代理团队在计算网络上的协作问题，提出了一种基于数字孪生的通信高效协调机制，有效解决了多轮对话带来的通信开销和异构能力约束问题，为端云协同的分布式代理系统提供了关键技术支撑。",
+      "llm_tldr": "该论文针对异构LLM具身代理团队在计算网络上的协作问题，提出了一种基于数字孪生的通信高效协调机制，有效解决了多轮对话带来的通信开销和异构能力约束问题，为端云协同的分布式代理系统提供了关键技术支撑。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.05482v1",
+      "source": "arxiv",
+      "title": "TypeGo: An OS Runtime for Embodied Agents",
+      "abstract": "Large language models (LLMs) can plan behavior for embodied agents from natural language, but treating the LLM as a request/response oracle on the critical path is fundamentally at odds with real-time control and concurrent goals. We argue for an operating-system-style runtime for embodied agents, and instantiate this idea in an early prototype, TypeGo. TypeGo structures LLM-based planning as asynchronous loops at multiple timescales that overlap with execution, and manages the agent's physical body like an OS manages hardware: the Skill Kernel arbitrates typed physical subsystems among concurrent per-task processes, a scheduler preempts them and resumes or replaces each by source, and speculative skill streaming hides LLM latency behind ongoing motion, while a fast first-action path yields visible feedback within a second. Users program behavior through natural language prescriptions that TypeGo dispatches to the LLM-based planners or compiles into low-latency interrupt handlers. Our prototype of Kalos, a Unitree Go2 quadruped, provides preliminary evidence for the design: in our current task suite, it cuts per-step delay by 50% over step-by-step planning and time-to-first-action by 73% over monolithic planning, while admitting concurrent tasks at low scheduling overhead.",
+      "authors": [
+        "Guojun Chen",
+        "Alex Schott",
+        "Lin Zhong"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE",
+        "cs.RO"
+      ],
+      "published": "2026-07-06T15:47:34+00:00",
+      "link": "https://arxiv.org/pdf/2607.05482v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "OS-style runtime for embodied agents, addressing real-time control and concurrent goals",
+      "llm_evidence_cn": "具身智能体的操作系统运行时，支持实时控制与并发",
+      "llm_evidence": "具身智能体的操作系统运行时，支持实时控制与并发",
+      "canonical_evidence": "具身智能体的操作系统运行时，支持实时控制与并发",
+      "llm_tldr_en": "Proposes TypeGo, an OS runtime for embodied agents that structures LLM planning as asynchronous loops overlapping with execution, managing physical body like hardware.",
+      "llm_tldr_cn": "本文提出TypeGo，一种类似操作系统的具身智能体运行时，将LLM规划结构化为多时间步异步循环，与执行重叠。通过技能内核仲裁物理子系统、调度器抢占恢复进程以及投机技能流等机制，解决实时控制与并发目标之间的冲突，首次将操作系统设计理念应用于具身智能体控制。",
+      "llm_tldr": "本文提出TypeGo，一种类似操作系统的具身智能体运行时，将LLM规划结构化为多时间步异步循环，与执行重叠。通过技能内核仲裁物理子系统、调度器抢占恢复进程以及投机技能流等机制，解决实时控制与并发目标之间的冲突，首次将操作系统设计理念应用于具身智能体控制。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.09295v1",
+      "source": "arxiv",
+      "title": "Multi-Agent Reinforcement Learning for SLA-Aware Network Slicing in UAV-Enabled MEC",
+      "abstract": "Unmanned Aerial Vehicle (UAV)-enabled Mobile Edge Computing (MEC) offers flexible capacity provisioning for heterogeneous network slices, including Hyper-Reliable and Low-Latency Communication (HRLLC), Enhanced Mobile Broadband (eMBB), and Massive Machine-Type Communications (mMTC). However, guaranteeing slice-level Service-Level Agreements (SLAs) under dynamic user mobility, stochastic task arrivals, and constrained onboard energy and computing resources remains a fundamental challenge. This paper proposes a predictive multi-agent Reinforcement Learning (RL) framework that proactively maintains SLA stability in UAV-enabled MEC through coordinated trajectory control and computation resource allocation. A lightweight prediction module forecasts near-future user mobility, enabling UAVs to anticipate congestion and reposition before SLA violations occur. We design an SLA-aware reward function that explicitly penalizes both violation probability and duration across slices, alongside total energy consumption. UAV agents are trained using Multi-Agent Proximal Policy Optimization (MAPPO) with centralized training and decentralized execution, enabling scalable online decision-making. Event-driven simulations with realistic mobility traces demonstrate that the proposed framework significantly improves SLA stability compared with baselines while maintaining competitive energy efficiency and delay performance, approaching oracle-level performance with sufficiently accurate predictive information.",
+      "authors": [
+        "Mohammad Farhoudi",
+        "Zeinab Sasan",
+        "Masoud Shokrnezhad",
+        "Tarik Taleb"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-07-10T11:19:06+00:00",
+      "link": "https://arxiv.org/pdf/2607.09295v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "UAV-enabled MEC with multi-agent RL for collaborative edge cloud",
+      "llm_evidence_cn": "无人机MEC场景下的多智能体强化学习实现边缘云协作",
+      "llm_evidence": "无人机MEC场景下的多智能体强化学习实现边缘云协作",
+      "canonical_evidence": "无人机MEC场景下的多智能体强化学习实现边缘云协作",
+      "llm_tldr_en": "This paper proposes a predictive multi-agent RL framework for SLA-aware network slicing in UAV-enabled MEC, coordinating trajectory control and resource allocation to maintain slice stability.",
+      "llm_tldr_cn": "针对无人机移动边缘计算中动态用户移动与任务到达导致切片SLA难以保障的问题，该文提出预测性多智能体强化学习框架，通过协调无人机轨迹与计算资源分配主动维持SLA稳定。实验表明该方法有效应对动态性，为边缘云协同AI代理系统的资源调度提供了可迁移方法。",
+      "llm_tldr": "针对无人机移动边缘计算中动态用户移动与任务到达导致切片SLA难以保障的问题，该文提出预测性多智能体强化学习框架，通过协调无人机轨迹与计算资源分配主动维持SLA稳定。实验表明该方法有效应对动态性，为边缘云协同AI代理系统的资源调度提供了可迁移方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

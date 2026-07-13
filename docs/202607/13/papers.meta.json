@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-13",
+  "date": "2026-07-13",
+  "generated_at": "2026-07-13T21:23:12",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/13/2607.09059v1-arcana-a-reflective-multi-agent-program-synthesis-framework-for-arc-agi-2-reasoning",
+      "section": "deep",
+      "title_en": "ARCANA: A Reflective Multi-Agent Program Synthesis Framework for ARC-AGI-2 Reasoning",
+      "authors": "Kunbo Zhang, Lei Fu, Zeyu Wang, Zijing Liu, Kejian Tong",
+      "date": "2026-07-10",
+      "pdf": "https://arxiv.org/pdf/2607.09059v1",
+      "score": "8.0",
+      "evidence": "协作式多智能体程序合成框架",
+      "tldr": "ARC-AGI-2任务要求严格的测试时间和硬件约束，现有方法难以高效求解。ARCANA提出一种反思式多智能体程序合成框架，将任务分解为感知、假设生成、符号执行和反思精炼四个阶段，智能体通过可微分黑板通信并由元控制器调度。在抽象变换任务上，该框架显著提升了推理效率和解决方案质量，展现了结构化程序搜索与自适应多轮修正结合的有效性。",
+      "tags": "query:eca",
+      "abstract_en": "We present ARCANA, a collaborative multi agent framework for solving ARC AGI 2 tasks under strict test time and hardware constraints. ARCANA decomposes each task into iterative perception, hypothesis generation, symbolic execution, and reflective refinement. A perceptual grounding agent builds object centric scene graphs from raw grids, a latent program policy proposes diverse DSL programs, a symbolic executor verifies candidates on demonstrations, and a reflective agent synthesizes failure driven feedback for the next turn. These agents communicate through a shared differentiable blackboard and are scheduled by a learned meta controller. The design combines structured program search with adaptive multi turn correction, improving reasoning efficiency and solution quality on challenging abstract transformation tasks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/13/2607.09330v1-communication-efficient-digital-twin-coordination-for-heterogeneous-llm-embodied-agents-over-computing-power-networks",
+      "section": "deep",
+      "title_en": "Communication-Efficient Digital-Twin Coordination for Heterogeneous LLM Embodied Agents over Computing Power Networks",
+      "authors": "Nuocheng Yang, Sihua Wang, Zihan Chen, Tony Q. S. Quek, Changchuan Yin",
+      "date": "2026-07-10",
+      "pdf": "https://arxiv.org/pdf/2607.09330v1",
+      "score": "8.0",
+      "evidence": "在计算网络上异构LLM具身代理的通信高效协调",
+      "tldr": "异构LLM具身智能体团队协作面临通信开销大、协调质量受限和动作延迟等挑战。提出LDT-Coord框架，通过轻量级数字孪生解耦协调与语言能力，并采用规则算法解决冲突。进一步使用PPO-Lagrangian优化通信控制。仿真表明在保持任务成功率的同时，通信开销降低70倍以上，且对LLM异构性具有鲁棒性。",
+      "tags": "query:eca",
+      "abstract_en": "Embodied agent teams powered by heterogeneous large language models (LLMs) are being widely deployed in physical artificial intelligence such as smart factories, warehouses, and service robotics. To enable collaboration among such an agent team, efficient coordination mechanisms that operate reliably under limited network resources are required. However, existing heterogeneous LLM-agent coordination frameworks that rely on multi-round natural-language-based conversations introduce three coupled challenges. First, inter-agent dialogue incurs communication overhead that grows rapidly with team size. Second, the quality of coordination is constrained by the heterogeneous capabilities of the agent team's LLMs. Third, agents may suffer from action delays due to iterative negotiation. To address these challenges, we propose LDT-Coord, a networked coordination framework built upon a lightweight digital twin (DT). Specifically, each agent independently selects its intended action and reports both the action decision and a structured temporal constraint over shared resources to the DT server, thereby decoupling coordination performance from natural-language reasoning ability. Then, DT executes a training-free, rule-based orchestrator algorithm to resolve cross-agent conflicts and returns coordination instructions to prevent such conflicts. To further reduce communication overhead, we formulate agent reporting control as a constrained partially observable Markov decision process (C-POMDP) and solve it with the PPO-Lagrangian algorithm. Simulation results show that LDT-Coord achieves a task success rate comparable to conventional coordination methods while reducing communication overhead by more than 70x and maintaining robustness under LLM heterogeneity.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/13/2607.05482v1-typego-an-os-runtime-for-embodied-agents",
+      "section": "quick",
+      "title_en": "TypeGo: An OS Runtime for Embodied Agents",
+      "authors": "Guojun Chen, Alex Schott, Lin Zhong",
+      "date": "2026-07-06",
+      "pdf": "https://arxiv.org/pdf/2607.05482v1",
+      "score": "7.0",
+      "evidence": "具身智能体的操作系统运行时，支持实时控制与并发",
+      "tldr": "大型语言模型为具身智能体规划行为时，请求/响应模式难以满足实时控制和并发需求。TypeGo设计操作系统风格运行时，将规划分解为多时间尺度异步循环与执行重叠。其Skill Kernel仲裁物理子系统，调度器管理进程，推测性技能流隐藏延迟，快速首动路径提供即时反馈。在Unitree Go2四足机器人上，每步延迟降低50%，首动时间降低73%，且支持低调度开销并发任务。",
+      "tags": "query:eca",
+      "abstract_en": "Large language models (LLMs) can plan behavior for embodied agents from natural language, but treating the LLM as a request/response oracle on the critical path is fundamentally at odds with real-time control and concurrent goals. We argue for an operating-system-style runtime for embodied agents, and instantiate this idea in an early prototype, TypeGo. TypeGo structures LLM-based planning as asynchronous loops at multiple timescales that overlap with execution, and manages the agent's physical body like an OS manages hardware: the Skill Kernel arbitrates typed physical subsystems among concurrent per-task processes, a scheduler preempts them and resumes or replaces each by source, and speculative skill streaming hides LLM latency behind ongoing motion, while a fast first-action path yields visible feedback within a second. Users program behavior through natural language prescriptions that TypeGo dispatches to the LLM-based planners or compiles into low-latency interrupt handlers. Our prototype of Kalos, a Unitree Go2 quadruped, provides preliminary evidence for the design: in our current task suite, it cuts per-step delay by 50% over step-by-step planning and time-to-first-action by 73% over monolithic planning, while admitting concurrent tasks at low scheduling overhead.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/13/2607.09295v1-multi-agent-reinforcement-learning-for-sla-aware-network-slicing-in-uav-enabled-mec",
+      "section": "quick",
+      "title_en": "Multi-Agent Reinforcement Learning for SLA-Aware Network Slicing in UAV-Enabled MEC",
+      "authors": "Mohammad Farhoudi, Zeinab Sasan, Masoud Shokrnezhad, Tarik Taleb",
+      "date": "2026-07-10",
+      "pdf": "https://arxiv.org/pdf/2607.09295v1",
+      "score": "7.0",
+      "evidence": "无人机MEC场景下的多智能体强化学习实现边缘云协作",
+      "tldr": "无人机辅助移动边缘计算面临动态用户移动性和随机任务到达下切片级SLA稳定性挑战。本文提出预测性多智能体强化学习框架，通过轻量预测模块预判用户移动，结合MAPPO协调轨迹与资源分配。事件驱动仿真表明该方法显著提升SLA稳定性，接近理想性能，同时保持能效与延迟优势。",
+      "tags": "query:eca",
+      "abstract_en": "Unmanned Aerial Vehicle (UAV)-enabled Mobile Edge Computing (MEC) offers flexible capacity provisioning for heterogeneous network slices, including Hyper-Reliable and Low-Latency Communication (HRLLC), Enhanced Mobile Broadband (eMBB), and Massive Machine-Type Communications (mMTC). However, guaranteeing slice-level Service-Level Agreements (SLAs) under dynamic user mobility, stochastic task arrivals, and constrained onboard energy and computing resources remains a fundamental challenge. This paper proposes a predictive multi-agent Reinforcement Learning (RL) framework that proactively maintains SLA stability in UAV-enabled MEC through coordinated trajectory control and computation resource allocation. A lightweight prediction module forecasts near-future user mobility, enabling UAVs to anticipate congestion and reposition before SLA violations occur. We design an SLA-aware reward function that explicitly penalizes both violation probability and duration across slices, alongside total energy consumption. UAV agents are trained using Multi-Agent Proximal Policy Optimization (MAPPO) with centralized training and decentralized execution, enabling scalable online decision-making. Event-driven simulations with realistic mobility traces demonstrate that the proposed framework significantly improves SLA stability compared with baselines while maintaining competitive energy efficiency and delay performance, approaching oracle-level performance with sufficiently accurate predictive information.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
