@@ -6,34 +6,38 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-13
-- 运行时间：2026-07-13 21:23:05 UTC
+- 最新运行日期：2026-07-14
+- 运行时间：2026-07-14 20:13:35 UTC
 - 运行状态：成功
-- 本次总论文数：4
+- 本次总论文数：6
 - 精读区：2
-- 速读区：2
+- 速读区：4
 
 ### 今日简报（AI）
-今日精选两篇8分研究，聚焦多智能体推理与数字孪生通信优化。  
-建议关注ARC-AGI反思框架与异构智能体数字孪生协调，突破多智能体协作瓶颈。  
-普通读者可快速浏览TypeGo具身智能系统，理解OS级抽象如何简化AI落地。
-- 详情：[/202607/13/README](/202607/13/README)
+今日聚焦6篇AI论文，包括分布式具身智能体容错协作与通用机器人操作系统两项高分研究；建议优先精读精读列表中的两篇高分论文，把握具身智能与机器人系统前沿。
+- 详情：[/202607/14/README](/202607/14/README)
 
 ### 精读区论文标签
-1. [ARCANA: A Reflective Multi-Agent Program Synthesis Framework for ARC-AGI-2 Reasoning](/202607/13/2607.09059v1-arcana-a-reflective-multi-agent-program-synthesis-framework-for-arc-agi-2-reasoning)  
-   标签：评分：8.0/10、query:eca
-   evidence：协作式多智能体程序合成框架
-2. [Communication-Efficient Digital-Twin Coordination for Heterogeneous LLM Embodied Agents over Computing Power Networks](/202607/13/2607.09330v1-communication-efficient-digital-twin-coordination-for-heterogeneous-llm-embodied-agents-over-computing-power-networks)  
-   标签：评分：8.0/10、query:eca
-   evidence：在计算网络上异构LLM具身代理的通信高效协调
+1. [Distributed Agent System: Fault-Tolerant Collaboration Among Embodied Agents](/202607/14/2607.10811v1-distributed-agent-system-fault-tolerant-collaboration-among-embodied-agents)  
+   标签：评分：10.0/10、query:eca
+   evidence：设备-边缘-云容错协作框架
+2. [ABot-AgentOS: A General Robotic Agent OS with Lifelong Multi-modal Memory](/202607/14/2607.10350v1-abot-agentos-a-general-robotic-agent-os-with-lifelong-multi-modal-memory)  
+   标签：评分：9.0/10、query:eca
+   evidence：明确提及机器人代理操作系统的边缘云协作
 
 ### 速读区论文标签
-1. [TypeGo: An OS Runtime for Embodied Agents](/202607/13/2607.05482v1-typego-an-os-runtime-for-embodied-agents)  
-   标签：评分：7.0/10、query:eca
-   evidence：具身智能体的操作系统运行时，支持实时控制与并发
-2. [Multi-Agent Reinforcement Learning for SLA-Aware Network Slicing in UAV-Enabled MEC](/202607/13/2607.09295v1-multi-agent-reinforcement-learning-for-sla-aware-network-slicing-in-uav-enabled-mec)  
-   标签：评分：7.0/10、query:eca
-   evidence：无人机MEC场景下的多智能体强化学习实现边缘云协作
+1. [DynaFilter: Cloud-driven Dynamic Filtering for Satellite Edge Intelligence](/202607/14/2607.10098v1-dynafilter-cloud-driven-dynamic-filtering-for-satellite-edge-intelligence)  
+   标签：评分：6.0/10、query:eca
+   evidence：云驱动的动态过滤技术，用于卫星边缘智能，实现边缘-云协作
+2. [Robo-Reporters: Evaluating Autonomous AI Agents as Algorithmic Gatekeepers in Computational Journalism](/202607/14/2607.10736v1-robo-reporters-evaluating-autonomous-ai-agents-as-algorithmic-gatekeepers-in-computational-journalism)  
+   标签：评分：6.0/10、query:eca
+   evidence：多智能体协作架构对比
+3. [LOGOS: A Living Logic for AI Agent Teams That Evolve With Humans](/202607/14/2607.10878v1-logos-a-living-logic-for-ai-agent-teams-that-evolve-with-humans)  
+   标签：评分：6.0/10、query:eca
+   evidence：多智能体团队演化与治理
+4. [Agentic Routing: The Harness-Native Data Flywheel](/202607/14/2607.11399v1-agentic-routing-the-harness-native-data-flywheel)  
+   标签：评分：6.0/10、query:eca
+   evidence：智能体内部路由优化协作
 
 
 <div class="dpr-home-promo-card">

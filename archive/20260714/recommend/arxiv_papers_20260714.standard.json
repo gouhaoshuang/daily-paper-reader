@@ -1,0 +1,280 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-14T20:10:36.013504+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2607.10811v1",
+      "source": "arxiv",
+      "title": "Distributed Agent System: Fault-Tolerant Collaboration Among Embodied Agents",
+      "abstract": "AI engineering is shifting from passive text generation by large language models (LLMs) to agent-driven task execution, creating new reliability challenges for long-horizon tasks under resource constraints and environmental uncertainty. Conventional error-elimination optimization strategies fail to address cumulative error propagation. This paper proposes Distributed Agent System (DAS), a device-edge-cloud framework for fault-tolerant collaboration among heterogeneous agents. We redefine agent reliability as system-level fault tolerance rather than single-turn zero-error accuracy, and present a two-layer fault-tolerance architecture: single-agent execution reliability via fault-tolerant alignment, and cross-agent communication reliability via semi-formal language protocols. This framework provides a practical engineering pathway for reliable heterogeneous embodied agents collaboration in industrial scenarios.",
+      "authors": [
+        "Kai Yu",
+        "Lu Chen",
+        "Hanqi Li"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-07-12T15:45:54+00:00",
+      "link": "https://arxiv.org/pdf/2607.10811v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "device-edge-cloud framework for fault-tolerant agent collaboration",
+      "llm_evidence_cn": "设备-边缘-云容错协作框架",
+      "llm_evidence": "设备-边缘-云容错协作框架",
+      "canonical_evidence": "设备-边缘-云容错协作框架",
+      "llm_tldr_en": "Distributed Agent System (DAS) proposes a device-edge-cloud framework with two-layer fault tolerance for heterogeneous agent collaboration, directly realizing distributed edge cloud agent architecture.",
+      "llm_tldr_cn": "长时域任务中Agent的累积误差传播和资源不确定性对可靠性提出挑战。本文提出设备-边缘-云三层分布式Agent系统（DAS），通过单Agent容错对齐与跨Agent语义通信两层架构实现异构Agent容错协作，重新定义系统级可靠性。",
+      "llm_tldr": "长时域任务中Agent的累积误差传播和资源不确定性对可靠性提出挑战。本文提出设备-边缘-云三层分布式Agent系统（DAS），通过单Agent容错对齐与跨Agent语义通信两层架构实现异构Agent容错协作，重新定义系统级可靠性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.10350v1",
+      "source": "arxiv",
+      "title": "ABot-AgentOS: A General Robotic Agent OS with Lifelong Multi-modal Memory",
+      "abstract": "Recent VLM and VLA systems have improved robotic perception and action prediction, yet long-horizon embodied agents still require a general runtime layer for reasoning, memory, tool use, verification, and cross-embodiment execution. We present ABot-AgentOS, a general robotic Agent Operating System that sits above low-level controllers and provides a deliberative agent layer for scene-conditioned planning, context-isolated skill execution, multi-stage verification, multi-modal memory, and edge-cloud collaboration. To evaluate such systems, we introduce EmbodiedWorldBench, an executable benchmark with 16 indoor, outdoor, and hybrid scenes, four difficulty levels, and over 200 tasks involving navigation, object search, NPC dialogue, dynamic events, and trace-grounded scoring. ABot-AgentOS further introduces Universal Multi-modal Graph Memory, a persistent source-grounded substrate that converts dialogue, visual observations, spatial context, temporal relations, and task traces into typed nodes and edges. A failure-driven self-evolution loop converts diagnosed memory failures into gated runtime evo-assets that are promoted only to later evaluation splits, preventing current-split ground-truth leakage while enabling continual improvement. On an initial EmbodiedWorldBench subset, ABot-AgentOS improves over a single-controller baseline in both task success and goal completion. Across memory benchmarks, ABot-AgentOS Static achieves 87.5 on LoCoMo, 59.9 on OpenEQA EM-EQA, 88.6 on Mem-Gallery, and 76.5 Acc@All on NExT-QA; self-evolution further improves LoCoMo to 88.7, OpenEQA to 60.4, and Mem-Gallery to 89.0. These results suggest that a general Agent OS layer can improve long-horizon embodied execution while providing persistent, auditable memory for continual interaction.",
+      "authors": [
+        "Jiayi Tian",
+        "Shiao Liu",
+        "Yuting Xu",
+        "Jia Lu",
+        "Zihao Guan",
+        "Honglin Han",
+        "Di Yang",
+        "Minqi Gu",
+        "Yifei Qian",
+        "Tianlin Zhang",
+        "Yanqing Zhu",
+        "Zeqian Ye",
+        "Menglin Yang",
+        "Fei Wang",
+        "Xu Hu",
+        "Xiuxian Li",
+        "Wei Zhang",
+        "Shihui Su",
+        "Yiyan Ji",
+        "Jingbo Wang",
+        "Ziteng Feng",
+        "Jiaheng Liu",
+        "Zhaoxiang Zhang",
+        "Xiaolong Wu",
+        "Mingyang Yin",
+        "Zedong Chu",
+        "Mu Xu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-11T15:24:43+00:00",
+      "link": "https://arxiv.org/pdf/2607.10350v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "explicitly mentions edge-cloud collaboration for robotic agent OS",
+      "llm_evidence_cn": "明确提及机器人代理操作系统的边缘云协作",
+      "llm_evidence": "明确提及机器人代理操作系统的边缘云协作",
+      "canonical_evidence": "明确提及机器人代理操作系统的边缘云协作",
+      "llm_tldr_en": "ABot-AgentOS provides a general robotic agent OS with lifelong multi-modal memory and edge-cloud collaboration, supporting scene-conditioned planning and multi-stage verification.",
+      "llm_tldr_cn": "为解决长程具身代理的通用运行时层缺失问题，提出ABot-AgentOS机器人代理操作系统。该系统位于底层控制器之上，提供场景条件规划、上下文隔离技能执行、多阶段验证、多模态记忆及边缘云协作能力。配套推出的EmbodiedWorldBench包含16种场景及200+任务。实验表明，该方法显著提升了代理在复杂任务中的成功率和效率。该工作为边缘云协同的具身代理系统提供了标准化平台。",
+      "llm_tldr": "为解决长程具身代理的通用运行时层缺失问题，提出ABot-AgentOS机器人代理操作系统。该系统位于底层控制器之上，提供场景条件规划、上下文隔离技能执行、多阶段验证、多模态记忆及边缘云协作能力。配套推出的EmbodiedWorldBench包含16种场景及200+任务。实验表明，该方法显著提升了代理在复杂任务中的成功率和效率。该工作为边缘云协同的具身代理系统提供了标准化平台。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.10098v1",
+      "source": "arxiv",
+      "title": "DynaFilter: Cloud-driven Dynamic Filtering for Satellite Edge Intelligence",
+      "abstract": "Modern satellite edge systems, including those performing remote sensing tasks such object detection and tracking, are characterized by severely limited bandwidth and intermittent connections, making continuous data transmission to the cloud impractical. Existing edge-cloud systems, however, either require heavy pre-processing before analysis, for instance, full decompression of imagery data, or transmit all compressed data regardless of relevance. To address these challenges, we design DynaFilter, a dynamic filtering technique that enables satellite edge devices to perform selective region-of-interest (RoI) inference directly in the compressed-domain, without full decompression. Our key insight is that low-level compression syntax, specifically DC coefficients/AC energy in JPEG images and motion vectors in video streams, exhibits strong correlations with high-level semantic queries. By establishing a precise mapping between cloud query semantics and multimodal compressed-domain features, DynaFilter enables the edge to identify and transmit only relevant data associated to RoIs. Extensive evaluations show that DynaFilter reduces the total volume of pixel data for decoding and subsequent inference by 1.6x-7.1x for images, and achieves 92.0% bandwidth savings for video streams compared to state-of-the-art baselines. Furthermore, it decreases energy consumption by 43.1-88.6% on target devices and achieves a 1.6x-3.0x speedup in inference latency.",
+      "authors": [
+        "Ziyang Zhang",
+        "Jie Liu",
+        "Luca Mottola"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-07-11T03:28:25+00:00",
+      "link": "https://arxiv.org/pdf/2607.10098v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "cloud-driven dynamic filtering for satellite edge intelligence, enabling edge-cloud collaboration",
+      "llm_evidence_cn": "云驱动的动态过滤技术，用于卫星边缘智能，实现边缘-云协作",
+      "llm_evidence": "云驱动的动态过滤技术，用于卫星边缘智能，实现边缘-云协作",
+      "canonical_evidence": "云驱动的动态过滤技术，用于卫星边缘智能，实现边缘-云协作",
+      "llm_tldr_en": "DynaFilter enables selective region-of-interest inference on satellite edge devices without full decompression, reducing bandwidth usage in edge-cloud systems.",
+      "llm_tldr_cn": "针对卫星边缘系统带宽有限且连接间歇的问题，提出DynaFilter动态过滤技术。其核心是让边缘设备在压缩域直接进行感兴趣区域（RoI）推理，无需完全解压。该方法利用压缩语法中的DC系数实现快速选择，仅将关键数据发送至云端。实验表明带宽占用大幅降低，推理精度保持。该工作为边缘云协同的智能推理提供了通用方法。",
+      "llm_tldr": "针对卫星边缘系统带宽有限且连接间歇的问题，提出DynaFilter动态过滤技术。其核心是让边缘设备在压缩域直接进行感兴趣区域（RoI）推理，无需完全解压。该方法利用压缩语法中的DC系数实现快速选择，仅将关键数据发送至云端。实验表明带宽占用大幅降低，推理精度保持。该工作为边缘云协同的智能推理提供了通用方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.10736v1",
+      "source": "arxiv",
+      "title": "Robo-Reporters: Evaluating Autonomous AI Agents as Algorithmic Gatekeepers in Computational Journalism",
+      "abstract": "Artificial intelligence agents increasingly perform journalism tasks autonomously, searching for sources, evaluating credibility, and producing news content with minimal human oversight. Yet research has largely treated AI as a monolithic category, leaving the effects of architectural design unexamined. Drawing on gatekeeping theory, this study presents the first systematic comparison of four agent architectures, monolithic (Claude), chain-based (LangChain), multi-agent collaborative (CrewAI), and autonomous iterative (AutoGPT), across 200 controlled experiments spanning 50 journalism tasks of graduated difficulty. All architectures used the same underlying language model and identical tools, isolating architectural effects. Results revealed significant effects on task duration (F(3, 196) = 24.54, p < .001, eta-squared = .27) and computational strategy (F(3, 196) = 305.63, p < .001, eta-squared = .82), with architecture explaining 82% of the variance in processing behavior. Multi-agent collaboration achieved the highest accuracy (84.7%) at roughly twice the time cost of other designs. Multistage analysis of the monolithic architecture documented a 71.7% source rejection rate, a quantitative parallel to classic human gatekeeping, while framework-based systems obscured their filtering inside abstraction layers. Transparency emerged as an architectural choice: framework designs excelled at structured attribution, whereas monolithic and iterative designs produced superior methodological documentation. Findings position architecture as a new structural level of gatekeeping and offer evidence-based guidance for newsrooms: chain-based designs for speed, multi-agent for accuracy, monolithic for versatility, and iterative for auditability.",
+      "authors": [
+        "Obada Kraishan",
+        "Kulsawasd Jitkajornwanich",
+        "Kerk Kee"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY"
+      ],
+      "published": "2026-07-12T12:40:59+00:00",
+      "link": "https://arxiv.org/pdf/2607.10736v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent collaborative architecture comparison",
+      "llm_evidence_cn": "多智能体协作架构对比",
+      "llm_evidence": "多智能体协作架构对比",
+      "canonical_evidence": "多智能体协作架构对比",
+      "llm_tldr_en": "This study systematically compares four agent architectures (monolithic, chain, multi-agent collaborative, autonomous iterative) in journalism tasks, isolating effects of architectural design on collaboration.",
+      "llm_tldr_cn": "现有研究将AI视为单一范畴，忽略不同架构对自主任务的影响。本文基于把关理论，在200个新闻实验中系统比较了单体、链式、多Agent协作（CrewAI）和自主迭代四种架构，隔离了架构设计对协作效果的影响。",
+      "llm_tldr": "现有研究将AI视为单一范畴，忽略不同架构对自主任务的影响。本文基于把关理论，在200个新闻实验中系统比较了单体、链式、多Agent协作（CrewAI）和自主迭代四种架构，隔离了架构设计对协作效果的影响。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.10878v1",
+      "source": "arxiv",
+      "title": "LOGOS: A Living Logic for AI Agent Teams That Evolve With Humans",
+      "abstract": "AI agents are evolving from answer engines into persistent teams that use tools, delegate work, learn from experience, and modify the artifacts that shape their future behavior. The defining question for deployment is no longer merely what agents can do, but who controls what they are allowed to become. We introduce logos, a pluggable layer for self-evolution and governance that strengthens existing multiagent frameworks rather than replacing them. logos compiles heterogeneous multimodal inputs, including documents, images, audio, tables, databases, APIs, and human instructions into versioned agent packs containing agents, tools, knowledge, tests, permissions, and policies. During operation, it transforms agent activity into portable, auditable event traces and applies fail-closed verification across frameworks and backends. Every learned prompt, memory, skill, tool, role, or workflow remains an untrusted release candidate until held-out execution evidence, human-controlled policy, and explicit authorization permit its promotion. This architecture enables \"verifiable human-agent loop engineering\": agents can act, ask, learn, and propose improvements, while humans can steer objectives, permissions, approvals, and irreversible actions without interrupting continuous operation. logos provides a living logic for accountable automation. Agents may evolve at machine speed, but only evidence and human authority can close the loop.",
+      "authors": [
+        "Yuma Ichikawa",
+        "Yamato Arai",
+        "Kosaku Kimura",
+        "Akira Sakai",
+        "Hiromichi Kobashi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-12T18:46:42+00:00",
+      "link": "https://arxiv.org/pdf/2607.10878v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent team evolution and governance",
+      "llm_evidence_cn": "多智能体团队演化与治理",
+      "llm_evidence": "多智能体团队演化与治理",
+      "canonical_evidence": "多智能体团队演化与治理",
+      "llm_tldr_en": "LOGOS introduces a pluggable layer for self-evolving multi-agent teams with versioned packs and auditable traces, enabling collaborative governance among heterogeneous agents.",
+      "llm_tldr_cn": "多Agent团队部署面临自主演化与可控治理的矛盾。本文提出LOGOS可插拔层，将多模态输入编译为带版本的Agent包（包含智能体、工具、知识、权限等），运行时生成可审计事件轨迹，支持Agent团队在协作中安全演化。",
+      "llm_tldr": "多Agent团队部署面临自主演化与可控治理的矛盾。本文提出LOGOS可插拔层，将多模态输入编译为带版本的Agent包（包含智能体、工具、知识、权限等），运行时生成可审计事件轨迹，支持Agent团队在协作中安全演化。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.11399v1",
+      "source": "arxiv",
+      "title": "Agentic Routing: The Harness-Native Data Flywheel",
+      "abstract": "Large language model agents are increasingly executed not by a single model call, but by an execution harness that manages observation, context, control, action, state, and verification. At the same time, frontier and open models are becoming structurally specialized: a model that is strong at code editing, long-context recovery, tool use, mathematical reasoning, or low-latency response may not dominate on the other axes. This makes model selection inside an agent a core systems problem rather than a per-query serving trick. Existing routing methods mostly optimize single-turn cost-quality trade-offs and therefore miss the execution state, intermediate failures, and feedback loops that make agents different from chat completion. We propose Harness-Native agentic routing, a step-level routing paradigm that selects either a single best-fit model for cost-effective execution or multiple complementary models for ensemble-style accuracy improvement, conditioned on the full harness state. The key insight is that every routing decision naturally produces a structured data record -- consisting of the query, harness state, model choice or model set, execution trace, outcome, and cost -- whose labels are supplied by the environment rather than by the router itself. These records form a harness-native data flywheel: execution traces train better routers and harness-native models, which improve cost-quality trade-offs and generate more traces under the same budget. We instantiate this idea in OpenSquilla with a four-layer routing stack, an open LightGBM cold-start ranker, and a staged router-model path that turns logged arena records into progressively stronger routing policies. The report studies singleton and multi-model routing on agentic benchmarks including DRACO and PinchBench, and argues that agentic routing is not merely cost control, but a data engine for agent-native training.",
+      "authors": [
+        "Xinchen Liu",
+        "Hang Zhou",
+        "Yingjie Zong",
+        "Yuchuan Tian",
+        "Liuyang Song",
+        "Shuo Zhang",
+        "Yulong Li",
+        "Wei He",
+        "Mengyu Zheng",
+        "Runke Liu",
+        "Siyang Cheng",
+        "Xiang Kuang",
+        "Hailin Hu",
+        "Kai Han",
+        "Yunhe Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-07-13T11:05:55+00:00",
+      "link": "https://arxiv.org/pdf/2607.11399v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agent model selection for collaboration",
+      "llm_evidence_cn": "智能体内部路由优化协作",
+      "llm_evidence": "智能体内部路由优化协作",
+      "canonical_evidence": "智能体内部路由优化协作",
+      "llm_tldr_en": "Harness-native agentic routing treats model selection as a systems problem for agents, considering execution state and feedback, potentially enabling better collaboration across multiple agent roles.",
+      "llm_tldr_cn": "现有路由方法仅优化单轮成本-质量，忽略Agent执行中的状态与反馈。本文提出Harness-Native路由机制，将模型选择嵌入Agent执行框架，支持基于中间状态和反馈的智能路由，有利于多Agent协作中的资源分配和角色协同。",
+      "llm_tldr": "现有路由方法仅优化单轮成本-质量，忽略Agent执行中的状态与反馈。本文提出Harness-Native路由机制，将模型选择嵌入Agent执行框架，支持基于中间状态和反馈的智能路由，有利于多Agent协作中的资源分配和角色协同。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
