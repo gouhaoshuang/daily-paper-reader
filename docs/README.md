@@ -6,38 +6,38 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-14
-- 运行时间：2026-07-14 20:13:35 UTC
+- 最新运行日期：2026-07-15
+- 运行时间：2026-07-15 21:17:41 UTC
 - 运行状态：成功
 - 本次总论文数：6
-- 精读区：2
-- 速读区：4
+- 精读区：3
+- 速读区：3
 
 ### 今日简报（AI）
-今日聚焦6篇AI论文，包括分布式具身智能体容错协作与通用机器人操作系统两项高分研究；建议优先精读精读列表中的两篇高分论文，把握具身智能与机器人系统前沿。
-- 详情：[/202607/14/README](/202607/14/README)
+今日收录6篇论文，精读领域集中在个性化联邦多模态大模型与物联网智能体编排。最值得关注的是分层LoRA分解技术（PFAdapter）和闭环IoT智能体网络（IoAT），两者均获9.0高分。建议深入研读这两篇精读文章，并关注多智能体协同与分布式系统的前沿方向。
+- 详情：[/202607/15/README](/202607/15/README)
 
 ### 精读区论文标签
-1. [Distributed Agent System: Fault-Tolerant Collaboration Among Embodied Agents](/202607/14/2607.10811v1-distributed-agent-system-fault-tolerant-collaboration-among-embodied-agents)  
-   标签：评分：10.0/10、query:eca
-   evidence：设备-边缘-云容错协作框架
-2. [ABot-AgentOS: A General Robotic Agent OS with Lifelong Multi-modal Memory](/202607/14/2607.10350v1-abot-agentos-a-general-robotic-agent-os-with-lifelong-multi-modal-memory)  
+1. [PFAdapter: Hierarchical LoRA Decomposition for Personalized Federated MLLMs](/202607/15/2607.12111v1-pfadapter-hierarchical-lora-decomposition-for-personalized-federated-mllms)  
    标签：评分：9.0/10、query:eca
-   evidence：明确提及机器人代理操作系统的边缘云协作
+   evidence：边缘云协同AI智能体系统中的联邦学习
+2. [Internet of Agentic Things: Networked AI Agents for Closed-Loop IoT Orchestration](/202607/15/2607.12662v1-internet-of-agentic-things-networked-ai-agents-for-closed-loop-iot-orchestration)  
+   标签：评分：9.0/10、query:eca
+   evidence：边缘云协同AI智能体系统用于物联网编排
+3. [Multi-Agent LLMs Fail to Explore Each Other](/202607/15/2607.11250v1-multi-agent-llms-fail-to-explore-each-other)  
+   标签：评分：8.0/10、query:eca
+   evidence：多智能体LLM中的协作探索失败
 
 ### 速读区论文标签
-1. [DynaFilter: Cloud-driven Dynamic Filtering for Satellite Edge Intelligence](/202607/14/2607.10098v1-dynafilter-cloud-driven-dynamic-filtering-for-satellite-edge-intelligence)  
+1. [Multi-Agent Robotic Control with Onboard Vision-Language Models](/202607/15/2607.07403v1-multi-agent-robotic-control-with-onboard-vision-language-models)  
+   标签：评分：7.0/10、query:eca
+   evidence：搭载视觉语言模型的多智能体机器人系统作为移动AI代理
+2. [[AAFLOW+] Stateful Operator Abstraction with Zero-Copy Distributed KV Cache Orchestration for Multi-Agent Workflows](/202607/15/2607.10987v1-aaflow-stateful-operator-abstraction-with-zero-copy-distributed-kv-cache-orchestration-for-multi-agent-workflows)  
    标签：评分：6.0/10、query:eca
-   evidence：云驱动的动态过滤技术，用于卫星边缘智能，实现边缘-云协作
-2. [Robo-Reporters: Evaluating Autonomous AI Agents as Algorithmic Gatekeepers in Computational Journalism](/202607/14/2607.10736v1-robo-reporters-evaluating-autonomous-ai-agents-as-algorithmic-gatekeepers-in-computational-journalism)  
+   evidence：面向多代理工作流的分布式KV缓存编排，提升边缘云效率
+3. [Agentic Service-Oriented Computing: A Manifesto for the Next Frontier of Service-Oriented Computing](/202607/15/2607.12619v1-agentic-service-oriented-computing-a-manifesto-for-the-next-frontier-of-service-oriented-computing)  
    标签：评分：6.0/10、query:eca
-   evidence：多智能体协作架构对比
-3. [LOGOS: A Living Logic for AI Agent Teams That Evolve With Humans](/202607/14/2607.10878v1-logos-a-living-logic-for-ai-agent-teams-that-evolve-with-humans)  
-   标签：评分：6.0/10、query:eca
-   evidence：多智能体团队演化与治理
-4. [Agentic Routing: The Harness-Native Data Flywheel](/202607/14/2607.11399v1-agentic-routing-the-harness-native-data-flywheel)  
-   标签：评分：6.0/10、query:eca
-   evidence：智能体内部路由优化协作
+   evidence：面向服务的分布式代理架构可应用于边缘云场景
 
 
 <div class="dpr-home-promo-card">
