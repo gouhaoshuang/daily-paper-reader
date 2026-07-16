@@ -1,0 +1,242 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-16T20:31:32.153393+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.10350v2",
+      "source": "arxiv",
+      "title": "ABot-AgentOS: A General Robotic Agent OS with Lifelong Multi-modal Memory",
+      "abstract": "Recent VLM and VLA systems have improved robotic perception and action prediction, yet long-horizon embodied agents still require a general runtime layer for reasoning, memory, tool use, verification, and cross-embodiment execution. We present ABot-AgentOS, a general robotic Agent Operating System that sits above low-level controllers and provides a deliberative agent layer for scene-conditioned planning, context-isolated skill execution, multi-stage verification, multi-modal memory, and edge-cloud collaboration. To evaluate such systems, we introduce EmbodiedWorldBench, an executable benchmark with 16 indoor, outdoor, and hybrid scenes, four difficulty levels, and over 200 tasks involving navigation, object search, NPC dialogue, dynamic events, and trace-grounded scoring. ABot-AgentOS further introduces Universal Multi-modal Graph Memory, a persistent source-grounded substrate that converts dialogue, visual observations, spatial context, temporal relations, and task traces into typed nodes and edges. A failure-driven self-evolution loop converts diagnosed memory failures into gated runtime evo-assets that are promoted only to later evaluation splits, preventing current-split ground-truth leakage while enabling continual improvement. On an initial EmbodiedWorldBench subset, ABot-AgentOS improves over a single-controller baseline in both task success and goal completion. Across memory benchmarks, ABot-AgentOS Static achieves 87.5 on LoCoMo, 59.9 on OpenEQA EM-EQA, 88.6 on Mem-Gallery, and 76.5 Acc@All on NExT-QA; self-evolution further improves LoCoMo to 88.7, OpenEQA to 60.4, and Mem-Gallery to 89.0. These results suggest that a general Agent OS layer can improve long-horizon embodied execution while providing persistent, auditable memory for continual interaction.",
+      "authors": [
+        "Jiayi Tian",
+        "Shiao Liu",
+        "Yuting Xu",
+        "Jia Lu",
+        "Zihao Guan",
+        "Honglin Han",
+        "Di Yang",
+        "Minqi Gu",
+        "Yifei Qian",
+        "Tianlin Zhang",
+        "Yanqing Zhu",
+        "Zeqian Ye",
+        "Menglin Yang",
+        "Fei Wang",
+        "Xu Hu",
+        "Xiuxian Li",
+        "Wei Zhang",
+        "Shihui Su",
+        "Yiyan Ji",
+        "Jingbo Wang",
+        "Ziteng Feng",
+        "Jiaheng Liu",
+        "Zhaoxiang Zhang",
+        "Xiaolong Wu",
+        "Zixiao Tang",
+        "Zhining Gu",
+        "Yang Cai",
+        "Linbo Zheng",
+        "Jingjing Ma",
+        "Mingyang Yin",
+        "Zedong Chu",
+        "Ziqiao Li",
+        "Mu Xu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-07-11T15:24:43+00:00",
+      "link": "https://arxiv.org/pdf/2607.10350v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge-cloud collaboration explicitly mentioned",
+      "llm_evidence_cn": "明确提及边缘云协作",
+      "llm_evidence": "明确提及边缘云协作",
+      "canonical_evidence": "明确提及边缘云协作",
+      "llm_tldr_en": "ABot-AgentOS provides a general robotic agent OS with lifelong multi-modal memory and edge-cloud collaboration, evaluated on EmbodiedWorldBench.",
+      "llm_tldr_cn": "针对长时间跨度具身智能体缺乏通用运行时层的问题，该文提出ABot-AgentOS，一个通用机器人代理操作系统，提供场景条件规划、上下文隔离技能执行、多阶段验证、多模态记忆和边缘云协作能力。通过引入包含16个场景和200+任务的EmbodiedWorldBench进行评测，证明其有效性。",
+      "llm_tldr": "针对长时间跨度具身智能体缺乏通用运行时层的问题，该文提出ABot-AgentOS，一个通用机器人代理操作系统，提供场景条件规划、上下文隔离技能执行、多阶段验证、多模态记忆和边缘云协作能力。通过引入包含16个场景和200+任务的EmbodiedWorldBench进行评测，证明其有效性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.13465v1",
+      "source": "arxiv",
+      "title": "DevicesWorld: Benchmarking Cross-Device Agents in Heterogeneous Environments",
+      "abstract": "LLM-based agents have rapidly improved at operating individual digital environments such as mobile applications, desktop systems, and smart homes. However, real-world user goals often span multiple devices: information may come from a phone, be processed on a desktop, and the result may need to appear on another device. Most existing benchmarks center on a single dominant execution environment, making it difficult to evaluate whether agents can acquire and integrate information across heterogeneous devices and complete end-to-end tasks with cross-device dependencies. We introduce DevicesWorld, a large-scale executable benchmark for cross-device collaborative operation. DevicesWorld contains 6,140 tasks and integrates three classes of device environments -- mobile, desktop, and IoT -- into a unified cross-device interaction and evaluation framework. Each task defines a natural-language user goal, participating devices and initial states, executable actions, rule-based verifiers, and a cleanup procedure. A multi-stage construction and quality-control pipeline keeps tasks close to realistic user needs while allowing final outcomes to be automatically verified from device states and generated files. We evaluate five frontier LLM-agent systems on a fixed evaluation set. All methods achieve low success rates, with the best reaching only 12.5%. Among failed runs, about 28.7% satisfy at least one scoring condition yet still fail the full task. Trajectories show that agents become stuck acquiring information or manipulating interfaces, confuse source and output devices, or terminate before all conditions are jointly satisfied. DevicesWorld turns cross-device collaborative operation into an executable, reproducible, and diagnostically useful evaluation problem for research on reliable cross-device agents.",
+      "authors": [
+        "Huatao Li",
+        "Xinwei Geng",
+        "Yuheng Wang",
+        "Yutong Li",
+        "Runde Yang",
+        "Hantao Chen",
+        "Shu Yao",
+        "Jingru Fan",
+        "Xuhui Ren",
+        "Yuanyuan Zhao",
+        "Fei Huang",
+        "Chen Qian"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.HC",
+        "cs.MA",
+        "cs.SE"
+      ],
+      "published": "2026-07-15T05:53:27+00:00",
+      "link": "https://arxiv.org/pdf/2607.13465v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Cross-device agent benchmark including mobile",
+      "llm_evidence_cn": "包含移动设备的跨设备智能体基准",
+      "llm_evidence": "包含移动设备的跨设备智能体基准",
+      "canonical_evidence": "包含移动设备的跨设备智能体基准",
+      "llm_tldr_en": "DevicesWorld introduces a large-scale benchmark for cross-device agent collaboration across mobile, desktop, and smart home, with 6,140 tasks.",
+      "llm_tldr_cn": "现有基准多聚焦单设备环境，无法评估智能体跨设备协作能力。DevicesWorld构建了包含移动、桌面和智能家居三类设备的可执行基准，涵盖6140个跨设备任务。该基准可检验智能体在异构设备间获取、整合信息并完成端到端任务的能力，对移动AI智能体等场景有直接参考价值。",
+      "llm_tldr": "现有基准多聚焦单设备环境，无法评估智能体跨设备协作能力。DevicesWorld构建了包含移动、桌面和智能家居三类设备的可执行基准，涵盖6140个跨设备任务。该基准可检验智能体在异构设备间获取、整合信息并完成端到端任务的能力，对移动AI智能体等场景有直接参考价值。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.13569v1",
+      "source": "arxiv",
+      "title": "GHR-VLM: Making Zero-Shot Transit Video Analytics Realizable with Grounded Hybrid Reasoning",
+      "abstract": "Transit video understanding can provide valuable fine-grained data that conventional passenger counters and fare systems cannot capture. However, supervised video models require task-specific annotations, while applying vision-language models (VLMs) directly to long onboard videos is unreliable and costly. To leverage the complementary strengths of both approaches, we propose GHR-VLM, a visual grounded hybrid reasoning framework for zero-shot transit-bus video analytics. It is motivated by the observation that explicit visual grounding can improve VLM reasoning by converting long surveillance streams into compact, passenger-centered spatiotemporal evidence. Specifically, we propose an edge-cloud design in which a lightweight edge-based monitor continuously tracks door status and segments passenger clips. A backend VLM then identifies boarding passengers and classifies payment behavior through a two-stage coarse-to-fine refinement of spatiotemporal evidence. By invoking the VLM only on grounded passenger clips and contact sheets, GHR-VLM reduces cloud inference, avoids payment-specific training data, and supplies the localized evidence that VLMs otherwise struggle to identify. Evaluation on 486 minutes of real-world bus surveillance video demonstrates the potential of grounded edge-cloud reasoning for passenger-level payment analytics while highlighting the challenges posed by degraded video conditions.",
+      "authors": [
+        "Kaicong Huang",
+        "Weiheng Oh",
+        "Ruimin Ke"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-07-15T08:09:05+00:00",
+      "link": "https://arxiv.org/pdf/2607.13569v1",
+      "tags": [
+        "keyword:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge-cloud design for video analytics with AI agents",
+      "llm_evidence_cn": "边缘-云协同的视频分析AI代理架构",
+      "llm_evidence": "边缘-云协同的视频分析AI代理架构",
+      "canonical_evidence": "边缘-云协同的视频分析AI代理架构",
+      "llm_tldr_en": "Proposes GHR-VLM with edge-cloud design for zero-shot transit video analytics, using lightweight edge processing and cloud VLM reasoning, reducing cost while achieving zero-shot capability.",
+      "llm_tldr_cn": "针对交通视频分析中监督模型需要标注、直接使用VLM成本高且不可靠的问题，本文提出GHR-VLM框架，采用边缘-云协同架构：轻量级边缘端将长视频流转换为紧凑的乘客中心时空证据，云端VLM基于此进行零样本推理。实验证明该方法在零样本场景下有效且降低了成本。该边缘-云协同设计直接契合端云协同的AI代理主题，为移动AI代理的系统架构提供了实用范例。",
+      "llm_tldr": "针对交通视频分析中监督模型需要标注、直接使用VLM成本高且不可靠的问题，本文提出GHR-VLM框架，采用边缘-云协同架构：轻量级边缘端将长视频流转换为紧凑的乘客中心时空证据，云端VLM基于此进行零样本推理。实验证明该方法在零样本场景下有效且降低了成本。该边缘-云协同设计直接契合端云协同的AI代理主题，为移动AI代理的系统架构提供了实用范例。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.13093v1",
+      "source": "arxiv",
+      "title": "Efficient and Privacy Aware Edge Cloud Collaborative Inference for Large Language Models",
+      "abstract": "On-device LLM inference faces a trilemma of response latency, limited hardware resources and user privacy. Full cloud inference delivers strong computing power but exposes user prompts and dialogue data, while standalone on-device inference is unfeasible for most consumer and embedded edge devices. This paper presents a privacy-centric edge-cloud collaborative LLM inference framework built on endpoint-authenticated KV cache. Local endpoints handle input preprocessing, embedding computation, adaptive feature optimization, KV cache authentication, speculative decoding and low-dimensional model head calculation, while the cloud conducts authenticated decoder inference, KV cache management, token verification and high-dimensional vocabulary projection. Endpoints fuse partial outputs, apply language-adaptive masking and sample target tokens. All transmitted data and truncated logits are quantized and AES-GCM encrypted for privacy, with core lightweight modules, draft parameters and cache access policies kept local to avoid leakage. The framework supports heterogeneous devices including CPU-only, GPU-equipped and embedded devices via optimized streaming, batching and quantized ONNX deployment. Evaluations demonstrate that the framework reduces per-token latency by up to 46.1\\% and downlink payloads by up to 67.4\\% over baseline split inference, retaining comparable performance to full cloud inference.",
+      "authors": [
+        "Yi Li",
+        "Chen Li",
+        "Jiexiong Liu"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-07-14T01:17:17+00:00",
+      "link": "https://arxiv.org/pdf/2607.13093v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "edge-cloud collaborative LLM inference framework with privacy protection",
+      "llm_evidence_cn": "端云协同的LLM推理框架，兼顾隐私与效率",
+      "llm_evidence": "端云协同的LLM推理框架，兼顾隐私与效率",
+      "canonical_evidence": "端云协同的LLM推理框架，兼顾隐私与效率",
+      "llm_tldr_en": "Presents a privacy-centric edge-cloud collaborative LLM inference framework using endpoint-authenticated KV cache for efficient and private inference.",
+      "llm_tldr_cn": "端侧LLM推理面临延迟、硬件资源和隐私的三难困境。纯云推理暴露用户数据，纯端侧推理又不可行。本文提出以隐私为中心的端云协同LLM推理框架，基于端点认证的KV缓存实现。端侧负责输入预处理、嵌入计算、特征优化、KV缓存认证和推测解码，云端进行解码推理和令牌验证。该框架在保护用户隐私的同时显著降低延迟，为端侧部署大模型提供了实用方案。",
+      "llm_tldr": "端侧LLM推理面临延迟、硬件资源和隐私的三难困境。纯云推理暴露用户数据，纯端侧推理又不可行。本文提出以隐私为中心的端云协同LLM推理框架，基于端点认证的KV缓存实现。端侧负责输入预处理、嵌入计算、特征优化、KV缓存认证和推测解码，云端进行解码推理和令牌验证。该框架在保护用户隐私的同时显著降低延迟，为端侧部署大模型提供了实用方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.13474v1",
+      "source": "arxiv",
+      "title": "MyAG: A Graph-Based Framework for Designing and Analyzing Composable LLM Agent Systems",
+      "abstract": "We present MyAG, a graph-based framework for designing and analyzing composable LLM agent systems. Our framework separates agent system construction into three graph abstractions: a component graph for agents, environments, and modules; a workflow graph for execution control; and a search graph for runtime execution. This separation allows users to flexibly reuse the same components with different strategies. We further support hierarchical composition through recursive system nodes and provide monitoring and visualization tools for inspecting agent execution. Experiments on representative agent applications show that our framework supports flexible agent system design and helps analyze performance-efficiency tradeoffs. Our framework is publicly available and fully open-source.",
+      "authors": [
+        "Zhisong Zhang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-07-15T06:03:52+00:00",
+      "link": "https://arxiv.org/pdf/2607.13474v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "composable LLM agent system framework",
+      "llm_evidence_cn": "可组合LLM代理系统框架",
+      "llm_evidence": "可组合LLM代理系统框架",
+      "canonical_evidence": "可组合LLM代理系统框架",
+      "llm_tldr_en": "Introduces MyAG, a graph-based framework for designing composable LLM agent systems with separate component, workflow, and search graphs, enabling flexible reuse and analysis.",
+      "llm_tldr_cn": "针对LLM代理系统设计中组件复用困难、执行控制不灵活的问题，本文提出MyAG框架，将系统构建分为组件图、工作流图和搜索图三个抽象层次，支持层次化组合和运行时监控。实验表明该框架能灵活设计代理系统并分析性能-效率权衡。其通用性使其可作为构建分布式边缘云代理架构的底层框架，提供方法论支持。",
+      "llm_tldr": "针对LLM代理系统设计中组件复用困难、执行控制不灵活的问题，本文提出MyAG框架，将系统构建分为组件图、工作流图和搜索图三个抽象层次，支持层次化组合和运行时监控。实验表明该框架能灵活设计代理系统并分析性能-效率权衡。其通用性使其可作为构建分布式边缘云代理架构的底层框架，提供方法论支持。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
