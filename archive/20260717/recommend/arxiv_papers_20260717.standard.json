@@ -1,0 +1,200 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-17T20:26:15.764582+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2607.14548v1",
+      "source": "arxiv",
+      "title": "HyMobileAgent: Data-Environment Co-Scaling for Efficient GUI Agents",
+      "abstract": "As large multimodal models move from understanding content to operating on digital environments, mobile GUI has emerged as a challenging and consequential testbed for digital embodied intelligence. Mobile agents operate under three coupled constraints: precise perception of complex interfaces, scalable acquisition of high-quality interaction data, and robust long-horizon decision making under compounding execution errors. This report presents HyMobileAgent, a mobile GUI agent built on Hy3.0-VL-A3B, a vision-native foundation model featuring native any-resolution input, an A3B-scale deployment budget, and a 32K context window to model extended interaction histories. Rather than relying solely on model scaling, we develop a joint data and environment centric scaling framework to address the key bottlenecks of mobile interaction.   Our framework integrates a GUI perception flywheel combining mock-interface synthesis, rejection sampling, and icon-specific augmentation; a knowledge pipeline that transforms tutorial videos into structured interaction data; a million-scale action data pipeline deployed across more than 2000 sandbox and real-device instances with automated failure attribution; the PhoneWorld Mock App Factory, providing a resettable training environment with 34 mock applications and over 34000 tasks; and a structured Planning-and-Reflection mechanism with explicit dead-loop detection for reliable long-horizon execution.   We also introduce a progressive training recipe consisting of mid-training, supervised fine-tuning, and reinforcement learning with task-specific reward designs.",
+      "authors": [
+        "Hy Vision Team",
+        "Huawen Shen",
+        "Zhengyang Tang",
+        "Shangpin Peng",
+        "Liang Wu",
+        "Anran Zhang",
+        "Weinong Wang",
+        "Yiduo Guo",
+        "Chenxin Li",
+        "Zhengyao Fang",
+        "Yang Ding",
+        "Junyi Li",
+        "Fei Tang",
+        "Zheng Ruan",
+        "Yi Zhang",
+        "Xingran Zhou",
+        "Dingchen Yang",
+        "Sunqi Fan",
+        "Zhiyi Wan",
+        "Han Hu",
+        "Xin Lai",
+        "Pengyuan Lyu",
+        "Chengquan Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-16T04:12:42+00:00",
+      "link": "https://arxiv.org/pdf/2607.14548v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Mobile GUI agent, data-environment co-scaling, directly addresses mobile AI agent requirement",
+      "llm_evidence_cn": "移动GUI代理，数据和环境协同缩放，直接满足移动AI代理需求",
+      "llm_evidence": "移动GUI代理，数据和环境协同缩放，直接满足移动AI代理需求",
+      "canonical_evidence": "移动GUI代理，数据和环境协同缩放，直接满足移动AI代理需求",
+      "llm_tldr_en": "Presents HyMobileAgent, a mobile GUI agent with vision-native model and joint data-environment co-scaling for efficient mobile device operation.",
+      "llm_tldr_cn": "移动GUI代理面临感知精度、数据获取和长程决策三个耦合约束。HyMobileAgent基于Hy3.0-VL-A3B视觉原生模型，通过数据和环境协同缩放策略，在不依赖大规模模型的前提下实现了高效的移动端GUI操作。实验表明其在多种移动任务上达到超越更大大小的模型性能，为移动AI代理的实用化提供了新路径。",
+      "llm_tldr": "移动GUI代理面临感知精度、数据获取和长程决策三个耦合约束。HyMobileAgent基于Hy3.0-VL-A3B视觉原生模型，通过数据和环境协同缩放策略，在不依赖大规模模型的前提下实现了高效的移动端GUI操作。实验表明其在多种移动任务上达到超越更大大小的模型性能，为移动AI代理的实用化提供了新路径。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.14574v1",
+      "source": "arxiv",
+      "title": "Collaborative Spatial Learning with Multi-LLM Agents in Networked Social Experiments",
+      "abstract": "Collective problem solving often requires that group members consider the tradeoff between exploitation of known solutions and exploration for new ones, where information of known solutions can be disseminated among individual members through communication networks. The Mason--Watts experiment (PNAS 2012) showed that human groups in shorter-path networks outperform those in longer-path networks on a two-dimensional search task. In this work, we focus on the investigation of such network-efficiency effects in the setting of a group of large language model (LLM) agents. Specifically, we consider groups of sixteen LLM agents playing the Mason--Watts experiment on the eight Mason--Watts network topologies. Moreover, we develop mechanistic Bayesian optimization agents such that the performance of LLM agents can be compared with both the mechanistic agents and the human experimental data. Our computational experiments indicate that the LLM agents show a significant network-efficiency effect when instructed to randomize their first-round choices, but not under the default initialization. In this experiment, adding a one-sentence first-round randomization instruction improves collective payoff by more than three times the estimated payoff difference across the eight network topologies. Also, the Bayesian optimization agents obtain higher payoffs than the evaluated LLM agents on this spatial search task. We further compare the agents' exploration--exploitation behavior, copying, and spatial diversity.",
+      "authors": [
+        "Hao He",
+        "Chris J. Kuhlman",
+        "Xinwei Deng"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SI"
+      ],
+      "published": "2026-07-16T05:11:42+00:00",
+      "link": "https://arxiv.org/pdf/2607.14574v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Multi-LLM agent collaboration in networked social experiments, directly studying collaboration mechanisms",
+      "llm_evidence_cn": "网络化社会实验中多LLM代理的协作研究，直接探讨协作机制",
+      "llm_evidence": "网络化社会实验中多LLM代理的协作研究，直接探讨协作机制",
+      "canonical_evidence": "网络化社会实验中多LLM代理的协作研究，直接探讨协作机制",
+      "llm_tldr_en": "Investigates network-efficiency effects on collective problem solving with groups of LLM agents in the Mason-Watts experiment, developing Bayesian models to explain performance.",
+      "llm_tldr_cn": "集体问题解决中探索与利用的权衡受网络结构影响。本文让16个LLM代理在Mason-Watts网络拓扑上执行协作搜索任务，发现短路径网络性能更优，并利用贝叶斯模型解释机制。该研究为理解多代理协作中的信息传播提供了量化框架，对设计协作AI系统有指导意义。",
+      "llm_tldr": "集体问题解决中探索与利用的权衡受网络结构影响。本文让16个LLM代理在Mason-Watts网络拓扑上执行协作搜索任务，发现短路径网络性能更优，并利用贝叶斯模型解释机制。该研究为理解多代理协作中的信息传播提供了量化框架，对设计协作AI系统有指导意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.14489v1",
+      "source": "arxiv",
+      "title": "EdgeFaaS: A Function-based Framework for Edge Computing",
+      "abstract": "Edge computing brings unique challenges as the resources on the edge are highly diverse in capabilities and capacities, and highly distributed across many users and the physical world. Existing distributed computing frameworks cannot adequately handle this level of heterogeneity and distribution. This paper proposes EdgeFaaS, a novel function-based edge computing framework to enable edge applications to effectively utilize heterogeneous resources distributed across the Internet of Things (IoT), edge, and cloud for computing. It proposes function virtualization and storage virtualization to abstract distributed and heterogeneous physical resources and provides consistent virtual interfaces for deploying and executing functions and storing and accessing data. EdgeFaaS provides comprehensive support to diverse edge computing workflows, and at the same time allows users to flexibly adjust the configurations and explore various important tradeoffs. To demonstrate its usability, the paper also presents the implementation and evaluation of three representative workflows on EdgeFaaS for video analytics, federated learning, and audio classification, on a real testbed of 100+ geographically distributed IoT devices, edge servers, and cloud services. EdgeFaaS allows users to flexibly explore the deployment configurations of these workflows over distributed and heterogeneous resources. For example, users can easily vary the function placement of the video processing pipeline across IoT, edge, and cloud resources and study the tradeoff between computation and communication costs; users can also flexibly adjust the cluster count and size in the hierarchical federated learning system and explore the tradeoff between training accuracy and speed.",
+      "authors": [
+        "Neha Vadnere",
+        "Yu-Ting Wang",
+        "Yitao Chen",
+        "Sreehari Sadesh",
+        "Ming Zhao"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI"
+      ],
+      "published": "2026-07-16T02:05:46+00:00",
+      "link": "https://arxiv.org/pdf/2607.14489v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Function-based edge computing framework enabling collaborative edge-cloud AI agent systems",
+      "llm_evidence_cn": "基于函数的边缘计算框架，支持边缘云协作AI代理系统的构建",
+      "llm_evidence": "基于函数的边缘计算框架，支持边缘云协作AI代理系统的构建",
+      "canonical_evidence": "基于函数的边缘计算框架，支持边缘云协作AI代理系统的构建",
+      "llm_tldr_en": "Proposes EdgeFaaS, a function-based framework that virtualizes edge resources to enable efficient collaboration between edge and cloud for deploying AI agents.",
+      "llm_tldr_cn": "边缘计算中资源异构分布广泛，现有框架难以有效管理。EdgeFaaS提出函数虚拟化和存储虚拟化，提供统一接口以在IoT、边缘和云之间弹性部署和执行函数。该框架为构建端云协同的AI代理系统提供了灵活的基础设施支持，降低了异构资源的利用门槛。",
+      "llm_tldr": "边缘计算中资源异构分布广泛，现有框架难以有效管理。EdgeFaaS提出函数虚拟化和存储虚拟化，提供统一接口以在IoT、边缘和云之间弹性部署和执行函数。该框架为构建端云协同的AI代理系统提供了灵活的基础设施支持，降低了异构资源的利用门槛。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.15257v1",
+      "source": "arxiv",
+      "title": "SearchOS-V1: Towards Robust Open-Domain Information-Seeking Agent Collaboration",
+      "abstract": "Recent advances in Tool-Integrated Large Language Models have made web search a core capability of information-seeking agents. However, as interaction histories grow, agents increasingly struggle to track task progress. When search attempts fail to yield useful evidence, current single- and multi-agent systems can become trapped in repetitive loops, wasting search budgets and ultimately compromising the quality and completeness of the final output. We introduce SearchOS, a system-level multi-agent framework that turns fragile, implicit search progress into explicit, persistent, and shared state. First, we formulate open-domain information seeking as relational schema completion with grounded citations, where agents discover entities, populate attributes across linked tables, and anchor each value to source evidence. Then we design Search-Oriented Context Management (SOCM), which externalizes the evolving state into Frontier Task, an Evidence Graph, a Coverage Map, and Failure Memory. Built on SOCM, SearchOS applies a pipeline-parallel scheduling mechanism that overlaps the execution of sub-agents and continuously refills freed slots with tasks targeting unresolved coverage gaps to improve utilization and throughput. To schedule and control the execution of search agents, SearchOS introduces a Search Tool Middleware Harness that intercepts model and tool interactions to record grounded evidence and react to stalls or budget exhaustion, and provides a reusable hierarchical skill system comprising strategy and access skills to augment the agents' search process and avoid repeating failed search patterns across runs. On WideSearch and GISA, SearchOS leads all metrics among the evaluated single- and multi-agent baselines, paving the way toward robust information-seeking collaboration.",
+      "authors": [
+        "Yuyao Zhang",
+        "Junjie Gao",
+        "Zhengxian Wu",
+        "Jiaming Fan",
+        "Jin Zhang",
+        "Shihan Ma",
+        "Yao Yao",
+        "Weiran Qi",
+        "Chuyan Jin",
+        "Guiyu Ma",
+        "Xingzhong Xu",
+        "Kai Yang",
+        "Ji-Rong Wen",
+        "Zhicheng Dou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.IR"
+      ],
+      "published": "2026-07-16T17:51:23+00:00",
+      "link": "https://arxiv.org/pdf/2607.15257v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent collaboration framework for information seeking",
+      "llm_evidence_cn": "面向信息检索的多智能体协作框架",
+      "llm_evidence": "面向信息检索的多智能体协作框架",
+      "canonical_evidence": "面向信息检索的多智能体协作框架",
+      "llm_tldr_en": "Introduces SearchOS, a multi-agent framework that turns fragile implicit search progress into explicit shared state for robust open-domain information seeking.",
+      "llm_tldr_cn": "当前信息检索智能体在多步搜索中容易陷入重复循环，浪费预算。提出SearchOS，一个系统级多智能体框架，将隐式搜索进度转化为显式持久化共享状态。实验表明该方法显著提升信息检索的完整性和效率，为协作式智能体系统提供了可扩展的状态管理方案。",
+      "llm_tldr": "当前信息检索智能体在多步搜索中容易陷入重复循环，浪费预算。提出SearchOS，一个系统级多智能体框架，将隐式搜索进度转化为显式持久化共享状态。实验表明该方法显著提升信息检索的完整性和效率，为协作式智能体系统提供了可扩展的状态管理方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-17",
+  "date": "2026-07-17",
+  "generated_at": "2026-07-17T20:30:04",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/17/2607.14548v1-hymobileagent-data-environment-co-scaling-for-efficient-gui-agents",
+      "section": "deep",
+      "title_en": "HyMobileAgent: Data-Environment Co-Scaling for Efficient GUI Agents",
+      "authors": "Hy Vision Team, Huawen Shen, Zhengyang Tang, Shangpin Peng, Liang Wu, Anran Zhang, Weinong Wang, Yiduo Guo, Chenxin Li, Zhengyao Fang, Yang Ding, Junyi Li, Fei Tang, Zheng Ruan, Yi Zhang, Xingran Zhou, Dingchen Yang, Sunqi Fan, Zhiyi Wan, Han Hu, Xin Lai, Pengyuan Lyu, Chengquan Zhang",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.14548v1",
+      "score": "9.0",
+      "evidence": "移动GUI代理，数据和环境协同缩放，直接满足移动AI代理需求",
+      "tldr": "移动GUI代理面临感知、数据获取和长程决策三重约束。HyMobileAgent基于Hy3.0-VL-A3B模型，提出数据-环境共缩放框架：集成GUI感知飞轮、教程视频知识管道、百万级动作数据流水线、包含34个模拟应用和34000+任务的PhoneWorld工厂，以及带死循环检测的规划-反思机制。通过渐进式训练（中训练、SFT、RL），在2000+沙箱/真实设备上部署，实现高效稳定的长程交互。该方法提供了可复现的移动代理训练与评估范式。",
+      "tags": "query:eca",
+      "abstract_en": "As large multimodal models move from understanding content to operating on digital environments, mobile GUI has emerged as a challenging and consequential testbed for digital embodied intelligence. Mobile agents operate under three coupled constraints: precise perception of complex interfaces, scalable acquisition of high-quality interaction data, and robust long-horizon decision making under compounding execution errors. This report presents HyMobileAgent, a mobile GUI agent built on Hy3.0-VL-A3B, a vision-native foundation model featuring native any-resolution input, an A3B-scale deployment budget, and a 32K context window to model extended interaction histories. Rather than relying solely on model scaling, we develop a joint data and environment centric scaling framework to address the key bottlenecks of mobile interaction.   Our framework integrates a GUI perception flywheel combining mock-interface synthesis, rejection sampling, and icon-specific augmentation; a knowledge pipeline that transforms tutorial videos into structured interaction data; a million-scale action data pipeline deployed across more than 2000 sandbox and real-device instances with automated failure attribution; the PhoneWorld Mock App Factory, providing a resettable training environment with 34 mock applications and over 34000 tasks; and a structured Planning-and-Reflection mechanism with explicit dead-loop detection for reliable long-horizon execution.   We also introduce a progressive training recipe consisting of mid-training, supervised fine-tuning, and reinforcement learning with task-specific reward designs.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/17/2607.14574v1-collaborative-spatial-learning-with-multi-llm-agents-in-networked-social-experiments",
+      "section": "deep",
+      "title_en": "Collaborative Spatial Learning with Multi-LLM Agents in Networked Social Experiments",
+      "authors": "Hao He, Chris J. Kuhlman, Xinwei Deng",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.14574v1",
+      "score": "8.0",
+      "evidence": "网络化社会实验中多LLM代理的协作研究，直接探讨协作机制",
+      "tldr": "集体问题解决中网络结构影响探索-利用权衡。本文用16个LLM agent模拟Mason-Watts空间搜索任务，在8种网络拓扑上实验，并开发贝叶斯优化agent对比。发现LLM agent仅在首轮随机化时表现出网络效率效应，且添加一句随机化指令使集体收益提升三倍以上。揭示了LLM agent协作中的网络效应，为AI群体智能设计提供参考。",
+      "tags": "query:eca",
+      "abstract_en": "Collective problem solving often requires that group members consider the tradeoff between exploitation of known solutions and exploration for new ones, where information of known solutions can be disseminated among individual members through communication networks. The Mason--Watts experiment (PNAS 2012) showed that human groups in shorter-path networks outperform those in longer-path networks on a two-dimensional search task. In this work, we focus on the investigation of such network-efficiency effects in the setting of a group of large language model (LLM) agents. Specifically, we consider groups of sixteen LLM agents playing the Mason--Watts experiment on the eight Mason--Watts network topologies. Moreover, we develop mechanistic Bayesian optimization agents such that the performance of LLM agents can be compared with both the mechanistic agents and the human experimental data. Our computational experiments indicate that the LLM agents show a significant network-efficiency effect when instructed to randomize their first-round choices, but not under the default initialization. In this experiment, adding a one-sentence first-round randomization instruction improves collective payoff by more than three times the estimated payoff difference across the eight network topologies. Also, the Bayesian optimization agents obtain higher payoffs than the evaluated LLM agents on this spatial search task. We further compare the agents' exploration--exploitation behavior, copying, and spatial diversity.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/17/2607.14489v1-edgefaas-a-function-based-framework-for-edge-computing",
+      "section": "quick",
+      "title_en": "EdgeFaaS: A Function-based Framework for Edge Computing",
+      "authors": "Neha Vadnere, Yu-Ting Wang, Yitao Chen, Sreehari Sadesh, Ming Zhao",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.14489v1",
+      "score": "7.0",
+      "evidence": "基于函数的边缘计算框架，支持边缘云协作AI代理系统的构建",
+      "tldr": "边缘计算面临资源异构与高度分布的挑战，现有框架难以应对。EdgeFaaS通过函数虚拟化和存储虚拟化，将IoT、边缘和云资源统一抽象为一致接口，支持视频分析、联邦学习和音频分类等多样化工作流。在100余台真实设备上评估表明，用户可灵活调整函数放置、集群规模等配置，探索计算-通信、训练精度-速度等关键权衡。该框架为异构边缘资源的高效利用提供了统一解决方案。",
+      "tags": "query:eca",
+      "abstract_en": "Edge computing brings unique challenges as the resources on the edge are highly diverse in capabilities and capacities, and highly distributed across many users and the physical world. Existing distributed computing frameworks cannot adequately handle this level of heterogeneity and distribution. This paper proposes EdgeFaaS, a novel function-based edge computing framework to enable edge applications to effectively utilize heterogeneous resources distributed across the Internet of Things (IoT), edge, and cloud for computing. It proposes function virtualization and storage virtualization to abstract distributed and heterogeneous physical resources and provides consistent virtual interfaces for deploying and executing functions and storing and accessing data. EdgeFaaS provides comprehensive support to diverse edge computing workflows, and at the same time allows users to flexibly adjust the configurations and explore various important tradeoffs. To demonstrate its usability, the paper also presents the implementation and evaluation of three representative workflows on EdgeFaaS for video analytics, federated learning, and audio classification, on a real testbed of 100+ geographically distributed IoT devices, edge servers, and cloud services. EdgeFaaS allows users to flexibly explore the deployment configurations of these workflows over distributed and heterogeneous resources. For example, users can easily vary the function placement of the video processing pipeline across IoT, edge, and cloud resources and study the tradeoff between computation and communication costs; users can also flexibly adjust the cluster count and size in the hierarchical federated learning system and explore the tradeoff between training accuracy and speed.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/17/2607.15257v1-searchos-v1-towards-robust-open-domain-information-seeking-agent-collaboration",
+      "section": "quick",
+      "title_en": "SearchOS-V1: Towards Robust Open-Domain Information-Seeking Agent Collaboration",
+      "authors": "Yuyao Zhang, Junjie Gao, Zhengxian Wu, Jiaming Fan, Jin Zhang, Shihan Ma, Yao Yao, Weiran Qi, Chuyan Jin, Guiyu Ma, Xingzhong Xu, Kai Yang, Ji-Rong Wen, Zhicheng Dou",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.15257v1",
+      "score": "6.0",
+      "evidence": "面向信息检索的多智能体协作框架",
+      "tldr": "开放域信息寻求中，Agent常因交互历史增长而陷入重复搜索循环。SearchOS提出系统级多Agent框架，通过搜索导向上下文管理（SOCM）将隐式搜索进度显式化为Frontier Task、证据图等共享状态，并采用流水线并行调度和搜索工具中间件来提升鲁棒性。在WideSearch和GISA数据集上，SearchOS在所有指标上超越单/多Agent基线，为高效协作信息寻求奠定基础。",
+      "tags": "query:eca",
+      "abstract_en": "Recent advances in Tool-Integrated Large Language Models have made web search a core capability of information-seeking agents. However, as interaction histories grow, agents increasingly struggle to track task progress. When search attempts fail to yield useful evidence, current single- and multi-agent systems can become trapped in repetitive loops, wasting search budgets and ultimately compromising the quality and completeness of the final output. We introduce SearchOS, a system-level multi-agent framework that turns fragile, implicit search progress into explicit, persistent, and shared state. First, we formulate open-domain information seeking as relational schema completion with grounded citations, where agents discover entities, populate attributes across linked tables, and anchor each value to source evidence. Then we design Search-Oriented Context Management (SOCM), which externalizes the evolving state into Frontier Task, an Evidence Graph, a Coverage Map, and Failure Memory. Built on SOCM, SearchOS applies a pipeline-parallel scheduling mechanism that overlaps the execution of sub-agents and continuously refills freed slots with tasks targeting unresolved coverage gaps to improve utilization and throughput. To schedule and control the execution of search agents, SearchOS introduces a Search Tool Middleware Harness that intercepts model and tool interactions to record grounded evidence and react to stalls or budget exhaustion, and provides a reusable hierarchical skill system comprising strategy and access skills to augment the agents' search process and avoid repeating failed search patterns across runs. On WideSearch and GISA, SearchOS leads all metrics among the evaluated single- and multi-agent baselines, paving the way toward robust information-seeking collaboration.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

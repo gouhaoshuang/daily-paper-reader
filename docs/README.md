@@ -6,35 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-16
-- 运行时间：2026-07-16 20:35:06 UTC
+- 最新运行日期：2026-07-17
+- 运行时间：2026-07-17 20:29:59 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：4
-- 速读区：1
+- 本次总论文数：4
+- 精读区：2
+- 速读区：2
 
 ### 今日简报（AI）
-今日聚焦智能体操作系统与跨设备基准测试，ABot-AgentOS 提出终身多模态记忆，DevicesWorld 定义异构环境评估标准。建议优先关注 ABot 的上下文感知能力与 DevicesWorld 的跨设备泛化方法。对普通读者而言，可尝试理解多模态记忆在机器人任务中的实际应用瓶颈。
-- 详情：[/202607/16/README](/202607/16/README)
+今天精读2篇、速读2篇，重点关注GUI智能体与多LLM协作方向。最推荐9.0分的《HyMobileAgent》探讨高效GUI智能体的数据-环境共扩展，以及8.0分的《Collaborative Spatial Learning》研究多LLM在社交实验中的协作学习。建议优先精读这两篇高评分论文，快速获得前沿洞察。
+- 详情：[/202607/17/README](/202607/17/README)
 
 ### 精读区论文标签
-1. [ABot-AgentOS: A General Robotic Agent OS with Lifelong Multi-modal Memory](/202607/16/2607.10350v2-abot-agentos-a-general-robotic-agent-os-with-lifelong-multi-modal-memory)  
+1. [HyMobileAgent: Data-Environment Co-Scaling for Efficient GUI Agents](/202607/17/2607.14548v1-hymobileagent-data-environment-co-scaling-for-efficient-gui-agents)  
    标签：评分：9.0/10、query:eca
-   evidence：明确提及边缘云协作
-2. [DevicesWorld: Benchmarking Cross-Device Agents in Heterogeneous Environments](/202607/16/2607.13465v1-devicesworld-benchmarking-cross-device-agents-in-heterogeneous-environments)  
-   标签：评分：9.0/10、query:eca
-   evidence：包含移动设备的跨设备智能体基准
-3. [GHR-VLM: Making Zero-Shot Transit Video Analytics Realizable with Grounded Hybrid Reasoning](/202607/16/2607.13569v1-ghr-vlm-making-zero-shot-transit-video-analytics-realizable-with-grounded-hybrid-reasoning)  
-   标签：评分：9.0/10、query:eca
-   evidence：边缘-云协同的视频分析AI代理架构
-4. [Efficient and Privacy Aware Edge Cloud Collaborative Inference for Large Language Models](/202607/16/2607.13093v1-efficient-and-privacy-aware-edge-cloud-collaborative-inference-for-large-language-models)  
+   evidence：移动GUI代理，数据和环境协同缩放，直接满足移动AI代理需求
+2. [Collaborative Spatial Learning with Multi-LLM Agents in Networked Social Experiments](/202607/17/2607.14574v1-collaborative-spatial-learning-with-multi-llm-agents-in-networked-social-experiments)  
    标签：评分：8.0/10、query:eca
-   evidence：端云协同的LLM推理框架，兼顾隐私与效率
+   evidence：网络化社会实验中多LLM代理的协作研究，直接探讨协作机制
 
 ### 速读区论文标签
-1. [MyAG: A Graph-Based Framework for Designing and Analyzing Composable LLM Agent Systems](/202607/16/2607.13474v1-myag-a-graph-based-framework-for-designing-and-analyzing-composable-llm-agent-systems)  
+1. [EdgeFaaS: A Function-based Framework for Edge Computing](/202607/17/2607.14489v1-edgefaas-a-function-based-framework-for-edge-computing)  
+   标签：评分：7.0/10、query:eca
+   evidence：基于函数的边缘计算框架，支持边缘云协作AI代理系统的构建
+2. [SearchOS-V1: Towards Robust Open-Domain Information-Seeking Agent Collaboration](/202607/17/2607.15257v1-searchos-v1-towards-robust-open-domain-information-seeking-agent-collaboration)  
    标签：评分：6.0/10、query:eca
-   evidence：可组合LLM代理系统框架
+   evidence：面向信息检索的多智能体协作框架
 
 
 <div class="dpr-home-promo-card">
