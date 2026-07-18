@@ -1,0 +1,192 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-18T20:52:10.931227+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2607.13220v1",
+      "source": "arxiv",
+      "title": "Networked Intelligence: Active Shared Context Graphs for Human-AI Team Science",
+      "abstract": "Most AI-for-science systems focus on scaling a single reasoning process through better models, larger context windows, long-horizon agentic execution, or digital co-scientists working with one principal user. However, challenging scientific problems are rarely solved by one reasoner alone. They are solved by teams whose members bring different priors, experimental backgrounds, tacit knowledge, and domain-trained intuitions. The open problem is therefore not only how to scale models, but how to cultivate networked intelligence: scaling the connections between humans and AI systems so that a result or hypothesis produced in one context reaches another person, agent, instrument, or robot that can act on it. We introduce Mycelium, an active shared workspace that automatically connects researchers and AI agents as a multi-user co-scientist. As human users and agents work, the system captures important observations and hypotheses, tracks how they relate to the team's evolving model, and routes them to the person or agent whose next decision they can inform. We evaluate Mycelium in its first empirical test, a biological multi-omics campaign in which routed shared context turned a local analytical finding into a cross-expert mechanistic constraint and ultimately into an experimental design. We also give networked intelligence a computational account as sparse conditional computation over distributed scientific contexts. This account distinguishes when a scaled standalone agent can match the network from when independent expertise and non-mergeable contexts make the network irreducible.",
+      "authors": [
+        "Sutanay Choudhury",
+        "Jeffrey J. Czajka",
+        "Lummy M. O. Monteiro",
+        "Erin Bredeweg",
+        "Jason McDermott",
+        "Katherine Wolf",
+        "Alex Beliaev",
+        "Josh Elmore",
+        "Paul Piehowski",
+        "Kylee Tate",
+        "Yuqian Gao",
+        "Aivett Bilbao",
+        "Kelly Stratton",
+        "Scott Baker",
+        "Jaydeep P. Bardhan",
+        "Kristin Burnum Johnson",
+        "Chris Oehmen",
+        "Robert Rallo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CE",
+        "cs.HC"
+      ],
+      "published": "2026-07-14T19:29:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.13220v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Human-AI team collaboration via shared context graphs",
+      "llm_evidence_cn": "通过共享上下文图实现人-AI团队协作",
+      "llm_evidence": "通过共享上下文图实现人-AI团队协作",
+      "canonical_evidence": "通过共享上下文图实现人-AI团队协作",
+      "llm_tldr_en": "Mycelium enables networked intelligence for human-AI team science via active shared context graphs, connecting agents and humans across contexts.",
+      "llm_tldr_cn": "大多数AI for science系统只扩展单个推理过程，忽视了科学发现依赖团队协作。本文提出Mycelium，一个主动共享上下文图框架，旨在连接人类、AI代理、仪器和机器人，使一个上下文中产生的结果能到达能对其采取行动的其他实体。通过构建网络智能，Mycelium支持跨团队的知识流动和协作，为分布式科学协作提供了新范式。",
+      "llm_tldr": "大多数AI for science系统只扩展单个推理过程，忽视了科学发现依赖团队协作。本文提出Mycelium，一个主动共享上下文图框架，旨在连接人类、AI代理、仪器和机器人，使一个上下文中产生的结果能到达能对其采取行动的其他实体。通过构建网络智能，Mycelium支持跨团队的知识流动和协作，为分布式科学协作提供了新范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.11138v1",
+      "source": "arxiv",
+      "title": "A Formal Hierarchical Architecture for Agentic Orchestration with Stack-Based Execution and Lazy Discovery",
+      "abstract": "The rapid expansion of capabilities in Large Language Model (LLM) agents has exposed a critical architectural bottleneck: when agents are given access to a flat, monolithic registry of tools, the model must evaluate hundreds or thousands of options simultaneously. This leads to decision-space explosion, context window saturation, and degraded routing accuracy. To address these limitations, this paper presents a hierarchical, skill-based architecture for agentic orchestration. Capabilities are organized as a rooted tree where internal nodes make routing decisions and leaf nodes execute deterministic tasks. The runtime enforces a single-step execution loop governed by a Last-In-First-Out (LIFO) stack, giving the agent a form of memory akin to a Pushdown Automaton, therefore enabling it to track nested execution contexts and resume deterministically from any depth. Capability discovery follows a manifest-driven, lazy-loading protocol: only the immediate children of the active node are loaded, so memory and prompt costs scale with the explored path rather than the global registry. By replacing global memory with localized stack frames, the architecture prevents outputs from one execution branch from leaking into another, establishing the isolation guarantees required for deployment in regulated enterprise environments. We also discuss UPI Help, an AI-powered digital payments support product, as a motivating production deployment context. We provide a mathematical formalization of the orchestration state, detailed algorithmic analysis of the execution loop, and controlled benchmarks comparing flat and hierarchical routing under increasing tool catalogs, multi-step workflow pressure, and visible schema-token exposure per LLM call.",
+      "authors": [
+        "Prashant Devadiga",
+        "Abhishek",
+        "Adithya Mishra",
+        "Alok Singh",
+        "Amisha Sinha",
+        "Asit Desai",
+        "Gaurang Dahad",
+        "Harshit Bhushan",
+        "Mandati Pramod Reddy",
+        "Prakhar Gupta",
+        "Rupesh Patil",
+        "Siddhi Behere"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-07-13T06:15:51+00:00",
+      "link": "https://arxiv.org/pdf/2607.11138v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "hierarchical skill-based architecture for agent orchestration relevant to distributed edge cloud architecture",
+      "llm_evidence_cn": "分层技能智能体编排架构与分布式边缘云智能体架构相关",
+      "llm_evidence": "分层技能智能体编排架构与分布式边缘云智能体架构相关",
+      "canonical_evidence": "分层技能智能体编排架构与分布式边缘云智能体架构相关",
+      "llm_tldr_en": "A formal hierarchical architecture with stack-based execution and lazy discovery addresses decision-space explosion in LLM agents by organizing capabilities as a tree, reducing context window saturation and improving routing accuracy.",
+      "llm_tldr_cn": "针对大语言模型智能体面临工具集膨胀导致的决策空间爆炸问题，提出分层技能编排架构。将能力组织为根树，内部节点做路由决策，叶节点执行确定性任务，通过后进先出栈控制运行时单步执行，显著降低了上下文窗口饱和并提高了路由准确性。该架构可适用于分布式边缘云智能体系统，促进解耦与高效协作。",
+      "llm_tldr": "针对大语言模型智能体面临工具集膨胀导致的决策空间爆炸问题，提出分层技能编排架构。将能力组织为根树，内部节点做路由决策，叶节点执行确定性任务，通过后进先出栈控制运行时单步执行，显著降低了上下文窗口饱和并提高了路由准确性。该架构可适用于分布式边缘云智能体系统，促进解耦与高效协作。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.13474v1",
+      "source": "arxiv",
+      "title": "MyAG: A Graph-Based Framework for Designing and Analyzing Composable LLM Agent Systems",
+      "abstract": "We present MyAG, a graph-based framework for designing and analyzing composable LLM agent systems. Our framework separates agent system construction into three graph abstractions: a component graph for agents, environments, and modules; a workflow graph for execution control; and a search graph for runtime execution. This separation allows users to flexibly reuse the same components with different strategies. We further support hierarchical composition through recursive system nodes and provide monitoring and visualization tools for inspecting agent execution. Experiments on representative agent applications show that our framework supports flexible agent system design and helps analyze performance-efficiency tradeoffs. Our framework is publicly available and fully open-source.",
+      "authors": [
+        "Zhisong Zhang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-07-15T06:03:52+00:00",
+      "link": "https://arxiv.org/pdf/2607.13474v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Graph-based framework for composable LLM agent systems",
+      "llm_evidence_cn": "基于图的可组合LLM智能体系统框架",
+      "llm_evidence": "基于图的可组合LLM智能体系统框架",
+      "canonical_evidence": "基于图的可组合LLM智能体系统框架",
+      "llm_tldr_en": "MyAG introduces a graph-based framework with three abstractions for designing composable LLM agent systems, enabling flexible reuse and performance analysis.",
+      "llm_tldr_cn": "现有LLM智能体系统框架难以灵活组合和复用。MyAG提出一个基于图的框架，包含组件图、工作流图和搜索图三层抽象，支持层次化组合和运行时监控。实验表明该框架提升了系统设计的灵活性和性能-效率权衡分析能力。该工作为智能体系统设计提供了一种通用且可扩展的方法。",
+      "llm_tldr": "现有LLM智能体系统框架难以灵活组合和复用。MyAG提出一个基于图的框架，包含组件图、工作流图和搜索图三层抽象，支持层次化组合和运行时监控。实验表明该框架提升了系统设计的灵活性和性能-效率权衡分析能力。该工作为智能体系统设计提供了一种通用且可扩展的方法。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.15053v1",
+      "source": "arxiv",
+      "title": "ANet Patu-1: The Value of Connection in the Agent Network",
+      "abstract": "The Internet taught us that the value of a network depends on \\emph{how} its nodes connect: broadcast stars scale as $V\\!\\propto\\!N$ (Sarnoff), fully-connected meshes as $N^2$ (Metcalfe), and group-forming networks as $2^{N}$ (Reed). We ask the analogous question for networks of AI agents. We model the net value of connection as a function of coordination-group size, derive from it the properties an optimal collaboration protocol must have, and introduce ANet Patu-1 -- a self-organizing consensus protocol in which the network continuously re-forms its own coalitions, adaptively riding the upper envelope of all three regimes at $O(1)$ parallel consensus rounds. To measure value without opinion-grading, we score an emergent protocol by formally specifying it and deriving its complexity, the way distributed algorithms are analyzed. Two results follow. (i)~Emergence -- a crowd of the \\emph{cheapest} model, when heterogeneous, starts weak but its collective value compounds with $N$ and \\emph{overtakes} a crowd of a far \\emph{stronger} model that is homogeneous: a crossover that marks a scaling law for collaboration rather than for scale. (ii)~Reflexivity -- a heterogeneous network, given only its own problem and no design hints, converges on ANet Patu-1 itself, reconstructing the high-dimensional law that governs its own connective value.",
+      "authors": [
+        "Mu Yuan",
+        "Jinke Song",
+        "Zhaomeng Zhou",
+        "Lan Zhang"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI"
+      ],
+      "published": "2026-07-16T14:31:15+00:00",
+      "link": "https://arxiv.org/pdf/2607.15053v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "agent network collaboration protocol self-organizing consensus",
+      "llm_evidence_cn": "代理网络协作协议与自组织共识",
+      "llm_evidence": "代理网络协作协议与自组织共识",
+      "canonical_evidence": "代理网络协作协议与自组织共识",
+      "llm_tldr_en": "Models net value of connection in agent networks and introduces ANet Patu-1, a self-organizing consensus protocol for optimal collaboration.",
+      "llm_tldr_cn": "该论文类比互联网价值定律，研究了AI代理网络中连接的价值模型，并提出ANet Patu-1自组织共识协议，使网络持续重组联盟以自适应地达到协作效率最优。理论分析和形式规范表明该协议在O(1)轮内实现三种价值定律的上界。该工作为分布式边缘云代理架构中的协作协议设计提供了理论基础和方法借鉴。",
+      "llm_tldr": "该论文类比互联网价值定律，研究了AI代理网络中连接的价值模型，并提出ANet Patu-1自组织共识协议，使网络持续重组联盟以自适应地达到协作效率最优。理论分析和形式规范表明该协议在O(1)轮内实现三种价值定律的上界。该工作为分布式边缘云代理架构中的协作协议设计提供了理论基础和方法借鉴。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

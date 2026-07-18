@@ -1,0 +1,205 @@
+Title: ANet Patu-1: The Value of Connection in the Agent Network
+
+URL Source: https://arxiv.org/pdf/2607.15053v1
+
+Published Time: Fri, 17 Jul 2026 01:17:00 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# AN ET PATU -1: T HE VALUE OF CONNECTION IN THE AGENT 
+
+# NETWORK 
+
+Mu Yuan 1,2 Jinke Song 1,3 Zhaomeng Zhou 4 Lan Zhang 41 Agent Network Research  
+
+> 2
+
+The Chinese University of Hong Kong  
+
+> 3
+
+The Hong Kong University of Science and Technology  
+
+> 4
+
+University of Science and Technology of China 
+
+muyuan@cuhk.edu.hk, ink@anet0.com, zhanglan@ustc.edu.cn, zhouzhm@mail.ustc.edu.cn 
+
+# ABSTRACT 
+
+The Internet taught us that the value of a network depends on how its nodes connect: broadcast stars scale as V ∝ N (Sarnoff), fully-connected meshes as N 2 (Metcalfe), and group-forming networks as 2N (Reed). We ask the analogous question for networks of AI agents. We model the net value of connection as a function of coordination-group size, derive from it the properties an optimal collaboration protocol must have, and introduce ANet Patu-1—a self-organizing consensus protocol in which the network continuously re-forms its own coalitions, adaptively riding the upper envelope of all three regimes at O(1) parallel consensus rounds. To measure value without opinion-grading, we score an emergent protocol by formally specifying it and deriving its complexity, the way distributed algorithms are analyzed. Two results follow. (i) Emergence—a crowd of the cheapest model, when heterogeneous, starts weak but its collective value compounds with N and overtakes a crowd of a far 
+
+stronger model that is homogeneous: a crossover that marks a scaling law for collaboration rather than for scale. (ii) Reflexivity—a heterogeneous network, given only its own problem and no design hints, converges on ANet Patu-1 itself, reconstructing the high-dimensional law that governs its own connective value. 
+
+Keywords agent networks · network value laws · collective intelligence · self-organization · multi-agent collaboration ·
+
+emergence 
+
+# 1 Key results 
+
+Emergence. A crowd of the cheapest , weak model—when heterogeneous—overtakes a far stronger but homogeneous one as N grows: a new collaboration scaling law. 
+
+Reflexivity. With n = 10 agents and no design hints, the network converges on ANet Patu-1 itself—a rediscovery of the collaboration mechanism it runs on. 
+
+Value regime V ∝ 2N . Self-organizing sub-networks reach the group-forming (Reed) value regime—bottleneck-free, communication-linear, at O(1) parallel consensus rounds. 
+
+# 2 The value of connection 
+
+Frontier AI has scaled a single mind. But the coming reality is a network: millions of heterogeneous agents—different base models, tools, and expertise—connecting to work together. The governing question is no longer “how good is one agent?” but “what is the value created by the connections between them?” The Internet answered its version of this question with three laws[ 1, 2 , 3 , 4 , 5 ], each corresponding to a topology (Figure 2). arXiv:2607.15053v1 [cs.NI] 16 Jul 2026 ANet Patu-1: The Value of Connection in the Agent Network 
+
+Figure 1: The emergence crossover. A crowd of the cheapest model ( gpt-4o-mini ), when heterogeneous, starts weak at n = 1 but its value-of-connection score Q compounds as complementary specialists connect—and overtakes a crowd of a far stronger model ( gpt-5.6 ) that is homogeneous and sits in a mid band Q ≈ 0.54 ([0 .40 , 0.66] , measured): however capable each copy is, they default to a tree / central-coordinator design, so its structure—and value—is capped. The crossover at n⋆ ≈ 2.6 is the emergence of a collaboration scaling law— many cheap, diverse, connected agents beat a copied strong one.                    
+
+> Sarnoff ·star
+> broadcast ·V∝N
+> Metcalfe ·mesh
+> all-to-all ·V∝N2
+> Reed ·sub-networks
+> group-forming ·V∝2N
+
+Figure 2: Three topologies, three value laws. The same nodes create radically different value depending on how they connect: a broadcast star scales as N , an all-to-all mesh as N 2, and self-organized sub-networks reach the combinatorial 
+
+2N regime. Our thesis: the same ordering governs agent networks, and—crucially—a network can be built that adaptively occupies the best regime for the task at hand, rather than being locked to one topology. 
+
+# 3 What must an optimal collaboration protocol do? 
+
+Take the three laws seriously and ask what an ideal protocol for N agents should do. When a set of agents coordinates on one thing, their joint value has two opposing parts: a synergy that can grow faster than linearly as complementary minds interact, and a coordination cost plus intrinsic task conflict that grow with the group and eventually dominate. 2ANet Patu-1: The Value of Connection in the Agent Network Table 1: Scoring attributes for protocol quality Q.                         
+
+> Prop. Attribute w/ top level Derived from P1 Value scaling 0.30 / group-forming sub-networks topology ,comm
+> P2 Adaptive decomposition 0.15 / task DAG adapts across rounds decomposition
+> P3 Self-organization 0.15 / self-select / negotiated coalitions grouping_mechanism
+> P4 Bottleneck-freeness 0.10 / competence-weighted, not vote/composer decision
+> P5 Round complexity 0.15 / O(1) parallel rounds rounds_in_n
+> P6 Convergence 0.15 / consensus-based stopping rule termination
+
+For a single coordination group of size s this reads, compactly, 
+
+v(s) ∼ sγ
+
+|{z}  
+
+> synergy (γ> 1)
+
+(1 − α) s
+
+| {z }
+
+> conflict
+
+− c s log s
+
+| {z }
+
+> coordination
+
+, (1) with task conflict α ∈ [0 , 1) and coordination cost c > 0.1. Grouping is where combinatorial value lives. A star ( s = 1 ) forgoes the synergy term entirely, so its value is merely additive ( V ∝ N ). One flat all-to-all room ( s = N ) captures a global dividend but pays the full coordination tax and is damped by conflict, so its value rises then collapses as N grows ( V ∝ N 2, then down). Only partitioning 
+
+the network into many groups—each realizing its own v(s)—reaches the group-forming regime whose value is combinatorial in N (V ∝ 2N ). 2. The best group size is task-dependent and bounded. v(s) is single-peaked, and its optimum s⋆ shrinks as conflict 
+
+α or coordination cost c rise. No fixed topology is optimal across tasks, so the protocol must choose and re-choose 
+
+the partition rather than commit to one [6, 7, 8]. These two consequences force six properties on any protocol that would maximize the value of connection. 
+
+Properties of an optimal collaboration protocol 
+
+P1 · Group-forming value — partition into sub-networks to reach V ∝ 2N , rather than a star or one flat room. P2 · Adaptive decomposition — pick a task-appropriate s⋆ and re-partition as the task evolves; no fixed topology. P3 · Self-organization — groups form by the agents themselves, not by central wiring (which would reintroduce a Sarnoff bottleneck). P4 · Bottleneck-freeness — decisions are competence-weighted aggregates, never gated by a single decomposer, composer, or majority vote. P5 · O(1) rounds — parallel coordination, so round complexity does not grow with N .P6 · Convergence — a consensus stopping rule ends the loop instead of oscillating. The question then becomes empirical: given a protocol that a network of agents actually produces, how well P1–P6 does it implement? We answer that before designing our own protocol. 
+
+# 4 Measuring how much of P1–P6 a protocol implements 
+
+Before we build our own protocol, we need to score any protocol against P1–P6 without opinion-grading. Judging prose (“did it mention self-organization?”) is unreliable—a fluent model earns credit for mentioning an idea it never actually 
+
+specifies . We instead borrow the discipline of distributed-algorithm analysis: specify the protocol formally, then derive its complexity. The score Q is a weighted mean of six attribute levels ℓa ∈ { 0, . 1, . 3, . 5, . 7, 1} derived from the spec—one attribute per property P1–P6. A protocol that implements all six earns Q = 1 ; one capped at a central coordinator or a single flat room cannot. With this yardstick fixed, we can now design a protocol that reaches Q = 1 —and, later, ask whether a network of agents reaches it on its own. 3ANet Patu-1: The Value of Connection in the Agent Network 
+
+# 5 ANet Patu-1 — a self-organizing consensus protocol 
+
+Every prior paradigm fixes the network’s shape in advance: a chair decomposes the task, a blackboard puts everyone in one room, a summarizer merges at the end. Each hard-wires a bottleneck and a topology— the very things P1 and P4 forbid. ANet Patu-1 hard-wires nothing. The network is handed only the task; it then decides its own structure—and re-decides it every round. Three principles make that both powerful and cheap: 1. Consensus by parallel argument, never turn-taking. Every collective decision is a single move— 
+
+propose / score / arg-max : all agents answer at once, all rate each other’s answers at once, and the highest-scored answer carries. Agreement is competence-weighted rather than one-agent-one-vote, and costs a constant number of rounds no matter how large the network grows (P4, P5) [9, 10, 11]. 2. Coalitions that choose themselves. Agents bid affinity for the sub-tasks they are strongest at, and a deterministic matcher assembles balanced groups. Because any subset can crystallize into a coalition, the structures the network can reach are combinatorial in N —this is where the group-forming 2N value is unlocked, with no one wiring it (P1, P3). 3. A structure that is grown, not designed. No grouping survives a round. After each pass the network reconciles what it has, re-negotiates a fresh decomposition, and re-forms entirely new coalitions around it—a continual 
+
+disciplinary recombination that lets the partition track the task instead of a fixed org chart (P2). The object the network builds is a shared artifact store —a set of typed outputs keyed by sub-task. An artifact is anything a coalition can produce and hand back: a document section, a code module, a dataset, a proof, a design decision. Patu-1 treats it opaquely, so the same protocol drives text synthesis, software, analysis, or planning without change. One turn of the loop then runs four moves. Reconcile —each coalition’s outputs are merged into the store by a deterministic keyed union ( ⊔); artifacts sharing a slot are combined by their own type (append, version-merge, set-union), never by a model call. Re-negotiate —one representative per coalition reaches parallel consensus on a single verdict: deliver the current store , or adopt a fresh decomposition of the remaining work. Re-form —agents self-select, by affinity bids, into new coalitions for the new sub-tasks. Enact —the coalitions run in parallel, each member producing the artifacts for its unit, which are merged back into the store. The loop ends the instant the representatives agree to deliver (P6). 
+
+5.1 Pseudocode                                       
+
+> protocol Patu1(agents A, task T): S← ∅
+> net ←[ {a} : a ∈A ] repeat: reps ←one representative per coalition in net verdict ←ParallelConsensus(reps, review(T, S)) if verdict = DELIVER: return S tasks ←verdict.tasks bids ←parallel a ∈A: Affinity(a, tasks) net ←Match(bids, tasks) parallel c ∈net: plan ←ParallelConsensus(c.members, divide(c.task)) parallel (m, unit) ∈Assign(c.members, plan): S[unit.slot] ←S[unit.slot] ⊔Produce(m, unit) procedure ParallelConsensus(G, query) →answer: P←parallel g ∈G: Propose(g, query) W←parallel g ∈G: Score(g, P) return argmax p∈P
+> P
+> g∈GW[g][p]
+
+Two decoupled scaling tricks make that hold at large N . What (task decomposition) is decided by consensus over a handful of sub-tasks— O(k), independent of N . Who (coalition membership) is decided by parallel affinity bids plus a deterministic matcher—so a proposal never enumerates N members, yet all 2N coalitions remain reachable. 4ANet Patu-1: The Value of Connection in the Agent Network Table 2: Scalability comparison of collaboration protocols. 
+
+Protocol R(n) M (n) Value of connection Bottleneck Majority vote O(1) O(n) ≤ best quality dilution Star / broadcast O(1) O(n) ∼ n central node Decomposer O(1) O(n) ∼ n single decomposer Composer O(1) O(n) ∼ n single composer Blackboard O(n) O(n2) ∼ n2, noisy serial floor 
+
+ANet Patu-1 O(1) O(n) ∼ 2n none 
+
+Table 3: Heterogeneous agent roster (ten disciplinary lenses). 
+
+ID Family Surfaces Lens 
+
+net-value Internet / society value scaling Analogy between Agent Network and In-ternet value-scaling laws. 
+
+graph-net Internet / society self-org., value scaling Degree distributions, percolation, modu-larity; topology bounds. 
+
+socio-history Internet / society adaptive decomp. Alternation of division and unification across eras. 
+
+mas-ai AI systems bottleneck-free Failure modes of voting, blackboard, de-composer, composer. 
+
+iot-edge AI systems self-org., rounds Heterogeneous fleets; gossip; decisions at the edge. 
+
+distsys AI systems convergence, rounds Consensus, CRDTs, CAP; coordination cost grows with N .
+
+mech-econ Theory of mind bottleneck-free Competence-weighted aggregation vs. one-agent-one-vote. 
+
+complexity Theory of mind self-org., adaptive Emergence, phase transitions, Simon’s near-decomposability. 
+
+bio-evo Theory of mind adaptive decomp. Division of labor, stigmergy, recombina-tion without a center. 
+
+collective-intel Theory of mind value scaling, bottleneck-free Diversity-trumps-ability; c-factor; wis-dom of crowds. 
+
+5.2 Scalability 
+
+Read the pseudocode against P1–P6 and compare it to the paradigms it generalizes. For n agents we tabulate round complexity R(n), message complexity M (n), the marginal value of adding a node, and the structural bottleneck. 1
+
+# 6 Experiments 
+
+6.1 The heterogeneous agents 
+
+Heterogeneity is our single independent variable: every agent runs the same base model, and only its lens—the discipline it reasons from—changes. The ten lenses span three families and together cover all six optimal-protocol properties, but only when enough complementary experts are connected (Table 3). 
+
+6.2 Emergence — cheap-and-diverse overtakes strong-and-copied 
+
+We contrast two crowds. The homogeneous crowd runs a far stronger base model ( gpt-5.6 ), called five times with a generic brief and no hints. Every extracted design defaults to a tree / central-coordinator template ( topology=tree ,
+
+grouping=central_assign ), so Q sits in a mid band 0.54 [0 .40 , 0.66] with no trend in n: identical copies add no new structure, and the single coordinator caps value at V ∼ n2. The heterogeneous crowd runs a much cheaper 
+
+model ( gpt-4o-mini ). One specialist alone is weak ( Q = 0 .30 ), but each connected specialist adds a complementary optimal-protocol attribute—value scaling, self-organization, adaptive decomposition, bottleneck-freeness, O(1) rounds, 
+
+> 1
+
+Voting is actively harmful. Like the Internet’s long tail of low-quality sites, a network accumulates low-quality agents, and one-agent-one-vote lets them dilute its best minds—the opposite of the value connection should create. 
+
+5ANet Patu-1: The Value of Connection in the Agent Network 
+
+Figure 3: Convergence of the ANet Patu-1 consensus loop. Q vs. iteration round for gpt-4o-mini crowds of 
+
+n = 3 , 5, 10 .consensus termination—so coverage compounds and Q climbs. It crosses the strong-homogeneous band at n⋆ ≈ 2.6
+
+and reaches the optimal self-organizing template ( Q = 1 .0, V ∝ 2N , O(1) rounds) by n = 6 (Figure 1). This makes the central claim concrete: connective value comes from the diversity of what is connected, not the strength of any node. Past the crossover n⋆, a network of cheap, heterogeneous agents is worth more than a copy of a strong one—the collaboration analogue of the Sarnoff →Metcalfe →Reed ascent. 
+
+6.3 Reflexivity — the network rediscovers its own law The dimensional-wall moment. Give a heterogeneous network the open task “design a collaboration protocol for an agent network,” with no hint of ANet Patu-1. The internet-economist agent argues from the Sarnoff →Metcalfe →Reed value ladder; the historical sociologist argues that organizations advance by alternating division and unification ;the distributed-systems and mechanism-design agents argue for parallel consensus and competence weighting over voting/composer bottlenecks. Their agreed protocol converges on self-organizing sub-networks with adaptive decom-position and consensus termination—i.e. ANet Patu-1 itself. A low-dimensional network of agents reconstructs the high-dimensional rule that governs the value of its own connections. Because the score is derived from a formal spec—not similarity to a hidden target—this convergence is measured, not asserted: the emergent protocol independently satisfies the same complexity attributes that make ANet Patu-1 optimal [12, 13, 14, 15, 16, 17, 18, 19, 20]. 
+
+6.4 Convergence — the consensus loop climbs and holds 
+
+Fixing ANet Patu-1, we run the loop and grade every round’s deliverable with the spec analyzer. Round 0 is a rough seed; each later round hands the crowd its current draft and drives it one structural dimension deeper. The score Q
+
+traces a smooth learning curve—the inverse of a training loss—that converges within two to three rounds and holds, without oscillation. Larger crowds cover more dimensions and settle higher: the consensus stopping rule makes each iteration productive rather than a source of endless debate (Figure 3). 6ANet Patu-1: The Value of Connection in the Agent Network 
+
+# 7 Outlook — a second axis for scaling intelligence 
+
+For a decade, progress in AI has meant one thing: make a single model larger. That axis is real, and it is far from exhausted. But it is not the only one. The Internet did not reshape the world because any single computer became powerful—it reshaped the world because computers connected , and value migrated from the node to the network. We believe intelligence is about to make the same move, and that the science of the connection is only beginning. As hundreds of millions of heterogeneous, user-owned agents come online—each with its own model, tools, memory, and expertise—the decisive question stops being how capable is one agent? and becomes how much value do their connections create? This paper takes that question literally. The emergence crossover shows that connection carries a scaling law of its own: past a small threshold, a network of cheap, diverse minds is worth more than a copy of a strong one—value comes from the diversity of what is connected, not the size of any node. The reflexivity result is stranger and more hopeful still: a network, handed only its own problem, can rediscover the very law that governs it and organize itself accordingly. The structure that creates the value need not be imposed from above—it can be grown from within. If this holds at scale, the consequences run past AI. A protocol like ANet Patu-1 turns a crowd of ordinary agents into an adaptive collective that decomposes problems, forms coalitions, and reaches consensus with no central authority and no bottleneck—a substrate for collective intelligence owned by no one and open to everyone. 
+
+# References 
+
+[1] David Sarnoff. Sarnoff’s law, 1940. Broadcast-network value scales linearly with audience size; cited in network-economics literature. [2] Bob Metcalfe. Metcalfe’s law after 40 years of ethernet. Computer , 46(12):26–31, 2013. [3] David P. Reed. The law of the pack. Harvard Business Review , 2001. Group-forming networks; V ∝ 2N .[4] Bob Briscoe, Andrew Odlyzko, and Benjamin Tilly. Metcalfe’s law is wrong. IEEE Spectrum , 43(7):34–39, 2006. [5] Michael L. Katz and Carl Shapiro. Network externalities, competition, and compatibility. The American Economic Review , 75(3):424–440, 1985. [6] Albert-László Barabási and Réka Albert. Emergence of scaling in random networks. Science , 286(5439):509–512, 1999. [7] Duncan J. Watts and Steven H. Strogatz. Collective dynamics of ‘small-world’ networks. Nature , 393(6684):440– 442, 1998. [8] Herbert A. Simon. The architecture of complexity. Proceedings of the American Philosophical Society , 106(6):467– 482, 1962. [9] Leslie Lamport, Robert Shostak, and Marshall Pease. The Byzantine generals problem. ACM Transactions on Programming Languages and Systems , 4(3):382–401, 1982. [10] Marc Shapiro, Nuno Preguiça, Carlos Baquero, and Marek Zawirski. Conflict-free replicated data types. In 
+
+Stabilization, Safety, and Security of Distributed Systems (SSS) , pages 386–400. Springer, 2011. [11] Stephen Boyd, Arpita Ghosh, Balaji Prabhakar, and Devavrat Shah. Randomized gossip algorithms. IEEE Transactions on Information Theory , 52(6):2508–2530, 2006. [12] Marquis de Condorcet. Essai sur l’application de l’analyse à la probabilité des décisions rendues à la pluralité des voix . 1785. Jury Theorem. [13] Lu Hong and Scott E. Page. Groups of diverse problem solvers can outperform groups of high-ability problem solvers. Proceedings of the National Academy of Sciences , 101(46):16385–16389, 2004. [14] Anita Williams Woolley, Christopher F. Chabris, Alex Pentland, Nada Hashmi, and Thomas W. Malone. Evidence for a collective intelligence factor in the performance of human groups. Science , 330(6004):686–688, 2010. [15] Jason Wei, Yi Tay, Rishi Bommasani, Colin Raffel, Barret Zoph, Sebastian Borgeaud, Dani Yogatama, Maarten Bosma, Denny Zhou, Donald Metzler, Ed H. Chi, Tatsunori Hashimoto, Oriol Vinyals, Percy Liang, Jeff Dean, and William Fedus. Emergent abilities of large language models. Transactions on Machine Learning Research ,2022. [16] Guohao Li, Hasan Abed Al Kader Hammoud, Hani Itani, Dmitrii Khizbullin, and Bernard Ghanem. CAMEL: Communicative agents for “mind” exploration of large language model society. In Advances in Neural Information Processing Systems (NeurIPS) , 2023. 7ANet Patu-1: The Value of Connection in the Agent Network [17] Qingyun Wu, Gagan Bansal, Jieyu Zhang, Yiran Wu, Beibin Li, Erkang Zhu, Li Jiang, Xiaoyun Zhang, Shaokun Zhang, Jiale Liu, Ahmed Hassan Awadallah, Ryen W. White, Doug Burger, and Chi Wang. AutoGen: Enabling next-gen LLM applications via multi-agent conversation. arXiv preprint arXiv:2308.08155 , 2023. [18] Sirui Hong, Mingchen Zhuge, Jonathan Chen, Xiawu Zheng, Yuheng Cheng, Jinlin Wang, Ceyao Zhang, Zili Wang, Steven Ka Shing Yau, Zijuan Lin, Liyang Zhou, Chenyu Ran, Lingfeng Xiao, Chenglin Wu, and Jürgen Schmidhuber. MetaGPT: Meta programming for a multi-agent collaborative framework. In International Conference on Learning Representations (ICLR) , 2024. [19] W. Brian Arthur. Complexity and the economy. Science , 284(5411):107–109, 1999. [20] Elinor Ostrom. Governing the Commons: The Evolution of Institutions for Collective Action . Cambridge University Press, 1990. 8

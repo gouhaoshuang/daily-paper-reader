@@ -6,32 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-17
-- 运行时间：2026-07-17 20:29:59 UTC
+- 最新运行日期：2026-07-18
+- 运行时间：2026-07-18 20:54:33 UTC
 - 运行状态：成功
 - 本次总论文数：4
-- 精读区：2
-- 速读区：2
+- 精读区：1
+- 速读区：3
 
 ### 今日简报（AI）
-今天精读2篇、速读2篇，重点关注GUI智能体与多LLM协作方向。最推荐9.0分的《HyMobileAgent》探讨高效GUI智能体的数据-环境共扩展，以及8.0分的《Collaborative Spatial Learning》研究多LLM在社交实验中的协作学习。建议优先精读这两篇高评分论文，快速获得前沿洞察。
-- 详情：[/202607/17/README](/202607/17/README)
+今日聚焦AI团队协作与智能体系统架构，精读1篇、速读3篇。最值得关注的是共享上下文图促进人机团队科学的精读论文（8.0分），以及基于栈执行与延迟发现的层次化编排、智能体网络连接价值两篇速读佳作。建议优先精读《Networked Intelligence》以理解人机协同新范式，再浏览速读掌握编排与网络化设计。
+- 详情：[/202607/18/README](/202607/18/README)
 
 ### 精读区论文标签
-1. [HyMobileAgent: Data-Environment Co-Scaling for Efficient GUI Agents](/202607/17/2607.14548v1-hymobileagent-data-environment-co-scaling-for-efficient-gui-agents)  
-   标签：评分：9.0/10、query:eca
-   evidence：移动GUI代理，数据和环境协同缩放，直接满足移动AI代理需求
-2. [Collaborative Spatial Learning with Multi-LLM Agents in Networked Social Experiments](/202607/17/2607.14574v1-collaborative-spatial-learning-with-multi-llm-agents-in-networked-social-experiments)  
+1. [Networked Intelligence: Active Shared Context Graphs for Human-AI Team Science](/202607/18/2607.13220v1-networked-intelligence-active-shared-context-graphs-for-human-ai-team-science)  
    标签：评分：8.0/10、query:eca
-   evidence：网络化社会实验中多LLM代理的协作研究，直接探讨协作机制
+   evidence：通过共享上下文图实现人-AI团队协作
 
 ### 速读区论文标签
-1. [EdgeFaaS: A Function-based Framework for Edge Computing](/202607/17/2607.14489v1-edgefaas-a-function-based-framework-for-edge-computing)  
+1. [A Formal Hierarchical Architecture for Agentic Orchestration with Stack-Based Execution and Lazy Discovery](/202607/18/2607.11138v1-a-formal-hierarchical-architecture-for-agentic-orchestration-with-stack-based-execution-and-lazy-discovery)  
    标签：评分：7.0/10、query:eca
-   evidence：基于函数的边缘计算框架，支持边缘云协作AI代理系统的构建
-2. [SearchOS-V1: Towards Robust Open-Domain Information-Seeking Agent Collaboration](/202607/17/2607.15257v1-searchos-v1-towards-robust-open-domain-information-seeking-agent-collaboration)  
+   evidence：分层技能智能体编排架构与分布式边缘云智能体架构相关
+2. [ANet Patu-1: The Value of Connection in the Agent Network](/202607/18/2607.15053v1-anet-patu-1-the-value-of-connection-in-the-agent-network)  
+   标签：评分：7.0/10、query:eca
+   evidence：代理网络协作协议与自组织共识
+3. [MyAG: A Graph-Based Framework for Designing and Analyzing Composable LLM Agent Systems](/202607/18/2607.13474v1-myag-a-graph-based-framework-for-designing-and-analyzing-composable-llm-agent-systems)  
    标签：评分：6.0/10、query:eca
-   evidence：面向信息检索的多智能体协作框架
+   evidence：基于图的可组合LLM智能体系统框架
 
 
 <div class="dpr-home-promo-card">
