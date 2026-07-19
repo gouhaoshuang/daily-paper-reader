@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-19",
+  "date": "2026-07-19",
+  "generated_at": "2026-07-19T21:05:31",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/19/2607.13027v1-palmclaw-a-native-on-device-agent-framework-for-mobile-phones",
+      "section": "deep",
+      "title_en": "PalmClaw: A Native On-Device Agent Framework for Mobile Phones",
+      "authors": "Hongru Cai, Yongqi Li, Ran Wei, Wenjie Li",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.13027v1",
+      "score": "8.0",
+      "evidence": "原生设备端移动智能体框架",
+      "tldr": "移动设备上的LLM代理目前主要依赖GUI操作，效率低且难以直接访问设备能力。PalmClaw提出原生设备代理框架，通过显式参数和结构化结果的设备工具暴露手机功能，直接在设备上管理会话、记忆和技能。实验表明任务成功率相对提升11.5%，完成时间减少94.9%，且设置负担更低。该框架为移动端代理提供了明确执行边界和可控操作的新方案。",
+      "tags": "query:eca",
+      "abstract_en": "Large Language Model (LLM) agents have moved beyond generating responses to executing multi-step tasks by calling tools, observing the results, and iteratively deciding the next action. Most agent systems run on desktops or servers, which support tool use and task automation. Mobile devices are also important agent environments because they are widely accessible and contain users' data, sensors, and daily-use applications. Existing mobile agents mainly operate smartphones through graphical user interface (GUI) actions such as tapping, swiping, and typing, which often form long, interface-dependent sequences, cannot directly access device capabilities, and make execution boundaries difficult to define. We present \\textbf{PalmClaw}, an open-source agent framework that runs natively on mobile phones and manages the sessions, memory, skills, tools, and agent loop directly on the device. PalmClaw exposes device capabilities as device tools with explicit arguments, structured results, and clearly defined execution boundaries. This design enables agents to use mobile capabilities directly while keeping each action explicit and controlled. Experiments show an 11.5\\% relative improvement in task success and a 94.9\\% reduction in completion time over the strongest baseline, with lower setup burden and traces illustrating how execution boundaries are applied. Code is available at https://github.com/ModalityDance/PalmClaw.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/19/2607.15053v1-anet-patu-1-the-value-of-connection-in-the-agent-network",
+      "section": "quick",
+      "title_en": "ANet Patu-1: The Value of Connection in the Agent Network",
+      "authors": "Mu Yuan, Jinke Song, Zhaomeng Zhou, Lan Zhang",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.15053v1",
+      "score": "6.0",
+      "evidence": "智能体网络协作协议与价值建模",
+      "tldr": "互联网的价值取决于连接方式，本文类比到AI代理网络，提出ANet Patu-1自组织共识协议。该协议动态重组联盟，自适应地实现Sarnoff、Metcalfe和Reed三种定律的上包络，仅需O(1)轮并行共识。关键发现：异质廉价模型集群的集体价值随规模复合增长，最终超越同质强模型；网络还能自反地收敛到自身连接价值定律。这项工作揭示了协作而非规模驱动的缩放定律。",
+      "tags": "query:eca",
+      "abstract_en": "The Internet taught us that the value of a network depends on \\emph{how} its nodes connect: broadcast stars scale as $V\\!\\propto\\!N$ (Sarnoff), fully-connected meshes as $N^2$ (Metcalfe), and group-forming networks as $2^{N}$ (Reed). We ask the analogous question for networks of AI agents. We model the net value of connection as a function of coordination-group size, derive from it the properties an optimal collaboration protocol must have, and introduce ANet Patu-1 -- a self-organizing consensus protocol in which the network continuously re-forms its own coalitions, adaptively riding the upper envelope of all three regimes at $O(1)$ parallel consensus rounds. To measure value without opinion-grading, we score an emergent protocol by formally specifying it and deriving its complexity, the way distributed algorithms are analyzed. Two results follow. (i)~Emergence -- a crowd of the \\emph{cheapest} model, when heterogeneous, starts weak but its collective value compounds with $N$ and \\emph{overtakes} a crowd of a far \\emph{stronger} model that is homogeneous: a crossover that marks a scaling law for collaboration rather than for scale. (ii)~Reflexivity -- a heterogeneous network, given only its own problem and no design hints, converges on ANet Patu-1 itself, reconstructing the high-dimensional law that governs its own connective value.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

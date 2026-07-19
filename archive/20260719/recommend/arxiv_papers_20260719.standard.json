@@ -1,0 +1,95 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-19T21:04:09.457748+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.13027v1",
+      "source": "arxiv",
+      "title": "PalmClaw: A Native On-Device Agent Framework for Mobile Phones",
+      "abstract": "Large Language Model (LLM) agents have moved beyond generating responses to executing multi-step tasks by calling tools, observing the results, and iteratively deciding the next action. Most agent systems run on desktops or servers, which support tool use and task automation. Mobile devices are also important agent environments because they are widely accessible and contain users' data, sensors, and daily-use applications. Existing mobile agents mainly operate smartphones through graphical user interface (GUI) actions such as tapping, swiping, and typing, which often form long, interface-dependent sequences, cannot directly access device capabilities, and make execution boundaries difficult to define. We present \\textbf{PalmClaw}, an open-source agent framework that runs natively on mobile phones and manages the sessions, memory, skills, tools, and agent loop directly on the device. PalmClaw exposes device capabilities as device tools with explicit arguments, structured results, and clearly defined execution boundaries. This design enables agents to use mobile capabilities directly while keeping each action explicit and controlled. Experiments show an 11.5\\% relative improvement in task success and a 94.9\\% reduction in completion time over the strongest baseline, with lower setup burden and traces illustrating how execution boundaries are applied. Code is available at https://github.com/ModalityDance/PalmClaw.",
+      "authors": [
+        "Hongru Cai",
+        "Yongqi Li",
+        "Ran Wei",
+        "Wenjie Li"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-07-14T17:58:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.13027v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "native on-device mobile agent framework",
+      "llm_evidence_cn": "原生设备端移动智能体框架",
+      "llm_evidence": "原生设备端移动智能体框架",
+      "canonical_evidence": "原生设备端移动智能体框架",
+      "llm_tldr_en": "PalmClaw is an on-device agent framework for mobile phones that directly accesses device capabilities via pub-sub events and data-centric API, enabling native task execution without GUI automation.",
+      "llm_tldr_cn": "当前移动智能体主要通过图形界面操作，流程冗长且无法直接访问设备能力。PalmClaw提出一种原生设备端智能体框架，采用发布-订阅事件和数据中心API直接调用移动设备功能，支持多步任务自动化。在多个真实任务上的实验表明，PalmClaw相比GUI方法在任务完成率和效率上均有显著提升，为移动端AI智能体提供了更高效、边界明确的解决方案。",
+      "llm_tldr": "当前移动智能体主要通过图形界面操作，流程冗长且无法直接访问设备能力。PalmClaw提出一种原生设备端智能体框架，采用发布-订阅事件和数据中心API直接调用移动设备功能，支持多步任务自动化。在多个真实任务上的实验表明，PalmClaw相比GUI方法在任务完成率和效率上均有显著提升，为移动端AI智能体提供了更高效、边界明确的解决方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.15053v1",
+      "source": "arxiv",
+      "title": "ANet Patu-1: The Value of Connection in the Agent Network",
+      "abstract": "The Internet taught us that the value of a network depends on \\emph{how} its nodes connect: broadcast stars scale as $V\\!\\propto\\!N$ (Sarnoff), fully-connected meshes as $N^2$ (Metcalfe), and group-forming networks as $2^{N}$ (Reed). We ask the analogous question for networks of AI agents. We model the net value of connection as a function of coordination-group size, derive from it the properties an optimal collaboration protocol must have, and introduce ANet Patu-1 -- a self-organizing consensus protocol in which the network continuously re-forms its own coalitions, adaptively riding the upper envelope of all three regimes at $O(1)$ parallel consensus rounds. To measure value without opinion-grading, we score an emergent protocol by formally specifying it and deriving its complexity, the way distributed algorithms are analyzed. Two results follow. (i)~Emergence -- a crowd of the \\emph{cheapest} model, when heterogeneous, starts weak but its collective value compounds with $N$ and \\emph{overtakes} a crowd of a far \\emph{stronger} model that is homogeneous: a crossover that marks a scaling law for collaboration rather than for scale. (ii)~Reflexivity -- a heterogeneous network, given only its own problem and no design hints, converges on ANet Patu-1 itself, reconstructing the high-dimensional law that governs its own connective value.",
+      "authors": [
+        "Mu Yuan",
+        "Jinke Song",
+        "Zhaomeng Zhou",
+        "Lan Zhang"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI"
+      ],
+      "published": "2026-07-16T14:31:15+00:00",
+      "link": "https://arxiv.org/pdf/2607.15053v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Agent network collaboration protocol and value modeling",
+      "llm_evidence_cn": "智能体网络协作协议与价值建模",
+      "llm_evidence": "智能体网络协作协议与价值建模",
+      "canonical_evidence": "智能体网络协作协议与价值建模",
+      "llm_tldr_en": "Models network value of AI agent connections and proposes a self-organizing consensus protocol ANet Patu-1.",
+      "llm_tldr_cn": "该论文类比互联网节点连接价值模型，研究了AI智能体网络的价值，推导出最优协作协议应具备的性质，并提出了ANet Patu-1自组织共识协议，该协议通过动态重组联盟自适应地选择最优规模，在O(1)并行轮次下实现网络价值上包络，为智能体协作网络的优化提供了理论依据。",
+      "llm_tldr": "该论文类比互联网节点连接价值模型，研究了AI智能体网络的价值，推导出最优协作协议应具备的性质，并提出了ANet Patu-1自组织共识协议，该协议通过动态重组联盟自适应地选择最优规模，在O(1)并行轮次下实现网络价值上包络，为智能体协作网络的优化提供了理论依据。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
