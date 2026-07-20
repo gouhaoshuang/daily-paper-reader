@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-20",
+  "date": "2026-07-20",
+  "generated_at": "2026-07-20T21:08:14",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/20/2607.13093v2-efficient-and-privacy-aware-edge-cloud-collaborative-inference-for-large-language-models",
+      "section": "deep",
+      "title_en": "Efficient and Privacy Aware Edge Cloud Collaborative Inference for Large Language Models",
+      "authors": "Chen Li, Jiexiong Liu, Yi Li",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.13093v2",
+      "score": "10.0",
+      "evidence": "隐私保护型的端云协同大模型推理框架",
+      "tldr": "针对端侧大模型推理面临延迟、资源与隐私的三难困境，本文提出基于端点认证KV缓存的隐私中心边缘-云协同推理框架。本地端处理输入预处理、嵌入计算、自适应特征优化、KV缓存认证、推测解码及低维模型头计算，云端负责认证解码器推理、KV缓存管理、令牌验证与高维词汇投影。所有传输数据和截断logits经量化和AES-GCM加密，核心轻量模块和缓存策略保留本地。实验表明，该方法在保持与全云推理相当性能的同时，单令牌延迟降低46.1%，下行负载减少67.4%。该框架支持CPU、GPU及嵌入式设备异构部署，为隐私敏感的LLM推理提供高效方案。",
+      "tags": "query:eca",
+      "abstract_en": "On-device LLM inference faces a trilemma of response latency, limited hardware resources and user privacy. Full cloud inference delivers strong computing power but exposes user prompts and dialogue data, while standalone on-device inference is unfeasible for most consumer and embedded edge devices. This paper presents a privacy-centric edge-cloud collaborative LLM inference framework built on endpoint-authenticated KV cache. Local endpoints handle input preprocessing, embedding computation, adaptive feature optimization, KV cache authentication, speculative decoding and low-dimensional model head calculation, while the cloud conducts authenticated decoder inference, KV cache management, token verification and high-dimensional vocabulary projection. Endpoints fuse partial outputs, apply language-adaptive masking and sample target tokens. All transmitted data and truncated logits are quantized and AES-GCM encrypted for privacy, with core lightweight modules, draft parameters and cache access policies kept local to avoid leakage. The framework supports heterogeneous devices including CPU-only, GPU-equipped and embedded devices via optimized streaming, batching and quantized ONNX deployment. Evaluations demonstrate that the framework reduces per-token latency by up to 46.1\\% and downlink payloads by up to 67.4\\% over baseline split inference, retaining comparable performance to full cloud inference.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/20/2607.14688v1-mind-cavs-multi-intelligence-negotiation-and-decision-system-for-cavs-based-on-intent-driven-autonomy",
+      "section": "quick",
+      "title_en": "MIND-CAVs: Multi-Intelligence Negotiation and Decision System for CAVs based on Intent-Driven Autonomy",
+      "authors": "Mainak Mondal, Yihang Feng, Yangchao Luo, Han Song",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.14688v1",
+      "score": "7.0",
+      "evidence": "利用边缘计算实现网联自动驾驶车意图感知协调的多智能体协商框架",
+      "tldr": "当前网联自动驾驶车辆仅广播低层运动状态，缺乏高层意图协调，导致全局决策不一致。本文提出MIND-CAVs框架，车辆将感知抽象为结构化意图并通过V2X上传，边缘服务器结合学习与规则仲裁冲突，云平台记录用于审计和持续训练。在CARLA多车道高速场景实验中，相比孤立自动驾驶、先到先服务和多智能体强化学习基线，该方法缩短了机动完成时间，降低了不安全接近和冗余刹车频率。该工作为网联自动驾驶提供了一种意图驱动的协同决策新范式，验证了边缘-云协作的有效性。",
+      "tags": "query:eca",
+      "abstract_en": "Modern autonomous vehicles largely operate as isolated agents: they rely on on-board perception and decision modules and broadcast Basic Safety Messages (BSMs) that expose only low-level kinematic state. While existing cooperative driving frameworks enable limited sensor sharing, they rarely communicate high-level maneuver intentions, and edge computing is primarily used for content delivery rather than decision arbitration. As a result, current connected autonomy lacks a principled mechanism for making globally consistent, intent-aware coordination decisions across vehicles. To address this gap, we propose MIND-CAVs, a Multi-Intelligence Negotiation and Decision framework for connected autonomous vehicles (CAVs) based on intent-driven autonomy. Each vehicle abstracts raw sensor observations into structured intent representations, exchanges them over V2X links, and receives globally consistent coordination plans from roadside edge servers. Edge agents combine learned and rule-based arbitration mechanisms to negotiate conflicting intents among vehicles, while a cloud platform records decisions for auditing and continual retraining. We implement MIND-CAVs in a CARLA-based AI-in-the-loop platform and evaluate it in multi-lane highway scenarios involving conflicting maneuvers and route-constrained exits. Experimental results show improved maneuver completion time and reduced unsafe proximity and unnecessary braking compared with isolated autonomy, first-come-first-served arbitration, and multi-agent reinforcement learning baselines.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/20/2607.14919v1-human-robot-interaction-in-genai-architectures-via-the-agent-client-protocol",
+      "section": "quick",
+      "title_en": "Human-Robot Interaction in GenAI Architectures via the Agent-Client Protocol",
+      "authors": "Jesus Moncada-Ramirez, Jose-Raul Ruiz-Sarmiento, Javier Gonzalez-Jimenez",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.14919v1",
+      "score": "7.0",
+      "evidence": "通过智能体-客户端协议实现人机交互，支持移动AI智能体",
+      "tldr": "当前基于大语言模型的机器人架构中，人机交互层因使用专有接口而碎片化，阻碍实时人机协作。本文提出采用Agent-Client协议作为统一通信标准，与模型上下文协议结合，构建人机交互、决策编排和物理执行完全解耦的三层架构。在实物移动机器人上，该架构成功实现三个异构用户界面的互操作，并支持实时可观测、授权和任务中断，延迟开销可忽略。该工作为人机交互层标准化提供了可行方案，促进了异构界面接入和平台替换的灵活性。",
+      "tags": "query:eca",
+      "abstract_en": "Recent advances in Generative Artificial Intelligence (GenAI), particularly Large Language Models (LLMs), are driving robotic architectures toward agent-based high-level orchestration, in which natural-language instructions can be translated into context-aware action sequences. While the integration of these agents and robotic capabilities is increasingly converging toward standardization through the Model Context Protocol (MCP), the upper Human-Robot Interaction (HRI) layer remains fragmented by proprietary, ad hoc interfaces that hinder real-time human-in-the-loop collaboration.   To address this fragmentation, this paper proposes the adoption of the Agent-Client Protocol (ACP) -- a communication standard originally introduced for coding agents in software engineering -- as a unified communication contract for the HRI layer in agent-based robotic systems. By combining ACP at the interface-agent link and MCP at the agent-execution link, we formulate a fully decoupled three-layer architecture that separates human interaction, deliberative orchestration, and physical execution. This topology removes rigid architectural dependencies, enabling heterogeneous user interfaces to connect to the same robotic system and allowing the underlying robotic platform to be replaced without requiring client-specific integration changes. Moreover, it provides native support for collaborative HRI capabilities such as real-time observability, explicit human authorization, and immediate task interruption. We experimentally evaluate the proposed architecture on a physical mobile robot, demonstrating interoperability across three heterogeneous user interfaces and validating real-time human-in-the-loop workflows with negligible latency overhead.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

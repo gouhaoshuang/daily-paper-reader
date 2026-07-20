@@ -6,28 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-19
-- 运行时间：2026-07-19 21:05:23 UTC
+- 最新运行日期：2026-07-20
+- 运行时间：2026-07-20 21:08:09 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：3
 - 精读区：1
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-今日聚焦移动端原生Agent框架“PalmClaw”及Agent网络连接价值研究。
-最值得关注的是PalmClaw（8.0分），它提出一种手机本地运行的智能体方案，兼顾隐私与低延迟。
-普通读者可深入PalmClaw技术细节，思考其在日常移动端自动化场景中的应用潜力。
-- 详情：[/202607/19/README](/202607/19/README)
+今日精读《高效隐私感知的边云协同大模型推理》，并速读两篇自动驾驶与人机交互论文。最值得关注的是边缘与云协作提升大模型推理效率的隐私保护方案。建议优先学习该方向，对大模型实际部署极具价值。
+- 详情：[/202607/20/README](/202607/20/README)
 
 ### 精读区论文标签
-1. [PalmClaw: A Native On-Device Agent Framework for Mobile Phones](/202607/19/2607.13027v1-palmclaw-a-native-on-device-agent-framework-for-mobile-phones)  
-   标签：评分：8.0/10、query:eca
-   evidence：原生设备端移动智能体框架
+1. [Efficient and Privacy Aware Edge Cloud Collaborative Inference for Large Language Models](/202607/20/2607.13093v2-efficient-and-privacy-aware-edge-cloud-collaborative-inference-for-large-language-models)  
+   标签：评分：10.0/10、query:eca
+   evidence：隐私保护型的端云协同大模型推理框架
 
 ### 速读区论文标签
-1. [ANet Patu-1: The Value of Connection in the Agent Network](/202607/19/2607.15053v1-anet-patu-1-the-value-of-connection-in-the-agent-network)  
-   标签：评分：6.0/10、query:eca
-   evidence：智能体网络协作协议与价值建模
+1. [MIND-CAVs: Multi-Intelligence Negotiation and Decision System for CAVs based on Intent-Driven Autonomy](/202607/20/2607.14688v1-mind-cavs-multi-intelligence-negotiation-and-decision-system-for-cavs-based-on-intent-driven-autonomy)  
+   标签：评分：7.0/10、query:eca
+   evidence：利用边缘计算实现网联自动驾驶车意图感知协调的多智能体协商框架
+2. [Human-Robot Interaction in GenAI Architectures via the Agent-Client Protocol](/202607/20/2607.14919v1-human-robot-interaction-in-genai-architectures-via-the-agent-client-protocol)  
+   标签：评分：7.0/10、query:eca
+   evidence：通过智能体-客户端协议实现人机交互，支持移动AI智能体
 
 
 <div class="dpr-home-promo-card">
