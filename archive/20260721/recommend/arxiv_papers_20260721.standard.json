@@ -1,0 +1,351 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-21T20:10:10.432408+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2607.16562v1",
+      "source": "arxiv",
+      "title": "AirMoE: Statistic-Augmented Over-the-Air MoE for Collaborative Intelligence",
+      "abstract": "Mixture of Experts (MoE) are increasingly deployed over wireless cloud-edge networks, as a single edge device lacks sufficient resources to host large-scale models locally. In this distributed architecture, a cloud-hosted pretrained Large Model (LM) acts as a shared backbone for latent feature extraction, while heterogeneous experts deployed across distributed, wirelessly-connected clients collaboratively form the task head. However, deploying MoE over wireless links exposes two coupled bottlenecks. On the one hand, routing which clients to activate generally overloads bandwidth-limited uplinks due to required raw feature transmission. On the other hand, aggregating the activated experts' outputs over wireless links is hindered by channel noise and poor scalability. To break these bottlenecks, we propose a statistic-augmented over-the-air MoE (AirMoE) paradigm. Specifically, on the routing side, each client queries its local Feature Retrieval Library (FRL) with a cloud-broadcast compact query, retrieves a prototype-induced statistic, and reports it digitally to the cloud, drastically reducing uplink traffic; the cloud then selects the most relevant clients by aligning these statistics with the LM-extracted features via Jensen--Shannon (JS) divergence. On the aggregating side, selected experts simultaneously transmit their outputs over the multiple-access channel, which physically computes the reweighted sum via waveform superposition, with reweighting coefficients realized through channel-aware power control. The two mechanisms are thus decoupled both algorithmically and physically. We further provide theoretical analyses on convergence and iteration complexity. Taking semantic segmentation task as an example, extensive experiments demonstrate that AirMoE outperforms MoE baselines and single-model competitors. Ablations further confirm the effectiveness of each incorporated component.",
+      "authors": [
+        "Wei-Bin Kou",
+        "Jingreng Lei",
+        "Guangxu Zhu",
+        "Yujiu Yang"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-07-18T00:20:43+00:00",
+      "link": "https://arxiv.org/pdf/2607.16562v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "cloud-hosted backbone with distributed experts over wireless edge, collaborative MoE",
+      "llm_evidence_cn": "云托管骨干与无线边缘分布式专家协作的MoE",
+      "llm_evidence": "云托管骨干与无线边缘分布式专家协作的MoE",
+      "canonical_evidence": "云托管骨干与无线边缘分布式专家协作的MoE",
+      "llm_tldr_en": "Proposes AirMoE for collaborative intelligence over wireless cloud-edge networks, using over-the-air aggregation to mitigate bandwidth and noise bottlenecks.",
+      "llm_tldr_cn": "针对无线云边网络中部署MoE面临的带宽瓶颈和信道噪声问题，提出AirMoE框架：云端托管大模型作为共享骨干，边缘客户端分布式部署异构专家，通过空中聚合实现协作。该方法利用统计信息增强，显著降低了上行传输开销，提升了协作鲁棒性，为边缘云协同AI系统提供了高效方案。",
+      "llm_tldr": "针对无线云边网络中部署MoE面临的带宽瓶颈和信道噪声问题，提出AirMoE框架：云端托管大模型作为共享骨干，边缘客户端分布式部署异构专家，通过空中聚合实现协作。该方法利用统计信息增强，显著降低了上行传输开销，提升了协作鲁棒性，为边缘云协同AI系统提供了高效方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.17143v1",
+      "source": "arxiv",
+      "title": "EdgeCoInfer: Hierarchical Collaborative Inference for On-Device Multimodal Large Models",
+      "abstract": "Modern mobile applications predominantly execute concurrent Multimodal Large Language Models (MLLMs) to provide ubiquitous intelligence. However, satisfying this demand within edge environments faces significant challenges due to multi-task concurrency and strictly coupled hard constraints. To address these issues, we propose EdgeCoInfer, a framework enabling granularity-adaptive deployment by co-optimizing inter-model functional module sharing and \\textbf{intra-model fine-grained partitioning}. We solve the underlying Mixed-Integer Non-Linear Programming (MINLP) problem via a Hybrid Evolutionary Hierarchical Reinforcement Learning (HE-HRL) paradigm, which synchronizes a Genetic Algorithm (GA) for discrete model placement with a Soft Actor-Critic (SAC) agent for continuous resource allocation. To navigate the sparse feasible region, we introduce a feasibility-guided constructive execution mechanism, integrating a constructive cut-step decoder with pre-act pruning and a two-phase curriculum strategy for stable adaptation. Experimental results demonstrate that EdgeCoInfer ensures a 100\\% task completion rate in high-concurrency scenarios, achieving a 76\\% reduction in system cost and 71.88\\% memory savings compared to state-of-the-art baselines.",
+      "authors": [
+        "Lin Tan",
+        "David K. Y. Yau",
+        "Songtao Guo"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-07-19T08:57:47+00:00",
+      "link": "https://arxiv.org/pdf/2607.17143v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "edge collaborative inference for on-device multimodal large models",
+      "llm_evidence_cn": "面向设备端多模态大模型的边缘协作推理",
+      "llm_evidence": "面向设备端多模态大模型的边缘协作推理",
+      "canonical_evidence": "面向设备端多模态大模型的边缘协作推理",
+      "llm_tldr_en": "EdgeCoInfer enables granularity-adaptive deployment of concurrent MLLMs on edge devices via hierarchical collaborative inference and HE-HRL optimization.",
+      "llm_tldr_cn": "移动设备上并发运行多模态大模型面临多任务并发和严格约束的挑战。本文提出EdgeCoInfer，通过模型间功能模块共享和模型内细粒度划分实现粒度自适应部署。采用混合进化分层强化学习（HE-HRL）求解混合整数非线性规划问题。实验表明该框架能有效优化边缘环境下的多模型推理性能。该工作为移动端智能体系统的高效推理提供了关键技术。",
+      "llm_tldr": "移动设备上并发运行多模态大模型面临多任务并发和严格约束的挑战。本文提出EdgeCoInfer，通过模型间功能模块共享和模型内细粒度划分实现粒度自适应部署。采用混合进化分层强化学习（HE-HRL）求解混合整数非线性规划问题。实验表明该框架能有效优化边缘环境下的多模型推理性能。该工作为移动端智能体系统的高效推理提供了关键技术。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.15545v1",
+      "source": "arxiv",
+      "title": "CoWeaver: A Bi-directional, Learnable and Explainable Matching Engine for Mixed Human-Agent Science Collaboration",
+      "abstract": "LLM-based agents excel at writing articles, coding and information retrieval. However, they fail to form strong collaborations within the scientific community due to the bidirectional, dynamic nature of the problem and a high demand of decision interpretability. We proposed COWEAVER, a bidirectional, learnable and explainable algorithm to match scientists and form strong collaborations within a human-agent network. COWEAVER matches candidates and requesters through filling capability gaps and filters candidates through a two-stage ranking step. Finally, the model explores newcomers by maintaining uncertainty-aware capability estimates and updating them through requester's feedback. We show that the selection mechanism of combining both exploration (UCB) and greedy of COWEAVER exceeds the greedy-only mechanism - the analytical best solution - on 6 out of the 20 tasks and performed on par with the greedy-only mechanism in terms of selecting the best candidate. We compared COWEAVER baselines in terms of matching quality and efficiency. COWEAVER outperforms baselines on all metrics.",
+      "authors": [
+        "Jiayao Gu",
+        "Kexin Chu",
+        "Peidong Liu",
+        "Yue Yang",
+        "Lynn Ai",
+        "Qi Zhang",
+        "Ling Yang",
+        "Tianyu Shi"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-17T01:35:12+00:00",
+      "link": "https://arxiv.org/pdf/2607.15545v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "bi-directional matching engine for human-agent collaboration in science",
+      "llm_evidence_cn": "面向人机科学协作的双向匹配引擎",
+      "llm_evidence": "面向人机科学协作的双向匹配引擎",
+      "canonical_evidence": "面向人机科学协作的双向匹配引擎",
+      "llm_tldr_en": "Proposes CoWeaver, a bidirectional learning-to-match algorithm for forming strong human-agent collaborations in scientific research, using two-stage ranking and uncertainty-aware exploration.",
+      "llm_tldr_cn": "针对LLM智能体在科学协作中难以形成强协作的问题，提出CoWeaver双向匹配引擎。通过两阶段排序填补能力缺口，并利用不确定性感知估计探索新人，从而形成高效的人机协作网络。实验表明该方法在协作质量和探索性上优于基线。",
+      "llm_tldr": "针对LLM智能体在科学协作中难以形成强协作的问题，提出CoWeaver双向匹配引擎。通过两阶段排序填补能力缺口，并利用不确定性感知估计探索新人，从而形成高效的人机协作网络。实验表明该方法在协作质量和探索性上优于基线。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.16066v1",
+      "source": "arxiv",
+      "title": "LLM-Powered Agentic AI for 5G/6G Networks: A Tutorial and Survey on Architectures, Protocols, and Standardization",
+      "abstract": "Agentic Artificial Intelligence (AI), enabled by Large Language Models, marks a shift from rule-based automation toward autonomous, goal-driven control of Next-Generation Networks (NGNs). Existing surveys treat the two domains in isolation, leaving protocol integration, evaluation, and standardization alignment underexplored. To address this gap, a two-part tutorial-and-survey is presented. Part I formalises the control, management, and AI-native planes of 5G and 6G. It then covers the foundations of agentic systems: reasoning, planning, tool use, multi-agent coordination, and evaluation. Part II maps agentic capabilities onto 5G/6G control surfaces, standardization, and major 6G initiatives. Finally, it identifies open challenges shaping autonomous telecommunications.",
+      "authors": [
+        "Mazene Ameur",
+        "Abdelkader Mekrache",
+        "Bouziane Brik",
+        "Adlen Ksentini"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI"
+      ],
+      "published": "2026-07-17T15:47:23+00:00",
+      "link": "https://arxiv.org/pdf/2607.16066v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-powered agentic AI for 5G/6G edge cloud networks",
+      "llm_evidence_cn": "基于LLM的智能体AI在5G/6G边缘云网络中的应用",
+      "llm_evidence": "基于LLM的智能体AI在5G/6G边缘云网络中的应用",
+      "canonical_evidence": "基于LLM的智能体AI在5G/6G边缘云网络中的应用",
+      "llm_tldr_en": "A two-part tutorial and survey on integrating LLM-powered agentic AI into 5G/6G networks, covering architectures, protocols, and standardization.",
+      "llm_tldr_cn": "现有调查将智能体AI与网络分别讨论，缺乏协议集成、评估和标准化的统一视角。本文以教程+综述的形式，第一部分形式化5G/6G控制、管理和AI原生平面，并涵盖智能体系统的基础；第二部分将智能体能力映射到5G/6G控制面和标准化。该工作为边缘云协同智能体系统的设计和标准化提供了全面参考。",
+      "llm_tldr": "现有调查将智能体AI与网络分别讨论，缺乏协议集成、评估和标准化的统一视角。本文以教程+综述的形式，第一部分形式化5G/6G控制、管理和AI原生平面，并涵盖智能体系统的基础；第二部分将智能体能力映射到5G/6G控制面和标准化。该工作为边缘云协同智能体系统的设计和标准化提供了全面参考。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.15593v1",
+      "source": "arxiv",
+      "title": "Scalable LLM Agent Tool Access in the Cloud",
+      "abstract": "LLM agents increasingly rely on tool calling to act on external systems, and the Model Context Protocol (MCP) has quickly become its de facto interface. Operating MCP at cloud scale, however, becomes difficult. On the tool provider side, legacy services are not directly callable through MCP; the rapid protocol development also creates ongoing compatibility cost. On the agent side, the number of accessible tool is limited by the LLM context window and inference overhead; mounting a large tool set increases token usage and inference latency and can reduce task success rate. Moreover, for stateful MCP backends with multiple replicas, preserving session affinity increases client-side complexity.   We present a cloud-scale gateway system for MCP service. It breaks the direct-connect model on the data plane and offloads legacy service integration, consolidating incompatible MCP variants, access control, tool recommendation, and session-aware routing to the gateway. Hybrid retrieval sustains 98% Top-15 recall; it scales agent tool access to 3,000+ with high tool selection accuracy, and reduces tool selection time by $8.9\\times$ and token usage by $23.8\\times$, with low per-call overhead, stable under scale-out. Finally, we share the lessons learned from deploying the gateway system in production.",
+      "authors": [
+        "Mingxin Li",
+        "Enge Song",
+        "Yueshang Zuo",
+        "Xiaodong Liu",
+        "Rong Wen",
+        "Qiang Fu",
+        "Gianni Antichi",
+        "Jian He",
+        "Jing Tie",
+        "Zhou Shao",
+        "Xiaobo Xue",
+        "Xiong Xiao",
+        "Luyao Zhong",
+        "Shaokai Zhang",
+        "Jiangu Zhao",
+        "Jianyuan Lu",
+        "Shize Zhang",
+        "Xiaoqing Sun",
+        "Changgang Zheng",
+        "Zihao Fan",
+        "Haonan Li",
+        "Tian Pan",
+        "Xiaomin Wu",
+        "Yang Song",
+        "Xing Li",
+        "Biao Lyu",
+        "Meng Li",
+        "Haipeng Dai",
+        "Guihai Chen",
+        "Shunmin Zhu"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI",
+        "cs.NI"
+      ],
+      "published": "2026-07-17T03:40:49+00:00",
+      "link": "https://arxiv.org/pdf/2607.15593v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "cloud-scale gateway for LLM agent tool access using MCP",
+      "llm_evidence_cn": "基于MCP的云端智能体工具访问网关",
+      "llm_evidence": "基于MCP的云端智能体工具访问网关",
+      "canonical_evidence": "基于MCP的云端智能体工具访问网关",
+      "llm_tldr_en": "This work presents a cloud-scale gateway system for the Model Context Protocol that breaks direct connections to enable scalable tool access for LLM agents, addressing legacy compatibility and session affinity.",
+      "llm_tldr_cn": "该论文针对LLM智能体在云端大规模使用工具时的困难，提出了一个云端网关系统。它支持MCP协议，可解决遗留服务兼容性、上下文窗口限制和会话亲和性等问题。网关系统解耦了智能体与工具的直接连接，为分布式边缘云智能体架构中工具的弹性扩展提供了基础。",
+      "llm_tldr": "该论文针对LLM智能体在云端大规模使用工具时的困难，提出了一个云端网关系统。它支持MCP协议，可解决遗留服务兼容性、上下文窗口限制和会话亲和性等问题。网关系统解耦了智能体与工具的直接连接，为分布式边缘云智能体架构中工具的弹性扩展提供了基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.18138v1",
+      "source": "arxiv",
+      "title": "AI Agent Communications in AI-Native 6G Network: Status, Challenges and Opportunities",
+      "abstract": "The rapid development of agentic AI and multi-agent systems is establishing AI agent communication as a fundamental requirement for the future Internet. While a diverse array of agent communication protocols has recently emerged, these solutions currently suffer from interoperability crises and infrastructure gaps. The newly proposed Service-Oriented Virtualization-Based Architecture (SOVA) offers an architectural framework to address these challenges for agent communication, which expects seamless support from the network infrastructure. The emerging AI-native 6G network is promising as a robust foundation for the SOVA framework, thereby greatly facilitating AI agent communication; however, its effectiveness in supporting the SOVA framework has yet to be fully assessed. To bridge the distinct research trajectories of AI-native 6G networks and AI agent communications, this paper investigates the capabilities of current and proposed 6G network architectures and protocol specifications for supporting the SOVA framework for AI agent communications. By critically examining 6G's key architectural paradigms and their potential to fulfill SOVA's requirements, this paper identifies gaps between 6G standards and the demands of AI agent communication. Based on this gap analysis, this paper outlines research and development directions to ensure that the future 6G network can natively empower AI agent communications in the era of agentic AI.",
+      "authors": [
+        "Qiang Duan"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-07-20T16:30:08+00:00",
+      "link": "https://arxiv.org/pdf/2607.18138v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "AI agent communication framework for 6G networks supporting distributed edge cloud",
+      "llm_evidence_cn": "面向6G网络的AI智能体通信框架，支持分布式边缘云",
+      "llm_evidence": "面向6G网络的AI智能体通信框架，支持分布式边缘云",
+      "canonical_evidence": "面向6G网络的AI智能体通信框架，支持分布式边缘云",
+      "llm_tldr_en": "This paper surveys AI agent communication challenges and proposes SOVA architecture, leveraging AI-native 6G network to support scalable agent coordination across edge-cloud environments.",
+      "llm_tldr_cn": "本文综述了AI智能体通信面临的互操作性与基础设施缺口，提出面向服务的虚拟化架构（SOVA），并论证了AI原生6G网络为分布式边缘云智能体通信提供基础支撑。",
+      "llm_tldr": "本文综述了AI智能体通信面临的互操作性与基础设施缺口，提出面向服务的虚拟化架构（SOVA），并论证了AI原生6G网络为分布式边缘云智能体通信提供基础支撑。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.16930v1",
+      "source": "arxiv",
+      "title": "A Multi-Agent System for 5G Throughput Prediction in Multi-Operator Urban Environments",
+      "abstract": "Throughput prediction is foundational for artificial intelligence-driven 6G resource orchestration. Conventional monolithic machine learning models struggle to generalize across diverse operators, mobility modes, and traffic types, leaving a critical stochasticity gap between signal conditions and achievable throughput. To overcome these constraints in heterogeneous urban environments, we propose a Tiered Multi-Agent System (TMAS) that dynamically routes edge telemetry to context-aware Domain Micro-Agents, validated on a dataset of 48,618 samples collected in Sunway City, Malaysia, with Nemo Handy drive test software, spanning three Tier-1 mobile network operators, three mobility modes, namely (i) elevated pedestrian walkway, (ii) ground-level shuttle bus, and (iii) elevated bus rapid transit; and three traffic profiles, namely (i) persistent download, (ii) persistent upload, and (iii) adaptive video streaming. Our evaluations reveal that TMAS overcomes predictability bottlenecks, achieving a coefficient of determination (R2) of up to 0.931 and a Mean Absolute Error (MAE) as low as 0.53 Mbps. The system demonstrates high operational efficiency, with rapid micro-agent training times, low inference latencies, and agentic routing overhead of 0.004 to 0.126 ms. These latency characteristics indicate the architecture is a promising candidate for the response times required by next-generation wireless networks.",
+      "authors": [
+        "Muhammad Kabeer",
+        "Rosdiadee Nordin",
+        "Nadiva Nuriftitah",
+        "Sian Lun Lau"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI",
+        "eess.SP"
+      ],
+      "published": "2026-07-18T18:48:53+00:00",
+      "link": "https://arxiv.org/pdf/2607.16930v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "edge telemetry routed to domain micro-agents in multi-agent system",
+      "llm_evidence_cn": "多智能体系统中边缘遥测路由到领域微智能体",
+      "llm_evidence": "多智能体系统中边缘遥测路由到领域微智能体",
+      "canonical_evidence": "多智能体系统中边缘遥测路由到领域微智能体",
+      "llm_tldr_en": "A tiered multi-agent system for 5G throughput prediction that dynamically routes edge telemetry to context-aware domain micro-agents, validated on a real-world dataset.",
+      "llm_tldr_cn": "针对传统单模型难以泛化多运营商、多模式场景的问题，提出分层多智能体系统TMAS，将边缘遥测数据动态路由至上下文感知的领域微智能体。在马来西亚双威城收集的48618个样本上验证，证明其能有效提升预测准确性，为6G资源编排提供支持。",
+      "llm_tldr": "针对传统单模型难以泛化多运营商、多模式场景的问题，提出分层多智能体系统TMAS，将边缘遥测数据动态路由至上下文感知的领域微智能体。在马来西亚双威城收集的48618个样本上验证，证明其能有效提升预测准确性，为6G资源编排提供支持。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.17175v1",
+      "source": "arxiv",
+      "title": "LMEdge: QoS-Aware LLM Inference Orchestration on Edge Clusters",
+      "abstract": "Large language model (LLM) services increasingly operate on edge infrastructure, enabling low-latency and privacy-preserving AI services. However, efficiently serving LLM requests across heterogeneous and resource-constrained edge devices require orchestration mechanisms that jointly determine model configuration (family, size, and quantization level) and execution placement while satisfying user- and system-level quality of service (QoS) requirements. This paper introduces LMEdge, a QoS-aware orchestration service that dynamically makes these decisions across heterogeneous edge devices. We formulate the problem as a binary integer linear programming (BILP) optimization that minimizes response time under accuracy, network, and resource constraints. To enable scalable online scheduling, we employ five lightweight machine learning (ML) models to predict query-specific latency, accuracy, resource usage, and response size for each model-size-quantization-device combination, and design a lightweight heuristic that approximates the BILP solution. We collect a comprehensive benchmarking dataset of over 59000 rows to train models and support reproducibility. Evaluation on a Kubernetes-based edge testbed with 57 instances and diverse query categories shows that LMEdge reduces latency, preserves accuracy, improves resource utilization, and increases serving ratio compared to two baselines.",
+      "authors": [
+        "Reza Farahani",
+        "Zoha Azimi",
+        "Mario Colosi",
+        "Schahram Dustdar"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-07-19T10:21:30+00:00",
+      "link": "https://arxiv.org/pdf/2607.17175v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "QoS-aware LLM orchestration on edge clusters",
+      "llm_evidence_cn": "边缘集群上QoS感知的LLM编排",
+      "llm_evidence": "边缘集群上QoS感知的LLM编排",
+      "canonical_evidence": "边缘集群上QoS感知的LLM编排",
+      "llm_tldr_en": "LMEdge dynamically selects model configuration and placement for LLM services on heterogeneous edge devices to minimize response time under QoS constraints.",
+      "llm_tldr_cn": "在异构资源受限的边缘设备上高效服务LLM请求需要同时决定模型配置和部署位置。本文提出LMEdge，一个QoS感知的编排服务。将问题建模为二进制整数线性规划，最小化响应时间同时满足精度、网络和资源约束。实验表明LMEdge能有效满足服务质量要求。该工作为边缘智能体系统的模型部署提供了实用方法。",
+      "llm_tldr": "在异构资源受限的边缘设备上高效服务LLM请求需要同时决定模型配置和部署位置。本文提出LMEdge，一个QoS感知的编排服务。将问题建模为二进制整数线性规划，最小化响应时间同时满足精度、网络和资源约束。实验表明LMEdge能有效满足服务质量要求。该工作为边缘智能体系统的模型部署提供了实用方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
