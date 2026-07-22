@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-22",
+  "date": "2026-07-22",
+  "generated_at": "2026-07-22T20:22:17",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/22/2607.18115v1-compositional-semantic-communication-for-physical-ai-category-theory-meets-game-theory",
+      "section": "quick",
+      "title_en": "Compositional Semantic Communication for Physical AI: Category Theory Meets Game Theory",
+      "authors": "Christo Kurisummoottil Thomas, Walid Saad, Emilio Calvanese Strinati",
+      "date": "2026-07-20",
+      "pdf": "https://arxiv.org/pdf/2607.18115v1",
+      "score": "7.0",
+      "evidence": "面向分布式物理AI代理的组合语义通信",
+      "tldr": "物理AI系统中，多传感设备传输原始数据导致高开销和延迟。现有语义通信方法泛化性差、扩展困难。提出组合语义通信框架，用范畴论度量语义组合性、Grothendieck拓扑和预层形式化多设备语义组合，并建模为Stackelberg博弈，ADMM求解均衡。实验表明：带宽降低17%、端到端延迟降低53%、推理精度保持85%。",
+      "tags": "query:eca",
+      "abstract_en": "Physical artificial intelligence (AI) systems involve distributed sensing agents with embedded AI models that must coordinate to perceive, reason, and act in networked environments. Transmitting raw sensor data incurs significant communication overhead, latency, and redundancy. While semantic communication (SC) mitigates these challenges by transmitting task-relevant information, existing deep learning-based joint source-channel coding approaches exhibit limited adaptability, poor out-of-distribution generalization, and scalability challenges. To address these limitations, this paper proposes a framework for compositional semantic communication (CSC), enabling heterogeneous physical AI sources to transmit semantic representations (SRs) that compose meaningfully at a base station (BS) or edge server for remote inference. First, a category-theoretic measure of compositional semantics is developed to quantify each device's contribution to inference tasks beyond mutual information. Second, Grothendieck topologies and presheaves formalize semantic composition across devices, ensuring consistency and task relevance. Building on these foundations, multi-device coordination is formulated as a Stackelberg game in which devices commit to encoding strategies and the BS optimally composes received SRs. An ADMM-based algorithm computes equilibrium signaling strategies. Equilibrium existence is established under mild conditions and is Pareto optimal when compositional information yields increasing collective benefit. Simulation results demonstrate that the proposed approach achieves up to 17% bandwidth reduction and 53% lower end-to-end latency than cooperative multi-agent, distributed gradient descent, and uniform-selection CSC baselines while maintaining 85% inference accuracy across diverse autonomous driving scenarios.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/22/2607.14688v2-mind-cavs-multi-intelligence-negotiation-and-decision-system-for-cavs-based-on-intent-driven-autonomy",
+      "section": "quick",
+      "title_en": "MIND-CAVs: Multi-Intelligence Negotiation and Decision System for CAVs based on Intent-Driven Autonomy",
+      "authors": "Mainak Mondal, Yihang Feng, Yangchao Luo, Song Han",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.14688v2",
+      "score": "6.0",
+      "evidence": "基于意图驱动的联网自动驾驶车辆分布式边缘协商与决策系统",
+      "tldr": "当前自动驾驶车辆作为孤立智能体，仅广播低级运动状态，无法进行意图驱动的全局协调决策。为此提出MIND-CAVs框架，车辆将原始感知抽象为结构化意图表示通过V2X交互，边缘服务器结合学习与规则仲裁冲突意图。在CARLA平台上多车道高速场景测试，相比孤立自动驾驶、先到先得和MARL基线，显著改善机动完成时间，减少不安全接近和不必要的刹车。该工作为联网自动驾驶提供了基于意图的协商决策机制。",
+      "tags": "query:eca",
+      "abstract_en": "Modern autonomous vehicles largely operate as isolated agents: they rely on on-board perception and decision modules and broadcast Basic Safety Messages (BSMs) that expose only low-level kinematic state. While existing cooperative driving frameworks enable limited sensor sharing, they rarely communicate high-level maneuver intentions, and edge computing is primarily used for content delivery rather than decision arbitration. As a result, current connected autonomy lacks a principled mechanism for making globally consistent, intent-aware coordination decisions across vehicles. To address this gap, we propose MIND-CAVs, a Multi-Intelligence Negotiation and Decision framework for connected autonomous vehicles (CAVs) based on intent-driven autonomy. Each vehicle abstracts raw sensor observations into structured intent representations, exchanges them over V2X links, and receives globally consistent coordination plans from roadside edge servers. Edge agents combine learned and rule-based arbitration mechanisms to negotiate conflicting intents among vehicles, while a cloud platform records decisions for auditing and continual retraining. We implement MIND-CAVs in a CARLA-based AI-in-the-loop platform and evaluate it in multi-lane highway scenarios involving conflicting maneuvers and route-constrained exits. Experimental results show improved maneuver completion time and reduced unsafe proximity and unnecessary braking compared with isolated autonomy, first-come-first-served arbitration, and multi-agent reinforcement learning baselines.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
