@@ -1,0 +1,261 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-23T21:08:59.161233+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.19676v1",
+      "source": "arxiv",
+      "title": "Edge Intelligence in Civil Aviation: Paradigms, Techniques, and Applications",
+      "abstract": "Civil aviation is safety critical and its operations, from flight decks and towers to ramps and maintenance, generate massive, heterogeneous data at the network edge. Yet cloud centric deployment of large Artificial Intelligence (AI) models often produces high task latency, lacks offline capability in communication denied environments, and requires centralizing sensitive data, raising privacy and sovereignty risks. Edge AI moves perception, prediction, and decision logic closer to the data producers via compression, collaborative inference, and split learning, thereby reducing latency, bandwidth, and exposure while enabling graceful operation during disconnections. This paper provides a panoramic view and a common understanding of edge intelligence tailored to civil aviation. We firstly articulate the operational motivations for edge AI, and then review recent techniques for edge inference and edge learning. We then introduce the organizational computing paradigms and the respective configurations in civil aviation environments; finally, we describe the emerging applications and the future research trends of edge intelligence in civil aviation. We argue that a refined edge solution can complement cloud foundations to deliver low latency, privacy preserving, and resilient AI services across the civil aviation lifecycle.",
+      "authors": [
+        "Wenbin Li",
+        "Zhongtian Liao",
+        "Bolin Liu",
+        "Yongjie Zhou",
+        "Jingling Wu",
+        "Xiaoyong Lin",
+        "Jing Chen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-22T02:25:46+00:00",
+      "link": "https://arxiv.org/pdf/2607.19676v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Edge AI collaborative inference and split learning for edge-cloud collaboration",
+      "llm_evidence_cn": "边缘AI协同推理和拆分学习用于端云协同",
+      "llm_evidence": "边缘AI协同推理和拆分学习用于端云协同",
+      "canonical_evidence": "边缘AI协同推理和拆分学习用于端云协同",
+      "llm_tldr_en": "Survey on edge intelligence techniques including collaborative inference and split learning for edge-cloud cooperation",
+      "llm_tldr_cn": "该论文全面综述了民用航空领域的边缘智能，针对云中心部署的高延迟、离线能力缺失及隐私风险，提出了将感知和决策推向网络边缘的范式，涵盖压缩、协同推理和拆分学习等技术，以减少延迟和带宽占用，并支持断连时优雅运行。",
+      "llm_tldr": "该论文全面综述了民用航空领域的边缘智能，针对云中心部署的高延迟、离线能力缺失及隐私风险，提出了将感知和决策推向网络边缘的范式，涵盖压缩、协同推理和拆分学习等技术，以减少延迟和带宽占用，并支持断连时优雅运行。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.13474v1",
+      "source": "arxiv",
+      "title": "MyAG: A Graph-Based Framework for Designing and Analyzing Composable LLM Agent Systems",
+      "abstract": "We present MyAG, a graph-based framework for designing and analyzing composable LLM agent systems. Our framework separates agent system construction into three graph abstractions: a component graph for agents, environments, and modules; a workflow graph for execution control; and a search graph for runtime execution. This separation allows users to flexibly reuse the same components with different strategies. We further support hierarchical composition through recursive system nodes and provide monitoring and visualization tools for inspecting agent execution. Experiments on representative agent applications show that our framework supports flexible agent system design and helps analyze performance-efficiency tradeoffs. Our framework is publicly available and fully open-source.",
+      "authors": [
+        "Zhisong Zhang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-07-15T06:03:52+00:00",
+      "link": "https://arxiv.org/pdf/2607.13474v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "graph-based framework for composable LLM agent systems enabling flexible collaboration",
+      "llm_evidence_cn": "基于图的组合式LLM智能体系统框架，支持灵活协作",
+      "llm_evidence": "基于图的组合式LLM智能体系统框架，支持灵活协作",
+      "canonical_evidence": "基于图的组合式LLM智能体系统框架，支持灵活协作",
+      "llm_tldr_en": "MyAG provides a graph-based framework for designing and analyzing composable LLM agent systems, enabling flexible reuse and hierarchical composition.",
+      "llm_tldr_cn": "当前LLM智能体系统设计缺乏统一的抽象和灵活组合机制。本文提出MyAG框架，通过组件图、工作流图和搜索图三层分离，支持模块化智能体系统构建。实验表明该框架能灵活设计代理系统并分析性能效率权衡，为复杂多智能体协作提供基础架构。",
+      "llm_tldr": "当前LLM智能体系统设计缺乏统一的抽象和灵活组合机制。本文提出MyAG框架，通过组件图、工作流图和搜索图三层分离，支持模块化智能体系统构建。实验表明该框架能灵活设计代理系统并分析性能效率权衡，为复杂多智能体协作提供基础架构。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.13705v2",
+      "source": "arxiv",
+      "title": "AgentCompass: A Unified Evaluation Infrastructure for Agent Capabilities",
+      "abstract": "As Large Language Models (LLMs) evolve into autonomous agents, the need for unified evaluation infrastructure becomes critical. However, current evaluation pipelines remain highly fragmented and tightly coupled, hindering reproducibility and causing redundant engineering. To address this, we introduce AgentCompass, an open-source, lightweight, and extensible infrastructure for evaluating LLM-based agents. AgentCompass organizes the evaluation process around three independent components, namely Benchmark, Harness, and Environment, thereby enabling flexible configurations without requiring the reimplementation of complex execution logic. Furthermore, it features a fault-tolerant asynchronous runtime and comprehensive trajectory analysis tools to transparently diagnose nuanced failure modes like reward-hacking. Natively supporting over 20 benchmarks across five capability dimensions, AgentCompass provides the community with a scalable and reproducible infrastructure for advancing agent research.",
+      "authors": [
+        "Kai Chen",
+        "Zichen Ding",
+        "Jiaye Ge",
+        "Shufan Jiang",
+        "Mo Li",
+        "Qingqiu Li",
+        "Zehao Li",
+        "Zonglin Li",
+        "Tiaohao Liang",
+        "Shudong Liu",
+        "Zerun Ma",
+        "Zixing Shang",
+        "Wenhui Tian",
+        "Zun Wang",
+        "Liwei Wu",
+        "Zhenyu Wu",
+        "Jun Xu",
+        "Bowen Yang",
+        "Dingbo Yuan",
+        "Qi Zhang",
+        "Songyang Zhang",
+        "Peiheng Zhou",
+        "Dongsheng Zhu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-07-15T11:11:17+00:00",
+      "link": "https://arxiv.org/pdf/2607.13705v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "unified evaluation infrastructure for LLM agents applicable to edge cloud agent systems",
+      "llm_evidence_cn": "统一评估基础设施，可应用于端云协同智能体系统",
+      "llm_evidence": "统一评估基础设施，可应用于端云协同智能体系统",
+      "canonical_evidence": "统一评估基础设施，可应用于端云协同智能体系统",
+      "llm_tldr_en": "AgentCompass: an open-source, extensible evaluation infrastructure for LLM-based agents, enabling flexible configurations and trajectory analysis.",
+      "llm_tldr_cn": "LLM智能体评估流程碎片化且耦合度高。本文提出AgentCompass开源框架，将评估解耦为基准、测试框架和环境三部分，支持异步运行时和轨迹分析。该基础设施可服务于端云协同智能体的评估需求，促进可重复性和效率。",
+      "llm_tldr": "LLM智能体评估流程碎片化且耦合度高。本文提出AgentCompass开源框架，将评估解耦为基准、测试框架和环境三部分，支持异步运行时和轨迹分析。该基础设施可服务于端云协同智能体的评估需求，促进可重复性和效率。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.18649v1",
+      "source": "arxiv",
+      "title": "Distributed Edge Learning under Imperfect Data Sensing",
+      "abstract": "Distributed learning systems typically assume that local data is already available at clients with fixed quality, while in practice, data is sensed through imperfect physical processes whose quality depends on modality, resolution, sensing power, and sample size. We model sensing noise as a structured, modality-dependent covariance and derive a non-convex learning convergence bound whose irreducible sensing floor is governed by the alignment between the modality noise covariance and the loss-sensitivity geometry. Thus, the optimal modality minimizes this noise-gradient alignment rather than total noise power alone. The analysis further yields a sensor-hardware achievability bound for epsilon-stationarity and a hardware-saturation threshold on the accumulated dataset size. We jointly optimize modality, resolution, power, and sample count and demonstrate the performance gain through simulations.",
+      "authors": [
+        "Mehdi Karbalayghareh",
+        "David J. Love",
+        "Christopher G. Brinton"
+      ],
+      "primary_category": "cs.IT",
+      "categories": [
+        "cs.IT",
+        "eess.SP"
+      ],
+      "published": "2026-07-21T02:40:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.18649v1",
+      "tags": [
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "distributed edge learning under sensing imperfections applicable to edge cloud agent data handling",
+      "llm_evidence_cn": "不完美感知下的分布式边缘学习，适用于边缘云智能体数据处理",
+      "llm_evidence": "不完美感知下的分布式边缘学习，适用于边缘云智能体数据处理",
+      "canonical_evidence": "不完美感知下的分布式边缘学习，适用于边缘云智能体数据处理",
+      "llm_tldr_en": "Distributed edge learning under imperfect data sensing: models noise as structured covariance and derives convergence bounds, relevant for edge agent perception.",
+      "llm_tldr_cn": "分布式学习系统通常假设本地数据质量固定，但实际感知数据受硬件影响。本文建模感知噪声为结构化协方差，推导非凸收敛界，指出最优模态选择应最小化噪声-梯度对齐而非总噪声。该理论为边缘云智能体系统的数据采集和处理提供优化指导。",
+      "llm_tldr": "分布式学习系统通常假设本地数据质量固定，但实际感知数据受硬件影响。本文建模感知噪声为结构化协方差，推导非凸收敛界，指出最优模态选择应最小化噪声-梯度对齐而非总噪声。该理论为边缘云智能体系统的数据采集和处理提供优化指导。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.18806v1",
+      "source": "arxiv",
+      "title": "AI Tour Meeting: Group Travel Planning by LLM Agents",
+      "abstract": "This paper proposes AI Tour Meeting, a group travel planning framework powered by multiple Large Language Model (LLM)-based agents. The agents are instantiated with distinct personas and collaboratively seek an itinerary that satisfies their constraints and preferences through natural language discussion. The framework enables easy and flexible orchestration of such discussions by providing interfaces for configuring agent personas, discussion workflows, monitoring, and LLM deployment. Its primary use case is a simulation tool for analyzing the behavior of multiple LLM agents during tour planning discussions. This paper demonstrates the utility of the framework by presenting system validation and several analytical results obtained by the framework.",
+      "authors": [
+        "Daisuke Kikuta"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.MA"
+      ],
+      "published": "2026-07-21T07:36:46+00:00",
+      "link": "https://arxiv.org/pdf/2607.18806v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent collaboration framework for group travel planning",
+      "llm_evidence_cn": "多智能体协作框架用于团体旅行规划",
+      "llm_evidence": "多智能体协作框架用于团体旅行规划",
+      "canonical_evidence": "多智能体协作框架用于团体旅行规划",
+      "llm_tldr_en": "Proposes a multi-LLM-agent framework for collaborative travel planning through natural language discussion",
+      "llm_tldr_cn": "该论文提出了AI Tour Meeting框架，使用多个带有不同人格的LLM智能体通过自然语言讨论协作规划旅行日程，提供配置界面和监控工具，主要用于模拟和分析多智能体讨论行为。",
+      "llm_tldr": "该论文提出了AI Tour Meeting框架，使用多个带有不同人格的LLM智能体通过自然语言讨论协作规划旅行日程，提供配置界面和监控工具，主要用于模拟和分析多智能体讨论行为。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.19215v1",
+      "source": "arxiv",
+      "title": "HACO: Hedged Agent Computing for Reliable LLM Systems",
+      "abstract": "As large language model (LLM) agents move from isolated prompting to longhorizon workflows, failures increasingly arise at the role-to-instance binding boundary, where task-specific role requests must be assigned to concrete agent instances under current service, network, and query conditions. Existing agent system research has improved role specialization, workflow topology, memory, and tool use, but often assumes a fixed stable execution environment. This assumption limits deployed reliability, because the same role request can exhibit different latency, failure probability, and output quality across agent instances operating under different service regions and network conditions. We propose Hedged Agent Computing (HACO), a runtime control scheme that treats each role request as a reliability-constrained selection problem over candidate agent instances, each coupling a role type, an LLM, and a concrete execution environment. Different from routing, HACO adaptively selects a hedge set of candidates for each invocation. Its allocation rule combines optimistic ranking, which prioritizes candidates with high estimated quality, reliability, and informative uncertainty, with conservative reliability accumulation, which stops selection only after the hedge set reaches a target success probability. Through experience harvesting, HACO updates candidate and link profiles from all executed candidate traces, including quality, success, latency, and network statistics. Experiments on various benchmarks, together with runtime degradation studies, show that HACO improves robustness and output quality under changing deployment conditions, while using lower token and latency cost than exhaustive parallel execution.",
+      "authors": [
+        "Enhan Li",
+        "Hongyang Du"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-07-21T15:47:35+00:00",
+      "link": "https://arxiv.org/pdf/2607.19215v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "runtime control for agent reliability across network conditions, relevant to distributed agent systems",
+      "llm_evidence_cn": "针对不同网络条件下代理可靠性的运行时控制，适用于分布式代理系统",
+      "llm_evidence": "针对不同网络条件下代理可靠性的运行时控制，适用于分布式代理系统",
+      "canonical_evidence": "针对不同网络条件下代理可靠性的运行时控制，适用于分布式代理系统",
+      "llm_tldr_en": "Proposes Hedged Agent Computing (HACO) to handle role-to-instance binding failures in LLM agent systems under varying service and network conditions, enabling reliable distributed agent execution.",
+      "llm_tldr_cn": "现有LLM代理系统假设固定执行环境，在实际部署中因不同服务区域和网络条件导致可靠性问题。本文提出对冲代理计算（HACO），一种运行时控制方案，通过动态选择最优代理实例来应对变化。实验表明HACO可显著降低延迟和失败率。该方法可直接应用于分布式边缘云代理架构中提升可靠性。",
+      "llm_tldr": "现有LLM代理系统假设固定执行环境，在实际部署中因不同服务区域和网络条件导致可靠性问题。本文提出对冲代理计算（HACO），一种运行时控制方案，通过动态选择最优代理实例来应对变化。实验表明HACO可显著降低延迟和失败率。该方法可直接应用于分布式边缘云代理架构中提升可靠性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

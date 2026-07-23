@@ -6,27 +6,41 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-22
-- 运行时间：2026-07-22 20:22:11 UTC
+- 最新运行日期：2026-07-23
+- 运行时间：2026-07-23 21:11:27 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：6
 - 精读区：0
-- 速读区：2
+- 速读区：6
 
 ### 今日简报（AI）
-今天关注了两篇前沿论文，分别探讨物理AI的组合语义通信与CAVs多智能体协商。最值得关注的方向是范畴论与博弈论融合的语义通信框架，以及意图驱动自动驾驶决策系统。普通读者可进一步了解语义通信与多智能体协作的交叉点，以及意图驱动在CAVs中的落地潜力。
-- 详情：[/202607/22/README](/202607/22/README)
+今日速读6篇论文，覆盖边缘智能、图式LLM Agent系统及Agent能力评估三大方向。
+其中《Edge Intelligence in Civil Aviation》得分最高（7.0/10），聚焦民航场景的AI边缘计算范式与落地潜力。
+建议优先阅读该高分论文，再结合《MyAG》与《AgentCompass》了解Agent系统的设计与评测方法。
+- 详情：[/202607/23/README](/202607/23/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Compositional Semantic Communication for Physical AI: Category Theory Meets Game Theory](/202607/22/2607.18115v1-compositional-semantic-communication-for-physical-ai-category-theory-meets-game-theory)  
+1. [Edge Intelligence in Civil Aviation: Paradigms, Techniques, and Applications](/202607/23/2607.19676v1-edge-intelligence-in-civil-aviation-paradigms-techniques-and-applications)  
    标签：评分：7.0/10、query:eca
-   evidence：面向分布式物理AI代理的组合语义通信
-2. [MIND-CAVs: Multi-Intelligence Negotiation and Decision System for CAVs based on Intent-Driven Autonomy](/202607/22/2607.14688v2-mind-cavs-multi-intelligence-negotiation-and-decision-system-for-cavs-based-on-intent-driven-autonomy)  
+   evidence：边缘AI协同推理和拆分学习用于端云协同
+2. [MyAG: A Graph-Based Framework for Designing and Analyzing Composable LLM Agent Systems](/202607/23/2607.13474v1-myag-a-graph-based-framework-for-designing-and-analyzing-composable-llm-agent-systems)  
    标签：评分：6.0/10、query:eca
-   evidence：基于意图驱动的联网自动驾驶车辆分布式边缘协商与决策系统
+   evidence：基于图的组合式LLM智能体系统框架，支持灵活协作
+3. [AgentCompass: A Unified Evaluation Infrastructure for Agent Capabilities](/202607/23/2607.13705v2-agentcompass-a-unified-evaluation-infrastructure-for-agent-capabilities)  
+   标签：评分：6.0/10、query:eca
+   evidence：统一评估基础设施，可应用于端云协同智能体系统
+4. [Distributed Edge Learning under Imperfect Data Sensing](/202607/23/2607.18649v1-distributed-edge-learning-under-imperfect-data-sensing)  
+   标签：评分：6.0/10、query:eca
+   evidence：不完美感知下的分布式边缘学习，适用于边缘云智能体数据处理
+5. [AI Tour Meeting: Group Travel Planning by LLM Agents](/202607/23/2607.18806v1-ai-tour-meeting-group-travel-planning-by-llm-agents)  
+   标签：评分：6.0/10、query:eca
+   evidence：多智能体协作框架用于团体旅行规划
+6. [HACO: Hedged Agent Computing for Reliable LLM Systems](/202607/23/2607.19215v1-haco-hedged-agent-computing-for-reliable-llm-systems)  
+   标签：评分：6.0/10、query:eca
+   evidence：针对不同网络条件下代理可靠性的运行时控制，适用于分布式代理系统
 
 
 <div class="dpr-home-promo-card">
