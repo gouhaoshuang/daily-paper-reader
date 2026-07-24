@@ -1,0 +1,294 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-24T20:39:05.301804+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2607.21361v1",
+      "source": "arxiv",
+      "title": "FedAgentKE: Federated Semantic Knowledge Evolution for Heterogeneous Agents",
+      "abstract": "Large language model (LLM)-based agents increasingly rely on reasoning, tool use, and iterative execution, yet existing agent frameworks still operate largely in isolation. While recent memory-based agent systems improve individual agents through local retrieval and workflow reuse, local experiences remain fragmented across isolated agent frameworks, limiting cross-framework knowledge transfer and collaborative reasoning evolution. We propose FedAgentKE, a lightweight framework for Federated Semantic Knowledge Evolution across heterogeneous agents. FedAgentKE enables distributed agent frameworks to collaboratively evolve transferable reasoning abstractions through iterative semantic knowledge distillation, aggregation, and adaptation without sharing raw reasoning trajectories. Experiments demonstrate consistent improvements under both cross-framework and cross-task settings, highlighting the potential of federated semantic knowledge evolution for future collaborative agent ecosystems.",
+      "authors": [
+        "Weihao Li",
+        "Jun Bai",
+        "Ziyang Song"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-23T14:24:02+00:00",
+      "link": "https://arxiv.org/pdf/2607.21361v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "federated knowledge evolution for heterogeneous distributed agents",
+      "llm_evidence_cn": "异构分布式智能体的联邦知识演化",
+      "llm_evidence": "异构分布式智能体的联邦知识演化",
+      "canonical_evidence": "异构分布式智能体的联邦知识演化",
+      "llm_tldr_en": "Proposes FedAgentKE, a lightweight framework for federated semantic knowledge evolution across heterogeneous agent frameworks, enabling collaborative reasoning without sharing raw data.",
+      "llm_tldr_cn": "现有智能体框架各自为政，本地经验难以跨框架共享。本文提出FedAgentKE，一个轻量级联邦语义知识演化框架，使异构分布式智能体通过迭代知识蒸馏、聚合和适应，协同演化可迁移的推理抽象。该方法无需共享原始数据，保护隐私，为端云协同的分布式智能体知识共享提供了有效方案。实验表明知识演化提升了跨框架任务性能。",
+      "llm_tldr": "现有智能体框架各自为政，本地经验难以跨框架共享。本文提出FedAgentKE，一个轻量级联邦语义知识演化框架，使异构分布式智能体通过迭代知识蒸馏、聚合和适应，协同演化可迁移的推理抽象。该方法无需共享原始数据，保护隐私，为端云协同的分布式智能体知识共享提供了有效方案。实验表明知识演化提升了跨框架任务性能。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.16133v1",
+      "source": "arxiv",
+      "title": "When Do Multi-Agent Systems Help? An Information Bottleneck Perspective",
+      "abstract": "LLM powered multi-agent systems (MAS) have emerged as a promising paradigm for complex tasks. However, their advantages over single-agent systems (SAS) remain unclear, with performance varying inconsistently across settings. Here, we provide an information bottleneck perspective on elucidating the differences between MAS and SAS. Specifically, our key observation is that a SAS accumulates its full reasoning trace in one shared context, while a MAS uses isolated local contexts connected by bounded relay messages. We show that, under infinite relay bandwidth, any SAS can be simulated by a MAS that transmits the full upstream context. Thus, the nontrivial advantage of MAS arises under bounded relays, where compression introduces a fundamental trade-off: reducing redundant context can improve efficiency, but may also incur loss of task-relevant information. We formalize this trade-off as an information bottleneck controlled by an effective parameter $β$, which captures how the balance shifts with model capability, and shows that MAS gains arise when context reduction outweighs relay information loss. We conduct 18 controlled experiments across five benchmarks and three model scales to validate our theoretical studies. We observe that MAS consistently helps when relays are near-sufficient, especially for weaker models. In contrast, MAS gains shrink or reverse when relays incur information loss, especially for stronger models that can already extract useful information from redundant context and thus gain little from compression. Our study shows that multi-agent design is fundamentally an information-bottleneck optimization problem. This perspective explains when bounded inter-agent communication helps or hurts.",
+      "authors": [
+        "Wendi Yu",
+        "Lianhao Zhou",
+        "Xiangjue Dong",
+        "Sai Sudarshan Barath",
+        "Declan Staunton",
+        "Byung-Jun Yoon",
+        "Xiaoning Qian",
+        "James Caverlee",
+        "Shuiwang Ji"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-17T17:13:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.16133v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent systems collaboration bounded relay",
+      "llm_evidence_cn": "多智能体系统协作与有界中继",
+      "llm_evidence": "多智能体系统协作与有界中继",
+      "canonical_evidence": "多智能体系统协作与有界中继",
+      "llm_tldr_en": "Explores when multi-agent systems outperform single-agent systems using an information bottleneck perspective, showing advantage under bounded relay bandwidth.",
+      "llm_tldr_cn": "当前多智能体系统与单智能体系统的性能差异尚不明确。本文从信息瓶颈角度出发，发现多智能体系统通过有界中继消息实现孤立上下文连接，在有限带宽下展现优势。理论分析揭示了压缩带来的基本权衡，为理解何时采用多智能体系统提供了指导。该方法对于端云协同等协作场景具有启发意义。",
+      "llm_tldr": "当前多智能体系统与单智能体系统的性能差异尚不明确。本文从信息瓶颈角度出发，发现多智能体系统通过有界中继消息实现孤立上下文连接，在有限带宽下展现优势。理论分析揭示了压缩带来的基本权衡，为理解何时采用多智能体系统提供了指导。该方法对于端云协同等协作场景具有启发意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.19555v1",
+      "source": "arxiv",
+      "title": "CHMAS: A Coupled Hierarchical Framework for Multi-Agent Reinforcement Learning",
+      "abstract": "Multi-agent reinforcement learning (MARL) systems face fundamental   challenges in balancing global coordination with local execution   across different temporal scales. This paper introduces the Coupled   Hierarchical Multi-Agent System (CHMAS), a novel framework that   decomposes multi-agent decision-making into centralized strategic   planning and distributed tactical execution with bidirectional   information flow. The strategic layer integrates all agents' states   with an exclusive global environmental state to generate guidance   actions every $T$ timesteps, while tactical agents execute   distributed policies augmented by strategic guidance and local   neighborhood observations. Unlike existing hierarchical approaches   with unidirectional control, CHMAS establishes a feedback mechanism   where accumulated tactical rewards influence strategic objectives   through a coupling coefficient $λ$, ensuring strategic plans   remain grounded in tactical feasibility. To address the   non-stationarity inherent in hierarchical learning, we propose an   asynchronous update protocol where strategic parameters update every   $N_f$ tactical episodes, allowing tactical policies to converge to   quasi-stationary points between strategic changes. We present both a   general bi-level formulation capturing full system dynamics and a   tractable additive approximation enabling rigorous analysis.   Theoretical analysis proves that this asynchronous scheme achieves   $\\mathcal{O}(\\log K/\\sqrt{K})$ convergence for the strategic layer   after $K$ strategic updates under standard assumptions. Experimental   validation in a multi-agent foraging domain demonstrates successful   learning of spatially partitioned exploration strategies, with both   layers converging stably despite hierarchical coupling.",
+      "authors": [
+        "Dongming Wang",
+        "Jie Xu",
+        "Yanyu Zhang",
+        "Wei Ren"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-21T20:22:40+00:00",
+      "link": "https://arxiv.org/pdf/2607.19555v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Coupled hierarchical multi-agent framework with global strategic and distributed tactical execution",
+      "llm_evidence_cn": "耦合分层多智能体框架，全局策略与分布式战术执行",
+      "llm_evidence": "耦合分层多智能体框架，全局策略与分布式战术执行",
+      "canonical_evidence": "耦合分层多智能体框架，全局策略与分布式战术执行",
+      "llm_tldr_en": "CHMAS introduces a coupled hierarchical multi-agent system that decomposes decision-making into centralized strategic planning and distributed tactical execution with bidirectional information flow, relevant to distributed edge-cloud agent architecture.",
+      "llm_tldr_cn": "多智能体强化学习在全局协调与局部执行间面临挑战，本文提出耦合分层多智能体系统（CHMAS），将决策分解为集中式策略规划与分布式战术执行，并建立双向信息流。策略层整合所有智能体状态生成全局指导，战术层结合局部观测与指导执行分布式策略。该架构为分布式边缘云智能体系统提供了可借鉴的协同范式。",
+      "llm_tldr": "多智能体强化学习在全局协调与局部执行间面临挑战，本文提出耦合分层多智能体系统（CHMAS），将决策分解为集中式策略规划与分布式战术执行，并建立双向信息流。策略层整合所有智能体状态生成全局指导，战术层结合局部观测与指导执行分布式策略。该架构为分布式边缘云智能体系统提供了可借鉴的协同范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.17311v1",
+      "source": "arxiv",
+      "title": "The Optimization Trilemma: Efficiency, Comfort and Fairness in Decentralized Multi-agent Coordination",
+      "abstract": "The problem of fair multi-agent coordination in decentralized settings is one of the most pressing challenges for building efficient collaborative systems. Resource allocation is based on optimized collective arrangements accounting for agents' needs. Such coordination should not only be computationally efficient but also account for fairness, i.e., equitable redistribution of costs incurred by all agents. Recent literature has proposed several algorithms that efficiently determine optimal plan combinations balancing system-wide efficiency and individual discomfort of agents in a centralized setting. However, these works do not address equitable resource optimization in fully decentralized scenarios, specifically, the optimized redistribution of discomfort among coordinating agents so that none experiences a discomfort level that could lead to loss of incentive or polarization that can disrupt planned operations. In this work, we study the problem of optimizing three objectives: (i) system-wide efficiency, (ii) individuals' comfort and (iii) fairness (i.e., balancing of incurred discomfort costs) in decentralized multi-agent coordination. We design a novel model to optimize those three orthogonal objectives, without any substantial increase in communication and computational overhead. Through experiments on two real-world datasets, we validate the model and demonstrate that it can achieve fairer optimization outcomes, while satisfying agents' preferences and system goals.",
+      "authors": [
+        "Jovan Nikolic",
+        "Maciej Krzysztof Zuziak",
+        "Evangelos Pournaras"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI",
+        "cs.CY",
+        "cs.DC",
+        "eess.SY"
+      ],
+      "published": "2026-07-19T15:51:33+00:00",
+      "link": "https://arxiv.org/pdf/2607.17311v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "decentralized multi-agent coordination with fairness",
+      "llm_evidence_cn": "去中心化多智能体协调与公平性",
+      "llm_evidence": "去中心化多智能体协调与公平性",
+      "canonical_evidence": "去中心化多智能体协调与公平性",
+      "llm_tldr_en": "Addresses the optimization trilemma of efficiency, comfort, and fairness in decentralized multi-agent coordination, proposing algorithms for equitable resource optimization.",
+      "llm_tldr_cn": "去中心化多智能体协调中，效率、舒适度和公平性三者难以兼顾。本文提出优化三难问题，并探讨在完全去中心化场景下公平资源优化的算法。该工作为分布式边缘云智能体系统中的资源分配和协作决策提供了理论基础，有助于平衡系统效率与个体公平。",
+      "llm_tldr": "去中心化多智能体协调中，效率、舒适度和公平性三者难以兼顾。本文提出优化三难问题，并探讨在完全去中心化场景下公平资源优化的算法。该工作为分布式边缘云智能体系统中的资源分配和协作决策提供了理论基础，有助于平衡系统效率与个体公平。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.20734v1",
+      "source": "arxiv",
+      "title": "LLMs Get Lost in Evolving User Intent",
+      "abstract": "As LLMs become more capable, they are increasingly deployed as collaborative agents, taking on user-delegated tasks through iterative interaction. Yet genuine interaction is inherently dynamic: users rarely specify their intent upfront, instead disclosing, revising, and reshaping it as the conversation unfolds. Despite this, LLMs are still predominantly evaluated or trained in single-turn, fully-specified settings, leaving open a fundamental question: how well do LLMs track and act on user intent as it evolves over the course of a conversation? To study this, we introduce a framework that transforms static, single-turn tasks into dynamic multi-turn conversations in which the user's intent evolves across turns--incrementally revealed, revised, and at times redirected mid-conversation--while preserving each task's original evaluation protocol, enabling existing benchmarks to be reused as controlled testbeds without new annotation. Across multiple tasks, we surface a consistent phenomenon: strong static-setting performance does not transfer to the evolving-intent setting, with substantial drops across model families. Our findings point to a fundamental gap: today's LLMs do not yet faithfully track and act on the user's evolving intent, a capability invisible to static evaluation yet critical for future collaborative agents.",
+      "authors": [
+        "Jihoon Tack",
+        "Philippe Laban",
+        "Jennifer Neville"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-22T21:14:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.20734v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "collaborative agents adapting to evolving user intent",
+      "llm_evidence_cn": "协作代理适应动态演变的用户意图",
+      "llm_evidence": "协作代理适应动态演变的用户意图",
+      "canonical_evidence": "协作代理适应动态演变的用户意图",
+      "llm_tldr_en": "LLMs Get Lost in Evolving User Intent studies how LLM agents handle dynamic multi-turn conversations where user intent incrementally changes, revealing significant failures and proposing a framework for evaluation.",
+      "llm_tldr_cn": "本文研究LLM作为协作代理在动态多轮对话中跟踪用户意图的能力，用户意图会逐步揭示、修正甚至转向。通过将静态任务转化为动态对话框架，实验发现当前LLM在意图演变时表现不佳，揭示了训练与评估中缺乏动态建模的问题，对构建真正交互式代理具有重要启示。",
+      "llm_tldr": "本文研究LLM作为协作代理在动态多轮对话中跟踪用户意图的能力，用户意图会逐步揭示、修正甚至转向。通过将静态任务转化为动态对话框架，实验发现当前LLM在意图演变时表现不佳，揭示了训练与评估中缺乏动态建模的问题，对构建真正交互式代理具有重要启示。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.21019v1",
+      "source": "arxiv",
+      "title": "HiMe: Real-Time Self-Hosted Personal Agent Platform for Health Insights with Wearable Devices",
+      "abstract": "Traditional approaches to wearable health signal analysis, such as smartwatches, are constrained by rigid analytical frameworks and limited personalisation. The emergence of LLM agents creates a new opportunity for Personal Health Agentic Analysis, where health insights can be generated adaptively and in context. However, currently there is no open-source locally deployable platform capable of processing personal health data in real time while preserving privacy. We present HiMe, a locally deployable, privacy-first agent platform that is fully compatible with real-time health data ecosystems across a wide range of wearable devices. HiMe is guided by three design principles. The database is treated as a first-class component. Effectiveness and efficiency are jointly optimised to achieve a low-cost Pareto-optimal balance. Data are processed in real time while the user is modelled over the long term. Together, these principles make it practical for individuals to harness Personal Health Agents for continuous, personalised health monitoring for better wellbeing.",
+      "authors": [
+        "Wei Liu",
+        "Siya Qi",
+        "Linhai Zhang",
+        "Lorainne Tudor Car",
+        "Yulan He"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.HC",
+        "cs.MA",
+        "cs.SE"
+      ],
+      "published": "2026-07-23T08:05:21+00:00",
+      "link": "https://arxiv.org/pdf/2607.21019v1",
+      "tags": [
+        "keyword:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "self-hosted personal agent platform for wearable health with local deployment",
+      "llm_evidence_cn": "本地部署的可穿戴健康个人智能体平台",
+      "llm_evidence": "本地部署的可穿戴健康个人智能体平台",
+      "canonical_evidence": "本地部署的可穿戴健康个人智能体平台",
+      "llm_tldr_en": "HiMe is a locally deployable, privacy-first personal agent platform for real-time health insights from wearable devices, treating the database as a first-class component.",
+      "llm_tldr_cn": "可穿戴设备健康信号分析受限于刚性框架和缺乏个性化。HiMe是一个本地可部署、隐私优先的智能体平台，兼容多种可穿戴设备，实时处理健康数据。其设计将数据库作为一等公民，在保护隐私的同时提供自适应、上下文相关的健康洞察。该工作展示了移动AI智能体在边缘设备上的实际应用范例。",
+      "llm_tldr": "可穿戴设备健康信号分析受限于刚性框架和缺乏个性化。HiMe是一个本地可部署、隐私优先的智能体平台，兼容多种可穿戴设备，实时处理健康数据。其设计将数据库作为一等公民，在保护隐私的同时提供自适应、上下文相关的健康洞察。该工作展示了移动AI智能体在边缘设备上的实际应用范例。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.21189v1",
+      "source": "arxiv",
+      "title": "GLP: A Grassroots, Multiagent, Concurrent, Logic Programming Language for AI",
+      "abstract": "A grassroots platform is a multiagent distributed system in which multiple independent instances can form and operate independently of each other and of any global resource, yet may coalesce into ever larger instances, possibly resulting in a single global instance.  Grassroots platforms aim to offer an egalitarian/democratic alternative to  centralised/autocratic and decentralised/plutocratic global platforms.   Here, we present Grassroots Logic Programs (GLP), a multiagent concurrent logic programming language designed for the implementation of grassroots platforms:  we recall the standard operational semantics of logic programs; introduce the concurrent operational semantics of   GLP as its restriction; recall multiagent atomic transactions; use them to introduce a multiagent operational semantics of GLP; and prove multiagent GLP to be grassroots. The grassroots social graph—the foundational grassroots platform on which all others are based—serves as a GLP programming example.",
+      "authors": [
+        "Ehud Shapiro"
+      ],
+      "primary_category": "cs.PL",
+      "categories": [
+        "cs.PL",
+        "cs.DC",
+        "cs.LO",
+        "cs.MA"
+      ],
+      "published": "2026-07-23T11:16:12+00:00",
+      "link": "https://arxiv.org/pdf/2607.21189v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "grassroots multiagent concurrent logic programming language",
+      "llm_evidence_cn": "草根多智能体并发逻辑编程语言",
+      "llm_evidence": "草根多智能体并发逻辑编程语言",
+      "canonical_evidence": "草根多智能体并发逻辑编程语言",
+      "llm_tldr_en": "Presents GLP, a grassroots multiagent concurrent logic programming language for implementing decentralized multiagent platforms with independent operation and coalescence.",
+      "llm_tldr_cn": "草根平台是一种去中心化的多智能体系统，允许独立实例自由合并。本文提出草根逻辑程序（GLP），一种专为草根平台设计的多智能体并发逻辑编程语言，定义了并发操作语义和多智能体原子事务。GLP支持构建真正去中心化、民主化的全局协作智能体系统，对于分布式边缘云架构具有启发意义。",
+      "llm_tldr": "草根平台是一种去中心化的多智能体系统，允许独立实例自由合并。本文提出草根逻辑程序（GLP），一种专为草根平台设计的多智能体并发逻辑编程语言，定义了并发操作语义和多智能体原子事务。GLP支持构建真正去中心化、民主化的全局协作智能体系统，对于分布式边缘云架构具有启发意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

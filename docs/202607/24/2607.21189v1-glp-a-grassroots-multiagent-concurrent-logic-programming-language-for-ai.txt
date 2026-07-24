@@ -1,0 +1,358 @@
+Title: GLP: A Grassroots, Multiagent, Concurrent, Logic Programming Language for AI
+
+URL Source: https://arxiv.org/pdf/2607.21189v1
+
+Published Time: Fri, 24 Jul 2026 00:49:27 GMT
+
+Number of Pages: 15
+
+Markdown Content:
+> W. Faber, L. Giordano, R. Rocha, V. Santos Costa (Eds.): 42nd International Conference on Logic Programming (ICLP 2026) EPTCS 450, 2026, pp. 119–133, doi:10.4204/EPTCS.450.11 © Shapiro This work is licensed under the Creative Commons Attribution License.
+
+# GLP: A Grassroots, Multiagent, Concurrent, Logic Programming Language for AI 
+
+## Ehud Shapiro 
+
+> London School of Economics and Weizmann Institute of Science
+
+A grassroots platform is a multiagent distributed system in which multiple independent instances can form and operate independently of each other and of any global resource, yet may coalesce into ever larger instances, possibly resulting in a single global instance. Grassroots platforms aim to offer an egalitarian/democratic alternative to centralised/autocratic and decentralised/plutocratic global platforms. Here, we present Grassroots Logic Programs (GLP), a multiagent concurrent logic programming language designed for the implementation of grassroots platforms: we recall the standard operational semantics of logic programs; introduce the concurrent operational semantics of GLP as its restriction; recall multiagent atomic transactions; use them to introduce a multiagent operational semantics of GLP; and prove multiagent GLP to be grassroots. These mathematical foundations are being used by AI to implement GLP as well as to program in GLP: a workstation-based implementation of concurrent GLP in Dart was derived from the con-current operational semantics of GLP; a multiagent smartphone-based implementation of GLP in Dart/Flutter is being developed based on the multiagent operational semantics of GLP; a moded type system for GLP was designed to facilitate collaborative human-AI development of GLP programs; GLP implementations of grassroots platforms for the social graph, social networks, currencies and bonds have been derived by AI from mathematical specifications. While concurrent logic programming and its powerful programming techniques have been known for four decades, adoption has been hampered by their inaccessibility to the average programmer. With AI as a hyper-programmer, this limitation is removed and the abstract nature and expressive power of concurrent logic programming can be put into effective use. 
+
+Keywords: concurrent logic programming, grassroots platforms, operational semantics, multiagent transition systems, AI programming 
+
+# 1 Introduction 
+
+Grassroots. Grassroots platforms aim to offer an egalitarian and democratic alternative to centralised and autocratic (Facebook) and decentralised and plutocratic (Bitcoin) global platforms [38]. A digital platform is grassroots [35, 42] if it can have multiple instances that can ( i) operate independently of each other and of any global resource other than the network, and ( ii ) coalesce into ever larger instances, possi-bly resulting in a single global instance. A grassroots platform aims to operate solely on the smartphones of its participants. Specifications of grassroots platforms that have been provided and proven grassroots include the grassroots social graph [36, 42] — the infrastructure platform on which all others build — grassroots social networks [36, 40], grassroots cryptocurrencies and bonds [37, 17, 41], and grassroots feder-ations [52, 10]; the unifying formal framework being volitional multiagent atomic transactions [19]. Working GLP implementations of the social graph (this paper), child-safe social networks [40], grass-roots cryptocurrencies and bonds [41], and secure recovery from major faults [7] have been derived by AI from these specifications. The Scuttlebutt protocol and social network [14] is perhaps the sole example of a deployed grassroots platform to date. 120 Grassroots Logic Programs 
+
+Grassroots Logic Programs. Here, we present Grassroots Logic Programs (GLP), a multiagent, con-current, logic programming language, designed for the implementation of grassroots platforms. Syntac-tically, GLP extends Logic Programs (LP) [22] with: 1. Readers: Each logic variable X (now referred to as writer ) is paired with a reader X ?, which is assigned a value only once its paired writer X is assigned that value; 2. Single-Occurrence (SO): A variable may occur at most once in a goal or a clause; and 3. Single-Reader Single-Writer (SRSW): A writer occurs in a clause iff its paired reader does. The result eschews unification for simple term matching, and conjures both linear logic [9] and fu-tures/promises [2, 8]: An assignment to a variable may be produced at most once, via the sole occurrence of a writer (promise), and consumed at most once, via the sole occurrence of its paired reader (future). Hence, in a multiagent distributed implementation, if a writer and its paired reader are held by dif-ferent agents, an assignment to the writer is realised as a single message from the writer-holding agent to the reader-holding agent. The source of all the powerful concurrent logic programming techniques is that such a message may, in turn, contain further readers and writers, enabling the concise expression of rich multidirectional communication modalities. In the simplest case, a reader sent in a message keeps the channel open for further messages from the sender (streaming); a writer sent in a message allows the receiver to reply. More generally, variables in a message paired with variables held by third agents can be used for arbitrary network reconfiguration (e.g. friend-mediated introduction, example below). 
+
+Semantics. The operational semantics of GLP is presented in two stages: First, we present the concurrent operational semantics of GLP (cGLP), an interleaving-based concurrent (single-agent) semantics defined as a restriction of standard LP semantics, preserving computation-as-deduction [15]. Second, we present multiagent transition systems and their specification via multiagent atomic trans-actions, and use them to define the multiagent operational semantics of GLP (maGLP), with (1) Commu-nication: Named agents that operate independently while communicating to remote readers assignments made to paired local writers; (2) Cold-calls: A means for sending a term with variables to a named agent while retaining their paired variables locally. Cold-calls allow two agents in disconnected components of the social graph to become the owners of paired logic variables. We illustrate maGLP via the grassroots social graph, in which agents may initiate friendships (bidirectional communication channels) via “cold-calls” as well as introduce mutual friends to each other. Lastly, we recall the definition of grassroots platforms and how to prove that a platform specified via atomic transactions is grassroots [35, 42], and apply these to prove that maGLP is indeed grassroots. 
+
+Historical Context. The concurrent logic programming family emerged in the 1980s — Concurrent Prolog [29], GHC [55], PARLOG [5]; surveyed in [32] — and was simplified by flattening (restricting guards to primitive tests) in Flat Concurrent Prolog (FCP) [24] and Flat GHC; sequential FCP abstract machines [12] made commercial deployment feasible. Mode systems followed, including Ueda’s moded Flat GHC [57, 58, 56], anticipating GLP’s SO discipline as a type-system refinement. GLP can be under-stood as FCP with the SRSW restriction added, simplifying read-only unification [16]. These languages saw industrial deployment during the Japanese Fifth Generation project [25, 28], most prominently in the chat product Virtual Places, developed in FCP by Ubique [54] and acquired by AOL in 1995, after which the codebase was migrated to C. With the conclusion of the Fifth Generation project [49], concurrent logic programming went out of fashion. Its core ideas, however, persisted: pattern-matched message-passing among lightweight share-nothing processes, with single-assignment variables for synchronisa-tion, found their most prominent industrial expression in Erlang [1] — perhaps the closest descendant of concurrent logic programming — and from there to Elixir and to actor frameworks such as Akka [21] in Scala and Orleans [23] in .Net. What was lost in this evolution was logic programming’s metaprogram-Shapiro 121 ming [26, 20] and the seamless integration of computation and synchronisation through paired logical variables; GLP recovers these, while maintaining the simplicity and efficiency of futures/promises. 
+
+AI. The foundations presented here are used by AI (Claude) in two distinct disciplines. Implementing 
+
+GLP proceeds through three layers—a mathematical specification, an informal English-and-code specifi-cation derived from it by AI, and Dart code derived from that—with authority flowing math →spec →Dart but harmonised by back-and-forth. The concurrent and multiagent operational semantics are first refined into deterministic counterparts, dGLP and madGLP [43]. From dGLP AI derived a workstation-based GLP implementation in Dart, and from madGLP a smartphone-based multiagent one in Dart/Flutter is being developed. Running these implementations surfaced defects, several at the mathematical level, that drove revisions to the operational semantics themselves. A moded type checker was implemented by AI in the same way [44]. Programming in GLP proceeds through three layers of its own—mathematical specifications, provided as guarded multiagent atomic transactions [19]; the type definitions and decla-rations agreed for the program together with the intended behaviour of each procedure; and the GLP code: the designer and AI first agree the types and intent, and only then does AI write, type-check, test, and debug the code, with the human providing design-level oversight rather than code-level interven-tion [44]. The type checker catches at compile time a characteristic class of mode errors—confusing a reader for its paired writer—otherwise manifesting as silent run-time suspensions; a befriending clause, for example, was rejected because a reader argument received a produced rather than a consumed value, and AI corrected it from the diagnostic alone. A secure GLP implementation using public-key cryptog-raphy, mutual attestations, and friend-based identity custodians is also being developed [7]. Example GLP programs in this paper are typed. 
+
+Paper outline. Section 2 presents GLP. Section 3 presents multiagent transition systems, the maGLP definition, and its safety properties. Section 4 presents the grassroots social graph. Section 5 proves maGLP is grassroots. Section 6 concludes. Proofs and supporting material are in the full paper [39]. 
+
+# 2 GLP 
+
+We present GLP syntax and operational semantics and discuss its programming techniques. 
+
+## 2.1 Syntax 
+
+GLP extends LP by adding a paired reader X ? to every “ordinary” logic variable X, now called a writer .
+
+Definition 2.1 (GLP Variables) . Let V denote the set of LP variables (identifiers beginning with upper-case), henceforth called writers . Define V ? = {X? | X ∈ V }, called readers . The set of all GLP variables is ˆV = V ∪ V ?. A writer X and its reader X? form a variable pair .GLP terms, unit goals, goals, and clauses are as in LP but defined over the variables in ˆV .
+
+Definition 2.2 (Single-Occurrence (SO) Invariant) . A term, goal, or clause satisfies the single-occurrence (SO) invariant if every variable occurs in it at most once. 
+
+Definition 2.3 (GLP Program, Goals) . A clause C satisfies the single-reader/single-writer (SRSW) re-striction if it satisfies SO and a variable occurs in C iff its paired variable also occurs in C. A GLP program is a finite sequence of clauses satisfying SRSW; clauses for the same predicate form a proce-dure . The set of GLP goals ˆG (P) includes all goals over ˆV and the vocabulary of P that satisfy SO. The purpose of the SRSW restriction is to prevent multiple writer occurrences racing to assign a vari-able; the simpler (SW) restriction is insufficient, since if a reader with multiple occurrences is assigned a term with a writer, the result is a writer with multiple occurrences. We use set notation also when referring to multisets. 122 Grassroots Logic Programs 
+
+Example 2.4 (Fair Merge) . Consider the quintessential concurrent logic program for fairly merging two streams, written in GLP: 1
+
+Stream ::= [] ;[_|Stream]. procedure merge(Stream?, Stream?, Stream). merge([X|Xs], Ys, [X?|Zs?]) :- merge(Ys?, Xs?, Zs). merge(Xs, [Y|Ys], [Y?|Zs?]) :- merge(Xs?, Ys?, Zs). merge([], Ys, Ys?). merge(Xs, [], Xs?). 
+
+and the goal merge([1,2,3|Xs?],[a,b|Ys?],Zs) , which satisfies SO; each clause satisfies SRSW. The first clause swaps inputs in the recursive call, ensuring fairness when both streams are available. 
+
+## 2.2 Operational Semantics 
+
+Definition 2.5 (Transition System, Computation, Run, Safe, Live, Correct (cf. [34, 19])) . A transition system is a tuple T S = ( C, c0, T, ∼) where C is an arbitrary set of configurations , c0 ∈ C a designated 
+
+initial configuration , T ⊆ C × C a set of transitions , each a pair c → c′ of non-identical configurations 
+
+c̸ = c′ ∈ C, and ∼ an equivalence relation on T ; we write [t] for the class of t ∈ T under ∼.A computation is a (nonempty, finite or infinite) sequence of configurations c1, c2, . . . ; it is a run if 
+
+c1 = c0, and safe if ci → ci+1 ∈ T for every two consecutive configurations. We write c ∗
+
+−→ c′ for the existence of a safe computation from c to c′ (empty if c = c′). A class [t] ∈ T /∼ is enabled in c if 
+
+c → c′ ∈ [t] for some c′. A run is live if no class [t] is enabled in every configuration of some suffix in which no member of [t] occurs, and correct if it is safe and live. 
+
+Definition 2.6 (Substitutions and Assignments) . A GLP writer assignment is a term of the form X := T ,
+
+X ∈ V , T /∈ V , satisfying SO. Similarly, a GLP reader assignment is a term of the form X? : = T ,
+
+X? ∈ V ?, T /∈ V , satisfying SO. A writers (readers) substitution σ is the substitution implied by a set of writer (reader) assignments that jointly satisfy SO. Given a writers assignment X := T , its readers counterpart is X? : = T , and given a writers substitution σ , its readers counterpart σ ? is the readers substitution defined by X?σ ? = Xσ . Given a reader assignment X? : = T , its writers counterpart is 
+
+X := T , and given a readers substitution τ, its writers counterpart τ! is the writers substitution defined by Xτ! = X?τ. The pair completion of a readers substitution σ is σ ⋆ = σ ∪ σ !, applied to a fixed point. 
+
+Definition 2.7 (GLP Renaming, Renaming Apart) . A GLP renaming is an injective substitution ρ : ˆV →
+
+ˆV such that for each X ∈ V : Xρ ∈ V and X?ρ = ( Xρ)?. Two GLP terms have a variable in common if for some writer X ∈ V , either X or X? occurs in both. A GLP renaming σ renames T ′ apart from T if 
+
+T ′σ and T have no variable in common. 
+
+Definition 2.8 (Writer MGU) . Given two GLP unit goals A and H, a writer mgu is a writers substitution 
+
+σ such that Aσ = Hσ and σ is most general among such substitutions. 
+
+Definition 2.9 (GLP Goal/Clause Reduction) . Given GLP unit goal A and clause C, with H :- B being the result of the GLP renaming of C apart from A, the GLP reduction of A with C succeeds with result 
+
+(B, σ ) if A and H have a writer mgu. The cGLP transition equivalence below identifies “the same transition” across configurations as goals are instantiated by reader substitutions; following [19], we first assign each goal a persistent identity. 
+
+> 1Moded-type definitions ( T ::= ... ) and declarations ( procedure ... ) used informally in examples are formally intro-duced in the Typed GLP companion paper [44].
+
+Shapiro 123 
+
+Definition 2.10 (Goal Identity) . Each unit goal in a cGLP computation carries a unique identifier as-signed at spawn time: goals in the initial goal G0 receive distinct initial identifiers, and goals spawned by a Reduce transition receive fresh identifiers. Communicate transitions preserve identifiers: the goal containing X? retains its identity after instantiation. 
+
+Definition 2.11 (cGLP Transition System) . Given a GLP program P, an asynchronous resolvent over P
+
+is a pair (G, σ ) where G ∈ ˆG (P) and σ is a readers substitution. A transition system cGLP = ( C , c0, T , ∼) is a cGLP transition system over P and initial goal G0
+
+satisfying SO if: 1. C is the set of all asynchronous resolvents over P
+
+2. c0 = ( G0, /0)
+
+3. T is the set of all transitions (G, σ ) → (G′, σ ′) satisfying either: (a) Reduce: there exists unit goal A ∈ G such that C ∈ P is the first clause for which the GLP reduction of A with C succeeds with result (B, ˆσ ), G′ = ( G \ { A} ∪ B) ˆσ , and σ ′ = σ ◦ ˆσ ?(b) Communicate: {X? : = T } ∈ σ , X? ∈ G, G′ = G{X? : = T }, and σ ′ = σ
+
+4. ∼, the cGLP transition equivalence , relates t1 ∼ t2 iff either both are Reduce transitions reducing the same goal (by identity, Definition 2.10) with the same clause, or both are Communicate transitions applying the counterpart of the same writer assignment to the same goal (by identity) cGLP Reduce differs from LP in (1) the use of a writer mgu instead of a regular mgu and (2) the choice of the first applicable clause instead of any clause. The first is the fundamental use of GLP readers for communication and synchronisation. The second compromises on the or-nondeterminism of LP to allow writing fair concurrent programs, such as fair merge above. Note that or-nondeterminism is not completely eliminated, as different scheduling of arrival of assignments on the two input streams of 
+
+merge may result in different orders in its output stream. The cGLP Communicate rule realises the use of reader/writer pairs for asynchronous communication: it communicates an assignment from its writer to its paired reader. 
+
+Monotonicity. In LP, if a goal cannot be reduced, it will never be reduced. In cGLP, a goal that cannot be reduced now may be reduced in the future: if A and H have an mgu that writes on a reader X? ∈ A
+
+with no writer mgu at present, another goal with X may reduce, assigning X, and later X?, to a value that will allow A and H to have a writer mgu. Conversely, in LP, if a goal A can be reduced now with some clause H:-B, with a regular mgu of A and H, it may not be reducible in the future due to variables that A shares with other goals being assigned values by reductions of other goals, preventing unification between the instantiated A and H. In cGLP, if a goal A can be reduced now (with a writers mgu), it can always be reduced in the future, as the SO invariant ensures that no other goal can assign any writer in A.Implementation-wise, if a GLP goal A cannot be reduced now, but there is a readers substitution σ
+
+such that Aσ can be reduced, such readers are identified, the goal A suspends on these readers, and is rescheduled for another reduction attempt once any of them is assigned. Despite these differences, cGLP has the same notion of logical consequence as LP. 
+
+Definition 2.12 (cGLP Proper Run, Outcome) . A cGLP run ρ : (G0, σ0) → · · · → (Gn, σn) is proper if for any 1 ≤ i < n, a variable that occurs in Gi+1 but not in Gi also does not occur in any G j, j < i; the 
+
+outcome of a proper run is (G0 :- Gn)σ ⋆ 
+
+> n
+
+; and the run is successful if Gn = /0. Pair completion (Definition 2.6) is employed since σn accumulates only readers counterparts, leaving the writers of G0 unbound. Let /? be an operator that replaces every reader by its paired writer. 124 Grassroots Logic Programs 
+
+Proposition 2.13 (cGLP Computation is Deduction) . Let (G0 :- Gn)σ ⋆ 
+
+> n
+
+be the outcome of a proper cGLP run ρ : (G0, σ0) → · · · → (Gn, σn). Then (G0 :- Gn)σ ⋆ 
+
+> n
+
+/? is a logical consequence of P /?.
+
+We note two additional safety properties of cGLP runs. 
+
+Proposition 2.14 (SO Preservation) . If the initial goal G 0 satisfies SO, then every goal in a proper cGLP run satisfies SO. 
+
+Proposition 2.15 (Monotonicity) . In any proper cGLP run, if unit goal A can reduce with clause C at step i, then either an instance of A has been reduced by step j > i, or an instance of A can still reduce with C at step j. 
+
+Every cGLP run is safe, so correctness (Definition 2.5) reduces to liveness. The SO invariant of GLP allows eschewing unification in favour of term matching : if two terms that jointly satisfy SO are unifiable, their mgu maps each variable in one term to a subterm of the other. Term matching thus performs joint term-tree traversal and collects variable assignments along the way; the detailed definition and table appear in the full paper [39]. 
+
+## 2.3 Guards 
+
+GLP clauses may include guards —tests that determine clause applicability. 
+
+Definition 2.16 (Guarded Clause) . A guarded clause has the form H :- G | B, where H is the head, G
+
+is a conjunction of guard predicates, and B is the body. The guard separator “ |” is interpreted logically as a conjunction. Guard arguments are readers paired to head writers. Guards have three-valued semantics. Each guard predicate explicitly defines its success condition. A guard suspends if it does not succeed but some instance of it under a readers substitution would succeed. A guard fails if no such instance exists. A guard conjunction succeeds if all members succeed; it suspends if any member suspends and none fail; it fails if any member fails. Definition 2.9 of a GLP goal/clause reduction is augmented to succeed if the guard also succeeds. 
+
+Remark 2.17 (Guards and SRSW) . Guard occurrences count toward SRSW satisfaction: if X? occurs in a guard, its paired writer X must occur in the head and X? may additionally occur once in the body. Furthermore, if the success of a guard implies that X? is bound to a ground term, then both X and 
+
+X? may occur multiple times in the clause. Groundness-implying guards include ground , integer ,
+
+number , string , constant , arithmetic comparisons ( <, >, =< , >= , =:= , =\= ), and ground equality (=?= ). However, known and compound do not imply groundness. 
+
+Remark 2.18 (Anonymous Variables) . An anonymous variable is any variable whose name begins with 
+
+_ (e.g., _, _Out ). Anonymous variables may appear anywhere a writer variable may appear; each occur-rence denotes a fresh writer with no paired reader. Anonymous readers ( _? , _Name? ) are not permitted. 
+
+System predicates and body kernels. GLP system predicates such as := (arithmetic assignment), now 
+
+(clock access), and =.. (term composition/decomposition) are defined by GLP clauses whose bodies may invoke body kernel predicates —runtime-implemented primitives not directly accessible to user pro-grams. The system predicate’s own guards ensure that body kernel preconditions are met before invoca-tion. For example, arithmetic assignment is defined recursively as follows: 
+
+Result? := N :- number(N?) | Result = N?. Result? := X + Y :- number(X?), number(Y?) | ’_add’(X?, Y?, Result). Result? := X + Y :- otherwise | X1 := X?, Y1 := Y?, Result := X1? + Y1?. Shapiro 125 The base case binds a plain number; the first addition clause guards that both operands are numbers and invokes the ’_add’ body kernel; the fallback clause recursively evaluates subexpressions. The full table of body kernels and the guard reference appear in the full paper [39]; the complete system-predicate definitions are in programs/self.glp of the repository. 
+
+## 2.4 GLP Programming Techniques 
+
+On the one hand, GLP has no unification, only pattern-matching and single-writer variables. On the other hand, goal reduction may write on several variables atomically. The result is that almost the en-tire range of concurrent logic programming techniques developed since the 1980s [32, 31] is available in GLP, including: streams and their fair, biased, and self-balancing merge [45, 46]; channels as generalised streams [53]; messages with reply variables and bounded buffers [51]; network reconfiguration and dis-tributed programming [27]; object-oriented programming with mutable state via stream-recursion [47]; systems programming and computation control [30, 50]; and the full range of meta-interpreters — fail-safe, termination-detecting, tracing, and algorithmic debugging [26, 20]. Tested GLP renditions of these and further techniques — monitors, distributors, network switches, replicators, and the metainterpreter family — are in the programs directory of the public GLP repository. 2
+
+Two techniques require workarounds. The use of logic variables for mutual exclusion — standard in concurrent logic languages with atomic unification [32] — must be achieved in GLP via a monitor [11, 3], the standard distributed-computing solution. Similarly, general broadcast — distributing a value to multiple consumers — is not directly supported by GLP, since it would require multiple occurrences of the same reader, in violation of SO; it must be achieved by explicit distributors . We note that if moded-type checking can determine that the values to be distributed never contain writers, then the SO restriction on readers may safely be relaxed allowing broadcast natively; a future upgrade of the language. Excluded is the encoding of logic programs or-parallel by the and-parallelism of Concurrent Prolog [6, 33], which depends on general unification in a fundamental way. 
+
+# 3 Multiagent GLP 
+
+We extend GLP to multiple agents: Recall the notion of multiagent transition systems via multiagent atomic transactions [34, 42]; define multiagent GLP (maGLP) as a transactions-based multiagent transi-tion system; and establish its safety properties. 
+
+## 3.1 Multiagent Transition Systems 
+
+We assume a potentially infinite set of agents Π, but consider only finite subsets of it, so when we refer to a particular set of agents P ⊂ Π we assume P to be nonempty and finite. We use ⊂ to denote the strict subset relation and ⊆ when equality is also possible. We use SP to denote the set S indexed by the set P, and if c ∈ SP we use cp to denote the member of 
+
+c indexed by p ∈ P. Intuitively, think of such a c ∈ SP as an array of cells indexed by members of P with cell values in S.
+
+Definition 3.1 (Local States, Configuration, Transaction, Participants) . Given agents Q ⊂ Π and an arbitrary set S of local states , a configuration over Q and S is a member of C := SQ. An atomic transaction 
+
+over participants Q and states S is any pair of configurations t = c → c′ ∈ C2 such that c̸ = c′, with 
+
+tp := cp → c′p for any p ∈ Q.
+
+Definition 3.2 (Multiagent Transition System) . Given agents P ⊂ Π and an arbitrary set S of local states 
+
+with a designated initial local state s 0 ∈ S, a multiagent transition system over P and S is a transition 
+
+> 2https://github.com/EShapiro2/GLP
+
+126 Grassroots Logic Programs 
+
+system T S = ( C, c0, T, ∼) with configurations C := SP, initial configuration c 0 := {s0}P, transitions T ⊆ C2 being a set of transactions over P and S, and ∼ an equivalence on T .Rather than specifying a multiagent transition system over a set of agents P directly, we specify it via atomic transactions. 
+
+Definition 3.3 (Transaction Closure) . Let P ⊂ Π, S a set of local states, and C := SP; for any transition or transaction t = c → c′, we say p is stationary in t if cp = c′p. For a transaction t = ( c → c′) over local states S with participants Q ⊆ P, the P-closure of t , t↑P, is the set of transitions over P and S defined by: 
+
+t↑P := {t′ ∈ C2 : ∀q ∈ Q.(tq = t′
+
+> q
+
+) ∧ ∀ p ∈ P \ Q.(p is stationary in t′)}
+
+If R is a set of transactions, each t ∈ R over some Q ⊆ P and S, then the P-closure of R , R↑P, is the set of transitions over P and S defined by: 
+
+R↑P := [
+
+> t∈R
+
+t↑P
+
+Given an equivalence ∼ on R, its P-closure ∼↑ P is the relation on R↑P with ˆ t (∼↑ P) ˆt′ iff ˆ t ∈ t↑P and ˆt′ ∈ t′↑P for some t ∼ t′.Namely, the closure over P ⊇ Q of a transaction t over Q includes all transitions t′ over P in which members of Q do the same in t and in t′, and the rest remain in their current (arbitrary) state. The closure likewise carries any equivalence on transactions to one on the induced transitions: since distinct transactions over the same participants have disjoint closures, ∼↑ P is an equivalence whenever ∼ is. 
+
+Definition 3.4 (Transactions-Based Multiagent Transition System) . Given agents P ⊂ Π, local states 
+
+S with initial local state s0 ∈ S, a set of transactions R, each t ∈ R over some Q ⊆ P and S, and an equivalence ∼ on R, the transactions-based multiagent transition system over P, S, R, and ∼ is the multiagent transition system T S = ( SP, {s0}P, R↑P, ∼↑ P).
+
+## 3.2 From cGLP to maGLP 
+
+In extending GLP to multiple agents, each agent maintains its own asynchronous resolvent as its local state. The key insight is that GLP’s variable pairs provide natural binary communication channels: when agent p assigns a writer X for which the paired reader X? is held by agent q, the assignment X := T must be communicated to q.A key difference between cGLP and maGLP is in the initial state. In a multiagent transition system all agents must have the same initial local state s0 (Definition 3.2), precluding the initial sharing of logic vari-ables, as this would imply different initial states for different agents. We resolve this in two steps. First, we employ only anonymous logic variables “ _” in the initial local states of agents: Anonymous variables are, on the one hand, syntactically identical, hence allow all initial states to be syntactically identical, and on the other hand represent unique variables, hence semantically all initial goals have unique, local, non-shared variables. The initial state of all agents is the atomic goal agent(ch(_?,_),ch(_?,_)) ,providing two bidirectional channels: the first to the person operating the machine, and the second to the network. The first channel is a bidirectional stream of GLP messages between the machine and the person, mediated by runtime UI support below the GLP layer and by physical UI hardware; messages flowing toward the person are rendered as UI elements, and the person’s responses flow back as GLP messages. With appropriate UI runtime support, a GLP message to the user may contain a writer, in which case the runtime presents it as a question and an eventual response from the person becomes the corresponding assignment. The second channel carries communication with other agents. Shapiro 127 Second, the Cold-call transaction enables agents to bootstrap communication by establishing shared variables through the network infrastructure, realising the cold-call protocol for connecting previously-disconnected agents. 
+
+Definition 3.5 (Multiagent GLP) . Given agents P ⊂ Π and GLP program M, the maGLP tran-sition system over P and M is the transactions-based multiagent transition system (Defini-tion 3.4) over P, local states being asynchronous resolvents (Gp, σp) over M, initial local state 
+
+s0 = ( {agent(ch(_?,_),ch(_?,_)) }, /0), the following transactions c → c′, and the equivalence ∼
+
+given below: 1. Reduce p: A unary transaction with participant p where cp → c′p is a cGLP Reduce transition (Defi-nition 2.11). 2. Communicate p to q: A transaction with participants p, q ∈ P where {X? : = T } ∈ σp, X? occurs in 
+
+Gq, σ ′ 
+
+> p
+
+= σp \ { X? : = T }, and c′ 
+
+> q
+
+= ( Gq{X? : = T }, σq).3. Cold-call p to q: A binary transaction with participants p̸ = q ∈ P where the network output stream in cp has a new message msg (q, X), c′p is the result of advancing the network output stream in cp, and 
+
+c′ 
+
+> q
+
+is the result of adding msg (q, X) to the network input stream in cq.4. ∼, the maGLP transaction equivalence on the transactions above, relates t1 ∼ t2 iff both are Reduce transactions at the same agent p reducing the same goal (by identity, Definition 2.10) with the same clause, both are Communicate transactions from the same p to the same q applying the counterpart of the same writer assignment to the same goal (by identity), or both are Cold-call transactions from the same p to the same q delivering the same message. Note that Communicate may be unary or binary, depending on whether p = q. Communicate trans-fers assignments from writers to readers between agents sharing a paired reader and writer. Cold-call transfers a term with its variables to q through the network streams established in each agent’s initial configuration, enabling the creation of paired variables among previously-disconnected agents. Cold-call is the exception, as once agents share a paired variable they can use it to communicate indefinitely; moreover, an agent with two friends (with which it shares channels) may introduce them to each other, also eschewing the need for a Cold-call. 
+
+## 3.3 Safety Properties of maGLP 
+
+The safety properties established for cGLP in Section 2 extend to maGLP. SO preservation (cf. Proposi-tion 2.14) generalises directly: 
+
+Proposition 3.6 (maGLP SO Preservation) . If the initial goals of all agents satisfy SO, then every goal in every agent’s resolvent throughout a proper run satisfies SO. 
+
+Definition 3.7 (maGLP Proper Run, Outcome) . An maGLP run is proper if the run at each agent is proper (Definition 2.12). The outcome of a proper maGLP run is the tuple of per-agent outcomes. To relate maGLP to deduction, consider the lifted system L : the cGLP transition system whose resolvent is the union of all agents’ local resolvents, whose initial goal includes a network goal with channels paired to each agent’s network channels, and whose program M′ is M augmented with the GLP definition of network .
+
+Proposition 3.8. Every proper maGLP run over P and M is simulated by a proper cGLP run of L whose outcome is a logical consequence of M ′/?.
+
+Every maGLP run is safe, so correctness (Definition 2.5) reduces to liveness. 128 Grassroots Logic Programs 
+
+Implementation. The implementation-ready deterministic variants of GLP and maGLP (the latter deter-ministic at the agent, not system, level), along with formal correctness proofs that they implement their respective specifications, are presented in a companion paper [43]. 
+
+# 4 The Grassroots Social Graph 
+
+The grassroots social graph is the foundation upon which all other grassroots platforms are built. Nodes represent cryptographically self-identified agents; edges represent authenticated bidirectional channels; connected components arise spontaneously through befriending. Each agent processes messages from user and network input streams and maintains an outputs list with one typed entry per destination — user_output , net_output , and a friend_output per friend — on which the library routers send_user , send_net , and send_friend dispatch. The program sup-ports three protocols: (1) cold-call befriending , where agents with no prior shared variables establish friendship by exchanging a response variable through the network; (2) friend-mediated introduction ,where a mutual friend creates a channel pair and sends each half to the respective parties, establishing a direct connection; and (3) text messaging between established friends via named output streams. The core of the program is the procedure agent/4 ; the key clauses follow. Module declarations (exported /imported , #-qualified calls) are elided from quoted clauses. 
+
+Channels. A channel is an authenticated bidirectional communication structure ch(In, Out) , where 
+
+In is a stream of incoming messages and Out is a stream of outgoing messages. Two agents share a channel by holding opposite views of the same underlying stream pair: what one writes on its Out , the other reads from its In . The procedure new_channel/2 creates such a pair: 
+
+new_channel(ch(Xs?, Ys), ch(Ys?, Xs)). 
+
+A single call new_channel(PQCh, QPCh) binds PQCh to ch(Xs?, Ys) and QPCh to ch(Ys?, Xs) :the reader Xs? of one channel is paired with the writer Xs of the other (and likewise for Ys /Ys? ), so each end’s outgoing stream is the other end’s incoming stream. Sending and receiving on a channel are: 
+
+send(X, ch(In, [X?|Out?]), ch(In?, Out)). receive(X?, ch([X|In], Out?), ch(In?, Out)). 
+
+Channels are used in friend-mediated introduction (below) to establish a direct connection between two parties without a cold-call. They are also used by the cold-call protocol: when the recipient accepts, it returns a freshly-created setup-channel half as its response; the friend channel itself is conveyed over the setup channel by the shared commit procedure befriend_commit , completing the bidirectional link. 
+
+Cold-call befriending. The user’s connect(Target) request triggers a cold-call: the agent sends 
+
+intro(Id, Resp) on the network and injects the paired reader Resp? into its own user-input stream, so the eventual response surfaces locally as a normal user-side message: 
+
+agent(Id, [msg(’_user’, Id1, connect(Target))|UserIn], NetIn, Outs) :-Id? =?= Id1?, ground(Target?) | send_net(msg(Target?, intro(Id?, Resp)), Outs?, Outs1), inject_msg(Resp?, Target?, Id?, UserIn?, UserIn1), agent(Id?, UserIn1?, NetIn?, Outs1?). 
+
+On the recipient side, an incoming intro(From, Resp?) captures the response writer Resp , forwarded to the user in a befriend prompt; the user’s decision will assign it, transparently transported back to the originator: 
+
+agent(Id, UserIn, [msg(Id1, intro(From, Resp?))|NetIn], Outs) :-Id? =?= Id1? | send_user(msg(agent, ’_user’, befriend(From?, Resp)), Outs?, Outs1), agent(Id?, UserIn?, NetIn?, Outs1?). Shapiro 129 When the user makes a decision (accept or reject), the agent processes the response: 
+
+agent(Id, [msg(’_user’, Id1, decision(Dec, From, response(Resp?)))|UserIn], NetIn, Outs) :-Id? =?= Id1? | bind_response(Id?, Dec?, From?, Resp, Outs?, Outs1, NetIn?, NetIn1), agent(Id?, UserIn?, NetIn1?, Outs1?). 
+
+The helper bind_response handles both cases: on yes , it creates a fresh setup-channel pair via 
+
+new_channel , assigns accept(RetCh?) to Resp (transported back to the initiator by the Communicate transaction) and commits the friendship over the local half via the shared befriend_commit , which conveys a fresh friend channel over the setup channel, registers its friend_output entry, and merges its incoming end into NetIn ; on no , it informs the user the request was rejected. Both ends run the same idempotent commit. Its definition appears in the full paper [39]. When Alice executes this protocol to befriend Bob, her agent sends msg(bob, intro(alice, Resp)) 
+
+on the ’_net’ output stream. The Cold-call transaction (Definition 3.5) transfers this message to Bob’s network input stream, adding the writer Resp to Bob’s resolvent. When Bob accepts, assigning Resp 
+
+to accept(RetCh?) for a fresh setup channel, the Communicate transaction transfers this assignment back to Alice; befriend_commit then installs the friend channel at both ends. 
+
+Friend-mediated introduction. Friend-mediated introduction creates a fresh setup-channel pair via 
+
+new_channel/2 and sends one half to each of the introduced parties; on mutual acceptance a direct connection arises without a cold-call: 
+
+agent(Id, [msg(’_user’, Id1, introduce(P, Q))|UserIn], NetIn, Outs) :-Id? =?= Id1?, ground(P?), ground(Q?), ~(P? =?= Q?), new_channel(PQCh, QPCh) | send_friend(P?, msg(Id?, P?, intro(Q?, QPCh?)), Outs?, Outs1), send_friend(Q?, msg(Id?, Q?, intro(P?, PQCh?)), Outs1?, Outs2), agent(Id?, UserIn?, NetIn?, Outs2?). 
+
+When Bob introduces Alice to Charlie, the setup-channel pair he creates contains readers that are trans-ferred to Alice and Charlie via Communicate; each party accepts by acknowledging on the setup channel, and on mutual acknowledgement both commit the friendship via befriend_commit — a direct connec-tion without any Cold-call. 
+
+Text messaging. Once two agents are friends, messages flow directly along their shared channel via the Communicate transaction, without cold-calls. The user’s send(Target, Text) request is dispatched by send_friend on the friend_output entry registered under Target in Outs :
+
+agent(Id, [msg(’_user’, Id1, send(Target, Text))|UserIn], NetIn, Outs) :-Id? =?= Id1?, ground(Target?) | send_friend(Target?, msg(Id?, Target?, text(Text?)), Outs?, Outs1), agent(Id?, UserIn?, NetIn?, Outs1?). 
+
+On the other side, an incoming text(Text) from From is forwarded to the user as received(From, Text) :
+
+agent(Id, UserIn, [msg(From, Id1, text(Text))|NetIn], Outs) :-Id? =?= Id1? | send_user(msg(agent, ’_user’, received(From?, Text?)), Outs?, Outs1), agent(Id?, UserIn?, NetIn?, Outs1?). 
+
+Boot and deployment. Each agent runs on a separate isolate (later — separate smartphone). Aboot clause reduces the universal initial state agent(ch(_?,_),ch(_?,_)) (Definition 3.5) to the four-argument form used in the clauses above. The complete tested program — the type vocabulary, 130 Grassroots Logic Programs 
+
+helper procedures, the UI mediator, the actors, the plays, and the boot variants — is the directory 
+
+programs/social/graph of the public GLP repository ( https://github.com/EShapiro2/GLP ); a comprehensive Alice/Bob/Charlie scenario appears in the full paper [39]. The social graph specified above, run as a maGLP program, is itself a grassroots platform: it inherits the grassroots property of maGLP (Corollary 5.4). 
+
+# 5 Multiagent GLP is Grassroots 
+
+This section establishes that maGLP is grassroots. We define the notion of grassroots following [19]; formal definitions appear in the full paper [39]. Informally, a protocol is grassroots if two disjoint groups of agents can each operate independently— their interleaved correct runs are correct runs of the combined system—yet the combined system offers genuinely new behaviours that neither group could produce on its own. The first requirement is oblivi-ousness ; the second is interactivity .The Cold-call transaction (Definition 3.5) is the fundamental interactive transaction of maGLP. It allows an agent q in one group to connect to an agent p in another, establishing shared variables that span both groups—a behaviour that no interleaving of independent runs of the two groups could produce. 
+
+Theorem 5.1. The maGLP protocol is grassroots. 
+
+The grassroots property of maGLP extends to applications built on top of it, provided they use the cold-call mechanism. 
+
+Definition 5.2 (GLP Application) . A GLP application is a GLP program M together with the maGLP infrastructure. An application uses cold-calls if agents can execute the Cold-call transaction to establish communication with previously-disconnected agents. 
+
+Proposition 5.3. Any GLP application that uses cold-calls is grassroots. 
+
+Corollary 5.4. The GLP implementation of the grassroots social graph (Section 4) is grassroots. 
+
+# 6 Conclusion 
+
+While concurrent logic programming and its powerful programming techniques have been known for four decades [32], adoption has been hampered by their inaccessibility to the average programmer. Con-current logic programming requires a substantial shift from sequential procedural or functional thinking to dataflow programming via partial bindings, with concurrent operational semantics in which commu-nication occurs through binding paired logical variables which may contain further logic variables. Our experience to date is that AI is highly effective and productive at programming from mathematical spec-ifications when the target is a typed high-level language such as GLP, where types constrain the space of legal programs and provide a checkable specification at the human-AI interface [44]. Moreover, our preliminary experience suggests that the abstract nature of concurrent logic programming renders it a more powerful and productive language than mainstream languages for collaborative human-AI abstract specifications-based program development. Constitutional governance of grassroots communities and federations builds on Constitutional Con-sensus [13, 18] and digital social contracts [4, 48], both realisable in GLP. The GLP runtime and example programs are open-source at https://github.com/EShapiro2/GLP .Shapiro 131 
+
+# References 
+
+[1] Joe Armstrong (2010): Erlang . Communications of the ACM 53(9), pp. 68–75, doi:10.1145/1810891.1810910. [2] Henry G. Baker & Carl Hewitt (1977): The Incremental Garbage Collection of Processes . In: Proceed-ings of the 1977 Symposium on Artificial Intelligence and Programming Languages , ACM, pp. 55–59, doi:10.1145/800228.806932. [3] Per Brinch Hansen (1973): Operating System Principles . Prentice-Hall. [4] Luca Cardelli, Liav Orgad, Gal Shahaf, Ehud Shapiro & Nimrod Talmon (2020): Digital social contracts: A foundation for an egalitarian and just digital society . In: CEUR Proceedings of the First International Forum on Digital and Democracy , 2781, CEUR-WS, pp. 51–60. [5] Keith Clark & Steve Gregory (1986): PARLOG: parallel programming in logic . ACM Transactions on Programming Languages and Systems (TOPLAS) 8(1), pp. 1–49, doi:10.1145/5001.5390. [6] Michael Codish & Ehud Shapiro (1986): Compiling OR-parallelism into AND-parallelism . In: International Conference on Logic Programming , Springer, pp. 283–297, doi:10.1007/3-540-16492-8 82. [7] Ohad Eitan, Idit Keidar & Ehud Shapiro (2026): Securing People and their Machines Against Major Faults .arXiv:2607.02304. [8] Daniel P. Friedman & David S. Wise (1976): The Impact of Applicative Programming on Multiprocessing .
+
+Indiana University Computer Science Department Technical Report (TR-26). [9] Jean-Yves Girard (1987): Linear Logic . Theoretical Computer Science 50(1), pp. 1–101, doi:10.1016/0304-3975(87)90045-4. [10] Daniel Halpern, Ariel D Procaccia, Ehud Shapiro & Nimrod Talmon (2024): Federated Assemblies . Proc AAAI 2025; arXiv preprint arXiv:2405.19129 .[11] C. A. R. Hoare (1974): Monitors: An operating system structuring concept . Communications of the ACM 
+
+17(10), pp. 549–557, doi:10.1145/355620.361161. [12] Avshalom Houri & Ehud Shapiro (1989): A sequential abstract machine for Flat Concurrent Prolog . The Journal of Logic Programming 7(2), pp. 85–123, doi:10.1016/0743-1066(89)90011-3. [13] Idit Keidar, Andrew Lewis-Pye & Ehud Shapiro (2025): Constitutional Consensus . arXiv preprint arXiv:2505.19216 .[14] Anne-Marie Kermarrec, Erick Lavoie & Christian Tschudin (2020): Gossiping with append-only logs in secure-Scuttlebutt . In: Proceedings of the 1st international workshop on distributed infrastructure for com-mon good , pp. 19–24, doi:10.1145/3428662.3428794. [15] Robert Kowalski (1974): Predicate logic as programming language . In: IFIP congress , 74, pp. 569–574. [16] Giorgio Levi & Catuscia Palamidessi (1985): The Semantics of the Read-Only Variable . In: Proc. Symposium on Logic Programming , IEEE, pp. 128–137. [17] Andrew Lewis-Pye, Oded Naor & Ehud Shapiro (2023): Grassroots Flash: A Payment System for Grassroots Cryptocurrencies . arXiv preprint arXiv:2309.13191 .[18] Andrew Lewis-Pye & Ehud Shapiro (2025): Morpheus Consensus: Excelling on trails and autobahns . Proc. 29th Conference on Principles of Distributed Systems, OPODIS 2025. arXiv preprint arXiv:2502.08465 ,doi:10.4230/LIPIcs.OPODIS.2025.35. [19] Andy Lewis-Pye & Ehud Shapiro (2026): Volitional Multiagent Atomic Transactions: Describing People and their Machines . arXiv preprint arXiv:2604.25596 .[20] Yossi Lichtenstein & Ehud Shapiro (1988): Concurrent algorithmic debugging . ACM SIGPLAN Notices 
+
+24(1), pp. 248–260, doi:10.1145/68210.69239. [21] Lightbend Inc. (2022): Akka: Build Concurrent, Distributed, and Resilient Message-Driven Applications .
+
+https://akka.io . Accessed October 2025. 132 Grassroots Logic Programs 
+
+[22] John W. Lloyd (1987): Foundations of Logic Programming , 2nd edition. Springer-Verlag, doi:10.1007/978-3-642-83189-8. [23] Microsoft (2022): Orleans: Cloud Native Application Framework . https://dotnet.github.io/ orleans . Accessed October 2025. [24] C. Mierowsky, S. Taylor, E. Shapiro, J. Levy & M. Safra (1985): On the implementation of Flat Concurrent Prolog . Proceedings of the 1985 Symposium on Logic Programming , pp. 276–286. [25] Tohru Moto-Oka (1983): Overview to the fifth generation computer system project . In: Proceedings of the 10th annual international symposium on Computer architecture , pp. 417–422. [26] Shmuel Safra & Ehud Shapiro (1988): Meta interpreters for real . In: Concurrent Prolog: Collected Papers ,MIT Press, pp. 166–179. [27] A. Shafrir & E. Shapiro (1987): Distributed Programming in Concurrent Prolog . In Ehud Shapiro, editor: 
+
+Concurrent Prolog: Collected Papers, Volume 1 , MIT Press, Cambridge, MA, pp. 318–338. [28] Ehud Shapiro (1983): The fifth generation project—a trip report . Communications of the ACM 26(9), pp. 637–641, doi:10.1145/358172.358179. [29] Ehud Shapiro (1983): A subset of Concurrent Prolog and its interpreter . ICOT Technical Report, TR-003 .[30] Ehud Shapiro (1984): Systems programming in concurrent prolog . In: Proceedings of the 11th ACM SIGACT-SIGPLAN symposium on Principles of Programming Languages , pp. 93–105, doi:10.1145/800017.800520. [31] Ehud Shapiro (1987): Concurrent Prolog: collected papers (Vols. I and II) . MIT press. [32] Ehud Shapiro (1989): The family of concurrent logic programming languages . ACM Computing Surveys (CSUR) 21(3), pp. 413–510, doi:10.1145/72551.72555. [33] Ehud Shapiro (1989): Or-parallel prolog in flat concurrent prolog . The Journal of Logic Programming 6(3), pp. 243–267, doi:10.1016/0743-1066(89)90016-2. [34] Ehud Shapiro (2021): Multiagent Transition Systems: Protocol-Stack Mathematics for Distributed Comput-ing . arXiv preprint arXiv:2112.13650 .[35] Ehud Shapiro (2023): Grassroots Distributed Systems: Concept, Examples, Implementation and Applications (Brief Announcement) . In: 37th International Symposium on Distributed Computing (DISC 2023). (Extended version: arXiv:2301.04391) , LIPICS, Italy, pp. 47:1, 47:7. [36] Ehud Shapiro (2023): Grassroots Social Networking: Serverless, Permissionless Protocols for Twitter/LinkedIn/WhatsApp . In: OASIS ’23 , Association for Computing Machinery, doi:10.1145/3599696.3612898. [37] Ehud Shapiro (2024): Grassroots Currencies: Foundations for Grassroots Digital Economies . arXiv preprint arXiv:2202.05619 .[38] Ehud Shapiro (2025): Characterising Global Platforms: Centralised, Decentralised, Federated, and Grass-roots . arXiv preprint arXiv:2511.03286 .[39] Ehud Shapiro (2025): GLP: A Grassroots, Multiagent, Concurrent, Logic Programming Language for AI (full version) . arXiv preprint arXiv:2510.15747, Summary to appear in Proc. of ICLP’26 .[40] Ehud Shapiro (2026): Child-Safe Social Networking . Submitted .[41] Ehud Shapiro (2026): Grassroots Bonds as a Foundation for Market Liquidity . arXiv:2603.13671. [42] Ehud Shapiro (2026): Grassroots Platforms with Atomic Transactions: Social Graphs, Cryptocurrencies, and Democratic Federations . In: Proceedings of the 27th International Conference on Distributed Computing and Networking , pp. 71–81, doi:10.1145/3772290.3772309. ArXiv preprint arXiv:2502.11299. [43] Ehud Shapiro (2026): Implementing Grassroots Logic Programs with Multiagent Transition Systems and AI (Full Version) . arXiv:2602.06934. Summary to appear in Proc. of LOPSTR+PPDP’26 .[44] Ehud Shapiro (2026): Types for Grassroots Logic Programs (Full version) . arXiv preprint arXiv:2601.17957 .Shapiro 133 
+
+[45] Ehud Shapiro & Colin Mierowsky (1984): Fair, biased, and self-balancing merge operators: Their spec-ification and implementation in Concurrent Prolog . New Generation Computing 2(3), pp. 221–240, doi:10.1007/BF03037058. [46] Ehud Shapiro & Shmuel Safra (1986): Multiway merge with constant delay in Concurrent Prolog . New Generation Computing 4(2), pp. 211–216, doi:10.1007/BF03037442. [47] Ehud Shapiro & Akikazu Takeuchi (1983): Object oriented programming in Concurrent Prolog . New Gen-eration Computing 1(1), pp. 25–48, doi:10.1007/BF03037020. [48] Ehud Shapiro & Nimrod Talmon (2022): Foundations for Grassroots Democratic Metaverse . In: Proceed-ings of the 21st International Conference on Autonomous Agents and Multiagent Systems , AAMAS ’22, International Foundation for Autonomous Agents and Multiagent Systems, Richland, SC, p. 1814–1818, doi:10.65109/cnal9987. [49] Ehud Shapiro & David HD Warren (1993): The 5th Generation Project: personal perspectives. Communi-cations of the ACM 36(3), pp. 47–49. [50] William Silverman, Michael Hirsch, Avshalom Houri & Ehud Shapiro (1988): The Logix system user manual Version 1.21 . In: Concurrent Prolog: Collected Papers , pp. 46–77. [51] A. Takeuchi & K. Furukawa (1987): Bounded Buffer Communication in Concurrent Prolog . In Ehud Shapiro, editor: Concurrent Prolog: Collected Papers, Volume 1 , MIT Press, Cambridge, MA, pp. 464–475. [52] Nimrod Talmon & Ehud Shapiro (2025): Grassroots Federation: Fair Democratic Governance at Scale .
+
+arXiv preprint arXiv:2505.02208; also Proc. of AAMAS’26 .[53] E. D. Tribble, M. S. Miller, K. Kahn, D. G. Bobrow, C. Abbott & E. Shapiro (1987): Channels: A Gener-alization of Streams . In Ehud Shapiro, editor: Concurrent Prolog: Collected Papers, Volume 1 , MIT Press, Cambridge, MA, pp. 446–463. [54] Ubique (1994): Ubique. Wikipedia, The Free Encyclopedia . Available at https://en.wikipedia.org/ wiki/Ubique_(company) .[55] Kazunori Ueda (1986): Guarded Horn Clauses . In: Logic Programming ’85 , Lecture Notes in Computer Science 221, Springer, pp. 168–179, doi:10.1007/3-540-16479-0 17. [56] Kazunori Ueda (2001): Resource-passing concurrent programming . Proceedings of TACS 2001 , pp. 95–126, doi:10.1007/3-540-45500-0 5. [57] Kazunori Ueda & Masao Morita (1994): Moded Flat GHC and Its Message-Oriented Implementation Tech-nique . New Generation Computing 12(4), pp. 337–368, doi:10.1007/BF03038307. [58] Kazunori Ueda & Masao Morita (1995): I/O mode analysis in concurrent logic programming . In: Proceed-ings of the International Symposium on Theory and Practice of Parallel Programming , Springer, pp. 356–368, doi:10.1007/BFb0026579.
