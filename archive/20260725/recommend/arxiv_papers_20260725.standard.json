@@ -1,0 +1,100 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-25T19:59:20.161071+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.20937v1",
+      "source": "arxiv",
+      "title": "Clustered Edge Intelligence: Beyond Just Convergence of Edge Computing and AI",
+      "abstract": "We are moving from an information age to the age of intelligence. A decade, or possibly less than that, data will not be the gold anymore rather the derived intelligence out of the data and the information we posses from the edge of the network. Existing Edge Intelligence research focuses mainly on two directions: using AI for edge resource management and deploying lightweight AI models on edge devices. However, existing edge computing research lacks an intelligence-centric framework in which derived intelligence is treated as a first-class, independently manageable entity that can be described, discovered, observed, shared, reused, and dynamically clustered across heterogeneous edge devices and applications. To address these research gaps, we introduced Clustered Edge Intelligence, a visionary intelligence-centric approach. The aim of CEI is to make intelligence a shareable and reusable first-class entity that can be independently represented, discovered, observed, exchanged, and managed across the distributed edge-cloud continuum. We present a three layer CEI architecture and examine enabling technologies and research dimensions, including intelligence inventories, semantic knowledge representation, communication, discoverability, observability, lifecycle automation, clustering mechanisms, marketplaces, interoperability, and standardization.",
+      "authors": [
+        "Chinmaya Kumar Dehury",
+        "Boris Sedlak",
+        "Alaa Saleh",
+        "Ilir Murturi",
+        "Lauri Loven",
+        "Satish Narayana Srirama",
+        "Praveen Kumar Donta"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.DC"
+      ],
+      "published": "2026-07-23T05:31:17+00:00",
+      "link": "https://arxiv.org/pdf/2607.20937v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "clustered edge intelligence framework for managing intelligence across edge devices",
+      "llm_evidence_cn": "集群边缘智能框架，将派生智能作为可管理实体在异构边缘设备间共享重用",
+      "llm_evidence": "集群边缘智能框架，将派生智能作为可管理实体在异构边缘设备间共享重用",
+      "canonical_evidence": "集群边缘智能框架，将派生智能作为可管理实体在异构边缘设备间共享重用",
+      "llm_tldr_en": "Proposes Clustered Edge Intelligence treating derived intelligence as a first-class entity for sharing and dynamic clustering across heterogeneous edge devices, enabling edge-cloud collaboration.",
+      "llm_tldr_cn": "现有边缘智能研究多关注AI管理资源或轻量模型部署，缺乏以智能为核心的可管理框架。本文提出集群边缘智能（Clustered Edge Intelligence），将派生智能作为一等实体，支持跨异构边缘设备的描述、发现、共享、重用和动态聚类。该方法填补了智能中心化框架的空白，为边缘云协同智能体系统提供了基础。但论文未展示具体实验结果，侧重于概念和架构。",
+      "llm_tldr": "现有边缘智能研究多关注AI管理资源或轻量模型部署，缺乏以智能为核心的可管理框架。本文提出集群边缘智能（Clustered Edge Intelligence），将派生智能作为一等实体，支持跨异构边缘设备的描述、发现、共享、重用和动态聚类。该方法填补了智能中心化框架的空白，为边缘云协同智能体系统提供了基础。但论文未展示具体实验结果，侧重于概念和架构。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.19336v1",
+      "source": "arxiv",
+      "title": "Agents in the Wild: Where Research Meets Deployment",
+      "abstract": "Agentic systems large language model (LLM) based architectures capable of reasoning, planning, acting, and coordinating with tools and other agents are rapidly transitioning from research prototypes to production scale deployments across domains such as software engineering, scientific discovery, and finance. While academic work has emphasized benchmarks and algorithmic innovation, deployment raises new challenges around robustness, safety, and reliability. This tutorial brings together researchers and practitioners to explore advances in reasoning and planning, multi agent coordination, and evaluation, highlighting open challenges arising from deployment experience. Through applied case studies in pharmaceutical discovery and financial systems, we analyze common design patterns that make agentic systems successful, and discuss practical mitigation strategies for failure modes, such as verification pipelines, fallback mechanisms, and human in the loop supervision. Attendees will gain a comprehensive view of the field along with concrete design patterns, evaluation checklists, and templates for safe and reliable deployment across industries.",
+      "authors": [
+        "Grace Hui Yang",
+        "Pranav N. Venkit",
+        "Hooman Sedghamiz",
+        "Enrico Santus",
+        "Victor Dibia",
+        "Ioana Baldini"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-21T17:55:10+00:00",
+      "link": "https://arxiv.org/pdf/2607.19336v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "tutorial on deployment challenges and multi-agent coordination in LLM agent systems",
+      "llm_evidence_cn": "关于LLM智能体系统部署挑战和多智能体协调的教程",
+      "llm_evidence": "关于LLM智能体系统部署挑战和多智能体协调的教程",
+      "canonical_evidence": "关于LLM智能体系统部署挑战和多智能体协调的教程",
+      "llm_tldr_en": "This tutorial bridges research and deployment of LLM-based agentic systems, covering reasoning, planning, multi-agent coordination, and evaluation with case studies.",
+      "llm_tldr_cn": "随着LLM智能体从研究原型走向生产部署，面临鲁棒性、安全性和可靠性新挑战。本教程汇聚研究人员和实践者，探讨推理、规划、多智能体协调和评估的进展，并通过制药发现和金融系统案例研究分析通用设计模式。虽然不直接聚焦边缘云，但其多智能体协调和部署经验对端云协同智能体系统具有重要借鉴意义。",
+      "llm_tldr": "随着LLM智能体从研究原型走向生产部署，面临鲁棒性、安全性和可靠性新挑战。本教程汇聚研究人员和实践者，探讨推理、规划、多智能体协调和评估的进展，并通过制药发现和金融系统案例研究分析通用设计模式。虽然不直接聚焦边缘云，但其多智能体协调和部署经验对端云协同智能体系统具有重要借鉴意义。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

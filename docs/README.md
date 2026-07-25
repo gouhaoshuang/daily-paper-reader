@@ -6,41 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-24
-- 运行时间：2026-07-24 20:43:51 UTC
+- 最新运行日期：2026-07-25
+- 运行时间：2026-07-25 20:01:15 UTC
 - 运行状态：成功
-- 本次总论文数：7
+- 本次总论文数：2
 - 精读区：1
-- 速读区：6
+- 速读区：1
 
 ### 今日简报（AI）
-今日推荐7篇论文，精读聚焦《FedAgentKE》异构智能体联邦语义知识演化（8.0分），速读覆盖多智能体系统信息瓶颈视角与去中心化协调三难问题。最值得关注的是联邦知识演化与多智能体何时有效的理论分析。建议优先精读《FedAgentKE》，并速读《When Do Multi-Agent Systems Help?》以理解辅助决策边界。
-- 详情：[/202607/24/README](/202607/24/README)
+今日精读《Clustered Edge Intelligence》并速读《Agents in the Wild》，重点关注边缘计算与AI的聚类融合方向。最值得深入的是前者的高评分结论——边缘智能正从简单协同走向结构化集群部署。建议优先阅读这篇精读论文，它揭示了该领域未来演进的关键趋势。
+- 详情：[/202607/25/README](/202607/25/README)
 
 ### 精读区论文标签
-1. [FedAgentKE: Federated Semantic Knowledge Evolution for Heterogeneous Agents](/202607/24/2607.21361v1-fedagentke-federated-semantic-knowledge-evolution-for-heterogeneous-agents)  
-   标签：评分：8.0/10、query:eca
-   evidence：异构分布式智能体的联邦知识演化
+1. [Clustered Edge Intelligence: Beyond Just Convergence of Edge Computing and AI](/202607/25/2607.20937v1-clustered-edge-intelligence-beyond-just-convergence-of-edge-computing-and-ai)  
+   标签：评分：9.0/10、query:eca
+   evidence：集群边缘智能框架，将派生智能作为可管理实体在异构边缘设备间共享重用
 
 ### 速读区论文标签
-1. [When Do Multi-Agent Systems Help? An Information Bottleneck Perspective](/202607/24/2607.16133v1-when-do-multi-agent-systems-help-an-information-bottleneck-perspective)  
-   标签：评分：7.0/10、query:eca
-   evidence：多智能体系统协作与有界中继
-2. [The Optimization Trilemma: Efficiency, Comfort and Fairness in Decentralized Multi-agent Coordination](/202607/24/2607.17311v1-the-optimization-trilemma-efficiency-comfort-and-fairness-in-decentralized-multi-agent-coordination)  
-   标签：评分：7.0/10、query:eca
-   evidence：去中心化多智能体协调与公平性
-3. [HiMe: Real-Time Self-Hosted Personal Agent Platform for Health Insights with Wearable Devices](/202607/24/2607.21019v1-hime-real-time-self-hosted-personal-agent-platform-for-health-insights-with-wearable-devices)  
-   标签：评分：7.0/10、query:eca
-   evidence：本地部署的可穿戴健康个人智能体平台
-4. [CHMAS: A Coupled Hierarchical Framework for Multi-Agent Reinforcement Learning](/202607/24/2607.19555v1-chmas-a-coupled-hierarchical-framework-for-multi-agent-reinforcement-learning)  
+1. [Agents in the Wild: Where Research Meets Deployment](/202607/25/2607.19336v1-agents-in-the-wild-where-research-meets-deployment)  
    标签：评分：6.0/10、query:eca
-   evidence：耦合分层多智能体框架，全局策略与分布式战术执行
-5. [LLMs Get Lost in Evolving User Intent](/202607/24/2607.20734v1-llms-get-lost-in-evolving-user-intent)  
-   标签：评分：6.0/10、query:eca
-   evidence：协作代理适应动态演变的用户意图
-6. [GLP: A Grassroots, Multiagent, Concurrent, Logic Programming Language for AI](/202607/24/2607.21189v1-glp-a-grassroots-multiagent-concurrent-logic-programming-language-for-ai)  
-   标签：评分：6.0/10、query:eca
-   evidence：草根多智能体并发逻辑编程语言
+   evidence：关于LLM智能体系统部署挑战和多智能体协调的教程
 
 
 <div class="dpr-home-promo-card">
