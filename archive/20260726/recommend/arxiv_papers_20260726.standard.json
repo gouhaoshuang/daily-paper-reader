@@ -1,0 +1,344 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-26T20:21:41.352026+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2607.20734v1",
+      "source": "arxiv",
+      "title": "LLMs Get Lost in Evolving User Intent",
+      "abstract": "As LLMs become more capable, they are increasingly deployed as collaborative agents, taking on user-delegated tasks through iterative interaction. Yet genuine interaction is inherently dynamic: users rarely specify their intent upfront, instead disclosing, revising, and reshaping it as the conversation unfolds. Despite this, LLMs are still predominantly evaluated or trained in single-turn, fully-specified settings, leaving open a fundamental question: how well do LLMs track and act on user intent as it evolves over the course of a conversation? To study this, we introduce a framework that transforms static, single-turn tasks into dynamic multi-turn conversations in which the user's intent evolves across turns--incrementally revealed, revised, and at times redirected mid-conversation--while preserving each task's original evaluation protocol, enabling existing benchmarks to be reused as controlled testbeds without new annotation. Across multiple tasks, we surface a consistent phenomenon: strong static-setting performance does not transfer to the evolving-intent setting, with substantial drops across model families. Our findings point to a fundamental gap: today's LLMs do not yet faithfully track and act on the user's evolving intent, a capability invisible to static evaluation yet critical for future collaborative agents.",
+      "authors": [
+        "Jihoon Tack",
+        "Philippe Laban",
+        "Jennifer Neville"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-22T21:14:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.20734v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "study on LLMs as collaborative agents failing to track evolving user intent in multi-turn conversations",
+      "llm_evidence_cn": "研究LLM作为协作智能体在多轮对话中跟踪演变意图的失败",
+      "llm_evidence": "研究LLM作为协作智能体在多轮对话中跟踪演变意图的失败",
+      "canonical_evidence": "研究LLM作为协作智能体在多轮对话中跟踪演变意图的失败",
+      "llm_tldr_en": "Finds that LLMs struggle to track evolving user intent in dynamic multi-turn conversations, proposing a framework to convert static tasks into intent-evolution scenarios.",
+      "llm_tldr_cn": "当前LLM评估多基于静态单轮任务，忽略用户意图动态演变。本文提出框架将静态任务转化为多轮对话，其中用户意图逐步揭示、修订和重定向。实验揭示LLM在协作式交互中意图跟踪能力的严重不足，对端云协同智能体的协作能力评估具有直接参考价值。",
+      "llm_tldr": "当前LLM评估多基于静态单轮任务，忽略用户意图动态演变。本文提出框架将静态任务转化为多轮对话，其中用户意图逐步揭示、修订和重定向。实验揭示LLM在协作式交互中意图跟踪能力的严重不足，对端云协同智能体的协作能力评估具有直接参考价值。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.21357v1",
+      "source": "arxiv",
+      "title": "Toward Federated Cognitive Digital Twins over the Edge-to-Cloud Continuum",
+      "abstract": "Digital Twins (DTs) are increasingly adopted to monitor, analyze, and optimize Cyber-Physical Systems (CPSs) through continuous interaction between physical assets and their digital counterparts. However, current DT architectures often rely on centralized and monolithic designs, leading to scalability, latency, and resilience issues in distributed environment such as smart cities. Moreover, they provide limited support for semantic integration and high-level reasoning, reducing the effectiveness of DT-based decision-making. Recent studies on Federated Digital Twins (FDTs) have addressed scalability by decomposing complex systems into interacting twins, but they still largely centralize intelligence in cloud components. In parallel, Cognitive Digital Twins (CDTs) enhance DTs with semantic reasoning, explainability, and AI-driven decision support, yet they are typically difficult to integrate into distributed architectures. This paper proposes a Federated Cognitive Digital Twin (FCDT) architecture that combines federation and cognition within a unified approach. The architecture distributes intelligence across the edge-to-cloud continuum through local twins, which provide real-time monitoring and lightweight cognitive capabilities, and global twins, which perform system-level reasoning, simulation, and coordination. By integrating distributed autonomy with cognitive reasoning, the proposed approach improves scalability, responsiveness, and decision-making in complex distributed CPSs",
+      "authors": [
+        "Alessandra Somma",
+        "Alessio Bucaioni"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-07-23T14:20:59+00:00",
+      "link": "https://arxiv.org/pdf/2607.21357v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "addresses federated cognitive digital twins over edge-to-cloud continuum",
+      "llm_evidence_cn": "提出边缘-云连续体上的联邦认知数字孪生",
+      "llm_evidence": "提出边缘-云连续体上的联邦认知数字孪生",
+      "canonical_evidence": "提出边缘-云连续体上的联邦认知数字孪生",
+      "llm_tldr_en": "Proposes Federated Cognitive Digital Twins over the edge-to-cloud continuum to overcome centralized limitations, enabling scalable and resilient collaborative AI agent systems.",
+      "llm_tldr_cn": "当前数字孪生架构多为集中式，存在可扩展性和延迟问题。本文提出边缘-云连续体上的联邦认知数字孪生，通过将智能分布到边缘和云，支持语义集成和高层推理，实现可扩展、低延迟的协作AI系统。在智慧城市等分布式环境中具有重要应用前景。",
+      "llm_tldr": "当前数字孪生架构多为集中式，存在可扩展性和延迟问题。本文提出边缘-云连续体上的联邦认知数字孪生，通过将智能分布到边缘和云，支持语义集成和高层推理，实现可扩展、低延迟的协作AI系统。在智慧城市等分布式环境中具有重要应用前景。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.17154v1",
+      "source": "arxiv",
+      "title": "OrderMoE: An expert similarity driven distributed edge MoE inference",
+      "abstract": "Although mixture-of-experts, MoE, models have been increasingly adopted to scale large language models with moderate computation cost, it remains challenging to deploy MoE inference over resource-constrained and bandwidth-limited edge infrastructures. Existing distributed MoE serving methods mainly rely on exact expert placement, caching, replication, or communication scheduling, while overlooking the functional similarity among experts, which provides an opportunity to reduce cross-server token transmission. Therefore, this paper introduces a similarity-aware expert allocation and distributed deployment framework, dubbed OrderMoE, which aims to accelerate edge MoE inference while balancing inference latency, communication overhead, server workload, and inference quality. OrderMoE first constructs an expert similarity model based on router-induced logits representations and partitions experts in each MoE layer into multiple similarity groups. Then, it develops a similarity-aware expert grouping and deployment strategy to improve local similarity coverage across edge servers. Since reducing remote expert invocation and preserving exact inference quality are conflicting objectives, OrderMoE further designs a quality-aware and trajectory-aware runtime server-expert selection algorithm to decide whether a token should invoke its remote target expert or use a feasible local substitute expert. Experimental results on a real distributed edge testbed show that OrderMoE significantly reduces average latency, tail latency, cross-server traffic, and remote expert invocation ratio, while introducing only small and controllable inference quality degradation.",
+      "authors": [
+        "Xin Yuan",
+        "Ning Li",
+        "Quan Chen",
+        "Wenchao Xu",
+        "Athanasios V. Vasilakos",
+        "Song Guo",
+        "Haijun Zhang"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.DC",
+        "cs.LG"
+      ],
+      "published": "2026-07-19T09:20:21+00:00",
+      "link": "https://arxiv.org/pdf/2607.17154v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "similarity-aware expert allocation for distributed edge MoE inference",
+      "llm_evidence_cn": "基于专家相似性的分布式边缘MoE推理分配",
+      "llm_evidence": "基于专家相似性的分布式边缘MoE推理分配",
+      "canonical_evidence": "基于专家相似性的分布式边缘MoE推理分配",
+      "llm_tldr_en": "Introduces OrderMoE, a similarity-aware framework for distributed MoE inference on edge, reducing cross-server token transmission by exploiting expert functional similarity.",
+      "llm_tldr_cn": "在资源受限的分布式边缘部署MoE模型面临高通信开销。本文提出OrderMoE，利用专家功能相似性优化分配，减少跨服务器令牌传输，平衡推理延迟、通信、负载等多目标，直接匹配分布式边缘协同智能体架构需求。",
+      "llm_tldr": "在资源受限的分布式边缘部署MoE模型面临高通信开销。本文提出OrderMoE，利用专家功能相似性优化分配，减少跨服务器令牌传输，平衡推理延迟、通信、负载等多目标，直接匹配分布式边缘协同智能体架构需求。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.17331v1",
+      "source": "arxiv",
+      "title": "Agentic ERP: Multi-Agent Large Language Model Architecture for Autonomous Enterprise Resource Planning",
+      "abstract": "Enterprise Resource Planning (ERP) systems record transactions reliably but still delegate almost all operational decision-making to human specialists, because classical rule-based automation cannot reason about exceptions and monolithic AI assistants degrade when asked to coordinate across functional boundaries. This paper presents Agentic ERP, an expert-system architecture that combines role-aligned large-language-model (LLM) agents with a risk-tiered human-in-the-loop harness and a graph-based orchestrator to execute end-to-end business workflows on a production ERP backend. First, autonomous ERP operation is formulated as a constrained sequential-decision problem over a structured enterprise state, with a decomposition argument linking role-aligned agents to a measurable reduction in per-step tool-selection complexity. Second, a graph-based Planner--Executor--Reflector--Responder orchestration decouples generation from evaluation through externalised grading criteria and sprint contracts, packaging recent harness-engineering principles as inspectable expert-system artefacts. Third, the system is evaluated at three levels: a scenario-based task suite, a comprehensive comparison of six orchestration paradigms on cross-functional crisis tasks, and a 365-day agent-in-the-loop simulation against rule-based RPA and no-intervention baselines. Across these levels the proposed multi-agent method is significantly better than the baseline, and the system sustains a simulated year of operation with zero stockouts while the rule-based baseline accumulates hundreds under the same demand stream. The work shows that role-aligned LLM agents under human oversight can move an ERP system from passively recording transactions to actively executing operational decisions, and it provides a reference architecture and an evaluation protocol for autonomous enterprise resource planning.",
+      "authors": [
+        "Zhihao Liu",
+        "Tianyu Wang",
+        "Xi Vincent Wang",
+        "Lihui Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-07-19T16:40:41+00:00",
+      "link": "https://arxiv.org/pdf/2607.17331v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent architecture for autonomous ERP workflows with role-aligned agents",
+      "llm_evidence_cn": "面向自主ERP的多智能体架构，采用角色对齐的智能体",
+      "llm_evidence": "面向自主ERP的多智能体架构，采用角色对齐的智能体",
+      "canonical_evidence": "面向自主ERP的多智能体架构，采用角色对齐的智能体",
+      "llm_tldr_en": "Agentic ERP presents a multi-agent LLM architecture with role-aligned agents, risk-tiered human-in-the-loop, and graph-based orchestrator for end-to-end autonomous enterprise workflows.",
+      "llm_tldr_cn": "该论文针对ERP系统依赖人工决策且单体AI难以跨功能协调的问题，提出了Agentic ERP架构。该架构结合角色对齐的LLM智能体、风险分层的人机协同机制和图基编排器，在生产ERP后端上执行端到端业务流程。通过将自主ERP操作建模为有约束的序列决策问题，并分解为企业状态，实现了跨功能边界的自主决策。实验表明该架构在多个业务场景中有效提升了自动化水平，为多智能体协作系统提供了可参考的范例。",
+      "llm_tldr": "该论文针对ERP系统依赖人工决策且单体AI难以跨功能协调的问题，提出了Agentic ERP架构。该架构结合角色对齐的LLM智能体、风险分层的人机协同机制和图基编排器，在生产ERP后端上执行端到端业务流程。通过将自主ERP操作建模为有约束的序列决策问题，并分解为企业状态，实现了跨功能边界的自主决策。实验表明该架构在多个业务场景中有效提升了自动化水平，为多智能体协作系统提供了可参考的范例。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.18975v1",
+      "source": "arxiv",
+      "title": "Mi-Memory: A Lifecycle Memory Framework for Personal AI",
+      "abstract": "Personal AI is moving beyond chat-only interaction toward continuous services that span phones, cars, homes, wearables, cameras, and tools. In this setting, memory cannot remain a cache of prior conversations. It should serve as a continuity and governance substrate: preserving durable user state, grounding answers in multimodal and device evidence, supporting correction and forgetting, bounding policy evolution, and remaining deployable under latency, cost, privacy, and edge-cloud constraints. This technical report presents Mi-Memory, a lifecycle memory framework for Personal AI organized around four roles: Structure, Expansion, Evolution, and Deployment. A shared audit contract links these roles through four recurring artifact families: typed evidence payloads preserve source identity and provenance, diagnostic traces localize evidence loss across the serving pipeline, strategy artifacts make memory-policy changes explicit, and gate/rollback records bound accepted evolution. MiMemory instantiates the roles through MemStack, MemSense/MemFuse, D$^{2}$ACCI/E$^{2}$MEND, and LiteMem. In controlled-reference Structure evaluations, MemStack reaches 93.59%, 57.24%, and 87.47% on LoCoMo, PersonaMem-V2, and LongMemEval, respectively; other tracks report module-level, preliminary/internal, transfer-feasibility, or design-only evidence with explicit boundaries. MiMemory is a step toward auditable, evidence-gated, and deployment-aware memory systems for Personal AI. Project homepage: https://darwin-agent.github.io/Mi-Memory/ .",
+      "authors": [
+        "Xule Liu",
+        "Hanlin Teng",
+        "Chao Li",
+        "Yanan Ni",
+        "Shuo Lu",
+        "Audrey Wang",
+        "Yijun Liu",
+        "Yunfei Wang",
+        "Xiaofeng Li",
+        "Xian Yi",
+        "Yuanfa Li",
+        "Kang Zhao",
+        "Jian Liang",
+        "Yuxuan Chen",
+        "Jinyuan Chen",
+        "Heng Qu",
+        "Kun Shao",
+        "Jian Luan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-21T11:10:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.18975v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "personal AI memory framework for mobile devices with edge-cloud constraints",
+      "llm_evidence_cn": "面向移动设备和边缘云约束的个人AI记忆框架",
+      "llm_evidence": "面向移动设备和边缘云约束的个人AI记忆框架",
+      "canonical_evidence": "面向移动设备和边缘云约束的个人AI记忆框架",
+      "llm_tldr_en": "Mi-Memory provides a lifecycle memory framework for personal AI that spans devices and edge-cloud constraints, enabling continuous service.",
+      "llm_tldr_cn": "个人AI从聊天式交互扩展到跨手机、汽车、家居等连续服务，现有记忆仅为对话缓存。Mi-Memory提出生命周期记忆框架，包含结构、扩展、演进和部署四个角色，通过统一审计合约管理记忆证据，满足延迟、成本、隐私和边缘云约束。为移动AI智能体的长效记忆提供了系统化方案。",
+      "llm_tldr": "个人AI从聊天式交互扩展到跨手机、汽车、家居等连续服务，现有记忆仅为对话缓存。Mi-Memory提出生命周期记忆框架，包含结构、扩展、演进和部署四个角色，通过统一审计合约管理记忆证据，满足延迟、成本、隐私和边缘云约束。为移动AI智能体的长效记忆提供了系统化方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.20709v1",
+      "source": "arxiv",
+      "title": "NVIDIA-labs OO Agents: Native Python Object-Oriented Agents",
+      "abstract": "Traditional agent development is split across prompt templates, tool schemas, callback code, and workflow graphs. We present NVIDIA Object-Oriented Agents (NOOA), a model-agnostic Python framework for building reliable AI agents. NOOA takes a simpler approach: an agent is a Python object. Its methods are the actions the model can take, fields are its state, docstrings are its prompts, and its type annotations are contracts. A method whose code body consists of \"...\" is completed at runtime by an LLM-driven agent loop, while methods with normal bodies remain standard deterministic Python. This gives developers and agents the same interface, so agent behavior can be tested, traced, refactored, and improved just like other software.   This paper makes three contributions. (1) We present the agent-as-a-Python-object programming model and the design principles behind it. Where Python has existing abstractions, we adopt them directly. Agent-specific capabilities--context, events, state rendering, long-term memory, and validated LLM loops--are exposed through simple Pythonic APIs, so both developers and agents share one familiar programming model. (2) We identify six model-facing ideas that NOOA is, to our knowledge, the first to combine on a single surface: typed input/output, pass-by-reference over live objects, code as action, programmable loop engineering, explicit object state, and model-callable harness APIs for context and events. We find the community already converging on several of these ideas--often as experimental or partial features--and present the comparison to encourage further adoption. (3) We demonstrate that current models use this interface effectively, both in targeted capability tests and on agentic and reasoning benchmarks such as SWE-bench Verified and Terminal-Bench 2.0 and ARC-AGI-3.",
+      "authors": [
+        "Paul Furgale",
+        "Severin Klingler",
+        "James Nolan",
+        "Matt Staats",
+        "Gaia Di Lorenzo",
+        "Elisa Martinez Abad",
+        "Christian Schüller",
+        "Razvan Dinu",
+        "Alessio Devoto",
+        "Pascal Berard",
+        "Gal Kaplun",
+        "Elad Sarafian",
+        "Riccardo Roveri",
+        "Leon Derczynski",
+        "Ricardo Silveira Cabral"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-22T20:25:55+00:00",
+      "link": "https://arxiv.org/pdf/2607.20709v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "object-oriented agent framework enabling reliable agent development across platforms",
+      "llm_evidence_cn": "面向对象智能体框架支持多种平台上可靠智能体的开发",
+      "llm_evidence": "面向对象智能体框架支持多种平台上可靠智能体的开发",
+      "canonical_evidence": "面向对象智能体框架支持多种平台上可靠智能体的开发",
+      "llm_tldr_en": "NVIDIA Object-Oriented Agents (NOOA) is a model-agnostic Python framework that treats agents as Python objects, unifying prompts, tools, and state, enabling testable and refactorable agent development.",
+      "llm_tldr_cn": "该论文针对传统智能体开发中提示模板、工具模式、回调代码和工作流图分离的问题，提出了NVIDIA面向对象智能体（NOOA）框架。NOOA将智能体视为Python对象，方法作为动作，字段作为状态，文档字符串作为提示，类型注解作为契约。带有...代码体的方法由LLM驱动的循环在运行时完成，正常方法体保持确定性执行。该框架使开发者和智能体共享同一接口，便于测试、追踪、重构和优化。NOOA提供了一个模型无关、可跨平台部署的智能体构建方案，对移动和边缘智能体开发具有直接应用价值。",
+      "llm_tldr": "该论文针对传统智能体开发中提示模板、工具模式、回调代码和工作流图分离的问题，提出了NVIDIA面向对象智能体（NOOA）框架。NOOA将智能体视为Python对象，方法作为动作，字段作为状态，文档字符串作为提示，类型注解作为契约。带有...代码体的方法由LLM驱动的循环在运行时完成，正常方法体保持确定性执行。该框架使开发者和智能体共享同一接口，便于测试、追踪、重构和优化。NOOA提供了一个模型无关、可跨平台部署的智能体构建方案，对移动和边缘智能体开发具有直接应用价值。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.18970v1",
+      "source": "arxiv",
+      "title": "Skillware: A Software Ontology and Engineering Lifecycle for Persistent Behavioral Artifacts",
+      "abstract": "Agent Skills have become persistent behavioral artifacts across independent AI agent systems. They combine natural-language task specifications with metadata and optional references, scripts, assets, hooks, package manifests, tests, and companion interfaces. Existing studies explain how Skills are specified, executed, maintained, and evolved, but lack an ontology that defines these artifacts as independent software objects. This paper introduces Skillware as the software abstraction that extends software engineering to persistent Behavioral Artifacts in agent systems. A Skill Artifact specifies reusable task behavior; a Skillware Unit manages that artifact as software through an independent identity and lifecycle. A compatible Agent Host activates the unit for runtime interpretation. Three necessary conditions operationalize category membership: behavioral primacy, independent software identity, and an Agent Host execution relationship. Lifecycle Continuity records whether the same unit identity persists through update, maintenance, rollback, and removal as a separate software-grade property. Evidence combines the Agent Skills specification, a frozen corpus of 138,133 content-deduplicated SKILL.md records associated with 20,556 repository identifiers, independent empirical studies, 15 category-boundary cases, and 13 fixed-revision engineering implementations. The evidence establishes a recurring artifact envelope, separable software identities, compatible execution paths, and lifecycle engineering pressure. Skillware provides the software ontology and engineering lifecycle through which agent capabilities can become identifiable, composable, maintainable, and evolvable software artifacts.",
+      "authors": [
+        "Haodi Fan",
+        "Zucong Lan"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE",
+        "cs.AI"
+      ],
+      "published": "2026-07-21T11:03:56+00:00",
+      "link": "https://arxiv.org/pdf/2607.18970v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agent skills as reusable behavioral artifacts enabling persistent agent capabilities",
+      "llm_evidence_cn": "智能体技能作为可复用行为工件，支持持久化能力",
+      "llm_evidence": "智能体技能作为可复用行为工件，支持持久化能力",
+      "canonical_evidence": "智能体技能作为可复用行为工件，支持持久化能力",
+      "llm_tldr_en": "Introduces Skillware as a software abstraction for persistent behavioral artifacts in AI agent systems, defining identity and lifecycle management for skill artifacts.",
+      "llm_tldr_cn": "现有AI智能体系统缺乏对行为工件的软件本体定义。本文提出Skillware，将智能体技能抽象为独立软件对象，赋予其身份和生命周期管理。该抽象方法支持技能的可复用和持久化，对移动端智能体能力复用具有直接价值。",
+      "llm_tldr": "现有AI智能体系统缺乏对行为工件的软件本体定义。本文提出Skillware，将智能体技能抽象为独立软件对象，赋予其身份和生命周期管理。该抽象方法支持技能的可复用和持久化，对移动端智能体能力复用具有直接价值。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.21324v1",
+      "source": "arxiv",
+      "title": "GRADRAG: Cross-Component Prompt Adaptation for Coordinated Multi-Agent RAG",
+      "abstract": "Retrieval-Augmented Generation (RAG) systems increasingly employ multiple LLM agents. Yet, most prior work optimizes components in isolation rather than coordinating improvements across the pipeline. We introduce GRADRAG, a framework for cross-component prompt adaptation that models the RAG pipeline as a computational graph and propagates structured evaluation feedback to update upstream agents. An Evaluator critiques downstream answers and supporting evidence, producing actionable feedback that a Prompt Optimizer uses to iteratively update adaptive agents, such as retrievers, graph constructors, and answerers. The Evaluator also triggers early stopping when the output is deemed satisfactory. We evaluate GRADRAG on the SQUALITY and QMSUM benchmarks under two retrieval paradigms: flat chunk-based retrieval using IRCoT-style query refinement (Trivedi et al., 2023), and graph-based retrieval that constructs and iteratively enriches an entity-relation graph from the document. Across both settings, GRADRAG consistently outperforms one-step refinement baselines that update only the final generator, achieving a 12-15 percentage point net preference margin in LLM-judged pairwise comparisons, with most gains realized within two refinement iterations.",
+      "authors": [
+        "Paolo Pedinotti",
+        "Enrico Santus"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-07-23T13:54:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.21324v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent coordination and collaboration in RAG pipeline",
+      "llm_evidence_cn": "多智能体RAG中的协调协作",
+      "llm_evidence": "多智能体RAG中的协调协作",
+      "canonical_evidence": "多智能体RAG中的协调协作",
+      "llm_tldr_en": "GRADRAG coordinates multi-agent RAG via cross-component prompt adaptation and evaluation feedback, improving overall performance.",
+      "llm_tldr_cn": "现有RAG系统优化各组件孤立，GRADRAG通过计算图建模并传播结构化评估反馈，协调更新检索器、图构建器和回答器等上游智能体。在SQUALITY和QMSUM基准上验证了有效性，为多智能体协作提供了通用方法。",
+      "llm_tldr": "现有RAG系统优化各组件孤立，GRADRAG通过计算图建模并传播结构化评估反馈，协调更新检索器、图构建器和回答器等上游智能体。在SQUALITY和QMSUM基准上验证了有效性，为多智能体协作提供了通用方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
