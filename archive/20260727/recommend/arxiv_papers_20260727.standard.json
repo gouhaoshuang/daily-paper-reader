@@ -1,0 +1,374 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-27T20:12:47.223641+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 8,
+    "quick_skim_target": 11,
+    "quick_selected": 8
+  },
+  "deep_dive": [
+    {
+      "id": "2607.22400v1",
+      "source": "arxiv",
+      "title": "A Self-Calibrating Agentic AI Framework for Autonomous Edge Resource Allocation",
+      "abstract": "Large Language Models (LLMs) are increasingly deployed as autonomous agents, transitioning from static conversational interfaces to dynamic systems capable of complex reasoning, tool execution, and decision-making. However, the operational reliability of these agentic AI systems is fundamentally challenged by the absence of reliable ground truth in open-ended environments and the risk of increasing operational drift over time. To address this challenge, we propose and experimentally evaluate an agentic AI framework, designed to enforce autonomous integrity within LLM-driven systems. We design a self-calibration mechanism that mitigates drift and dynamically approximates ground truth by incorporating an ARIMA forecaster, without requiring continuous human oversight. To demonstrate the effectiveness and reliability of our methodology, we apply it to the complex domain of profiling the resource usage of zero-knowledge workloads in edge computing networks. Experimental results show that the proposed self-calibrating agentic framework successfully profiles the zero-knowledge workloads, achieving a higher accuracy than baseline LLM agents by 91.7% for resource usage prediction and improving the prediction speed by 71.7% compared to pure profiling, establishing a robust foundation for deploying autonomous AI in decentralized infrastructures. Furthermore, the ground truth generation using the proposed ARIMA leaping algorithm is 52% faster than a standard ARIMA forecasting algorithm, while achieving the same accuracy.",
+      "authors": [
+        "Fin Gentzen",
+        "Marla Grunewald",
+        "Iulisloi Zacarias",
+        "Mounir Bensalem",
+        "Admela Jukan"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI"
+      ],
+      "published": "2026-07-24T15:21:54+00:00",
+      "link": "https://arxiv.org/pdf/2607.22400v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "autonomous edge resource allocation with self-calibrating agent",
+      "llm_evidence_cn": "自校准智能体自主分配边缘资源",
+      "llm_evidence": "自校准智能体自主分配边缘资源",
+      "canonical_evidence": "自校准智能体自主分配边缘资源",
+      "llm_tldr_en": "Proposes an agentic AI framework with a self-calibration mechanism using ARIMA forecaster to mitigate operational drift in edge resource allocation, ensuring integrity without ground truth.",
+      "llm_tldr_cn": "针对边缘资源分配中智能体面临运营漂移和无可靠真实值的问题，该研究提出一种自校准智能体AI框架，通过集成ARIMA预测器动态逼近真实值，实现自主完整性维护。实验表明该方法能有效检测并纠正漂移，保障边缘环境下AI代理的可靠运行，是端云协同场景的重要支撑技术。",
+      "llm_tldr": "针对边缘资源分配中智能体面临运营漂移和无可靠真实值的问题，该研究提出一种自校准智能体AI框架，通过集成ARIMA预测器动态逼近真实值，实现自主完整性维护。实验表明该方法能有效检测并纠正漂移，保障边缘环境下AI代理的可靠运行，是端云协同场景的重要支撑技术。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.19336v1",
+      "source": "arxiv",
+      "title": "Agents in the Wild: Where Research Meets Deployment",
+      "abstract": "Agentic systems large language model (LLM) based architectures capable of reasoning, planning, acting, and coordinating with tools and other agents are rapidly transitioning from research prototypes to production scale deployments across domains such as software engineering, scientific discovery, and finance. While academic work has emphasized benchmarks and algorithmic innovation, deployment raises new challenges around robustness, safety, and reliability. This tutorial brings together researchers and practitioners to explore advances in reasoning and planning, multi agent coordination, and evaluation, highlighting open challenges arising from deployment experience. Through applied case studies in pharmaceutical discovery and financial systems, we analyze common design patterns that make agentic systems successful, and discuss practical mitigation strategies for failure modes, such as verification pipelines, fallback mechanisms, and human in the loop supervision. Attendees will gain a comprehensive view of the field along with concrete design patterns, evaluation checklists, and templates for safe and reliable deployment across industries.",
+      "authors": [
+        "Grace Hui Yang",
+        "Pranav N. Venkit",
+        "Hooman Sedghamiz",
+        "Enrico Santus",
+        "Victor Dibia",
+        "Ioana Baldini"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-21T17:55:10+00:00",
+      "link": "https://arxiv.org/pdf/2607.19336v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "tutorial on deploying multi-agent systems",
+      "llm_evidence_cn": "多智能体系统部署教程",
+      "llm_evidence": "多智能体系统部署教程",
+      "canonical_evidence": "多智能体系统部署教程",
+      "llm_tldr_en": "Tutorial covering advances in reasoning, planning, multi-agent coordination, and evaluation for production deployment of LLM-based agents, with case studies in pharma and finance.",
+      "llm_tldr_cn": "该教程探讨了大语言模型智能体从研究原型到生产部署的关键挑战，包括推理、规划、多智能体协调和评估。通过制药和金融领域的案例研究，分析了常见设计模式与开放问题，为端云协同下的智能体部署提供了实践指导，强调了鲁棒性、安全性和可靠性的重要性。",
+      "llm_tldr": "该教程探讨了大语言模型智能体从研究原型到生产部署的关键挑战，包括推理、规划、多智能体协调和评估。通过制药和金融领域的案例研究，分析了常见设计模式与开放问题，为端云协同下的智能体部署提供了实践指导，强调了鲁棒性、安全性和可靠性的重要性。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.17038v1",
+      "source": "arxiv",
+      "title": "Reward-Driven LLM Agent Workflows: Synthesizing POMDP Routing and Self-Correction for Autonomous Decision-Making",
+      "abstract": "This paper addresses key technical challenges in current large language model (LLM) agent applications, including long-horizon planning, sparse reward attribution, and dynamic environmental interaction, by designing and optimizing an intelligent agent workflow. The proposed architecture is based on the synthesis of core AI paradigms: Visual, Language, Generative, Graph, Multimodal, Reinforcement, and Agent Intelligence. Unlike conventional baseline models that rely on static prompting and lack robust perception-action loops, our approach introduces a Partially Observable Markov Decision Process (POMDP) routing mechanism. This mechanism is augmented with an internal, self-correcting reward model that evaluates decision trajectories before execution. By integrating multimodal inputs and advanced reinforcement learning principles (such as proximal policy optimization and value function approximation), the agent maintains long-term structural memory and dynamically adapts its reasoning pathways to mitigate error accumulation. Empirical experiments on the ALFWorld embodied simulation environment and the WebShop online navigation benchmark demonstrate a 24.5% absolute improvement in task success rate and trajectory efficiency over mainstream baselines like the standard ReAct framework. Comprehensive ablation studies confirm the significant contribution of the reward-driven critique module in suppressing hallucination rates. This research bridges theoretical foundations of reinforcement learning and graph-based memory with autonomous agent workflows. Ultimately, the resulting architecture offers a practical, scalable reference framework for developing artificial intelligence technologies in complex, multi-step autonomous systems. Code is available at https://github.com/01Amez/RLAW_Implementation.",
+      "authors": [
+        "Amez Amanj Ali",
+        "Kuo-Kun Tseng"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-19T02:51:41+00:00",
+      "link": "https://arxiv.org/pdf/2607.17038v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "reward-driven LLM agent workflows for autonomous decision-making applicable to mobile AI agents",
+      "llm_evidence_cn": "奖励驱动的LLM代理工作流用于自主决策，适用于移动AI代理",
+      "llm_evidence": "奖励驱动的LLM代理工作流用于自主决策，适用于移动AI代理",
+      "canonical_evidence": "奖励驱动的LLM代理工作流用于自主决策，适用于移动AI代理",
+      "llm_tldr_en": "Proposes a reward-driven LLM agent workflow integrating POMDP routing and self-correction for autonomous decision-making in dynamic environments.",
+      "llm_tldr_cn": "该论文针对LLM代理在长程规划、稀疏奖励和动态环境中的挑战，提出一种结合POMDP路由机制和内部自纠正奖励模型的工作流架构。通过视觉、语言、强化等多模态智能的融合，实现代理的鲁棒感知-行动循环，显著提升在复杂动态任务中的自主决策能力，为移动AI代理的部署提供了可迁移的方法论。",
+      "llm_tldr": "该论文针对LLM代理在长程规划、稀疏奖励和动态环境中的挑战，提出一种结合POMDP路由机制和内部自纠正奖励模型的工作流架构。通过视觉、语言、强化等多模态智能的融合，实现代理的鲁棒感知-行动循环，显著提升在复杂动态任务中的自主决策能力，为移动AI代理的部署提供了可迁移的方法论。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.21876v1",
+      "source": "arxiv",
+      "title": "Variance-Reduced Q-Learning over Static and Time-Varying Networks",
+      "abstract": "We investigate a decentralized reinforcement learning problem involving multiple agents that interact with the same Markov Decision Process (MDP). The agents can exchange information over a network to collectively learn the optimal state-action value function. For this setting, we introduce a novel epoch-based distributed $Q$-learning algorithm called VRDQ, where within each epoch, agents locally estimate the Bellman optimality operator and diffuse information using a consensus-based protocol. For both static and time-varying networks, we establish high-probability finite-time convergence rates for VRDQ that enjoy linear speedups from collaboration. Crucially, we prove that such speedups in sample-complexity require only $\\tilde{O}(1)$ communication, substantially improving upon the communication costs in prior work.",
+      "authors": [
+        "Sreejeet Maity",
+        "Feng Zhu",
+        "Aritra Mitra",
+        "Robert W. Heath"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-07-24T00:24:09+00:00",
+      "link": "https://arxiv.org/pdf/2607.21876v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Decentralized multi-agent RL with consensus-based communication achieving linear speedups",
+      "llm_evidence_cn": "基于共识通信的分布式多智能体强化学习实现线性加速",
+      "llm_evidence": "基于共识通信的分布式多智能体强化学习实现线性加速",
+      "canonical_evidence": "基于共识通信的分布式多智能体强化学习实现线性加速",
+      "llm_tldr_en": "This paper proposes VRDQ, a distributed Q-learning algorithm with variance reduction that achieves linear speedups through collaboration over static and time-varying networks with only constant communication.",
+      "llm_tldr_cn": "该论文针对多智能体分布式强化学习问题，提出了一种基于epoch的方差缩减Q学习算法VRDQ。智能体在局部估计Bellman最优算子，并通过共识协议交换信息。理论分析证明，在静态和时变网络下，VRDQ均能实现样本复杂度的线性加速，且通信代价仅为常数。该工作为分布式协作学习提供了高效算法和理论保证。",
+      "llm_tldr": "该论文针对多智能体分布式强化学习问题，提出了一种基于epoch的方差缩减Q学习算法VRDQ。智能体在局部估计Bellman最优算子，并通过共识协议交换信息。理论分析证明，在静态和时变网络下，VRDQ均能实现样本复杂度的线性加速，且通信代价仅为常数。该工作为分布式协作学习提供了高效算法和理论保证。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.18816v1",
+      "source": "arxiv",
+      "title": "AgentTrails: Towards Trust and Reuse for Agentic Tasks",
+      "abstract": "LLM-powered agents increasingly tackle complex tasks by invoking tools, querying databases, executing code, and manipulating intermediate artifacts. These agents follow trajectories that are typically stored as chronological logs, obscuring the underlying dataflow -- the dependencies between their actions and the artifacts they create and manipulate. This limits developers' ability to understand the agents' trails, compare executions, debug failures, and re-use the computations. We present AgentTrails, a prototype system for agent provenance and sensemaking. AgentTrails converts raw trajectories into structured provenance graphs, where tool calls are modeled as computational actions and inputs and outputs as data artifacts. The system supports the comparison of executions by placing multiple provenance graphs on a shared canvas and constructing a joined quotient graph that aligns recurring tools, artifacts, and dependency structures across trajectories. On top of this representation, AgentTrails supports pattern extraction, downstream analysis, and skill abstraction. We demonstrate AgentTrails on real-world agent trajectories, showing that it reveals hidden dependencies, aligns divergent executions, and surfaces recurring tool-use patterns beyond chronological logs.",
+      "authors": [
+        "Eden Wu",
+        "Sonia Castelo",
+        "Yurong Liu",
+        "Cláudio T. Silva",
+        "Juliana Freire"
+      ],
+      "primary_category": "cs.DB",
+      "categories": [
+        "cs.DB",
+        "cs.AI"
+      ],
+      "published": "2026-07-21T07:53:58+00:00",
+      "link": "https://arxiv.org/pdf/2607.18816v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "provenance system for agent trajectories supports collaboration understanding",
+      "llm_evidence_cn": "代理轨迹溯源系统支持协作理解",
+      "llm_evidence": "代理轨迹溯源系统支持协作理解",
+      "canonical_evidence": "代理轨迹溯源系统支持协作理解",
+      "llm_tldr_en": "AgentTrails converts raw agent execution logs into structured provenance graphs, enabling comparison, debugging, and reuse of agent workflows for collaborative tasks.",
+      "llm_tldr_cn": "该论文提出AgentTrails原型系统，将LLM代理的原始轨迹日志转化为结构化溯源图，其中工具调用建模为动作，输入输出为数据工件。系统支持代理执行的比较、调试和计算复用，从而增强对代理协作任务的理解和信任，促进代理工作流的透明性与可重用性。",
+      "llm_tldr": "该论文提出AgentTrails原型系统，将LLM代理的原始轨迹日志转化为结构化溯源图，其中工具调用建模为动作，输入输出为数据工件。系统支持代理执行的比较、调试和计算复用，从而增强对代理协作任务的理解和信任，促进代理工作流的透明性与可重用性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.22242v1",
+      "source": "arxiv",
+      "title": "Agentic CPU-GPU Scheduling for Heterogeneous AI Workloads",
+      "abstract": "Agentic AI systems compose heterogeneous tool workloads on shared GPU/CPU infrastructure, yet existing frameworks assign all GPU-capable tools to the GPU by default. We profile 19 AI tools across GPU and CPU and find that 11 are GPU-preferred, 4 are ambiguous, 1 is CPU-preferred due to PCIe transfer dominance, and 3 are device-neutral, establishing that blanket GPU-first scheduling is suboptimal. We formulate device scheduling as assigning each tool to one of three options: immediate GPU execution, queued GPU execution, or CPU offload, under a VRAM budget, and identify two runtime factors that cause end-to-end latency to diverge from static profiles: GPU utilization contention and VRAM capacity contention. We present an agentic scheduler that pairs an LLM agent with an algorithmic runtime monitor, where the monitor expands what the LLM can observe via running averages, symmetric reprobing, swap reprobing, and exploration hints, without ever prescribing which mapping to adopt. Across 13 scenarios spanning serial execution, parallel contention, and memory-constrained execution, the agentic scheduler reaches the brute-force optimal mapping in all 13 scenarios, matching the best classical baseline on mapping accuracy while avoiding bandit-style exploration over complete mappings, and outperforming HEFT, StarPU, and the all-GPU policy while requiring zero offline training.",
+      "authors": [
+        "Tianxi Lu",
+        "Sherief Reda"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-07-24T12:18:36+00:00",
+      "link": "https://arxiv.org/pdf/2607.22242v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "agentic scheduler for heterogeneous AI workloads",
+      "llm_evidence_cn": "面向异构AI工作负载的智能体调度器",
+      "llm_evidence": "面向异构AI工作负载的智能体调度器",
+      "canonical_evidence": "面向异构AI工作负载的智能体调度器",
+      "llm_tldr_en": "Profiles 19 AI tools to show GPU-first is suboptimal, and presents an agentic scheduler pairing an LLM agent with contention-aware decisions under VRAM budget.",
+      "llm_tldr_cn": "针对现有AI工作负载默认全GPU调度次优的问题，该研究对19个AI工具进行了GPU/CPU性能剖析，发现仅11个GPU优先，其余可CPU执行。提出智能体调度器，结合LLM智能体与资源竞争感知策略，在显存预算下选择即时GPU、排队GPU或CPU卸载，有效降低端到端延迟。该调度方法可应用于边缘云环境下的资源分配。",
+      "llm_tldr": "针对现有AI工作负载默认全GPU调度次优的问题，该研究对19个AI工具进行了GPU/CPU性能剖析，发现仅11个GPU优先，其余可CPU执行。提出智能体调度器，结合LLM智能体与资源竞争感知策略，在显存预算下选择即时GPU、排队GPU或CPU卸载，有效降低端到端延迟。该调度方法可应用于边缘云环境下的资源分配。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.19297v1",
+      "source": "arxiv",
+      "title": "Graph-Based Agentic AI with LangGraph: Workflow Pathways for Long-Running Stateful Business Processes",
+      "abstract": "This paper is a practitioner guide to graph-based workflow pathways for long-running, stateful, multi-step generative AI systems in business processes. Rather than treating LangGraph, a low-level orchestration framework for stateful agents, as a model-quality benchmark target, we present three executable recipes -- SQL analytics with repair loops, agentic retrieval-augmented generation with evidence gating, and human-in-the-loop policy review with interrupt and checkpoint recovery -- to show how typed state, conditional routing, deterministic tools, retries, interrupts, checkpoints, and traces fit together. LangGraph is positioned by workflow-complexity fit, not as a universal default: simpler ReAct-style or plain SDK loops may be better for basic tool use, schema-first tools for structured extraction and validation, and DSPy when prompt or program optimization is the main goal. Each recipe explains when LangGraph is worth the extra structure and which implementation patterns make routes, pauses, and audit trails explicit product behavior rather than hidden prompt logic.",
+      "authors": [
+        "Daniel Pearson",
+        "Sidney Shapiro",
+        "Emiliano Sebastian Gonzalez Venegas",
+        "Sanad Al-Khatib",
+        "Aurora Pinzón Arzola"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-07-21T17:07:13+00:00",
+      "link": "https://arxiv.org/pdf/2607.19297v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "graph-based agentic workflow for stateful processes",
+      "llm_evidence_cn": "基于图的智能体有状态工作流",
+      "llm_evidence": "基于图的智能体有状态工作流",
+      "canonical_evidence": "基于图的智能体有状态工作流",
+      "llm_tldr_en": "Presents three executable recipes using LangGraph for stateful multi-step agent workflows including SQL analytics with repair loops, agentic RAG, and human-in-the-loop review.",
+      "llm_tldr_cn": "为构建长时间运行的有状态智能体工作流，该论文提供了基于LangGraph的三种可执行方案：含修复循环的SQL分析、带证据门控的智能体检索增强生成、含中断与检查点恢复的人工参与审查。展示了状态路由、条件分支等机制如何组合运用，为类似端云协同中的复杂工作流编排提供了参考。",
+      "llm_tldr": "为构建长时间运行的有状态智能体工作流，该论文提供了基于LangGraph的三种可执行方案：含修复循环的SQL分析、带证据门控的智能体检索增强生成、含中断与检查点恢复的人工参与审查。展示了状态路由、条件分支等机制如何组合运用，为类似端云协同中的复杂工作流编排提供了参考。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.20709v1",
+      "source": "arxiv",
+      "title": "NVIDIA-labs OO Agents: Native Python Object-Oriented Agents",
+      "abstract": "Traditional agent development is split across prompt templates, tool schemas, callback code, and workflow graphs. We present NVIDIA Object-Oriented Agents (NOOA), a model-agnostic Python framework for building reliable AI agents. NOOA takes a simpler approach: an agent is a Python object. Its methods are the actions the model can take, fields are its state, docstrings are its prompts, and its type annotations are contracts. A method whose code body consists of \"...\" is completed at runtime by an LLM-driven agent loop, while methods with normal bodies remain standard deterministic Python. This gives developers and agents the same interface, so agent behavior can be tested, traced, refactored, and improved just like other software.   This paper makes three contributions. (1) We present the agent-as-a-Python-object programming model and the design principles behind it. Where Python has existing abstractions, we adopt them directly. Agent-specific capabilities--context, events, state rendering, long-term memory, and validated LLM loops--are exposed through simple Pythonic APIs, so both developers and agents share one familiar programming model. (2) We identify six model-facing ideas that NOOA is, to our knowledge, the first to combine on a single surface: typed input/output, pass-by-reference over live objects, code as action, programmable loop engineering, explicit object state, and model-callable harness APIs for context and events. We find the community already converging on several of these ideas--often as experimental or partial features--and present the comparison to encourage further adoption. (3) We demonstrate that current models use this interface effectively, both in targeted capability tests and on agentic and reasoning benchmarks such as SWE-bench Verified and Terminal-Bench 2.0 and ARC-AGI-3.",
+      "authors": [
+        "Paul Furgale",
+        "Severin Klingler",
+        "James Nolan",
+        "Matt Staats",
+        "Gaia Di Lorenzo",
+        "Elisa Martinez Abad",
+        "Christian Schüller",
+        "Razvan Dinu",
+        "Alessio Devoto",
+        "Pascal Berard",
+        "Gal Kaplun",
+        "Elad Sarafian",
+        "Riccardo Roveri",
+        "Leon Derczynski",
+        "Ricardo Silveira Cabral"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-22T20:25:55+00:00",
+      "link": "https://arxiv.org/pdf/2607.20709v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "object-oriented agent framework in Python",
+      "llm_evidence_cn": "Python面向对象智能体框架",
+      "llm_evidence": "Python面向对象智能体框架",
+      "canonical_evidence": "Python面向对象智能体框架",
+      "llm_tldr_en": "Proposes NOOA, a model-agnostic Python framework where agents are Python objects, methods are actions, fields are state, docstrings are prompts; methods with body ... are LLM-completed.",
+      "llm_tldr_cn": "为解决传统智能体开发碎片化问题，提出NOOA框架，将智能体建模为Python对象：方法作为动作、字段作为状态、文档字符串作为提示，只有空方法体（...）由LLM运行时填充。该框架实现了开发者与智能体统一接口，便于测试和重构，可方便地用于构建端云协同中的智能体组件。",
+      "llm_tldr": "为解决传统智能体开发碎片化问题，提出NOOA框架，将智能体建模为Python对象：方法作为动作、字段作为状态、文档字符串作为提示，只有空方法体（...）由LLM运行时填充。该框架实现了开发者与智能体统一接口，便于测试和重构，可方便地用于构建端云协同中的智能体组件。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.22406v1",
+      "source": "arxiv",
+      "title": "Vibe Coding: An Experiment with Test-Driven Development",
+      "abstract": "Context: Conversational Large Language Models (CLLMs) can automatically generate code by collaborating with users through natural language. However, poor collaboration can lead to poor quality output.   Objective: This exploratory study aims to investigate how humans and CLLMs can collaborate as peers through vibe coding, an approach that integrates principles from prompt engineering, agile design, and human-AI co-creation to enhance collaboration.   Method: We designed four interaction models representing different collaboration patterns in the software development process: the solo model (human-only development), the collaborative model (human-CLLM collaboration), the fully automated model (development autonomously performed by a CLLM), and the agentic model (development autonomously performed by the MetaGPT~X platform). Based on these models, we implemented corresponding Test-Driven Development (TDD) workflows using structured prompts and Python scripts. We then conducted a controlled pre-experimental study with TDD professionals to compare the solo and collaborative workflows. In addition, we performed repeated exploratory executions of fully automated and agentic workflows on the same development tasks to obtain complementary evidence.   Results: Our findings suggest that the choice of interaction model should depend on the development objective. Agentic workflows are best suited for rapid development and functionally correct production code but may introduce additional implementation complexity. However, they may also introduce additional implementation decisions that are not explicitly required by the functional specifications, resulting in untested decision points. In contrast, collaborative workflows produce higher-quality, better-organized test suites.   Conclusions: Our work explored how...",
+      "authors": [
+        "Moritz Mock",
+        "Barbara Russo"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-07-24T15:24:57+00:00",
+      "link": "https://arxiv.org/pdf/2607.22406v1",
+      "tags": [
+        "keyword:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "human-CLLM collaboration in code generation",
+      "llm_evidence_cn": "代码生成中的人机协作",
+      "llm_evidence": "代码生成中的人机协作",
+      "canonical_evidence": "代码生成中的人机协作",
+      "llm_tldr_en": "Explores vibe coding integrating prompt engineering, agile design, and human-AI co-creation to enhance collaboration, with four interaction models including human-CLLM collaboration.",
+      "llm_tldr_cn": "针对大型语言模型与人类协作生成代码中协作质量不足的问题，该研究提出将提示工程、敏捷设计和人机共创融合的vibe编码方法。设计了四种交互模型（包括纯人类、人机协作、全自动和代理模型），通过实验探索协作模式对代码质量的影响。结果表明人机协作模式在特定场景下优于其他模式，为提升人机协作效率提供了新视角。",
+      "llm_tldr": "针对大型语言模型与人类协作生成代码中协作质量不足的问题，该研究提出将提示工程、敏捷设计和人机共创融合的vibe编码方法。设计了四种交互模型（包括纯人类、人机协作、全自动和代理模型），通过实验探索协作模式对代码质量的影响。结果表明人机协作模式在特定场景下优于其他模式，为提升人机协作效率提供了新视角。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

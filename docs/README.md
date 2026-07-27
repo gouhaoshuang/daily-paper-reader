@@ -6,46 +6,47 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-26
-- 运行时间：2026-07-26 20:28:40 UTC
+- 最新运行日期：2026-07-27
+- 运行时间：2026-07-27 20:17:28 UTC
 - 运行状态：成功
-- 本次总论文数：8
-- 精读区：5
-- 速读区：3
+- 本次总论文数：9
+- 精读区：1
+- 速读区：8
 
 ### 今日简报（AI）
-今日精读聚焦LLM在演化用户意图中的迷失与联邦认知数字孪生两大方向，速读补充了多智能体RAG与面向对象智能体实践。
-最值得关注的两篇高分论文：《LLMs Get Lost in Evolving User Intent》揭示大模型对用户意图变化的适应短板，以及《Toward Federated Cognitive Digital Twins over the Edge-to-Cloud Continuum》探索边缘到云联合数字孪生架构。
-普通读者可优先精读这两篇高分论文，理解LLM意图追踪瓶颈与分布式数字孪生协同思路，速读的NVIDIA OO Agents和GRADRAG则展示了多智能体落地案例。
-- 详情：[/202607/26/README](/202607/26/README)
+今日聚焦自校准Agentic AI框架突破边缘资源分配瓶颈，并追踪智能体部署与异构调度研究。精读论文提出的自校准智能体框架可实现自主边缘资源优化，是该领域当前最值得关注的进展。建议优先精读此10分论文，再浏览速读列表中的部署调度研究以拓展视野。
+- 详情：[/202607/27/README](/202607/27/README)
 
 ### 精读区论文标签
-1. [LLMs Get Lost in Evolving User Intent](/202607/26/2607.20734v1-llms-get-lost-in-evolving-user-intent)  
-   标签：评分：9.0/10、query:eca
-   evidence：研究LLM作为协作智能体在多轮对话中跟踪演变意图的失败
-2. [Toward Federated Cognitive Digital Twins over the Edge-to-Cloud Continuum](/202607/26/2607.21357v1-toward-federated-cognitive-digital-twins-over-the-edge-to-cloud-continuum)  
-   标签：评分：9.0/10、query:eca
-   evidence：提出边缘-云连续体上的联邦认知数字孪生
-3. [OrderMoE: An expert similarity driven distributed edge MoE inference](/202607/26/2607.17154v1-ordermoe-an-expert-similarity-driven-distributed-edge-moe-inference)  
-   标签：评分：8.0/10、query:eca
-   evidence：基于专家相似性的分布式边缘MoE推理分配
-4. [Agentic ERP: Multi-Agent Large Language Model Architecture for Autonomous Enterprise Resource Planning](/202607/26/2607.17331v1-agentic-erp-multi-agent-large-language-model-architecture-for-autonomous-enterprise-resource-planning)  
-   标签：评分：8.0/10、query:eca
-   evidence：面向自主ERP的多智能体架构，采用角色对齐的智能体
-5. [Mi-Memory: A Lifecycle Memory Framework for Personal AI](/202607/26/2607.18975v1-mi-memory-a-lifecycle-memory-framework-for-personal-ai)  
-   标签：评分：8.0/10、query:eca
-   evidence：面向移动设备和边缘云约束的个人AI记忆框架
+1. [A Self-Calibrating Agentic AI Framework for Autonomous Edge Resource Allocation](/202607/27/2607.22400v1-a-self-calibrating-agentic-ai-framework-for-autonomous-edge-resource-allocation)  
+   标签：评分：10.0/10、query:eca
+   evidence：自校准智能体自主分配边缘资源
 
 ### 速读区论文标签
-1. [NVIDIA-labs OO Agents: Native Python Object-Oriented Agents](/202607/26/2607.20709v1-nvidia-labs-oo-agents-native-python-object-oriented-agents)  
+1. [Agents in the Wild: Where Research Meets Deployment](/202607/27/2607.19336v1-agents-in-the-wild-where-research-meets-deployment)  
    标签：评分：7.0/10、query:eca
-   evidence：面向对象智能体框架支持多种平台上可靠智能体的开发
-2. [GRADRAG: Cross-Component Prompt Adaptation for Coordinated Multi-Agent RAG](/202607/26/2607.21324v1-gradrag-cross-component-prompt-adaptation-for-coordinated-multi-agent-rag)  
+   evidence：多智能体系统部署教程
+2. [Variance-Reduced Q-Learning over Static and Time-Varying Networks](/202607/27/2607.21876v1-variance-reduced-q-learning-over-static-and-time-varying-networks)  
    标签：评分：7.0/10、query:eca
-   evidence：多智能体RAG中的协调协作
-3. [Skillware: A Software Ontology and Engineering Lifecycle for Persistent Behavioral Artifacts](/202607/26/2607.18970v1-skillware-a-software-ontology-and-engineering-lifecycle-for-persistent-behavioral-artifacts)  
+   evidence：基于共识通信的分布式多智能体强化学习实现线性加速
+3. [Agentic CPU-GPU Scheduling for Heterogeneous AI Workloads](/202607/27/2607.22242v1-agentic-cpu-gpu-scheduling-for-heterogeneous-ai-workloads)  
+   标签：评分：7.0/10、query:eca
+   evidence：面向异构AI工作负载的智能体调度器
+4. [Reward-Driven LLM Agent Workflows: Synthesizing POMDP Routing and Self-Correction for Autonomous Decision-Making](/202607/27/2607.17038v1-reward-driven-llm-agent-workflows-synthesizing-pomdp-routing-and-self-correction-for-autonomous-decision-making)  
    标签：评分：6.0/10、query:eca
-   evidence：智能体技能作为可复用行为工件，支持持久化能力
+   evidence：奖励驱动的LLM代理工作流用于自主决策，适用于移动AI代理
+5. [AgentTrails: Towards Trust and Reuse for Agentic Tasks](/202607/27/2607.18816v1-agenttrails-towards-trust-and-reuse-for-agentic-tasks)  
+   标签：评分：6.0/10、query:eca
+   evidence：代理轨迹溯源系统支持协作理解
+6. [Graph-Based Agentic AI with LangGraph: Workflow Pathways for Long-Running Stateful Business Processes](/202607/27/2607.19297v1-graph-based-agentic-ai-with-langgraph-workflow-pathways-for-long-running-stateful-business-processes)  
+   标签：评分：6.0/10、query:eca
+   evidence：基于图的智能体有状态工作流
+7. [NVIDIA-labs OO Agents: Native Python Object-Oriented Agents](/202607/27/2607.20709v1-nvidia-labs-oo-agents-native-python-object-oriented-agents)  
+   标签：评分：6.0/10、query:eca
+   evidence：Python面向对象智能体框架
+8. [Vibe Coding: An Experiment with Test-Driven Development](/202607/27/2607.22406v1-vibe-coding-an-experiment-with-test-driven-development)  
+   标签：评分：6.0/10、query:eca
+   evidence：代码生成中的人机协作
 
 
 <div class="dpr-home-promo-card">
