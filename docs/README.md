@@ -6,47 +6,37 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-27
-- 运行时间：2026-07-27 20:17:28 UTC
+- 最新运行日期：2026-07-28
+- 运行时间：2026-07-28 20:13:04 UTC
 - 运行状态：成功
-- 本次总论文数：9
-- 精读区：1
-- 速读区：8
+- 本次总论文数：5
+- 精读区：4
+- 速读区：1
 
 ### 今日简报（AI）
-今日聚焦自校准Agentic AI框架突破边缘资源分配瓶颈，并追踪智能体部署与异构调度研究。精读论文提出的自校准智能体框架可实现自主边缘资源优化，是该领域当前最值得关注的进展。建议优先精读此10分论文，再浏览速读列表中的部署调度研究以拓展视野。
-- 详情：[/202607/27/README](/202607/27/README)
+今日精读聚焦联邦边缘智能架构与LLM系统间智能体协调两大前沿方向。  
+《OrchNAS》与《MCP/A2A对比研究》均获9.0高分，前者提出个性化联邦边缘智能NAS服务，后者揭示LLM系统智能体协调机制的关键差异。  
+建议优先精读这两篇高分论文，速读《Focus Is All You Need》了解多智能体图系统中的自适应注意力编排。
+- 详情：[/202607/28/README](/202607/28/README)
 
 ### 精读区论文标签
-1. [A Self-Calibrating Agentic AI Framework for Autonomous Edge Resource Allocation](/202607/27/2607.22400v1-a-self-calibrating-agentic-ai-framework-for-autonomous-edge-resource-allocation)  
-   标签：评分：10.0/10、query:eca
-   evidence：自校准智能体自主分配边缘资源
+1. [OrchNAS: Orchestrated Neural Architecture Search Service for Personalised Federated Edge Intelligence](/202607/28/2607.22805v1-orchnas-orchestrated-neural-architecture-search-service-for-personalised-federated-edge-intelligence)  
+   标签：评分：9.0/10、query:eca
+   evidence：面向异构边缘环境的服务器端NAS服务联邦边缘智能
+2. [A Comparative Study of MCP and A2A for Inter-Agent Coordination in LLM-Based Systems](/202607/28/2607.23884v1-a-comparative-study-of-mcp-and-a2a-for-inter-agent-coordination-in-llm-based-systems)  
+   标签：评分：9.0/10、query:eca
+   evidence：代理间协调协议比较（MCP与A2A）直接关注协作
+3. [Coordinated Networking for On-Device Agent-Augmented Real-Time Communication](/202607/28/2607.22854v1-coordinated-networking-for-on-device-agent-augmented-real-time-communication)  
+   标签：评分：8.0/10、query:eca
+   evidence：设备端代理增强实时通信，解决端云并发流量竞争问题
+4. [SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human-Robot Workspaces](/202607/28/2607.23901v1-share-towards-head-mounted-ar-with-user-centric-slam-in-shared-human-robot-workspaces)  
+   标签：评分：8.0/10、query:eca
+   evidence：面向人机协作共享空间的边缘服务器多智能体SLAM系统，考虑不同代理的延迟需求
 
 ### 速读区论文标签
-1. [Agents in the Wild: Where Research Meets Deployment](/202607/27/2607.19336v1-agents-in-the-wild-where-research-meets-deployment)  
-   标签：评分：7.0/10、query:eca
-   evidence：多智能体系统部署教程
-2. [Variance-Reduced Q-Learning over Static and Time-Varying Networks](/202607/27/2607.21876v1-variance-reduced-q-learning-over-static-and-time-varying-networks)  
-   标签：评分：7.0/10、query:eca
-   evidence：基于共识通信的分布式多智能体强化学习实现线性加速
-3. [Agentic CPU-GPU Scheduling for Heterogeneous AI Workloads](/202607/27/2607.22242v1-agentic-cpu-gpu-scheduling-for-heterogeneous-ai-workloads)  
-   标签：评分：7.0/10、query:eca
-   evidence：面向异构AI工作负载的智能体调度器
-4. [Reward-Driven LLM Agent Workflows: Synthesizing POMDP Routing and Self-Correction for Autonomous Decision-Making](/202607/27/2607.17038v1-reward-driven-llm-agent-workflows-synthesizing-pomdp-routing-and-self-correction-for-autonomous-decision-making)  
+1. [Focus Is All You Need: Adaptive Goal-aware Attention Orchestration for Multi-Agent Graph Systems](/202607/28/2607.23678v1-focus-is-all-you-need-adaptive-goal-aware-attention-orchestration-for-multi-agent-graph-systems)  
    标签：评分：6.0/10、query:eca
-   evidence：奖励驱动的LLM代理工作流用于自主决策，适用于移动AI代理
-5. [AgentTrails: Towards Trust and Reuse for Agentic Tasks](/202607/27/2607.18816v1-agenttrails-towards-trust-and-reuse-for-agentic-tasks)  
-   标签：评分：6.0/10、query:eca
-   evidence：代理轨迹溯源系统支持协作理解
-6. [Graph-Based Agentic AI with LangGraph: Workflow Pathways for Long-Running Stateful Business Processes](/202607/27/2607.19297v1-graph-based-agentic-ai-with-langgraph-workflow-pathways-for-long-running-stateful-business-processes)  
-   标签：评分：6.0/10、query:eca
-   evidence：基于图的智能体有状态工作流
-7. [NVIDIA-labs OO Agents: Native Python Object-Oriented Agents](/202607/27/2607.20709v1-nvidia-labs-oo-agents-native-python-object-oriented-agents)  
-   标签：评分：6.0/10、query:eca
-   evidence：Python面向对象智能体框架
-8. [Vibe Coding: An Experiment with Test-Driven Development](/202607/27/2607.22406v1-vibe-coding-an-experiment-with-test-driven-development)  
-   标签：评分：6.0/10、query:eca
-   evidence：代码生成中的人机协作
+   evidence：多智能体图系统协调
 
 
 <div class="dpr-home-promo-card">

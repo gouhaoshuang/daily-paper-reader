@@ -1,0 +1,689 @@
+Title: SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human-Robot Workspaces
+
+URL Source: https://arxiv.org/pdf/2607.23901v1
+
+Published Time: Tue, 28 Jul 2026 01:45:48 GMT
+
+Number of Pages: 28
+
+Markdown Content:
+# SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces 
+
+## TIANYUAN DU ∗, Duke University, United States 
+
+## TIANYI HU, Duke University, United States 
+
+## HANTING YE, Duke University, United States 
+
+## MARIA GORLATOVA, Duke University, United States 
+
+Human-Robot Collaboration (HRC) in shared physical spaces using Augmented Reality (AR) interfaces is powered by Simultaneous Localization and Mapping (SLAM). Existing multi-agent SLAM systems rely on an edge server to combine visual findings of multiple resource-constrained agents, perform computation, and schedule updates to their local maps. However, the edge treats all agents uniformly and ignores the fundamentally different latency requirements of heterogeneous HRC agents: robots and head-mounted AR users. This uniform resource allocation often results in high lag for user manipulation, as it does not meet the stringent latency requirements of AR. In this work, we design, implement, and evaluate SHARE , a user-centric SLAM system that strategically prioritizes AR user experience while maintaining accurate tracking performance for robots. SHARE builds a first-of-its-kind experience model for HRC agents and adaptively adjusts transmission priorities to match it. To reduce end-to-end latency, SHARE leverages the redundancy of visual features acquired by agents in shared human-robot workspaces to reduce computation time induced by edge-based processing. Real-world deployment with commercial AR headsets and a ground robot achieves 13.22 ms average latency for AR users (43.3% reduction from baseline) while maintaining sub-2-centimeter tracking accuracy. User studies further reveal statistically significant improvements in user perception. CCS Concepts: • Human-centered computing → Mixed / augmented reality ; Collaborative interaction ; Interaction paradigms ; • Computing methodologies → Computer vision ; • Computer systems organization → Robotics .Additional Key Words and Phrases: Augmented Reality, SLAM, Human-Robot Collaboration, Edge Computing 
+
+ACM Reference Format: 
+
+Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova. 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces. Proc. ACM Interact. Mob. Wearable Ubiquitous Technol. 10, 3, Article 97 (September 2026), 28 pages. https://doi.org/10.1145/3832004 
+
+1 Introduction 
+
+Augmented Reality (AR)-enabled Human-Robot Collaboration (HRC) applications facilitate seamless interaction between robots and humans in shared physical environments, ranging from collaborative assembly to domestic cleaning assistance. Achieving coordinated spatial awareness in AR-HRC scenarios requires multi-agent Simulta-neous Localization and Mapping (SLAM), which leverages diverse sensory inputs (e.g., cameras and IMUs) from 
+
+> ∗
+
+Corresponding author. Authors’ Contact Information: Tianyuan Du (corresponding author), alex.du@duke.edu, Duke University, Department of Electrical and Computer Engineering, Durham, North Carolina, United States; Tianyi Hu, tianyi.hu@duke.edu, Duke University, Department of Electrical and Computer Engineering, Durham, North Carolina, United States; Hanting Ye, hanting.ye@duke.edu, Duke University, Department of Electrical and Computer Engineering, Durham, North Carolina, United States; Maria Gorlatova, maria.gorlatova@duke.edu, Duke University, Department of Electrical and Computer Engineering, Durham, North Carolina, United States. 
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. 
+
+© 2026 Copyright held by the owner/author(s). ACM 2474-9567/2026/9-ART97 https://doi.org/10.1145/3832004 Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. arXiv:2607.23901v1 [cs.HC] 27 Jul 2026 97:2 • Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova Cleaning Spot 
+
+> User Wearing AR Headset
+> Egocentric
+> AR View
+> Fig. 1. Latency challenge in AR-HRC. User designates a spot for the robot to clean by dragging the target marker, but the marker lags during movement due to latency.
+
+multiple mobile agents to jointly construct a map of an unknown environment while simultaneously localizing each agent within it. A critical bottleneck in AR-HRC that severely impairs AR user experience is latency . AR applications impose stringent motion-to-photon latency requirements, i.e., the delay from a user’s gesture control to the final visual display. Typically, this delay is required to stay below a low threshold, often set at 20 𝑚𝑠 , to prevent user discomfort and maintain visual coherence between virtual and real-world environments, as demonstrated in Figure 1. However, existing multi-agent SLAM frameworks often exceed this constraint, with recent works reporting delays of 100 − 500 𝑚𝑠 [71 , 75 ]. This is largely because current multi-agent SLAM systems commonly offload computationally intensive tasks to edge servers due to limited computational resources on mobile agents [ 4 , 11 , 50 , 61 , 69 , 71 ], and the absence of edge support for synchronizing and exchanging map data among multiple AR headsets and robots can also lead to degraded tracking accuracy. Therefore, we ask the following research question: Can we reduce the latency in current AR-powered HRC multi-agent SLAM systems while maintaining good tracking accuracy? 
+
+To address this, we examine the causes of this performance bottleneck. Existing multi-agent SLAM systems predominantly address homogeneous agent configurations, either multiple robots [ 50 , 61 , 71 ] or multiple user devices [ 16 , 48 ], whereas AR-HRC applications introduce fundamental challenges from heterogeneous coexistence .Thus, the key to resolving this latency concern in AR lies in the heterogeneous latency requirements between direct AR headset experiences and indirect robot control within the HRC context. While the AR experience is highly sensitive to latency due to the real-time nature of rendering and user interaction, users exhibit a tolerance for robot control latency that is an order of magnitude higher, up to 750 ms to 1 s [51 , 62 , 72 ]. This tolerance arises because users subconsciously map a robot’s response time in decision-making and mechanical delays to that of a human, expecting delays similar to natural conversational pauses [ 13 , 51 , 62 , 77 ]. However, conventional multi-agent SLAM systems often treat all agents as homogeneous, failing to differentiate in resource allocation and thus causing uniformly high latency across all agents. Therefore, the first challenge we meet is: how can we realize a user-centric strategy to effectively prioritize the latency of AR applications for human users, while exploiting the looser latency requirement on the robot? 
+
+To address this challenge, we propose differentiated quality-of-experience (QoE) policies to model varying latency tolerance across heterogeneous agents, e.g., AR headsets and robots, which differ in how latency affects user-perceived experience. We observe from prior user experience research across multiple domains, including telecommunications [ 55 ], web browsing [ 76 ], and human-computer interaction [ 43 ], that users exhibit diminishing marginal sensitivity to performance improvements and that different performance factors contribute differently to perceived experience. Meanwhile, system performance metrics (e.g., Quality-of-Service (QoS) indicators such as accuracy and latency) often exhibit an exponential relationship with subjective quality perception [ 19 , 23 , 27 ]. Inspired by this, we model an agent-specific QoE function that captures the differential priorities of AR services (latency-sensitive) versus robotic services (accuracy-critical).   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:3
+
+However, calculating accuracy requires a ground-truth trajectory to be provided to the SLAM system, which is unrealistic, since SLAM’s objective is to estimate that trajectory. Inspired by recent advancements in embedded AI models in mobile devices, we design and deploy a lightweight deep neural network architecture on mobile agents to provide real-time accuracy estimation. Combining estimated accuracy with measured latency, the constructed QoE model can then be used to prioritize edge-agent communication for AR headsets, while allowing relaxed latency constraints for robots. Although QoE modeling captures metrics of latency and accuracy, these metrics are environment-dependent in the SLAM context. Even homogeneous agents, such as two users wearing identical AR headsets, can experience different QoE due to differences in their visual environments. Specifically, the number of features in visual frames captured by each agent significantly impacts both latency and accuracy, and subsequently the overall QoE. This indicates that latency and accuracy in the QoE model are tightly coupled through an implicit variable: visual environment dynamics . When a mobile agent’s visual sensors encounter a featureless environment, such as white walls, fewer distinguishable features are available for matching with previous frames to detect spatial changes, resulting in the need for increased visual frames. Consequently, the second challenge we face is: How can we reasonably balance latency and accuracy to optimize the QoE of multi-agent SLAM systems in response to dynamics in visual environments? 
+
+To tackle this challenge, a straightforward method is to set a fixed threshold or implement rule-based mech-anisms for prioritization and resource allocation, i.e., once the QoE falls below a certain threshold, increase the frame rate or other computational resources to improve QoE. However, the visual environment could ex-hibit rapid, complex changes that render rule-based mechanisms insufficient. To address this, we propose a Proportional-Integral-Derivative (PID) scheduling pipeline to continuously monitor environmental conditions and adjust transmission priorities across heterogeneous and homogeneous agents based on feedback from the edge server. This approach enables different agents to maintain a stable and smooth QoE, regardless of whether they are looking toward a feature-rich or a featureless environment. After applying the methods described above to dynamically allocate resources across heterogeneous and homogeneous agents, we still find the latency of some AR applications exceeding 20 ms . We examine the causes of this performance degradation. The cause is that AR-powered HRC systems typically operate in small-scale indoor environments. In such environments, vanilla SLAM system often performs a large amount of redundant computation that does not contribute to tracking accuracy improvement. This leads to additional computational latency, especially when multiple mobile agents have highly similar views, resulting in map construction redundancy within these confined environments. Therefore, the third challenge we face is how to address inefficiency from map redundancy in AR-powered HRC SLAM scenarios? 
+
+To solve this challenge, we propose a visual overlap calculation methodology that identifies and trims redundant map merging operations by predicting merge utility based solely on agent poses (location and orientation). We observe that in confined indoor environments, multiple agents often have their Line of Sight (LoS) intersection 
+
+within a short period of time, i.e., they all look toward the same area in the room. Visual redundancy increases during this time as the lines of sight gradually converge and decreases as the agents’ viewpoints diverge. Instead of integrating all captured visual features throughout the entire sight-line intersection process, as in vanilla SLAM systems, we focus solely on the moment of LoS intersection (i.e., the point of highest visual overlap) to estimate agent locations, thereby reducing computational resource consumption. A key advantage of this approach is that only pose data (around 200 B) sent from each agent to the server are sufficient to calculate the visual overlap volume, eliminating the need to transmit full feature points (around 200 KB), and thus reducing both computational and communication overhead. With the above design, we propose SHARE , a system implemented in real-world deployments with Meta Quest 3 AR headsets and a TurtleBot 4 ground robot, operating simultaneously within indoor environments. We collect data from five distinct trajectories totaling 483.93 meters with a motion capture system, and construct two   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:4 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova
+> Fig. 2. Structure of edge-assisted SLAM for heterogeneous agents. Agents build individual local maps and collaboratively construct a global map.
+
+emulation datasets based on the trajectories. SHARE achieves an average tracking latency of 13.22 ms for AR users in a field study, representing a 43.3% improvement over the baseline COVINS-G system and maintaining latency below the latency threshold required for AR experiences. It also exhibits 43.1% and 39.4% latency improvement on emulation datasets. In addition, SHARE maintains sub-2-cm absolute trajectory error and sub-1-cm translational relative pose error for all agents, which is comparable to state-of-the-art SLAM systems. To validate real-world usability, we conduct a user study with 20 participants performing robot control tasks through AR interfaces. The results show statistically significant improvements in both robot responsiveness and movement predictability compared to baselines, with 65% of the participants rating our system as their most preferred solution. The system is open-sourced at https://github.com/tyduduke/SHARE. 
+
+2 Primer on Multi-agent SLAM 
+
+Multi-agent SLAM systems involve multiple mobile agents collaboratively constructing a map while simultane-ously localizing themselves within it as they explore an unknown environment. Such systems can deliver strong spatial awareness capabilities across a wide range of applications, from autonomous vehicles to advanced AR and human-robot collaboration. Multi-agent SLAM could be either distributed or centralized, with the latter approach recognized as advantageous for accuracy [ 9 , 24 ]. In a centralized SLAM implementation, individual agents perform local sensing and computation, while an edge server coordinates global optimization processes [50, 60, 61, 71, 75, 78]. The architecture is shown in Figure 2. 
+
+Mobile agents , such as robots and AR devices, employ a SLAM frontend pipeline to process visual data. In the frontend, the camera continuously captures raw image data at a fixed rate, producing camera frames . Since not all camera frames are suitable for localization and mapping, the SLAM frontend selectively processes camera frames based on criteria such as motion magnitude, converting qualifying camera frames into SLAM frames for pose estimation. Among these SLAM frames, the system further identifies frames with significant viewpoint changes or rich geometric details as keyframes , which contain sufficient distinctive visual features that serve as map points .All the keyframes and map points form the local map maintained by the frontend used to track the agent’s spatial position and orientation, commonly referred to as pose , which is represented as a six Degrees of Freedom (6-DoF) transformation matrix. The latency of the entire agent pose estimation process (tracking) is denoted as 𝜏 𝑡𝑟𝑎𝑐𝑘 .
+
+Edge server receives captured keyframes and map points from multiple agents and is used to maintain the global map across all agents. The process begins with loop closure detection , which examines new keyframes for visual overlap with existing ones. This occurs when an agent revisits previously mapped locations (intra-agent loops) or when multiple agents observe common environmental features (inter-agent loops). The edge server invokes a map merging if it detects a loop closure. This involves integrating spatial information from multiple agents into a   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:5
+
+unified coordinate framework, enabling the construction of a comprehensive environmental representation that exceeds the observational capacity of individual agents. The total computation latency incurred when keyframes are processed at the edge server for loop closure and map merging is denoted as 𝜏 𝑐𝑜𝑚𝑝 .
+
+Communication in-between. As shown in Figure 2, the total latency of bidirectional data transmission between mobile agents and the edge server is denoted as 𝜏 𝑐𝑜𝑚𝑚 . The agent transmits the corresponding keyframe along with its map point to the edge server when there is a substantial displacement between its latest estimated pose and the previous pose. On the edge server, the conventional method uses the global map to update the agent’s local map, sends the new local map to the agent, and the agent uses the updated local map to calculate its pose [ 3 , 71 , 75 ]. However, COVINS and COVINS-G [ 50 , 61 ], a state-of-the-art open-source visual SLAM framework, use a more efficient way by sending only a pose correction matrix instead of the local map to agent, achieving lower bandwidth and latency overhead. 
+
+3 Related Work 
+
+Edge-Assisted Multi-Agent SLAM. The computational demands of real-time SLAM motivate research into edge-assisted architectures, such as Edge-SLAM [ 4 , 8], which distribute processing between mobile devices and edge servers. Early cloud-offloaded SLAM systems such as C2TAM [ 56 ] established the paradigm of offloading map optimization to remote servers, though at the cost of transmitting the full global map back to each agent. Subsequent centralized collaborative frameworks, including CVI-SLAM [ 33 ] and CCM-SLAM [ 60 ], refined this architecture by having agents run local odometry while a central server handles global optimization, but exclusively targeted homogeneous robotic teams. COVINS [ 61 ] and COVINS-G [ 50 ] extend this approach to collaborative multi-agent scenarios. Furthermore, SwarmMap [ 71 ] addresses visual SLAM for multi-agent collaboration in large open areas, CloudSLAM [ 69 ] applies edge offloading to vehicular SLAM demonstrating domain-specific latency concerns, while Map++ [ 75 ] explores efficiency improvements in map merging. However, these works are mainly based on homogeneous agents and focus on improving the scalability of SLAM for large-scale environments, often overlooking the unique challenges posed by AR-specific adaptations in real-world settings. In this work, we are the first to address the stringent latency requirements of AR by dynamically balancing the differing latency tolerances of heterogeneous human and robot agents and exploiting redundancy opportunities in small indoor environments. 
+
+SLAM for Head-Mounted AR. Early SLAM systems for AR optimize on-device computation through parallel tracking and mapping threads [ 35 ] and dynamic accuracy-efficiency balancing [ 49 ], but due to device limitations, they operate on stationary equipment, such as a personal computer. With the development of head-mounted AR devices, more recent approaches either address pervasiveness through sensor fusion, such as RoVAR [ 15 ], or address computational limitations through edge-assisted offloading, such as SLAM-Share [ 16 ]. Further works study the multi-user AR communication problem: Ran et al. [ 53 ] reduce transmission overhead between homogeneous AR users through content-aware selective keyframe sharing, while Chen et al. [ 10 ] characterize latency as the central bottleneck across edge-cloud and peer-to-peer architectures for localization-based multi-user AR. However, these SLAM solutions for head-mounted AR focus solely on supporting human users. In contrast, our work leverages agent heterogeneity, specifically the coexistence of heterogeneous agents such as robots and humans in AR-based collaborative environments, to address critical latency concerns. To accommodate the diverse needs of different agent types, we propose a QoE modeling mechanism to capture the distinct requirements of each agent type and employ a PID scheduler to dynamically allocate resources between homogeneous (multiple human users) and heterogeneous (human-robot) agent configurations based on QoE.                                  
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:6 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova t0t1t2t1
+> (a) 𝑡 1−𝑡 0<𝜏 𝐴𝑅 <𝑡 2−𝑡 0t0t1t2(b) 𝜏 𝐴𝑅 <𝑡 1−𝑡 0
+> Fig. 3. Effect of motion-to-photon latency ( 𝜏 𝐴𝑅 ) on AR rendering. Time points 𝑡 0,𝑡 1, and 𝑡 2denote the user’s start, displacement, and an idle period after it. In (a), failure to update the cube’s position within 𝑡 1−𝑡 0, causing it to drift from correct location. At 𝑡 2, the cube is re-rendered in the correct location, but confusion on virtual contents’ implication and on robot’s planned trajectory had already occurred. In (b), cube location update is done within 𝑡 1−𝑡 0, preventing confusion of both kinds.
+
+4 When Head-Mounted AR Meets Multi-Agent SLAM 
+
+In this section, we describe what we encounter when deploying multi-agent SLAM in practical AR scenarios. Although SLAM can provide accurate pose tracking for AR devices to render virtual content, its latency results in drift in the perceived spatial locations of rendered virtual content as perceived by users. 
+
+4.1 Latency Challenges of Multi-Agent SLAM Adoption in Head-Mounted AR 
+
+4.1.1 Harsh motion-to-photon latency requirements from head-mounted AR. Motion-to-photon latency, defined as the cumulative delay from motion sensing through tracking to visual display, represents a critical performance metric for AR systems. Head-mounted displays are uniquely latency-sensitive among interactive computing systems because unlike earth-fixed displays such as monitors and projectors, the entire visual scene is rigidly yoked to the user’s head. This coupling means that any rendering delay causes the displayed scene to lag behind the user’s actual head position, producing a discrepancy between where the visual scene appears and where the vestibulo-ocular reflex (VOR), a gaze-stabilizing neural circuit in the brainstem, expects it to be [ 66 , 74 ]. This discrepancy has no equivalent in conventional display systems and is the reason latency detection thresholds in head-mounted displays are substantially lower than that in any other display class, with psycho-physical experiments reporting just-noticeable differences of less than 17 ms [ 2, 31 , 45 ]. These findings establish 20 ms as a perceptually derived upper bound for motion-to-photon latency, beyond which VOR-induced image slip becomes reliably detectable and causes perceptual instability during typical head movements [2, 45, 66, 68]. A demonstration of latency in AR is shown in Figure 3, where a virtual object acts as an interface between the user and the robot. In Figure 3(a), when the user moves in the real world and their pose changes, high motion-to-photon latency prevents the AR device from updating the AR object’s position (its spatial coordinates) in accordance with the user’s new pose. As a result, the AR object appears to maintain its original relative distance from the user, causing it to drift from the correct pose. This failure of virtual objects to update their positions synchronously with the user’s head movements creates a phenomenon known as judder or swim [41, 64]. In AR, the physical world provides a simultaneous zero-latency reference, rendering any lag in virtual content rendering immediately apparent as spatial misalignment and scaling errors by the product of head angular velocity and end-to-end latency [ 5], producing displacements of several centimeters at arm’s length even at moderate head-rotation rates [ 25 ]. This geometric constraint independently corroborates the perceptual 20 ms threshold and reinforces its application specifically to head-mounted AR. 
+
+4.1.2 What’s the role of SLAM in head-mounted AR’s latency? The motion-to-photon latency for AR users mainly stems from three components: sensor collection latency , SLAM estimation latency , visual rendering and display latency [ 66 , 68 ]. The sensor collection latency and the visual rendering and display latency are either hardware-limited (depending on inertial and visual sensor types) or determined by the AR device choice (depending on whether a video-see-through or optical-see-through solution is used), and are therefore outside the scope of this work. Therefore, they consume a fixed portion of the 20 ms budget regardless of software optimization.   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:7
+> Fig. 4. COVINS-G latency on our field study data. The 20 ms threshold is the required upper limit for Augmented Reality. Target
+> QoE
+> AR
+> Required
+> Robot
+> Required
+> Vanilla
+> SLAM
+> Latency
+> Fig. 5. QoE modeling. Compared to vanilla SLAM that causes equal latency between agents, we capture the different latency require-ments between agents and target equal QoE.
+
+Consequently, the SLAM estimation component is allocated strictly less than 20 ms, since any SLAM latency at or exceeding this bound guarantees violation of the total motion-to-photon constraint, independent of all other system choices. This motivates treating 20 ms as a hard ceiling for SLAM latency. In AR applications, SLAM introduces two types of latency: 1) When the user’s range of motion is small and the environment detected by the AR device does not change significantly, the AR device can estimate the user’s pose and render the AR content locally. The latency experienced by the user in this case is the tracking latency of the mobile agent, i.e., 𝜏 𝑡𝑟𝑎𝑐𝑘 . 2) When the user’s range of motion is large or the environment detected by the AR device changes considerably, the AR device cannot accurately estimate the user’s pose on its own. In this case, the latest keyframe captured by the AR device must be uploaded, and the user’s pose must be updated with the help of the global map constructed from the perspectives of other users and robots. The latency experienced by the user is then the sum of the communication and computation latencies of the entire agent–edge–agent process in the edge-assisted SLAM system, i.e., 𝜏 𝑡𝑟𝑎𝑐𝑘 + 𝜏 𝑐𝑜𝑚𝑝 + 𝜏 𝑐𝑜𝑚𝑚 . As shown in Figure 3(b), when SLAM latency is reduced, AR objects rendered according to the updated pose maintain consistency in the user’s perception. 
+
+4.2 Key Observations for AR-HRC SLAM 
+
+Due to the distributed nature and communication requirements of multi-agent SLAM, existing systems such as SwarmMap [ 71 ] and Map++[ 75 ] report delays of tracking, 𝜏 𝑡𝑟𝑎𝑐𝑘 , to be 50 to 100 ms and delays of map processing, 
+
+𝜏 𝑐𝑜𝑚𝑝 , of 300 ms to 600 ms. To address harsh latency challenges in head-mounted AR, we take a deeper look into multi-agent systems in the HRC context to identify latency optimization opportunities that exist across heterogeneous agents, homogeneous agents, and the edge server. Below, we present our key observations that can be leveraged to reduce communication and computation latency. 
+
+4.2.1 Observation 1: Heterogeneous latency requirements between AR applications and robots for human experience. 
+
+We observe a fundamental distinction in users’ localization requirements between AR experience and robot control. This distinction arises from the fundamental difference in how latency manifests perceptually: while other mobile agents (e.g., robots) experience latency as delayed state updates affecting their control loops, AR devices directly expose latency-induced spatial inconsistencies to human perception. However, traditional multi-agent SLAM frameworks do not differentiate between AR devices and other mobile agents. As suggested in Figure 5, this observation indicates that implementing differentiated quality-of-experience (QoE) policies to prioritize communication for AR headsets while relaxing latency constraints for robots could satisfy both applications. 
+
+4.2.2 Observation 2: Dynamic tracking conditions among homogeneous agents. Traditional multi-agent SLAM systems treat homogeneous agents, e.g., human-to-human, as functionally equivalent and interchangeable entities. However, SLAM tracking performance can vary significantly across homogeneous agents due to differences in the   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:8 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova QoE ↑ Accuracy ↑ Latency ↓
+> Extracted
+> Features
+> Visual
+> Environment
+> Frame Rate
+> Feature-rich N
+> Feature-rich N + k
+> Featureless N
+> Featureless N + k
+
+Fig. 6. Dynamic visual environment observation: up arrow indicates resulting increase, down arrow indicates resulting decrease. In feature-rich environments, more visual frames create redundancy. In featureless cases, limited visual frames cause poor accuracy. 36.0 32.3 
+
+> 52.6
+> 52.3
+> 26.7
+> 83.6
+> 32.1
+> 24.3
+> 36.3
+> Trajectory (m) 2 Agents Map Merge
+> 3 Agents Map Merge
+> ……
+> ……
+
+Fig. 7. Observation of redundancy in map merging. Values reflect the length of trajectory before selected merges. Map merging is aggregated over certain win-dows, suggesting redundancy. 
+
+visual information they capture, reflecting environmental dynamics. This observation indicates the potential for resource allocation based on visual conditions. As demonstrated in Figure 6, latency increases when redundant visual frames are captured under favorable tracking conditions (adequate features, slow motion), while accuracy drops when limited visual frames are captured under challenging visual conditions (scarce features, fast motion). This sheds light on the need for an adaptive resource allocation approach based on real-time assessments of each agent’s visual conditions. Such an approach should prioritize communication resources for agents experiencing challenging visual conditions, while reducing resource allocation to agents in favorable tracking circumstances, thereby maintaining overall tracking performance. 
+
+4.2.3 Observation 3: Inefficient computation of map merging in shared human–robot workspaces. Unlike au-tonomous driving, which primarily deals with open-world SLAM in unstructured outdoor environments involving scalability and long-term consistency [ 12 ], we focus on AR use cases that apply SLAM in indoor, constrained, personal spaces. These spatially constrained environments usually have well-defined boundaries and limited structural complexity. Moreover, when multiple agents are placed in a spatially constrained region, they generate map merge requests to the edge server for segments that exhibit high structural similarity. Figure 7 demonstrates all the map merges when our baseline SLAM system with backend optimization (COVINS-G) is running on one trajectory of our collected data. Aggregated merging is repeatedly observed, where map merging can happen three times within as little as 1 meter of total movement distance. For example, the red-marked distances in Figure 7 show merges occurring frequently in a short duration between 32.1 m and 32.3 m, 36.0 m and 36.3 m, and 52.3 m and 52.6 m. Therefore, the resulting frequent merging operations process incrementally similar geometric information, leading to only marginal accuracy improvements while significantly contributing to computation latency, 𝜏 𝑐𝑜𝑚𝑝 . This observation suggests that developing selective map merging strategies could reduce computation latency while maintaining tracking accuracy for household SLAM applications. 
+
+5 System Design 5.1 System Overview 
+
+SHARE addresses the latency requirements in multi-agent SLAM systems through three primary components. 
+
+QoE Modeling (Section 5.2) is employed to quantify tracking performance for individual agents. The QoE assessment integrates error estimation metrics with latency measurements to evaluate tracking quality. This quantification enables differentiated resource allocation policies, allowing the system to prioritize communication for AR devices while applying relaxed constraints to robotic agents (Observation 1), thereby accommodating           
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:9 Robot
+> AR Device 2
+> Local Map
+> Pose
+> Estimation
+> IMU
+> RGB
+> Monitor
+> Module
+> View Cones Overlap Calculation
+> Merge Decider
+> Edge Server
+> Pose
+> AR Device 1
+> PID Scheduler §5.3
+> §5.4
+> §5.2
+> QoE Modeling §5.2 DNN
+> Evaluation
+> Global Map Backend
+> Pose
+> Update
+> Merge
+> Request
+> Message
+> Frame
+> Rate
+
+Fig. 8. Main system diagram. Each message contains the error estimation from DNN evaluation and real-time latency, calculated by adding Round Trip Time (RTT) and keyframe processing time. 
+
+the heterogeneous latency requirements across agent types. DNN-based evaluation module is implemented to evaluate all keyframes. The evaluation module analyzes visual features to estimate localization errors, generating parameters that inform QoE modeling. This evaluation enables assessment of tracking accuracy without requiring ground-truth data, facilitating resource management adaptation to tracking conditions. 
+
+PID Scheduler (Section 5.3) dynamically adjusts frame transmission rates according to QoE values. The scheduler modulates frame rates to allocate communication resources based on tracking difficulty, increasing frame rates for agents experiencing challenging visual conditions while reducing rates for agents under favorable circumstances. This adaptive scheduling addresses the dynamic tracking variations among homogeneous agents (Observation 2), preventing latency increases from redundant transmissions and accuracy degradation from insufficient frame updates. 
+
+Visual Overlap Analysis (Section 5.4) is based on view cone overlap between agents to determine spatial relationships. Applying overlap thresholds, the module selectively filters map merge requests, reducing redundant merging operations that occur within limited movement ranges. This approach minimizes computational overhead in shared human–robot workspaces (Observation 3) while maintaining tracking accuracy for household SLAM applications at the same time. These components are distributed across the system architecture as follows: the DNN evaluation module operates in the frontend to provide real-time quality assessment; the QoE modeling function and PID scheduler comprise the Monitor Module for adaptive resource management; and the visual overlap analysis functions within the Merge Decider coordinate with the global map backend taken from the implementation of COVINS-G [50]. Details of the system design are demonstrated in Figure 8. 
+
+5.2 Agent-specific QoE modeling 
+
+To capture and utilize this difference in latency requirements, we develop a Quality of Experience (QoE) modeling method for different services. Effective resource scheduling for tracking-dependent systems requires modeling user perception of tracking quality: how users perceive the tracking performance when interacting with them. To establish a principled approach to this modeling challenge, we examine how QoE has been formulated across domains where user perception of system performance is critical. In web server load balancing, queuing analysis revealed logarithmic correlation between queue lengths and QoE [ 76 ]. In human-computer interaction, MacKenzie and Ware [ 43 ]established logarithmic perceptual scaling effects even for small delays. In telecommunications services, Reichl et al. [ 54 , 55 ] established that user-perceived quality follows logarithmic relationships with Quality of Service metrics representing positive resource parameters such as bandwidth or throughput, grounded in the psychophysical Weber-Fechner law. Complementing these findings, the IQX hypothesis [ 19 , 23 , 26 ] formalizes the exponential relationship between influence factors and QoE.   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:10 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova
+
+These findings converge on a common principle that users exhibit diminishing marginal sensitivity to performance improvements, and different performance factors contribute differentially to experience. 
+
+The foundational work by Keeney and Raiffa [ 34 ] on Multi-Attribute Utility Theory (MAUT) provides theoretical justification for weighted logarithmic formulations that naturally capture such diminishing returns in multi-factor quality perception. We adapt these established QoE modeling principles to the human-robot collaboration context, where the SLAM tracking quality directly impacts task completion, safety, and user confidence. In this domain, latency determines responsiveness of collaborative actions, while tracking accuracy affects spatial awareness and manipulation precision. To the best of our knowledge, this work represents the first attempt to formulate QoE-driven resource management for SLAM systems in HRC scenarios. 
+
+Agent-specific QoE Modeling. We adopt an agent-specific QoE model that captures heterogeneous service priorities by explicitly distinguishing agent-centric and marginally contributing performance determinants for different agents (Robot and AR). QoE is defined as a function of latency and accuracy, which are normalized and parameterized differently depending on the agent type: QoE 𝑖 = 𝑒 −𝛽 𝑖 ·𝑃 𝑖 ·
+
+
+
+1 − 𝑒 −𝛾 𝑖 ·𝑄 𝑖 
+
+
+
+, (1) where the parameters’ implications can be explained below: 
+
+Agent-centric factor penalty ( 𝑃 𝑖 ). The agent-centric factor penalty captures the dominant QoE bottleneck for a given agent and enforces steep QoE degradation when this bottleneck is violated. 
+
+• AR services : Latency is the dominant factor due to human perceptual sensitivity. We define 𝑃 𝑖 = 𝑑 − 𝑑 0, where 
+
+𝑑 is the motion-to-photon or system latency in milliseconds, and 𝑑 0 is the 20 ms threshold. This choice reflects that even small latency increases can significantly degrade user experience. The parameter 𝛽 𝑖 controls the severity of QoE degradation with respect to latency, enforcing the strength of QoE collapse when latency deteriorates, visually reflected by the steepness of the curve in Figure 5. 
+
+• Robot services : Task correctness and control stability are the key concerns. We define 𝑃 𝑖 = 𝑎 0 − 𝑎 , where 
+
+𝑎 denotes task accuracy and 𝑎 0 is the minimum acceptable accuracy threshold, heuristically set as 1 cm. This formulation reflects the fact that users will experience high QoE drop when robots fail to achieve their assigned task. The parameter 𝛽 𝑖 controls the severity of QoE degradation with respect to accuracy, enforcing the strength of QoE collapse when accuracy deteriorates. 
+
+Marginal performance contribution ( 𝑄 𝑖 ). The marginal performance contribution models auxiliary benefits that improve QoE but exhibit diminishing marginal returns once the primary requirement is satisfied. 
+
+• AR services : Accuracy contribution has diminishing marginal returns. We define 𝑄 𝑖 = 𝑎 , reflecting that higher visual or spatial accuracy improves immersion and task performance, but cannot compensate for excessive latency. The parameter 𝛾 𝑖 determines the rate at which accuracy improvements contribute to QoE. The term 
+
+(1 − 𝑒 −𝛾 𝑖 ·𝑄 𝑖 ) ensures diminishing returns. 
+
+• Robot services : Latency has diminishing marginal returns since robots can compensate for moderate delays through control buffering. We define 𝑄 𝑖 = (𝑑 + 𝜃 𝑖 )−1, where 𝜃 𝑖 is a normalization constant that bounds latency sensitivity and reflects agent-specific tolerance. This inverse formulation captures the asymptotic improvement in QoE as latency decreases, without allowing latency to dominate accuracy-driven QoE. The parameter 𝛾 𝑖 determines the rate at which latency improvements contribute to QoE, with the term (1 −𝑒 −𝛾 𝑖 ·𝑄 𝑖 )
+
+ensuring diminishing returns, reflecting the observation that beyond a certain point, improvements in accuracy yield progressively smaller benefits, as reflected in the damping effect of curves in Figure 5. 
+
+5.2.1 Deep Neural Network-based SLAM Accuracy Estimation. Modeling QoE requires the accuracy term 𝑎 to be estimated in real time. However, accurate assessment of SLAM localization accuracy presents a fundamental challenge, as ground-truth trajectory information from Motion Capture (MoCap) systems or similar mechanisms   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:11
+
+is unavailable in real-world settings. To address this limitation, we employ a lightweight deep neural network architecture for real-time SLAM error estimation, building upon established methodologies that utilize keyframe analysis for visual SLAM error prediction [ 29 ]. We develop a streamlined architecture based on MobileNetV2, specifically optimized for low-latency inference in resource-constrained environments [ 58 ]. The full training pipeline, including label generation scripts, dataset preparation, and model training code, is released as part of the open-source codebase accompanying this paper. 
+
+Training label generation. Since ground-truth localization error is unavailable at runtime, we generate per-frame error labels offline using a custom monocular SLAM pipeline built on pyslam [ 20 ]. For each frame in the training dataset, pyslam runs ORB feature detection and tracking with DBoW3-based loop closure to produce an estimated camera pose. The corresponding ground-truth pose is obtained from the SenseTime SLAM dataset [ 32 ]synchronized to the image timestamps, and the per-frame localization error is computed by comparing the two. Simultaneously, pyslam exposes its internal tracking state at each successfully tracked frame, from which the Point Spatial Distribution (PSD) matrix and the eight scalar features are extracted and cached alongside the error label, forming the complete input–label pairs used for supervised training. 
+
+Neural network architecture. As illustrated in Figure 9, the network processes three complementary input modalities through dedicated branches, whose outputs are fused to produce the predicted tracking error. The visual branch processes each keyframe through a pre-trained MobileNetV2 backbone with the classification head removed. Global average pooling over the final feature map yields a 1280-dimensional representation, which a single fully connected layer projects to 64 dimensions, followed by ReLU activation and layer normalization. The PSD branch encodes the spatial arrangement of inlier feature points, which substantially impacts tracking robustness [ 29 ]. Inlier map points are encoded in a three-channel spatial grid capturing keypoint response strength, the inlier indicator, and estimated depth. Two sequential convolutional layers (8 and 16 filters, 3×3
+
+kernels, stride 2) with ReLU activations, followed by global average pooling, reduce this grid to a 16-dimensional representation. The scalar branch captures SLAM system state characteristics that cannot be encoded spatially. An 8-element vector comprising image-level statistics (brightness, contrast, entropy, Laplacian variance) and tracking-quality indicators (detected keypoints, successful matches, active map points, and aggregate tracking quality score) is processed through a single fully connected layer with ReLU activation to produce a 16-dimensional representation. The three branch outputs are concatenated into a 96-dimensional joint representation, which is passed through a two-layer fully connected network and ReLU activation, producing the scalar predicted tracking error. 
+
+5.3 PID scheduling pipeline 
+
+In addition to the different requirements among heterogeneous agents, another observation is derived from the dynamic visual environment at different times of operation, which affects SLAM performance. To address this, we employ a Proportional-Integral-Derivative (PID) scheduling framework for QoE optimization, utilizing frame transmission rate modulation as the primary control mechanism. The PID scheduler treats the QoE functions as target setpoints and dynamically adjusts frame transmission rates to maintain desired performance levels across heterogeneous agents. The control system architecture treats each agent’s QoE deviation from its target value as an error signal, applying proportional, integral, and derivative corrections to determine optimal frame transmission rates. This approach enables the system to balance immediate QoE requirements (proportional term), compensate for persis-tent performance deficits (integral term), and anticipate future resource needs based on QoE trends (derivative term), thereby achieving robust multi-agent resource allocation in dynamic communication environments. The error calculation is defined as: 
+
+𝑒𝑟𝑟 (𝑡 ) = QoE target − QoE current (𝑡 ), (2)   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:12 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova
+
+Fig. 9. Architecture of the DNN-based SLAM error estimator. B refers to batch size, and H and W represent the spatial height and width of the PSD grid. Three parallel branches process visual keyframe data, PSD matrices, and scalar tracking features, respectively. Their outputs are concatenated into a 96-dimensional joint representation and passed through a two-layer fully connected network to produce the predicted per-frame localization error. 
+
+Fig. 10. PID scheduler parameter grid search results arranged left to right. For each parameter setting, left shows tracking error (cm) and right shows latency (ms). The three pairs from left to right fix 𝐾 𝑝 = 0.8, 𝐾 𝑖 = 0.15 , 𝐾 𝑑 = 0.2 respectively, representing parameters that optimize scheduling by balancing emphasis on current, accumulated, and projected error. 
+
+where QoE target represents the desired performance level for all agents, and QoE current (𝑡 ) is computed using the agent-specific QoE models. The scheduler output combines three complementary terms through the standard PID formulation: 
+
+𝑢 (𝑡 ) = 𝐾 𝑝 · 𝑒𝑟𝑟 (𝑡 ) + 𝐾 𝑖 ·
+
+∫ 𝑡 
+
+> 0
+
+𝑒𝑟𝑟 (𝜏 )𝑑𝜏 + 𝐾 𝑑 · 𝑑𝑒𝑟𝑟 (𝑡 )
+
+𝑑𝑡 , (3) where the proportional term 𝐾 𝑝 · 𝑒𝑟𝑟 (𝑡 ) provides immediate response proportional to current QoE deviation, the integral term 𝐾 𝑖 · ∫ 𝑡  
+
+> 0
+
+𝑒𝑟𝑟 (𝜏 )𝑑𝜏 eliminates steady-state error by accumulating historical performance deficits, and the derivative term 𝐾 𝑑 · 𝑑𝑒𝑟𝑟 (𝑡 ) 
+
+> 𝑑𝑡
+
+anticipates future trends based on error rate of change. To mitigate high-frequency noise in QoE measurements, the derivative term incorporates exponential filtering and anti-windup mechanisms. The PID output is mapped to frame transmission rate adjustments through: 
+
+𝑅 (𝑡 ) = 𝑅 prev + 𝑢 (𝑡 ), (4) where 𝑅 (𝑡 ) represents the adjusted frame transmission rate for the agent. The continuous nature of PID scheduling enables fine-grained resource allocation adjustments, providing higher responsiveness compared to discrete threshold-based approaches employed in prior work [ 71 ]. Rather than binary decisions based on predetermined QoE thresholds, the PID framework facilitates smooth, incremental modifications to frame transmission rates, minimizing the effect of abrupt environmental transformations.   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:13
+
+Algorithm 1 SHARE PID Scheduling System  
+
+> 1:
+
+function PID (agent , 𝑄 ) 
+
+> 2:
+
+𝑠 ← state [agent ] ⊲ load per-agent controller state  
+
+> 3:
+
+𝑄 ∗ ← qoe_target [agent ] 
+
+> 4:
+
+𝑡 ← GetCurrentTime ( )  
+
+> 5:
+
+Δ𝑡 ← 𝑡 − 𝑠.𝑡 prev  
+
+> 6:
+
+𝑒 ← 𝑄 ∗ − 𝑄 
+
+Proportional term:  
+
+> 7:
+
+𝑃 ← 𝐾 𝑝 · 𝑒 ⊲ compute proportional term from current error 
+
+Integral term:  
+
+> 8:
+
+𝑠.𝐼 ← Clip (𝑠.𝐼 + 𝐾 𝑖 · 𝑒 · Δ𝑡, −𝐼 max , 𝐼 max ) ⊲ accumulate error with clamping  
+
+> 9:
+
+𝐼 ← 𝑠.𝐼 
+
+Derivative term:  
+
+> 10:
+
+𝑑 raw ← ( 𝑒 − 𝑠.𝑒 prev )/ Δ𝑡 ⊲ estimate error change rate  
+
+> 11:
+
+𝑑 ← 𝛼 · 𝑑 raw + ( 1 − 𝛼 ) · 𝑠.𝑑 prev ⊲ filter the derivative estimate  
+
+> 12:
+
+𝐷 ← 𝐾 𝑑 · 𝑑 
+
+Output update:  
+
+> 13:
+
+𝑢 ← 𝑃 + 𝐼 + 𝐷 ⊲ combine PID terms  
+
+> 14:
+
+𝑅 ← Clip (𝑠.𝑅 prev + 𝑢, 𝑅 min , 𝑅 max ) ⊲ apply bounded rate update  
+
+> 15:
+
+𝑠.𝑒 prev ← 𝑒 ; 𝑠.𝑑 prev ← 𝑑 ; 𝑠.𝑅 prev ← 𝑅 ; 𝑠.𝑡 prev ← 𝑡 ⊲ store state for the next update  
+
+> 16:
+
+return 𝑅  
+
+> 17:
+
+end function  
+
+> 18:
+
+procedure MainControlLoop ( )  
+
+> 19:
+
+for all evaluation messages received do  
+
+> 20:
+
+agent ← GetAgentFromMessage ( )  
+
+> 21:
+
+𝑄 ← CalculateQoE (agent.delay , agent.accuracy ) 
+
+> 22:
+
+𝑅 ← PID (agent , 𝑄 ) 
+
+> 23:
+
+end for  
+
+> 24:
+
+end procedure 
+
+The parameters of the PID scheduler are determined by conducting a grid search on a separate dataset that is collected in the same environment as the experiments, but not used for evaluating the system. The optimal combination of parameters is selected based on latency and accuracy, as demonstrated in Figure 10. The grid search results reveal the following insights: (1) The proportional term is dominant, suggesting that the scheduler prioritizes immediate response to current QoE fluctuations. Large proportional gain ensures rapid correction of instantaneous QoE drops such as sudden movements, which smaller values could overlook. (2) The integral term is small but non-negligible, indicating that the scheduler accounts for accumulated effects over time, such as map aging. The presence of a modest, non-zero integral term is consistent with the memory characteristics of SLAM systems, while refraining from excessive corrective actions on historical errors, such as drifts. (3) The derivative term is present at a moderate level, indicating that the scheduler has predictive responsiveness to emerging QoE trends caused by increased latency or decreased accuracy. A high derivative gain would make the scheduler excessively sensitive and cause instability in response to sensor noise.   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:14 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova Low
+> Time
+> Overlap Volume
+> Visual sharing
+
+(a) Conventional map merging. Time Visual sharing   
+
+> Overlap Volume High
+
+(b) Proposed map merging. Fig. 11. Map merging redundancy removal. Map merging is triggered when agents share visual information. The conventional method incurs repeated map merging (left), while our method only merges on high overlap, achieving reduced redundancy. 
+
+5.4 Visual overlap calculation methodology 
+
+The deployment characteristics of SHARE in small-scale indoor environments for human-robot collaboration introduce specific optimization opportunities for map merging operations. 
+
+5.4.1 Pose-based Overlap Volume Calculation. Traditional map merge triggering mechanisms rely on counting keypoints in overlapped views, which requires computation using two frames and introduces complexity. We employ a calculation scheme that uses only the 6-DOF poses of two cameras, enabling rapid overlap assessment with limited information. The camera frustum model [ 30 , 65 ] represents the visible volume for each agent as a truncated pyramid defined by horizontal field of view 𝜃 ℎ , vertical field of view 𝜃 𝑣 , near clipping distance 𝑑 𝑛𝑒𝑎𝑟 , and far clipping distance 𝑑 𝑓 𝑎𝑟 . Agent poses are represented as 6-DOF transformations combining 3D position vectors p =
+
+[𝑥, 𝑦, 𝑧 ]𝑇 and orientation quaternions q = [𝑞 𝑥 , 𝑞 𝑦 , 𝑞 𝑧 , 𝑞 𝑤 ]𝑇 , which produce a 4 ×4 homogeneous transformation matrix T encoding the complete spatial relationship. After that, point-in-frustum testing determines whether arbitrary 3D points lie within the visible volume of a given camera. For a candidate point x = [𝑥, 𝑦, 𝑧 ]𝑇 and camera transformation T, the point is transformed to the camera coordinate system as x𝑐𝑎𝑚 = T−1 [x𝑇 , 1]𝑇 . The transformed point is then evaluated against frustum constraints: 
+
+arctan 
+
+ |𝑥 cam ||𝑧 cam |
+
+
+
+≤ 𝜃 h
+
+2 , arctan 
+
+ |𝑦 cam ||𝑧 cam |
+
+
+
+≤ 𝜃 v
+
+2 . (5) Volume discretization employs regular 3D grid sampling to approximate the continuous overlap volume through discrete point counting. The sampling domain is established by computing a bounding box encompassing all agent positions with expansion margins based on maximum camera range 𝑑 𝑓 𝑎𝑟 . For agents with poses {p1, p2, . . . , p𝑛 },the sampling space is S = {( 𝑥, 𝑦, 𝑧 ) : (𝑥, 𝑦, 𝑧 ) ∈ [ p𝑚𝑖𝑛 , p𝑚𝑎𝑥 ]} , where p𝑚𝑖𝑛 = min 𝑖 (p𝑖 ) and p𝑚𝑎𝑥 = max 𝑖 (p𝑖 ),sampled at intervals of 𝛿 . For cameras 𝑖 and 𝑗 , let V𝑖 and V𝑗 denote the sets of points visible to each camera. The overlap volume is approximated by sampling points visible to both cameras and scaling by the volume element 
+
+𝑉 𝑜𝑣𝑒𝑟𝑙𝑎𝑝 = |V 𝑖 ∩ V 𝑗 | · 𝛿 3.
+
+The intersection-over-union ratio quantifies the relative overlap magnitude as 𝑅 𝐼𝑜𝑈 = 𝑉 𝑜𝑣𝑒𝑟𝑙𝑎𝑝 /𝑉 𝑢𝑛𝑖𝑜𝑛 , where 
+
+𝑉 𝑢𝑛𝑖𝑜𝑛 = |V 𝑖 ∪ V 𝑗 | · 𝛿 3. This pose-based overlap calculation enables efficient spatial redundancy assessment without requiring explicit map reconstruction, facilitating real-time overlap monitoring during multi-agent SLAM operations. The discretization resolution 𝛿 provides a trade-off between computational efficiency and volume estimation accuracy. 
+
+5.4.2 Spatial Redundancy Reduction. To address computational inefficiency in constrained indoor environments, we propose a selective map merging framework based on overlap volume analysis that distinguishes between essential and redundant merge operations, as suggested in Figure 11. Map merges are conducted to align maps of multiple agents and provide inter-agent loop closure, which eliminates drift from local tracking. Therefore, when drifts are not significant, map merges contribute limited accuracy improvements and may be skipped to   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:15 Infrared Marker
+> Realsense Camera
+> Meta Quest 3
+> Portable Computer
+
+(a) AR headset (Meta Quest 3) and added camera. Infrared 
+
+> Marker
+> Realsense
+> Camera
+
+(b) Turtlebot 4. Fig. 12. Devices used in this study. Emulated Factory Warehouse  Emulated Fire Station 
+
+> Trajectories
+> Field Study Environment
+> Mocap Camera
+
+Fig. 13. Experiment environments used to construct datasets using same trajectories collected from field study. 
+
+reduce latency. The overlap volume calculation quantifies the spatial intersection between agents as a geometric measure of information redundancy. Map merge is triggered when agents approach each other and their cameras’ fields of view intersect. If the approach continues, map merges are repeatedly triggered, and if they separate symmetrically to the trajectory they approach, the same map merges occur again, resulting in increased redundancy. As shown in Figure 11, overlap volume transitions from increasing to decreasing during this process, with the higher volume indicating the closer distance between agents, hence suggesting more shared visual features for better map merging, and should be less likely to be skipped. This is achieved through probabilistic thresholding on overlap volume, assigning lower probability of skipping map merges with closer agent distances, which are equally computationally heavy but more informative than their counterparts. To implement this strategy, a buffer maintains overlap volumes from completed merge operations, denoted as 
+
+{𝑉 1, 𝑉 2, . . . , 𝑉 𝑁 }, with historical mean overlap volume computed as ¯𝑉 = 1
+
+> 𝑁
+
+Í𝑁 𝑖 =1 𝑉 𝑖 . When a new merge request is generated with overlap volume 𝑉 𝑛𝑒𝑤 , the system computes a skip probability that reflects the likelihood of the request representing a local optimum for merging. The skip probability 𝑃 𝑠𝑘𝑖𝑝 is defined as a linear function of the ratio between the merge volume 𝑉 𝑛𝑒𝑤 and the historical mean: 
+
+𝑃 𝑠𝑘𝑖𝑝 = max 
+
+
+
+0, 1 − 𝛼 𝑚 · 𝑉 𝑛𝑒𝑤 
+
+¯𝑉 
+
+
+
+, (6) where 𝛼 𝑚 is a scaling parameter that controls the sensitivity of the redundancy removal mechanism and ¯𝑉 is the mean volume in the buffer. This probabilistic approach enables the system to maintain map accuracy while reducing computational load in scenarios where agents frequently encounter overlapping regions. 
+
+6 Implementation 
+
+We implement SHARE with 3 components: two AR user agents, a robot agent, and an edge server built upon the COVINS-G multi-agent SLAM framework [ 61 ], which follows a front-end to back-end structure. The frontend is implemented on all agents. It consists of sensing, the communication scheme of COVINS-G, and a pose estimation module. The pose estimation module is custom-designed by combining ORB-SLAM3 Visual-Inertial Odometry [ 7 ], IMU-PARSAC algorithm [ 39 ], and Extended Kalman Filter [ 40 ] to enhance its robustness in feature extraction. The backend is implemented on the server. Additionally, we incorporate our QoE modeling and PID scheduling in Python, visual overlap calculation and map merging in C++, on both agents and the server side. The DNN evaluator in each agent is trained using pySLAM [20] and SenseTime visual SLAM dataset [32]. 
+
+AR users. We use the Meta Quest 3 as the AR headset worn by each AR user. To address the restriction on direct access to integrated cameras and IMU data of commercial AR headsets due to privacy considerations, we mount a RealSense D435i camera onto the Quest 3 and connect it to a BOSGAME Mini PC [ 6], featuring an Intel N100 processor, as demonstrated in Figure 12a. The Intel N100 processor offers processing capabilities comparable to those of Meta Quest 3 with 4 cores and a 6 MB cache. The additionally mounted camera is placed              
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:16 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova ①
+> ②
+> ③④
+> ⑤
+> ①
+> ③
+> ④
+> ⑤
+> ②
+> ③
+> ④
+> ⑤
+> ①
+> ②
+> Fig. 14. Demonstration of trajectories across all agents. For User 1, total length of trajectories 1○-5○are 82.56 m, 33.39 m, 28.48 m, 54.02 m, 37.67 m. For User 2, total length of trajectories 1○-5○are 17.21 m, 43.87 m, 35.66 m, 40.77 m, 34.17 m. For Robot, total length of trajectories 1 ○- 5 ○are 10.06 m, 10.88 m, 8.16 m, 23.91 m, 23.09 m.
+
+to allow camera access on commercial, closed-source headsets, providing camera intrinsics necessary for feature matching in SLAM operations. This is a common approach in various prior works [17, 18, 47, 67, 73]. 
+
+Robot. We use TurtleBot 4 (Figure 12b) as the robot collaborator in SHARE . We choose this robot for its wide applicability in HRC research [21, 36, 70] in addition to its common application as a cleaning robot that applies to our use case. Turtlebot 4 runs ROS 2 navigation components [ 42 ] based on the SLAM functionality we design and embed within an LXC subsystem running Ubuntu 20.04 to ensure compatibility with the backend. 
+
+Edge server. For the edge server that hosts our backend processing and coordination of all agents’ SLAM system, along with the real-time QoE values, PID scheduling and overlap calculations, we use a Lenovo ThinkPad T14 running on Ubuntu 20.04. It is equipped with an Intel i7 CPU with 4 cores and 8 threads, a maximum frequency of 4.9 GHz and an 8 MB cache. 
+
+Networking. All agents and the edge server are connected to the same Wi-Fi network operating on the 5.0 GHz frequency band. Temporal synchronization across multiple heterogeneous devices is critical for timing recovery and communication delay analysis. We implement the network time protocol over the Wi-Fi network, with the motion capture workstation serving as the authoritative time server [ 46 ]. This synchronization approach achieves millisecond-level timing accuracy through systematic calculation of clock offsets and round-trip delays, ensuring temporal alignment of sensor data streams across all participating agents. 
+
+7 Evaluation 7.1 Experiment Setup 
+
+Dataset collected from field studies. To evaluate SHARE , we collect real-world experimental data under controlled laboratory conditions. The data collection setup consists of two AR users equipped with Meta Quest 3 headsets and one TurtleBot 4 ground robot, all operating within a 9 m × 6 m × 4 m motion capture space instrumented with 22 ceiling-mounted Vicon cameras [ 1 ]. We attach infrared reflective markers to all devices, enabling the collection of ground-truth pose measurements with millimeter-level accuracy for precise tracking evaluation. After synchronized pose sequence optimization [ 28 ], we compute the rigid transformations required to map motion capture rigid body frames onto the device reference frames. The experimental protocol requires simultaneous operation of all three agents, each starting from arbitrary initial positions and following unconstrained trajectories within the capture volume. The robot is teleoperated by an AR user (one of the agents) using wireless navigation commands, while both the operator and an additional human observer move freely within the environment. The motion capture system continuously records ground-truth pose trajectories for all agents. Additionally, sensor data and associated timestamps are logged from each device to evaluate both localization accuracy and system latency. We collect five distinct trajectory sequences, each involving all three agents operating concurrently within the motion capture space demonstrated in Figure 13.   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:17
+
+The proposed system operates at 30 frames per second, and for each trajectory, the agents move for 60 seconds. The total data collection yields 25,657 frames across all agents. Trajectories are demonstrated in Figure 14. Each sequence represents a complete multi-agent SLAM session with varying trajectory characteristics and agent interaction patterns. The total lengths per sequence are summarized in Figure 14. 
+
+Synthesized datasets. To test the robustness of SHARE in new environments, the dataset collected solely from the lab environment is insufficient. However, there is a scarcity of large-scale visual SLAM datasets (with accurate ground-truth pose data) that cover a diverse range of realistic, commonly encountered visual environments. To address this limitation, we employ an emulator-based synthetic data generation approach [ 59 ], as illustrated in Figure 13. This approach substitutes synthetic visual scenes for real camera imagery while preserving the original IMU data from the physical experiments within easily modifiable virtual environments. To produce realistic virtual environments for our synthetic datasets, we use the Unity game engine’s High Definition Render Pipeline. We place virtual cameras in these environments, where the virtual camera intrinsics are set for simulation environments, referencing established prior works [ 52 , 59 , 63 ]. The virtual cameras move along the same trajectories collected from the field study and collect visual frames in the same frame rate. Visual frames are then combined with real IMU information from the trajectory collection process to form the synthesized dataset. The virtual environments used in the evaluation are shown in Figure 13. They are specifically designed to assess multi-agent SLAM application scenarios and to provide a diverse spectrum of visual features. For each environment, we construct a dataset equivalent in size to the data collected from the field study, containing the identical trajectories. The first dataset, Warehouse , is based on an emulated factory warehouse environment. It includes lighting from multiple directions, pillars and walls with various features, and a sufficient number of real-world objects. This dataset aims to cover the usage of robots in construction and logistics support, as well as navigation in dynamically lit environments. The second dataset, Firestation , is based on an emulated fire station facility. The environment is more spread out compared to the Warehouse environment, with walls and floors featuring fewer visual cues, which makes feature extraction more challenging. This dataset is intended to model scenarios involving robots used in first-response operations. 
+
+Goal and metrics. The goal of the evaluation is to demonstrate that our proposed pipeline is able to achieve 1) low tracking latency that enables its compatibility with real-time AR, we use delay (ms) as the metric; and 2) high accuracy for tracking. As discussed in the prior sections, the latency of interest in AR is measured from a certain frame to the best estimate of pose from the frame, as demonstrated in Figure.3. This latency is calculated by averaging latency from local pose estimate of all frames and edge corrections from applicable frames. Regarding accuracy, we employ Absolute Trajectory Error (ATE) and Relative Pose Error (RPE) . ATE measures the global consistency of a trajectory by comparing the estimated trajectory against the ground-truth trajectory after aligning them in a common reference frame. RPE quantifies the local drift in between consecutive poses, measuring how much displacement between two estimated poses differs from the corresponding ground-truth displacement. RPE is calculated through root mean square error on both translation and rotation perspective or pose drifts. 
+
+Baselines. While several multi-agent SLAM systems [ 15 , 16 , 71 ] have been proposed, establishing a fair comparison with our proposed system presents challenges due to fundamental differences in system design, implementation availability, and hardware requirements. Both SwarmMap [ 71 ] and SLAM-Share [16 ] utilize powerful and expensive GPU acceleration (a 512-core Volta GPU costing $1300 in SwarmMap , and a Tesla V100 GPU costing $450 in SLAM-Share , priced at the time of submission of this paper) for both front-end keypoint detection on mobile devices and global map optimization on edge servers. Due to the limited cost of the AR headset (e.g., Meta Quest 3 at $500), such powerful GPU resources are not currently available in commercial AR headsets. Note that our developed SHARE framework could also benefit from GPU acceleration once such resources become available on headsets in the future. In addition, RoVAR [15 ] diverges significantly in its approach   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:18 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova
+
+by fusing a new sensor modality, Radio-Frequency tracking with Ultra-wideband, with the original visual output, which is beyond the scope of this work. Given the aforementioned considerations, we compare the performance of the following three edge-assisted solutions: (1) Our SHARE . (2) Streamed ORB-SLAM3: implemented by enforcing a real-time stream of raw visual and inertial data to the server and running three separate single-agent ORB-SLAM3 instances, serving as a trivial baseline of tracking without multi-agent collaboration or edge offloading. (3) COVINS-G: the COVINS-G system without modification [ 50 ], serving as the foundational reference implementation that provides standard multi-agent collaborative SLAM functionality without any adaptive resource management or agent-specific optimizations. COVINS-G is used because it is an open-source, state-of-the-art, centralized system. 
+
+7.2 Results Analysis 
+
+We evaluate the performance of SHARE using data collected from both field studies and emulated environments. 
+
+Latency Analysis. The latency results demonstrate consistent performance improvements across the field study dataset and the synthesized datasets, as shown in Figure 15. In the field study, SHARE maintains latency under the 20 ms AR threshold across all trajectories and human users, averaging 13.22 ms and achieving a 43.3% reduction compared to COVINS-G. In contrast, COVINS-G exceeds this threshold in all cases except for user 2 in trajectory 1○, indicating its limited suitability for AR applications. Both user 1 and user 2 maintain consistent sub-threshold latency under SHARE across all five trajectories despite their differing trajectory lengths, demonstrating that the PID scheduler effectively adapts resource allocation to sustain AR latency requirements regardless of the operational distance covered by individual users. The synthesized datasets validate these findings: SHARE reduces latency by 43.1% in the warehouse scene and 39.4% in the fire station scene, consistently maintaining performance below 20 ms, yet COVINS-G is only able to achieve this threshold for user 2 under the trajectory 3○,rendering it insufficient for the latency requirement. For the robot, SHARE exhibits marginally higher latency in most cases, with increases below 10% across field study trajectories (except trajectory 5○). In the emulated environments, this pattern persists, where robot cameras positioned lower in the virtual scene encounter incorrectly rendered virtual objects at scene joints and corners, contributing to modest latency variations. These results validate the system’s strategic communication resource allocation, prioritizing AR latency requirements while maintaining robot latency around 25 ms, which is acceptable for most robot tasks. The variability in latency trends across the same trajectories over the three distinct datasets indicates that visual environment characteristics influence tracking performance. Overall, SHARE ’s gains over COVINS-G are most pronounced under operationally realistic conditions with longer trajectories, feature-sparse environments, and sustained multi-agent interaction, which are precisely the conditions that characterize target deployment scenarios. In the cases of both human users and robots, SHARE and COVINS-G both significantly outperformed ORB-SLAM3 with raw frame streaming. This reflects the efficiency advantage of strategic offloading on communication and computation. Importantly, the system attains the aforementioned low latency despite relying on a modestly provisioned edge server with only 4 cores, as described in Section 6. This result underscores the efficiency and robustness of SHARE. 
+
+Accuracy Analysis. The accuracy metrics demonstrate consistent performance across all datasets, as shown in Figure 16. In line with the latency results, both SHARE and COVINS-G outperform ORB-SLAM3 with raw frame streaming, reflecting that collaborative map construction contributes to significant improvement in SLAM accuracy. Comparing the two, SHARE achieves errors below 2 cm for both users and robots in all cases. In the field study, SHARE outperforms COVINS-G in 13 out of 15 trajectory-agent combinations, achieving the lowest ATE on trajectories 1○ through 4○ for human users and trajectories 2○ through 5○ for robots. The limited cases where COVINS-G achieves lower ATE arise on short trajectories with restricted viewpoint diversity, where adaptive frame dropping occasionally discards keyframes carrying non-redundant geometric information; this        
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:19
+> (a) Field study users. (b) Warehouse (Emulation) users. (c) Firestation (Emulation) users.
+> (d) Field study robot. (e) Warehouse (Emulation) robot. (f) Firestation (Emulation) robot. Fig. 15. Latency comparison between SHARE , COVINS-G, and ORB-SLAM3 across three environments. Red line marks 20 ms AR limit. Lower is better.
+
+effect diminishes as trajectory length grows and redundant observations accumulate. The emulated datasets corroborate these findings. In the fire station scene, which contains fewer visual features, the PID scheduler compensates by increasing frame transmission rates, a behavior absent in COVINS-G, explaining SHARE ’s stronger relative accuracy gains there. The consistency of ATE across field study and emulated environments, both maintaining sub-2 cm error, validates the system’s stability across diverse settings. A concrete direction for improvement is to make the frame dropping policy more conservative in the early phase of short trajectories where keyframe diversity is most critical, transitioning to more aggressive dropping once sufficient map density has been established. 
+
+7.3 Ablation Study 
+
+To evaluate the effectiveness of individual modules, we compare SHARE against two implementations tailored to isolate specific components: (1) COVINS-G and Linear Frame Dropping (Linear Baseline): It extends the original COVINS-G system by incorporating a linear frame dropping mechanism designed to mitigate communication overhead under varying latency conditions. This approach follows simple adaptive methodologies established in prior work [ 14 ] that do not consider agent heterogeneity. Specifically, no frames are dropped when the measured end-to-end latency 
+
+𝑑 is at or below the 20 ms AR threshold 𝑑 0. When latency rises above this threshold, the drop rate increases proportionally as (𝑑 − 𝑑 0)/( 𝑑 max − 𝑑 0), reaching its maximum of 1.0 at 𝑑 max = 1,000 ms, and is applied uniformly across all agents without differentiation. (2) SHARE with Equal QoE (Equal Baseline): It implements equivalent QoE allocation across all participating agents, treating both human agents and robot agents with identical priority and resource allocation policies on the original COVINS-G system. This baseline specifically removes agent discrimination mechanisms in the original design of SHARE . (3) SHARE with Random PID Parameters (Random Baseline): It demonstrates the system without tuning the PID scheduler, implemented by averaging performance from 10 randomly selected parameter configurations of the PID system. This baseline demonstrates the functionality of PID scheduling. The ablation study is based on the dataset collected from the field study.       
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:20 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova
+> (a) Field study users. (b) Warehouse (Emulation) users. (c) Firestation (Emulation) users.
+> (d) Field study robot. (e) Warehouse (Emulation) robot. (f) Firestation (Emulation) robot. Fig. 16. ATE comparison between SHARE, COVINS-G, and ORB-SLAM3 across three environments. Lower is better.
+
+Impact of QoE. The results on both latency and accuracy comparisons are demonstrated in Figure 17. The Equal Baseline generates lower AR latency only on trajectories 2○ and 3○ and the advantage is marginal, but it gives higher latency for human agents on trajectories 1○, 4○, 5○, especially on trajectory 5○ where it is 5 ms higher than SHARE . This is because trajectories 2○ and 3○ are shorter in length, holding less than 90 meters, where other trajectories are longer than 100 meters. On the accuracy perspective, converting to equal QoE results in increase for localization error on AR users in all cases, which is a result of higher investment in robot’s performance. In addition, it is observed that aligning all agents’ QoE models with the same as AR experience’s QoE results in the system having limited care on accuracy but aggressively looking to drop latency. This results in decreased accuracy for all agents. The results provide the insight that when trajectories are short, QoE differences are addressed to a limited extent. Results suggest that the threshold for the scheduler to reflect the QoE differences and utilize it for distinguishing different agents is between 90 m to 100 m of total operation distance, but this distance is correlated to multiple factors, and the observation may only apply to the specific experiment setup. Concerning the performance of the robot, the trade-offs across baselines reveal distinct optimization behaviors. Equal Baseline achieves lower robot latency than SHARE in 4 out of 5 trajectories, consistent with its undifferentiated QoE that allocates communication resources without preference for AR users. However, this latency advantage comes at a consistent accuracy cost, where robot ATE under Equal Baseline is substantially higher than SHARE across all trajectories, reflecting the same pattern on users. Linear Baseline presents the opposite failure mode as it incurs the highest robot latency among all adaptive methods while also producing the worst robot ATE, suggesting that latency-proportional frame dropping without agent-awareness simultaneously harms both metrics for the robot. SHARE achieves the lowest robot ATE in all trajectories while keeping robot latency within an acceptable range, demonstrating that differentiated QoE optimization does not sacrifice robot localization quality in exchange for AR latency gains. 
+
+Impact of PID. The results on both latency and accuracy comparisons are demonstrated in Figure 17. The latency performance of the Linear Baseline is on par with our proposed method for AR agents. On the human side’s trajectories, 2○, 3○, 4○ see the Linear Baseline demonstrating lower latency than the proposed method with advantage of less than 3 ms. On trajectories 1○ and 5○, the two methods have equivalent latency. However,   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:21
+
+(a) AR users latency (b) Robot latency 
+
+(c) AR users accuracy (d) Robot accuracy Fig. 17. Ablation study results on field study trajectories. Linear is replacing PID scheduler with linear dropping, Equal is assigning equal QoE for heterogeneous agents. Random is setting non-tuned PID parameters. The lower the better. Table 1. Map Merges per Meter 
+
+Traj. COVINS-G SHARE Improvement (%) 
+
+1○ 0.13 0.06 57.18 2○ 0.14 0.09 33.28 3○ 0.10 0.07 28.51 4○ 0.09 0.05 45.42 5○ 0.09 0.04 55.59 
+
+Avg. 0.11 0.06 43.72 
+
+Table 2. Error Predictor Comparison 
+
+Method RMSE (cm) Time (ms) SHARE DNN 0.43 8.2 
+
+Random Forest 0.88 63.2 Linear Regression 9.57 2.2 MLP 0.85 14.4 Contrastive CNN 0.67 19.6 
+
+linear dropping results in significantly higher (ATE), which is infeasible for the system’s overall performance. Compared to the baseline of linear frame dropping, PID based frame dropping delivers significantly lower ATE in both human and robot agents in all trajectories, as demonstrated in Figure 17. In all experiment sets, converting PID scheduler to linear dropping causes accuracy degradation. This is because the linear dropping mechanism has no awareness of visual environment, and it has a higher chance of removing informative visual frames, causing tracking to be inaccurate. On the other hand, Random Baseline has worse performance than both our method and the Linear Baseline in latency, but has performance between the two in ATE. This shows that without informed tuning, PID scheduler could remain awareness of visual environment, but cannot effectively address users’ latency concerns. 
+
+Impact of map merging. The effect of map merging redundancy of our method compared to COVINS-G is demonstrated in Table 1. Compared to the baseline COVINS-G, we have removed an average of 43.72 percent of merges averaged across the 5 trajectories. The percentage of removal is also relevant to the length of trajectories, with longer trajectories experiencing more removal. These removals cast limited impact on accuracy, as suggested in Figure 16, which validates that our removal of redundancy is effective and accurate. 
+
+Impact of DNN frame evaluator. To evaluate the effectiveness of our design choice of using the DNN frame evaluator, we implement four distinct approaches across the same dataset partition using consistent evaluation protocols for estimating SLAM error from visual information: 1) Linear Regression: a linear regression model    
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:22 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova 2
+> 1
+> 3
+> 4
+> 6
+> 5
+> 7
+> 8
+> 9
+> 10
+> 4 m
+> 4 m
+> 2 m
+> 1.5 m
+> 1 m 1 m
+> Robot Start
+> Researcher Trajectory
+
+(a) Experiment environ-ment layout. Robot Location Tags 
+
+(b) User study real envi-ronment. 
+
+(c) Results of the user study, normalized to percentages for comparison. Higher is better. Fig. 18. User study setup. 
+
+using only the 8 scalar features extracted from the SLAM system (number of keypoints, loop closures, tracking quality metrics, etc.). 2) Random Forest: Random forest using the same features as the neural network, combining 1280-dimensional MobileNetV2 image features, 16-dimensional PSD features, and 16-dimensional processed scalar features, resulting in a 1312-dimensional feature vector. The model employs 70 trees with default scikit-learn parameters, trained on the extracted feature representations. 3) Multi-Layer Perceptron (MLP): MLP architecture utilizing the same multi-modal feature extraction as our proposed method but replacing the final prediction layer with a deeper fully connected layer. 4) Contrastive-style CNN: a similar architecture to our proposed method but focusing solely on feature extraction capabilities, using a simpler final prediction head compared to our proposed approach. Training is conducted for 20 epochs with optimization settings identical to our proposed approach. The DNN evaluation is performed on two metrics: Root Mean Squared Error (RMSE) measures the accuracy of models’ estimation, and Process Time measures the time elapsed for a model to predict one input. Table 2 presents the quantitative comparison of all evaluated approaches across accuracy and efficiency metrics. Our proposed method achieves the lowest RMSE of 0.43 cm, representing a 35% improvement over the next-best performing approach (Contrastive-style CNN at 0.67 cm). While Linear Regression offers the fastest inference time (2.2 ms), its prediction accuracy is poor (9.57 cm RMSE), confirming that multi-modal information integration is essential for accurate SLAM error prediction. The Random Forest and MLP approaches achieve similar accuracy levels (0.88 cm and 0.85 cm respectively), but both underperform compared to our proposed architecture. The Random Forest approach suffers from slow inference (63.2 ms), making it unsuitable for real-time applications despite acceptable accuracy. In comparison, our proposed method achieves the second-fastest processing time (8.2 ms) while maintaining high accuracy. 
+
+7.4 User Study 
+
+To evaluate the effectiveness of SHARE in the context of human experience, we recruit 20 participants (7 female, 11 male, and 2 non-binary, aged between 18 and 51) through our university mailing lists, social networks, and advertising boards in our department building. Among the participants, 10 reported high familiarity with AR, 3 reported low familiarity, and 7 reported no prior experience. For robot familiarity, 4 participants reported high familiarity, 2 reported low familiarity, and 14 reported no prior experience. The user study is approved by an Institutional Review Board (IRB). 
+
+Setup. The user study is conducted in an open space contained in a 4-meter by 4-meter square area, as demonstrated in Figure 18. The researcher and a participant act as two AR user agents working in this area. The participant wears the composed Meta Quest 3 headset (cf. Section 6) and uses our custom-developed application to control the robot’s movement. The researcher traverses a fixed trajectory around the user study area at a steady speed of 0.5 meters per second, demonstrated as "Researcher Trajectory" in Figure 18. 
+
+Task design. The full study process contains four trials. For each trial, one of four solutions runs: Ours, COVINS-G (cf. Section 7.2), Linear Baseline, and Equal Baseline (cf. Section 7.3). The ordering of the four solutions   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:23
+
+is randomly assigned and differs between users. Both the researcher and the participant are unaware of the underlying algorithm for each trial. During each trial of the study, the participant is asked to traverse the 10 designated spots in Figure 18 in a random order. Once the participant approaches one of the spots, they are asked to stop and press the controller. A virtual cube is then generated at the spot to signal that a command has been sent to the robot, and the robot approaches the user. Once the robot stops moving, the human user moves to another spot, until all ten spots are covered. 
+
+Results. After each trial, the participant is asked the following two questions on a 10-point Likert scale (1 for not at all; 10 for absolutely) :- Q1: How predictable is the movement of the robot? 
+
+- Q2: How responsive is the robot to your command? 
+
+The users are instructed to rate predictability as 1 if the robot’s movement is completely random, and 10 if the robot’s movement completely aligns with their expectations; rate the responsiveness to 1 if the response of the robot is slow enough to cause irritation, and 10 if the response is instant and not noticeable. After all four trials are completed, the participant is asked the following questions: - Q3: Among all four trials, which one do you prefer most? 
+
+- Q4: Among all four trials, which one do you prefer least? 
+
+Based on objective measurements and the answers to the four questions, we conduct evaluation on the following metrics. 
+
+Reachability. An objective metric regarding the task completion rate of the robot, where it describes how well the robot performs in the task of reaching a designated location. For each command of location reaching, it either succeeds or fails, and Reachability describes the rate of success. Over the course of the entire experiment, our method achieves the highest task completion rate among all conditions, as demonstrated in Figure 18c. SHARE achieves relative improvements of 24.6%, 29.1%, and 65.1% compared to COVINS-G, Linear Baseline, and Equal Baseline. This result validates that our method delivers the best applicability with the highest completion rate. 
+
+Predictability. A subjective metric measuring perception of the movement trajectory of the robot. This metric describes how well the robot’s movement aligns with the user’s anticipation. As demonstrated in Figure 18c, COVINS-G, Linear Baseline, and Equal Baseline achieve 79.79%, 52.13%, and 58.51% of our predictability score, respectively, corresponding to relative improvements of 25.3%, 91.8%, and 70.9% in favor of SHARE . Notably, Equal Baseline ranks above Linear Baseline on this metric, reversing the ordering observed in Reachability and Responsiveness. This inversion is consistent with the finding in Section 7.3 that linear frame dropping, while reducing communication overhead, does so without regard for the informativeness of the discarded frames, thereby degrading tracking accuracy. The resulting spatial inconsistencies manifest perceptually as less predictable robot trajectories. Equal Baseline, by contrast, maintains more uniform tracking quality across agents, which translates to more coherent robot motion as perceived by users, even though it does not optimize for latency. This result further demonstrates our proposed method’s capability in addressing human users’ spatial cognition in addition to the completion of assigned tasks. 
+
+Responsiveness. A subjective metric measuring perception of the time the robot takes to initiate a movement. This term describes how quickly the robot responds to the user’s commands. As demonstrated in Figure 18c, SHARE improved by 12.1%, 15.4%, and 21.7% compared to the COVINS-G, Linear Baseline, and Equal Baseline. The comparatively smaller margin on this metric across all conditions reflects that responsiveness is partially attributable to hardware-level robot actuation delays shared across all software conditions. Nonetheless, SHARE consistently achieves the highest rating, demonstrating its advantage under low-latency operation. 
+
+Preference. A summary of preferences from all 20 participants. 13 participants (65%) identify our method as most preferred, while no participant selects it as least preferred, yielding a net preference score of +13 . COVINS-G receives 4 most-preferred and 5 least-preferred selections (net −1). Equal Baseline receives 3 most-preferred and   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:24 •Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova
+
+6 least-preferred selections (net −3). Linear Baseline receives no most-preferred selections and 9 least-preferred selections (net −9). The consistent ranking across all preference indicators confirms that SHARE is the most preferred solution, and its absence from any participant’s least-preferred selections indicate broad acceptability across the user population. 
+
+Statistical Analysis. To assess whether the observed differences across methods are statistically reliable, we conduct two complementary hypothesis tests on each of the three metrics. Because the same participants complete all four conditions, a within-subjects design is employed throughout. The Friedman test [22 ] is selected as the primary omnibus test as it is appropriate for the ordinal structure of Likert-scale responses. The repeated-measures ANOVA is applied as a parametric complement, providing higher statistical power when distributional assumptions are approximately satisfied, and its convergence with the Friedman results strengthens the overall conclusions on all three metrics. The Friedman test yields significant omnibus effects for all three metrics: Predictability ( 𝜒 2 = 19 .62 , 𝑝 <
+
+0.005 ), Responsiveness ( 𝜒 2 = 13 .24 , 𝑝 < 0.05 ), and Reachability ( 𝜒 2 = 24 .44 , 𝑝 < 0.005 ). Repeated-measures ANOVA corroborates these findings: Predictability ( 𝐹 (3, 57 ) = 8.76 , 𝑝 < 0.005 ), Responsiveness ( 𝐹 (3, 57 ) = 3.06 ,
+
+𝑝 < 0.05 ), and Reachability ( 𝐹 (3, 57 ) = 13 .05 , 𝑝 < 0.005 ). The agreement between the non-parametric and parametric tests across all three metrics indicates that the observed performance ordering is robust to the choice of statistical assumption. Reachability exhibits the strongest overall effect, consistent with its status as an objective binary outcome measure, while Responsiveness shows a smaller but still significant effect, reflecting the partial contribution of hardware actuation delays shared across all conditions. Together, these results confirm that the performance differences reported in Figure 18c reflect genuine systematic differences attributable to the choice of method, with SHARE yielding the best performance across all metrics. 
+
+8 Discussion 
+
+The evaluation results collectively demonstrate that SHARE achieves consistent latency and accuracy advantages over all baselines across diverse environments and agent configurations, with gains most pronounced under the operationally realistic conditions of longer trajectories, feature-sparse scenes, and sustained multi-agent interac-tion. The user study corroborates these objective findings at the perceptual level, with statistically significant improvements in predictability, responsiveness, and reachability across 20 participants. While the participant pool was recruited from a single institution and may not fully capture the demographic diversity of target deployment contexts, the effect sizes and statistical consistency across both parametric and non-parametric tests suggest that the observed advantages reflect genuine system-level differences rather than population-specific responses. These results motivate a closer examination of the design trade-offs underlying SHARE and the conditions under which its assumptions hold, which the remainder of this section addresses. 
+
+Robot latency. A deliberate consequence of the QoE prioritization strategy is an average increase in robot latency of 2.1 to 4.6 ms, as shown in Figure 15. The latency remains within the tolerance for human–robot interaction tasks since tolerance is comparatively higher in domestic and logistic robot assistance scenarios that we target, as reported by prior works [ 51 , 62 , 72 ]. Furthermore, certain deployment contexts may impose much stricter latency requirements on the robot itself. For high-speed industrial robots where latency degradation is intolerable, the QoE formulation should be inverted to treat the robot as the latency-critical agent. For multi-purpose robots, the QoE model could vary per operational mode. In the case of tightly coupled closed-loop control, a promising direction is to dynamically partition the AR and robot control loops based on their instantaneous QoE states. Given that these robots are not widely available, we leave such framework formalization and validation for future research. 
+
+PID Transferability. The parameters of the PID scheduler are currently tuned for the environments evaluated, since our application scenarios are focused on domestic and logistics assistance that only require fine-tuning   
+
+> Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces •97:25
+
+once per environment. SHARE can be extended to settings with substantially different visual or communication characteristics that may benefit from adaptive gain scheduling [ 38 ] or reinforcement learning-based parameter tuning [ 37 ]. These advancements will further facilitate SHARE applications across a wide range of environments. 
+
+Practical Deployment. Currently, we mount external cameras on the Meta Quest 3 to obtain visual captures and IMU data, since privacy considerations on commercial headsets restrict direct access to integrated cameras and IMU data. The external camera configuration is consistent with established practice in AR tracking research [ 47 ,73 ], and the compute requirements of SHARE are met by modestly provisioned hardware. Looking forward, SHARE ’s core mechanisms are designed to be decoupled from the specific sensor configuration, which reduces migration effort as open sensor access becomes available across headsets including Magic Leap 2 [ 44 ] and Samsung Galaxy XR [ 57 ]. Together, these factors suggest that SHARE is well-positioned to support collaborative AR applications including AR-guided assembly, domestic cleaning assistance, and first-response coordination as device ecosystems mature. 
+
+Large-scale environment. The present work targets small-scale indoor environments, and no outdoor evaluation has been performed. Some AR-HRC applications, such as warehouse coordination and search-and-rescue support, may require operation across larger and more open environments. Potential solutions include adjusting overlap threshold to account for sparser co-visibility in larger spaces, retraining error estimation model to account for more diverse lighting and motion, and adjusting buffer window size to reflect the lower frequency of agent viewpoint overlap in a larger environment. We will explore them in our future work. 
+
+9 Conclusion 
+
+This paper presented SHARE , a system that enables multi-agent SLAM to address critical latency challenges in AR-powered human-robot collaboration. We build a first-of-its-kind QoE model for HRC agents to quantify the impact of various factors introduced by a SLAM-based tracking service. Building upon it, SHARE employs a PID scheduler to adaptively adjust transmission priorities and meet diverse QoE requirements across HRC agents. We further reduce edge computation by removing visual redundancy in shared human-robot workspaces. Through extensive real-world evaluations and user studies using commercial AR headsets and robots, SHARE achieved latency well below the critical 20 ms threshold while maintaining good tracking performance for both users and robot collaborators. Its insights extend beyond SLAM: any edge-based multi-agent system serving heterogeneous clients can benefit from quality-of-experience differentiation and context-aware data fusion. 
+
+Acknowledgments 
+
+This work was supported in part by NSF grants CSR-2312760, CNS-2112562, and IIS-2231975, NSF CAREER Award IIS-2046072, NSF NAIAD Award 2332744, a CISCO Research Award, a Meta Research Award, Defense Advanced Research Projects Agency Young Faculty Award HR0011-24-1-0001, and the Army Research Laboratory under Cooperative Agreement Number W911NF-23-2-0224. The views and conclusions contained in this document are those of the authors and should not be interpreted as representing the official policies, either expressed or implied, of the Defense Advanced Research Projects Agency, the Army Research Laboratory, or the U.S. Government. This paper has been approved for public release; distribution is unlimited. No official endorsement should be inferred. The U.S. Government is authorized to reproduce and distribute reprints for Government purposes notwithstanding any copyright notation herein. The authors would also like to gratefully acknowledge the assistance of Dhun Pandya from North Carolina School of Science and Mathematics on this work. 
+
+References     
+
+> [1] 2024. Vicon. https:// www.vicon.com/ (2024). [2] Bernard D Adelstein, Thomas G Lee, and Stephen R Ellis. 2003. Head Tracking Latency in Virtual Environments: Psychophysics and a Model. In Proceedings of the Human Factors and Ergonomics Society Annual Meeting . SAGE Publications. doi:10.1177/154193120304702001 Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026.
+
+97:26 • Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova 
+
+[3] A. J. B. Ali, Z. S. Hashemifar, and K. Dantu. 2020. Edge-SLAM: Edge-Assisted Visual Simultaneous Localization and Mapping. In 
+
+Proceedings of ACM MobiSys .[4] A. J. B. Ali, M. Kouroshli, S. Semenova, Z. S. Hashemifar, S. Y. Ko, and K. Dantu. 2022. Edge-SLAM: Edge-Assisted Visual Simultaneous Localization and Mapping. ACM Transactions on Embedded Computing Systems (2022). [5] Ronald Azuma and Gary Bishop. 1994. Improving Static and Dynamic Registration in an Optical See-Through HMD. In Proceedings of the 21st Annual Conference on Computer Graphics and Interactive Techniques (SIGGRAPH ’94) . ACM, 197–204. doi:10.1145/192161.192199 [6] BOSGAME. 2025. BOSGAME P4 Mini PC Gaming (AMD Ryzen 7 5825U, 16 GB DDR4, 512 GB PCIe SSD, Dual 2.5G LAN, Triple 4K Display, WiFi 6E, BT 5.2). https://www.bosgamepc.com/products/bosgame-ryzen-7-5700u-mini-pc-p4. Desktop computer — mini PC form-factor. [7] C. Campos, R. Elvira, J. J. G. Rodríguez, J. M. Montiel, and J. D. Tardós. 2021. ORB-SLAM3: An Accurate Open-Source Library for Visual, Visual–Inertial, and Multimap SLAM. IEEE Transactions on Robotics (2021). [8] H. Cao, J. Xu, D. Li, L. Shangguan, Y. Liu, and Z. Yang. 2022. Edge Assisted Mobile Semantic Visual SLAM. IEEE Transactions on Mobile Computing (2022). [9] Yun Chang, Yulun Tian, Jonathan P. How, and Luca Carlone. 2021. Kimera-Multi: A System for Distributed Multi-Robot Metric-Semantic Simultaneous Localization and Mapping. In Proceedings of IEEE ICRA .[10] Jiasi Chen, K. K. Ramakrishnan, Aditya Dhakal, and Xukan Ran. 2023. Networked Architectures for Localization-Based Multi-User Augmented Reality. IEEE Communications Magazine 61 (2023). doi:10.1109/MCOM.003.2300275 [11] Y. Chen, H. Inaltekin, and M. Gorlatova. 2023. AdaptSLAM: Edge-Assisted Adaptive SLAM with Resource Constraints via Uncertainty Minimization. In Proceedings of IEEE INFOCOM .[12] Jun Cheng, Liyan Zhang, Qihong Chen, Xinrong Hu, and Jingcao Cai. 2022. A Review of Visual SLAM Methods for Autonomous Driving Vehicles. Engineering Applications of Artificial Intelligence (2022). [13] Jim Dabrowski and Ethan V. Munson. 2011. 40 Years of Searching for the Best Computer System Response Time. Interacting with Computers (2011). [14] G. Damigos, N. Stathoulopoulos, A. Koval, T. Lindgren, and G. Nikolakopoulos. 2024. Communication-Aware Control of Large Data Transmissions via Centralized Cognition and 5G Networks for Multi-Robot Map Merging. Journal of Intelligent & Robotic Systems 
+
+(2024). [15] Mallesham Dasari, Ramanujan K. Sheshadri, Karthikeyan Sundaresan, and Samir R. Das. 2023. RoVAR: Robust Multi-Agent Tracking through Dual-Layer Diversity in Visual and RF Sensor Fusion. Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 7, 1, Article 8 (mar 2023), 25 pages. doi:10.1145/3580854 [16] A. Dhakal, X. Ran, Y. Wang, J. Chen, and K. K. Ramakrishnan. 2022. SLAM-share: Visual Simultaneous Localization and Mapping for Real-Time Multi-User Augmented Reality. In Proceedings of ACM CoNEXT .[17] Panagiotis Drakopoulos, George Alex Koulieris, and Katerina Mania. 2020. Front Camera Eye Tracking For Mobile VR. In Proceeedings of IEEE VRW .[18] Panagiotis Drakopoulos, George-alex Koulieris, and Katerina Mania. 2021. Eye Tracking Interaction on Unmodified Mobile VR Headsets Using the Selfie Camera. ACM Transactions on Applied Perception (2021). [19] Markus Fiedler, Tobias Hossfeld, and Phuoc Tran-Gia. 2010. A Generic Quantitative Relationship Between Quality of Experience and Quality of Service. IEEE Network (2010). [20] Luigi Freda. 2025. pySLAM: An Open-Source, Modular, and Extensible Framework for SLAM. arXiv preprint arXiv:2502.11955. [21] John Frericks, Brandon Kang, Neal Outland, Prashant Doshi, Kyle Johnsen, and Aaron Schecter. 2024. Trust and Collaboration Testing in Controlled Human-Robot Environments. In Proceedings of IEEE CogMI .[22] Milton Friedman. 1937. The Use of Ranks to Avoid the Assumption of Normality Implicit in the Analysis of Variance. J. Amer. Statist. Assoc. (1937). doi:10.1080/01621459.1937.10503522 [23] Nermin Goran, Alen Begović, and Mesud Hadžialić. 2014. A Testing of IQX Hypothesis: An Example at Data Link Layer in DSL Environment. In Proceedings of IEEE ELMAR .[24] Johannes Hofer, Peter Sossalla, Giang T. Nguyen, and Frank H. P. Fitzek. 2024. RAVIC: Reliable Agents in Centralized Visual Collaborative SLAM. In Proceedings of IEEE GLOBECOM .[25] Richard L. Holloway. 1997. Registration Error Analysis for Augmented Reality. Presence: Teleoperators and Virtual Environments 6, 4 (1997), 413–432. doi:10.1162/pres.1997.6.4.413 [26] Tobias Hoßfeld, David Hock, Phuoc Tran-Gia, Kurt Tutschku, and Markus Fiedler. 2008. Testing the IQX hypothesis for exponential interdependency between QoS and QoE of voice codecs iLBC and G.711. In 18th ITC Specialist Seminar on Quality of Experience .Karlskrona, Sweden, 105–114. [27] Tobias Hoßfeld, Poul E. Heegaard, Lea Skorin-Kapov, and Martín Varela. 2019. Fundamental Relationships for Deriving QoE in Systems. In Proceedings of IEEE QoMEX .[28] Tianyi Hu, Tianyuan Du, Zhehan Qu, and Maria Gorlatova. 2025. XR Reality Check: What Commercial Devices Deliver for Spatial Tracking. In Proceedings of IEEE ISMAR .Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human–Robot Workspaces • 97:27 
+
+[29] Tianyi Hu, Tim Scargill, Fan Yang, Ying Chen, Guohao Lan, and Maria Gorlatova. 2024. SEESys: Online Pose Error Estimation System for Visual SLAM. In Proceedings of the ACM SenSys .[30] Hua Huang, Chien-Chun Ni, Xiaomeng Ban, Jie Gao, and Shan Lin. 2013. Connected Wireless Camera Network Deployment with Visibility Coverage. In Proceedings of ACM/IEEE IPSN .[31] Jason Jerald. 2010. Relating Scene-Motion Thresholds to Latency Thresholds for Head-Mounted Displays. In Proceedings of IEEE VR .[32] Li Jinyu, Yang Bangbang, Chen Danpeng, Wang Nan, Zhang Guofeng, and Bao Hujun. 2019. Survey and Evaluation of Monocular Visual-Inertial SLAM Algorithms for Augmented Reality. Virtual Reality & Intelligent Hardware (2019). [33] M. Karrer, P. Schmuck, and M. Chli. 2018. CVI-SLAM—Collaborative Visual-Inertial SLAM. IEEE Robotics and Automation Letters (2018). [34] Ralph L. Keeney and Howard Raiffa. 1993. Decisions with multiple objectives: preferences and value trade-offs . Cambridge University Press, Cambridge, UK. [35] Georg Klein and David Murray. 2007. Parallel Tracking and Mapping for Small AR Workspaces. In Proceedings of IEEE/ACM ISMAR .[36] Maros Krupas, Saahil Chand, Yuqian Lu, Xun Xu, Erik Kajati, and Iveta Zolotova. 2023. Human-Centric UAV-UGV Collaboration. In 
+
+Proceedings of IEEE CASE .[37] Anas I. Lakhani, Mohammad A. Chowdhury, and Qiugang Lu. 2022. Stability-Preserving Automatic Tuning of PID Control with Reinforcement Learning. Complex Engineering Systems 2, 1 (2022), 3. doi:10.20517/ces.2021.15 [38] Douglas J. Leith and William E. Leithead. 2000. Survey of Gain-Scheduling Analysis and Design. Internat. J. Control 73, 11 (2000), 1001–1025. doi:10.1080/002071700411304 [39] Jinyu Li, Xiaokun Pan, Gan Huang, Ziyang Zhang, Nan Wang, Hujun Bao, and Guofeng Zhang. 2024. RD-VIO: Robust Visual-Inertial Odometry for Mobile Augmented Reality in Dynamic Environments. IEEE Transactions on Visualization and Computer Graphics (2024). [40] Mingyang Li and Anastasios I Mourikis. 2013. High-Precision, Consistent EKF-Based Visual-Inertial Odometry. The International Journal of Robotics Research (2013). [41] Hope Lutwak, T Scott Murdison, and Kevin W Rio. 2023. User Self-Motion Modulates the Perceptibility of Jitter for World-Locked Objects in Augmented Reality. In Proceedings of IEEE ISMAR .[42] Steven Macenski, Tully Foote, Brian Gerkey, Chris Lalancette, and William Woodall. 2022. Robot Operating System 2: Design, Architecture, and Uses in the Wild. Science Robotics (2022). [43] I. Scott MacKenzie and Colin Ware. 1993. Lag as a determinant of human performance in interactive systems. In Proceedings of the INTERACT’93 and CHI’93 Conference on Human Factors in Computing Systems . ACM, Amsterdam, Netherlands, 488–493. [44] Magic Leap. 2025. Sensor Data Access — Magic Leap 2 Developer Documentation . https://developer-docs.magicleap.cloud/docs/guides/f eatures/sensor-data/ [45] Katerina Mania, Bernard D. Adelstein, Stephen R. Ellis, and Michael I. Hill. 2004. Perceptual Sensitivity to Head Tracking Latency in Virtual Environments with Varying Degrees of Scene Complexity. In Proceedings of the 1st Symposium on Applied Perception in Graphics and Visualization . ACM, 39–47. doi:10.1145/1012551.1012559 [46] Jim Martin, Jack Burbank, William Kasch, and David L. Mills. 2010. Network Time Protocol Version 4: Protocol and Algorithms Specification. RFC 5905. doi:10.17487/RFC5905 [47] Vimal Mollyn and Chris Harrison. 2024. EgoTouch: On-Body Touch Input Using AR/VR Headset Cameras. In Proceedings of ACM UIST .[48] Xiaokun Pan, Gan Huang, Ziyang Zhang, Jinyu Li, Hujun Bao, and Guofeng Zhang. 2024. Robust Collaborative Visual-Inertial SLAM for Mobile Augmented Reality. IEEE Transactions on Visualization and Computer Graphics (2024). [49] Jong-Chul Park and Sung-Dae Kim. 2017. Adaptive Monocular Visual–Inertial SLAM for Real-Time Augmented Reality Applications in Mobile Devices. Sensors (2017). [50] Manthan Patel, Marco Karrer, Philipp Bänninger, and Margarita Chli. 2023. COVINS-G: A Generic Back-end for Collaborative Visual-Inertial SLAM. In Proceedings of IEEE ICRA .[51] Hannah Pelikan and Emily Hofstetter. 2023. Managing Delays in Human-Robot Interaction. ACM Transactions on Computer-Human Interaction (2023). [52] Thomas Pollok, Lorenz Junglas, Boitumelo Ruf, and Arne Schumann. 2019. UnrealGT: Using Unreal Engine to Generate Ground Truth Datasets. In Proceedings of Springer ISVC .[53] Xukan Ran, Carter Slocum, Yi-Zhen Tsai, Kittipat Apicharttrisorn, Maria Gorlatova, and Jiasi Chen. 2020. Multi-User Augmented Reality with Communication Efficient and Spatially Consistent Virtual Objects. In Proceedings of the 16th International Conference on Emerging Networking Experiments and Technologies (CoNEXT ’20) . 386–398. doi:10.1145/3386367.3431312 [54] Peter Reichl, Sebastian Egger, Raimund Schatz, and Alessandro D’Alconzo. 2010. The logarithmic nature of QoE and the role of the Weber-Fechner law in QoE assessment. In 2010 IEEE International Conference on Communications . IEEE, Cape Town, South Africa, 1–5. [55] Peter Reichl, Bruno Tuffin, and Raimund Schatz. 2013. Logarithmic laws in service quality perception: where microeconomics meets psychophysics and quality of experience. Telecommunication Systems 52, 2 (2013), 587–600. doi:10.1007/s11235-011-9503-7 [56] L. Riazuelo, J. Civera, and J. M. Montiel. 2014. C2TAM: A Cloud Framework for Cooperative Tracking and Mapping. Robotics and Autonomous Systems (2014). Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026. 97:28 • Tianyuan Du, Tianyi Hu, Hanting Ye, and Maria Gorlatova 
+
+[57] Samsung Electronics. 2025. Introducing Galaxy XR: Opening New Worlds . https://news.samsung.com/global/introducing-galaxy-xr-opening-new-worlds [58] Mark Sandler, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, and Liang-Chieh Chen. 2018. MobileNetV2: Inverted Residuals and Linear Bottlenecks. In Proceedings of the IEEE CVPR .[59] Tim Scargill, Ying Chen, Nathan Marzen, and Maria Gorlatova. 2022. Integrated Design of Augmented Reality Spaces Using Virtual Environments. In Proceedings of IEEE ISMAR .[60] P. Schmuck and M. Chli. 2019. CCM-SLAM: Robust and Efficient Centralized Collaborative Monocular Simultaneous Localization and Mapping for Robotic Teams. Journal of Field Robotics (2019). [61] Patrik Schmuck, Thomas Ziegler, Marco Karrer, Jonathan Perraudin, and Margarita Chli. 2021. COVINS: Visual-Inertial SLAM for Centralized Collaboration. In Proceedings of IEEE ISMAR-Adjunct .[62] Toshiyuki Shiwa, Takayuki Kanda, Michita Imai, Hiroshi Ishiguro, and Norihiro Hagita. 2008. How Quickly Should Communication Robots Respond?. In Proceedings of ACM/IEEE HRI .[63] John Skinner, Sourav Garg, Niko Sünderhauf, Peter Corke, Ben Upcroft, and Michael Milford. 2016. High-Fidelity Simulation for Evaluating Robotic Vision Performance. In Proceedings of IEEE/RSJ IROS .[64] Carter Slocum, Yicheng Zhang, Nael Abu-Ghazaleh, and Jiasi Chen. 2023. Going Through the Motions: AR/VR Keylogging from User Head Motions. In Proceedings of USENIX Security .[65] Stanislava Soro and Wendi Heinzelman. 2009. A Survey of Visual Sensor Networks. Advances in Multimedia (2009). [66] Jan-Philipp Stauffert, Florian Niebling, and Marc Erich Latoschik. 2020. Latency and Cybersickness: Impact, Causes, and Measures. A Review. Frontiers in Virtual Reality (2020). doi:10.3389/frvir.2020.582204 [67] Denis Tome, Thiemo Alldieck, Patrick Peluse, Gerard Pons-Moll, Lourdes Agapito, Hernan Badino, and Fernando de la Torre. 2023. SelfPose: 3D Egocentric Pose Estimation From a Headset Mounted Camera. IEEE Transactions on Pattern Analysis and Machine Intelligence 
+
+(2023). [68] Matthew Warburton, Mark Mon-Williams, Faisal Mushtaq, and J Ryan Morehead. 2023. Measuring Motion-to-Photon Latency for Sensorimotor Experiments with Virtual Reality Systems. Behavior Research Methods (2023). [69] K. Wright, A. Sivakumar, P. Steenkiste, B. Yu, and F. Bai. 2020. CloudSLAM: Edge Offloading of Stateful Vehicular Applications. In 
+
+Proceedings of IEEE/ACM SEC .[70] Mingyu Wu, Ye Sheng Koh, Che Fai Yeong, Kai Woon Goh, Marvin Dares, ES Lee Ming, William Holderbaum, and Mohd Shahrizal Sunar. 2024. Optimizing Assembly Processes with Augmented Reality: A Case Study on TurtleBots. Indonesian Journal of Electrical Engineering and Computer Science (2024). [71] J. Xu, H. Cao, Z. Yang, L. Shangguan, J. Zhang, X. He, and Y. Liu. 2022. SwarmMap: Scaling Up Real-Time Collaborative Visual SLAM at the Edge. In Proceedings of USENIX NSDI .[72] Euijung Yang and Michael Dorneich. 2015. The Effect of Time Delay on Emotion, Arousal, and Satisfaction in Human-Robot Interaction. 
+
+Proceedings of the Human Factors and Ergonomics Society Annual Meeting (2015). [73] Siyu Yu, Lin Qi, and Yun Tie. 2019. A Calibration Algorithm for Real-Time Scene-Aware Portable Augmented Reality. In Proceedings of IEEE ISNE .[74] Roberts Zabels, Rendijs Smukulis, Ralfs Fenuks, Andris Kučiks, Elza Linina, Kriss Osmanis, and Ilmars Osmanis. 2021. Reducing Motion to Photon Latency in Multi-Focal Augmented Reality Near-Eye Display. In Proceedings of Optical Architectures for Displays and Sensing in Augmented, Virtual, and Mixed Reality (AR, VR, MR) II . SPIE. [75] X. Zhang, H. Zhu, Y. Duan, W. Zhang, L. Shangguan, Y. Zhang, J. Ji, and Y. Zhang. 2024. Map++: Towards User-Participatory Visual SLAM Systems with Efficient Map Expansion and Sharing. In Proceedings of ACM MobiCom .[76] Zhongju Zhang and Weiguo Fan. 2008. Web server load balancing: A queueing analysis. European Journal of Operational Research 186, 2 (2008), 681–693. [77] Allan Zhou, Dylan Hadfield-Menell, Anusha Nagabandi, and Anca D. Dragan. 2017. Expressive Robot Motion Timing. In Proceedings of ACM/IEEE HRI .[78] Chenle Zuo, Zhao Feng, and Xiaohui Xiao. 2024. CCMD-SLAM: Communication-Efficient Centralized Multirobot Dense SLAM With Real-Time Point Cloud Maintenance. IEEE Transactions on Instrumentation and Measurement (2024). Proc. ACM Interact. Mob. Wearable Ubiquitous Technol., Vol. 10, No. 3, Article 97. Publication date: September 2026.

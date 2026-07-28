@@ -1,0 +1,208 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-28T20:10:08.844455+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.22805v1",
+      "source": "arxiv",
+      "title": "OrchNAS: Orchestrated Neural Architecture Search Service for Personalised Federated Edge Intelligence",
+      "abstract": "We propose OrchNAS, an energy-aware, personalised, federated edge intelligence framework that leverages a Neural Architecture Search Service to automatically design service-adaptive models for heterogeneous edge environments. The framework orchestrates the architecture search process on a server-side NAS service, enabling edge services to derive personalised architectures under device-level energy, computation, and memory constraints. We introduce an energy-aware global architecture search mechanism that learns a compact global representation across heterogeneous services. We develop an energy-efficient architecture selection mechanism that enables each service to derive a personalised subnet that satisfies its resource constraints via a progressive, greedy, energy-aware pruning strategy. We propose an energy-efficient personalised model optimisation scheme that updates service-adaptive parameters while preserving global representations, where a primal-dual optimisation mechanism enforces strict energy budgets during architecture adaptation. Experiments on real-world and benchmark datasets demonstrate the effectiveness of the proposed approach.",
+      "authors": [
+        "Keya Patel",
+        "Sajib Mistry",
+        "Sheik Mohammad Mostakim Fattah",
+        "Aneesh Krishna"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-24T16:05:17+00:00",
+      "link": "https://arxiv.org/pdf/2607.22805v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Federated edge intelligence with server-side NAS service for heterogeneous edge environments",
+      "llm_evidence_cn": "面向异构边缘环境的服务器端NAS服务联邦边缘智能",
+      "llm_evidence": "面向异构边缘环境的服务器端NAS服务联邦边缘智能",
+      "canonical_evidence": "面向异构边缘环境的服务器端NAS服务联邦边缘智能",
+      "llm_tldr_en": "OrchNAS proposes an energy-aware personalized federated edge intelligence framework with a server-side NAS service to design service-adaptive models for heterogeneous edge devices.",
+      "llm_tldr_cn": "OrchNAS提出了一种能量感知的个性化联邦边缘智能框架，利用服务器端的神经架构搜索服务自动为异构边缘环境设计自适应模型。该框架通过能量感知全局架构搜索学习紧凑全局表征，并允许每个服务导出个性化子网满足资源约束。它为边缘云协同AI系统提供了模型自动生成的方法。",
+      "llm_tldr": "OrchNAS提出了一种能量感知的个性化联邦边缘智能框架，利用服务器端的神经架构搜索服务自动为异构边缘环境设计自适应模型。该框架通过能量感知全局架构搜索学习紧凑全局表征，并允许每个服务导出个性化子网满足资源约束。它为边缘云协同AI系统提供了模型自动生成的方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.23884v1",
+      "source": "arxiv",
+      "title": "A Comparative Study of MCP and A2A for Inter-Agent Coordination in LLM-Based Systems",
+      "abstract": "Recent industry practice has seen the rapid emergence of agentic systems composed of heterogeneous, tool- and LLM-mediated agent components, raising practical questions about inter-agent coordination and protocol design. This paper presents an implementation-grounded comparison of the Model Context Protocol (MCP) and the Agent2Agent (A2A) protocol, from a multi-agent systems engineering perspective, using an inter-agent coordination scenario involving LLM-based agents. We evaluate an MCP-based and an A2A-based multi-agent implementation of the same software engineering task against a set of requirements derived from prior literature and discussions with industry partners, including agent discoverability, multi-part messaging, multi-turn conversations, asynchronous communication, observability, interoperability, and access control. The results evidence that MCP can support inter-agent coordination in constrained LLM-based systems through a comparatively lightweight implementation model with lower coordination complexity, although coordination concerns such as conversational state management and task lifecycle handling must be implemented explicitly at the application layer. In contrast, A2A provides richer native support for stateful, multi-turn coordination through protocol-level abstractions for tasks and lifecycle management, but this comes with substantially greater implementation and coordination complexity. Given the narrow scope of the evaluated coordination pattern, these findings are presented as design observations from an empirical experience report rather than general claims of protocol suitability or superiority across broader classes of MAS, highlighting trade-offs and how protocol abstractions shape the distribution of coordination responsibilities in contemporary agentic systems.",
+      "authors": [
+        "Ionut Predoaia",
+        "Tuong Manh Vu",
+        "Konstantinos Barmpis",
+        "Dimitris Kolovos",
+        "Antonio García-Domínguez"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-26T23:05:08+00:00",
+      "link": "https://arxiv.org/pdf/2607.23884v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Inter-agent coordination protocol comparison (MCP vs A2A) directly addresses collaboration",
+      "llm_evidence_cn": "代理间协调协议比较（MCP与A2A）直接关注协作",
+      "llm_evidence": "代理间协调协议比较（MCP与A2A）直接关注协作",
+      "canonical_evidence": "代理间协调协议比较（MCP与A2A）直接关注协作",
+      "llm_tldr_en": "This paper compares MCP and A2A protocols for inter-agent coordination in LLM-based multi-agent systems, evaluating them against requirements like discoverability and multi-turn messaging, providing insights for building collaborative AI agent systems.",
+      "llm_tldr_cn": "该论文从多代理系统工程视角，对模型上下文协议（MCP）和Agent2Agent（A2A）协议进行实现级对比，针对代理发现、多部分消息、多轮协调等需求评估两种方案。实验表明两者各有优劣，为构建可靠、可扩展的协作AI代理系统提供了协议选择指导。",
+      "llm_tldr": "该论文从多代理系统工程视角，对模型上下文协议（MCP）和Agent2Agent（A2A）协议进行实现级对比，针对代理发现、多部分消息、多轮协调等需求评估两种方案。实验表明两者各有优劣，为构建可靠、可扩展的协作AI代理系统提供了协议选择指导。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.22854v1",
+      "source": "arxiv",
+      "title": "Coordinated Networking for On-Device Agent-Augmented Real-Time Communication",
+      "abstract": "AI agents are enabling a new paradigm of agent-augmented real-time communication (RTC), where humans focus on high-level collaboration, while agents autonomously retrieve, analyze, and generate information in real time to support their interactions. These apps enable new experiences across various domains: for example, when corporate employees co-author a legal document, their agents can discuss and draft on their behalf, sparing them the burden of manually reviewing each other's work. As existing cloud-based agents suffer from privacy risks and unscalable server costs, on-device agent-augmented RTC offers a promising alternative. However, this on-device paradigm introduces a new networking challenge: contention between concurrent traffic flows generated by humans (for live video streaming) and agents (for sending context files for analysis). We design HFS, a framework to ensure both high live video quality and low agent response latency in agent-augmented RTC apps. We achieve the goal through an app-guided multi-flow transport approach, where a unified app-layer orchestrator jointly controls the sending rates of live video and agent context flows based on their heterogeneous app requirements. Our prototype built atop WebRTC and llama.cpp demonstrates that HAFS outperforms baselines, achieving 1.5x higher video quality while reducing agent response time by 31%.",
+      "authors": [
+        "Goodsol Lee",
+        "Juheon Yi",
+        "Jinglu Wang",
+        "Haowen Xu",
+        "Saewoong Bahk",
+        "Yan Lu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-24T18:52:41+00:00",
+      "link": "https://arxiv.org/pdf/2607.22854v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "on-device agent-augmented RTC with networking coordination for edge-cloud contention",
+      "llm_evidence_cn": "设备端代理增强实时通信，解决端云并发流量竞争问题",
+      "llm_evidence": "设备端代理增强实时通信，解决端云并发流量竞争问题",
+      "canonical_evidence": "设备端代理增强实时通信，解决端云并发流量竞争问题",
+      "llm_tldr_en": "This paper addresses networking challenges in on-device agent-augmented real-time communication, proposing coordinated traffic management to resolve contention between cloud and on-device flows.",
+      "llm_tldr_cn": "本文研究设备端AI代理增强的实时通信场景下的网络挑战。现有云代理存在隐私和成本问题，但设备端方案面临并发流量竞争。论文提出协调网络机制，通过智能流量调度缓解端云间的网络竞争，从而支持代理在端侧高效运行，同时保持实时通信质量。该工作直接支撑端云协同AI代理系统的网络基础设施。",
+      "llm_tldr": "本文研究设备端AI代理增强的实时通信场景下的网络挑战。现有云代理存在隐私和成本问题，但设备端方案面临并发流量竞争。论文提出协调网络机制，通过智能流量调度缓解端云间的网络竞争，从而支持代理在端侧高效运行，同时保持实时通信质量。该工作直接支撑端云协同AI代理系统的网络基础设施。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.23901v1",
+      "source": "arxiv",
+      "title": "SHARE: Towards Head-Mounted AR with User-Centric SLAM in Shared Human-Robot Workspaces",
+      "abstract": "Human-Robot Collaboration (HRC) in shared physical spaces using Augmented Reality (AR) interfaces is powered by Simultaneous Localization and Mapping (SLAM). Existing multi-agent SLAM systems rely on an edge server to combine visual findings of multiple resource-constrained agents, perform computation, and schedule updates to their local maps. However, the edge treats all agents uniformly and ignores the fundamentally different latency requirements of heterogeneous HRC agents: robots and head-mounted AR users. This uniform resource allocation often results in high lag for user manipulation, as it does not meet the stringent latency requirements of AR. In this work, we design, implement, and evaluate SHARE, a user-centric SLAM system that strategically prioritizes AR user experience while maintaining accurate tracking performance for robots. SHARE builds a first-of-its-kind experience model for HRC agents and adaptively adjusts transmission priorities to match it. To reduce end-to-end latency, SHARE leverages the redundancy of visual features acquired by agents in shared human-robot workspaces to reduce computation time induced by edge-based processing. Real-world deployment with commercial AR headsets and a ground robot achieves 13.22 ms average latency for AR users (43.3% reduction from baseline) while maintaining sub-2-centimeter tracking accuracy. User studies further reveal statistically significant improvements in user perception.",
+      "authors": [
+        "Tianyuan Du",
+        "Tianyi Hu",
+        "Hanting Ye",
+        "Maria Gorlatova"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.RO"
+      ],
+      "published": "2026-07-27T00:21:39+00:00",
+      "link": "https://arxiv.org/pdf/2607.23901v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "edge server for multi-agent SLAM with user-centric scheduling in human-robot collaboration",
+      "llm_evidence_cn": "面向人机协作共享空间的边缘服务器多智能体SLAM系统，考虑不同代理的延迟需求",
+      "llm_evidence": "面向人机协作共享空间的边缘服务器多智能体SLAM系统，考虑不同代理的延迟需求",
+      "canonical_evidence": "面向人机协作共享空间的边缘服务器多智能体SLAM系统，考虑不同代理的延迟需求",
+      "llm_tldr_en": "This paper presents SHARE, a user-centric SLAM system that uses an edge server for multi-agent SLAM in human-robot collaboration, prioritizing AR user latency over robot agents.",
+      "llm_tldr_cn": "本文提出SHARE系统，针对人机协作共享空间中头戴式AR用户与机器人的异构延迟需求，设计了一种以用户为中心的边缘服务器端SLAM系统。现有边缘端多代理SLAM对所有代理统一调度，导致AR用户延迟过高。SHARE通过区分用户与机器人的资源分配，优先保证AR用户的实时性，从而提升协作体验。实验表明该方法能显著降低用户操作延迟。",
+      "llm_tldr": "本文提出SHARE系统，针对人机协作共享空间中头戴式AR用户与机器人的异构延迟需求，设计了一种以用户为中心的边缘服务器端SLAM系统。现有边缘端多代理SLAM对所有代理统一调度，导致AR用户延迟过高。SHARE通过区分用户与机器人的资源分配，优先保证AR用户的实时性，从而提升协作体验。实验表明该方法能显著降低用户操作延迟。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.23678v1",
+      "source": "arxiv",
+      "title": "Focus Is All You Need: Adaptive Goal-aware Attention Orchestration for Multi-Agent Graph Systems",
+      "abstract": "Large language models (LLMs) enable autonomous agents for reasoning, planning, and tool use. Recent systems increasingly organize these agents as graphs of specialized, interconnected nodes. Although graph-based orchestration supports flexible decomposition and coordination, it creates a key challenge: \\textbf{attention allocation}. As workflows grow, existing approaches often execute graph components uniformly, wasting resources on irrelevant or low-impact tasks. We introduce \\textbf{Attention Orchestration}, a paradigm that extends Transformer-style attention from token representations to workflow-level agent coordination. Our framework, \\textbf{Adaptive Goal-aware Attention Orchestration (AGAO)}, dynamically estimates agent importance based on user objectives, graph dependencies, and computational constraints. AGAO combines three components: (1) goal-aware attention, measuring semantic relevance between user goals and agent capabilities; (2) topology-aware attention, modeling structural dependencies in agent graphs; and (3) resource-aware attention, allocating budgets and execution priorities across heterogeneous agents. Together, these mechanisms transform static agent graphs into adaptive systems that focus computation on goal-critical reasoning paths. Experiments across diverse multi-agent workloads show that AGAO improves task effectiveness while reducing unnecessary computation, latency, and token consumption compared with existing graph-based execution strategies. Our work establishes \\textbf{Attention Engineering} as a direction for scalable, intelligent multi-agent systems. Code: https://github.com/MingzhouFan97/AGAO.",
+      "authors": [
+        "Mingzhou Fan",
+        "Siyuan Xu",
+        "Mingxuan Yuan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-26T14:23:33+00:00",
+      "link": "https://arxiv.org/pdf/2607.23678v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent graph systems orchestration",
+      "llm_evidence_cn": "多智能体图系统协调",
+      "llm_evidence": "多智能体图系统协调",
+      "canonical_evidence": "多智能体图系统协调",
+      "llm_tldr_en": "Proposes Adaptive Goal-aware Attention Orchestration (AGAO) for multi-agent graph systems, dynamically allocating attention to agent nodes to improve efficiency and reduce waste.",
+      "llm_tldr_cn": "针对多智能体图系统中注意力分配不均导致资源浪费的问题，提出自适应目标感知的注意力协调框架AGAO，将Transformer风格的注意力机制扩展到工作流级的智能体协调上，动态评估各智能体节点对当前目标的贡献并分配计算资源，实验表明在复杂任务上显著提升了协调效率与任务完成率。",
+      "llm_tldr": "针对多智能体图系统中注意力分配不均导致资源浪费的问题，提出自适应目标感知的注意力协调框架AGAO，将Transformer风格的注意力机制扩展到工作流级的智能体协调上，动态评估各智能体节点对当前目标的贡献并分配计算资源，实验表明在复杂任务上显著提升了协调效率与任务完成率。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
