@@ -1,0 +1,392 @@
+Title: Toward an Organizational Science of Multi-Agent LLM Systems: Decoupling Who, How, and Which Algorithm
+
+URL Source: https://arxiv.org/pdf/2607.25446v1
+
+Published Time: Wed, 29 Jul 2026 00:49:06 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# Toward an Organizational Science of Multi-Agent LLM Systems: Decoupling Who, How, and Which Algorithm 
+
+# Huan Chen 1, Xiang Song 1, Jian Jin 1, Pan Ren 1, Liang-Jie Zhang 2
+
+> 1
+
+Shunfeng Technology Co., Ltd., China 
+
+> 2
+
+Shenzhen University, China 
+
+Abstract 
+
+Multi-agent frameworks built on large language models (LLMs) routinely entangle three logically distinct concerns: 
+
+who is on the team (organization), how members align (co-ordination), and which algorithm fuses their work (collabora-tion protocol). IMACS (Intelligent Multi-Agent Collaboration System) separates the three into orthogonal, independently swappable layers. Classic organizational theory (Belbin roles, Mintzberg coordination, RACI accountability) becomes ex-ecutable, validated configuration, and the framework places six published collaboration algorithms behind a common in-terface while exposing roles, coordination, and accountability as independently configurable factors. We use this separation to conduct controlled comparisons in which organizational as-signments vary while the collaboration protocol is held fixed. It also turns protocol choice into a variable that can be learned :Adaptive Org Routing, a contextual-bandit meta-protocol, se-lects a protocol per task under an explicit quality–cost trade-off, outperforms every fixed protocol in a controlled study, and trains online on real benchmark and LLM-judge rewards. The ablations expose a mechanism. Accountability placement changes outcomes exactly when the protocol routes the deliv-erable through the accountable agent, and the winning place-ment flips across model families, so organizational design cannot be hard-coded; it must be re-validated, or learned, for each model binding. 
+
+# Introduction 
+
+Large language models (LLMs) have moved from single-shot prompting to multi-agent collaboration, in which mul-tiple model instances critique and build on one another’s reasoning. A growing toolbox of collaboration algorithms now exists—Mixture-of-Agents (Wang et al. 2025), Multi-Agent Debate (Du et al. 2024), Self-Consistency (Wang et al. 2023b), LLM-Blender (Jiang, Ren, and Lin 2023), Plan-and-Execute (Hong et al. 2024), Reflexion (Shinn et al. 2023)— alongside agent frameworks such as AutoGen, CAMEL, and MetaGPT. 
+
+The entanglement problem. Despite this progress, most frameworks tangle three logically independent concerns into one implementation: 1. Organization (WHO): which agents exist, what roles they play, which models back them, and who is account-able. 2. Coordination (HOW): the mechanism by which mem-bers align, whether informal mutual adjustment, a su-pervisor issuing orders, or standardized procedures and outputs. 3. Collaboration protocol (the ALGORITHM): the pro-cedure that fuses individual contributions into a result, such as debate, voting, or planning. When these are fused, swapping the aggregation algorithm means rewriting the team. The cost is threefold: teams can-not be reconfigured without touching algorithms; decades of organizational theory (Belbin 2010; Mintzberg 1979) cannot be applied as a first-class design surface; and collaboration algorithms cannot be compared on an equal organizational footing, since each ships its own implicit team. 
+
+Our thesis: decouple the three concerns. We argue these concerns are orthogonal and model them as indepen-dently swappable layers. IMACS (Intelligent Multi-Agent Collaboration System) realizes this: organizations are de-clared in YAML and grounded in Belbin’s nine roles (Bel-bin 2010); coordination is one of Mintzberg’s five mech-anisms (Mintzberg 1979); and the collaboration protocol is a pluggable object behind a single interface. RACI is a cross-cutting tag with a validated at-most-one-Accountable constraint, and any layer can be replaced without touching the others (Proposition 1). To show the organization layer is culturally pluggable, IMACS ships three presets: belbin 
+
+(default), adhocracy , and three-departments (the Tang-dynasty ministry system in Belbin terms). 
+
+Why decouple? Once the three factors are independently swappable, organizational variables (roles, coordination, RACI) can be held fixed or ablated while the protocol stays constant; to our knowledge, no prior multi-agent LLM frame-work supports such controlled ablation of who and how inde-pendent of which algorithm . Protocol choice also becomes a free variable. We exploit both consequences in this paper. 
+
+Adaptive Org Routing. With protocol choice freed, we cast it as an online decision problem. Adaptive Org Rout-ing featurizes each task into an interpretable 7-dimensional vector and uses a LinUCB contextual bandit (Li et al. 2010) to select, per task, the protocol that maximizes a cost-adjusted reward r = quality − λ · cost, updating online via rank-1 Sherman–Morrison updates. Over a task stream it traces a arXiv:2607.25446v1 [cs.AI] 28 Jul 2026 quality/cost Pareto frontier, spending on expensive protocols only when they earn their cost. 
+
+Contributions. 
+
+• A decoupled architecture and formalization (our core contribution). We separate organization, coordination, and collaboration into orthogonal layers, formalize an organization as O = (R, μ, κ, ρ ) and a protocol as 
+
+π : ( Task , Team , Blackboard ) → Result, and prove an orthogonality property on which the controlled ablations and the router below both rest. 
+
+• A systematic study of the organization dimension. 
+
+Holding the protocol fixed and varying the organization, controlled RACI ablations replicated three times show ac-countability matters exactly when the protocol routes the deliverable through the accountable agent, and only by changing which model does the work; a natural cross-dataset conjecture proves unstable across repeats and model bindings . We also stress-test a catalog of evidence-backed (organization, protocol) recipes on five real bench-marks. 
+
+• Adaptive Org Routing , an online organization-aware meta-protocol that selects a protocol per task via a con-textual bandit over task features, evaluated on a controlled oracle ( 82% routing accuracy, beating all six fixed base-lines) and trained on real objective and LLM-judge re-wards. 
+
+• A modular, reproducible framework , released with this paper: a unified pluggable implementation of the six pro-tocols above on AgentScope 2.0, with gateway key isola-tion, a transparent blackboard runtime, and seeded bench-marks. A note on scope: the framework is the primary contribution and the router a method instance built on it. The router’s headline number comes from a controlled simulated oracle; the real-benchmark, real-reward, and RACI results are small-
+
+N , reported as direction and mechanism (see Discussion). 
+
+# Related Work 
+
+Multi-agent LLM frameworks. Prior frameworks couple roles, coordination, and aggregation (Guo et al. 2024): con-versational systems like AutoGen, CAMEL, and AgentVerse fix the dialogue loop as the protocol (Wu et al. 2024; Li et al. 2023; Chen et al. 2024), while MetaGPT and ChatDev bind roles to a fixed software-company pipeline (Hong et al. 2024; Qian et al. 2024). A complementary line optimizes the communication topology itself—GPTSwarm learns over agent graphs (Zhuge et al. 2024), DyLAN prunes dynamic agent networks (Liu et al. 2024)—but within one algorithmic family, without declarative roles or accountability. Purpose-built evaluations have followed: MultiAgentBench scores collaboration across coordination topologies with milestone KPIs (Zhu et al. 2025); AgentsNet poses formally verifiable coordination problems over agent networks (Grötschla et al. 2025). IMACS instead treats organization, coordination, and collaboration as orthogonal layers over a generic runtime (we build on AgentScope 2.0 (Gao et al. 2024)), so a team and an algorithm combine freely. 
+
+Collaboration algorithms. We treat published collabo-ration algorithms as interchangeable protocols : Mixture-of-Agents (Wang et al. 2025) (proposer/aggregator lay-ers), Multi-Agent Debate (Du et al. 2024) (critique-revise rounds), Self-Consistency (Wang et al. 2023b) (sample-and-vote), LLM-Blender (Jiang, Ren, and Lin 2023) (rank-and-fuse), Plan-and-Execute in the Plan-and-Solve / MetaGPT line (Wang et al. 2023a; Hong et al. 2024) (decompose-then-execute), and Reflexion (Shinn et al. 2023) (verbal self-feedback). IMACS ships each behind a common interface, so they can be compared on the same team and selected automatically per task. 
+
+Organizational theory. Belbin (Belbin 2010) iden-tifies nine team roles (thought-, people-, action-oriented) a balanced team covers; Mintzberg (Mintzberg 1979) identifies five coordination mechanisms and forms such as the adhocracy; RACI assigns Responsi-ble/Accountable/Consulted/Informed tags, classically one Accountable per deliverable. While agent “personas” are common, IMACS makes these theories a first-class, declar-ative, validated design surface, with cultural pluggability via the three-departments preset (the Tang ministry system; Fei, Guo, and Xiao 2026 also cast historical institutions as agent topologies, but as fixed architectures, not a swappable layer). 
+
+Bandits for model and protocol selection. LinUCB (Li et al. 2010) is the canonical linear-payoff contextual ban-dit (Auer, Cesa-Bianchi, and Fischer 2002; Chu et al. 2011) with ˜O(√T ) regret. Adjacent selection problems use the same machinery, routing queries to models (Chen, Zaharia, and Zou 2024; Shnitzer et al. 2024; Ong et al. 2025; Poon et al. 2026) or across agent communication standards (A2A, ACP, ANP) (Du et al. 2026). IMACS routes at a different layer, to our knowledge unaddressed: its arms are entire col-laboration algorithms over a declared organization, its con-text an interpretable 7-dimensional task featurization, and the problem is well-posed only because organization and protocol are decoupled (Proposition 1). 
+
+# The IMACS Framework 
+
+IMACS is organized as a stack of seven layers (Figure 1). Lower layers provide atomic capabilities; upper layers com-pose them. The three middle layers (organization, collabora-tion, and the runtime that hosts them) are where the decou-pling lives. 
+
+Layers 
+
+L1 Atomic capabilities. Model adapters, tools, MCP servers, and the provider-facing ModelGateway . The Mod-elGateway owns provider credentials and resolves opaque model handles, keeping credentials below the agent bound-ary. Models are restricted to an author-defined experimental registry: callable through available provider APIs, compati-ble with the common AgentScope chat interface, and span-ning distinct provider families. It is an implementation al-lowlist, not an external certification or quality endorsement. An offline deterministic stand-in keeps tests and demos run-ning without credentials or network access. L1 Atomic — ModelGateway + model adapters / tools / MCP                     
+
+> L2 Agent — role-typed model handle + tools (ReAct)
+> L3 Organization (WHO / HOW)
+> Belbin roles ·RACI tags ·Mintzberg coordination (YAML)
+> L4 Collaboration Protocol (ALGORITHM)
+> voting ·MoA ·blender ·debate ·reflexion ·plan-execute ·adaptive
+> L5 Runtime — Conductor + observable Blackboard (Team interface)
+> L6 API Gateway — FastAPI REST + SSE
+> L7 Application — Vue arena / project UI
+> decoupled core
+
+Figure 1: The seven-layer IMACS stack. Inside the dashed region, the organization (WHO/HOW) and the collaboration protocol (ALGORITHM) meet only through the runtime’s Team and Blackboard interfaces, so any organization com-poses with any protocol (Proposition 1). The adaptive router is itself an L4 protocol that selects among the others. 
+
+L2 Agent. A role-typed wrapper binding a model handle, a system prompt, and tools; agents act via a ReAct-style reason-act loop (Yao et al. 2023) when tools are involved. 
+
+L3 Organization (WHO/HOW). A declarative team: Belbin-typed roles, each bound to a registered model and a RACI tag, plus a Mintzberg coordination mechanism. Loaded from YAML presets and formalized below (Defi-nition 1). 
+
+L4 Collaboration protocol (ALGORITHM). The plug-gable fusion algorithm behind the single interface of Defini-tion 2. Ships voting, MoA, blender, debate, reflexion, plan-execute, and the adaptive meta-protocol (Adaptive Org Rout-ing). 
+
+L5 Runtime. A Conductor instantiates a Team from an organization and drives a protocol over a shared Blackboard 
+
+on which every intermediate message is posted, a transparent room with human-in-the-loop and SSE hooks. 
+
+L6 API Gateway. A FastAPI boundary exposes the L5 Conductor through REST and streams Blackboard events through SSE. It delegates model resolution to L1’s Model-Gateway and does not expose provider credentials to appli-cations. 
+
+L7 Application. A Vue application provides two canon-ical demos: an arena (models compete per query) and a 
+
+project (a task decomposed across roles). 
+
+Formalization 
+
+Definition 1 (Organization) . An organization is a tuple O =(R, μ, κ, ρ ) where 
+
+• R = {r1, . . . , r n} is a set of roles , each ri ∈ B drawn from Belbin’s nine team roles B;
+
+• μ : R → M is a model binding from roles to the configured model registry M (the gateway guarantees 
+
+im( μ) ⊆ M ); 
+
+• κ ∈ K is a single coordination mechanism from Mintzberg’s five mechanisms K;
+
+• ρ : R → { R, A, C, I} is the RACI assignment , subject to the single-owner constraint {r ∈ R : ρ(r) = A} ≤ 1.
+
+Here R, A, C, and I denote Responsible, Accountable, Consulted, and Informed; Greek symbols name organiza-tion components rather than reusing these RACI initials. The single-owner constraint is validated at load time. A Team T
+
+is the instantiation of O: a set of agents {ai} where ai wraps model μ(ri) under role ri, sharing a coordination context derived from κ.
+
+Definition 2 (Collaboration protocol) . A collaboration pro-tocol is a function 
+
+π : ( Task , Team , Blackboard ) −→ Result ,
+
+that, given a task, an instantiated team, and a shared black-board, executes a fusion algorithm and returns a result, while posting every intermediate utterance to the blackboard. The set of protocols Π is extensible: a new algorithm is a new 
+
+π ∈ Π registered by name. 
+
+A protocol is deliberately agnostic to which roles popu-late the team and to κ; it sees a pool of role-typed agents, never a fixed cast. Conversely, an organization carries no commitment to any π.
+
+Proposition 1 (Orthogonality of the three layers) . Let O
+
+be the set of valid organizations and Π the protocols. The system’s behavior is a well-defined map run : O × Π ×
+
+Task → Result on the full product O × Π: any organization 
+
+O ∈ O composes with any protocol π ∈ Π. Hence replacing one component leaves the interfaces of the others invariant: for fixed π, varying O (roles, models, coordination κ, or RACI assignment ρ) requires no change to π; and for fixed 
+
+O, varying π requires no change to O.Proof sketch. π depends on O only through the Team inter-face (a pool of role-typed agents) and the Blackboard inter-face, neither of which exposes specific roles, model identities, 
+
+κ, or ρ. O depends on π through no interface at all; it is a static declaration consumed by the runtime, not by π. There-fore the two are free coordinates of the design space, and run 
+
+is total on O × Π. The coordination mechanism κ is likewise a property of O surfaced to agents as context, independent of π. □
+
+Proposition 1 lets the three presets (belbin ,
+
+adhocracy , three-departments ) and the protocol library be reused combinatorially, and it makes the rout-ing problem of Adaptive Org Routing well-posed: the router chooses a point in Π while O is held fixed. 
+
+# Adaptive Org Routing 
+
+Decoupling protocols from organizations (Proposition 1) makes protocol choice a free variable. The right choice is task-dependent: cheap voting suffices for factual lookups, de-bate helps reasoning, and plan-and-execute suits decompos-able work, but each step up costs more model calls. Adaptive Org Routing learns this mapping online. 
+
+Task featurization 
+
+Routing must be cheap relative to the protocols it selects, so featurization uses no model call. A goal string is mapped to an interpretable vector x ∈ R7 whose coordinates are an intercept 1 and six features— length , #questions , #sub-tasks , reasoning , factoid , has_code —each bounded to [0 , 1] 
+
+by normalized counts (token length, ? count, decomposi-tion/reasoning/factoid keyword densities, and a code indi-cator). These features are the context that lets the policy generalize across tasks of the same type. 
+
+Bandit formulation 
+
+We cast per-task protocol selection as a contextual bandit. The arms are the six base protocols A =
+
+{voting , moa , blender , debate , reflexion , plan-execute }. On task t with feature vector xt, the router plays arm πt ∈ A ,runs that protocol over the (fixed) organization, observes a quality estimate qt ∈ [0 , 1] from an evaluator agent, and forms a cost-adjusted reward 
+
+rt = qt − λ · ˜c(πt), ˜c(π) = c(π)max π′ c(π′) , (1) where c(π) is the protocol’s relative model-call multiplicity (voting 1.0, MoA/blender 1.5, reflexion 2.0, plan-execute 
+
+2.5, debate 3.0) and λ ≥ 0 tunes cost aversion. We use LinUCB (Li et al. 2010). Each arm a maintains 
+
+Aa ∈ Rd×d (initialized to Id, d=7 ) and ba ∈ Rd. Its payoff estimate is ˆθa = A−1 
+
+> a
+
+ba and the router selects 
+
+πt = arg max 
+
+> a∈A
+
+ˆθ⊤ 
+
+> a
+
+xt + α
+
+q
+
+x⊤ 
+
+> t
+
+A−1 
+
+> a
+
+xt
+
+
+
+, (2) the upper-confidence bound on cost-adjusted utility, with exploration coefficient α. After observing rt it updates 
+
+Aπt += xtx⊤ 
+
+> t
+
+, bπt += rtxt. We maintain A−1 
+
+> a
+
+directly via the Sherman–Morrison rank-1 update, 
+
+A−1 ← A−1 − (A−1x)( A−1x)⊤
+
+1 + x⊤A−1x , (3) giving O(d2) per-step learning with no matrix inversion. The full per-task meta-protocol is given as pseudocode in the supplement. 
+
+Persistence and online observability 
+
+The router’s entire learned state is the per-arm pair (A−1 
+
+> a
+
+, b a)
+
+plus a pull count, a few small dense matrices ( d=7 ) that seri-alize compactly to JSON, so a policy can be checkpointed and restored to resume learning rather than cold-start; restoration validates the arm set and feature dimension. Because learn-ing is fully online, rolling routing accuracy and cumulative regret stream per round (Figure 2): train once, persist, keep improving. 
+
+Regret and “org-awareness” 
+
+Equation (2) is LinUCB on a d-dimensional context with bounded rewards, which under the standard linear-payoff as-sumption enjoys ˜O(√dT ) cumulative regret (Li et al. 2010); our setting satisfies the assumptions by construction (full statement and sketch in the supplement), so per-round regret against the cost-adjusted optimum vanishes as ˜O(pd/T ).The router holds O fixed and chooses over Π, but by Propo-sition 1 the arm set extends to (protocol, coordination) pairs or per-role model bindings with the same machinery (only 
+
+|A| grows); we evaluate the protocol-selection instance and leave the joint space to future work.                 
+
+> Scenario Org Protocol
+> Factual lookup belbin voting Math reasoning belbin voting Open reasoning belbin debate Code generation belbin reflexion Open-ended gen. adhocracy moa Candidate fusion belbin blender Complex decomp. three-departments plan-execute
+
+Table 1: Evidence-backed scenario recipes. Each pairing is the default IMACS recommendation for its scenario, tested against a public benchmark; evidence cited in the text. 
+
+# Scenario Recommendations 
+
+Proposition 1 guarantees that any organization composes with any protocol, but not which combination to pick. This section closes that gap with a small catalog of evidence-backed (organization, protocol) recipes (Table 1), each nam-ing a public benchmark so the recommendation is falsifiable, shipped as a one-call API and an auto-recommender. 
+
+From evidence to recipes 
+
+The recipes follow established results: self-consistency vot-ing for verifiable arithmetic (Wang et al. 2023b); multi-agent debate for open-ended reasoning and factuality (Du et al. 2024); Mixture-of-Agents (Wang et al. 2025) and ranking-fusion (Jiang, Ren, and Lin 2023) for open-ended generation; Reflexion for code with executable feedback (Shinn et al. 2023); and role-specialized planning for complex, decom-posable tasks (Hong et al. 2024). Collaboration is not universally beneficial: heavy proto-cols can over-think simple tasks and coordination failures can reduce quality (Cemri et al. 2025). Recipes therefore encode structural role division rather than persona strings, which do not reliably improve objective accuracy (Zheng et al. 2024), and serve as priors for the adaptive router. 
+
+From asserted to validated recommendations 
+
+We test these priors on five public benchmarks: GSM8K (Cobbe et al. 2021) exact-match, Hu-manEval (Chen et al. 2021) pass@1, HotpotQA token-F1, and AgentsNet (Grötschla et al. 2025) formal validity use task-intrinsic, model-free scoring; open-ended AlpacaEval uses a disclosed LLM-judge win-rate. Runs also log latency and answer length, isolate item-level transport failures, and record data source and generation mode. Every table cell is generated from its evaluation record, so Table 2 is a directly auditable quality/cost frontier rather than a manually transcribed summary. 
+
+Findings. At N =10 /cell, HotpotQA supports Plan-and-Execute ( 0.54 , also lowest latency), while GSM8K favors Plan-and-Execute and Debate ( 0.90 ) over the Voting recipe (0.60 ). At N =10 , all reported HumanEval and AgentsNet cells equal 1.00 , leaving cost as the useful axis: Plan-and-Execute is respectively 4.2× and 2.3× faster than Debate. Reported AlpacaEval scores are near the ceiling ( 0.90 –1.00 ); MoA reaches the top observed win-rate at the lowest latency GSM8K HumanEval HotpotQA AlpacaEval AgentsNet Protocol exact-match pass@1 token-F1 win-rate validity Voting 0.60 1.00 0.33 0.90 1.00                               
+
+> Debate 0.90 1.00 0.36 1.00 1.00
+> Reflexion 0.50 1.00 0.21 –1.00
+> Plan-Execute 0.90 1.00 0.54 –1.00
+> MoA –––1.00 –Blender –––1.00 –Best solo 0.90 1.00 0.53 1.00 1.00
+
+Table 2: Real-benchmark evaluation, N =10 items/cell, real models (belbin org). Each column is scored by its objective metric (exact-match / pass@1 / token-F1 / formal validity) or, for the inherently open-ended AlpacaEval, an LLM-judge win-rate vs. a reference baseline (judge = GLM-5.2; a model judge carries length/style biases). Best protocol per objective column in bold. At 
+
+N =10 , reported AlpacaEval scores are near the ceiling and AgentsNet scores equal 1.00 , so we read cost there. “–”: not run. Bottom row: the strongest single model per dataset answering alone (mean over the three solo runs in the organization-dimension study; single run for AlpacaEval and AgentsNet). (127 s versus 154 s for Blender and 230 s for Debate). No protocol exceeds the strongest solo model on quality, and that model changes by dataset. Thus task type and model binding jointly determine the winner: recipes are falsifiable priors, not guarantees, motivating adaptive selection. These small-
+
+N runs are directional rather than leaderboard claims. Ob-jective metrics are used wherever possible; the open-ended judge, its biases, and the synthetic/real boundary are ex-plicitly disclosed. AgentsNet is evaluated as a whole-graph deliverable because its checker is intrinsic to the output; framework-coupled interaction metrics are excluded (sup-plement). 
+
+The organization dimension 
+
+The findings above vary the protocol while holding the orga-nization fixed. We now cross the two. Table 3(a) evaluates a partial 3 × 2 organization–protocol grid on GSM8K: no or-ganization is uniformly best, the protocol preference varies with the organization ( belbin and three-departments favor debate, 0.60 /0.80 and 0.50 /0.90 , while adhocracy is even at 0.70 /0.70 ), and a fixed protocol moves by up to 0.20 
+
+exact-match across organizations. This is direct evidence for Proposition 1 in practice: the organization is a real, indepen-dent lever whose best choice interacts with the protocol. 
+
+Does accountability placement matter? A controlled RACI ablation. Because the three presets differ on many axes at once, a raw grid cannot isolate RACI , so we add a controlled ablation (Table 3(b)): three variants of the same 
+
+belbin team (identical roles, models, and coordination) dif-fering only in the Accountable tag (Chair, Critic, or none). Voting and debate never read the tag, so for them the three variants are functionally identical, which lets this grid dou-ble as a noise calibration. Over three independent repeats, the variant means agree within 0.04 (voting 0.57 –0.60 ; debate 
+
+0.73 –0.77 ) while the single-run cross-variant spread reaches 
+
+0.17 ±0.05 : single-run differences of that size are generation noise, the yardstick for the Blender effect below. With three repeats (all ± are population std over repeats), we report sign consistency and paired effect sizes rather than significance tests. We report this near-null result as is: where account-ability sits barely moves objective accuracy, consistent with evidence that role/persona tags alone do not lift objective performance (Zheng et al. 2024) and with the framing above that a recipe’s value is structural. 
+
+When RACI does bite: a mechanistic prediction, tested. 
+
+The null on voting/debate does not mean accountability is inert; those protocols simply never read the Accountable tag. Reading the control flow predicts when RACI matters: LLM-Blender hands the final fusion to the team’s accountable agent (first agent when none is tagged), so the fuser is the account-able agent ; moving Accountable from the Chair ( glm-5.2 )to the Critic ( deepseek ) reroutes the final write to a dif-ferent model. MoA instead aggregates at its coordinator role and consults the Accountable tag only as a fallback, so its aggregator stays the Chair regardless of RACI. This yields a falsifiable prediction, RACI should move Blender but not MoA , and a natural follow-up conjecture, that Blender’s win-ning variant should use the stronger fuser model. We test both across three independent repeats with a solo-model base-line (Table 3(c) and Table 4). The prediction holds in the repeated data: on HotpotQA, Blender’s paired Critic −Chair gap is positive in every repeat ( +0 .08 ±0.02 in the fuser grid; 
+
+0.34 ± 0.06 vs. 0.48 ± 0.05 cross-dataset), while the MoA control, whose aggregator is identical in all three variants, shows an unsigned spread of comparable magnitude ( 0.13 per repeat) whose ordering shuffles across repeats. The effect is stable in sign; the control varies without one. GSM8K moves the same way when it moves ( 0.70 ±0.00 vs. 0.77 ±0.09 ) and all HumanEval cells equal 1.0 in this sample. The follow-up conjecture, by contrast, has no stable direction : across the re-peats the winning fuser matched the stronger solo model in 1,
+
+3, and 1 of 3 datasets, and shifts again under a different model binding (supplement). The claim that survives is precise: ac-countability placement affects outcomes exactly when the protocol routes the deliverable through the accountable agent (a replicated, sign-consistent effect), it operates by changing which model does the work, and its direction is not predictable a priori . The optimal placement must therefore be found empirically, an argument for an adaptive router over (organization, protocol) rather than a static rule. Organization Voting Debate                      
+
+> (a) org ×protocol — presets
+> belbin 0.60 0.80
+> adhocracy 0.70 0.70 three-departments 0.50 0.90
+> (b) RACI ablation (3 repeats)
+> Chair 0.60 ±0.00 0.77 ±0.05 Critic 0.57 ±0.05 0.73 ±0.05 none 0.60 ±0.16 0.73 ±0.12
+> (c) HotpotQA fuser ablation (3 repeats)
+> MoA Blender
+> Chair 0.38 ±0.03 0.34 ±0.04 Critic 0.32 ±0.07 0.42 ±0.02 none 0.30 ±0.06 0.25 ±0.06
+
+Table 3: Organization dimension (exact-match / token-F1, 
+
+N =10 /cell, real models; (b–c) mean ±std over three repeats). 
+
+(a) GSM8K: no organization is uniformly best and the pro-tocol preference varies with the organization — a real, in-dependent lever that interacts with the protocol. (b) Voting and debate never read the Accountable tag, so these variants are functionally identical: means agree within 0.04 , single-run spread reaches 0.17 ± 0.05 (the measured N =10 noise floor). (c) Blender’s fuser is the accountable agent: its paired Critic −Chair gap is positive in 3/3 repeats ( +0 .08 ± 0.02 ), while the MoA control (identical aggregator) shuffles across repeats. The gap keeps its sign; the control does not. 
+
+# Experiments 
+
+We study whether Adaptive Org Routing learns to send each task to its cost-adjusted optimal protocol, and whether the learned policy beats every fixed protocol. Because the goal is to measure routing/regret behavior against known ground truth, not to estimate absolute LLM quality, we evaluate against a controlled simulated oracle (motivated in the Dis-cussion). 
+
+Setup 
+
+Task stream. A mixed suite of factual, reasoning, complex-decomposition, code, and open-ended tasks (e.g., “What is the capital of France?”). Each round draws a task uniformly at random; tasks carry a type tag used only to define the oracle, never seen by the router. 
+
+Simulated quality oracle. Each (task-type, protocol) pair has a latent mean quality in [0 , 1] plus bounded Gaussian noise ( σ=0 .03 ). The latent profile encodes established lit-erature trends: factual tasks peak at voting ; reasoning peaks at debate (Du et al. 2024); code peaks at reflexion (Shinn et al. 2023); complex/decomposable tasks peak at plan-execute (Hong et al. 2024); open-ended generation peaks at MoA (Wang et al. 2025). After cost adjustment (Eq. 1) each type has one clearly separated optimal arm, giving a learnable signal and a well-defined regret target. 
+
+Router and baselines. LinUCB with d=7 , α=0 .6. We compare against the six fixed-protocol baselines (always play one arm), an oracle upper bound (always play the cost-adjusted optimal arm, no noise), and a context-free bandit                 
+
+> Dataset Blender Blender Solo Solo Chair Critic glm deepseek
+> glm fuser deepseek fuser GSM8K 0.70 ±0.00 0.77 ±0.09 0.70 ±0.00 0.90 ±0.08 HumanEval 1.00 ±0.00 1.00 ±0.00 1.00 ±0.00 1.00 ±0.00 HotpotQA 0.34 ±0.06 0.48 ±0.05 0.53 ±0.04 0.50 ±0.01
+
+Table 4: RACI × Blender cross-dataset attribution, mean ±std over 3 independent repeats ( N =10 /cell, real mod-els). Moving Accountable from Chair ( glm-5.2 fuser) to Critic ( deepseek fuser) reroutes who writes the final an-swer. The winning fuser matched the stronger solo model in 1, 3, 1 of 3 datasets per repeat: no stable direction, so the optimal placement must be found empirically.                      
+
+> Method Mean reward ∆vs. router
+> Adaptive Org Routing (LinUCB) 0.708 —Oracle (upper bound) 0.754 +0 .046
+> MoA (best fixed) 0.669 −0.038
+> Blender 0.652 −0.056
+> Voting 0.629 −0.079
+> Reflexion 0.621 −0.086
+> Plan-Execute 0.550 −0.157
+> Debate 0.519 −0.189
+> Context-free bandit (ablation) 0.628 −0.080
+
+Table 5: Mean cost-adjusted reward over T =400 mixed tasks (λ=0 .3). The router beats all six fixed baselines and ap-proaches the oracle; the context-free ablation collapses to always-voting, below the best fixed arm. ablation (LinUCB fed a constant intercept-only feature, i.e., no task context). Reward is cost-adjusted (Eq. 1); unless noted λ=0 .3 and T =400 . Routing accuracy is the fraction of the last 50 tasks routed to the cost-adjusted optimal arm. All runs are seeded and reproducible (supplement). 
+
+Model versions. The controlled study above uses no LLM calls. All real-model runs use this registry and pin exact versions: DeepSeek-V4 ( deepseek-v4-pro ,
+
+deepseek-v4-flash ), Qwen3.7 (qwen3.7-plus ), GLM-5.2 ( glm-5.2 ), and MiniMax-M3 ( MiniMax-M3 ); the AlpacaEval judge is glm-5.2 .
+
+Main result: the router approaches the oracle. Table 5 reports mean cost-adjusted reward at T =400 , λ=0 .3. The router attains 0.708 , beating all six fixed-protocol baselines (best fixed, MoA, 0.669 ) and recovering 45% of the best-fixed →oracle headroom (oracle 0.754 ); final routing accu-racy is 82% , with sublinear regret and an accuracy plateau (Figure 2). The learned arm counts, in turn, show what the router learned: cheap MoA (142/400) and voting (111) carry the open-ended and factual mass, reflexion (73) fires on code tasks, and the expensive arms ( plan-execute 29, blender 23, 
+
+debate 22) are played only where their edge survives the cost penalty. 0 200 400   
+
+> 0
+> 10
+> 20
+> round
+> cum. regret
+> 0200 400
+> 0
+> 0.5
+> 1
+> round
+> routing acc.
+
+Figure 2: Online learning ( λ=0 .3, T =400 ). Left: cumula-tive regret vs. the cost-adjusted oracle grows sublinearly and flattens as the policy converges (consistent with the ˜O(√T )
+
+LinUCB bound). Right: last-50 routing accuracy climbs to-ward its plateau (dashed: final 82% ). 
+
+Ablation: task context. The context-free bandit (constant feature) collapses to mean reward 0.628 , the level of always-voting ( 0.629 ) and below the best fixed arm (MoA, 0.669 ). Without features it can only learn one global arm, so the gain comes from context, not from the bandit machinery. 
+
+Ablation: cost-aversion λ. The λ-sweep (λ ∈{0.1, 0.3, 0.5}) shows the router beats best-fixed at every setting: accuracy rises as cost pressure separates the cost-adjusted optima ( 70% , 82% , 84% ) while absolute reward falls with the heavier penalty. 
+
+From synthetic oracle to real rewards 
+
+We now run the same router on real rewards: each round draws an item from a mixed real-benchmark stream, the cho-sen protocol runs with real models, and the objective score (exact-match / pass@1 / token-F1) forms r = score −λ ˜c(π).With no oracle for real quality we report realized reward and score, not a regret curve. Over an 18-round mixed stream (λ=0 .3, belbin) the router trains end-to-end with no er-rors: mean task score 0.68 , reward 0.54 (HumanEval 1.00 ,GSM8K 0.83 , HotpotQA 0.21 ). We read this as a feasibil-ity result ( N =18 , with the arm distribution concentrated on one cost-efficient protocol): the central mechanism now runs unchanged on genuine outcomes. 
+
+Judge-based rewards integrate on the same scale. Mix-ing AlpacaEval into the stream (reward an LLM-judge win-rate against a reference baseline), a 20-round four-dataset run trains with no errors (mean task score 0.86 , reward 0.76 ): judge-scored items land in [0 , 1] on the same scale as exact-match/F1, so the bandit needs no special-casing. As a small-
+
+N artifact the policy again concentrates on one cheap arm (here voting): a subjective, judge-derived reward drops into the same online loop. 
+
+# Discussion and Limitations 
+
+The synthetic oracle is a controlled stand-in. The re-gret/accuracy study uses a simulated oracle calibrated to lit-erature trends (Du et al. 2024; Shinn et al. 2023; Hong et al. 2024): learning under known ground truth with exact re-gret; real-benchmark and real-reward results supply absolute quality. 
+
+Linearity, arms, and scale. LinUCB assumes payoffs ap-proximately linear in the 7 features; kernelized or neural bandits could capture nonlinear structure at higher cost. Ex-tending arms to (protocol, coordination) or per-role bindings is well-defined under Proposition 1 but enlarges exploration; our real runs are small-N feasibility runs, not tuned policies. 
+
+Cost and statistical scope. The router uses model-call multiplicity rather than provider-specific billing, so deploy-ment costs require local recalibration. Real-model cells con-tain only N =10 items and the RACI study only three repeats; we therefore report latency, dispersion, sign consistency, and paired effects instead of leaderboard or significance claims. The process-global policy is suited to sequential learning; concurrent services should isolate or synchronize updates. 
+
+Benchmark and deployment scope. The evaluated tasks score final deliverables; they do not cover long-horizon tool use, human approval loops, or failures caused by changing ex-ternal state. AgentsNet is posed as a whole-graph team deliv-erable rather than through its native partial-visibility harness, which preserves task-intrinsic scoring but narrows the coor-dination claim. Online runs also depend on provider avail-ability and a unified proxy, so their latency is environment-specific even when quality metrics are reproducible. Fi-nally, the current feature map is intentionally lightweight and English-centric. Richer semantic features, persistent policies across deployments, and joint routing over organization and per-role model bindings remain open evaluations rather than claims established here. 
+
+Scope of orthogonality. Proposition 1 guarantees inter-faces compose, not that every combination is equally ef-fective ; the router exists to discover effective combinations empirically. 
+
+Model-binding dependence. Recipe winners and the di-rection of the RACI effect flip across model bindings (supple-ment), so organizational conclusions need not transfer across model families. Re-validation must therefore be cheap, or learned online; this is the framework’s central argument. 
+
+# Conclusion 
+
+Most multi-agent LLM frameworks hard-wire who collab-orates into how results are fused. IMACS separates these concerns: organizational theory becomes executable config-uration, controlled ablations expose mechanisms, and proto-col choice becomes learnable. Adaptive Org Routing outper-forms every fixed protocol in the controlled study and trains online on real rewards. Roles, coordination, and account-ability can thus be optimized alongside fusion algorithms, enabling inspectable comparisons across organizations, pro-tocols, and model bindings. 
+
+# References    
+
+> Auer, P.; Cesa-Bianchi, N.; and Fischer, P. 2002. Finite-time Anal-ysis of the Multiarmed Bandit Problem. Machine Learning , 47: 235–256. Belbin, R. M. 2010. Management Teams: Why They Succeed or Fail .Oxford, UK: Butterworth-Heinemann, 3rd edition. First edition 1981.
+
+Cemri, M.; Pan, M. Z.; Yang, S.; Agrawal, L. A.; Chopra, B.; Tiwari, R.; Keutzer, K.; Parameswaran, A.; Klein, D.; Ramchandran, K.; Zaharia, M.; Gonzalez, J. E.; and Stoica, I. 2025. Why Do Multi-Agent LLM Systems Fail? In Advances in Neural Information Processing Systems (NeurIPS) , volume 38. Chen, L.; Zaharia, M.; and Zou, J. 2024. FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Per-formance. Transactions on Machine Learning Research (TMLR) .Chen, M.; Tworek, J.; Jun, H.; Yuan, Q.; et al. 2021. Evalu-ating Large Language Models Trained on Code. arXiv preprint arXiv:2107.03374 .Chen, W.; Su, Y.; Zuo, J.; Yang, C.; Yuan, C.; Chan, C.-M.; Yu, H.; Lu, Y.; Hung, Y.-H.; Qian, C.; Qin, Y.; Cong, X.; Xie, R.; Liu, Z.; Sun, M.; and Zhou, J. 2024. AgentVerse: Facilitating Multi-Agent Collaboration and Exploring Emergent Behaviors. In Proceedings of ICLR .Chu, W.; Li, L.; Reyzin, L.; and Schapire, R. 2011. Contextual Bandits with Linear Payoff Functions. In Proceedings of AISTATS ,208–214. Cobbe, K.; Kosaraju, V.; Bavarian, M.; Chen, M.; Jun, H.; Kaiser, L.; Plappert, M.; Tworek, J.; Hilton, J.; Nakano, R.; Hesse, C.; and Schulman, J. 2021. Training Verifiers to Solve Math Word Problems. arXiv preprint arXiv:2110.14168 .Du, H.; Su, J.; Li, J.; Ding, L.; Yang, Y.; Han, P.; Tang, X.; Zhu, K.; and You, J. 2026. Which LLM Multi-Agent Protocol to Choose? In Proceedings of ICML .Du, Y.; Li, S.; Torralba, A.; Tenenbaum, J. B.; and Mordatch, I. 2024. Improving Factuality and Reasoning in Language Models through Multiagent Debate. In Proceedings of ICML , 11733– 11763. Fei, C.; Guo, H.; and Xiao, Y. 2026. When Agents Evolve, Institu-tions Follow. arXiv preprint arXiv:2604.27691 .Gao, D.; Li, Z.; Pan, X.; Kuang, W.; Ma, Z.; Qian, B.; Wei, F.; Shen, W.; Dou, Y.; Li, W.; Ding, B.; and Zhou, J. 2024. AgentScope: A Flexible yet Robust Multi-Agent Platform. arXiv preprint arXiv:2402.14034 .Grötschla, F.; Müller, L.; Tönshoff, J.; Galkin, M.; and Perozzi, B. 2025. AgentsNet: Coordination and Collaborative Reasoning in Multi-Agent LLMs. arXiv preprint arXiv:2507.08616 .Guo, T.; Chen, X.; Wang, Y.; Chang, R.; Pei, S.; Chawla, N. V.; Wiest, O.; and Zhang, X. 2024. Large Language Model Based Multi-Agents: A Survey of Progress and Challenges. In Proceedings of IJCAI .Hong, S.; Zhuge, M.; Chen, J.; Zheng, X.; Cheng, Y.; Zhang, C.; Wang, J.; Wang, Z.; Yau, S. K. S.; Lin, Z.; et al. 2024. MetaGPT: Meta Programming for a Multi-Agent Collaborative Framework. In 
+
+International Conference on Learning Representations (ICLR) .Jiang, D.; Ren, X.; and Lin, B. Y. 2023. LLM-Blender: Ensembling Large Language Models with Pairwise Ranking and Generative Fusion. In Proceedings of ACL , 14165–14178. Li, G.; Hammoud, H. A. A. K.; Itani, H.; Khizbullin, D.; and Ghanem, B. 2023. CAMEL: Communicative Agents for "Mind" Exploration of Large Language Model Society. In Advances in Neu-ral Information Processing Systems (NeurIPS) , volume 36, 51991– 52008. Li, L.; Chu, W.; Langford, J.; and Schapire, R. E. 2010. AContextual-Bandit Approach to Personalized News Article Rec-ommendation. In Proceedings of WWW , 661–670. Liu, Z.; Zhang, Y.; Li, P.; Liu, Y.; and Yang, D. 2024. A Dynamic LLM-Powered Agent Network for Task-Oriented Agent Collabora-tion. In Proceedings of COLM .Mintzberg, H. 1979. The Structuring of Organizations: A Synthesis of the Research . Englewood Cliffs, NJ: Prentice-Hall. Ong, I.; Almahairi, A.; Wu, V.; Chiang, W.-L.; Wu, T.; Gonzalez, J. E.; Kadous, M. W.; and Stoica, I. 2025. RouteLLM: Learning to Route LLMs from Preference Data. In The Thirteenth International Conference on Learning Representations (ICLR) .Poon, M.; Dai, X.; Liu, X.; Kong, F.; Lui, J. C.; and Zuo, J. 2026. Online Multi-LLM Selection via Contextual Bandits under Un-structured Context Evolution. In Proceedings of the 40th AAAI Conference on Artificial Intelligence , volume 40, 24855–24863. Qian, C.; Liu, W.; Liu, H.; Chen, N.; Dang, Y.; Li, J.; Yang, C.; Chen, W.; Su, Y.; Cong, X.; Xu, J.; Li, D.; Liu, Z.; and Sun, M. 2024. ChatDev: Communicative Agents for Software Development. In Proceedings of ACL , 15174–15186. Shinn, N.; Cassano, F.; Berman, E.; Gopinath, A.; Narasimhan, K.; and Yao, S. 2023. Reflexion: Language Agents with Verbal Rein-forcement Learning. In Advances in Neural Information Processing Systems (NeurIPS) , volume 36, 8634–8652. Shnitzer, T.; Ou, A.; Silva, M.; Soule, K.; Sun, Y.; Solomon, J.; Thompson, N.; and Yurochkin, M. 2024. Large Language Model Routing with Benchmark Datasets. In Proceedings of COLM .Wang, J.; Wang, J.; Athiwaratkun, B.; Zhang, C.; and Zou, J. 2025. Mixture-of-Agents Enhances Large Language Model Capabilities. In The Thirteenth International Conference on Learning Represen-tations (ICLR) .Wang, L.; Xu, W.; Lan, Y.; Hu, Z.; Lan, Y.; Lee, R. K.-W.; and Lim, E.-P. 2023a. Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models. In 
+
+Proceedings of ACL , 2609–2634. Wang, X.; Wei, J.; Schuurmans, D.; Le, Q.; Chi, E.; Narang, S.; Chowdhery, A.; and Zhou, D. 2023b. Self-Consistency Improves Chain of Thought Reasoning in Language Models. In International Conference on Learning Representations (ICLR) .Wu, Q.; Bansal, G.; Zhang, J.; Wu, Y.; Li, B.; Zhu, E.; Jiang, L.; Zhang, X.; Zhang, S.; Liu, J.; Awadallah, A. H.; White, R. W.; Burger, D.; and Wang, C. 2024. AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation. In Proceedings of COLM .Yao, S.; Zhao, J.; Yu, D.; Du, N.; Shafran, I.; Narasimhan, K.; and Cao, Y. 2023. ReAct: Synergizing Reasoning and Acting in Language Models. In International Conference on Learning Rep-resentations (ICLR) .Zheng, M.; Pei, J.; Logeswaran, L.; Lee, M.; and Jurgens, D. 2024. When “A Helpful Assistant” Is Not Really Helpful: Personas in System Prompts Do Not Improve Performances of Large Language Models. In Findings of the Association for Computational Linguis-tics: EMNLP 2024 , 15126–15154. Zhu, K.; Du, H.; Hong, Z.; Yang, X.; Guo, S.; Wang, Z.; Wang, Z.; Qian, C.; Tang, X.; Ji, H.; and You, J. 2025. MultiAgentBench: Evaluating the Collaboration and Competition of LLM Agents. In 
+
+Proceedings of ACL .Zhuge, M.; Wang, W.; Kirsch, L.; Faccio, F.; Khizbullin, D.; and Schmidhuber, J. 2024. GPTSwarm: Language Agents as Optimiz-able Graphs. In Proceedings of ICML .
