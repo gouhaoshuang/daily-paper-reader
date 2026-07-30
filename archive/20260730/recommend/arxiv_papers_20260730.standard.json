@@ -1,0 +1,158 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-30T21:09:31.637869+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2607.26865v1",
+      "source": "arxiv",
+      "title": "Think Short, Defer Smart, Act, and Repeat: Calibrated Reasoning and Uncertainty-Aware Deferral for Edge LLM Agents",
+      "abstract": "LLM agents following the ReAct paradigm are promising enablers of complex multi-step tasks, including multi-hop question answering, code generation, and control of physical AI systems. Yet, when deployed at the edge, they must tightly manage their reasoning budget while remaining reliable and deferring to a cloud-side model only when local uncertainty is too high to act safely. We propose Think Short, Defer Smart (TSDS), a framework that synergistically integrates a lightweight convergence probe, which halts on-device reasoning once the intended action has stabilized, with a perplexity-based deferral rule that escalates uncertain actions to a cloud-side model. Both mechanisms are jointly calibrated on end-to-end episode trajectories via a multi-objective Learn-Then-Test (LTT) procedure, providing simultaneous finite-sample guarantees on expected episode reward and cloud-call rate. We evaluate TSDS on four ReAct benchmarks spanning arithmetic reasoning (GSM8K), multi-hop question answering (HotpotQA), code generation (MBPP), and multi-step embodied planning (household robot), and compare against thought-calibration-only and calibrated-deferral-only standalone baselines. TSDS reduces per-episode thinking compute by 43%-73% over deferral-only baselines across HotpotQA, MBPP, and the household robot task, while maintaining certified reward and cloud-call rate guarantees.",
+      "authors": [
+        "Amirmohammad Farzaneh",
+        "Osvaldo Simeone"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.AI",
+        "cs.IT",
+        "cs.LG"
+      ],
+      "published": "2026-07-29T12:47:05+00:00",
+      "link": "https://arxiv.org/pdf/2607.26865v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "edge LLM agents with cloud deferral",
+      "llm_evidence_cn": "边缘LLM代理与云端移交",
+      "llm_evidence": "边缘LLM代理与云端移交",
+      "canonical_evidence": "边缘LLM代理与云端移交",
+      "llm_tldr_en": "TSDS enables edge LLM agents to efficiently reason locally with calibrated convergence probes and defer uncertain actions to a cloud model, balancing cost and reliability.",
+      "llm_tldr_cn": "边缘部署的LLM代理面临推理预算与可靠性之间的权衡。本文提出TSDS框架，在设备端集成轻量收敛探针以提前终止稳定推理，并利用基于困惑度的移交规则将不确定性高的动作交给云端模型处理。两者联合校准后，在多项任务上实现了推理效率与准确性的提升。该方法直接支撑了端云协同的AI代理系统构建。",
+      "llm_tldr": "边缘部署的LLM代理面临推理预算与可靠性之间的权衡。本文提出TSDS框架，在设备端集成轻量收敛探针以提前终止稳定推理，并利用基于困惑度的移交规则将不确定性高的动作交给云端模型处理。两者联合校准后，在多项任务上实现了推理效率与准确性的提升。该方法直接支撑了端云协同的AI代理系统构建。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.22083v1",
+      "source": "arxiv",
+      "title": "Nanbeige4.2-3B: Unlocking Agentic Capabilities in a Compact Mode",
+      "abstract": "We present Nanbeige4.2-3B, a compact general agentic model with 3B non-embedding parameters. It delivers strong performance across code-agent, office-agent, and complex tool-use tasks while maintaining highly competitive reasoning capabilities in mathematics, coding, and science. Nanbeige4.2-3B is pretrained from scratch on 28T tokens with a Looped Transformer that reuses the layer stack to increase capacity without adding parameters. For SFT data and trajectory construction, we expand the diversity of executable environments, task assets, and agentic scaffolds through real-world deployment and large-scale synthesis. Our RL pipeline applies mixed-mode RLHF over Think and Non-Think responses to improve overall model quality and reduce failure cases, length-controlled reasoning RL to balance accuracy and reasoning efficiency, and agentic RL with outcome and process rewards to stabilize long-horizon training. Extensive evaluations show that Nanbeige4.2-3B outperforms larger models, including Qwen3.5-9B and Gemma4-12B, across diverse agentic benchmarks while remaining competitive on reasoning and alignment tasks. Performance with OpenClaw further supports its use as a compact local personal assistant.",
+      "authors": [
+        "Nanbeige Lab",
+        ":",
+        "Chen Yang",
+        "Chengrui Huang",
+        "Fufeng Lan",
+        "Hanhui Chen",
+        "Hao Zhou",
+        "Huatong Song",
+        "Jiaqi Cao",
+        "Jiaying Zhu",
+        "Jinlin Niu",
+        "Kai Wang",
+        "Lisheng Huang",
+        "Qiliang Liang",
+        "Ran Le",
+        "Ruixiang Feng",
+        "Shuang Sun",
+        "Tao Gu",
+        "Tao Zhang",
+        "Tianyu Luo",
+        "Yang Song",
+        "Yun Xing",
+        "Yuntao Wen",
+        "Ziyao Xu",
+        "Zongchao Chen",
+        "Zongqiang Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-24T08:33:26+00:00",
+      "link": "https://arxiv.org/pdf/2607.22083v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "compact agentic model for mobile",
+      "llm_evidence_cn": "紧凑型代理模型适用于移动端",
+      "llm_evidence": "紧凑型代理模型适用于移动端",
+      "canonical_evidence": "紧凑型代理模型适用于移动端",
+      "llm_tldr_en": "Presents Nanbeige4.2-3B, a compact 3B parameter agentic model with strong tool-use and reasoning, suitable for mobile AI agents due to small size.",
+      "llm_tldr_cn": "移动AI代理需要紧凑高效的模型。本文提出Nanbeige4.2-3B，一个3B参数的小型通用代理模型，采用循环Transformer和混合模式RLHF训练，在代码代理、办公代理等任务上表现优异，同时保持强推理能力。该模型参数量小，适合资源受限的移动设备，为移动AI代理部署提供了可行方案。",
+      "llm_tldr": "移动AI代理需要紧凑高效的模型。本文提出Nanbeige4.2-3B，一个3B参数的小型通用代理模型，采用循环Transformer和混合模式RLHF训练，在代码代理、办公代理等任务上表现优异，同时保持强推理能力。该模型参数量小，适合资源受限的移动设备，为移动AI代理部署提供了可行方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.26836v1",
+      "source": "arxiv",
+      "title": "Before Agents Speak: Pre-hoc Failure Risk Inference in Multi-Agent Systems",
+      "abstract": "LLM-based multi-agent systems (MAS) have exhibited remarkable capabilities in collaborative reasoning and decision-making, yet their interconnected communications introduce new systemic risk: localized hallucinations can propagate along agent communication chain, amplify through interactions, and ultimately trigger cascading failures. Existing countermeasures predominantly follow a post-hoc paradigm, identifying failures only after unsafe behaviors emerge, by which time harmful effects may have already spread throughout the agent network. To tackle this problem, we investigate a complementary pre-hoc approach and propose HalluProp, a Propagation-aware Hallucination inference framework that estimates individual agent failures and emergent system-level hallucination risks before inter-agent interaction. First, we model intrinsic hallucination risks by identifying fine-grained semantic misalignment between agent roles and task queries. We then characterize inter-agent risk propagation by modeling both semantic influence and communication topology. Finally, we integrate these two risks via a differentiable Noisy-OR inference mechanism to derive a systemic diagnosis. Extensive experiments show that HalluProp accurately localizes faulty agents, achieving an average AUROC of 84.6%, while enabling sub-second diagnosis with over $65\\times$ speedup over post-hoc methods. By facilitating early intervention through upstream screening, HalluProp effectively complements post-hoc methods, highlighting the potential of pre-hoc risk inference for building more reliable multi-agent systems.",
+      "authors": [
+        "Shi Lin",
+        "Chenpei Wang",
+        "Peng Qian",
+        "Dezhang Kong",
+        "Minghao Li",
+        "Yufeng Li",
+        "Xun Wang"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-07-29T12:26:41+00:00",
+      "link": "https://arxiv.org/pdf/2607.26836v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "collaborative multi-agent system failure propagation",
+      "llm_evidence_cn": "多代理协作中的故障传播",
+      "llm_evidence": "多代理协作中的故障传播",
+      "canonical_evidence": "多代理协作中的故障传播",
+      "llm_tldr_en": "Proposes HalluProp to infer pre-hoc failure risk in multi-agent systems, addressing hallucination propagation in collaborative reasoning, relevant to collaboration requirement.",
+      "llm_tldr_cn": "当前多代理系统在协作中面临幻觉传播导致级联故障的风险，现有事后检测已慢一步。本文提出HalluProp，一种预感知幻觉推理框架，在代理发言前估计个体故障和系统级风险。实验证明HalluProp能提前识别故障点，增强多代理协作的鲁棒性。该工作对于构建可靠的协作AI代理系统具有重要意义。",
+      "llm_tldr": "当前多代理系统在协作中面临幻觉传播导致级联故障的风险，现有事后检测已慢一步。本文提出HalluProp，一种预感知幻觉推理框架，在代理发言前估计个体故障和系统级风险。实验证明HalluProp能提前识别故障点，增强多代理协作的鲁棒性。该工作对于构建可靠的协作AI代理系统具有重要意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

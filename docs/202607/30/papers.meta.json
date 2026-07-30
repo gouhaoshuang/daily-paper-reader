@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-30",
+  "date": "2026-07-30",
+  "generated_at": "2026-07-30T21:11:43",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/30/2607.26865v1-think-short-defer-smart-act-and-repeat-calibrated-reasoning-and-uncertainty-aware-deferral-for-edge-llm-agents",
+      "section": "deep",
+      "title_en": "Think Short, Defer Smart, Act, and Repeat: Calibrated Reasoning and Uncertainty-Aware Deferral for Edge LLM Agents",
+      "authors": "Amirmohammad Farzaneh, Osvaldo Simeone",
+      "date": "2026-07-29",
+      "pdf": "https://arxiv.org/pdf/2607.26865v1",
+      "score": "10.0",
+      "evidence": "边缘LLM代理与云端移交",
+      "tldr": "边缘LLM代理需在有限推理预算下保持可靠性，但现有方法缺乏协调机制。本文提出TSDS框架，通过轻量级收敛探测提前终止稳定的推理循环，并基于困惑度将高不确定性动作推迟至云端。采用多目标Learn-Then-Test联合校准，同时保证奖励和云端调用率。在四个ReAct基准上，推理计算减少43%-73%，且保持认证性能。",
+      "tags": "query:eca",
+      "abstract_en": "LLM agents following the ReAct paradigm are promising enablers of complex multi-step tasks, including multi-hop question answering, code generation, and control of physical AI systems. Yet, when deployed at the edge, they must tightly manage their reasoning budget while remaining reliable and deferring to a cloud-side model only when local uncertainty is too high to act safely. We propose Think Short, Defer Smart (TSDS), a framework that synergistically integrates a lightweight convergence probe, which halts on-device reasoning once the intended action has stabilized, with a perplexity-based deferral rule that escalates uncertain actions to a cloud-side model. Both mechanisms are jointly calibrated on end-to-end episode trajectories via a multi-objective Learn-Then-Test (LTT) procedure, providing simultaneous finite-sample guarantees on expected episode reward and cloud-call rate. We evaluate TSDS on four ReAct benchmarks spanning arithmetic reasoning (GSM8K), multi-hop question answering (HotpotQA), code generation (MBPP), and multi-step embodied planning (household robot), and compare against thought-calibration-only and calibrated-deferral-only standalone baselines. TSDS reduces per-episode thinking compute by 43%-73% over deferral-only baselines across HotpotQA, MBPP, and the household robot task, while maintaining certified reward and cloud-call rate guarantees.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/30/2607.22083v1-nanbeige42-3b-unlocking-agentic-capabilities-in-a-compact-mode",
+      "section": "quick",
+      "title_en": "Nanbeige4.2-3B: Unlocking Agentic Capabilities in a Compact Mode",
+      "authors": "Nanbeige Lab, :, Chen Yang, Chengrui Huang, Fufeng Lan, Hanhui Chen, Hao Zhou, Huatong Song, Jiaqi Cao, Jiaying Zhu, Jinlin Niu, Kai Wang, Lisheng Huang, Qiliang Liang, Ran Le, Ruixiang Feng, Shuang Sun, Tao Gu, Tao Zhang, Tianyu Luo, Yang Song, Yun Xing, Yuntao Wen, Ziyao Xu, Zongchao Chen, Zongqiang Li",
+      "date": "2026-07-24",
+      "pdf": "https://arxiv.org/pdf/2607.22083v1",
+      "score": "7.0",
+      "evidence": "紧凑型代理模型适用于移动端",
+      "tldr": "小型模型受限于参数，难以实现复杂代理能力。Nanbeige4.2-3B通过Looped Transformer在28T tokens上预训练，增加容量不增参数。结合混合RLHF、长度控制推理RL与代理RL，在代码代理、办公代理等任务上超越Qwen3.5-9B等大模型。该工作证明紧凑模型经创新训练可以解锁高级代理能力，适合作为本地个人助理。",
+      "tags": "query:eca",
+      "abstract_en": "We present Nanbeige4.2-3B, a compact general agentic model with 3B non-embedding parameters. It delivers strong performance across code-agent, office-agent, and complex tool-use tasks while maintaining highly competitive reasoning capabilities in mathematics, coding, and science. Nanbeige4.2-3B is pretrained from scratch on 28T tokens with a Looped Transformer that reuses the layer stack to increase capacity without adding parameters. For SFT data and trajectory construction, we expand the diversity of executable environments, task assets, and agentic scaffolds through real-world deployment and large-scale synthesis. Our RL pipeline applies mixed-mode RLHF over Think and Non-Think responses to improve overall model quality and reduce failure cases, length-controlled reasoning RL to balance accuracy and reasoning efficiency, and agentic RL with outcome and process rewards to stabilize long-horizon training. Extensive evaluations show that Nanbeige4.2-3B outperforms larger models, including Qwen3.5-9B and Gemma4-12B, across diverse agentic benchmarks while remaining competitive on reasoning and alignment tasks. Performance with OpenClaw further supports its use as a compact local personal assistant.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/30/2607.26836v1-before-agents-speak-pre-hoc-failure-risk-inference-in-multi-agent-systems",
+      "section": "quick",
+      "title_en": "Before Agents Speak: Pre-hoc Failure Risk Inference in Multi-Agent Systems",
+      "authors": "Shi Lin, Chenpei Wang, Peng Qian, Dezhang Kong, Minghao Li, Yufeng Li, Xun Wang",
+      "date": "2026-07-29",
+      "pdf": "https://arxiv.org/pdf/2607.26836v1",
+      "score": "7.0",
+      "evidence": "多代理协作中的故障传播",
+      "tldr": "基于大语言模型的多智能体系统在协作推理中，局部幻觉可能沿通信链传播并引发级联故障。现有方法多为事后检测，无法在危害扩散前干预。本文提出HalluProp，一种传播感知的幻觉推理框架，通过精细语义对齐建模智能体内在风险，并结合语义影响与通信拓扑刻画风险传播，利用可微Noisy-OR机制整合为系统诊断。实验表明，HalluProp平均AUROC达84.6%，诊断速度比事后方法快65倍以上。该预兆风险推理方法有效补充事后检测，助力构建更可靠的多智能体系统。",
+      "tags": "query:eca",
+      "abstract_en": "LLM-based multi-agent systems (MAS) have exhibited remarkable capabilities in collaborative reasoning and decision-making, yet their interconnected communications introduce new systemic risk: localized hallucinations can propagate along agent communication chain, amplify through interactions, and ultimately trigger cascading failures. Existing countermeasures predominantly follow a post-hoc paradigm, identifying failures only after unsafe behaviors emerge, by which time harmful effects may have already spread throughout the agent network. To tackle this problem, we investigate a complementary pre-hoc approach and propose HalluProp, a Propagation-aware Hallucination inference framework that estimates individual agent failures and emergent system-level hallucination risks before inter-agent interaction. First, we model intrinsic hallucination risks by identifying fine-grained semantic misalignment between agent roles and task queries. We then characterize inter-agent risk propagation by modeling both semantic influence and communication topology. Finally, we integrate these two risks via a differentiable Noisy-OR inference mechanism to derive a systemic diagnosis. Extensive experiments show that HalluProp accurately localizes faulty agents, achieving an average AUROC of 84.6%, while enabling sub-second diagnosis with over $65\\times$ speedup over post-hoc methods. By facilitating early intervention through upstream screening, HalluProp effectively complements post-hoc methods, highlighting the potential of pre-hoc risk inference for building more reliable multi-agent systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
