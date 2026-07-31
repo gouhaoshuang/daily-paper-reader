@@ -1,0 +1,3363 @@
+Title: Auditing Emergent LLM-Agent Collaboration through Cooperation-Obligation Coupling
+
+URL Source: https://arxiv.org/pdf/2607.27429v1
+
+Published Time: Fri, 31 Jul 2026 00:11:12 GMT
+
+Number of Pages: 35
+
+Markdown Content:
+# Auditing Emergent LLM-Agent Collaboration through Cooperation–Obligation Coupling 
+
+# Zuyuan Zhang 1∗, Hanqing Yang 2∗, Carlee Joe-Wong 2, Tian Lan 1
+
+> 1
+
+Department of Electrical and Computer Engineering, The George Washington University 
+
+> 2
+
+Department of Electrical and Computer Engineering, Carnegie Mellon University zuyuan.zhang@gwu.edu, hanqing3@andrew.cmu.edu, cjoewong@andrew.cmu.edu, tlan@gwu.edu 
+
+Abstract 
+
+LLM-agent systems can solve complex tasks through dynamic self-organization and emergent cooperation. Auditing this pro-cess is essential because plausible intermediate or final outputs can conceal incomplete or unsupported work and poorly allo-cated responsibility, ultimately compromising response qual-ity. While existing approaches may record messages, tool calls, provenance, or task dependencies, an auditability gap exists as they do not jointly represent what work remains, who is responsible for it, and what evidence justifies each work-state transition. We address this auditability gap by proposing In-tegrated Cooperation-Obligation REpresentation (iCORE). It creates a unified encoding X = ( G, Q, Π) integrating ob-servable interactions as a cooperation graph G, evolving work and assignments as an obligation graph Q, and the audit map 
+
+Π linking them with verifiable properties and evidence. This iCORE representation enables the auditor to certify two com-plementary properties: Work soundness, where every active decision-relevant work assertion must have a finite justifica-tion through G and Π; and Agent-assignment stability, which requires that no feasible alternative agent improve the declared contribution value for an evaluated obligation by more than ϵ.We establish local-to-global soundness and assignment-regret guarantees and a performance bound under stated conditions. iCORE is an instrumentation layer over workflows. Numeri-cal results show that the full coupled state exactly reconstructs soundness and assignment defects in two execution modes and that, relative to passive full-state observation, iCORE-Audit yields absolute trajectory-quality improvements of 11 .5% and 
+
+26 .4% in controlled and real-LLM execution, respectively, with corresponding absolute terminal-performance improve-ments of 15 .1% and 31 .0% .
+
+# 1 Introduction 
+
+Large language models are increasingly deployed as cooper-ative systems rather than isolated agents (Wang et al. 2024; Guo et al. 2024). Conversation-oriented frameworks support dynamic role coordination and intermediate-work exchange (Wu et al. 2023; Li et al. 2023; Yang et al. 2026), while software-oriented systems organize agents around shared ar-tifacts and staged responsibilities (Hong et al. 2024; Qian et al. 2024). Tool-using agents adapt later actions to external observations (Yao et al. 2022; Schick et al. 2023; Shen et al. 2023). Planning methods revise execution structure (Wang 
+
+> ∗
+
+These authors contributed equally. 
+
+et al. 2023; Yao et al. 2023), and self-refinement methods re-vise outputs from intermediate feedback (Madaan et al. 2023; Shinn et al. 2023). Generative-agent simulations also show how local interactions can produce collective behavior (Park et al. 2023). These capabilities allow cooperation to emerge 
+
+without fixing every role or work transition in advance. We focus on an auditability gap in emergent LLM-agent collaboration–where existing approaches may record mes-sages, tool calls, provenance, or task dependencies, but they do not jointly represent what work remains, who is respon-sible for it, and what evidence justifies each work-state tran-sition. A work obligation is a basic unit of progress, whether introduced by the task or created as agents organize the work. We call a cooperation state auditable when every active work assertion that can affect a later update, diagnostic, or terminal output can be traced to observable actions or artifacts, the op-eration that changed the work, and currently valid evidence, e.g., from environment observations. Auditability is essential for reasoning, certifying, and improving emergent collective behavior, as a plausible output can often conceal unsupported intermediate claims, incomplete work, poor task allocation, or failures that propagated through the workflow. Existing approaches provide important but partial views. LLM-agent frameworks record workflow traces, but do not define the obligations or evidence governing work-state tran-sitions (Wu et al. 2023; Li et al. 2023; Hong et al. 2024; Qian et al. 2024). Distributed-event and provenance models repre-sent ordering, causality, and derivation, but not evolving task obligations and their settlement (Lamport 2019; Belhajjame et al. 2013; Groth and Moreau 2013). Planning and workflow models represent decomposition and dependencies while of-ten abstracting away the event-level support for committed updates (Erol, Hendler, and Nau 1994; Torreno et al. 2017; van Der Aalst et al. 2003; Van der Aalst 1998; Murata 1989). Runtime verification and LLM judges assess traces or out-puts, but lack the event–work correspondence needed to lo-cate unsupported obligations or justify capability-based reas-signment (Havelund and Roşu 2001; Leucker and Schallhart 2009; Zheng et al. 2023). The limitation is representational: interaction without work semantics is ambiguous, whereas work state without observable provenance is unauditable. We introduce the Integrated Cooperation-Obligation REp-resentation (iCORE), with a unified state representation 
+
+X = ( G, Q, Π) . The cooperation graph G encodes observ-arXiv:2607.27429v1 [cs.MA] 29 Jul 2026 able agent execution and artifacts, the obligation graph Q
+
+encodes evolving work and assignments, and the audit map 
+
+Π certifies the correspondence between them with verifiable properties and evidence for reasoning on collective emergent behavior. iCORE is an instrumentation layer over workflows. The application specifies the environment- or task-specific observable and validation interfaces in a declaration package 
+
+D, while the host framework retains control of execution. This iCORE representation enables the auditor to certify two complementary properties: Work soundness , where ev-ery active decision-relevant work assertion from Q must have a finite justification through G and Π; and Agent-assignment stability , which requires that no feasible alternative agent improve the declared contribution value for an evaluated obligation by more than a threshold ϵ. The weighted sat-isfaction rates of these properties define iCORE-state qual-ity cq D,ϵ . We use the iCORE framework to prove local-to-global soundness and assignment-regret guarantees. Specifi-cally, legal local updates preserve global work soundness and that componentwise stability bounds aggregate reassignment gain. Under explicit decomposability, validator-adequacy, and value-calibration conditions, iCORE-state quality also lower-bounds expected task performance; otherwise, it re-mains a process diagnostic. We operationalize iCORE through iCORE-Audit , an event-triggered layer around the host policy. It audits each pro-posal’s intended state effects and can diagnose unsupported work, beneficial reassignment, or stalled progress before a terminal result is produced. Proposed repairs are themselves audited, to prevent the system from appearing to improve simply by deleting or excluding difficult work. Relative to passive full-state observation, iCORE-Audit yields absolute trajectory-quality (as quantified by the iCORE state quality) improvements of 11 .5% and 26 .4% in controlled and real-LLM execution, respectively, with corresponding absolute terminal-performance improvements of 15 .1% and 31 .0% .This paper makes three main contributions .1. We define auditability for emergent LLM-agent coopera-tion and introduce iCORE to couple observable interac-tion with evolving work and responsibility. 2. We formalize work soundness, agent-assignment stabil-ity, their local-to-global guarantees, and the conditions relating iCORE-state quality to task performance. 3. We develop iCORE-Audit and evaluate representation sufficiency, matched quality improvement, task perfor-mance, and cost in controlled and real-LLM settings. 
+
+# 2 Cooperation-Obligation Representation 
+
+We study fully cooperative, non-strategic agents with het-erogeneous capabilities that jointly produce solve a single application-assigned task. The application supplies a quan-titative outcome metric Perf , and iCORE audits the process that produced the result, aiming to detect and forestall coop-eration failures like execution errors, unsupported updates, incompatible partial results, or poor work assignments. Before execution, the application fixes a declaration pack-age D = ( OD , MD , Ω, V, ID ), where OD specifies ob-servable action and artifact types and semantic fields and 
+
+ID collects the capability-value, work-weighting, local-view, equivalence, and terminal interfaces; MD , Ω, and V are the finite observable agent set, work-operation vocabulary, and validation specification (e.g., on work correctness). The In-tegrated Cooperation-Obligation REpresentation (iCORE) represents emergent cooperation through observable inter-action in G, evolving work and responsibility in Q, and their certified correspondence in Π, as we formally define below. A work-level assertion is any semantic fact encoded in 
+
+Q, including for example a node, relation, work status, re-sult signature, coverage or compatibility claim, assignment, or terminal marker. It is active if currently asserted and not superseded, and decision-relevant if changing it can affect a declared update, an unresolved work obligation, a iCORE diagnostic, or a terminal predicate. A state is auditable when every active, decision-relevant assertion traces through Π
+
+to finitely many observable actions or artifacts in G, its de-clared work operation, and active evidence valid under V . An asserted work update is justified when it instantiates an oper-ation declared by D, its recorded preconditions are current, and its certificates pass V . Auditability thus requires more than a message log: it checks each decision-relevant update, assignment, and terminal decision up to the observational equivalence declared by D. This equivalence may ignore fresh identifiers and inessential timestamps, but must pre-serve assignees, statuses, coverage, and terminal evidence. 
+
+Definition 1 (iCORE state) . A iCORE state is 
+
+X = ( G, Q, Π) ,
+
+where G is a cooperation graph, Q is an obligation graph, and Π is an audit map between them. 
+
+2.1 Cooperation Graph: Observable Agent Interactions 
+
+Definition 2 (Cooperation graph) . A cooperation graph is a finite typed directed acyclic graph 
+
+G = ( VG, E G, s G, t G, θ G, λ G, τ G, μ G),
+
+where sG, t G : EG → VG are the source and target maps, and θG and λG assign application-declared types and ob-servable labels to vertices and edges. The logical-time map 
+
+τG : VG → N satisfies u →G v =⇒ τG(u) < τ G(v).
+
+The vertex types distinguish action nodes Act( G) ⊆ VG
+
+and artifact nodes Art( G) ⊆ VG. An artifact is a recorded, referenceable output of execution—for example, a message, plan, code patch, tool result, partial answer, or verification report—that may be consumed or checked by later actions. The metadata map μG stores observable information such as the acting agent, recipient, tool, verifier, capability evidence, or monitor decision. 
+
+G therefore records observable actions, artifacts, and typed production, consumption, routing, or verification dependen-cies. This directed acyclic graph (DAG) records interaction events over time rather than an agent interaction topology: repeated agent interactions create distinct nodes in VG. Thus, 
+
+G identifies observable provenance but not the required work or its current assignee. 2.2 Obligation Graph: Evolving Work 
+
+A work obligation is a unit of work that must be addressed as part of completing the assigned task. It may stem from the initial request or emerge as agents organize, assign, and per-form work. Q tracks relationships between work obligations. 
+
+Definition 3 (Obligation graph) . An obligation graph is a finite typed directed graph 
+
+Q = ( VQ, E Q, s Q, t Q, θ Q, λ Q, ρ Q, stat Q, σ Q, α Q).
+
+Here sQ, t Q : EQ → VQ are the source and target maps; 
+
+θQ and λQ assign declared types and observable labels; ρQ
+
+assigns declared semantic roles to edges; stat Q : VQ → S Q
+
+records one of the eight statuses listed below for each work obligation v ∈ VQ; σQ stores observable result signatures used for compatibility; and αQ : VQ → M D ∪ {⊥} stores the current assignee of unresolved work or the last assignee of settled work, with ⊥ denoting no assignment. 
+
+The typed relations represented in EQ encode dependency, refinement, support, aggregation, or contradiction. The work obligation statuses mean: open , identified but not enabled; 
+
+ready , enabled; blocked , waiting on a recorded condi-tion; closed , execution complete; submitted , awaiting validation or aggregation; accepted , validated and eligi-ble to discharge work; rejected , failed acceptance; and 
+
+invalid , unusable under V . We define Unres( Q) to com-prise open , ready , blocked , and submitted obliga-tions; we refer to all other obligations as settled work .A required root is an obligation with no predecessor un-der the obligation relation. To complete the task, it must be discharged unless active valid evidence marks it as excluded, duplicated, irrelevant, or superseded. Formally, the required root set ReqRoot( Q) ⊆ { q ∈ VQ : ∄p ∈ VQ with p ≺obl 
+
+> Q
+
+q}. Let EffRoot( X) be the roots not so removed and 
+
+Cov Q(q) the roots that q may discharge. These semantics allow work to emerge without a complete decomposition in advance; Appendix A.2 gives the full definitions. 
+
+Definition 4 (Relative obligation and evaluation set) . For a component q, let Dis −q (X) be the effective roots dis-charged by accepted work whose active support does not depend on q. Its relative obligation is Ob X (q) = Cov Q(q) ∩ EffRoot( X) \ Dis −q (X). The evaluation set W(X) con-tains every unresolved q with Ob X (q)̸ = ∅ and every com-ponent carrying an active decision-relevant assertion for a iCORE diagnostic or terminal predicate. 
+
+Thus, unresolved obligations remain evaluated while nonempty, and settled, excluded, or superseded components remain only while they affect a diagnostic or terminal deci-sion. This preserves terminal support and prevents terminal iCORE-state scores from becoming vacuous. Unlike G, Q
+
+represents work semantics and assignment but does not iden-tify the interactions or capability evidence justifying them. 
+
+2.3 Audit Map: Connecting Interaction and Work 
+
+The audit map connects the interactions recorded in G with the work evolution recorded in Q using the application-declared vocabulary Ω of operations that create, assign, re-assign, transform, verify, or resolve work. 
+
+Definition 5 (Audit map) . Given G and Q, an audit map is 
+
+Π = ( π, ω, κ ), π : VG ⇀ 2VQ , ω : Lπ ⇀ Ω,
+
+where Lπ = {(a, q ) ∈ Act( G) × VQ : q ∈ π(a)}, π links observable actions and artifacts to the work components they affect, ω records the declared work operation for each linked action–component pair, and κ stores the certificates supporting the correspondence and resulting work update. 
+
+For a ∈ Act( G) and q ∈ π(a), ω(a, q ) records how an agent action a changes or maintains the work obligation q,so one action may implement different declared operations on different components. A linked artifact z ∈ Art( G) may be a certificate premise but needs no operation label. A certificate c ∈ κ stores an identifier, internal and exter-nal premises, a claim, and an issuer; its claim must instantiate a schema declared by D. Internal premises refer to the cur-rent iCORE state, whereas external premises enter through declared environment-input nodes in G. The certificate is valid when active, current, authorized in issuer and scope, and accepted by V ; it remains active until validly revoked or superseded. The complete record is given in Appendix A.3. Certificate validity alone is insufficient: the certificate and its premises must connect through Π to the affected assertion in Q and the responsible observable nodes in G. In partic-ular, an assignment is auditable only when the responsible action, affected work and assignee, assignment operation, and capability evidence agree across G, Q, ω, and κ.Together, G, Q, and Π determine whether work is jus-tified, responsibility is suitably assigned, and both assess-ments evolve. Appendix A.8 shows why unlabeled interac-tion topology alone cannot determine these properties. 
+
+# 3 iCORE for Work Soundness 
+
+iCORE uses work soundness in the proof-theoretic sense: ev-ery active decision-relevant work-level assertion must have a finite valid derivation from recorded interaction, its declared operation, and active evidence under V . The preservation, re-construction, and terminal-report results below are specifica-tion invariants induced by the update legality, recording, and terminal contracts; required-root completeness is enforced separately by Section 3.3, and semantic task correctness still depends on validator adequacy. 
+
+3.1 Legal Cooperation Processes 
+
+Using the declaration package from Section 2, a iCORE system is S = ( D, XD , bR, X 0, Acc , Rej) , where XD is the feasible-state space, bR is the family of candidate local-update schemas, X0 ∈ X D is the initial state, and Acc , Rej : XD →{0, 1} are the terminal predicates. The relation X ≡X Y
+
+identifies states differing only in fields declared inessential by D while preserving, under transported typed-graph iso-morphisms, every field affecting update enablement, obliga-tions, assignments, evidence, or terminal decisions; it is a congruence for legal updates, as detailed in Appendix A.5. Membership in XD constrains represented states, not the physical actions agents may attempt: an unsupported effect may be recorded in G but cannot be committed in Q ex-cept as an explicit blocked, rejected, invalid, superseded, or repair-pending record. Feasibility anchors work to ob-servable input, keeps unresolved work accountable, supports assignments with observable assignment and capability ev-idence, and certifies aggregate coverage and compatibility; Appendix A.4 gives the complete conditions. A candidate local update, induced by an observable agent action, tool result, validator decision, or monitor interven-tion, may change G, Q, and Π. Its finite declared local view contains the events read, their linked work, and the active evidence required by the operation; enablement uses neither future events nor unrecorded global information. 
+
+Definition 6 (Legal iCORE update) . A candidate local up-date X → X′ is legal if it (i) accesses only declared finite interfaces and depends only on its declared local view and 
+
+D; (ii) applies an operation permitted by D; (iii) provides active V -valid evidence for every assertion it creates, acti-vates, makes decision-relevant, or semantically modifies, and leaves no active assertion supported only by evidence that the update revokes or supersedes; and (iv) yields X′ ∈ X D
+
+while respecting ≡X .
+
+An admissible process is any finite or infinite sequence 
+
+X0 → X1 → X2 → · · · of legal updates; different inter-action orders, agent outputs, and monitor interventions may induce different admissible processes. 
+
+3.2 Work Soundness 
+
+Using the correspondence established by Π, work soundness determines whether the evolving state of work in Q is justified by observable interaction in G.
+
+Definition 7 (Work soundness) . For q ∈ W(X), let 
+
+AD (q; X) be its active decision-relevant work-level asser-tions and set AD (X) = S 
+
+> q∈W (X)
+
+AD (q; X). A iCORE state 
+
+X is work-sound when every a ∈ AD (X) has a finite justifi-cation through observable initial-input or interaction nodes in G, the declared operation for each non-initial assertion, the corresponding links in Π, and evidence active and valid under V . A process is work-sound when every state it reaches is work-sound. 
+
+Soundness therefore applies to every decision-relevant cre-ation, assignment, transformation, resolution, and terminal-support assertion, not only the final report. For the eval-uation set W(X) in Definition 4, D predeclares positive weights wq based on declared information such as work type or covered-root importance; uniform weights are allowed. Let JD (q; X) = 1 exactly when all assertions in AD (q; X)
+
+are justified. Define 
+
+snd D (X) = 
+
+
+
+1, W(X) = ∅,
+
+P 
+
+> q∈W (X)
+
+wq JD (q; X)
+
+P 
+
+> q∈W (X)
+
+wq
+
+, otherwise .
+
+Then X is work-sound if and only if snd D (X) = 1 .
+
+Proposition 1 (Local-to-global preservation of work sound-ness) . If X0 is work-sound, every state reachable by an ad-missible process is work-sound. 
+
+The proof is given in Appendix D.2; thus, legality checked from finite local views yields a global guarantee over all active decision-relevant assertions in each reachable state. Work soundness also makes the recorded work process reconstructable. 
+
+Proposition 2 (Audit reconstruction) . If every legal update and its effects on G, Q, and Π are recorded, the ordered record reconstructs every iCORE state up to ≡X . For any fi-nite accepted process, it also gives each component in the terminal cover a finite explanation from the initial input through linked interactions in G, work transformations in 
+
+Q, and their correspondence in Π.
+
+The proof is given in Appendix D.3. 
+
+3.3 Sound Terminal Outcomes 
+
+For A ⊆ Accepted( Q) and R ⊆ ReqRoot( Q), A covers R
+
+when R ⊆ S 
+
+> a∈A
+
+Cov Q(a), and is a terminal cover when it also has the joint compatibility evidence required by V .The relevant root set EffRoot( X) omits roots excluded, du-plicated, rendered irrelevant, or superseded by active valid evidence. Let EffUnres( X) contain the non-excluded unresolved components whose coverage intersects EffRoot( X), and let 
+
+FailRoot( X) contain effective roots with active valid fail-ure evidence not neutralized by an active valid repair. Then 
+
+Acc( X) requires feasibility, no effective unresolved work, accepted work forming a certified terminal cover of all ef-fective roots, no failed effective root or accepted component with unresolved or invalid support, and no live action or ar-tifact that can change any effective root’s discharge, failure, exclusion, or compatibility. Conversely, Rej( X) requires fea-sibility, no effective unresolved work, a nonempty effective-root set entirely contained in FailRoot( X) with no effective root discharged, and no live action or artifact that can repair, discharge, or reopen an effective root. Appendix A.6 gives the exact predicates. A finite process is terminally complete 
+
+when its final state satisfies Acc( X) or Rej( X), or active valid evidence certifies that it is externally stuck. 
+
+Definition 8 (Terminal-report soundness) . A work-sound process is terminal-report sound when every Accept report emitted at a state X satisfies Acc( X) and every Reject re-port emitted at a state X satisfies Rej( X).
+
+Work soundness justifies individual work updates, while terminal-report soundness additionally requires the reported outcome to account for all required work. 
+
+Corollary 1 (Terminal-report soundness) . If X0 is work-sound, every committed update is legal, and Accept and 
+
+Reject are emitted only when Acc( X) and Rej( X) hold, respectively, then the process is terminal-report sound. 
+
+When process guarantees imply task correctness. These process guarantees imply semantic task correctness only when V is adequate for the declared task class. An emit-ted decision is semantically correct when its Accept out-put or Reject report satisfies the class’s declared accep-tance or rejection semantics. A V -certified failed-root set 
+
+F ⊆ EffRoot( X) contains roots with active valid fail-ure evidence not neutralized by active valid repair. We call V task-adequate when every V -certified accepted terminal cover yields a semantically correct accepted output, every V -certified failed-root set satisfying the declared rejection rule yields a semantically correct rejection, and every process-relevant fault in coverage, compatibility, evidence, or termi-nal settlement is detectable under V .
+
+Proposition 3 (Task-level implication under validator ade-quacy) . If V is task-adequate and a process is work-sound, terminal-report sound, and terminally complete, then every emitted Accept or Reject decision is semantically correct for the declared task class; an externally stuck report certifies only process status. 
+
+The proof is given in Appendix D.5. For open-ended tasks whose quality is not fully captured by V , iCORE exposes unsupported process states but does not certify the remaining semantic quality of the agents’ outputs. 
+
+# 4 iCORE for Agent-Assignment Suitability 
+
+Work soundness determines whether evaluated work is justi-fied, not whether it is assigned suitably. We formalize agent-assignment stability as the absence of a feasible alternative whose declared contribution advantage exceeds a fixed tol-erance; here, “stability” means resistance to beneficial reas-signment, not temporal invariance. 
+
+4.1 Capability Values and Beneficial Reassignment 
+
+For each q ∈ W(X), D defines a feasible-agent set 
+
+FD (q, X ) ⊆ M D using declared observable constraints such as tool access, modality, availability, authorization, or resource limits; feasibility does not predict success. The rule is evaluated from registered metadata and capability evidence in G. If no hard filter is available, it may conservatively set 
+
+FD (q, X ) = MD ; by convention, a maximum over an empty feasible set is zero, indicating that no reassignment candidate is currently available. The map αQ(q) ∈ M D ∪{⊥} records the current assignee for unresolved work and the last assignee for settled work, using the statuses defined after Definition 3; ⊥ denotes a blocked or unassigned component. Feasibility of XD requires every non-⊥ assignee to belong to the feasible set in the applicable evaluation context. To prevent retrospective evaluation, let Xeval  
+
+> D
+
+(q) be X
+
+for unresolved work and the reconstructible snapshot im-mediately before the assignment or reassignment establish-ing αQ(q) for settled work, and abbreviate FD (q, X ) := 
+
+FD
+
+ q, X eval  
+
+> D
+
+(q), vD (m, q | X) := vD
+
+ m, q |
+
+Xeval  
+
+> D
+
+(q). Thus, later availability changes and post-outcome oracle information cannot alter settled-work assessment. For m ∈ M D , D declares a normalized net contribution value vD (m, q | X) ∈ [0 , 1] . It may be a scalarization, fixed before evaluation, of auditable criteria such as validated suc-cess estimates, latency, cost, or risk; it need not be an oracle estimate. If no defensible scalarization exists, report the cri-teria separately and do not invoke the scalar regret guarantee. Set vD (⊥, q | X) = 0 . Every capability observation used by feasibility or contribution values must be recorded in G and linked through Π to the corresponding assignment in Q; un-supported self-reports and post-outcome oracle information are excluded. For m ∈ F D (q, X ), define the counterfactual assign-ment gain ∆D (m ← αQ(q); q, X ) = vD (m, q | X) −
+
+vD (αQ(q), q | X). A gain above a declared tolerance ϵ ≥ 0
+
+is an actionable ϵ-beneficial reassignment for unresolved work. For settled work retained in W(X), it is a historical assignment-regret diagnostic computed in the assignment-time context and excludes later evidence. 
+
+Definition 9 (Agent-assignment stability) . A component 
+
+q ∈ W (X) is ϵ-stable at X when max m∈F D (q,X ) ∆D (m ←
+
+αQ(q); q, X ) ≤ ϵ. Using the same predeclared weights wq
+
+as work soundness, define 
+
+astab D,ϵ (X) = 
+
+
+
+1,
+
+W(X) = ∅,
+
+P 
+
+> q∈W (X)
+
+wq 1[q is ϵ-stable at X]
+
+P 
+
+> q∈W (X)
+
+wq
+
+,
+
+otherwise .
+
+The state is agent-assignment stable when astab D,ϵ (X) = 1 .
+
+The definition couples all three iCORE components: Q
+
+supplies the component and assignee, G the agents and ob-servable capability evidence, and Π the certified assignment correspondence. 
+
+Theorem 1 (From Local Stability to Global Assignmen-t-Regret Bound) . Assume W(X)̸ = ∅ and normalize its weights so that P 
+
+> q∈W (X)
+
+wq = 1 . Let UD (α | X) = 
+
+P 
+
+> q∈W (X)
+
+wq vD (α(q), q | X). For any componentwise fea-sible alternative assignment β, meaning β(q) ∈ F D (q, X ) ∪{⊥} for every q, UD (β | X) − UD (αQ | X) ≤ 1 − (1 −
+
+ϵ) astab D,ϵ (X). In particular, if X is agent-assignment sta-ble, no feasible joint reassignment can improve the declared aggregate value by more than ϵ.
+
+The proof is given in Appendix D.6. The left-hand side is the declared global assignment regret of replacing the recorded assignment αQ by β. The theorem is local-to-global because componentwise stability bounds this regret for every feasible reassignment of the full evaluated work set; it does not require strategic agents or an equilibrium interpretation. 
+
+4.2 iCORE-State Quality and Task Performance 
+
+Definition 10 (iCORE-state quality) . The normalized iCORE-state quality is cq D,ϵ (X) = 12
+
+ snd D (X) + astab D,ϵ (X) ∈ [0 , 1] . We report 100 cq D,ϵ (X) together with both component scores; equal weighting is fixed before evaluation. 
+
+Because both components are weight-normalized satis-faction rates, cq D,ϵ is invariant to common weight rescaling and supports comparison across work-set sizes; reporting the components separately prevents the average from hiding a severe soundness or assignment defect. 
+
+Proposition 4 (Performance implication of iCORE-state quality) . Let W = W(X)̸ = ∅. Assume (i) Perf =P 
+
+> q∈W
+
+wq Yq with Yq ≥ 0 and P 
+
+> q∈W
+
+wq = 1; (ii) V
+
+is task-adequate; (iii) every justified q ∈ W satisfies 
+
+E[Yq | X] ≥ vD (αQ(q), q | X); and (iv) every q ∈ W 
+
+has a feasible agent with value at least pmin > ϵ . Then 
+
+E[Perf | X] ≥ 2( pmin − ϵ) cq D,ϵ (X) − 12
+
+ 
+
+> +
+
+.
+
+The proof is given in Appendix D.7. Assumption (i) re-stricts the bound, not the definition of cq D,ϵ , to metrics de-composable over required roots or verifier-certified compo-nents. Without such a decomposition, adequate validators, lower calibration, or the feasible-agent floor, cq D,ϵ remains a process diagnostic rather than a performance certificate. 
+
+# 5 iCORE-Audit 
+
+iCORE-Audit is an event-triggered intervention layer around an existing multi-agent execution policy. It neither defines the task nor generates or selects ordinary work; Schedule D in Algorithm 1 is only the host-policy interface. Each proposal is labeled by its intended effects on G, Q, and Π and audited under Definition 6. Unsupported work is detected from cer-tificate or event–work correspondence defects, assignment instability from Definition 9, and stalling from a progress predicate fixed in D, so no trigger relies on unrecorded mon-itor judgment. After each ordinary attempt, iCORE-Audit recomputes 
+
+snd D (X), astab D,ϵ (X), and cq D,ϵ (X) from W(X), active certificates, assignments, and capability evidence. A hard flag records a repair-requiring defect, such as an unsupported attempted assertion, a revocation that makes dependent work repair-pending, or a validator inconsistency; the unsupported semantic effect is not committed. Let h count consecutive it-erations since the last committed transition satisfying the predeclared Progress D predicate. It resets only on such a transition and otherwise increases after a legal nonproductive step, a rejected proposal, or no enabled productive work. An intervention fires when the current state has no enabled pro-ductive ordinary update, h ≥ H, a hard flag, an ϵ-beneficial reassignment, or cq D,ϵ (X) < τ ; H and τ are fixed before execution. A diagnosis F identifies the affected obligations, miss-ing or invalid evidence, current assignees, feasible alter-natives, and relevant interaction history. The deterministic routing rule ResponsibleAgent D (X, F ) selects the agent authorized to propose the repair; “responsible” denotes re-pair authority rather than blame. For a work or evidence defect, this is the current assignee or the proposer whose at-tempted update produced the flag, according to a priority rule fixed in D. For an assignment defect, it is the recorded agent designated by D as authorized to revise assignments, which may be the original assigner and need not be the currently assigned worker. The selected agent proposes a repair, veri-fication, decomposition, or reassignment, but iCORE-Audit still labels and audits the candidate recovery. The recovery is committed only if it is legal and work-sound, satisfies the matched-set conditions below, and resolves every diagnosed hard flag whose resolution is required for continuation or ac-ceptance; otherwise, only a legal failure-and-feedback record is added to the iCORE state. To compare intervention quality without rewarding the silent deletion of difficult work, let X− denote the state at which F is issued, let Xf be the candidate repaired state, and let X+ = Commit D (Xf ) when the recovery is ac-cepted. Before feedback is sent, F freezes a matched audit set WF containing the affected obligations and every active support component whose assertions or assignments may be changed by the recovery. The comparison is therefore between the problematic pre-intervention state and its pro-posed repair on the same frozen cohort: cq D,ϵ (Xf ; WF ) ≥
+
+cq D,ϵ (X−; WF ). After commitment, the left-hand side is equivalently evaluated at X+. A valid discharge, replace-ment, or supersession counts as satisfied, whereas removal without valid transport or settlement evidence remains in the frozen cohort and counts as unsound. The complete matched-set semantics are given in Appendix A.9. Algorithm 1, given in Appendix A.10, formalizes this loop. It checks the terminal predicates, requests an ordinary proposal through the host execution policy when productive work is enabled, audits the proposal, updates the patience counter h, and recomputes the iCORE diagnostics. When a trigger fires, it constructs F and WF , routes the diagnosis to the declared repair authority, and commits the proposed recovery only after AuditRecovery D returns no violation. Because rejected proposals, diagnoses, feedback, and ac-cepted recoveries are represented by legal iCORE updates, a later auditor can reconstruct what information was supplied, which agent responded, and how the response changed the work and assignment state. 
+
+Proposition 5 (Soundness and intervention quality) . As-sume that X0 is work-sound, every committed update in Algorithm 1 is legal, and AuditRecovery D enforces the matched-set conditions above. Then every committed state is work-sound. Moreover, for every committed intervention from X− to X+ with diagnosis F , cq D,ϵ (X+; WF ) ≥
+
+cq D,ϵ (X−; WF ).
+
+The proof is given in the Appendix.If Proposition 4’s as-sumptions hold for both matched states on normalized WF
+
+with the same pmin and ϵ, its certified lower bound cannot de-crease and increases strictly when post-intervention matched quality exceeds both its pre-intervention value and 1/2. This is a conditional guarantee, not a claim that every intervention improves every open-ended outcome. 
+
+# 6 Experiments 
+
+We test three claims: whether the coupled state X =(G, Q, Π) is necessary to reconstruct both work-soundness and assignment defects; whether state-grounded auditing im-proves passive observation of the same full state; and whether iCORE quality follows the conditional performance relation in Proposition 4. Realized terminal performance is reported separately from process quality. 
+
+6.1 Protocol 
+
+Applications and systems. We use six structured col-laborative task (SCT) applications with obligation graphs that evolve during execution: Binary Coverage (BC), De-compose and Solve (DS), Compatible Merge (CM), Depen-0.0 0.2 0.4 0.6 0.8 1.0  
+
+> Soundness-defect F1
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Bene fi cial-reassignment F1
+> MAS INT
+> TASK
+> JUDGE
+> iCORE (O/A)
+> Controlled
+> Real LLM
+
+(a) Representation validity 0.0 0.1 0.2 0.3 0.4 0.5 0.6 
+
+> Paired gain of iCORE-A over iCORE-O (Δ)
+> iCORE quality
+> Conditional performance
+> Terminal performance
+> Controlled
+> Real LLM
+
+(b) Paired auditing effect 
+
+Figure 1: Coupled-state reconstruction and auditing. (a) 
+
+Representation validity across observation settings and exe-cution modes. Markers distinguish controlled and real-LLM execution. iCORE (O/A) overlaps because both use FULL. 
+
+(b) Paired iCORE-A minus iCORE-O gains. Error bars are paired-bootstrap 95% confidence intervals over 90 controlled and 18 real-LLM episode keys. dency Ladder (DL), Repair Verification (RV), and Capabil-ity Assignment (CA), with terminal performance defined as the weighted correctness of required roots. Each uses three agents, ϵ = 0 .05 , and pmin = 0 .65 . The controlled suite eval-uates all six under five cooperation failure conditions, allow-ing us to observe iCORE’s ability to detect distinct classes of faults; the real-LLM suite evaluates BC, DS, and CA under clean and mixed faults with Qwen2.5-0.5B-Instruct. The main suites contain 540 controlled and 108 real-LLM episodes, while ablation and boundary tests bring the total to 
+
+882 artifacts. Appendix C gives the full matrix, replication settings, and runtime specifications. We compare two variants of iCORE to several baselines. In MAS-Only, agents receive no monitor state; agents un-der Interaction-only (INT), Task-only (TASK), and LLM-Judge (JUDGE) observe G, Q, and the execution trace, re-spectively. iCORE-Observe (iCORE-O) and iCORE-Audit (iCORE-A) both observe X = ( G, Q, Π) , but only iCORE-A returns structured diagnoses and applies the frozen-set preview guard. A shared proposal backend within each mode makes iCORE-A versus iCORE-O isolate intervention. 
+
+Metrics and inference. We report iCORE quality cq D,ϵ ,the conditional performance from Proposition 4, and termi-nal performance on required roots. Proposal-probe detec-tion is measured before feedback. Comparisons use matched episode keys, one-sided paired Wilcoxon tests with Holm correction, and paired-bootstrap 95% confidence intervals. 
+
+6.2 Reconstruction and Auditing Effects 
+
+Figure 1(b) compares iCORE-A with iCORE-O on identical episode keys. Auditing improves trajectory quality, conditional performance, and terminal perfor-mance by 0.115 /0.214 /0.151 in controlled execution and 
+
+0.264 /0.480 /0.310 in real-LLM execution. Moreover, every recorded intervention is nondecreasing in matched iCORE quality ( 512 controlled and 108 real-LLM records). This monotonicity is enforced by the preview guard, while the paired episode gains measure its downstream effect. 
+
+Controlled Real LLM System CQ Cond. Term. CQ Cond. Term. Best partial 0.738 0.592 0.671 0.683 0.511 0.495 iCORE-O 0.684 0.570 0.638 0.586 0.392 0.356 iCORE-A 0.799 0.785 0.789 0.850 0.872 0.667 
+
+Table 1: Main-suite results under controlled and real-LLM execution. “Best partial” is the columnwise best result among MAS-Only, INT, TASK, and JUDGE. Cond. and Term. denote conditional and terminal performance. Complete system-wise results appear in Appendix C.2. 
+
+6.3 Aggregate Results 
+
+Table 1 compares iCORE-A with passive full-state observa-tion and the strongest partial-state baseline. iCORE-A is best on all six mode–metric combinations, with particularly large gains in conditional performance under real-LLM execution. Its improvements over all five baselines remain significant after Holm correction (largest adjusted p = 8 .71 × 10 −3
+
+controlled and 3.41 × 10 −2 real LLM). For every controlled quality bin with a positive certified bound, even the lower bootstrap endpoint of conditional per-formance remains above the bound in Proposition 4. The boundary suite shows why this conclusion requires adequate validators, calibrated capability values, and feasible agents, and the real-LLM suite is a finite candidate-selection stress test rather than an open-ended autonomous benchmark. Full results, boundary tests, and prompts appear in Appendix C. 
+
+# 7 Conclusion 
+
+This paper introduced iCORE, a coupled representation 
+
+X = ( G, Q, Π) for observable cooperation, evolving work obligations and assignments, and their certificate-backed cor-respondence. iCORE separates two complementary process properties: work soundness, which requires each decision-relevant work assertion to be justified, and agent-assignment stability, which requires active work to be assigned within a declared tolerance of the best feasible heterogeneous agent. Their quantitative satisfaction rates define iCORE-state qual-ity, making it possible to compare states, interventions, and complete executions. Under decomposable tasks, adequate validators, and calibrated capability values, this score pro-vides a lower bound on expected task performance; out-side these assumptions, it remains a process-quality diag-nostic rather than a certificate of open-ended answer quality. iCORE-Audit operationalizes the representation by allow-ing the ordinary agent process to run and returning state-grounded feedback when the process stalls or exposes a quality defect. Every diagnosis and recovery remains part of the auditable state, so quality improvement does not come at the cost of losing process accountability. References 
+
+Baader, F.; and Nipkow, T. 1998. Term rewriting and all that .Cambridge university press. Belhajjame, K.; B’Far, R.; Cheney, J.; Coppens, S.; Cress-well, S.; Gil, Y.; Groth, P.; Klyne, G.; Lebo, T.; McCusker, J.; et al. 2013. Prov-dm: The prov data model. W3C Recom-mendation , 14: 15–16. Brauer, W.; Reisig, W.; and Rozenberg, G. 1986. Petri Nets: Applications and Relationships to Other Models of Concur-rency: Advances in Petri Nets 1986, Part II Proceedings of an Advanced Course Bad Honnef, 8.–19. September 1986. In Advanced Course on Petri Nets . Springer. Erol, K.; Hendler, J.; and Nau, D. S. 1994. HTN planning: Complexity and expressivity. In AAAI , volume 94, 1123– 1128. Groth, P.; and Moreau, L. 2013. PROV-overview. An overview of the PROV family of documents. Guo, T.; Chen, X.; Wang, Y.; Chang, R.; Pei, S.; Chawla, N. V.; Wiest, O.; and Zhang, X. 2024. Large language model based multi-agents: A survey of progress and challenges. 
+
+arXiv preprint arXiv:2402.01680 .Havelund, K.; and Roşu, G. 2001. Monitoring java programs with java pathexplorer. Electronic Notes in Theoretical Com-puter Science , 55(2): 200–217. Hong, S.; Zhuge, M.; Chen, J.; Zheng, X.; Cheng, Y.; Wang, J.; Zhang, C.; Yau, S.; Lin, Z.; Zhou, L.; et al. 2024. MetaGPT: Meta programming for a multi-agent collabora-tive framework. In International Conference on Learning Representations , volume 2024, 23247–23275. Lamport, L. 2019. Time, clocks, and the ordering of events in a distributed system. In Concurrency: the Works of Leslie Lamport , 179–196. Leucker, M.; and Schallhart, C. 2009. A brief account of runtime verification. The journal of logic and algebraic programming , 78(5): 293–303. Li, G.; Hammoud, H.; Itani, H.; Khizbullin, D.; and Ghanem, B. 2023. Camel: Communicative agents for" mind" explo-ration of large language model society. Advances in neural information processing systems , 36: 51991–52008. Li, S.; and Kokar, M. M. 2012. Agent communication lan-guage. In Flexible Adaptation in Cognitive Radios , 37–44. Springer. Madaan, A.; Tandon, N.; Gupta, P.; Hallinan, S.; Gao, L.; Wiegreffe, S.; Alon, U.; Dziri, N.; Prabhumoye, S.; Yang, Y.; et al. 2023. Self-refine: Iterative refinement with self-feedback. Advances in neural information processing sys-tems , 36: 46534–46594. Murata, T. 1989. Petri nets: Properties, analysis and applica-tions. Proceedings of the IEEE , 77(4): 541–580. Newman, M. H. A. 1942. On theories with a combinatorial definition of" equivalence". Annals of mathematics , 43(2): 223–243. Nii, H. P. 1986. Blackboard Systems. Technical report. Park, J. S.; O’Brien, J.; Cai, C. J.; Morris, M. R.; Liang, P.; and Bernstein, M. S. 2023. Generative agents: Interac-tive simulacra of human behavior. In Proceedings of the 36th annual acm symposium on user interface software and technology , 1–22. Qian, C.; Liu, W.; Liu, H.; Chen, N.; Dang, Y.; Li, J.; Yang, C.; Chen, W.; Su, Y.; Cong, X.; et al. 2024. Chatdev: Com-municative agents for software development. In Proceedings of the 62nd annual meeting of the association for computa-tional linguistics (volume 1: Long papers) , 15174–15186. Schick, T.; Dwivedi-Yu, J.; Dessì, R.; Raileanu, R.; Lomeli, M.; Hambro, E.; Zettlemoyer, L.; Cancedda, N.; and Scialom, T. 2023. Toolformer: Language models can teach themselves to use tools. Advances in neural information processing systems , 36: 68539–68551. Shen, Y.; Song, K.; Tan, X.; Li, D.; Lu, W.; and Zhuang, Y. 2023. Hugginggpt: Solving ai tasks with chatgpt and its friends in hugging face. Advances in Neural Information Processing Systems , 36: 38154–38180. Shinn, N.; Cassano, F.; Gopinath, A.; Narasimhan, K.; and Yao, S. 2023. Reflexion: Language agents with verbal re-inforcement learning. Advances in neural information pro-cessing systems , 36: 8634–8652. Smith, R. G. 1988. The contract net protocol: High-level communication and control in a distributed problem solver. In Readings in distributed artificial intelligence , 357–366. Elsevier. Torreno, A.; Onaindia, E.; Komenda, A.; and Štolba, M. 2017. Cooperative multi-agent planning: A survey. ACM Computing Surveys (CSUR) , 50(6): 1–32. Van der Aalst, W. M. 1998. The application of Petri nets to workflow management. Journal of circuits, systems, and computers , 8(01): 21–66. van Der Aalst, W. M.; Ter Hofstede, A. H.; Kiepuszewski, B.; and Barros, A. P. 2003. Workflow patterns. Distributed and parallel databases , 14(1): 5–51. Wang, L.; Ma, C.; Feng, X.; Zhang, Z.; Yang, H.; Zhang, J.; Chen, Z.; Tang, J.; Chen, X.; Lin, Y.; et al. 2024. A survey on large language model based autonomous agents. Frontiers of Computer Science , 18(6): 186345. Wang, L.; Xu, W.; Lan, Y.; Hu, Z.; Lan, Y.; Lee, R. K.-W.; and Lim, E.-P. 2023. Plan-and-solve prompting: Improving zero-shot chain-of-thought reasoning by large language models. In Proceedings of the 61st annual meeting of the association for computational linguistics (volume 1: long papers) , 2609– 2634. Wu, Q.; Bansal, G.; Zhang, J.; Wu, Y.; Li, B.; Zhu, E.; Jiang, L.; Zhang, X.; Zhang, S.; Liu, J.; et al. 2023. Autogen: Enabling next-gen llm applications via multi-agent conver-sation. arXiv preprint arXiv:2308.08155 .Yang, H.; Lee, H.; Yao, Y.; Liu, Z.; Liu, K.; Chen, J.; and Joe-Wong, C. 2026. DIG to Heal: Scaling General-purpose Agent Collaboration via Explainable Dynamic De-cision Paths. arXiv preprint arXiv:2603.00309 .Yao, S.; Yu, D.; Zhao, J.; Shafran, I.; Griffiths, T.; Cao, Y.; and Narasimhan, K. 2023. Tree of thoughts: Deliberate problem solving with large language models. Advances in neural information processing systems , 36: 11809–11822. Yao, S.; Zhao, J.; Yu, D.; Du, N.; Shafran, I.; Narasimhan, K.; and Cao, Y. 2022. React: Synergizing reasoning and acting in language models. arXiv preprint arXiv:2210.03629 .Yu, F. X.; Zhang, Z.; Imani, M.; Bastian, N. D.; and Lan, T. 2026. Interactive Critique-Revision Training for Reliable Structured LLM Generation. arXiv preprint arXiv:2605.08327 .Zhang, Z.; Zhou, H.; Imani, M.; Lee, T.; and Lan, T. 2025. Learning to collaborate with unknown agents in the absence of reward. In Proceedings of the AAAI Conference on Artifi-cial Intelligence , volume 39, 14502–14511. Zheng, L.; Chiang, W.-L.; Sheng, Y.; Zhuang, S.; Wu, Z.; Zhuang, Y.; Lin, Z.; Li, Z.; Li, D.; Xing, E.; et al. 2023. Judging llm-as-a-judge with mt-bench and chatbot arena. Ad-vances in neural information processing systems , 36: 46595– 46623. A Formal iCORE Semantics 
+
+This appendix provides the detailed semantics and proofs underlying Sections 2–5. It retains the complete execution model while the main text presents only the definitions needed to state the central results. 
+
+A.1 Typed Observable Graphs 
+
+A typed observable graph is 
+
+H = ( VH , E H , s H , t H , θ H , λ H ),
+
+where VH and EH are finite node and edge sets, sH , t H :
+
+EH → VH are source and target maps, and θH and λH assign declared types and observable labels. We write u →H v
+
+when an edge connects u to v and u ⇝H v when there is a directed path from u to v.A field is semantic when it may affect update enablement, feasibility, coverage, compatibility, or a terminal decision. Two typed graphs are observationally equivalent when a type-preserving graph isomorphism preserves every seman-tic field declared by D. Only representational fields, such as fresh identifiers, formatting, or inessential timestamps, may differ. iCORE imposes an observational boundary. Private prompts, hidden chain-of-thought, and internal tool-selection heuristics may influence an agent, but they cannot support a work assertion or terminal decision unless their relevant effect is emitted as an observable action, artifact, label, or certificate premise represented in G, Q, or Π. Thus auditabil-ity concerns declared observables rather than access to an agent’s hidden internal reasoning. For S ⊆ VG, define 
+
+Past G(S) = {u ∈ VG : u ⇝G s for some s ∈ S}.
+
+The live frontier Live( G) contains the actions and artifacts whose effects may still influence unresolved work or a termi-nal decision. A node leaves the live frontier only when its use, resolution, rejection, discard, invalidation, or supersession is observably recorded. 
+
+A.2 Work Semantics 
+
+The application declares how each relation in RQ contributes to obligation, coverage, and support. We write 
+
+p ≺obl  
+
+> Q
+
+q
+
+when p must be resolved before q,
+
+p ≺cov  
+
+> Q
+
+q
+
+when q may contribute to discharging p, and 
+
+p ≺sup  
+
+> Q
+
+q
+
+when p supports the existence or state of q.The exact status vocabulary is SQ =
+
+{open , ready , blocked , closed ,
+
+submitted , accepted , rejected , invalid }.
+
+The required roots satisfy ReqRoot( Q) ⊆ { q ∈ VQ :
+
+∄p ∈ VQ with p ≺obl  
+
+> Q
+
+q}. The unresolved and accepted work sets are Unres( Q) = {q ∈ VQ : stat Q(q) ∈{open , ready , blocked , submitted }} , and 
+
+Accepted( Q) = {q ∈ VQ : stat Q(q) = accepted }.
+
+For a work component q, its root coverage is 
+
+Cov Q(q) = {r ∈ ReqRoot( Q) : r ⪯cov  
+
+> Q
+
+q}.
+
+A set A ⊆ Accepted( Q) is a terminal cover of R ⊆
+
+ReqRoot( Q) when 
+
+R ⊆ [
+
+> a∈A
+
+Cov Q(a)
+
+and the joint compatibility evidence required by V exists. A required root is discharged when a terminal cover exists for it. We write 
+
+Dis( Q) = {r ∈ ReqRoot( Q) : r is discharged }.
+
+The declaration package fixes a finite observable agent set 
+
+MD . The map αQ records the current assignee of unresolved work and retains the last recorded assignee of settled work. For a component q, let Dis −q (X) contain the effective roots discharged by active accepted work whose support chain does not depend on q, and define 
+
+Ob X (q) = Cov Q(q) ∩  EffRoot( X) \ Dis −q (X).
+
+The evaluation set W(X) contains every unresolved compo-nent q with Ob X (q)̸ = ∅, together with every component carrying an active decision-relevant assertion for a iCORE diagnostic or terminal predicate. Consequently, settled sup-port components remain auditable rather than disappearing from terminal quality scores. If W(X) = ∅, the task has no remaining or terminal-support work and both component scores are defined as one by convention. For each q ∈ W (X), D specifies a feasible-agent set 
+
+FD (q, X ) and a normalized net contribution value vD (m, q |
+
+X) ∈ [0 , 1] . The formula and permissible evidence are fixed before evaluation. For settled work, vD may use only capa-bility evidence observable no later than the relevant assign-ment or settlement event; post-outcome oracle information is excluded. Any capability observation used by vD must be represented in G, and any assignment or reassignment in Q
+
+must be connected through Π to the corresponding observ-able event and active valid evidence. 
+
+A.3 Certificates and Correspondence 
+
+A certificate is a finite record 
+
+c =  id( c), prem int (c), prem ext (c), claim( c), issuer( c).
+
+Internal premises reference information already represented in X. External premises reference sources whose authority and scope are declared by V .An external premise enters a work-support chain only through a declared environment-input node in G and an ac-tive valid certificate linking that node, through Π, to the af-fected work assertion. External evidence therefore does not bypass the observable support requirement. A certificate is active when no active valid revocation or supersession certificate targets it. The predicate 
+
+ValidCert V (c; X) = 1 
+
+holds when c ∈ κ, c is active, its internal premises are present and current, its external premises satisfy V , and its claim passes the declared validation procedure. The active certificate-dependency graph must be acyclic. A work-level assertion includes any asserted node, rela-tion, status, signature, coverage fact, compatibility fact, or terminal marker in Q. Every non-initial decision-relevant as-sertion must be connected through Π to observable execution and active valid evidence. 
+
+A.4 Feasibility 
+
+A well-typed state X = ( G, Q, (π, ω, κ )) is feasible when: 1. every required root is connected to an observable initial input and supporting certificate; 2. every non-initial work assertion is backed by responsible nodes in G, corresponding operation labels, and active valid certificates; 3. every non-root work node has a finite support chain end-ing at a required root or declared external input; 4. every unresolved work component remains connected to live execution or has an explicitly certified blocked, dele-gated, waiting, submitted, superseded, or repair-pending condition; 5. coverage uses only eligible work, and every aggregate has the joint compatibility evidence required by V ;6. every active assignment in Q names a feasible agent or carries valid blocked/unassigned evidence, and every as-signment or reassignment is supported by an observable event and capability evidence through Π;7. every terminal event in G corresponds to the appropriate work state in Q, and every terminal work state has an observable witness; 8. revoked or superseded evidence cannot continue support-ing an active assertion without re-certification, repair, in-validation, rejection, or supersession; and 9. no active assertion simultaneously depends on a certifi-cate and an active valid revocation of that certificate. 
+
+A.5 iCORE Systems, Local Views, and Admissible Processes 
+
+Definition 11 (iCORE system) . A iCORE system is 
+
+S = ( D, XD , bR, X 0, Acc , Rej) ,
+
+where D fixes the observable semantics, agent set MD , op-eration vocabulary, validation specification V , capability-value interface, local-view interface, and declared equiva-lence; XD is the set of feasible iCORE states satisfying the preceding conditions; bR is the family of candidate local-update schemas; X0 ∈ X D is the initial state; and 
+
+Acc , Rej : XD → { 0, 1}
+
+are the declared terminal predicates. 
+
+The declared state equivalence X ≡X X′ holds when 
+
+X and X′ differ only in fields declared inessential by D
+
+while agreeing, under transported graph isomorphisms, on every field that may affect update enablement, obligations, assignments, capability evidence, or terminal decisions. The relation is required to be a congruence for legal updates. A rewrite occurrence ρ at X = (G, Q, Π) has fi-nite declared interfaces Read G(ρ; X), Write G(ρ; X),
+
+Read Q(ρ; X), Write Q(ρ; X), Read Π(ρ; X),
+
+Write Π(ρ; X). Its local cooperation view is 
+
+Loc G(ρ; X) = Read G(ρ; X) ∪ Anc DG (Read G(ρ; X)) ,
+
+where the permitted ancestry rule and finite depth bound are fixed by D. Its mapped work view is 
+
+View Q(ρ; Π , X ) = Read Q(ρ; X)
+
+∪ [
+
+> g∈Loc G(ρ;X)∩VG
+
+π(g),
+
+together with the incident semantic relations, current sta-tuses and signatures, and active certificates required by the declared operation. The complete local view is 
+
+L(ρ; X) = (Loc G(ρ; X), View Q(ρ; Π , X ), Read Π(ρ; X)) .
+
+Definition 12 (Legal local update) . A candidate update schema induces a partial function 
+
+bRρ : XD ⇀ XD , bRρ(X) = X′.
+
+An occurrence is enabled when every declared object and certificate premise is present and current in L(ρ; X) and D
+
+permits the proposed operation. The enabled update is le-gal when it (i) reads and writes only through its declared interfaces, (ii) depends only on L(ρ; X) and the fixed dec-larations, (iii) supports every new semantic assertion with active valid evidence under V , (iv) produces X′ ∈ X D , and (v) respects declared state equivalence. 
+
+Definition 13 (Admissible process and reachability) . An ad-missible process is a finite or infinite sequence 
+
+X0 → X1 → X2 → · · · 
+
+in which every transition is a legal local update. A state Y is reachable when X0 →∗ Y along a finite admissible prefix. 
+
+Anchoring, obligation settlement, certificate consistency, and event–work correspondence are state-space conditions encoded by feasibility rather than separate dynamic ax-ioms. The remaining dynamic contract is online locality plus preservation: a legal update may use only its current declared view and must preserve feasibility and equivalence congru-ence. An incorrect proposal must therefore become an ob-servable blocked, rejected, invalid, superseded, excluded, or repair-pending fact rather than silently breaking the model. 
+
+A.6 Terminal Predicates 
+
+Let Off X (Q) contain work components marked by active valid evidence as duplicated, excluded, irrelevant, or super-seded. Define 
+
+EffRoot( X) = ReqRoot( Q) \ Off X (Q)and EffUnres( X) = q ∈ Unres( Q) \ Off X (Q) :Cov Q(q) ∩ EffRoot( X)̸ = ∅ .
+
+The failed roots FailRoot( X) are the effective roots with active valid rejection, invalidity, impossibility, or unreacha-bility evidence and no valid repair neutralizing that failure. A state satisfies Acc( X) when: 1. X is feasible and EffUnres( X) = ∅;2. accepted work forms a certified terminal cover of 
+
+EffRoot( X);3. no effective root belongs to FailRoot( X);4. no accepted component depends on unresolved, invalid, rejected, contradictory, or unrepaired work; and 5. no live productive artifact can change the discharge, fail-ure, exclusion, or compatibility of an effective root. A state satisfies Rej( X) when: 1. X is feasible, EffUnres( X) = ∅, and EffRoot( X)̸ = ∅;2. every effective root belongs to FailRoot( X);3. 
+
+EffRoot( X) ∩ Dis( Q) = ∅;
+
+and 4. no live productive artifact can repair, accept, discharge, or reopen an effective root. 
+
+A.7 Productivity and Fairness 
+
+A transition X → Y is productive when X̸ ≡X Y . The productive quotient is defined by 
+
+[X]≡X →p [Y ]≡X
+
+when there exist X′ ≡X X and Y ′ ≡X Y such that X′ →
+
+Y ′ is productive. We write →∗ 
+
+> p
+
+for its reflexive-transitive closure. The system is productively terminating when no reachable state begins an infinite productive path. It is productively nor-malizing when every reachable state has a finite productive continuation to a productive normal form. An occurrence is continuously enabled when, from some point onward, its declared objects and premises remain avail-able. A productive execution is fair when it does not perma-nently starve a continuously enabled productive occurrence. The occurrence must eventually execute, or another recorded productive update must invalidate one of its premises by resolving, blocking, delegating, excluding, superseding, or repairing the relevant work. 
+
+A.8 Why the Coupling Is Necessary 
+
+Theorem 2 (Projection insufficiency) . Consider any class of iCORE states containing two states with identical unlabeled cooperation-graph topology but different obligation, assign-ment, certificate, or event–work correspondence information, such that one state is work-sound or agent-assignment stable and the other is not. No monitor restricted to the unlabeled topology of G can be both sound and complete for the differ-ing property on that class. 
+
+A.9 Matched Intervention Quality 
+
+Let F be a diagnosis produced at state X. The matched audit set WF is the finite weighted set containing every diagnosed component, every active component whose support or as-signment is changed by the proposed recovery, and the active support ancestors required to evaluate those assertions. The set and weights are frozen before the agent receives feedback. For a successor state Y , the declaration package trans-ports each q ∈ W F through recorded identity, refinement, replacement, supersession, or settlement links. Define 
+
+JFD (q; Y ) = 1 when the transported component remains fully justified or has been validly discharged, rejected, replaced, or superseded with all required evidence; dele-tion without a valid transport or settlement record gives 
+
+JFD (q; Y ) = 0 . Define AFD,ϵ (q; Y ) = 1 when the transported unresolved component is ϵ-stable, or when a settled compo-nent was completed under an assignment that was ϵ-stable according to capability evidence available no later than settlement. The matched scores are snd D (Y ; WF ) =P      
+
+> q∈W FwqJFD(q;Y)
+> P
+> q∈W Fwq
+
+, astab D,ϵ (Y ; WF ) =     
+
+> P
+> q∈W FwqAFD,ϵ (q;Y)
+> P
+> q∈W Fwq
+
+, with value one when WF = ∅,and 
+
+cq D,ϵ (Y ; WF ) = 12 (snd D (Y ; WF ) + astab D,ϵ (Y ; WF )) .
+
+Freezing the cohort prevents an intervention from increasing its score merely by deleting, renaming, or excluding a difficult obligation without valid evidence. 
+
+A.10 iCORE-Audit Procedure 
+
+Algorithm 1 gives the complete state-maintenance loop. The routine AuditOrdinary D returns the set of legality or work-soundness violations in an ordinary proposal. If that set is nonempty, RecordFailure D records the attempted proposal and its audit result without committing the unsupported ef-fects on Q or Π. Similarly, AuditRecovery D returns the violations of legality, work soundness, diagnosed-flag reso-lution, or matched-set quality. All recording operations below are themselves legal iCORE updates. Here h counts consecutive iterations without a committed transition satisfying Progress D . The recovery audit accepts 
+
+Xf only when the candidate update is legal and work-sound, does not silently remove any obligation in WF , resolves each diagnosed hard flag required for continuation or acceptance, and satisfies 
+
+cq D,ϵ (Xf ; WF ) ≥ cq D,ϵ (X−; WF ).
+
+A successful but nonproductive recovery therefore does not reset h.Algorithm 1: iCORE-Audit with State-Grounded Agent Feedback 
+
+Require: Initial request u0, declarations D, tolerance ϵ, quality threshold τ , patience H, budget B
+
+1: X ← Init D (u0); h ← 0
+
+2: for t = 0 , 1, . . . , B − 1 do 
+
+3: if Acc( X) then 
+
+4: return Accept 
+
+5: else if Rej( X) then 
+
+6: return Reject 
+
+7: end if 
+
+8: U ← EnabledProd D (X)
+
+9: if U̸ = ∅ then 
+
+10: (m, ρ ) ← Schedule D (X, U )
+
+11: L ← LocalView D (X, ρ )
+
+12: (o, C ) ← AgentStep D (m, L )
+
+13: eX ← LabelUpdate D (X, ρ, m, o, C )
+
+14: E ← AuditOrdinary D (X, eX)
+
+15: if E = ∅ then 
+
+16: X+ ← Commit D ( eX)
+
+17: h ← 0 if Progress D (X, X +); otherwise h ← h + 1 
+
+18: X ← X+
+
+19: else 
+
+20: X ← RecordFailure D (X, eX, E ); h ← h + 1 
+
+21: end if 
+
+22: else 
+
+23: h ← h + 1 
+
+24: end if 
+
+25: q ← cq D,ϵ (X)
+
+26: if U = ∅ ∨ h ≥ H ∨ HardFlag D (X) ∨ BeneficialReassign D,ϵ (X) ∨ q < τ then 
+
+27: X− ← X; F ← Diagnose D (X−); WF ← MatchedSet D (X−, F )
+
+28: mf ← ResponsibleAgent D (X−, F )
+
+29: Lf ← FeedbackView D (X−, F )
+
+30: (of , C f ) ← AgentRevise D (mf , L f , F )
+
+31: Xf ← LabelIntervention D (X−, m f , o f , C f , F )
+
+32: Ef ← AuditRecovery D (X−, X f , F, WF )
+
+33: if Ef = ∅ then 
+
+34: X+ ← Commit D (Xf )
+
+35: h ← 0 if Progress D (X−, X +); otherwise h ← h + 1 
+
+36: X ← X+
+
+37: else 
+
+38: X ← RecordFeedback D (X−, X f , F, E f ); h ← h + 1 
+
+39: if CertifiedStuck D (X) then 
+
+40: return Stuck 
+
+41: end if 
+
+42: end if 
+
+43: end if 
+
+44: end for 
+
+45: return CertifyBudget D (X) if valid; otherwise Incomplete B Supplementary Execution-Order Stability 
+
+This section retains the earlier task-process notion of stability as a supplementary property. It is intentionally excluded from the main text, where stability refers only to heterogeneous-agent assignment. Here the question is whether different legal orders of productive updates reach equivalent semantic out-comes. A legal update X → Y is productive when X̸ ≡X Y and stuttering otherwise. A reachable state is a productive normal form when no productive legal update remains enabled. Sup-pose two productive updates ρ and η are enabled at X. They are residual-sound independent when both residual execu-tions ρ; ηρ and η; ρη are defined and reach equivalent states. Otherwise the one-step fork is a productive local critical pair .Two states Y and Z are productively joinable modulo ≡X ,written Y ↓p, ≡X Z, when they have productive descendants 
+
+Y ′ and Z′ with Y ′ ≡X Z′.
+
+Definition 14 (Execution-order stability) . A iCORE system is globally execution-order stable when any two productive continuations from the same reachable state to productive normal forms terminate in equivalent iCORE states. 
+
+Theorem 3 (Local-to-global execution-order stability) . As-sume that the reachable productive quotient terminates and every reachable one-step productive fork is either residual-sound independent or a productive local critical pair. Then the system is globally execution-order stable if and only if every reachable productive local critical pair is productively joinable modulo ≡X .
+
+Joinability requires agreement across the full state: the branches must reconcile their cooperation events in G, work and assignment states in Q, and event–work/certificate cor-respondence in Π. Therefore an unlabeled cooperation topol-ogy alone cannot characterize execution-order stability. This supplementary property may be useful when reproducible or-dering is itself an application requirement, but it is not used to define agent-assignment stability or iCORE-state quality in the main text. 
+
+# C Additional Experimental Details 
+
+This appendix documents the exact experiment matrix mate-rialized in the supplied artifact. All 882 scheduled keys listed below produced episode JSON files; “completed” elsewhere in the tables is a task-success indicator rather than a file-completion indicator. 
+
+C.1 Experiment Matrix 
+
+The controlled main, real-LLM main, ablation, and boundary suites contain 540 , 108 , 90 , and 144 materialized episode artifacts, respectively. 
+
+C.2 Full Aggregate Results C.3 Structured Collaborative Task Environments 
+
+All environments use agents agent_1 , agent_2 , and 
+
+agent_3 , with ϵ = 0 .05 and pmin = 0 .65 . Every action becomes an event in G; work status, assignee, prerequisites, values, and weights reside in Q; assignment, result, merge, verification, and repair certificates are appended to Π. The implementation is a self-contained graph runtime. It does not import an external DIG runtime package. 
+
+Binary Coverage (BC). The six work points p0, . . . , p 5 are independent required roots. A valid terminal state requires every point to be closed with a valid result certificate. Du-plicate completion is permitted by the runtime but consumes an agent action and can be detected from recent events in G.
+
+Decompose and Solve (DS). The root begins open while children s1, . . . , s 4 are latent. A legal decomposition acti-vates the children. Their exact values must sum to 10 , and the aggregate certificate must retain the child identifiers. Di-rect root completion before decomposition lacks the required support relation. 
+
+Compatible Merge (CM). Three independent compo-nents with values 0.2, 0.3, and 0.5 support an aggregate root of 1.0. The merge is justified only if all support components are current and certified. 
+
+Dependency Ladder (DL). Only d0 is initially open. The remaining nodes are blocked until all predecessors close. Completing a blocked node still creates an observable event, but its work assertion is unsupported. 
+
+Repair Verification (RV). The graph requires a value-7
+
+draft and check, followed by a value-8 repair and final result. Check and repair items use versioned validators. Evidence with version 1 is stale after the required version becomes 2.
+
+Capability Assignment (CA). Four independent roots en-code math, search, code, and review. Ground-truth capabil-ity tables are fixed before evaluation. For example, the best agents for math, search, and code have probabilities 0.94 ,
+
+0.95 , and 0.96 ; review is best assigned to agent_2 with probability 0.88 . A work item is stable when no declared feasible agent improves expected contribution by more than 
+
+ϵ = 0 .05 .
+
+C.4 Systems and Observable Projections 
+
+For every proposed action, the evaluator first creates an unre-viewed proposal state and records measurement predictions on that same state. Only then does the selected system review or modify the action. This proposal-probe protocol prevents iCORE-Audit from receiving artificially easy labels after it repairs a defect. iCORE-Audit diagnoses duplicate work, assignments more than ϵ below the best declared agent, blocked dependen-cies, missing evidence, incomplete submission, and unsup-ported closed work. It evaluates the recommended successor on the same frozen work set. A candidate that reduces frozen-set soundness or iCORE quality is replaced with wait ; the diagnosis remains visible to the next decision. This explains why nondecreasing matched intervention quality is an en-forced guard property rather than an unconstrained empirical coincidence. 
+
+C.5 Controlled Proposal Backend 
+
+Every controlled system uses the same 
+
+SharedPolicyMLP : a 12 → 32 → 32 → 1 network Mode Suite Environments Systems/variants Conditions or boundaries Episodes Controlled Main BC, DS, CM, DL, RV, CA six systems clean, missing evidence, misassignment, verifier delay, stall 540 Real LLM Main BC, DS, CA six systems clean, mixed 108 Controlled Ablation BC, DS, CM, DL, RV, CA Full, SO, AO, −Π, NC mixed 90 Controlled Boundary BC, DS, CM, DL, RV, CA iCORE-O, iCORE-A standard, DV, SC, WP 144 Total materialized episode artifacts 882 
+
+Table 2: Executed matrix. DV, SC, and WP denote degraded validator, shuffled declared capabilities, and weak agent pool. 
+
+Controlled (540 episodes) Real LLM (108 episodes) System CQ Cond. Perf. Term. Perf. CQ Cond. Perf. Term. Perf. MAS-Only 0.684 0.570 0.638 0.586 0.392 0.356 Interaction-only 0.680 0.579 0.662 0.586 0.392 0.356 Task-only 0.738 0.592 0.654 0.683 0.511 0.495 LLM-Judge 0.686 0.581 0.671 0.586 0.392 0.356 iCORE-Observe 0.684 0.570 0.638 0.586 0.392 0.356 iCORE-Audit 0.799 0.785 0.789 0.850 0.872 0.667 
+
+Table 3: Complete aggregate main-suite means. CQ is trajectory iCORE quality; Cond. Perf. is the calibrated conditional expectation used in Proposition 4; Term. Perf. is realized performance on required roots. Bold and underlined entries denote the best and second-best distinct means in each column. with ReLU activations. Its twelve candidate features are enabled status, assigned-to-self, unassigned, prerequisites ready, aggregate ready, evidence available, current-agent capability, best capability, already complete, duplicate risk, audit recommendation, and terminal-submit readiness. The checkpoint is trained on 8,000 synthetic feature vectors for 20 epochs with batch size 256 , AdamW learning rate 
+
+2 × 10 −3, weight decay 10 −4, and binary cross entropy. A deterministic keyed Gaussian jitter with standard deviation 
+
+0.025 breaks exact score ties. If the checkpoint is absent, the implementation falls back to the fixed linear score recorded in models.py ; the supplied run used the trained checkpoint. The controlled JUDGE condition cannot call a language model. Its review surrogate selects the first diagnosed al-ternative with probability 0.70 and otherwise selects a keyed random alternative. The real-LLM JUDGE condition instead uses the separate judge prompt below. 
+
+C.6 Real-LLM Backend and Prompts 
+
+Reporting prompt templates is standard and useful for repro-ducibility in LLM-agent experiments. We therefore include the exact system strings and the JSON payload schemas used by the artifact. The LLM does not generate arbitrary tools or free-form work products. It selects one candidate from the finite list constructed by the environment. Consequently, this suite tests orchestration and monitor feedback under an LLM decision policy; it is not an open-ended natural-language problem-solving benchmark. 
+
+You are one cooperative worker in amulti-agent graph task. Choose exactly one listed action. Return JSON only as {"candidate_index": <integer>, "reasoning": "brief"}. <environment description from the YAML specification> {"observation": {"agent": <agent id>, "round": <integer>, "max_rounds": <integer>, "own_assignments": <list>, "messages": <last five messages>, "feedback": <monitor message or null >}, "candidate_actions": [{"index": <integer>, "action": < structured action>, "description": <candidate description>}, ... ]}You are a process judge. Select the safest action index using only the provided observable trace summary. Return JSON only as {"candidate_index ": <integer>}. {"trace_summary": {"round": <integer>, "events": <last 12 events>}, "proposed_action": <structured action >, "alternatives": <up to eight structured actions> Env. Obligation structure Targets/validator Required roots Max rounds Primary mechanism BC six independent atomic items each value 1, exact six, weight 1 each 7 complete each item exactly once with active evidence DS aggregate root plus four latent children children 1, 2, 3, 4; root sum 10 root, weight 2 9 decompose, solve, certify, and merge CM three source items supporting one aggregate 0.2, 0.3, 0.5 → 1.0 aggregate, weight 2 8 retain all compatible support sources DL chain d0 → d1 → d2 → d3 values 1, 2, 3, 4, exact d3, weight 1.5 8 respect certified prerequisites RV draft, check, repair, final chain 7, 7, 8, 8; versioned evidence final, weight 2 9 invalidate stale version-1 evidence and certify repair CA four independent heterogeneous items 11 , 13 , 17 , 19 , exact four, weight 1 each 7 assign math/search/code/review to capable agents 
+
+Table 4: Environment specifications 
+
+System Projection Intervention Operational distinction MAS-Only none no shared worker policy without monitoring Interaction-only G yes detects duplicate actions and stalls from event history Task-only Q yes detects dependencies, incomplete submission, and beneficial reassignment LLM-Judge trace yes free-form trace judge; no direct Q or Π access iCORE-Observe (G, Q, Π) no exact passive measurement of both iCORE components iCORE-Audit (G, Q, Π) yes structured diagnosis, recommended repair, and frozen-set preview guard 
+
+Table 5: Evaluated systems. iCORE-Observe and iCORE-Audit intentionally share the same measurement projection. 
+
+}
+
+The local model is 
+
+Qwen/Qwen2.5-0.5B-Instruct , accessed through the OpenAI-compatible vLLM endpoint. Decoding uses temperature 0, at most 160 completion tokens, and JSON-object response format. The server log records vLLM 
+
+0.26 .0, bfloat16 weights, maximum sequence length 4096 ,tensor parallel size 1, asynchronous scheduling, prefix caching, chunked prefill, and GPU-memory utilization 
+
+0.85 . It records one CUDA rank with 47 .37 GiB visible memory, but not the GPU product name; we therefore do not infer a hardware SKU from the log. The checkpoint occupies approximately 0.93 GiB. The default endpoint is 
+
+http://127.0.0.1:8000/v1 .
+
+C.7 Fault Injection and Theory-Boundary Conditions 
+
+The controlled main suite uses the following conditions. 
+
+• Clean: no explicit action fault. 
+
+• Missing evidence: completion, merge, repair, or verifi-cation loses its evidence with probability 0.65 .
+
+• Misassignment: assignment or reassignment is redi-rected to the least capable declared agent with probability 
+
+0.75 .
+
+• Verifier delay: relevant certificates become available two rounds later. 
+
+• Stall: a proposed action becomes wait with probability 
+
+0.30 .The real-LLM mixed condition combines missing evidence, misassignment, and stall with a common probability scale of 0.55 , yielding probabilities 0.65 × 0.55 , 0.75 × 0.55 , and 
+
+0.30 × 0.55 . Fault draws use stable keyed randomness, so system-specific calls do not shift the perturbation schedule. The boundary suite changes assumptions rather than merely increasing random noise. DV accepts a wrong re-sult with probability 0.65 , breaking validator adequacy. SC 
+
+cyclically permutes declared capability values while retain-ing the original ground-truth success probabilities, breaking calibration. WP scales both true and declared capabilities by 
+
+0.55 , weakening the feasible-agent floor. These variants are used to delimit Proposition 4, not to claim robustness under arbitrary assumption violations. 
+
+C.8 Metrics 
+
+For an active or frozen work set, the implementation com-putes weighted fractions 
+
+snd D (X) = 
+
+P 
+
+> w
+
+ωw 1[w is justified ]
+
+P 
+
+> w
+
+ωw
+
+,
+
+astab D,ϵ (X) = 
+
+P 
+
+> w
+
+ωw 1[gain( w) ≤ ϵ]
+
+P 
+
+> w
+
+ωw
+
+.
+
+and cq D,ϵ (X) = (snd D (X) + astab D,ϵ (X)) /2. The paper macros define the same quantities; the displayed indicator notation here is only an implementation-level restatement. 
+
+Trajectory metrics average state scores over all recorded rounds. Conditional performance sums the ground-truth success probability of each currently assigned, justified com-ponent and normalizes by active work weight. It is the empiri-cal conditional expectation corresponding to the proposition. 
+
+Terminal performance is the realized weighted correctness of required roots. Terminal violation indicates a submitted but invalid terminal state. Completion indicates that all re-quired roots were closed before the round limit. The certified bound is 
+
+2 max( pmin − ϵ, 0) [cq D,ϵ (X) − 1/2] +.
+
+A single terminal realization below this expectation bound is not a theorem violation; the appropriate empirical com-0.5 0.6 0.7 0.8 0.9 1.0 
+
+> iCORE quality
+> 0.0
+> 0.1
+> 0.2
+> 0.3
+> 0.4
+> 0.5
+> 0.6
+> 0.7
+> 0.8
+> Conditional performance
+> TASK
+> iCORE-O
+> iCORE-A
+> Certi fi ed LB
+
+Figure 2: Controlled conditional performance by iCORE-quality bin. Shaded regions are bootstrap 95% confidence intervals; the dashed curve is the mean certified lower bound. parison is between conditional-performance means and the bound within quality bins. 
+
+C.9 Measurement Reconstruction 
+
+Table 6 gives all proposal-probe results. FULL-state recon-struction is exact in both modes. TASK reconstructs assign-ment defects but cannot validate certificate-backed work as-sertions. INT detects many event-visible soundness failures but has no access to capability comparisons. JUDGE is noisy on both components. MAS predicts no defects and is included as a zero-information reference. 
+
+C.10 Quality–Performance Relationship 
+
+The controlled figure uses trajectory states from TASK, iCORE-O, and iCORE-A. At the zero-bound quality bin, both the performance estimate and bound are zero for iCORE-A. For every reported bin with positive certified bound, the lower endpoint of the performance interval remains above that bound. This is the assumption-aligned empirical check of Proposition 4; terminal performance is analyzed sepa-rately. 
+
+C.11 Environment-Level Paired Gains 
+
+The mean controlled gain is positive in all six environments: 
+
+0.114 (BC), 0.087 (DS), 0.120 (CM), 0.097 (DL), 0.103 
+
+(RV), and 0.167 (CA). Real-LLM gains are 0.228 (BC), 
+
+0.371 (DS), and 0.194 (CA). These are paired process-quality effects and do not imply that every environment reaches a valid terminal submission. 
+
+C.12 Ablations 
+
+Full iCORE-A achieves soundness 1.000 , assignment sta-bility 0.637 , CQ 0.818 , conditional performance 0.865 , and BC DS CM DL RV CA 
+
+> 0.00
+> 0.05
+> 0.10
+> 0.15
+> 0.20
+> 0.25
+> 0.30
+> 0.35
+> 0.40
+> iCORE-A minus iCORE-O (Δ CQ)  Controlled
+> Real LLM
+
+Figure 3: Paired trajectory-CQ gain of iCORE-Audit over iCORE-Observe by environment. Error bars are bootstrap 
+
+95% confidence intervals. Real-LLM bars exist only for BC, DS, and CA. iCORE-A SO AO -Pi NC   
+
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Mean trajectory score
+> Soundness Assignment Cond. performance
+
+Figure 4: Controlled mixed-condition ablations. SO re-tains only soundness diagnoses, AO retains only beneficial-reassignment diagnoses, −Π removes ledger visibility, and NC disables certificate validation in review. terminal performance 1.000 . SO preserves soundness but reduces assignment stability to 0.350 . AO preserves more assignment stability ( 0.621 ) but allows soundness to fall to 
+
+0.840 . The −Π and NC variants reduce CQ to 0.730 and 
+
+0.735 and terminal performance to 0.694 and 0.657 . AO and 
+
+−Π have identical aggregate scores in this matrix; this tie should not be presented as evidence that the two mechanisms are equivalent beyond the current generator. 
+
+C.13 Boundary of the Performance Claim 
+
+The boundary suite illustrates why iCORE quality requires the proposition’s external adequacy assumptions. DV leaves CQ near the standard value ( 0.812 versus 0.818 ) while termi-nal performance falls from 1.000 to 0.704 , because invalid evidence can be accepted. WP similarly retains CQ 0.807 
+
+while terminal performance falls to 0.519 , because all avail-able agents are weak. SC produces CQ 0.825 and terminal performance 0.833 by decoupling declared and true capabil-Controlled Real LLM System Sound. F1 Reassign. F1 |dCQ − CQ | Sound. F1 Reassign. F1 |dCQ − CQ |                                    
+
+> MAS-Only 0.000 0.000 0.291 0.000 0.000 0.412 Interaction-only 0.810 0.000 0.234 0.952 0.000 0.337 Task-only 0.000 1.000 0.071 0.000 1.000 0.052 LLM-Judge 0.592 0.047 0.196 0.640 0.031 0.298 iCORE-Observe 1.000 1.000 0.000 1.000 1.000 0.000 iCORE-Audit 1.000 1.000 0.000 1.000 1.000 0.000
+
+Table 6: Proposal-probe reconstruction results across controlled and real-LLM execution.                          
+
+> Variant Sound. Assign. CQ Term. Perf. Full 1.000 0.637 0.818 1.000 Sound.-only 1.000 0.350 0.675 0.944 Assign.-only 0.840 0.621 0.730 0.694 No Π0.840 0.621 0.730 0.694 No cert. val. 0.847 0.622 0.735 0.657
+
+Table 7: Controlled mixed-condition ablations over six envi-ronments (90 episodes total).                     
+
+> Boundary CQ Cond. Perf. Term. Perf. Completed Standard 0.818 0.865 1.000 1.000 Degraded val. 0.812 0.865 0.704 0.944 Shuffled cap. 0.825 0.723 0.833 0.778 Weak pool 0.807 0.442 0.519 0.333
+
+Table 8: iCORE-Audit in the controlled theory-boundary suite (144 episodes across iCORE-Observe and iCORE-Audit). ities. These are expected boundary failures, not counterex-amples to a claim made without those assumptions. 
+
+C.14 Execution Cost 
+
+iCORE-A requires 0.026 seconds per controlled episode ver-sus 0.018 for iCORE-O, an approximately 49% relative in-crease but only 0.009 seconds absolute. In the local real-LLM run, the corresponding values are 3.131 and 2.672 
+
+seconds, an approximately 17% increase. iCORE-A makes more model decisions because recovery can extend a trace, but successful structured repair reduces mean verifier calls from 8.22 to 4.33 and certificates from 12 .11 to 9.67 relative to iCORE-O. Wall time depends on the local server, com-pilation cache, and hardware and is therefore reported as an implementation cost rather than a general latency claim. 
+
+C.15 Statistical Tests 
+
+Each target–baseline comparison uses the same materialized episode keys across systems and is paired on environment, condition, and boundary. Controlled tests have 90 pairs; real-LLM tests have 18 . We use the one-sided alternative that iCORE-A is greater and Holm-adjust all 15 comparisons 0.78 0.79 0.80 0.81 0.82 0.83 0.84 
+
+> iCORE quality
+> 0.5
+> 0.6
+> 0.7
+> 0.8
+> 0.9
+> 1.0
+> Terminal performance
+> DV
+> SC
+> Std
+> WP
+
+Figure 5: iCORE-Audit quality and realized terminal perfor-mance under standard and theory-boundary conditions. DV, SC, and WP denote degraded validator, shuffled declared ca-pabilities, and weak pool. within each mode. The compact table reports the small-est mean gain and largest adjusted p-value across the five baselines for each metric. The full baseline-specific CSV is included with the generated package. 
+
+C.16 Reproducibility and Limitations 
+
+The artifact stores complete per-episode JSON objects con-taining G, Q, Π, trajectories, proposal probes, predictions, interventions, metrics, and costs. Figure source CSVs and ta-ble source CSVs are included. The plotting and table scripts supplied with the artifact write to new output directories and never overwrite the original experiment code or results. Two limitations constrain interpretation. First, the real-LLM test covers only BC, DS, and CA with a 0.5B model, so its scope across task families and model scales remains lim-ited. Second, the LLM selects from environment-generated candidate actions whose structured fields include task val-ues and evidence templates; it does not independently solve the underlying numerical or semantic task. These limitations are compatible with the paper’s narrower claim: a coupled representation makes the target process properties measur-able, and state-grounded auditing can use that measurement to guard and repair graph-structured cooperation. Mode System Wall (s) Model calls Prompt tok. Completion tok. Verifier calls Certificates Controlled MAS-Only 0.016 16.30 0.0 0.0 4.26 8.81 Interaction-only 0.018 16.62 0.0 0.0 4.52 9.16 Task-only 0.017 15.96 0.0 0.0 4.39 9.02 LLM-Judge 0.020 16.52 0.0 0.0 4.71 9.37 iCORE-Observe 0.018 16.30 0.0 0.0 4.26 8.81 iCORE-Audit 0.026 17.47 0.0 0.0 3.59 7.87 Real LLM MAS-Only 2.608 14.67 5776.4 764.8 8.22 12.11 Interaction-only 2.763 14.72 5799.9 762.6 8.28 12.17 Task-only 2.658 15.28 5981.6 731.6 7.22 11.33 LLM-Judge 3.010 14.78 5858.3 762.4 8.22 12.11 iCORE-Observe 2.672 14.67 5776.4 758.9 8.22 12.11 iCORE-Audit 3.131 18.17 6543.3 877.2 4.33 9.67 
+
+Table 9: Per-episode execution-cost means. Controlled token counts are zero because the shared MLP does not tokenize prompts. Wall time is implementation- and hardware-specific and is not used as a quality metric. MAS INT TASK JUDGE iCORE-O iCORE-A   
+
+> 0.0
+> 0.5
+> 1.0
+> 1.5
+> 2.0
+> 2.5
+> 3.0
+> 3.5
+> Wall time / episode (s)
+> 2.61 2.76 2.66
+> 3.01
+> 2.67
+> 3.13
+
+Figure 6: Mean real-LLM wall time per episode. The shared local server, model, and decoding configuration are fixed across systems. 
+
+# D Proofs 
+
+D.1 Proof of Theorem 2 
+
+Lemma 1 (Indistinguishability on a projection fiber) . Let C
+
+be a class of states, let 
+
+ϱ : C → Y 
+
+be an observation map, and let 
+
+P : C → { 0, 1}
+
+be a Boolean property. Suppose that there exist X+, X − ∈ C 
+
+such that 
+
+ϱ(X+) = ϱ(X−), P(X+) = 1 , P(X−) = 0 .
+
+Then no monitor whose decision depends only on ϱ(X) can be both sound and complete for P on C.Proof. A monitor restricted to the observation ϱ(X) is a map 
+
+M : C → { 0, 1}
+
+Mode Metric Pairs Min. gain Max. pH
+
+Controlled CQ 90 0.060 1.13e-09 Controlled Cond. Perf. 90 0.193 2.73e-07 Controlled Term. Perf. 90 0.118 8.71e-03 Real LLM CQ 18 0.168 7.30e-03 Real LLM Cond. Perf. 18 0.361 2.30e-03 Real LLM Term. Perf. 18 0.171 3.41e-02 
+
+Table 10: One-sided paired Wilcoxon tests for iCORE-Audit against each of the five baselines. Holm correction is applied jointly over 15 comparisons within each execution mode. The table reports the least favorable adjusted result. for which there exists a decision rule 
+
+cM : Y → { 0, 1}
+
+satisfying 
+
+M (X) = cM  ϱ(X)
+
+for every X ∈ C . We use the convention that M (X) = 1 
+
+means that the monitor declares that P holds at X. Soundness therefore requires 
+
+M (X) = 1 =⇒ P(X) = 1 
+
+for every X ∈ C , whereas completeness requires 
+
+P(X) = 1 =⇒ M (X) = 1 
+
+for every X ∈ C .Assume, for contradiction, that such a monitor is both sound and complete. Since 
+
+ϱ(X+) = ϱ(X−),
+
+the restriction of M to ϱ gives 
+
+M (X+) = cM  ϱ(X+)
+
+= cM  ϱ(X−)
+
+= M (X−).
+
+Thus the monitor must return the same Boolean value on X+
+
+and X−. Denote this common value by b ∈ { 0, 1}.If b = 1 , then 
+
+M (X−) = 1 .
+
+Soundness would imply 
+
+P(X−) = 1 ,
+
+contradicting the assumption 
+
+P(X−) = 0 .
+
+If instead b = 0 , then 
+
+M (X+) = 0 .
+
+However, since 
+
+P(X+) = 1 ,
+
+completeness requires 
+
+M (X+) = 1 ,
+
+which is again a contradiction. Since the common output must be either zero or one and both possibilities contradict one of the two required guarantees, no monitor depending only on ϱ(X) can be both sound and complete for P.
+
+Proof of Theorem 2. Let C be the class of iCORE states ap-pearing in the theorem. For a iCORE state 
+
+X = ( G, Q, Π) ,
+
+with 
+
+G = ( VG, E G, s G, t G, θ G, λ G, τ G, μ G),
+
+define its unlabeled cooperation-graph topology by 
+
+Top( X) = [( VG, E G, s G, t G)] ∼= ,
+
+where [·]∼= denotes the directed-graph isomorphism class obtained after discarding vertex and edge identifiers together with all types, observable labels, logical times, metadata, agent identities, capability evidence, verifier information, and monitor annotations. In particular, Top( X) retains only the incidence structure of the cooperation graph and contains no information from the obligation graph Q or the audit map 
+
+Π.By assumption, C contains two states with identical un-labeled cooperation-graph topology for which one of the properties named in the theorem has different truth values. Choose such states and denote them by 
+
+X+ = ( G+, Q +, Π+) and X− = ( G−, Q −, Π−),
+
+where X+ satisfies the differing property and X− does not. The assumed identity of their unlabeled topologies means 
+
+Top( X+) = Top( X−).
+
+If the differing property is work soundness, define 
+
+Pws (X) = 1X is work-sound .
+
+By Definition 7, this is equivalently 
+
+Pws (X) = 1snd D (X) = 1 .
+
+The choice of X+ and X− then gives 
+
+Pws (X+) = 1 and Pws (X−) = 0 .
+
+Consequently, the property Pws is not constant on the fiber 
+
+Top −1 Top( X+).
+
+This difference cannot be recovered from the unlabeled topology. Indeed, work soundness requires that, for ev-ery decision-relevant component q ∈ W (X), every active decision-relevant assertion associated with q be justified by observable interaction, a declared work operation, and ev-idence valid under V . In terms of the state representation, evaluating the indicator 
+
+JD (q; X)
+
+requires the semantic status, obligation, coverage, and sup-port information stored in Q, together with the event–work correspondence π, operation label ω, and certificate infor-mation κ stored in 
+
+Π = ( π, ω, κ ).
+
+Accordingly, 
+
+snd D (X) = 
+
+P 
+
+> q∈W (X)
+
+wq JD (q; X)
+
+P 
+
+> q∈W (X)
+
+wq
+
+when W(X)̸ = ∅ depends on information that is absent from Top( X). Two states can therefore have the same di-rected incidence pattern in G while differing in whether a work assertion is linked to the correct event, whether the corresponding operation is declared, whether the required certificate exists, whether that certificate is valid and active, or whether the asserted work is an actual decision-relevant obligation. The hypothesis of the theorem selects precisely such a pair for which these erased distinctions change the truth value of work soundness. If the differing property is instead agent-assignment sta-bility, define 
+
+Pas (X) = 1X is agent-assignment stable .
+
+By Definition 9, this is equivalently 
+
+Pas (X) = 1astab D,ϵ (X) = 1 .
+
+The selected states satisfy 
+
+Pas (X+) = 1 and Pas (X−) = 0 .
+
+Hence Pas is likewise not constant on a fiber of Top .More explicitly, for each q ∈ W (X), assignment stability requires evaluation of 
+
+max   
+
+> m∈F D(q,X )
+
+∆D
+
+ m ← αQ(q); q, X  ≤ ϵ, 
+
+where 
+
+∆D
+
+ m ← αQ(q); q, X  = vD (m, q | X) − vD (αQ(q), q | X).
+
+Determining the left-hand side requires the work component 
+
+q, its current or recorded assignee αQ(q), the feasible-agent set FD (q, X ), the declared contribution values vD (m, q |X), and the observable capability evidence and assignment correspondence validating those quantities. The assignee is stored in Q, while the agreement among the responsible event in G, the affected work in Q, the assignment operation, and its supporting evidence is represented through Π. None of these quantities is determined by the unlabeled incidence struc-ture of G. Thus identical unlabeled cooperation topology is compatible with different values of 
+
+max   
+
+> m∈F D(q,X )
+
+[vD (m, q | X) − vD (αQ(q), q | X)] 
+
+and therefore with different truth values of agent-assignment stability, exactly as assumed by the theorem. Now let M be any monitor restricted to the unlabeled topology of G. By the meaning of this restriction, there must exist a function cM such that 
+
+M (X) = cM  Top( X)
+
+for every X ∈ C . Therefore, 
+
+M (X+) = cM  Top( X+)
+
+= cM  Top( X−)
+
+= M (X−).
+
+For whichever property differs between X+ and X−, take 
+
+P = Pws or P = Pas ,
+
+respectively. We then have 
+
+Top( X+) = Top( X−), P(X+) = 1 , P(X−) = 0 .
+
+Applying Lemma 1 with 
+
+ϱ = Top 
+
+shows that no such monitor can be both sound and complete for P on C.The same conclusion also holds for a randomized topology-restricted monitor under zero-error soundness and completeness. If 
+
+a(T ) = Pr[ M declares that P holds | Top( X) = T ] ,
+
+then the common topology 
+
+T = Top( X+) = Top( X−)
+
+forces the same acceptance probability on both states. Com-pleteness at X+ requires a(T ) = 1 , while soundness at X−
+
+requires a(T ) = 0 , which is impossible. Hence neither deter-ministic nor zero-error randomized access to the unlabeled cooperation-graph topology suffices to obtain both guaran-tees. This proves the theorem. 
+
+D.2 Proof of Proposition 1 
+
+For a iCORE state X = ( G, Q, Π) , denote by AD (X) the set of active decision-relevant work-level assertions in Q.For a ∈ AD (X), write Just D (a; X) = 1 when there exists a finite justification for a consisting of observable interac-tion recorded in G, the corresponding operation labels from the declared vocabulary Ω, the event–work correspondence recorded by Π, and certificates that are active and valid under 
+
+V in state X. With this notation, Definition 7 is equivalently 
+
+X is work-sound ⇐⇒ Just D (a; X) = 1 
+
+for every a ∈ AD (X).
+
+Lemma 2 (One-step preservation of work soundness) . If X
+
+is work-sound and X → X′ is a legal iCORE update, then 
+
+X′ is work-sound. Proof. Fix an arbitrary assertion 
+
+a ∈ AD (X′).
+
+We prove that 
+
+Just D (a; X′) = 1 .
+
+First suppose that a was already active and decision-relevant in X and that the update changes neither the semantic content of a, its active status, its decision relevance, nor any semantic object used by one of its valid justification witnesses. Since 
+
+X is work-sound, Definition 7 gives 
+
+Just D (a; X) = 1 .
+
+Consequently, there exist a finite set of observable actions or artifacts 
+
+Ha ⊆ VG,
+
+a finite set of declared operation labels 
+
+Oa ⊆ Ω,
+
+the corresponding event–work links represented in Π, and a finite set of certificates 
+
+Ca ⊆ κ
+
+such that these objects jointly justify a in X. More explicitly, the nodes in Ha record the observable actions or artifacts responsible for the assertion, the labels in Oa identify the declared work operations by which those observable events affect the relevant work components, the corresponding en-tries of Π connect those events and operations to a, and every certificate c ∈ Ca satisfies 
+
+ValidCert V (c; X) = 1 .
+
+A legal update reads and writes only through its declared interfaces. By the present case assumption, none of the se-mantic objects belonging to this justification is changed by the update. Therefore every node in Ha, every operation la-bel in Oa, every relevant event–work correspondence in Π,and every certificate in Ca remains present in X′ with the same semantic meaning. Moreover, every c ∈ Ca remains active, its internal premises remain present and current, its external premises continue to satisfy V , and its claim contin-ues to pass the declared validation procedure. If any of these activity, currentness, or validation conditions changed, then the support of a would be affected and the assertion would belong to the complementary case considered below. Hence 
+
+ValidCert V (c; X′) = 1 for every c ∈ Ca.The same finite collection 
+
+(Ha, O a, C a)
+
+together with the unchanged correspondence entries in Π is therefore a valid justification witness for a in X′. It follows that 
+
+Just D (a; X′) = 1 .
+
+It remains to consider the complementary case, in which 
+
+a is newly created, newly activated, newly decision-relevant, semantically modified, or affected because some part of its former justification is written, revoked, superseded, invali-dated, or replaced by the update. Suppose first that a is newly created, newly activated, newly decision-relevant, or seman-tically modified. A work-level assertion includes an asserted node, relation, status, signature, coverage fact, compatibility fact, or terminal marker. Thus creating such an assertion, changing its semantic value, or making it newly active and decision-relevant produces a new decision-relevant assertion in the successor state. By Definition 6, legality requires the update to support every such assertion using an operation permitted by D and evidence valid under V . Therefore the update must provide valid supporting evidence for a.Legality additionally requires 
+
+X′ ∈ X D .
+
+By the feasibility conditions defining XD , every non-initial work assertion must be backed by responsible observable nodes in G, corresponding operation labels, and active valid certificates through Π, while every required initial root must remain connected to observable initial input and support-ing evidence. Consequently, the support required by legality cannot consist only of an unrecorded or external assertion. It must be represented in the successor state by observable interaction in G, an operation from Ω, the corresponding event–work links in Π, and certificates valid under V . Hence 
+
+Just D (a; X′) = 1 .
+
+Now suppose that a existed before the update but a certifi-cate, correspondence entry, operation label, premise, or other semantic object in its former justification is revoked, super-seded, invalidated, replaced, or otherwise made noncurrent. The former witness can no longer be used automatically, because the definition of certificate validity requires all cer-tificates and premises in the witness to remain active and current. Nevertheless, legality still requires 
+
+X′ ∈ X D .
+
+The feasibility conditions defining XD require that revoked or superseded evidence cannot continue to support an active assertion without re-certification, repair, invalidation, rejec-tion, or supersession. They also prohibit an active assertion from depending simultaneously on a certificate and an ac-tive valid revocation of that certificate. Therefore, after the update, precisely one of the following must occur: the old assertion is made observably inactive by a valid invalidation, rejection, or supersession record, or the assertion remains ac-tive and is supplied with replacement, repaired, or re-certified support that is active and valid in X′.The first alternative is impossible for the fixed assertion a,because 
+
+a ∈ AD (X′)
+
+means that a is active and decision-relevant in the successor state. Hence the second alternative must hold. There there-fore exist responsible observable nodes in G′, corresponding declared operation labels, event–work links in Π′, and active certificates valid under V that jointly support a in X′. Thus 
+
+Just D (a; X′) = 1 .
+
+The assertion a ∈ AD (X′) was arbitrary. We have proved 
+
+∀a ∈ AD (X′), Just D (a; X′) = 1 .
+
+Definition 7 therefore implies that X′ is work-sound. 
+
+Proof of Proposition 1. Let 
+
+X0 → X1 → X2 → · · · 
+
+be an arbitrary admissible process. By the definition of ad-missibility, every transition 
+
+Xn → Xn+1 
+
+is a legal iCORE update. We prove by induction on n ∈ N
+
+that every state Xn is work-sound. The base case is immediate from the hypothesis: 
+
+X0 is work-sound .
+
+Now let n ≥ 0 and assume that 
+
+Xn is work-sound .
+
+Since the process is admissible, the transition 
+
+Xn → Xn+1 
+
+is legal. Applying Lemma 2 with 
+
+X = Xn and X′ = Xn+1 
+
+gives 
+
+Xn+1 is work-sound .
+
+The induction therefore yields 
+
+∀n ∈ N, Xn is work-sound .
+
+Equivalently, for every n and every component 
+
+q ∈ W (Xn),
+
+all active decision-relevant assertions associated with q are justified. Hence 
+
+JD (q; Xn) = 1 for every q ∈ W (Xn).
+
+When 
+
+W(Xn) = ∅,
+
+the definition of the work-soundness score directly gives 
+
+snd D (Xn) = 1 .
+
+When 
+
+W(Xn)̸ = ∅,we obtain 
+
+snd D (Xn) = 
+
+P 
+
+> q∈W (Xn)
+
+wq JD (q; Xn)
+
+P 
+
+> q∈W (Xn)
+
+wq
+
+=
+
+P 
+
+> q∈W (Xn)
+
+wq · 1
+
+P 
+
+> q∈W (Xn)
+
+wq
+
+=
+
+P 
+
+> q∈W (Xn)
+
+wq
+
+P 
+
+> q∈W (Xn)
+
+wq
+
+= 1 .
+
+The denominator is strictly positive because the index set is nonempty and every predeclared importance weight satisfies 
+
+wq > 0.
+
+Thus every state occurring in the admissible process is work-sound. Finally, let Y be any state reached from X0 by an admis-sible process. By the definition of reachability, there exists a finite admissible prefix 
+
+X0 → X1 → · · · → Xn = Y
+
+for some n ∈ N. The induction result gives that Xn is work-sound, and therefore 
+
+Y is work-sound .
+
+The same reasoning applies when the complete admissi-ble process is infinite, because every state reached along an infinite process occurs at some finite index. Hence every state reached by an admissible process from X0 is work-sound. 
+
+D.3 Proof of Proposition 2 
+
+For an admissible process 
+
+X0
+
+> ρ0
+
+−→ X1
+
+> ρ1
+
+−→ X2
+
+> ρ2
+
+−→ · · · , Xi = ( Gi, Q i, Πi),
+
+write the ordered audit entry of the transition Xiρi
+
+−→ Xi+1 
+
+as 
+
+ri =  ρi, ∆Gi , ∆Qi , ∆Π
+
+> i
+
+,
+
+where ρi identifies the legal update occurrence and ∆Gi ,
+
+∆Qi , and ∆Π 
+
+> i
+
+record all of its semantic effects on the three components of the iCORE state. Thus these effects include every created or removed node and edge, every changed se-mantic label, status, signature, or assignment, every created, revoked, or superseded certificate, and every changed event– work or operation correspondence. Fields declared inessen-tial by D, such as a choice of fresh identifiers or an inessential timestamp, need not be reproduced literally. The order of the entries is the commit order of the process, equivalently the order in which the corresponding state transitions occur. 
+
+Lemma 3 (Replay uniqueness modulo declared equiva-lence) . Let R = ( r0, r1, . . . ) be the ordered audit record of an admissible process from the fixed initial state X0. Any replay of R from a representative bX0 ≡X X0 produces states bXi satisfying 
+
+bXi ≡X Xi
+
+for every recorded index i. Consequently, any two state se-quences consistent with the same record are pointwise equiv-alent under ≡X .Proof. We argue by induction on the number of replayed entries. At index zero, the replay is initialized with a repre-sentative satisfying 
+
+bX0 ≡X X0,
+
+so the claim holds before any update is replayed. Suppose that, for some i ≥ 0, the replay has already produced a state 
+
+bXi for which 
+
+bXi ≡X Xi.
+
+By the definition of the declared state equivalence, there are transported type-preserving graph isomorphisms between the G- and Q-components of these states, together with the induced transport of Π, and these transports preserve every field that may affect update enablement, feasibility, obliga-tions, assignments, capability evidence, certificate validity, or terminal decisions. Transport the recorded occurrence ρi
+
+along these isomorphisms and denote the transported occur-rence by bρi. Because the semantic read objects, statuses, sig-natures, operation labels, correspondence entries, and certifi-cate premises are preserved, the complete local views agree up to the same transport: 
+
+L(bρi; bXi) ∼= L(ρi; Xi).
+
+The occurrence ρi is legal at Xi, because the original process is admissible. Hence every object and certificate premise re-quired by ρi is present and current in L(ρi; Xi), the operation is permitted by D, every new semantic assertion has active valid support, and the recorded successor is 
+
+Xi+1 = bRρi (Xi) ∈ X D .
+
+The transported equality of local views implies that the same enablement and validation tests hold for bρi at bXi. Moreover, declared state equivalence is required to be a congruence for legal updates. Therefore the transported occurrence is legal and its successor satisfies 
+
+bXi+1 = bRbρi ( bXi) ≡X bRρi (Xi) = Xi+1 .
+
+The recorded effects ∆Gi , ∆Qi , and ∆Π 
+
+> i
+
+determine all seman-tic writes of this occurrence. Since an update occurrence induces a partial function on XD , a replay consistent with the entry cannot choose a different semantic successor; it may differ only in fields that D declares inessential. This proves the induction step, and thus 
+
+bXi ≡X Xi
+
+for every finite index i. The argument applies without change to an infinite record, because every state at a finite index is determined by a finite prefix. Finally, if ( bXi)i and ( eXi)i are two replays of the same record, then 
+
+bXi ≡X Xi and eXi ≡X Xi,
+
+and symmetry and transitivity of ≡X give 
+
+bXi ≡X eXi
+
+for every i.
+
+Lemma 4 (Finite backward explanation of terminal-cover work) . Let 
+
+X0
+
+> ρ0
+
+−→ X1
+
+> ρ1
+
+−→ · · · ρN −1
+
+−−−→ XN
+
+be a finite admissible process with Acc( XN ) = 1 , and let 
+
+A ⊆ Accepted( QN ) be the certified terminal cover used by the acceptance predicate. For every component a ∈ A, there exists a finite explanation substructure consisting of recorded interaction objects from the cooperation graphs, recorded work objects and transformations from the obligation graphs, and the corresponding restriction of the audit maps, such that the explanation contains the accepted status and terminal-cover role of a, connects every non-initial work assertion in the explanation to responsible observable interaction and active valid evidence, and reaches an observable initial input through the required-root coverage and support structure. Proof. Fix a ∈ A. Since Acc( XN ) = 1 , the terminal-state conditions in Appendix A.6 imply that XN is feasible, that 
+
+a has status accepted , that the accepted components in A
+
+jointly cover every effective required root with the compati-bility evidence required by V , and that no accepted compo-nent depends on unresolved, invalid, rejected, contradictory, or unrepaired work. Let SN (a) be the finite set containing the assertion 
+
+stat QN (a) = accepted ,
+
+the active result and signature assertions of a used by the terminal decision, the coverage assertions by which a partic-ipates in the certified terminal cover, and the compatibility assertions involving a that are used by the joint terminal-cover certificate. This set is finite because QN , ΠN , and every certificate record are finite. We first expose the work-side connection to the input. Be-cause a belongs to the certified terminal cover, its terminal-cover evidence identifies the effective required root or roots whose discharge uses a. For each such root r, the coverage semantics provide a finite coverage path in QN from r to a;schematically, 
+
+r = q0 ⪯cov  
+
+> QN
+
+q1 ⪯cov  
+
+> QN
+
+· · · ⪯ cov  
+
+> QN
+
+qℓ = a. 
+
+If an intermediate work component occurring in the selected terminal support is not itself a required root, feasibility sup-plies a finite support chain ending at a required root or a declared input node. We add the nodes, semantic relations, statuses, signatures, coverage facts, and support facts on these finitely many selected chains to SN (a). Every required root reached in this way is connected, by feasibility, to an ob-servable initial-input node and a supporting certificate. Any auxiliary external premise is not treated as hidden support: by Appendix A.3, it enters only through a declared environment-input node in G and an active valid certificate. Thus the work-side support of a is anchored at the declared observ-able input boundary and, through the required-root branch of the terminal cover, at the initial input. It remains to show that every assertion on these work chains can be expanded into a finite recorded cross-layer ex-planation. We construct a backward audit slice. At a generic transition 
+
+Xiρi
+
+−→ Xi+1 ,
+
+consider a finite set Si+1 of semantic objects and assertions in 
+
+Xi+1 that are currently required by the explanation. Partition it as 
+
+Si+1 = Ui ∪ Wi,
+
+where Ui contains the objects that were already present in Xi
+
+with the same semantic value and remained unchanged by ρi,while Wi contains the objects created, activated, semantically modified, re-certified, repaired, or otherwise supplied with their current support by the transition. Objects in Ui can simply be carried to the preceding state. For an object or assertion z ∈ Wi, the update is legal, so the current semantic value of z cannot have been introduced without the support required by D and V . In particular, the relevant part of the recorded update contains observable action or artifact nodes 
+
+g ∈ VGi+1 , a declared operation label ωi+1 (g) ∈ Ω, an event–work correspondence 
+
+q ∈ πi+1 (g),
+
+and certificates in κi+1 that are active and valid for the claim being introduced or maintained. For every such certificate c,
+
+ValidCert V (c; Xi+1 ) = 1 .
+
+We add these recorded G-objects, Q-effects, operation labels, correspondence entries, and certificates to the explanation. We then place into Si the objects and premises from the pre-update local view L(ρi; Xi) that are needed to enable and validate this relevant part of the update. Formally, it is sufficient to set 
+
+Si = Ui ∪ [
+
+> z∈Wi
+
+Prem i(z),
+
+where Prem i(z) denotes the subset of L(ρi; Xi) used by the declared operation and validators to support z. If the implementation does not separately mark the minimal subset, we may take 
+
+Prem i(z) = L(ρi; Xi),
+
+which is still finite by the finite-interface and finite-ancestry requirements. This construction also covers changes of evidence. If sup-port formerly used by a required assertion is revoked, super-seded, or made noncurrent, feasibility prohibits that assertion from remaining active unless it is re-certified, repaired, in-validated, rejected, or superseded. Since the assertions in the selected terminal explanation remain active and support an accepted component, the invalidation or rejection alternative cannot be the terminal support used for a. The backward slice therefore follows the recorded replacement, repair, re-certification, or valid supersession chain. Internal certificate premises are added to the slice; external premises termi-nate at their declared environment-input nodes. The active certificate-dependency graph is acyclic, so expanding the certificates occurring within one state or one update cannot create an infinite regress. Likewise, the cooperation graph is a finite directed acyclic graph, so adding the causal ancestors of a responsible event adds only finitely many observable actions and artifacts. Starting with the finite seed SN (a) and applying the pre-ceding construction successively for 
+
+i = N − 1, N − 2, . . . , 0
+
+produces finite sets Si at every stage. The update index strictly decreases whenever the construction asks for pre-update premises, so after exactly N backward transitions no further process history remains to be traversed. The remain-ing objects lie in the fixed initial state X0. Feasibility of X0
+
+connects every required root to an observable initial input and gives every non-root initial work object a finite sup-port chain ending at such a root or at a declared input node. Adding these initial anchors closes the explanation. Let Ia ⊆ { 0, 1, . . . , N − 1} be the set of update indices whose entries were included by the backward slice, and let Ea
+
+be the union of the selected initial objects, selected local-view premises, selected update effects, selected causal ancestors in G, selected work chains in Q, and selected restrictions of 
+
+Π and κ. Its size is bounded by 
+
+|E a| ≤ | X0| + X
+
+> i∈Ia
+
+ |L(ρi; Xi)| + |∆Gi | + |∆Qi | + |∆Π 
+
+> i
+
+|,
+
+and the right-hand side is finite because Ia is finite and every state, local interface, update effect, and certificate record is finite. By construction, every selected work transformation is paired through the selected audit-map entries with the observable event and declared operation that justified it, every selected certificate premise is represented and validated, the explanation begins at the observable input anchors, and it ends at the accepted terminal assertions of a. Thus Ea is the required finite explanation. 
+
+Proof of Proposition 2. Let 
+
+X0
+
+> ρ0
+
+−→ X1
+
+> ρ1
+
+−→ X2
+
+> ρ2
+
+−→ · · · 
+
+be the legal process represented by the record. The dec-laration package fixes X0, and the hypothesis supplies the ordered entry ri for every committed transition. Lemma 3 therefore shows, by replaying the entries from X0, that the record determines every state Xi up to ≡X . It also shows uniqueness: any other state sequence compatible with the same initial state and the same recorded updates and effects is pointwise equivalent to the original sequence. Hence the record reconstructs the complete sequence of iCORE states up to the declared observational equivalence. For an infinite process, this statement is understood pointwise, since every finite-index state is reconstructed from a finite record prefix. Now suppose that the process is finite and accepted, so that for some N < ∞ its final state satisfies 
+
+Acc( XN ) = 1 .
+
+Let A be the certified terminal cover used by the acceptance predicate and fix an arbitrary a ∈ A. Lemma 4 constructs a finite explanation Ea whose G-part contains the responsi-ble observable interaction events and artifacts, whose Q-part contains the relevant work components and transformations, and whose Π-part records the operation, event–work, and certificate correspondence connecting those two parts. The explanation is anchored at the observable initial input and terminates at the accepted status, coverage role, and com-patibility support of a. Since a was arbitrary, every accepted component in the terminal cover has such a finite explanation. This proves both claims. 
+
+D.4 Proof of Corollary 1 
+
+Proof. Consider the sequence of states produced by the com-mitted updates of the execution. This sequence has the form 
+
+X0
+
+> ρ0
+
+−→ X1
+
+> ρ1
+
+−→ X2
+
+> ρ2
+
+−→ · · · ,
+
+where the index set of states is either 
+
+I = {0, 1, . . . , N }
+
+for some finite execution, or 
+
+I = N
+
+for an infinite execution. For every index n ∈ I such that 
+
+n + 1 ∈ I , the transition 
+
+Xnρn
+
+−→ Xn+1 
+
+is a committed update. By hypothesis, every committed up-date is legal. Hence 
+
+Xn → Xn+1 is a legal iCORE update for every such n. It follows directly from the definition of an admissible process that the committed-state sequence is an admissible process beginning at X0. Candidate updates that are rejected, blocked, aborted, or otherwise not committed do not occur as transitions in this sequence and therefore do not change any state reached by the process. The initial state is work-sound by hypothesis. Proposition 1 states that every state reached from a work-sound initial state by an admissible process is work-sound. Applying that propo-sition to the committed-state sequence gives 
+
+Xn is work-sound for every n ∈ I .
+
+Equivalently, for every n ∈ I and every active decision-relevant work-level assertion 
+
+a ∈ AD (Xn),
+
+there exists a justification consisting of observable interac-tion recorded in Gn, declared operation labels from Ω, the corresponding event–work relations recorded by Πn, and certificates that are active and valid under V in Xn. In the notation used in Appendix D.2, 
+
+Just D (a; Xn) = 1 for every a ∈ AD (Xn).
+
+Thus every state reached by the execution is work-sound, and Definition 7 therefore implies that the entire committed process is work-sound. It remains to verify the conditions governing the emitted terminal reports. Let e be an arbitrary terminal-report occur-rence in the execution, and let Xn(e) denote the current com-mitted state when e is emitted. Such a state exists even when no update has yet been committed, in which case n(e) = 0 
+
+and the current state is X0. Because Xn(e) belongs to the committed-state sequence, the preceding argument gives 
+
+Xn(e) is work-sound .
+
+Suppose first that the report occurrence e emits Accept .The reporting hypothesis states that the execution emits 
+
+Accept only when the acceptance predicate holds at the current state. Therefore, 
+
+e = Accept =⇒ Acc  Xn(e)
+
+.
+
+In particular, the execution cannot emit Accept at a state for which 
+
+Acc  Xn(e)
+
+
+
+is false. Notice that this conclusion is not inferred merely from work soundness: work soundness justifies the active decision-relevant assertions, whereas Acc additionally re-quires complete settlement of the effective required roots, a certified compatible terminal cover, the absence of unre-solved relevant work and supported failures, and the absence of a live productive artifact that can change the outcome. These additional terminal conditions are supplied precisely by the assumed acceptance guard. Suppose instead that e emits Reject . The corresponding reporting hypothesis states that the execution emits Reject 
+
+only when the rejection predicate holds at the current state. Hence, 
+
+e = Reject =⇒ Rej  Xn(e)
+
+.
+
+Consequently, the execution cannot emit Reject at a state for which 
+
+Rej  Xn(e)
+
+
+
+is false. As in the acceptance case, this implication is imposed by the terminal-report guard rather than by work soundness alone. The report occurrence e was arbitrary. We have therefore established that every terminal-report occurrence satisfies 
+
+e = Accept =⇒ Acc  Xn(e)
+
+
+
+and 
+
+e = Reject =⇒ Rej  Xn(e)
+
+.
+
+Together with the fact that every state in the committed pro-cess is work-sound, these are exactly the conditions in Def-inition 8. Hence the process is terminal-report sound. The argument applies equally to finite and infinite executions, because every report in an infinite execution occurs after a finite committed prefix and is therefore associated with some state Xn covered by the preceding reasoning. 
+
+D.5 Proof of Proposition 3 
+
+Proof. Let 
+
+p : X0 → X1 → · · · → XN
+
+be the process under consideration. The process is finite because terminal completeness is defined for a finite process. Write 
+
+Xi = ( Gi, Q i, Πi) (0 ≤ i ≤ N ).
+
+Since the process is work-sound, Definition 7 gives 
+
+Xi is work-sound for every i ∈ { 0, 1, . . . , N }.
+
+Equivalently, using the notation introduced in Appendix D.2, for every active decision-relevant assertion 
+
+b ∈ AD (Xi)
+
+we have 
+
+Just D (b; Xi) = 1 .
+
+Thus every accepted or rejected status, every coverage or compatibility claim, every failure claim, every exclusion, duplication, irrelevance, or supersession claim used to deter-mine the effective required roots, and every terminal-support assertion that is active and decision-relevant at any reported state is connected through Πi to observable interaction in Gi,a declared operation, and evidence active and valid under V .In particular, the terminal predicates cannot be supported by an unrecorded work assertion or by evidence that is inactive, revoked, superseded, noncurrent, or invalid under V .Let e be an arbitrary emitted Accept or Reject report, and let Xn(e) be the current committed state when e is emitted. Because e occurs after a finite prefix of p, its index satisfies 
+
+n(e) ∈ { 0, 1, . . . , N }.
+
+For readability, set 
+
+Xe = Xn(e), Qe = Qn(e).
+
+The preceding work-soundness conclusion applies to Xe.Suppose first that 
+
+e = Accept .
+
+Terminal-report soundness implies that an Accept report may be emitted only at a state satisfying the declared accep-tance predicate. Hence 
+
+e = Accept =⇒ Acc( Xe).
+
+Unfolding Acc( Xe) from Appendix A.6, there exists a set 
+
+Ae ⊆ Accepted( Qe)
+
+that forms a certified terminal cover of EffRoot( Xe). There-fore 
+
+EffRoot( Xe) ⊆ [
+
+> a∈Ae
+
+Cov Qe (a),
+
+and the joint compatibility evidence required by V exists for the components in Ae. The other clauses of the acceptance predicate give 
+
+EffUnres( Xe) = ∅and 
+
+EffRoot( Xe) ∩ FailRoot( Xe) = ∅.
+
+They also ensure that no accepted component depends on un-resolved, invalid, rejected, contradictory, or unrepaired work, and ensure that no live productive artifact can change the discharge, failure, exclusion, or compatibility of an effective root. Consequently, the cover is terminal rather than merely provisional: every effective required root is discharged by ac-cepted work, no effective required root simultaneously car-ries an unneutralized supported failure, no unresolved rele-vant work remains, and no still-live productive artifact can alter the reported outcome. It remains to verify that the terminal cover just described is genuinely certified under V , rather than merely having the correct set-theoretic shape. Every assertion that a compo-nent belongs to Accepted( Qe), every active coverage asser-tion used in Cov Qe (a), every compatibility assertion used to combine the members of Ae, and every active assertion used to remove a root from 
+
+EffRoot( Xe) = ReqRoot( Qe) \ Off Xe (Qe)
+
+is decision-relevant to the Accept report. Since Xe is work-sound, each such assertion has a justification through ob-servable interaction, a declared operation, the correspon-dence recorded by Πn(e), and active evidence valid under 
+
+V . Hence no required root is silently omitted: a root is ab-sent from EffRoot( Xe) only when its duplicated, excluded, irrelevant, or superseded status is supported by active valid evidence. It follows that Ae is a V -certified accepted terminal cover in precisely the sense used by task adequacy. By the first clause of task adequacy, every V -certified ac-cepted terminal cover yields a semantically correct accepted output for the declared task class. Applying that clause to Ae
+
+shows that the output certified by Ae is semantically correct. Therefore the emitted decision 
+
+e = Accept 
+
+is semantically correct for the declared task class. Notice that validator adequacy is essential here: work soundness proves that the acceptance evidence is valid according to V , while task adequacy is what permits the further inference from validity under V to correctness under the task semantics. Suppose instead that 
+
+e = Reject .
+
+Terminal-report soundness now gives 
+
+e = Reject =⇒ Rej( Xe).
+
+Define 
+
+Fe = EffRoot( Xe).
+
+Unfolding the rejection predicate yields 
+
+Fe̸ = ∅, EffUnres( Xe) = ∅,
+
+and 
+
+Fe ⊆ FailRoot( Xe).
+
+Because Fe = EffRoot( Xe), the last inclusion states that every effective required root has active valid rejection, inva-lidity, impossibility, or unreachability evidence and has no valid repair neutralizing that failure. The rejection predicate also gives 
+
+Fe ∩ Dis( Qe) = ∅
+
+and states that no live productive artifact can repair, accept, discharge, or reopen any root in Fe. Thus the reported failure is complete over the effective requirement set, is not contra-dicted by a valid discharge of any of those roots, and cannot still be changed by remaining productive work. Each active failure assertion used to place a root in 
+
+FailRoot( Xe), together with each exclusion or superses-sion assertion used to determine Fe, is decision-relevant to the Reject report. Work soundness of Xe therefore supplies, for every r ∈ Fe, observable interaction in Gn(e), a declared work operation, the corresponding entries in Πn(e), and ac-tive evidence valid under V supporting the asserted failure of r. Moreover, the definition of FailRoot( Xe) excludes any root whose failure has been neutralized by a valid repair. Hence Fe is a V -certified failed-root set, not merely a set of roots carrying unsupported failure labels. By the second clause of task adequacy, every V -certified failed-root set of this kind justifies rejection for the declared task class. Applying that clause to Fe proves that the decision 
+
+e = Reject 
+
+is semantically correct. The detectability clause in task ad-equacy is consistent with both cases above: any process-relevant defect in required-root coverage, compatibility, ev-idence, or terminal settlement must be detectable under V ,and therefore cannot be hidden behind a purportedly certi-fied terminal cover or failed-root set. Without this clause, a process could be internally sound relative to an incomplete validator while still missing a task-relevant defect. The report occurrence e was arbitrary. Let 
+
+SemCorrect D (e) denote that the report e is semanti-cally correct for the task class declared by D. We have proved 
+
+e = Accept =⇒ SemCorrect D (e)
+
+and 
+
+e = Reject =⇒ SemCorrect D (e)
+
+for every emitted Accept or Reject report. It remains to identify what terminal completeness permits when neither semantic decision is reported. Since p is termi-nally complete, its final state XN satisfies 
+
+Acc( XN ) ∨ Rej( XN ) ∨ CertStuck V (p, X N ),
+
+where CertStuck V (p, X N ) abbreviates the existence of valid evidence certifying that the process is externally stuck at XN . The acceptance and rejection predicates cannot both hold. Indeed, Rej( XN ) would imply 
+
+EffRoot( XN )̸ = ∅
+
+and 
+
+EffRoot( XN ) ⊆ FailRoot( XN ),
+
+whereas Acc( XN ) would imply 
+
+EffRoot( XN ) ∩ FailRoot( XN ) = ∅.These relations would force 
+
+EffRoot( XN ) = ∅,
+
+contradicting the nonemptiness required by Rej( XN ). Thus an accepted terminal decision and a rejected terminal deci-sion are mutually exclusive. If terminal completeness is witnessed instead by external stuckness, then by definition there exists valid evidence certi-fying that the cooperation process cannot presently continue because of an external process condition. Denote one such certificate by cstuck . Its validity means 
+
+ValidCert V (cstuck ; XN ) = 1 ,
+
+and its claim is that the process is externally stuck at XN . Be-cause the process is work-sound, any active decision-relevant terminal-status assertion supported by this certificate is also connected through ΠN to the relevant observable events and declared operation. This validates the reported process status. It does not, however, provide either a V -certified accepted terminal cover or a V -certified failed-root set. The definition of task adequacy licenses semantic acceptance only from the former and semantic rejection only from the latter. Exter-nal stuckness may arise from unavailable tools, permissions, resources, communication, or other process conditions with-out establishing that the task output is correct or that the task itself is semantically impossible. Therefore no Accept or Re-ject conclusion follows from external stuckness alone, and an externally stuck report is valid only as the certified status of the cooperation process. This proves the proposition. 
+
+D.6 Proof of Theorem 1 
+
+Proof. Let 
+
+W := W(X).
+
+By assumption, W̸ = ∅, and the component weights are normalized so that X
+
+> q∈W
+
+wq = 1 .
+
+Define the set of ϵ-stable components by 
+
+Sϵ(X) := 
+
+
+
+q ∈ W : max   
+
+> m∈F D(q,X )
+
+∆D
+
+ m ← αQ(q); q, X  ≤ ϵ
+
+
+
+,
+
+and define its complement in W by 
+
+Rϵ(X) := W \ S ϵ(X).
+
+Hence, 
+
+W = Sϵ(X) ˙ ∪ R ϵ(X).
+
+By the definition of the assignment-stability score and the normalization P 
+
+> q∈W
+
+wq = 1 , we have 
+
+astab D,ϵ (X) = 
+
+P 
+
+> q∈W
+
+wq 1 [q ∈ S ϵ(X)] 
+
+P 
+
+> q∈W
+
+wq
+
+= X
+
+> q∈W
+
+wq 1 [q ∈ S ϵ(X)] = X
+
+> q∈S ϵ(X)
+
+wq .
+
+It follows that X
+
+> q∈R ϵ(X)
+
+wq = X
+
+> q∈W
+
+wq − X
+
+> q∈S ϵ(X)
+
+wq
+
+= 1 − astab D,ϵ (X).
+
+Now fix an arbitrary componentwise feasible alternative assignment β, so that 
+
+β(q) ∈ F D (q, X ) ∪ {⊥} for every q ∈ W .
+
+For each q ∈ W , define the componentwise utility gain 
+
+gq := vD (β(q), q | X) − vD (αQ(q), q | X).
+
+Using the definition of UD , the aggregate gain produced by 
+
+β can be written exactly as 
+
+UD (β | X) − UD (αQ | X)= X
+
+> q∈W
+
+wq vD (β(q), q | X) − X
+
+> q∈W
+
+wq vD (αQ(q), q | X)= X
+
+> q∈W
+
+wq (vD (β(q), q | X) − vD (αQ(q), q | X)) = X
+
+> q∈W
+
+wq gq
+
+= X
+
+> q∈S ϵ(X)
+
+wq gq + X
+
+> q∈R ϵ(X)
+
+wq gq .
+
+Consider any component 
+
+q ∈ S ϵ(X).
+
+If 
+
+β(q) ∈ F D (q, X ),
+
+then, by the definition of the counterfactual assignment gain, 
+
+gq = vD (β(q), q | X) − vD (αQ(q), q | X)= ∆ D
+
+ β(q) ← αQ(q); q, X .
+
+Because β(q) is an element of FD (q, X ), its gain cannot exceed the maximum gain over that feasible set. Therefore, 
+
+gq = ∆ D
+
+ β(q) ← αQ(q); q, X 
+
+≤ max   
+
+> m∈F D(q,X )
+
+∆D
+
+ m ← αQ(q); q, X .
+
+Since q ∈ S ϵ(X), the defining inequality of ϵ-stability gives 
+
+max   
+
+> m∈F D(q,X )
+
+∆D
+
+ m ← αQ(q); q, X  ≤ ϵ. 
+
+Combining the preceding two inequalities yields 
+
+gq ≤ ϵ. 
+
+If instead 
+
+β(q) = ⊥,
+
+then the convention vD (⊥, q | X) = 0 gives 
+
+gq = vD (⊥, q | X) − vD (αQ(q), q | X)= −vD (αQ(q), q | X).Since declared component values are nonnegative, 
+
+vD (αQ(q), q | X) ≥ 0,
+
+and hence 
+
+gq ≤ 0.
+
+Because ϵ ≥ 0, it follows that 
+
+gq ≤ 0 ≤ ϵ. 
+
+Thus, regardless of whether β(q) is a feasible agent or ⊥,
+
+gq ≤ ϵ for every q ∈ S ϵ(X).
+
+Now consider any component 
+
+q ∈ R ϵ(X).
+
+Although no ϵ-stability guarantee is available for such a com-ponent, the normalization of the declared values implies 
+
+0 ≤ vD (β(q), q | X) ≤ 1.
+
+Indeed, this follows directly from the range of vD when 
+
+β(q) ∈ F D (q, X ), while for β(q) = ⊥ it follows from 
+
+vD (⊥, q | X) = 0 . Similarly, 
+
+0 ≤ vD (αQ(q), q | X) ≤ 1.
+
+Therefore, 
+
+gq = vD (β(q), q | X) − vD (αQ(q), q | X)
+
+≤ 1 − 0= 1 .
+
+Hence, 
+
+gq ≤ 1 for every q ∈ R ϵ(X).
+
+Substituting the two componentwise bounds into the de-composition of the aggregate gain, and using wq > 0, gives 
+
+UD (β | X) − UD (αQ | X) = X
+
+> q∈S ϵ(X)
+
+wq gq + X
+
+> q∈R ϵ(X)
+
+wq gq
+
+≤ X
+
+> q∈S ϵ(X)
+
+wq ϵ + X
+
+> q∈R ϵ(X)
+
+wq
+
+= ϵ X
+
+> q∈S ϵ(X)
+
+wq + X
+
+> q∈R ϵ(X)
+
+wq .
+
+Using X
+
+> q∈S ϵ(X)
+
+wq = astab D,ϵ (X)
+
+and X
+
+> q∈R ϵ(X)
+
+wq = 1 − astab D,ϵ (X),
+
+we obtain 
+
+UD (β | X) − UD (αQ | X) ≤ ϵ astab D,ϵ (X) + 1 − astab D,ϵ (X)= 1 − astab D,ϵ (X) + ϵ astab D,ϵ (X)= 1 − (1 − ϵ) astab D,ϵ (X).
+
+This proves the first claim. Finally, suppose that X is agent-assignment stable. By definition, 
+
+astab D,ϵ (X) = 1 .
+
+Substituting this identity into the established bound gives 
+
+UD (β | X) − UD (αQ | X) ≤ 1 − (1 − ϵ) · 1= ϵ. 
+
+Since β was an arbitrary componentwise feasible joint re-assignment, no feasible joint reassignment can improve the declared aggregate value by more than ϵ.
+
+D.7 Proof of Proposition 4 
+
+Proof. Fix a iCORE state X satisfying the assumptions of the proposition, and write 
+
+W = W(X).
+
+Because assumption (i) requires normalized weights over W,the evaluated work set is nonempty and the weights satisfy 
+
+wq > 0 for every q ∈ W , X
+
+> q∈W
+
+wq = 1 .
+
+By the weighted decomposition of task performance in as-sumption (i), there exist nonnegative random component con-tributions Yq ≥ 0, indexed by q ∈ W , such that 
+
+Perf = X
+
+> q∈W
+
+wq Yq .
+
+For every q ∈ W , define 
+
+Jq = JD (q; X) ∈ { 0, 1}
+
+and 
+
+Sq = 1[q is ϵ-stable at X] ∈ { 0, 1}.
+
+Equivalently, by Definition 9, 
+
+Sq = 1
+
+
+
+max   
+
+> m∈F D(q,X )
+
+∆D (m ← αQ(q); q, X ) ≤ ϵ
+
+
+
+.
+
+Since the state X is fixed, the quantities Jq , Sq , αQ(q),
+
+FD (q, X ), and vD (m, q | X) are deterministic under the conditional expectation given X.We first relate the expected task contribution of each com-ponent to the declared contribution value of its current or recorded assignee. Suppose that Jq = 1 . Then every ac-tive decision-relevant assertion associated with q is justi-fied under the declared validator. Since V is task-adequate, such a justified component is semantically valid for the task-performance decomposition. If αQ(q)̸ = ⊥, the calibration assumption therefore gives 
+
+E[Yq | X] ≥ vD (αQ(q), q | X).
+
+If αQ(q) = ⊥, then the convention 
+
+vD (⊥, q | X) = 0 
+
+and the nonnegativity of Yq give 
+
+E[Yq | X] ≥ 0 = vD (αQ(q), q | X).
+
+Thus, whenever Jq = 1 ,
+
+E[Yq | X] ≥ vD (αQ(q), q | X).When Jq = 0 , the nonnegativity of Yq implies 
+
+E[Yq | X] ≥ 0,
+
+while 
+
+Jq vD (αQ(q), q | X) = 0 .
+
+Consequently, for every q ∈ W , regardless of whether q is justified, 
+
+E[Yq | X] ≥ Jq vD (αQ(q), q | X).
+
+Using the weighted decomposition of Perf and linearity of conditional expectation, we obtain 
+
+E[Perf | X] = E
+
+ X
+
+> q∈W
+
+wq Yq X
+
+
+
+= X
+
+> q∈W
+
+wq E[Yq | X]
+
+≥ X
+
+> q∈W
+
+wq Jq vD (αQ(q), q | X).
+
+We next derive a uniform lower bound on the declared value of every ϵ-stable component. Fix an arbitrary q ∈ W 
+
+for which Sq = 1 . Assumption (iv) states that q has at least one feasible agent whose declared value is at least pmin .Hence, there exists an agent 
+
+m⋆q ∈ F D (q, X )
+
+such that 
+
+vD (m⋆q , q | X) ≥ pmin .
+
+Since Sq = 1 , component q is ϵ-stable, and therefore 
+
+max   
+
+> m∈F D(q,X )
+
+∆D (m ← αQ(q); q, X ) ≤ ϵ. 
+
+By the definition of the reassignment gain, 
+
+∆D (m ← αQ(q); q, X ) = vD (m, q | X)−vD (αQ(q), q | X).
+
+Substituting this definition into the stability condition yields 
+
+max   
+
+> m∈F D(q,X )
+
+{vD (m, q | X) − vD (αQ(q), q | X)} ≤ ϵ. 
+
+Because m⋆q ∈ F D (q, X ), its reassignment gain cannot ex-ceed the maximum over the feasible-agent set. Thus, 
+
+vD (m⋆q , q | X) − vD (αQ(q), q | X)
+
+≤ max   
+
+> m∈F D(q,X )
+
+{vD (m, q | X) − vD (αQ(q), q | X)}≤ ϵ. 
+
+Rearranging this inequality gives 
+
+vD (αQ(q), q | X) ≥ vD (m⋆q , q | X) − ϵ. 
+
+Using the lower bound 
+
+vD (m⋆q , q | X) ≥ pmin ,
+
+we conclude that 
+
+vD (αQ(q), q | X) ≥ pmin − ϵ. 
+
+In particular, an ϵ-stable component cannot be unassigned under the assumptions of the proposition. Indeed, if αQ(q) = 
+
+⊥, then 
+
+vD (αQ(q), q | X) = vD (⊥, q | X) = 0 ,
+
+and hence 
+
+∆D (m⋆q ← ⊥ ; q, X ) = vD (m⋆q , q | X) − vD (⊥, q | X)= vD (m⋆q , q | X)
+
+≥ pmin 
+
+> ϵ, 
+
+which would contradict the ϵ-stability of q.We have therefore shown that 
+
+Sq = 1 =⇒ vD (αQ(q), q | X) ≥ pmin − ϵ. 
+
+If Sq = 0 , then 
+
+(pmin − ϵ)Sq = 0 ,
+
+and the range condition 
+
+vD (αQ(q), q | X) ∈ [0 , 1] 
+
+again gives 
+
+vD (αQ(q), q | X) ≥ (pmin − ϵ)Sq .
+
+Consequently, the inequality 
+
+vD (αQ(q), q | X) ≥ (pmin − ϵ)Sq
+
+holds for every q ∈ W . Multiplying both sides by the non-negative indicator Jq gives 
+
+Jq vD (αQ(q), q | X) ≥ (pmin − ϵ)Jq Sq .
+
+Substituting this componentwise bound into the preceding lower bound on conditional task performance yields 
+
+E[Perf | X] ≥ X
+
+> q∈W
+
+wq Jq vD (αQ(q), q | X)
+
+≥ (pmin − ϵ) X
+
+> q∈W
+
+wq Jq Sq .
+
+It remains to lower-bound the total normalized weight of the components that are simultaneously justified and ϵ-stable. Since Jq , S q ∈ { 0, 1}, one has 
+
+(1 − Jq )(1 − Sq ) ≥ 0.
+
+Expanding the left-hand side gives 
+
+1 − Jq − Sq + Jq Sq ≥ 0,
+
+and therefore 
+
+Jq Sq ≥ Jq + Sq − 1.
+
+Multiplying by wq > 0 and summing over q ∈ W gives 
+
+X
+
+> q∈W
+
+wq Jq Sq ≥ X
+
+> q∈W
+
+wq (Jq + Sq − 1) = X
+
+> q∈W
+
+wq Jq + X
+
+> q∈W
+
+wq Sq − X
+
+> q∈W
+
+wq .Since the weights are normalized, 
+
+X
+
+> q∈W
+
+wq = 1 .
+
+Moreover, by the definition of work soundness and the fact that W̸ = ∅,
+
+snd D (X) = 
+
+P 
+
+> q∈W
+
+wq JD (q; X)
+
+P 
+
+> q∈W
+
+wq
+
+= X
+
+> q∈W
+
+wq Jq .
+
+Similarly, by the definition of agent-assignment stability, 
+
+astab D,ϵ (X) = 
+
+P 
+
+> q∈W
+
+wq 1[q is ϵ-stable at X]
+
+P 
+
+> q∈W
+
+wq
+
+= X
+
+> q∈W
+
+wq Sq .
+
+Hence, X
+
+> q∈W
+
+wq Jq Sq ≥ snd D (X) + astab D,ϵ (X) − 1.
+
+On the other hand, every term wq Jq Sq is nonnegative, so 
+
+X
+
+> q∈W
+
+wq Jq Sq ≥ 0.
+
+Combining these two inequalities gives 
+
+X
+
+> q∈W
+
+wq Jq Sq ≥ max {0, snd D (X) + astab D,ϵ (X) − 1} .
+
+Equivalently, 
+
+X
+
+> q∈W
+
+wq Jq Sq ≥ [snd D (X) + astab D,ϵ (X) − 1] + .
+
+Therefore, 
+
+E[Perf | X] ≥ (pmin − ϵ) X
+
+> q∈W
+
+wq Jq Sq
+
+≥ (pmin − ϵ) [snd D (X) + astab D,ϵ (X) − 1] + .
+
+By Definition 10, 
+
+cq D,ϵ (X) = 12 (snd D (X) + astab D,ϵ (X)) ,
+
+and therefore 
+
+snd D (X) + astab D,ϵ (X) = 2 cq D,ϵ (X).
+
+Substituting this identity into the preceding bound gives 
+
+E[Perf | X] ≥ (pmin − ϵ) 2 cq D,ϵ (X) − 1
+
+> +
+
+= ( pmin − ϵ)
+
+
+
+2
+
+
+
+cq D,ϵ (X) − 12
+
+ 
+
+> +
+
+.
+
+Since 2 > 0, the positive-part operator satisfies 
+
+[2 z]+ = 2[ z]+
+
+for every z ∈ R. Applying this identity with 
+
+z = cq D,ϵ (X) − 12
+
+finally yields 
+
+E[Perf | X] ≥ 2( pmin − ϵ)
+
+
+
+cq D,ϵ (X) − 12
+
+
+
+> +
+
+.
+
+This is the claimed performance implication. 
+
+D.8 Proof of Proposition 5 
+
+Proof. Let 
+
+X(0) , X (1) , X (2) , . . . 
+
+denote the actual sequence of states retained by Algorithm 1, with 
+
+X(0) = X0.
+
+Tentative states such as eX and intervention proposals such as Xf that fail their corresponding audits are not members of this sequence, because they are never committed. The failure and feedback records retained by the algorithm are them-selves represented as legal iCORE updates and do not install the rejected candidate assertions. Hence every transition 
+
+X(k) −→ X(k+1) 
+
+in the retained sequence is a legal iCORE update under the hypotheses of the proposition. We first prove that every retained state is work-sound. We proceed by induction on k. The initial state is work-sound by assumption, and therefore 
+
+X(0) = X0
+
+is work-sound. Now fix an arbitrary k ≥ 0 and suppose that 
+
+X(k)
+
+is work-sound. Since 
+
+X(k) −→ X(k+1) 
+
+is a legal iCORE update, Lemma 2 applies with 
+
+X = X(k) and X′ = X(k+1) .
+
+It follows that 
+
+X(k+1) 
+
+is work-sound. The induction therefore gives 
+
+X(k) is work-sound for every retained index k. 
+
+In particular, the conclusion holds after both an ordinary commitment and an intervention commitment. For a com-mitted intervention, the same conclusion is also certified directly by AuditRecovery D , because the recovery audit ac-cepts an intervention candidate only when the candidate is legal and work-sound. Thus every committed state produced by Algorithm 1 is work-sound. It remains to establish that quality is nondecreasing on the matched audit set whenever an intervention is commit-ted. Consider an arbitrary committed intervention. Let X−
+
+denote the state immediately before the diagnosis, and write 
+
+F = Diagnose D (X−), WF = MatchedSet D (X−, F ).
+
+Let Xf be the labeled intervention state proposed in response to F . Since this intervention is committed, its recovery audit returns no violation: 
+
+AuditRecovery D
+
+ X−, X f , F, WF
+
+ = ∅.
+
+Let 
+
+X+ = Commit D (Xf )denote the state retained after the successful intervention. Commitment changes the audited proposal from tentative to retained but does not alter the semantic contents of G, Q, or 
+
+Π on which the matched-set indicators depend. Hence, for every q ∈ W F ,
+
+JFD (q; X+) = JFD (q; Xf )
+
+and 
+
+AFD,ϵ (q; X+) = AFD,ϵ (q; Xf ).
+
+Consequently, 
+
+cq D,ϵ (X+; WF ) = cq D,ϵ (Xf ; WF ).
+
+By construction, the set WF and all of its weights are frozen before the diagnosis is supplied to the responsi-ble agent. Therefore the intervention cannot alter the co-hort or the weights on which the pre-intervention and post-intervention scores are evaluated. Moreover, every q ∈ W F is transported from X− to X+ through the identity, refinement, replacement, supersession, or settlement relations declared by D. For brevity, define 
+
+J− 
+
+> q
+
+= JFD (q; X−), J+ 
+
+> q
+
+= JFD (q; X+),A− 
+
+> q
+
+= AFD,ϵ (q; X−), A+ 
+
+> q
+
+= AFD,ϵ (q; X+).
+
+Suppose first that 
+
+WF = ∅.
+
+By the empty-set convention in the matched-set definitions, 
+
+snd D (X−; WF ) = 1 
+
+and 
+
+astab D,ϵ (X−; WF ) = 1 .
+
+The same convention gives 
+
+snd D (X+; WF ) = 1 
+
+and 
+
+astab D,ϵ (X+; WF ) = 1 .
+
+It follows that 
+
+cq D,ϵ (X−; WF ) = 12
+
+ snd D (X−; WF ) + astab D,ϵ (X−; WF )
+
+= 12 (1 + 1) = 1 
+
+and, similarly, 
+
+cq D,ϵ (X+; WF ) = 12
+
+ snd D (X+; WF ) + astab D,ϵ (X+; WF )
+
+= 12 (1 + 1) = 1 .
+
+Therefore 
+
+cq D,ϵ (X+; WF ) = cq D,ϵ (X−; WF ),
+
+so the required nondecrease holds with equality when the matched audit set is empty. Now suppose that 
+
+WF̸ = ∅.
+
+Define the frozen total matched weight by 
+
+WF = X
+
+> q∈W F
+
+wq .
+
+Every predeclared importance weight satisfies 
+
+wq > 0.
+
+Since WF is nonempty, it follows that 
+
+WF > 0.
+
+Using the matched-set definitions, the pre-intervention soundness score is 
+
+snd D (X−; WF ) = 
+
+P 
+
+> q∈W F
+
+wq J−
+
+> q
+
+WF
+
+,
+
+and the corresponding assignment-stability score is 
+
+astab D,ϵ (X−; WF ) = 
+
+P 
+
+> q∈W F
+
+wq A−
+
+> q
+
+WF
+
+.
+
+Therefore 
+
+cq D,ϵ (X−; WF ) = 12
+
+ snd D (X−; WF ) + astab D,ϵ (X−; WF )
+
+= 12
+
+P 
+
+> q∈W F
+
+wq J−
+
+> q
+
+WF
+
++
+
+P 
+
+> q∈W F
+
+wq A−
+
+> q
+
+WF
+
+!
+
+= 12WF
+
+ X
+
+> q∈W F
+
+wq J− 
+
+> q
+
++ X
+
+> q∈W F
+
+wq A−
+
+> q
+
+
+
+= 12WF
+
+X
+
+> q∈W F
+
+wq
+
+ J− 
+
+> q
+
++ A−
+
+> q
+
+.
+
+The same expansion for the committed successor gives 
+
+cq D,ϵ (X+; WF ) = 12
+
+ snd D (X+; WF ) + astab D,ϵ (X+; WF )
+
+= 12
+
+P 
+
+> q∈W F
+
+wq J+
+
+> q
+
+WF
+
++
+
+P 
+
+> q∈W F
+
+wq A+
+
+> q
+
+WF
+
+!
+
+= 12WF
+
+X
+
+> q∈W F
+
+wq
+
+ J+ 
+
+> q
+
++ A+
+
+> q
+
+.
+
+Because 
+
+AuditRecovery D
+
+ X−, X f , F, WF
+
+ = ∅
+
+and because the recovery audit enforces the matched-set con-ditions of Algorithm 1, the accepted intervention satisfies 
+
+cq D,ϵ (Xf ; WF ) ≥ cq D,ϵ (X−; WF ).
+
+Since the matched semantic indicators of Xf and X+ are identical, this inequality is equivalent to 
+
+cq D,ϵ (X+; WF ) ≥ cq D,ϵ (X−; WF ).Substituting the two expanded expressions yields 
+
+12WF
+
+X
+
+> q∈W F
+
+wq
+
+ J+ 
+
+> q
+
++ A+
+
+> q
+
+ ≥ 12WF
+
+X
+
+> q∈W F
+
+wq
+
+ J− 
+
+> q
+
++ A−
+
+> q
+
+.
+
+Since 
+
+2WF > 0,
+
+multiplication by 2WF preserves the direction of the inequal-ity and gives 
+
+X
+
+> q∈W F
+
+wq
+
+ J+ 
+
+> q
+
++ A+
+
+> q
+
+ ≥ X
+
+> q∈W F
+
+wq
+
+ J− 
+
+> q
+
++ A−
+
+> q
+
+.
+
+Subtracting the right-hand side from the left-hand side gives 
+
+X
+
+> q∈W F
+
+wq
+
+  J+ 
+
+> q
+
+− J−
+
+> q
+
+ +  A+ 
+
+> q
+
+− A−
+
+> q
+
+ ≥ 0.
+
+Dividing by the positive quantity 2WF now yields 
+
+cq D,ϵ (X+; WF ) − cq D,ϵ (X−; WF )= 12WF
+
+X
+
+> q∈W F
+
+wq
+
+  J+ 
+
+> q
+
+− J−
+
+> q
+
+ +  A+ 
+
+> q
+
+− A−
+
+> q
+
+ 
+
+≥ 0.
+
+Hence 
+
+cq D,ϵ (X+; WF ) ≥ cq D,ϵ (X−; WF ).
+
+The transport and no-silent-removal conditions ensure that this inequality represents an actual quality comparison rather than a change of evaluation cohort. In particular, if some 
+
+q ∈ W F is deleted without a valid identity, refinement, replacement, supersession, or settlement record, then the matched-set definition assigns 
+
+JFD (q; X+) = 0 
+
+instead of removing q and its weight from the score. A com-ponent that is discharged, rejected, replaced, or superseded receives 
+
+JFD (q; X+) = 1 
+
+only when the corresponding transport or settlement opera-tion is supported by all evidence required by D. Likewise, a settled component receives 
+
+AFD,ϵ (q; X+) = 1 
+
+only when it was completed under an ϵ-stable assignment according to capability evidence available no later than set-tlement. Thus the intervention cannot obtain the preceding inequality merely by deleting, renaming, hiding, or retro-spectively relabeling difficult work. The committed intervention was arbitrary. Therefore every committed intervention satisfies 
+
+cq D,ϵ (X+; WF ) ≥ cq D,ϵ (X−; WF ).
+
+Hence iCORE-Audit is quality-nondecreasing on the matched audit set at every committed intervention. Together with the work-soundness induction, this proves both conclu-sions of the proposition. 
+
+D.9 Proof of Theorem 3 
+
+Lemma 5 (Termination and local joinability imply global joinability) . Let (A, ⇒) be an abstract rewrite system such that ⇒ terminates. Then every element of A has a ⇒-normal descendant. If, in addition, every one-step fork is joinable, in the sense that whenever 
+
+A ⇒ B, A ⇒ C, 
+
+there exists D ∈ A satisfying 
+
+B ⇒∗ D, C ⇒∗ D. 
+
+Then every pair of descendants of a common source is join-able: for all A, B, C ∈ A such that 
+
+A ⇒∗ B, A ⇒∗ C, 
+
+there exists H ∈ A such that 
+
+B ⇒∗ H, C ⇒∗ H. 
+
+Under this additional local-joinability assumption, any two normal descendants of the same element are equal. Proof. We first verify existence of normal descendants. Fix 
+
+A ∈ A . If no normal element were reachable from A, then 
+
+A itself would not be normal, so there would exist A1 with 
+
+A ⇒ A1.
+
+The element A1 would likewise have no normal descendant, because any normal descendant of A1 would also be a normal descendant of A. Hence there would exist A2 with 
+
+A1 ⇒ A2.
+
+Repeating the same argument would produce an infinite se-quence 
+
+A ⇒ A1 ⇒ A2 ⇒ A3 ⇒ · · · ,
+
+contradicting termination. Therefore every A ∈ A has at least one normal descendant. We now prove global joinability by well-founded induc-tion. Define a strict descendant relation ≺ on A by 
+
+B ≺ A ⇐⇒ A ⇒+ B, 
+
+where ⇒+ is the transitive closure of ⇒. Since ⇒ terminates, there is no infinite chain 
+
+A0 ⇒+ A1 ⇒+ A2 ⇒+ · · · ,
+
+and consequently ≺ is well founded. For A ∈ A , let P(A)
+
+denote the assertion that every two descendants of A are joinable. Assume inductively that P(A′) holds for every A′ ≺
+
+A, and consider arbitrary reductions 
+
+A ⇒∗ B, A ⇒∗ C. 
+
+If the first reduction has length zero, then B = A, and choos-ing H = C gives 
+
+B = A ⇒∗ C = H, C ⇒∗ C = H. The same argument applies if the second reduction has length zero. We may therefore assume that both reductions are nonempty and write their first steps as 
+
+A ⇒ A1 ⇒∗ B, A ⇒ A2 ⇒∗ C. 
+
+By the assumed joinability of every one-step fork, there exists 
+
+D such that 
+
+A1 ⇒∗ D, A2 ⇒∗ D. 
+
+Because A ⇒ A1, we have A1 ≺ A. Both B and D are descendants of A1, so the induction hypothesis P(A1) yields an element E satisfying 
+
+B ⇒∗ E, D ⇒∗ E. 
+
+Similarly, A2 ≺ A, and both C and D are descendants of A2.The induction hypothesis P(A2) therefore yields an element 
+
+F satisfying 
+
+C ⇒∗ F, D ⇒∗ F. 
+
+The element D is itself a strict descendant of A, because 
+
+A ⇒ A1 ⇒∗ D. 
+
+Thus D ≺ A. Since E and F are both descendants of D, the induction hypothesis P(D) gives an element H for which 
+
+E ⇒∗ H, F ⇒∗ H. 
+
+Combining the reductions gives 
+
+B ⇒∗ E ⇒∗ H and C ⇒∗ F ⇒∗ H, 
+
+so B and C are joinable. This proves P(A). Well-founded induction now implies P(A) for every A ∈ A .Finally, suppose that N1 and N2 are normal descendants of the same element A. Global joinability provides H such that 
+
+N1 ⇒∗ H, N2 ⇒∗ H. 
+
+Because N1 is normal, the first reduction must have length zero, and hence H = N1. Because N2 is normal, the second reduction must also have length zero, and hence H = N2.Therefore 
+
+N1 = N2,
+
+which proves uniqueness of the normal descendant. 
+
+Proof of Theorem 3. Let 
+
+X reach  
+
+> p
+
+= [X]≡X : X is reachable 
+
+be the set of reachable equivalence classes, and abbreviate the productive quotient relation by 
+
+A ⇒ B ⇐⇒ A →p B, A, B ∈ X reach  
+
+> p
+
+.
+
+The theorem assumes that this relation terminates. We first record how the quotient relation is connected to actual legal updates. Suppose 
+
+[S]≡X ⇒ [T ]≡X .
+
+By the definition of the productive quotient, there exist rep-resentatives S′ and T ′ such that 
+
+S′ ≡X S, T ′ ≡X T, S′ → T ′, S′̸ ≡X T ′.
+
+Let ρ be the legal update occurrence realizing S′ → T ′. Since declared state equivalence is a congruence for legal updates, 
+
+ρ can be transported from S′ to any equivalent representative 
+
+bS ≡X S′. The transported occurrence is enabled and legal at bS, and it produces a successor bT satisfying 
+
+bS → bT , bT ≡X T ′.
+
+This transported update remains productive. Indeed, if bS ≡X
+
+bT , then 
+
+S′ ≡X bS ≡X bT ≡X T ′,
+
+which would imply S′ ≡X T ′ by transitivity and contradict the productivity of S′ → T ′. Consequently, every quotient edge can be realized by a productive legal update from any representative of its source class. Applying this observation successively gives the following path-lifting property. For every finite quotient path 
+
+A0 ⇒ A1 ⇒ · · · ⇒ Ak
+
+and every state X′ 
+
+> 0
+
+satisfying 
+
+[X′
+
+> 0
+
+]≡X = A0,
+
+there exists a sequence of productive legal updates 
+
+X′ 
+
+> 0
+
+→ X′ 
+
+> 1
+
+→ · · · → X′
+
+> k
+
+such that 
+
+[X′ 
+
+> i
+
+]≡X = Ai for every i ∈ { 0, 1, . . . , k }.
+
+This follows by induction on i: once X′ 
+
+> i
+
+has been constructed in the class Ai, the next quotient edge can be transported to 
+
+X′ 
+
+> i
+
+by the preceding congruence argument, producing X′
+
+> i+1
+
+in the class Ai+1 .The quotient normal forms are exactly the equivalence classes of productive normal forms. To see one direction, suppose that N is a productive normal form but that [N ]≡X
+
+has an outgoing quotient edge. A witness for that edge would be a productive update from some state N ′ ≡X N , and con-gruence would transport that update to a productive update enabled at N , contradicting normality. Conversely, if [N ]≡X
+
+is quotient-normal but a productive legal update N → N ′ is enabled, then 
+
+[N ]≡X ⇒ [N ′]≡X
+
+would be an outgoing quotient edge, again a contradiction. Hence 
+
+N is a productive normal form ⇐⇒ [N ]≡X is ⇒-normal .
+
+Assume first that the system is globally execution-order stable. Let 
+
+X ρ
+
+−→ Y, X η
+
+−→ Z
+
+be an arbitrary reachable productive local critical pair. Since the quotient relation terminates, the normal-form-existence conclusion of Lemma 5 guarantees that both [Y ]≡X and 
+
+[Z]≡X have quotient-normal descendants. Thus there exist quotient-normal classes AY and AZ such that 
+
+[Y ]≡X ⇒∗ AY , [Z]≡X ⇒∗ AZ .By the path-lifting property, these quotient reductions can be realized by productive legal continuations 
+
+Y →∗ NY , Z →∗ NZ ,
+
+with 
+
+[NY ]≡X = AY , [NZ ]≡X = AZ .
+
+Because AY and AZ are quotient-normal, the established normal-form correspondence implies that NY and NZ are productive normal forms. Concatenating the two first updates with these continuations gives two productive continuations from the same reachable state X:
+
+X ρ
+
+−→ Y →∗ NY , X η
+
+−→ Z →∗ NZ .
+
+Global execution-order stability therefore gives 
+
+NY ≡X NZ .
+
+Equivalently, [Y ]≡X ⇒∗ [NY ]≡X , [Z]≡X ⇒∗
+
+[NZ ]≡X , [NY ]≡X = [ NZ ]≡X . This is exactly 
+
+Y ↓p, ≡X Z. 
+
+Since the reachable productive local critical pair was arbi-trary, every reachable productive local critical pair is produc-tively joinable modulo ≡X .For the converse, assume that every reachable productive local critical pair is productively joinable modulo ≡X . We show that every one-step fork of the reachable productive quotient is joinable. Consider arbitrary quotient edges 
+
+A ⇒ B, A ⇒ C, 
+
+where A ∈ X reach  
+
+> p
+
+. Choose a reachable state X with 
+
+A = [ X]≡X .
+
+By the definition of the two quotient edges, each edge has a productive legal-update witness whose source is equivalent to X. Transporting both witnesses to the common represen-tative X by congruence yields productive legal updates 
+
+X ρ
+
+−→ Y, X η
+
+−→ Z
+
+such that 
+
+B = [ Y ]≡X , C = [ Z]≡X .
+
+If B = C, then the quotient fork is trivially joinable by taking its common descendant to be B = C. Suppose therefore that 
+
+B̸ = C. By the fork-classification assumption of the theorem, the reachable one-step productive fork at X is either residual-sound independent or a productive local critical pair. If the two updates are residual-sound independent, then both residual executions are defined. Hence there exist states 
+
+U and V such that 
+
+X ρ
+
+−→ Y ηρ
+
+−→ U, X η
+
+−→ Z ρη
+
+−→ V, U ≡X V. 
+
+A residual update may itself be productive or stuttering. If 
+
+Y → U is productive, then 
+
+[Y ]≡X ⇒ [U ]≡X ;
+
+if it is stuttering, then Y ≡X U , so 
+
+[Y ]≡X = [ U ]≡X ,
+
+so a zero-step quotient reduction connects the same two classes. In either case, 
+
+[Y ]≡X ⇒∗ [U ]≡X .
+
+The identical argument gives 
+
+[Z]≡X ⇒∗ [V ]≡X .
+
+Since U ≡X V , we have 
+
+[U ]≡X = [ V ]≡X .
+
+Thus B = [ Y ]≡X and C = [ Z]≡X are joinable. If instead the fork is a productive local critical pair, the present assumption gives 
+
+Y ↓p, ≡X Z. 
+
+By definition, there exist productive descendants Y ′ and Z′
+
+satisfying 
+
+[Y ]≡X ⇒∗ [Y ′]≡X , [Z]≡X ⇒∗ [Z′]≡X , Y ′ ≡X Z′.
+
+Therefore 
+
+[Y ′]≡X = [ Z′]≡X ,
+
+so the quotient branches are again joinable. We have proved that every one-step fork of (X reach  
+
+> p
+
+, ⇒) is joinable. The quotient relation terminates by hypothesis. Lemma 5 therefore applies and shows that any two quotient descen-dants of a common reachable class are joinable. Let X be any reachable state, and consider arbitrary productive con-tinuations 
+
+X →∗ N1, X →∗ N2
+
+to productive normal forms. Passing to equivalence classes gives 
+
+[X]≡X ⇒∗ [N1]≡X , [X]≡X ⇒∗ [N2]≡X .
+
+The normal-form correspondence shows that both [N1]≡X
+
+and [N2]≡X are quotient-normal. The uniqueness conclusion of Lemma 5 therefore gives 
+
+[N1]≡X = [ N2]≡X .
+
+Equality of the quotient classes is equivalent to 
+
+N1 ≡X N2.
+
+Since X and the two productive continuations were arbitrary, the system is globally execution-order stable. This proves the converse implication and completes the equivalence.

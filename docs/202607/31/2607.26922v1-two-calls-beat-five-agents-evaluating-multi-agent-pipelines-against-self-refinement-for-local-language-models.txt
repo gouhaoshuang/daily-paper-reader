@@ -1,0 +1,307 @@
+Title: Two Calls Beat Five Agents: Evaluating Multi-Agent Pipelines Against Self-Refinement for Local Language Models
+
+URL Source: https://arxiv.org/pdf/2607.26922v1
+
+Published Time: Thu, 30 Jul 2026 00:57:40 GMT
+
+Number of Pages: 9
+
+Markdown Content:
+# Two Calls Beat Five Agents: Evaluating Multi-Agent Pipelines Against Self-Refinement for Local Language Models 
+
+Ashish Prajapati 
+
+Independent Researcher Mumbai, India 
+
+ashish.prajapati.research@gmail.com 
+
+Om Mohite 
+
+Independent Researcher Mumbai, India 
+
+om.mohite.research@gmail.com 
+
+## Abstract 
+
+Multi-agent LLM pipeline systems break down the task among multiple roles for better reasoning, but are benchmarked mainly with large-scale commercial models. In this study, we investigate Parishad, a structured multi-agent system involving five roles, by deploying it on Qwen2.5-7B-Instruct, a local model, on two datasets: GSM8K (500 questions) and HumanEval (164 questions), compared with prompting directly and two-call self-refinement. The multi-agent system drops GSM8K accuracy from 75.0% to 45.0% with JSON data format due to the error accumulation problem. With plaintext format, the accuracy is restored to 82.0%. A two-call self-refinement strategy (V1) can achieve 86.2% accuracy on GSM8K, with 7.4 × lower token usage. However, the same V1 implementation on HumanEval—where direct accuracy is already 96.3%—actively destroys perfor-mance (66.5%). A task-aware gated redesign (V2) applied to HumanEval preserves accuracy at 95.1%. Our results demonstrate that communication format and imple-mentation details determine outcomes more than architectural complexity, and that simpler approaches match or outperform multi-agent pipelines for local 7B model deployment. All code and data are released. 
+
+## 1 Introduction 
+
+Multi-agent LLM systems have emerged as a dominant paradigm for complex reasoning tasks. Systems such as ChatDev [ 8 ], MetaGPT [ 4], AutoGen [ 12 ], and CrewAI [ 10 ] decompose problems across multiple specialized agents, each contributing a distinct capability—planning, execution, verification, synthesis. These systems consistently show improvements over single-model baselines, often achieving state-of-the-art results on coding, reasoning, and software engineering benchmarks. However, nearly all published evaluations of multi-agent systems use large commercial models: GPT-4, Claude, or Gemini. There is growing practical interest in running LLM systems locally on consumer hardware, for reasons of cost, privacy, and offline deployment. It is not established whether multi-agent architectures that help GPT-4 also help smaller local models. The architectural assumptions that hold for 100B+ parameter models—reliable instruction following, consistent structured output generation, stable context maintenance across long prompts—may not hold for 7B parameter models running on consumer hardware. We evaluate this question directly. We take Parishad, a structured five-role pipeline (Refiner → Planner 
+
+→ Worker → Checker → Judge), and run it against direct prompting and two-call self-refinement on a local Qwen2.5-7B-Instruct model. We test on GSM8K [ 3] for mathematical reasoning and HumanEval [2] for code generation. Our findings are surprising in their clarity. Our contributions are: arXiv:2607.26922v1 [cs.LG] 29 Jul 2026 1. The first empirical evaluation of a structured multi-role pipeline against self-refinement on a local 7B model across both math and code benchmarks. 2. Identification of JSON inter-role communication as the primary failure mechanism in local model pipelines, with a 37 percentage-point recovery from switching to plain text. 3. Evidence that two-call self-refinement outperforms the fixed pipeline on math ( +4.2%) using 7.4 × fewer tokens. 4. A systematic ablation showing that self-refinement implementation details—confidence gating and prompt design—determine whether refinement helps ( +11.2%) or actively destroys performance ( −29.8%) on code tasks. 5. A practical design recommendation: for local 7B model deployment, communication format and task-aware implementation matter more than architectural complexity. 
+
+## 2 Related Work 
+
+2.1 Multi-Agent LLM Systems 
+
+ChatDev [ 8] and MetaGPT [ 4] pioneered the use of role-based multi-agent systems for software development, assigning agents to roles such as programmer, reviewer, and tester. The AutoGen sys-tem [ 12 ] proposes a generic architecture for multi-agent communication. The AgentCoder system [ 5]utilizes multi-agent coordination for code synthesis. Both systems show consistent improvement over single-agent systems. In particular, MetaGPT demonstrates considerable performance improvement on HumanEval benchmarks. Nevertheless, all these systems are benchmarked using GPT-3.5 or GPT-4 class models. 
+
+2.2 Self-Refinement 
+
+Self-Refine is a system proposed by Madaan et al. [ 7], wherein a model repeatedly improves its generated outputs based on feedback from a critic. It achieves stable gains on various tasks such as mathematics, programming, and dialogue. Most importantly, it was extensively tested using GPT-3.5 and GPT-4. On the other hand, Shinn et al. [ 9] introduce Reflexion, which uses verbal reinforcement to enhance the decisions made by an agent over several trials. Both methods depend on the capability of the model to evaluate itself—which we validate in our experiment. 
+
+2.3 Small Model Reasoning 
+
+Recent work wanted to see what smaller models are able to do. They explored the limits of reasoning in these models. Wei et al. [ 11 ] showed that chain-of-thought prompting only reliably emerges in models above approximately 100B parameters, though subsequent work found earlier emergence with instruction tuning. In addition to Kojima et al. [ 6], who demonstrated that “Let’s think step by step” can be transferred to small models, our paper contributes to this body of work by studying whether multi-step architectural patterns, but not prompting patterns, transfer to 7B models. 
+
+2.4 Gap Addressed 
+
+None of the existing literature has made a direct comparison between multi-role pipelines and self-refinement on sub-10B models. Our evaluation closes this gap through rigorous experimental comparison using the same model, hardware, and benchmark tasks. 
+
+## 3 System and Methods 
+
+3.1 The Parishad Pipeline 
+
+Parishad is an organized five-role architecture for orchestrating LLMs. It follows a pipeline where the output of one task serves as context for the subsequent task within the pipeline. The five roles are: 
+
+Darbari (Refiner): Receives the raw user query and produces a structured task specification identify-ing the problem type, constraints, difficulty, and output format. 2Majumdar (Planner): Receives the task specification and produces a step-by-step execution plan. 
+
+Sainik (Worker): Receives the query, task specification, and plan, and generates the primary solution—code, computation, or text. 
+
+Prerak (Checker): Receives all previous outputs and validates the Worker’s solution for correctness, completeness, and consistency. 
+
+Raja (Judge): Receives all outputs and synthesizes a final authoritative answer, resolving any conflicts between the Worker and Checker. 
+
+3.2 Communication Variants Pipeline V1 (JSON): Each role is instructed to output a structured JSON object with specific fields. The engine parses JSON from each role’s output and passes the parsed structure to the next role. When JSON parsing fails, the raw output text is passed downstream. 
+
+Pipeline V2 (Plain Text): Role system prompts are rewritten to elicit plain text output instead of JSON. Each role describes its analysis, plan, or solution in natural language. The engine passes raw text strings between roles with no parsing step. Role prompts include explicit formatting cues (numbered steps, labeled sections) but require no JSON structure. 
+
+3.3 Self-Refinement 
+
+We implement two variants of two-call self-refinement. Both variants use the same Call 1 prompt. They differ only in how Call 2 is prompted and whether it is gated. 
+
+Self-Refine V1 (Ungated, Generic): Call 1 generates an initial solution using a task-appropriate system prompt. Call 2 runs unconditionally on all problems using a generic verification prompt that asks the model to check for errors and always provide the final answer in the appropriate format.V1 is tested on both GSM8K (500 questions) and HumanEval (164 questions). V1 succeeds on GSM8K but not HumanEval, which leads to the following redesign. 
+
+Self-Refine V2 (Gated, Task-Aware): Developed precisely to resolve V1’s shortcomings with HumanEval. Call 1 is identical to V1. Call 2 is gated by a task-specific confidence check. For code tasks, the gate checks whether the response contains a complete closed code block; if so, Call 2 is skipped. For math tasks, the gate checks for uncertainty markers. The Call 2 prompt for code instructs the model to respond CORRECT if the solution is correct, and only rewrite if a specific concrete bug is identified. We evaluate V2 on HumanEval only (164 problems), since V1 already produced strong results on GSM8K. 
+
+3.4 Direct Baseline 
+
+A single model call with a task-appropriate system prompt. For math: “Solve step by step. End with: The answer is [number].” For code: “Write a complete correct Python function. Wrap in “‘python“‘ 
+
+blocks.” 
+
+3.5 Experimental Setup 
+
+All experiments use Qwen2.5-7B-Instruct [ 1] in GGUF Q4_K_M quantization via llama.cpp , with a 4096-token context window and all GPU layers offloaded. Hardware: Windows, Intel Core i7 (Gen 12), 31GB RAM. Random seed: 42. GSM8K is evaluated on 500 test problems (Direct, Pipeline V2, Self-Refine V1); 200 problems for Pipeline V1. HumanEval uses all 164 problems for all methods. GSM8K accuracy is measured via regex-based numeric extraction; HumanEval uses pass@1 against provided unit tests. 
+
+## 4 Results 
+
+4.1 Main Results 
+
+Table 1 shows the main comparison across methods and benchmarks. There are three clear trends. 3Table 1: Main results across all methods and benchmarks. †: 200-problem sample. ‡: 50-problem 
+
+Method GSM8K HumanEval Avg. Tokens Avg. Latency 
+
+Direct 75.0% 96.3% 295 / 466 4.7s / 7.1s Pipeline V1 (JSON) 45.0% † 56.0% ‡ 8,688 / 9,726 57.5s / 920s Pipeline V2 (Plain Text) 82.0% 81.7% 3,098 / 3,881 30.4s / 35.4s Self-Refine V1 (ungated) 86.2% 66.5% 416 / 1,260 6.5s / 15.5s Self-Refine V2 (gated, HE only) N/A 95.1% — / 453 — / 6.3s Table 2: Self-refinement call-by-call analysis. (Call 2, SR-V2 was evaluated on HumanEval only.) 
+
+Variant Benchmark Call 1 Final Fixed Hurt Skipped Tok C1 Tok C2 
+
+SR-V1 (ungated) GSM8K 85.4% 86.2% 5 1 — 376 39 SR-V1 (ungated) HumanEval 95.1% 66.5% 4 51 0 452 807 SR-V2 (gated) HumanEval 95.1% 95.1% 0 0 163 453 ≈0
+
+Pipeline V1 fails catastrophically compared to prompt-based reasoning. Pipeline V1 under-performs by 30 percentage points on GSM8K and 40 percentage points on HumanEval relative to prompting directly on the problem. It appears that the entire pipeline architecture actually hinders reasoning abilities of the model. 
+
+Plaintext communication almost fully compensates for the loss. Changing JSON to plaintext (Pipeline V1 → V2) results in 37-point accuracy increase on GSM8K (45.0% → 82.0%) and large accuracy boost on HumanEval (56.0% → 81.7%). No changes have been made to the architecture, roles, model. Only the communication format was modified. This is the key insight of our paper: 
+
+communication format, rather than architecture, is the key factor in local model pipeline performance .In the GSM8K dataset, Self-Refine V1 is the most accurate approach (86.2%) but uses 7.4 × fewer tokens compared to Pipeline V2. For math problems, two roles outperform five roles by two calls. But for HumanEval, the same V1 drops its performance down to 66.5%, which is 29.8 percentage points behind Direct by task-aware refactoring, 
+
+4.2 Token Efficiency 
+
+Self-Refine V1 consumes 1.4 × the number of tokens as Direct on GSM8K but performs the best in terms of accuracy on GSM8K. For HumanEval, Self-Refine V2 consumes only slightly fewer tokens compared to Direct (453 vs. 466 tokens) because the confidence gate does not execute the second call (Call 2) on 163 of 164 examples. Self-Refine V1 consumes 2.7 × the number of tokens consumed by Direct but scores 29.8 points lower than Direct–the inverse of what would be expected. The Pipeline V1 consumes close to 30 × more tokens than Direct but attains the lowest accuracy for both tasks.Figure 1 visualizes the accuracy vs. token-cost tradeoff across all methods. 
+
+4.3 Self-Refine Detailed Analysis 
+
+Table 2 breaks down the call-by-call contribution of self-refinement across all evaluated conditions. For GSM8K, Self-Refine V1 Call 2 is useful: 5 problems get corrected for a price of 1 regression; overall improvement of 4 problems ( +0.8%). The average number of 39 tokens generated by Call 2 indicates the model is affirming correct solutions instead of writing them anew—the most effective use of the model’s capacity. For HumanEval, Self-Refine V1 Call 2 is catastrophic: 95.1% drops to 66.5% because 4 problems get fixed and 51 break—a 28.6% degradation. Self-Refine V2 resolves the issue, as Call 2 skips on 163 out of 164 problems through the confidence gate, and the only remaining problem results in CORRECT 
+
+without modifying the original code, preserving the initial accuracy of 95.1%. 4200 500 1000 3000 10k 30k 
+
+10 1.6
+
+10 1.7
+
+10 1.78 
+
+10 1.85 
+
+10 1.9
+
+10 1.95 
+
+10 2
+
+> Direct 75.0% (GSM8K)
+> SR-V1
+> 86.2% (GSM8K)
+> Pipe-V2 82.0% (GSM8K)
+> Pipe-V1 45.0% (GSM8K)
+> Direct 96.3% (HE)
+> SR-V2 95.1% (HE)
+> SR-V1 66.5% (HE)
+> Pipe-V2 81.7% (HE)
+> Pipe-V1 56.0% (HE)
+
+Optimal 
+
+Compute Cost (Generated Tokens per Problem) 
+
+> Accuracy / Pass@1 (%)
+
+Direct (GSM8K • / HumanEval ◦)
+
+Self-Refine V1 GSM8K (best) 
+
+Pipeline V2 (Plain Text) 
+
+Pipeline V1 (JSON) 
+
+Self-Refine V1 HumanEval (broken) 
+
+Self-Refine V2 HumanEval (fixed) 
+
+Figure 1: Accuracy vs. average tokens per problem (log scale). 
+
+4.4 Pipeline V1 Runtime 
+
+Practical remark: In order to complete the entire HumanEval set, we needed to run for at least 13 hours to solve only the first 50 problems of V1 on the pipeline and an average time delay of 920 seconds per problem. It will take about 42 hours to solve all 164 problems. This runtime is completely impractical for any real deployment. 
+
+## 5 Analysis 
+
+5.1 Why JSON Communication Fails 
+
+This Pipeline V1 failure follows a well-documented pattern. Each role is asked to produce a structured JSON object. A 7B model producing a response according to a complicated system prompt and valid JSON at the same time will produce malformed output—missing brackets, broken escaping, truncated content, and additional commentary not part of the JSON object. If malformed JSON is encountered by the engine, it defaults to passing plain text to the next role downstream. The next role then gets a prompt which includes JSON fragments intermixed with parts of reasoning in natural language and without context for the initial question anymore. By the third or fourth role, the chain has strayed far from its starting point. Figure 2 highlights this process. The fix achieved by Pipeline V2 supports this explanation. Roles generating numbered steps and natural language instead of JSON lead to successful responses. The same 7B model generating malformed JSON 30–40% of the time produces valid natural language responses almost all the time. 
+
+Implications for practitioners: Avoid using structured JSON output requirements for sub-10B models. Stick to plain text with minimal formatting. 5Pipeline V1 — JSON Communication 
+
+Darbari 
+
+{malformed JSON} 
+
+Majumdar 
+
+garbled context 
+
+Sainik 
+
+Wrong answer   
+
+> parse fail →raw text
+> context lost
+> 45.0% GSM8K / 56.0% HumanEval
+
+Pipeline V2 — Plain Text 
+
+Darbari 
+
+plain text analysis 
+
+Majumdar 
+
+numbered plan 
+
+Sainik 
+
+Correct answer 
+
+> passed cleanly
+> full context maintained
+> 82.0% GSM8K / 81.7% HumanEval
+> Cascading failure
+
+Figure 2: JSON communication V/S Plain Text Communication 
+
+Call 1 Baseline (Shared Initial) 
+
+Self-Refine V1 (Ungated) 
+
+Self-Refine V2 (Gated) 
+
+Direct (Single Call) 
+
+50 
+
+60 
+
+70 
+
+80 
+
+90 
+
+95 
+
+100 
+
+> 51 correct solutions broken (ungated, forced rewrite)
+> 163/164 skipped by gate accuracy preserved
+
+95 .1
+
+66 .5
+
+95 .1 96 .3
+
+> HumanEval Pass@1 (%)
+
+Figure 3: Effect of the self-refinement Call 2 step on HumanEval pass@1. 
+
+5.2 Why Self-Refine V1 Fails on Code (And How V2 Fixes It) 
+
+One of the most noteworthy outcomes of this evaluation is Self-Refine V1 on HumanEval: starting from 95.1% initial accuracy after Call 1, the generic ungated Call 2 step reduced final accuracy to 66.5%, after fixing 4 errors and introducing 51. Note that the same V1 implementation worked well on GSM8K ( +0.8% net). The failure is specific to code tasks. Three contributing factors have been identified. 
+
+Cause 1: Code confidence gate failed. The V1 gate checked for uncertainty markers (“I think”, “might be”, “not certain”) within the entire response. Python code frequently contains these phrases in comments and docstrings, causing the gate to classify all 164 responses as uncertain and running Call 2 unconditionally. 6Table 3: Self-Refine ablation on HumanEval. 
+
+Variant Pass@1 Fixed Hurt Skipped 
+
+Call 1 baseline (shared) 95.1% — — —Self-Refine V1 (no gate + force-rewrite) 66.5% 4 51 0Variant A: no gate + generic prompt 96.3% 2 0 0Variant B: gate + conservative prompt 95.1% 0 0 163 Variant C: gate + force-rewrite 94.5% 0 1 163 Direct (reference) 96.3% — — —
+
+Reason 2: Urgency causes superfluous rewriting. Call 2 was asked to “always present the final function enclosed by code blocks.” The model would even rewrite the perfectly working function out of habit, resulting in bugs being added to working code. 
+
+Reason 3: Too high initial accuracy approaching ceiling. With 95.1% initial accuracy, 156 out of 164 examples are working correctly. Applying Call 2 to all 164 examples will result in 164 chances of breaking working code but only 8 chances of fixing incorrect code. All of these problems are fixed in Self-Refine V2: a gate specific for code that detects the end of code block instead of detecting uncertainty marker; a cautious prompt asking the model to respond with 
+
+CORRECT whenever there are no bugs detected; and returning the initial response from Call 1 output when Call 2 confirms correctness. 
+
+5.3 Ablation: What Actually Matters in Self-Refine 
+
+Table 3 presents the HumanEval ablation isolating each design decision. Variant A (no gate, non-coercive prompt) achieves 96.3%— marginally above the Call 1 baseline of 95.1%. This is unexpected: V1 (also no gate) scored 66.5%. The difference is the Call 2 prompt. Removing the forced-rewrite instruction eliminates the 51-problem regression entirely. Variant B (gate on, conservative prompt) scores 95.1%, identical to Call 1. The gate skips 163 problems; the one that reaches Call 2 returns CORRECT and the original code. Variant C (gate on, force-rewrite) scores 94.5%, breaking 1 problem—confirming that the force-rewrite instruction is harmful even when it fires rarely. 
+
+Counterintuitive finding: The no-gate approach (Variant A) works better than the gate versions, since the gate prevents two fixes that Variant A achieves. The best choice for near-ceiling tasks is no gate with non-coercive prompts. For tasks with improvement potential (like GSM8K), the gate is not critical, as Call 2 helps and rarely hurts on math problems. 
+
+5.4 Task Type Determines Optimal Strategy 
+
+By summing up all observations, we can draw the following conclusion. In cases where the direct accuracy still needs some improvement (GSM8K at 75%), the process of self-refinement always helps the model improve. In situations where the model already demonstrates maximum direct accuracy possible (HumanEval at 96.3%), self-refinement does not help but costs extra effort. 
+
+Recommendation for practice: determine the direct accuracy first. If it is under 85%, self-refinement should help. If direct accuracy is above 90%, self-refinement will cost extra effort but yield nothing. 
+
+## 6 Discussion 
+
+6.1 Why Pipelines Were Expected to Help 
+
+The logic for the multirole pipeline approach appears reasonable. Dividing the complex task into planning, acting, and verifying will result in an optimized cognitive workload distribution, specializa-tion, and improved error checking. This is possible only if each of the roles is able to accomplish its task. 7The unreliable structure assumption failure occurs for 7B models. GPT-4-class models reliably generate a correct JSON structure when prompted to create one in a complex system prompt. But the 7B model cannot do so. Once the assumption of reliable output structuring breaks down, it ruins everything, since the context in each successive stage is broken by default. 
+
+6.2 The Plain Text Recovery 
+
+This 37 percentage point improvement relative to plain text communication also has important engineering implications. Engineers who implement multiagent systems for local models need to focus their communication on the strength of small models, which is natural language descriptions, rather than that of large models, which is structured formats. However, it must be pointed out that plain text role communication means one capability of structured format is lost: parsing and validating the role outputs programmatically. Our results suggest this is a worthwhile tradeoff for local models. 
+
+6.3 The Self-Refine Tradeoff 
+
+Self-Refine V1 provides the most accurate results on GSM8K with the least amount of tokens for all algorithms that outperform Direct. The main utility of self-refinement lies in increasing the baseline accuracy—the 5 mistakes in Call 2 would have been incorrect solutions otherwise—instead of transforming the distribution of accuracy results drastically. The problem with V1’s inability to solve HumanEval questions does not reside within the self-refinement framework itself; rather, the ablation analysis proves that using a noncoercive prompt (Variant A) resolves the entire issue. The failure was in the specific forced-rewrite instruction. 
+
+6.4 Limitations 
+
+We have certain limitations in our evaluation. For example, we evaluate only one family of models, namely Qwen2.5-7B-Instruct. Our results may vary for other families such as Llama, Mistral, or Phi families. We evaluated two benchmarking sets, but our results for multi-hop reasoning, factual QA, or long-form generation might differ from those in our study. Pipeline V1 HumanEval evaluation is done using 50 tasks because of the high latency of 920 seconds. Our study does not include evaluation for larger models, 13B or 34B. 
+
+## 7 Conclusion 
+
+A multi-agent pipeline comprising five roles was tested against direct prompting and self-refinement methods on the local version of Qwen2.5-7B. JSON-based communication using the multi-agent pipeline reduces accuracy by more than 30 percent on both datasets compared to plain text communi-cation which restores nearly all these lost accuracies. The two-step refinement method using V1 is better than the static pipeline on math by requiring 7.4 × less token usage. However, the use of the V1 on HumanEval decreases accuracy by 29.8 percent since the rewrite prompt causes the model to write broken code. Task-specific refinement using V2 brings back the accuracy to 95.1%. The main lesson from this experiment is that complex design cannot compensate for poor imple-mentation . The five-part pipeline with incorrect communication protocol underperforms compared to one call from a single model. Similarly, two-call self-refinement with the wrong prompting setup underperforms compared to its own first call. Ensuring a proper implementation in terms of communication protocol, prompt design, confidence gating, and answer selection trumps architectural complexity. Practitioners using LLMs locally on 7B models: Start with direct prompts as your baseline; incorpo-rate self-refinement for tasks where direct prompt accuracy is less than 85%; and do not use structured JSON-based communication in multi-step pipelines. 8Acknowledgments and Disclosure of Funding 
+
+The authors thank the open-source communities behind llama.cpp and the Qwen team for releasing model weights. 
+
+## References 
+
+[1] J. Bai et al. Qwen2.5 Technical Report. arXiv preprint arXiv:2412.15115 , 2025. [2] M. Chen et al. Evaluating Large Language Models Trained on Code. arXiv preprint arXiv:2107.03374 , 2021. [3] K. Cobbe et al. Training Verifiers to Solve Math Word Problems. arXiv preprint arXiv:2110.14168 , 2021. [4] S. Hong et al. MetaGPT: Meta Programming for Multi-Agent Collaborative Framework. In 
+
+ICLR , 2024. [5] D. Huang et al. AgentCoder: Multi-Agent-based Code Generation with Iterative Testing and Optimisation. arXiv preprint arXiv:2312.13010 , 2023. [6] T. Kojima et al. Large Language Models are Zero-Shot Reasoners. In NeurIPS , 2022. [7] A. Madaan et al. Self-Refine: Iterative Refinement with Self-Feedback. In NeurIPS , 2023. [8] C. Qian et al. ChatDev: Communicative Agents for Software Development. In ACL , 2024. [9] N. Shinn et al. Reflexion: Language Agents with Verbal Reinforcement Learning. In NeurIPS ,2023. [10] J. Moura. CrewAI: Framework for Orchestrating Role-Playing Autonomous AI Agents. https: //github.com/joaomdmoura/crewAI , 2024. [11] J. Wei et al. Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. In 
+
+NeurIPS , 2022. [12] Q. Wu et al. AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation. 
+
+arXiv preprint arXiv:2308.08155 , 2023. 9

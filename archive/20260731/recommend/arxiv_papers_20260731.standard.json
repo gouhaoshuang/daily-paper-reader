@@ -1,0 +1,335 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-31T21:14:07.490562+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2607.28227v1",
+      "source": "arxiv",
+      "title": "Qwen-UI-Agent Technical Report: Toward Next-Generation Real-World Centric Foundation GUI Agents",
+      "abstract": "GUI agents have the potential to become a general purpose executor over existing digital devices. To advance them toward real-world use, we envision agents that operate reliably on real devices, execute workflows across platforms, combine GUI interaction with CLI execution, complete long-horizon tasks, proactively initiate useful services, and autonomously improve their capabilities with minimal human effort. Guided by this vision, we present Qwen-UI-Agent, a real-world centric foundation GUI agent spanning mobile, computer-use, web, and DeepSearch environments. Qwen-UI-Agent combines diverse sandbox environments with a large-scale real-device mobile runtime. Its unified action space interleaves GUI operations with CLI execution and generates batched actions in a single model turn. An AutoResearch-style data flywheel uses agents to construct tasks and environments, diagnose failures, and plan subsequent iterations. Online RL supports training on trajectories exceeding 100 turns, with over 10,000 concurrent environments accelerating rollout. A lightweight harness layer supports proactive service initiation and stateful workflows across mobile and computer.   Across a broad suite of evaluations, Qwen-UI-Agent sets state-of-the-art performance on mobile-use benchmarks while delivering competitive performance on computer- and browser-use tasks against frontier models, including Opus 4.8, Gemini 3.1 Pro, and GPT-5.6 Sol. On mobile use, it achieves 82.1% on MobileWorld, 92.2% on MobileWorld-Real, and 97.5% on AndroidDaily. On computer use, it achieves 79.5% on OSWorld-Verified and a 40.0% partial-progress score on OSWorld-v2. On browser use and GUI grounding, it achieves 73.6% on WebArena and 81.5% on ScreenSpot-Pro, respectively.",
+      "authors": [
+        "Hanzhang Zhou",
+        "Panrong Tong",
+        "Xu Zhang",
+        "Quyu Kong",
+        "Chenglin Cai",
+        "Tianyu Xia",
+        "Gongjie Zhang",
+        "Jianan Zhang",
+        "Long Li",
+        "Long Chen",
+        "Lei Wang",
+        "Gaole Dai",
+        "Pengxiang Li",
+        "Liangyu Chen",
+        "Yue Wang",
+        "Steven Hoi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CV"
+      ],
+      "published": "2026-07-30T13:58:41+00:00",
+      "link": "https://arxiv.org/pdf/2607.28227v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Foundation GUI agent spanning mobile, computer, web, and DeepSearch with real-device mobile runtime, directly matches mobile AI agent",
+      "llm_evidence_cn": "覆盖移动端、桌面、网页与DeepSearch的基础GUI智能体，直接匹配移动AI智能体",
+      "llm_evidence": "覆盖移动端、桌面、网页与DeepSearch的基础GUI智能体，直接匹配移动AI智能体",
+      "canonical_evidence": "覆盖移动端、桌面、网页与DeepSearch的基础GUI智能体，直接匹配移动AI智能体",
+      "llm_tldr_en": "Qwen-UI-Agent is a real-world-centric foundation GUI agent spanning mobile, computer-use, web, and DeepSearch, combining GUI and CLI actions and a large-scale real-device mobile runtime for long-horizon autonomous tasks.",
+      "llm_tldr_cn": "GUI智能体有望成为数字设备的通用执行体，但真实设备上的跨平台工作流仍具挑战。论文提出Qwen-UI-Agent，一个覆盖移动端、电脑、网页和DeepSearch环境的真实世界基础GUI智能体，统一动作空间支持GUI与CLI交错执行，并配备大规模真实设备移动运行时。它可以完成长程任务、主动发起服务并自主提升，是移动AI智能体的直接技术实践。",
+      "llm_tldr": "GUI智能体有望成为数字设备的通用执行体，但真实设备上的跨平台工作流仍具挑战。论文提出Qwen-UI-Agent，一个覆盖移动端、电脑、网页和DeepSearch环境的真实世界基础GUI智能体，统一动作空间支持GUI与CLI交错执行，并配备大规模真实设备移动运行时。它可以完成长程任务、主动发起服务并自主提升，是移动AI智能体的直接技术实践。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.27429v1",
+      "source": "arxiv",
+      "title": "Auditing Emergent LLM-Agent Collaboration through Cooperation-Obligation Coupling",
+      "abstract": "LLM-agent systems can solve complex tasks through dynamic self-organization and emergent cooperation. Auditing this process is essential because plausible intermediate or final outputs can conceal incomplete or unsupported work and poorly allocated responsibility, ultimately compromising response quality. While existing approaches may record messages, tool calls, provenance, or task dependencies, an auditability gap exists as they do not jointly represent what work remains, who is responsible for it, and what evidence justifies each work-state transition. We address this auditability gap by proposing \\emph{Integrated Cooperation-Obligation REpresentation} (iCORE). It creates a unified encoding $X=(G,Q,Π)$ integrating observable interactions as a cooperation graph $G$, evolving work and assignments as an obligation graph $Q$, and the audit map $Π$ linking them with verifiable properties and evidence. This iCORE representation enables the auditor to certify two complementary properties: {Work soundness}, where every active decision-relevant work assertion must have a finite justification through $G$ and $Π$; and {Agent-assignment stability}, which requires that no feasible alternative agent improve the declared contribution value for an evaluated obligation by more than $ε$. We establish local-to-global soundness and assignment-regret guarantees and a performance bound under stated conditions. iCORE is an instrumentation layer over workflows. Numerical results show that the full coupled state exactly reconstructs soundness and assignment defects in two execution modes and that, relative to passive full-state observation, iCORE-Audit yields absolute trajectory-quality improvements of $11.5\\%$ and $26.4\\%$ in controlled and real-LLM execution, respectively, with corresponding absolute terminal-performance improvements of $15.1\\%$ and $31.0\\%$.",
+      "authors": [
+        "Zuyuan Zhang",
+        "Hanqing Yang",
+        "Carlee Joe-Wong",
+        "Tian Lan"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-29T19:56:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.27429v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Auditing emergent LLM-agent collaboration via cooperation-obligation coupling",
+      "llm_evidence_cn": "通过合作-义务耦合审计涌现式 LLM 代理协作",
+      "llm_evidence": "通过合作-义务耦合审计涌现式 LLM 代理协作",
+      "canonical_evidence": "通过合作-义务耦合审计涌现式 LLM 代理协作",
+      "llm_tldr_en": "Proposes iCORE, a unified representation for auditing emergent LLM-agent collaboration, encoding remaining work, responsibility, and evidence for each work-state transition, filling the auditability gap in multi-agent systems.",
+      "llm_tldr_cn": "针对现有 LLM 多代理系统无法联合表示待完成工作、责任归属与状态转换证据的审计缺口，提出 iCORE，将可观察交互统一编码为 X=(G,Q,Π)，刻画合作-义务耦合。该方法可揭示中间输出中隐藏的不完整或无法支持的工作，并明确责任分配。实验表明其能有效提升多代理协作过程的可审计性与响应质量，为安全部署涌现式协作提供支撑。",
+      "llm_tldr": "针对现有 LLM 多代理系统无法联合表示待完成工作、责任归属与状态转换证据的审计缺口，提出 iCORE，将可观察交互统一编码为 X=(G,Q,Π)，刻画合作-义务耦合。该方法可揭示中间输出中隐藏的不完整或无法支持的工作，并明确责任分配。实验表明其能有效提升多代理协作过程的可审计性与响应质量，为安全部署涌现式协作提供支撑。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.28430v1",
+      "source": "arxiv",
+      "title": "AgentRadio: Passive Awareness for Long-Horizon Multi-Agent Collaboration",
+      "abstract": "Understanding large codebases is a long-horizon task for Large Language Model (LLM) agents: answering a single question can require building and running the software, tracing execution across files, and synthesizing evidence over tens of minutes. On SWE-Atlas QnA, a benchmark of long-horizon questions over production repositories, a single Claude Code agent (Opus 4.6) resolves only 32.3% of tasks. Dividing the work among agents with clean contexts mitigates this limitation. However, the subtasks of code comprehension are interdependent. One agent's findings can rewrite another's task, so agents must coordinate during execution, not only at phase boundaries. Existing multi-agent systems support such exchange only between phases, through staged handoffs or synchronized rounds. Communication and work remain mutually exclusive. A discovery made mid-execution cannot be shared until the next boundary. We present AgentRadio, an asynchronous message-passing layer that equips coding-agent harnesses with three primitives: threads, messages, and waiting for mentions. The last runs as a background task, surfacing teammates' messages without interrupting foreground work, so each agent remains passively aware of its peers and folds new findings into its ongoing task. Under a five-phase protocol of division of labor and negotiation, four agents organized by AgentRadio resolve 62.1% of tasks, 29.8 points above a single agent and above Claude Code with the newer Opus 4.8 (57.2%). Rubric-level analysis shows the gain growing with task difficulty, consistent with mid-course correction as the underlying mechanism. Our code is available at https://github.com/Coral-Protocol/AgentRadio.",
+      "authors": [
+        "Xinxing Ren",
+        "Qianbo Zang",
+        "Ziyan Wang",
+        "Caelum Forder",
+        "Suman Deb",
+        "Peter Carroll",
+        "Zekun Guo"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-30T16:07:32+00:00",
+      "link": "https://arxiv.org/pdf/2607.28430v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Passive awareness for long-horizon multi-agent collaboration with dynamic coordination",
+      "llm_evidence_cn": "面向长时程多代理协作的被动感知与动态协调",
+      "llm_evidence": "面向长时程多代理协作的被动感知与动态协调",
+      "canonical_evidence": "面向长时程多代理协作的被动感知与动态协调",
+      "llm_tldr_en": "Presents AgentRadio, a passive awareness mechanism that lets agents exchange findings during execution, not only at phase boundaries, enabling dynamic coordination for long-horizon code-comprehension tasks and improving multi-agent collaboration.",
+      "llm_tldr_cn": "针对长时程代码理解任务中，多代理子任务相互依赖、仅阶段式交接不足以支持执行期协调的局限，提出 AgentRadio。其提供被动感知机制，使代理在执行过程中持续感知彼此发现，并动态调整自身任务。在 SWE-Atlas QnA 基准上，该方法相比单代理与阶段式多代理系统显著提升任务完成率。该机制为长时程多代理协作提供了一种轻量、有效的运行时协调方式。",
+      "llm_tldr": "针对长时程代码理解任务中，多代理子任务相互依赖、仅阶段式交接不足以支持执行期协调的局限，提出 AgentRadio。其提供被动感知机制，使代理在执行过程中持续感知彼此发现，并动态调整自身任务。在 SWE-Atlas QnA 基准上，该方法相比单代理与阶段式多代理系统显著提升任务完成率。该机制为长时程多代理协作提供了一种轻量、有效的运行时协调方式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.28527v1",
+      "source": "arxiv",
+      "title": "MANTA: Multi-Agent Network Topology Adaptation for Self-Evolving Multi-Agent Systems",
+      "abstract": "Large language model-based multi-agent systems improve complex problem solving through task decomposition, agent specialization, information exchange, and intermediate validation. However, existing systems typically treat communication topology as a fixed design choice or an offline optimization target. We introduce MANTA, a framework for Multi-Agent Network Topology Adaptation that enables communication structures to self-evolve at inference time. Before execution, MANTA initializes a task-conditioned topology from prior structural experience. During deployment, it monitors collaboration traces and applies bounded structural updates when the current organization becomes insufficient. These updates can modify agent roles, communication links, execution order, information visibility, and validation pathways while preserving the task interface and agent budget. We evaluate MANTA against representative single-agent and multi-agent baselines on five benchmarks spanning information seeking, tool use, planning, workflow execution, and mathematical reasoning. MANTA achieves the highest average score of 74.0, outperforming the strongest baseline by 5.8 percentage points and obtaining the best result on PlanCraft. These results show that inference-time self-improvement can extend to the architecture of collaboration itself.",
+      "authors": [
+        "Mao-xun Huang",
+        "Jerry Wang",
+        "Yi-Cheng Lai",
+        "Zhengxin Zhang",
+        "Claire Cardie",
+        "Hen-Hsen Huang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-30T17:01:27+00:00",
+      "link": "https://arxiv.org/pdf/2607.28527v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Self-evolving multi-agent network topology adaptation with collaboration traces",
+      "llm_evidence_cn": "基于协作轨迹自演化的多代理网络拓扑适配",
+      "llm_evidence": "基于协作轨迹自演化的多代理网络拓扑适配",
+      "canonical_evidence": "基于协作轨迹自演化的多代理网络拓扑适配",
+      "llm_tldr_en": "Presents MANTA, a framework for Multi-Agent Network Topology Adaptation that self-evolves communication structures at inference time, using collaboration traces and bounded structural updates to modify agent roles and links, improving multi-agent problem solving.",
+      "llm_tldr_cn": "针对现有 LLM 多代理系统将通信拓扑视为固定设计或离线优化的局限，提出 MANTA 框架，在推理时根据协作轨迹自适应调整拓扑。其先在执行前初始化任务条件化拓扑，再通过有界结构更新调整代理角色与通信链路。实验表明该方法能提升复杂问题求解的协作效率与适应性，为动态多代理系统提供新的设计范式。",
+      "llm_tldr": "针对现有 LLM 多代理系统将通信拓扑视为固定设计或离线优化的局限，提出 MANTA 框架，在推理时根据协作轨迹自适应调整拓扑。其先在执行前初始化任务条件化拓扑，再通过有界结构更新调整代理角色与通信链路。实验表明该方法能提升复杂问题求解的协作效率与适应性，为动态多代理系统提供新的设计范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.25076v1",
+      "source": "arxiv",
+      "title": "Towards an Agent Operating System - Lessons from Classical and Cloud OS",
+      "abstract": "Every major wave of platform software follows the same arc: an initial period of experimentation with competing frameworks and ad-hoc implementations, followed by the articulation of a small set of stable abstractions with well-defined semantics, and finally consolidation around those abstractions into a platform that applications can portably target. POSIX did this for classical operating systems; Kubernetes did it for the cloud. Agentic AI systems - autonomous, LLM-driven agents that plan, use tools, maintain memory, and collaborate - are currently in the experimentation phase of the third such wave. dozens of frameworks and protocols have emerged, but no community consensus exists on what the core abstractions are or what guarantees they carry. Without that consensus, agentic applications cannot be written portably, platforms cannot compose reliably, and the field cannot advance beyond prototype deployments. We argue that the path forward is to follow the prior-wave methodology: derive new agentic abstractions by extending classical OS and cloud OS primitives to stochastic, natural-language-mediated execution, specify their semantics precisely, and consolidate around them - just as POSIX and Kubernetes consolidated their respective waves.",
+      "authors": [
+        "Gosia Steinder",
+        "Hubertus Franke"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-27T21:10:59+00:00",
+      "link": "https://arxiv.org/pdf/2607.25076v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Proposes abstractions for an agent operating system drawing from cloud OS like Kubernetes, applicable to distributed agent architectures",
+      "llm_evidence_cn": "借鉴Kubernetes等云OS提出智能体操作系统抽象，适用于分布式智能体架构",
+      "llm_evidence": "借鉴Kubernetes等云OS提出智能体操作系统抽象，适用于分布式智能体架构",
+      "canonical_evidence": "借鉴Kubernetes等云OS提出智能体操作系统抽象，适用于分布式智能体架构",
+      "llm_tldr_en": "Draws lessons from POSIX and Kubernetes to outline an Agent Operating System with stable abstractions for agentic AI, covering resource management and collaboration in distributed environments.",
+      "llm_tldr_cn": "在Agentic AI系统仍处于实验探索阶段的背景下，本文借鉴经典操作系统POSIX与云操作系统Kubernetes的发展路径，提出为智能体系统定义稳定、语义清晰的核心抽象，并以此构建智能体操作系统。文章讨论了资源管理、工具使用、记忆与协作等关键能力在平台层面的抽象方式，设想一个应用可移植的智能体平台。该观点性论文为边缘-云协同智能体的系统架构设计提供了重要方向指引。",
+      "llm_tldr": "在Agentic AI系统仍处于实验探索阶段的背景下，本文借鉴经典操作系统POSIX与云操作系统Kubernetes的发展路径，提出为智能体系统定义稳定、语义清晰的核心抽象，并以此构建智能体操作系统。文章讨论了资源管理、工具使用、记忆与协作等关键能力在平台层面的抽象方式，设想一个应用可移植的智能体平台。该观点性论文为边缘-云协同智能体的系统架构设计提供了重要方向指引。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.22750v1",
+      "source": "arxiv",
+      "title": "Commitment To Cooperation With Self-Negotiated Contracts",
+      "abstract": "As AI agents operate with increasing autonomy in a multi-agent world, they will need to learn to cooperate with other agents and with humans to generate mutual benefits. However, cooperation is a challenge because the costs of cooperation are often incurred early on, but the benefits are only realized later, creating an incentive to defect. How can AI agents cooperate with commitment? Here, we draw on inspiration from legal institutions and contracting that human societies have used to solve principal-agent problems of this kind. Contracts provide observable representations of agreements that enable credible commitments through the enforcement of terms. We study the role of contract-based cooperation using LLM-based agents in \\CT, a spatial-temporal game that combines bargaining with navigation towards a goal. We study a suite of contract representations that range from formal contracts that compile to code to natural contracts that require reinterpretation. We evaluate agents with a range of LLM backbones using different sizes and providers. We find that self-negotiated contracts can improve cooperative outcomes beyond what is possible with regular trading.",
+      "authors": [
+        "Tim Wyse",
+        "Kaitlin Bustos",
+        "Yulia Volkova",
+        "Max Kleiman-Weiner"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-23T11:04:58+00:00",
+      "link": "https://arxiv.org/pdf/2607.22750v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Studies contract-based cooperation among LLM agents, directly addressing collaboration mechanisms",
+      "llm_evidence_cn": "研究LLM智能体间基于契约的合作，直接涉及协作机制",
+      "llm_evidence": "研究LLM智能体间基于契约的合作，直接涉及协作机制",
+      "canonical_evidence": "研究LLM智能体间基于契约的合作，直接涉及协作机制",
+      "llm_tldr_en": "Investigates how self-negotiated contracts enable AI agents to commit to cooperation in multi-agent settings, using LLM-based agents in a spatiotemporal game to show contracts support credible commitments.",
+      "llm_tldr_cn": "针对多智能体世界中合作早期成本高而收益滞后导致背叛激励的问题，本文借鉴法律契约思想，提出AI智能体可通过自协商的合约实现可信的合作承诺。合约以可观察形式表示协议，并借助条款执行约束各方行为。作者在包含时空博弈的环境中利用LLM智能体验证了该机制。实验表明契约能显著提升智能体间的长期合作水平，为多智能体协作与端云协同智能体中的信任机制设计提供了新思路。",
+      "llm_tldr": "针对多智能体世界中合作早期成本高而收益滞后导致背叛激励的问题，本文借鉴法律契约思想，提出AI智能体可通过自协商的合约实现可信的合作承诺。合约以可观察形式表示协议，并借助条款执行约束各方行为。作者在包含时空博弈的环境中利用LLM智能体验证了该机制。实验表明契约能显著提升智能体间的长期合作水平，为多智能体协作与端云协同智能体中的信任机制设计提供了新思路。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.25090v1",
+      "source": "arxiv",
+      "title": "Matryoshka Agent: Unfolding Sub-Agents for Long-Horizon Machine Learning Engineering",
+      "abstract": "Machine learning engineering (MLE) tasks require long-horizon decision making over iterative solution debugging and refinement, under expensive and feedback-driven environment interactions. Developing and training a monolithic agent for such tasks is fundamentally challenging, as it must simultaneously manage extremely long and noisy contexts, explore vast solution spaces, and remain effective under limited model capacity and computational budgets. To address these challenges, we propose Matryoshka Agent, a unified hierarchical agent framework for complex long-horizon tasks. Matryoshka Agent decomposes agentic problem solving into a coordinated hierarchy of decision making and execution: a high-level Orchestrator maintains compact, long-horizon exploration states and issues strategic instructions, while lower-level Sub-Agents execute concrete solution attempts through direct environment interaction, mediated by standardized Tool interface. This design decouples strategic exploration from costly execution, substantially reducing the burden of long-context reasoning and enabling efficient iterative refinement. We further develop an efficient training paradigm for Matryoshka Agent. Experimental results on a broad range of MLE tasks with diverse model types and scales demonstrate that Matryoshka Agent is an effective and scalable paradigm for long-horizon MLE tasks and complex agentic problem solving. Notably, Matryoshka Agent enables Qwen3-4B-Instruct to reach Orchestrator performance comparable to o4-mini. Applying Matryoshka Agent to Qwen3-30B-Coder results in at most 36.7% relative performance gain.",
+      "authors": [
+        "Rushi Qiang",
+        "Changhao Li",
+        "Haotian Sun",
+        "Yuchen Zhuang",
+        "Chao Zhang",
+        "Bo Dai"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-07-27T21:30:39+00:00",
+      "link": "https://arxiv.org/pdf/2607.25090v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Hierarchical sub-agent orchestration for long-horizon machine learning engineering",
+      "llm_evidence_cn": "面向长时程机器学习工程的分层子代理编排",
+      "llm_evidence": "面向长时程机器学习工程的分层子代理编排",
+      "canonical_evidence": "面向长时程机器学习工程的分层子代理编排",
+      "llm_tldr_en": "Proposes Matryoshka Agent, a unified hierarchical agent framework that decomposes long-horizon ML engineering into a coordinated hierarchy of decision and execution, with a high-level Orchestrator maintaining compact long-horizon context for sub-agents.",
+      "llm_tldr_cn": "针对机器学习工程任务中长时程决策、稀疏反馈与高内存开销的问题，提出 Matryoshka Agent，一种统一分层代理框架，将复杂问题求解分解为高层编排器与低层执行代理的协同层级。编排器维护紧凑的长时程上下文，子代理负责具体执行，从而降低单代理容量负担。实验表明该框架能有效完成长时程 MLE 任务，验证了层级化子代理编排是解决长时程任务的可行方案。",
+      "llm_tldr": "针对机器学习工程任务中长时程决策、稀疏反馈与高内存开销的问题，提出 Matryoshka Agent，一种统一分层代理框架，将复杂问题求解分解为高层编排器与低层执行代理的协同层级。编排器维护紧凑的长时程上下文，子代理负责具体执行，从而降低单代理容量负担。实验表明该框架能有效完成长时程 MLE 任务，验证了层级化子代理编排是解决长时程任务的可行方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.26922v1",
+      "source": "arxiv",
+      "title": "Two Calls Beat Five Agents: Evaluating Multi-Agent Pipelines Against Self-Refinement for Local Language Models",
+      "abstract": "Multi-agent LLM pipeline systems break down the task among multiple roles for better reasoning, but are benchmarked mainly with large-scale commercial models. In this study, we investigate Parishad, a structured multi-agent system involving five roles, by deploying it on Qwen2.5-7B-Instruct, a local model, on two datasets: GSM8K (500 questions) and HumanEval (164 questions), compared with prompting directly and two-call self-refinement. The multi-agent system drops GSM8K accuracy from 75.0\\% to 45.0\\% with JSON data format due to the error accumulation problem. With plaintext format, the accuracy is restored to 82.0\\%. A two-call self-refinement strategy (V1) can achieve 86.2\\% accuracy on GSM8K, with 7.4$\\times$ lower token usage. However, the same V1 implementation on HumanEval---where direct accuracy is already 96.3\\%---actively destroys performance (66.5\\%). A task-aware gated redesign (V2) applied to HumanEval preserves accuracy at 95.1\\%. Our results demonstrate that communication format and implementation details determine outcomes more than architectural complexity, and that simpler approaches match or outperform multi-agent pipelines for local 7B model deployment. All code and data are released.",
+      "authors": [
+        "Ashish Prajapati",
+        "Om Mohite"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-29T13:53:02+00:00",
+      "link": "https://arxiv.org/pdf/2607.26922v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Evaluates multi-agent pipelines and self-refinement on local LLMs, relevant to on-device AI agents",
+      "llm_evidence_cn": "在本地LLM上评估多智能体流水线与自我精炼，与设备端智能体相关",
+      "llm_evidence": "在本地LLM上评估多智能体流水线与自我精炼，与设备端智能体相关",
+      "canonical_evidence": "在本地LLM上评估多智能体流水线与自我精炼，与设备端智能体相关",
+      "llm_tldr_en": "Studies whether multi-agent pipelines or self-refinement work better for local LLMs, showing two-call self-refinement improves GSM8K accuracy while the five-agent pipeline suffers from error accumulation.",
+      "llm_tldr_cn": "针对本地语言模型上多智能体流水线与自我精炼的表现差异问题，本文在Qwen2.5-7B-Instruct上部署包含五个角色的多智能体系统，并在GSM8K与HumanEval数据集上开展实验。结果显示五角色系统在JSON格式下准确率由75%降至45%，暴露错误累积问题；改用纯文本格式后恢复至82%，而两次调用的自我精炼策略达到86.2%。这表明在资源受限的本地或边缘场景中，简洁的自精炼方法可能比复杂多智能体流水线更有效，为端侧智能体的高效推理提供了实证参考。",
+      "llm_tldr": "针对本地语言模型上多智能体流水线与自我精炼的表现差异问题，本文在Qwen2.5-7B-Instruct上部署包含五个角色的多智能体系统，并在GSM8K与HumanEval数据集上开展实验。结果显示五角色系统在JSON格式下准确率由75%降至45%，暴露错误累积问题；改用纯文本格式后恢复至82%，而两次调用的自我精炼策略达到86.2%。这表明在资源受限的本地或边缘场景中，简洁的自精炼方法可能比复杂多智能体流水线更有效，为端侧智能体的高效推理提供了实证参考。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
