@@ -1,0 +1,260 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-01T20:53:23.335241+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2607.27952v1",
+      "source": "arxiv",
+      "title": "LAST: The Last Query Token Guides Visual Token Pruning for Edge-Cloud Collaborative MLLM Inference",
+      "abstract": "Multimodal foundation models are reshaping edge-cloud visual intelligence from task-specific feature pipelines into token-based interfaces, where edge devices encode visual inputs into tokens for a general-purpose cloud MLLM. However, dense visual-token sequences increase cloud-side inference costs. Existing pruning methods mainly target centralized inference: vision-driven methods can operate before cloud execution but are typically query-agnostic, whereas query-guided methods often rely on internal states of the target MLLM and cannot determine token relevance before transmission. Compact guidance models offer an alternative, but existing designs may require costly attention aggregation or auxiliary generation. We propose LAST, a training-free framework for query-dependent visual token pruning in edge-cloud collaborative MLLM inference. LAST uses a compact edge-side VLM as a guidance proxy and derives a lightweight importance signal from the last query token's attention to visual tokens. Under causal attention, the last query token can attend to the full visual sequence and the entire query context, enabling query-aware pruning without cloud-model access, autoregressive generation, or costly aggregation over multiple query positions. LAST then retains a diverse set of query-relevant visual tokens under a fixed token budget. We evaluate LAST on 11 multimodal benchmarks under multiple token budgets against pruning methods with different guidance strategies. Experiments show that LAST consistently achieves the strongest performance, preserving 95.4% of the full-token accuracy while retaining only 12.5% of the visual tokens, with low edge-side selection overhead and reduced cloud-side computation.",
+      "authors": [
+        "Feng Yang",
+        "Xinrui Ju",
+        "Keyang Zhang",
+        "Xiandong Meng",
+        "Rongqun Lin",
+        "Howard Leung",
+        "Shiqi Wang",
+        "Haoliang Li",
+        "Chris Xing Tian"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-07-30T09:59:25+00:00",
+      "link": "https://arxiv.org/pdf/2607.27952v1",
+      "tags": [
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Edge-cloud collaborative MLLM inference with visual token pruning guided by the last query token",
+      "llm_evidence_cn": "端云协同多模态大模型推理，通过末尾查询令牌指导视觉令牌剪枝",
+      "llm_evidence": "端云协同多模态大模型推理，通过末尾查询令牌指导视觉令牌剪枝",
+      "canonical_evidence": "端云协同多模态大模型推理，通过末尾查询令牌指导视觉令牌剪枝",
+      "llm_tldr_en": "LAST uses the last query token to guide visual token pruning before transmission in edge-cloud collaborative MLLM inference, reducing cloud-side costs while maintaining relevance, addressing the challenge of query-aware pruning without relying on cloud MLLM internal states.",
+      "llm_tldr_cn": "端云协同多模态大模型推理中，边缘设备需将视觉输入编码为令牌传给云端，但密集的视觉令牌序列显著增加云端推理成本。现有剪枝方法要么查询不可知，要么依赖云端模型内部状态，难以在传输前判断相关性。本文提出LAST方法，利用最后一个查询令牌在传输前指导视觉令牌剪枝，无需云端模型内部状态即可实现查询相关剪枝。实验表明该方法在保持推理质量的同时有效降低云端传输与计算开销，为端云协同多模态智能体系统提供了关键效率技术。",
+      "llm_tldr": "端云协同多模态大模型推理中，边缘设备需将视觉输入编码为令牌传给云端，但密集的视觉令牌序列显著增加云端推理成本。现有剪枝方法要么查询不可知，要么依赖云端模型内部状态，难以在传输前判断相关性。本文提出LAST方法，利用最后一个查询令牌在传输前指导视觉令牌剪枝，无需云端模型内部状态即可实现查询相关剪枝。实验表明该方法在保持推理质量的同时有效降低云端传输与计算开销，为端云协同多模态智能体系统提供了关键效率技术。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.25883v1",
+      "source": "arxiv",
+      "title": "Towards a Systems Foundation for Agentic Cloud Management",
+      "abstract": "Agentic cloud management is emerging as a practice to automate laborious operations, minimize toil, and improve responsiveness. Despite the rapid development of autonomous management agents, we argue that the fundamental missing piece is a systems foundation to enable safe, effective operations across agents and between agents and human operators. In this paper, we advocate for the need of such a systems foundation and share our efforts on developing CloudWeaver, an agentic management substrate that works across existing cloud-user interfaces and future agent-native interfaces. Specifically, we discuss how CloudWeaver (1) scopes the context of individual agent sessions with local views of cloud resources and (2) coordinates concurrent management operations on shared cloud resources. CloudWeaver offers strong safety guarantees and attributable feedback in the presence of conflicting intents, while preserving concurrency between independent operations. We validate CloudWeaver using a representative Azure API workload.",
+      "authors": [
+        "Minghao Li",
+        "Ziqian Liu",
+        "Ziyu Mao",
+        "Daqian Ding",
+        "Yu Kang",
+        "Qingwei Lin",
+        "Tianyin Xu",
+        "Yiming Qiu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-28T15:44:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.25883v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Agentic cloud management substrate coordinating agents, close to edge cloud collaborative agent system",
+      "llm_evidence_cn": "面向智能体云管理的系统基座，协调多智能体操作，接近端云协同智能体系统",
+      "llm_evidence": "面向智能体云管理的系统基座，协调多智能体操作，接近端云协同智能体系统",
+      "canonical_evidence": "面向智能体云管理的系统基座，协调多智能体操作，接近端云协同智能体系统",
+      "llm_tldr_en": "CloudWeaver proposes a systems foundation for agentic cloud management, scoping per-session local views and coordinating concurrent management operations across agents and human operators, enabling safe and effective multi-agent cloud operations.",
+      "llm_tldr_cn": "智能体云管理正成为自动化运维的方向，但缺乏系统基础来保障多智能体以及智能体与操作员之间的安全有效协作。本文提出CloudWeaver，一个跨现有云接口和未来智能体原生接口的智能体管理基座，通过界定单次智能体会话的本地资源视图和协调共享资源上的并发管理操作，为智能体云管理建立基础。该方法有助于提升多智能体云管理的安全性与可靠性，对端云协同智能体系统的设计具有借鉴意义。",
+      "llm_tldr": "智能体云管理正成为自动化运维的方向，但缺乏系统基础来保障多智能体以及智能体与操作员之间的安全有效协作。本文提出CloudWeaver，一个跨现有云接口和未来智能体原生接口的智能体管理基座，通过界定单次智能体会话的本地资源视图和协调共享资源上的并发管理操作，为智能体云管理建立基础。该方法有助于提升多智能体云管理的安全性与可靠性，对端云协同智能体系统的设计具有借鉴意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.24280v1",
+      "source": "arxiv",
+      "title": "From Proprietary to Open-Source: Bridging the Distribution Gap via Multi-Agent Protocol Distillation in Agentic Search",
+      "abstract": "Agentic search enables large language models to solve knowledge-intensive tasks by interleaving multi-step reasoning with retrieval, yet optimizing this with outcome-based reinforcement learning (RL) provides only sparse supervision. Knowledge distillation can supply denser guidance, and advanced proprietary models with their strong reasoning capabilities are promising teachers. While distilling from proprietary models can densify this supervisory signal, conventional logit-matching is precluded by hidden logits and mismatched tokenizers, whereas raw natural language trajectory imitation transfers superficial stylistic artifacts rather than core reasoning competence. To address the heterogeneous distillation problem and bridge the distribution gap, we propose Multi-Agent Protocol Distillation (MAPD), a joint distillation and RL framework uses a structured, style-normalized protocol as an intermediate representation. An offline multi-agent system (MAS) decomposes each query, retrieves supporting evidence, repairs failed searches, and converts the resulting exploration trace into a JSON protocol containing the task type, reasoning plan, and extractive grounding facts. During training, the protocol is provided only to a privileged branch of the student policy, whose token distributions furnish a dense distillation signal alongside the sparse RL objective. Extensive evaluations across seven QA benchmarks demonstrate that MAPD consistently outperforms competitive distillation and RL, achieving average success rates of 39.4\\% on Qwen3-1.7B and 44.4\\% on Qwen3-4B. Crucially, the framework generalizes robustly across diverse proprietary teachers while effectively mitigating the student policy from style drift and verbosity degeneration.",
+      "authors": [
+        "Junlin Liu",
+        "Jiangwang Chen",
+        "Zixin Song",
+        "Shuaiyu Zhou",
+        "Chunji Lv",
+        "Hank Wu",
+        "Kailin Jiang",
+        "Jinyang Wu",
+        "Bohan Yu",
+        "Chenxi Zhou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-27T11:27:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.24280v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent protocol distillation in agentic search, training student agents from proprietary teacher agents",
+      "llm_evidence_cn": "在智能体搜索中通过多智能体协议蒸馏，从专有教师智能体训练学生智能体",
+      "llm_evidence": "在智能体搜索中通过多智能体协议蒸馏，从专有教师智能体训练学生智能体",
+      "canonical_evidence": "在智能体搜索中通过多智能体协议蒸馏，从专有教师智能体训练学生智能体",
+      "llm_tldr_en": "This paper proposes multi-agent protocol distillation to transfer reasoning capabilities from proprietary to open-source models for agentic search, addressing the distribution gap with denser supervision.",
+      "llm_tldr_cn": "针对智能体搜索中结果型强化学习监督稀疏的问题，本文提出多智能体协议蒸馏方法，利用专有模型作为教师，通过协议级蒸馏而非简单轨迹模仿，弥合专有与开源模型间的分布差距。实验表明该方法能有效提升开源模型在智能体搜索任务上的推理与检索表现。其多智能体协作训练框架可借鉴于端云协同的代理能力迁移。",
+      "llm_tldr": "针对智能体搜索中结果型强化学习监督稀疏的问题，本文提出多智能体协议蒸馏方法，利用专有模型作为教师，通过协议级蒸馏而非简单轨迹模仿，弥合专有与开源模型间的分布差距。实验表明该方法能有效提升开源模型在智能体搜索任务上的推理与检索表现。其多智能体协作训练框架可借鉴于端云协同的代理能力迁移。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.27942v1",
+      "source": "arxiv",
+      "title": "Scaling LLM-Driven Multi-Agent Systems: Design Principles and Architectural Scalability Analysis",
+      "abstract": "LLM-based multi-agent systems have the potential to enable collective intelligence and scale toward solving highly complex tasks through coordinated ensembles of specialized agents. However, despite their theoretical potential, the architectural design space remains largely non-systematized and lacks broadly established design principles. Furthermore, the scalability characteristics of such systems are only partially understood so far. This paper makes two contributions. We first distill four design principles for scalable MAS architectures from a structured analysis of prior work: simplicity, elastic feedback, sequential workflows with optional loops, and summary-based communication. We operationalize these principles in a reference architecture whose topology is formalized as a constrained directed workflow graph, and we evaluate four configurations of increasing complexity on a standardized benchmark of terminal-based system engineering tasks using two LLMs of differing capability. Our findings show that scaling yields measurable accuracy improvements with approximately linear cost growth, but only when the underlying LLM exceeds a minimum capability threshold. Performance peaks at intermediate complexity, then degrades due to timeouts and evaluation limitations. In addition, persistent consistency issues emerge as a central challenge across all scaling levels. These results provide concrete design guidance for practitioners and highlight consistency and evaluation standardization as key targets for future research.",
+      "authors": [
+        "Linus Sander",
+        "Fengjunjie Pan",
+        "Vahid Zolfaghari",
+        "Andre Schamschurko",
+        "Nenad Petrovic",
+        "Alois Knoll"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-30T09:50:04+00:00",
+      "link": "https://arxiv.org/pdf/2607.27942v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "architectural principles and scalability analysis for LLM multi-agent systems, transferable to distributed edge-cloud deployments",
+      "llm_evidence_cn": "面向LLM多智能体系统的架构原则与可扩展性分析，可迁移到分布式端云部署",
+      "llm_evidence": "面向LLM多智能体系统的架构原则与可扩展性分析，可迁移到分布式端云部署",
+      "canonical_evidence": "面向LLM多智能体系统的架构原则与可扩展性分析，可迁移到分布式端云部署",
+      "llm_tldr_en": "Distills four design principles for scalable LLM multi-agent architectures from prior work and operationalizes them in a reference architecture, providing scalability analysis for distributed agent systems.",
+      "llm_tldr_cn": "基于LLM的多智能体系统有望通过协调专业智能体解决复杂任务，但其架构设计空间尚未系统化，可扩展性也未被充分理解。本文从既有工作中提炼出四个可扩展MAS架构设计原则：简洁性、弹性反馈、带可选循环的顺序工作流以及基于摘要的通信。论文将这些原则实例化在可复现的建筑中，并进行了可扩展性分析。这为分布式多智能体系统（如端云协同）的架构设计提供了系统化指导。",
+      "llm_tldr": "基于LLM的多智能体系统有望通过协调专业智能体解决复杂任务，但其架构设计空间尚未系统化，可扩展性也未被充分理解。本文从既有工作中提炼出四个可扩展MAS架构设计原则：简洁性、弹性反馈、带可选循环的顺序工作流以及基于摘要的通信。论文将这些原则实例化在可复现的建筑中，并进行了可扩展性分析。这为分布式多智能体系统（如端云协同）的架构设计提供了系统化指导。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.28573v1",
+      "source": "arxiv",
+      "title": "Rethinking Inference-Time Scaling in Local Computer-Use Agents: Failure Modes and Compute Tradeoffs",
+      "abstract": "Deploying autonomous computer-use agents (CUAs) locally is increasingly important for privacy, cost efficiency, and practical usability, yet improving their performance under strict hardware constraints remains challenging. While recent studies show that inference-time scaling can improve frontier computer-use agents through additional computation during execution, its effectiveness for resource-constrained local models remains poorly understood. We present a systematic empirical study of inference-time scaling in local CUAs across contextual, temporal, structural, and parallel dimensions. We evaluate Qwen3-VL-8B/30B-A3B, UI-TARS-1.5-7B, and OpenCUA-7B on the OSWorld benchmark. Our results show that additional computation often yields diminishing returns while changing failure modes. Contextual scaling provides historical grounding that improves trajectory stability and task accuracy, but its gains saturate as token cost increases and failures shift from repetitive or stalled trajectories toward premature false successes. Temporal scaling similarly reduces max-step stalls, yet does not substantially improve task success, indicating that longer horizons often extend erroneous trajectories rather than correct them. We further find that structural decomposition can introduce planning and formatting overhead in local two-stage agents, while parallel scaling partially mitigates these failures at a substantial computational cost. Overall, our findings suggest that efficient local CUAs require selective compute allocation, failure-aware control mechanisms, and agentic frameworks designed around the capabilities and limitations of local models.",
+      "authors": [
+        "Woongkyu Lee",
+        "Jungwook Choi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-30T17:36:36+00:00",
+      "link": "https://arxiv.org/pdf/2607.28573v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "local resource-constrained computer-use agents, relevant to on-device/mobile agent performance",
+      "llm_evidence_cn": "本地资源受限的计算机使用智能体，与端侧/移动智能体性能相关",
+      "llm_evidence": "本地资源受限的计算机使用智能体，与端侧/移动智能体性能相关",
+      "canonical_evidence": "本地资源受限的计算机使用智能体，与端侧/移动智能体性能相关",
+      "llm_tldr_en": "A systematic study of inference-time scaling for local computer-use agents, evaluating Qwen3-VL, UI-TARS, and OpenCUA on OSWorld to reveal failure modes and compute tradeoffs under hardware constraints.",
+      "llm_tldr_cn": "在本地硬件约束下部署自主计算机使用智能体对隐私和成本很重要，但推理时扩展对资源受限本地模型的效果尚不明确。本文对本地CUA进行了系统的推理时扩展实证研究，覆盖上下文、时间、结构和并行四个维度，并在OSWorld基准上评测了Qwen3-VL、UI-TARS和OpenCUA模型。结果显示额外计算的效果有限且存在多种失败模式。该研究为本地/移动设备上的智能体性能优化提供了重要的计算权衡经验。",
+      "llm_tldr": "在本地硬件约束下部署自主计算机使用智能体对隐私和成本很重要，但推理时扩展对资源受限本地模型的效果尚不明确。本文对本地CUA进行了系统的推理时扩展实证研究，覆盖上下文、时间、结构和并行四个维度，并在OSWorld基准上评测了Qwen3-VL、UI-TARS和OpenCUA模型。结果显示额外计算的效果有限且存在多种失败模式。该研究为本地/移动设备上的智能体性能优化提供了重要的计算权衡经验。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.27958v1",
+      "source": "arxiv",
+      "title": "$Σ$-Mem: An Online Reliability Memory for LLM-based Multi-Agent Systems",
+      "abstract": "Memory is central to long-horizon LLM agents, yet existing memory systems primarily preserve interaction content rather than modeling which agents can be trusted and under what conditions. This limitation is particularly important in multi-agent systems, where a central model may be unable to directly verify plausible or correlated peer responses. We introduce $Σ$-Mem, an online reliability memory that records historical competence evidence for individual peers and peer relationship evidence across the peer set. Both forms of evidence are maintained as real symmetric states and updated from post-decision correctness feedback. By Weyl's inequality, the spectral change caused by each event-level update is bounded, enabling stable online adaptation without retraining the underlying models. $Σ$-Mem provides a general write-and-read interface: the same memory can be used for residual steering of a central model, response-free peer routing, or reliability-weighted voting. Across five Qwen-family models, $Σ$-Mem adapts to counterfactual reliability shifts and generalizes to unseen peers and task domains. Direct memory readouts also outperform majority voting and the best fixed peer over the full OOD evaluation set. Moreover, performance improves consistently as more correctness feedback becomes available, indicating that $Σ$-Mem progressively accumulates actionable reliability information. These results establish reliability memory as a reusable foundation for adaptive coordination in LLM-based multi-agent systems.",
+      "authors": [
+        "Peilin Feng",
+        "Suorong Yang",
+        "Soujanya Poria"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-07-30T10:05:50+00:00",
+      "link": "https://arxiv.org/pdf/2607.27958v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Online reliability memory for multi-agent systems, enhancing collaborative trust",
+      "llm_evidence_cn": "面向多智能体系统的在线可靠性记忆，增强协作信任",
+      "llm_evidence": "面向多智能体系统的在线可靠性记忆，增强协作信任",
+      "canonical_evidence": "面向多智能体系统的在线可靠性记忆，增强协作信任",
+      "llm_tldr_en": "This paper proposes Sigma-Mem, an online reliability memory that records peer competence and relationship evidence in multi-agent systems, improving trust and stability in long-horizon collaborations via spectral-bounded updates.",
+      "llm_tldr_cn": "多智能体系统长期协作中，单一模型难以验证同伴响应是否可信。本文提出Sigma-Mem在线可靠性记忆，记录个体能力证据和同伴关系证据，并通过Weyl不等式保证谱更新有界，实现稳定的在线适应。实验表明该机制可以更准确识别可信同伴，提升多智能体决策的可靠性。这为端云协同中代理间信任建模提供了理论基础。",
+      "llm_tldr": "多智能体系统长期协作中，单一模型难以验证同伴响应是否可信。本文提出Sigma-Mem在线可靠性记忆，记录个体能力证据和同伴关系证据，并通过Weyl不等式保证谱更新有界，实现稳定的在线适应。实验表明该机制可以更准确识别可信同伴，提升多智能体决策的可靠性。这为端云协同中代理间信任建模提供了理论基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

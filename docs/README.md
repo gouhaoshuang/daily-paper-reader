@@ -6,46 +6,38 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-31
-- 运行时间：2026-07-31 21:21:52 UTC
+- 最新运行日期：2026-08-01
+- 运行时间：2026-08-01 20:56:55 UTC
 - 运行状态：成功
-- 本次总论文数：8
-- 精读区：4
-- 速读区：4
+- 本次总论文数：6
+- 精读区：1
+- 速读区：5
 
 ### 今日简报（AI）
-今日精读4篇、速读4篇，聚焦GUI智能体与LLM多智能体协作行为研究。
-最值得关注的是《Qwen-UI-Agent》（9.0）提出的真实世界GUI智能体架构，以及《Auditing Emergent LLM-Agent Collaboration》（8.0）对协作义务耦合的审计视角。
-下一步可顺速读线索，从“代理操作系统”和“子代理展开”两个方向拓展对智能体工程化设计的理解。
-- 详情：[/202607/31/README](/202607/31/README)
+今日共读6篇，精读1篇《LAST》聚焦视觉Token剪枝，速读3篇覆盖智能体云管理与多智能体扩展；最值得关注的是LAST的9.0分高评价，其边缘云协同推理思路有实用价值；建议普通读者优先了解LAST的方法，并留意多智能体系统的可靠性与扩展性趋势。
+- 详情：[/202608/01/README](/202608/01/README)
 
 ### 精读区论文标签
-1. [Qwen-UI-Agent Technical Report: Toward Next-Generation Real-World Centric Foundation GUI Agents](/202607/31/2607.28227v1-qwen-ui-agent-technical-report-toward-next-generation-real-world-centric-foundation-gui-agents)  
+1. [LAST: The Last Query Token Guides Visual Token Pruning for Edge-Cloud Collaborative MLLM Inference](/202608/01/2607.27952v1-last-the-last-query-token-guides-visual-token-pruning-for-edge-cloud-collaborative-mllm-inference)  
    标签：评分：9.0/10、query:eca
-   evidence：覆盖移动端、桌面、网页与DeepSearch的基础GUI智能体，直接匹配移动AI智能体
-2. [Auditing Emergent LLM-Agent Collaboration through Cooperation-Obligation Coupling](/202607/31/2607.27429v1-auditing-emergent-llm-agent-collaboration-through-cooperation-obligation-coupling)  
-   标签：评分：8.0/10、query:eca
-   evidence：通过合作-义务耦合审计涌现式 LLM 代理协作
-3. [AgentRadio: Passive Awareness for Long-Horizon Multi-Agent Collaboration](/202607/31/2607.28430v1-agentradio-passive-awareness-for-long-horizon-multi-agent-collaboration)  
-   标签：评分：8.0/10、query:eca
-   evidence：面向长时程多代理协作的被动感知与动态协调
-4. [MANTA: Multi-Agent Network Topology Adaptation for Self-Evolving Multi-Agent Systems](/202607/31/2607.28527v1-manta-multi-agent-network-topology-adaptation-for-self-evolving-multi-agent-systems)  
-   标签：评分：8.0/10、query:eca
-   evidence：基于协作轨迹自演化的多代理网络拓扑适配
+   evidence：端云协同多模态大模型推理，通过末尾查询令牌指导视觉令牌剪枝
 
 ### 速读区论文标签
-1. [Towards an Agent Operating System - Lessons from Classical and Cloud OS](/202607/31/2607.25076v1-towards-an-agent-operating-system---lessons-from-classical-and-cloud-os)  
+1. [Towards a Systems Foundation for Agentic Cloud Management](/202608/01/2607.25883v1-towards-a-systems-foundation-for-agentic-cloud-management)  
    标签：评分：7.0/10、query:eca
-   evidence：借鉴Kubernetes等云OS提出智能体操作系统抽象，适用于分布式智能体架构
-2. [Matryoshka Agent: Unfolding Sub-Agents for Long-Horizon Machine Learning Engineering](/202607/31/2607.25090v1-matryoshka-agent-unfolding-sub-agents-for-long-horizon-machine-learning-engineering)  
+   evidence：面向智能体云管理的系统基座，协调多智能体操作，接近端云协同智能体系统
+2. [Scaling LLM-Driven Multi-Agent Systems: Design Principles and Architectural Scalability Analysis](/202608/01/2607.27942v1-scaling-llm-driven-multi-agent-systems-design-principles-and-architectural-scalability-analysis)  
    标签：评分：7.0/10、query:eca
-   evidence：面向长时程机器学习工程的分层子代理编排
-3. [Commitment To Cooperation With Self-Negotiated Contracts](/202607/31/2607.22750v1-commitment-to-cooperation-with-self-negotiated-contracts)  
+   evidence：面向LLM多智能体系统的架构原则与可扩展性分析，可迁移到分布式端云部署
+3. [$Σ$-Mem: An Online Reliability Memory for LLM-based Multi-Agent Systems](/202608/01/2607.27958v1--mem-an-online-reliability-memory-for-llm-based-multi-agent-systems)  
+   标签：评分：7.0/10、query:eca
+   evidence：面向多智能体系统的在线可靠性记忆，增强协作信任
+4. [From Proprietary to Open-Source: Bridging the Distribution Gap via Multi-Agent Protocol Distillation in Agentic Search](/202608/01/2607.24280v1-from-proprietary-to-open-source-bridging-the-distribution-gap-via-multi-agent-protocol-distillation-in-agentic-search)  
    标签：评分：6.0/10、query:eca
-   evidence：研究LLM智能体间基于契约的合作，直接涉及协作机制
-4. [Two Calls Beat Five Agents: Evaluating Multi-Agent Pipelines Against Self-Refinement for Local Language Models](/202607/31/2607.26922v1-two-calls-beat-five-agents-evaluating-multi-agent-pipelines-against-self-refinement-for-local-language-models)  
+   evidence：在智能体搜索中通过多智能体协议蒸馏，从专有教师智能体训练学生智能体
+5. [Rethinking Inference-Time Scaling in Local Computer-Use Agents: Failure Modes and Compute Tradeoffs](/202608/01/2607.28573v1-rethinking-inference-time-scaling-in-local-computer-use-agents-failure-modes-and-compute-tradeoffs)  
    标签：评分：6.0/10、query:eca
-   evidence：在本地LLM上评估多智能体流水线与自我精炼，与设备端智能体相关
+   evidence：本地资源受限的计算机使用智能体，与端侧/移动智能体性能相关
 
 
 <div class="dpr-home-promo-card">
