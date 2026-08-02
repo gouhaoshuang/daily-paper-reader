@@ -6,38 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-01
-- 运行时间：2026-08-01 20:56:55 UTC
+- 最新运行日期：2026-08-02
+- 运行时间：2026-08-02 19:55:23 UTC
 - 运行状态：成功
-- 本次总论文数：6
+- 本次总论文数：3
 - 精读区：1
-- 速读区：5
+- 速读区：2
 
 ### 今日简报（AI）
-今日共读6篇，精读1篇《LAST》聚焦视觉Token剪枝，速读3篇覆盖智能体云管理与多智能体扩展；最值得关注的是LAST的9.0分高评价，其边缘云协同推理思路有实用价值；建议普通读者优先了解LAST的方法，并留意多智能体系统的可靠性与扩展性趋势。
-- 详情：[/202608/01/README](/202608/01/README)
+- 今日共生成 3 篇推荐（精读 1 篇，速读 2 篇）
+- 精读：《Layered Architecture for Mobile Intelligence》（8.0/10）
+- 速读：《SKIMIX: Multi-Agent Harness-Time Scaling with Skill Mixture for Dynamic Harness Engineering》（7.0/10）, 《Decentralised Consensus Learning Networks: SME Rotation Without Centralised Reward》（6.0/10）
+- 这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。
+- 详情：[/202608/02/README](/202608/02/README)
 
 ### 精读区论文标签
-1. [LAST: The Last Query Token Guides Visual Token Pruning for Edge-Cloud Collaborative MLLM Inference](/202608/01/2607.27952v1-last-the-last-query-token-guides-visual-token-pruning-for-edge-cloud-collaborative-mllm-inference)  
-   标签：评分：9.0/10、query:eca
-   evidence：端云协同多模态大模型推理，通过末尾查询令牌指导视觉令牌剪枝
+1. [Layered Architecture for Mobile Intelligence](/202608/02/2607.28083v1-layered-architecture-for-mobile-intelligence)  
+   标签：评分：8.0/10、query:eca
+   evidence：面向动态移动与边缘环境的移动AI栈分层架构
 
 ### 速读区论文标签
-1. [Towards a Systems Foundation for Agentic Cloud Management](/202608/01/2607.25883v1-towards-a-systems-foundation-for-agentic-cloud-management)  
+1. [SKIMIX: Multi-Agent Harness-Time Scaling with Skill Mixture for Dynamic Harness Engineering](/202608/02/2607.27994v1-skimix-multi-agent-harness-time-scaling-with-skill-mixture-for-dynamic-harness-engineering)  
    标签：评分：7.0/10、query:eca
-   evidence：面向智能体云管理的系统基座，协调多智能体操作，接近端云协同智能体系统
-2. [Scaling LLM-Driven Multi-Agent Systems: Design Principles and Architectural Scalability Analysis](/202608/01/2607.27942v1-scaling-llm-driven-multi-agent-systems-design-principles-and-architectural-scalability-analysis)  
-   标签：评分：7.0/10、query:eca
-   evidence：面向LLM多智能体系统的架构原则与可扩展性分析，可迁移到分布式端云部署
-3. [$Σ$-Mem: An Online Reliability Memory for LLM-based Multi-Agent Systems](/202608/01/2607.27958v1--mem-an-online-reliability-memory-for-llm-based-multi-agent-systems)  
-   标签：评分：7.0/10、query:eca
-   evidence：面向多智能体系统的在线可靠性记忆，增强协作信任
-4. [From Proprietary to Open-Source: Bridging the Distribution Gap via Multi-Agent Protocol Distillation in Agentic Search](/202608/01/2607.24280v1-from-proprietary-to-open-source-bridging-the-distribution-gap-via-multi-agent-protocol-distillation-in-agentic-search)  
+   evidence：多智能体通过技能组合与迭代细化协作
+2. [Decentralised Consensus Learning Networks: SME Rotation Without Centralised Reward](/202608/02/2607.24416v1-decentralised-consensus-learning-networks-sme-rotation-without-centralised-reward)  
    标签：评分：6.0/10、query:eca
-   evidence：在智能体搜索中通过多智能体协议蒸馏，从专有教师智能体训练学生智能体
-5. [Rethinking Inference-Time Scaling in Local Computer-Use Agents: Failure Modes and Compute Tradeoffs](/202608/01/2607.28573v1-rethinking-inference-time-scaling-in-local-computer-use-agents-failure-modes-and-compute-tradeoffs)  
-   标签：评分：6.0/10、query:eca
-   evidence：本地资源受限的计算机使用智能体，与端侧/移动智能体性能相关
+   evidence：去中心化共识多智能体学习，无集中奖励
 
 
 <div class="dpr-home-promo-card">

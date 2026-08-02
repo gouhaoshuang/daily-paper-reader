@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-02",
+  "date": "2026-08-02",
+  "generated_at": "2026-08-02T19:55:35",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/02/2607.28083v1-layered-architecture-for-mobile-intelligence",
+      "section": "deep",
+      "title_en": "Layered Architecture for Mobile Intelligence",
+      "authors": "Qingwen Liu, Mingqing Liu",
+      "date": "2026-07-30",
+      "pdf": "https://arxiv.org/pdf/2607.28083v1",
+      "score": "8.0",
+      "evidence": "面向动态移动与边缘环境的移动AI栈分层架构",
+      "tldr": "现有AI框架多假设静态云中心范式，难以支撑自动驾驶、机器人等移动智能应用。本文提出移动AI栈，整合移动能源网络、节能AI芯片、云边移动基础设施、分布式模型与具身应用五层紧耦合结构。该框架揭示能源、计算、通信与算法需协同演化，为大规模移动智能提供系统性设计蓝图，有望推动构建可靠高效的下一代基础设施。",
+      "tags": "query:eca",
+      "abstract_en": "Artificial intelligence (AI) is rapidly evolving from a centralized computing capability into a pervasive infrastructure that interacts directly with the physical world. While recent perspectives highlight the roles of energy, chips, infrastructure, models, and applications in enabling large-scale AI systems, these frameworks primarily assume a static, cloud-centric computing paradigm. However, emerging intelligent applications, including autonomous vehicles, drones, robots, and wearable systems, require AI to operate in highly dynamic and mobile environments. This shift introduces mobility as a fundamental constraint across the entire AI ecosystem, affecting energy supply, computation, and intelligence deployment. In this article, we introduce the concept of the Mobile AI Stack, a mobility-aware architectural framework that integrates five tightly coupled layers: mobile energy networks, energy-efficient AI chips, cloud-edge-mobile infrastructure, distributed AI models, and embodied AI applications. The proposed framework provides a systematic perspective for understanding how energy delivery, computing architectures, communication networks, and AI algorithms must co-evolve to support large-scale mobile intelligence. We further discuss key research challenges and future directions toward building scalable, reliable, and energy-efficient mobile AI systems. Mobile AI Stack offers a conceptual blueprint of the next-generation infrastructure which deeply integrates the networks of computation, energy, and communications for mobile intelligence.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/02/2607.27994v1-skimix-multi-agent-harness-time-scaling-with-skill-mixture-for-dynamic-harness-engineering",
+      "section": "quick",
+      "title_en": "SKIMIX: Multi-Agent Harness-Time Scaling with Skill Mixture for Dynamic Harness Engineering",
+      "authors": "Jia Luo",
+      "date": "2026-07-30",
+      "pdf": "https://arxiv.org/pdf/2607.27994v1",
+      "score": "7.0",
+      "evidence": "多智能体通过技能组合与迭代细化协作",
+      "tldr": "AI智能体日益依赖大型技能库，但如何选择、组合和维护技能仍是难题。为此提出SKIMIX多智能体框架，让拥有不同技能组合的智能体通过迭代细化协作，集成嵌入检索、子模反稀释路由与自适应技能演化。在六个推理基准上，多智能体协作显著改善开放式数学推理，但对选择题提升有限甚至为负；智能体数量扩展呈现非单调性，且大部分收益出现在首轮细化。这些结果说明任务特性决定技能级集成的价值，为可扩展智能体设计提供实践指导。",
+      "tags": "query:eca",
+      "abstract_en": "AI agents increasingly rely on large skill libraries, but selecting, combining, and maintaining skills remains difficult. We propose SKIMIX, a multi-agent framework in which agents with different skill portfolios collaborate through iterative refinement. SKIMIX combines embedding-based skill retrieval, submodular anti-dilution routing, and adaptive skill evolution. Across six reasoning benchmarks, multi-agent collaboration substantially improves open-ended mathematical reasoning but offers limited or negative gains on multiple-choice tasks. Agent-count scaling is non-monotonic, and most improvements arise during the first refinement round. These results show that task characteristics determine whether skill-level ensembles help and provide practical guidance for scalable agent design.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/02/2607.24416v1-decentralised-consensus-learning-networks-sme-rotation-without-centralised-reward",
+      "section": "quick",
+      "title_en": "Decentralised Consensus Learning Networks: SME Rotation Without Centralised Reward",
+      "authors": "Florin Neagu",
+      "date": "2026-07-27",
+      "pdf": "https://arxiv.org/pdf/2607.24416v1",
+      "score": "6.0",
+      "evidence": "去中心化共识多智能体学习，无集中奖励",
+      "tldr": "中心化奖励主导AI学习，但强加单一外部标准。本文提出去中心化共识学习框架，通过加权社交共识和同行验证更新信念，SME按能力排名动态分配。大规模仿真显示SME轮换鲁棒且规模不变，高维向量信念下涌现稳定部分共识并导致专家集中于单一智能体。这揭示无中心化奖励时专业知识可自然涌现。",
+      "tags": "query:eca",
+      "abstract_en": "Centralised reward signals dominate modern AI learning systems, but they impose a single external definition of correct or valuable knowledge. We present a decentralised, consensus-based multi-agent learning framework in which expertise emerges through peer validation rather than prescribed reward. Agents update beliefs via weighted social consensus, while trust is allocated according to competence inferred from peer consistency instead of ground truth. Subject-matter expert (SME) status is assigned dynamically as a top-percentile competence rank rather than a fixed label.   We evaluate the framework across 84 simulation runs spanning 30 to 10,000 agents, multiple graph topologies, sparse large-scale networks, scalar and vector belief representations, dimensionality sweeps (D=1-500), multi-seed robustness tests, and parameter sensitivity analyses. Phase 1 shows that SME rotation is robust, persistent, topology-invariant, and scale-invariant: 90-100% of agents attain SME status, with most expertise turnover occurring after belief convergence and increasing with network size. Phases 2 and 3 show that vector beliefs introduce heterogeneous convergence with cascade dynamics and reveal five distinct dynamical regimes as belief dimensionality increases. At high dimensionality (D=150-200), the network reaches stable partial consensus while expertise becomes increasingly concentrated in a single agent. ETA sensitivity analysis demonstrates that this concentration is driven by belief dimensionality rather than stochastic noise. We interpret this behaviour as an emergent property of decentralised learning: in complex high-dimensional consensus spaces, the agent most consistently aligned with the collective belief naturally emerges as the recognised expert.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
