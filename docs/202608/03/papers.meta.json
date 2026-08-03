@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-03",
+  "date": "2026-08-03",
+  "generated_at": "2026-08-03T21:42:57",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/03/2607.27877v1-an-empirical-study-of-coordination-mode-as-the-first-class-citizen-in-from-scratch-multi-agent-coding",
+      "section": "deep",
+      "title_en": "An Empirical Study of Coordination Mode as the First-Class Citizen in From-Scratch Multi-Agent Coding",
+      "authors": "Yanyu Ren, Yunfeng Bai, Xizheng Wang, Li Chen, Dan Li",
+      "date": "2026-07-30",
+      "pdf": "https://arxiv.org/pdf/2607.27877v1",
+      "score": "8.0",
+      "evidence": "多智能体编码中协调模式与协作拓扑的实证研究",
+      "tldr": "现有基准在合成环境中评估多智能体编程，忽略实际成本、混淆推理与通信，且仅奖励表面完成。为此提出MSEval基准，基于10个真实全栈项目，用分层需求和确定性评分标准衡量性能；其执行引擎LegoGent支持10种协作拓扑，并通过原生CI/CD部署，配合自动评测器TAgent联合测量功能、延迟和前缀缓存成本。100次运行表明，组织拓扑与模型能力同等重要，不同拓扑使分数波动超30分、耗时翻倍，结构化流水线最快且质量最高，而过度管理反而降低性能。MSEval为多智能体真实软件开发提供了严谨可复现的评测标准。",
+      "tags": "query:eca",
+      "abstract_en": "Multi-agent vibe coding promises to accelerate software development, yet existing benchmarks rely on synthetic environments that ignore practical time and monetary costs, conflate reasoning with communication, and reward only superficial completion. We introduce multi-agent from-scratch evaluation benchmark, MSEval, evaluating multi-agent coding on real-world tasks. Grounded in 10 authentic, full-stack projects across 10 domains, MSEval scores performance using hierarchical requirements and deterministic rubrics.   Its execution engine, LegoGent, tests 10 collaboration topologies where agents coordinate via periodic sync intervals and deploy through native CI/CD pipelines. Concurrently, the automated grader TAgent dynamically probes implementations to jointly measure functional success, latency, and prefix-cached token cost. Across 100 runs, MSEval reveals that organizational topology rivals model capability in shaping the speed--cost--quality trade-off. For identical tasks and models, varying the topology shifts scores by over 30 points and doubles wall-clock time. Structured pipelines converge fastest with the highest quality, whereas heavy managerial oversight degrades performance. Ultimately, MSEval establishes a rigorous, reproducible standard for measuring how multi-agent teams actually build software. The benchmark is released at https://github.com/robinren03/MSEval.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/03/2607.28836v1-the-anylog-edge-data-fabric",
+      "section": "deep",
+      "title_en": "The AnyLog Edge Data Fabric",
+      "authors": "Roy Shadmon, Mark Davidson, Eric Aquaronne, Massimiliano Pinto, Ori Shadmon, Moshe Shadmon",
+      "date": "2026-07-30",
+      "pdf": "https://arxiv.org/pdf/2607.28836v1",
+      "score": "8.0",
+      "evidence": "基于智能体与边缘的数据管理平台，云仅用于非关键任务",
+      "tldr": "传统架构依赖集中式云平台处理工业数据，导致延迟高、扩展难；边缘数据织物AnyLog通过分布式元数据层、虚拟数据湖和统一命名空间，将分散的数据与算力抽象为单一逻辑系统。查询和计算在数据所在代理处本地执行，仅传输请求与结果，显著减少数据移动并保留本地所有权。系统在断连时仍能持续运行，支持分布式SQL、边缘AI和联邦学习，提供无单点故障的云式操作模型，适用于自主系统实时决策。",
+      "tags": "query:eca",
+      "abstract_en": "Industrial and autonomous systems increasingly depend on AI, automation, and real-time coordination to act on operational data as it is generated. Yet conventional architectures often require that data to pass through centralized platforms before decisions can be made. Cloud systems remain valuable for training, reporting, and long-term analytics, but they add latency and external dependencies to the critical decision path and become harder to scale as each new site adds additional edge devices and data. As intelligence spreads across machines, sites, facilities, and vehicles, continued dependence on centralization will constrain response time, resilience, scalability, and autonomous operation.   This paper presents the AnyLog Edge Data Fabric, an agent- and edge-based platform that manages operational data at its source while presenting distributed data, assets, compute resources, and services as one logical system. Through its Distributed Metadata Layer, Virtual Data Lake, Unified Namespace, Single System Image, and Model Context Protocol, authorized users, applications, automation services, and AI agents can discover, query, process, and act on distributed resources without knowing where they are hosted. Queries and computation execute at the agents holding the relevant data, so only requests and results traverse the network. This preserves local ownership, reduces data movement, supports continued operation during connectivity disruptions, and enables repeatable deployment from validated digital-twin configurations. AnyLog provides a cloud-like operating model for distributed SQL, real-time automation, Edge AI, federated learning, and resilient decision-making without a single point of failure or any dependence on centralized infrastructure.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/03/2607.26593v1-asarl-autonomous-social-aware-relevance-learning-for-qq-search",
+      "section": "quick",
+      "title_en": "ASARL: Autonomous Social-Aware Relevance Learning for QQ Search",
+      "authors": "Tao Su, Jinjing Hu, Xiao Wang, Xingzhong Cao, Hui Wang",
+      "date": "2026-07-29",
+      "pdf": "https://arxiv.org/pdf/2607.26593v1",
+      "score": "6.0",
+      "evidence": "采用ReasonAgent与CriticAgent的协作智能体系统进行相关性学习",
+      "tldr": "社交搜索中查询与标题使用非正式社区语言，大模型存在上下文偏差和数据稀缺问题。提出ASARL框架，用多智能体数据策展生成可解释标签并增强长尾数据，再经三阶段训练对齐行为信号并蒸馏至轻量模型。在QQ搜索上离线指标和在线用户参与均显著提升，标注效率也得到增强。",
+      "tags": "query:eca",
+      "abstract_en": "The rapid growth of online social platforms has transformed communication and information retrieval, giving rise to social search, where queries-titles are typically expressed in informal, community-specific language. While large language models provide strong general-purpose semantic understanding, their effectiveness in social search is constrained by contextual discrepancy, data scarcity, and behavior-driven dynamics. To address these challenges, we propose the Autonomous Social-Aware Relevance Learning (ASARL), a fully automated framework that integrates multi-agent data curation with staged model training. ASARL leverages a collaborative agent system: ReasonAgent generates interpretable relevance labels grounded in social attributes, CriticAgent validates and ensures logical consistency, and GenAgent augments long-tail data through synthetic query-title pairs. Building on the curated dataset, ASARL employs three-stage training: Social Context Training (SCT) to capture social language patterns, Preference-Guided Optimization (PGO) to align model predictions with behavioral signals, and Social Distillation (SD) to transfer these improvements into compact models for efficient deployment. Extensive offline and online experiments on the QQ search platform demonstrate significant improvements in both offline relevance metrics and online user engagement indicators, along with enhanced annotation efficiency. These results validate the effectiveness of combining autonomous, socially grounded data governance with preference-aligned training in practical search systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

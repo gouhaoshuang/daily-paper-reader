@@ -1,0 +1,136 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-03T21:39:24.998845+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.27877v1",
+      "source": "arxiv",
+      "title": "An Empirical Study of Coordination Mode as the First-Class Citizen in From-Scratch Multi-Agent Coding",
+      "abstract": "Multi-agent vibe coding promises to accelerate software development, yet existing benchmarks rely on synthetic environments that ignore practical time and monetary costs, conflate reasoning with communication, and reward only superficial completion. We introduce multi-agent from-scratch evaluation benchmark, MSEval, evaluating multi-agent coding on real-world tasks. Grounded in 10 authentic, full-stack projects across 10 domains, MSEval scores performance using hierarchical requirements and deterministic rubrics.   Its execution engine, LegoGent, tests 10 collaboration topologies where agents coordinate via periodic sync intervals and deploy through native CI/CD pipelines. Concurrently, the automated grader TAgent dynamically probes implementations to jointly measure functional success, latency, and prefix-cached token cost. Across 100 runs, MSEval reveals that organizational topology rivals model capability in shaping the speed--cost--quality trade-off. For identical tasks and models, varying the topology shifts scores by over 30 points and doubles wall-clock time. Structured pipelines converge fastest with the highest quality, whereas heavy managerial oversight degrades performance. Ultimately, MSEval establishes a rigorous, reproducible standard for measuring how multi-agent teams actually build software. The benchmark is released at https://github.com/robinren03/MSEval.",
+      "authors": [
+        "Yanyu Ren",
+        "Yunfeng Bai",
+        "Xizheng Wang",
+        "Li Chen",
+        "Dan Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-30T08:53:05+00:00",
+      "link": "https://arxiv.org/pdf/2607.27877v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "empirical study of coordination modes and collaboration topologies in multi-agent coding",
+      "llm_evidence_cn": "多智能体编码中协调模式与协作拓扑的实证研究",
+      "llm_evidence": "多智能体编码中协调模式与协作拓扑的实证研究",
+      "canonical_evidence": "多智能体编码中协调模式与协作拓扑的实证研究",
+      "llm_tldr_en": "Existing benchmarks for multi-agent coding rely on synthetic environments. MSEval and LegoGent evaluate 10 collaboration topologies on 10 real projects with hierarchical rubrics, advancing realistic multi-agent coding assessment.",
+      "llm_tldr_cn": "现有多智能体编码基准依赖合成环境，忽略实践中时间与金钱成本，且混淆推理与通信。作者提出MSEval基准与LegoGent执行引擎，基于10个真实全栈项目，测试10种协作拓扑，通过周期性同步与CI/CD流程实现协调。该工作为从零开始的多智能体编码提供了以协调模式为核心的实证评估框架，有助于推动该领域更贴近实际开发场景。",
+      "llm_tldr": "现有多智能体编码基准依赖合成环境，忽略实践中时间与金钱成本，且混淆推理与通信。作者提出MSEval基准与LegoGent执行引擎，基于10个真实全栈项目，测试10种协作拓扑，通过周期性同步与CI/CD流程实现协调。该工作为从零开始的多智能体编码提供了以协调模式为核心的实证评估框架，有助于推动该领域更贴近实际开发场景。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.28836v1",
+      "source": "arxiv",
+      "title": "The AnyLog Edge Data Fabric",
+      "abstract": "Industrial and autonomous systems increasingly depend on AI, automation, and real-time coordination to act on operational data as it is generated. Yet conventional architectures often require that data to pass through centralized platforms before decisions can be made. Cloud systems remain valuable for training, reporting, and long-term analytics, but they add latency and external dependencies to the critical decision path and become harder to scale as each new site adds additional edge devices and data. As intelligence spreads across machines, sites, facilities, and vehicles, continued dependence on centralization will constrain response time, resilience, scalability, and autonomous operation.   This paper presents the AnyLog Edge Data Fabric, an agent- and edge-based platform that manages operational data at its source while presenting distributed data, assets, compute resources, and services as one logical system. Through its Distributed Metadata Layer, Virtual Data Lake, Unified Namespace, Single System Image, and Model Context Protocol, authorized users, applications, automation services, and AI agents can discover, query, process, and act on distributed resources without knowing where they are hosted. Queries and computation execute at the agents holding the relevant data, so only requests and results traverse the network. This preserves local ownership, reduces data movement, supports continued operation during connectivity disruptions, and enables repeatable deployment from validated digital-twin configurations. AnyLog provides a cloud-like operating model for distributed SQL, real-time automation, Edge AI, federated learning, and resilient decision-making without a single point of failure or any dependence on centralized infrastructure.",
+      "authors": [
+        "Roy Shadmon",
+        "Mark Davidson",
+        "Eric Aquaronne",
+        "Massimiliano Pinto",
+        "Ori Shadmon",
+        "Moshe Shadmon"
+      ],
+      "primary_category": "cs.ET",
+      "categories": [
+        "cs.ET",
+        "cs.MA",
+        "cs.NI"
+      ],
+      "published": "2026-07-30T21:00:43+00:00",
+      "link": "https://arxiv.org/pdf/2607.28836v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Agent- and edge-based platform managing operational data with cloud for non-critical tasks",
+      "llm_evidence_cn": "基于智能体与边缘的数据管理平台，云仅用于非关键任务",
+      "llm_evidence": "基于智能体与边缘的数据管理平台，云仅用于非关键任务",
+      "canonical_evidence": "基于智能体与边缘的数据管理平台，云仅用于非关键任务",
+      "llm_tldr_en": "Presents AnyLog Edge Data Fabric, an agent- and edge-based platform that manages operational data across distributed sites, keeping cloud for non-critical tasks to reduce latency and increase resilience.",
+      "llm_tldr_cn": "工业与自主系统需要利用实时数据决策，但传统中心化云平台会引入延迟与依赖。本文提出AnyLog边缘数据编织，基于智能体与边缘节点管理分布式运营数据，仅在训练、报表等非关键路径使用云。该架构提升了响应速度、可扩展性与自主运行能力，适合边缘云协同场景。",
+      "llm_tldr": "工业与自主系统需要利用实时数据决策，但传统中心化云平台会引入延迟与依赖。本文提出AnyLog边缘数据编织，基于智能体与边缘节点管理分布式运营数据，仅在训练、报表等非关键路径使用云。该架构提升了响应速度、可扩展性与自主运行能力，适合边缘云协同场景。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.26593v1",
+      "source": "arxiv",
+      "title": "ASARL: Autonomous Social-Aware Relevance Learning for QQ Search",
+      "abstract": "The rapid growth of online social platforms has transformed communication and information retrieval, giving rise to social search, where queries-titles are typically expressed in informal, community-specific language. While large language models provide strong general-purpose semantic understanding, their effectiveness in social search is constrained by contextual discrepancy, data scarcity, and behavior-driven dynamics. To address these challenges, we propose the Autonomous Social-Aware Relevance Learning (ASARL), a fully automated framework that integrates multi-agent data curation with staged model training. ASARL leverages a collaborative agent system: ReasonAgent generates interpretable relevance labels grounded in social attributes, CriticAgent validates and ensures logical consistency, and GenAgent augments long-tail data through synthetic query-title pairs. Building on the curated dataset, ASARL employs three-stage training: Social Context Training (SCT) to capture social language patterns, Preference-Guided Optimization (PGO) to align model predictions with behavioral signals, and Social Distillation (SD) to transfer these improvements into compact models for efficient deployment. Extensive offline and online experiments on the QQ search platform demonstrate significant improvements in both offline relevance metrics and online user engagement indicators, along with enhanced annotation efficiency. These results validate the effectiveness of combining autonomous, socially grounded data governance with preference-aligned training in practical search systems.",
+      "authors": [
+        "Tao Su",
+        "Jinjing Hu",
+        "Xiao Wang",
+        "Xingzhong Cao",
+        "Hui Wang"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR"
+      ],
+      "published": "2026-07-29T08:14:00+00:00",
+      "link": "https://arxiv.org/pdf/2607.26593v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "collaborative agent system with ReasonAgent and CriticAgent for relevance learning",
+      "llm_evidence_cn": "采用ReasonAgent与CriticAgent的协作智能体系统进行相关性学习",
+      "llm_evidence": "采用ReasonAgent与CriticAgent的协作智能体系统进行相关性学习",
+      "canonical_evidence": "采用ReasonAgent与CriticAgent的协作智能体系统进行相关性学习",
+      "llm_tldr_en": "Social search suffers from informal language and scarce data. ASARL combines multi-agent data curation (ReasonAgent, CriticAgent) with staged training, generating and validating relevance labels to improve QQ search relevance.",
+      "llm_tldr_cn": "社交搜索中查询与标题常用非正式社区语言，通用大模型面临语境差异和数据稀缺。本文提出ASARL，一个全自动框架，集成多智能体数据策展与分阶段模型训练，其中ReasonAgent生成可解释相关性标签，CriticAgent进行验证，形成协作式智能体系统。该方法在QQ搜索相关任务上缓解了行为动态带来的挑战。该工作展示了协作智能体在信息检索数据质量提升中的价值。",
+      "llm_tldr": "社交搜索中查询与标题常用非正式社区语言，通用大模型面临语境差异和数据稀缺。本文提出ASARL，一个全自动框架，集成多智能体数据策展与分阶段模型训练，其中ReasonAgent生成可解释相关性标签，CriticAgent进行验证，形成协作式智能体系统。该方法在QQ搜索相关任务上缓解了行为动态带来的挑战。该工作展示了协作智能体在信息检索数据质量提升中的价值。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

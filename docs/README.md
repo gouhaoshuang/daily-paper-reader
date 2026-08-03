@@ -6,32 +6,31 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-02
-- 运行时间：2026-08-02 19:55:23 UTC
+- 最新运行日期：2026-08-03
+- 运行时间：2026-08-03 21:42:52 UTC
 - 运行状态：成功
 - 本次总论文数：3
-- 精读区：1
-- 速读区：2
+- 精读区：2
+- 速读区：1
 
 ### 今日简报（AI）
-- 今日共生成 3 篇推荐（精读 1 篇，速读 2 篇）
-- 精读：《Layered Architecture for Mobile Intelligence》（8.0/10）
-- 速读：《SKIMIX: Multi-Agent Harness-Time Scaling with Skill Mixture for Dynamic Harness Engineering》（7.0/10）, 《Decentralised Consensus Learning Networks: SME Rotation Without Centralised Reward》（6.0/10）
-- 这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。
-- 详情：[/202608/02/README](/202608/02/README)
+今日精读多智能体编码协调模式与AnyLog边缘数据织物，另速读QQ搜索相关学习。  
+最值得看：从零搭建多智能体编码时“协调模式”作为一等公民的实证结论，以及AnyLog统一边缘数据管理方案。  
+建议普通读者优先了解多智能体协作边界与边缘数据落地场景，按需深入原文。
+- 详情：[/202608/03/README](/202608/03/README)
 
 ### 精读区论文标签
-1. [Layered Architecture for Mobile Intelligence](/202608/02/2607.28083v1-layered-architecture-for-mobile-intelligence)  
+1. [An Empirical Study of Coordination Mode as the First-Class Citizen in From-Scratch Multi-Agent Coding](/202608/03/2607.27877v1-an-empirical-study-of-coordination-mode-as-the-first-class-citizen-in-from-scratch-multi-agent-coding)  
    标签：评分：8.0/10、query:eca
-   evidence：面向动态移动与边缘环境的移动AI栈分层架构
+   evidence：多智能体编码中协调模式与协作拓扑的实证研究
+2. [The AnyLog Edge Data Fabric](/202608/03/2607.28836v1-the-anylog-edge-data-fabric)  
+   标签：评分：8.0/10、query:eca
+   evidence：基于智能体与边缘的数据管理平台，云仅用于非关键任务
 
 ### 速读区论文标签
-1. [SKIMIX: Multi-Agent Harness-Time Scaling with Skill Mixture for Dynamic Harness Engineering](/202608/02/2607.27994v1-skimix-multi-agent-harness-time-scaling-with-skill-mixture-for-dynamic-harness-engineering)  
-   标签：评分：7.0/10、query:eca
-   evidence：多智能体通过技能组合与迭代细化协作
-2. [Decentralised Consensus Learning Networks: SME Rotation Without Centralised Reward](/202608/02/2607.24416v1-decentralised-consensus-learning-networks-sme-rotation-without-centralised-reward)  
+1. [ASARL: Autonomous Social-Aware Relevance Learning for QQ Search](/202608/03/2607.26593v1-asarl-autonomous-social-aware-relevance-learning-for-qq-search)  
    标签：评分：6.0/10、query:eca
-   evidence：去中心化共识多智能体学习，无集中奖励
+   evidence：采用ReasonAgent与CriticAgent的协作智能体系统进行相关性学习
 
 
 <div class="dpr-home-promo-card">
