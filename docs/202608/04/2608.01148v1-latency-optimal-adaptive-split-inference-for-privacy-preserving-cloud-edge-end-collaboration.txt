@@ -1,0 +1,594 @@
+Title: Latency-Optimal Adaptive Split Inference for Privacy-Preserving Cloud-Edge-End Collaboration
+
+URL Source: https://arxiv.org/pdf/2608.01148v1
+
+Published Time: Tue, 04 Aug 2026 01:33:37 GMT
+
+Number of Pages: 22
+
+Markdown Content:
+# Latency-Optimal Adaptive Split Inference for Privacy-Preserving Cloud-Edge-End Collaboration 
+
+Yi Li 1, Peng Zhang 1⋆, and Man Ho Au 2 
+
+> 1
+
+Guangdong Provincial Key Laboratory of Intelligent Information Processing, College of Electronics and Information Engineering, Shenzhen University, Shenzhen 518060, Guangdong, China 
+
+stabilelee@foxmail.com, zhangp@szu.edu.cn  
+
+> 2
+
+Department of Computing, The Hong Kong Polytechnic University, Hong Kong, China 
+
+man-ho-allen.au@polyu.edu.hk 
+
+Abstract. Internet of Things (IoT) end devices are increasingly ex-pected to support privacy-sensitive batch inference, yet their limited computational resources often make full local execution of convolutional neural networks impractical. This paper presents a latency-optimal adap-tive split inference framework for privacy-preserving cloud-edge-end col-laboration. The end device acts as the trust anchor, executes the plain-text model prefix, encrypts the split activation using fully homomorphic encryption (FHE), and keeps the secret key locally, while the edge and cloud execute assigned model segments only on FHE ciphertexts. We for-mulate collaborative encrypted inference as a split-pair selection prob-lem over an end-side split point and an edge-side termination point. The proposed planner jointly models plaintext prefix execution, encryption, communication, edge-side FHE execution, and cloud-side FHE comple-tion, and supports both convolution-level and block-level split granular-ities. Experiments on CIFAR-10 and PathMNIST show that the pro-posed convolution-level collaborative scheme achieves amortized end-to-end speedups of approximately 12 .9× over full-cloud FHE and 3.9× over the block-level alternative, while preserving the corresponding plaintext-model accuracy. Including modeled communication, the amortized la-tencies are 1033.279 s/sample on CIFAR-10 and 1023.429 s/sample on PathMNIST. 
+
+Keywords: Cloud-Edge-End Collaboration · Convolutional Neural Net-works · Split Inference · Fully Homomorphic Encryption 
+
+## 1 INTRODUCTION 
+
+Internet of Things (IoT) applications increasingly rely on end devices to ac-quire and preprocess privacy-sensitive data in settings such as pathology slide  
+
+> ⋆
+
+Corresponding author. arXiv:2608.01148v1 [cs.CR] 2 Aug 2026 2 Y. Li et al. 
+
+digitization and archival medical image analysis. Convolutional neural networks (CNNs) are widely used to provide visual recognition and decision support for these workloads. However, IoT end devices are typically constrained by limited computing capacity, memory, battery supply, and thermal constraints. Running the full model locally may therefore lead to long processing time and high energy consumption. Directly offloading inference to edge or cloud servers can reduce the device-side burden, but it exposes raw inputs or semantically rich interme-diate features to external infrastructure. Split inference distributes CNN execution across multiple tiers by executing an initial prefix on the end device and delegating the remaining layers to edge or cloud servers. Recent studies have shown that this execution model is practical under heterogeneous resource constraints. The deep neural network (DNN) par-titioning framework DNN Surgery accelerates edge inference by selecting layer partition points between the device and edge [11], while an adaptive end-edge-cloud framework further predicts layer-wise latency and divides DNN compu-tation across all three tiers [12]. Latency- and privacy-aware CNN distributed inference further demonstrates that split selection should consider both response time and feature-level privacy in reliable artificial intelligence (AI) systems [7]. However, conventional split inference falls short for privacy-sensitive IoT appli-cations when intermediate representations are transmitted in plaintext, because these representations may still reveal information about the original input, user attributes, or the final prediction. Fully homomorphic encryption (FHE) is a natural cryptographic primitive for this setting because it allows external servers to compute directly on ciphertexts without observing plaintext inputs or intermediate features. Prior encrypted inference systems have demonstrated the feasibility of FHE-compatible neural network evaluation [6, 13, 2], and homomorphic encryption has also been adopted in cloud-edge-end privacy-preserving machine learning [21]. Nevertheless, full-cloud FHE deployment remains costly due to ciphertext expansion, encrypted communication, and homomorphic arithmetic. Moving the encrypted workload entirely to the edge is also insufficient, since edge servers are closer to the user but have lower computing capacity than the cloud. The central challenge is therefore to determine where to split a CNN and how to divide its encrypted suffix between the edge and cloud tiers so that privacy is preserved while end-to-end latency is minimized. This paper proposes a privacy-preserving split inference framework for cloud-edge-end collaboration. The end device serves as the trust anchor, while the edge and cloud execute the encrypted suffix according to the latency-minimizing split pair selected by the planner. The main contributions of this work are summarized as follows. 
+
+– We design and integrate a privacy-preserving cloud-edge-end split inference framework for CNNs, where the end device remains the trust anchor by keep-ing the secret key and all plaintext data locally, and all external computation at the edge and cloud is performed strictly on FHE ciphertexts without ever decrypting intermediate results. Latency-Optimal Split Inference 3
+
+– We formulate collaborative encrypted inference as a latency minimization problem over split pairs (q, e ) and develop a split-granularity-aware planner. The proposed model jointly captures local plaintext execution, encryption, communication, edge-side FHE execution, and cloud-side FHE completion, while supporting both convolution-level and block-level partitioning to avoid bottlenecks in edge-side encrypted computation. 
+
+– We implement a CKKS/OpenFHE prototype for CNN models designed for FHE. Experiments on CIFAR-10 and PathMNIST show that convolution-level collaboration substantially reduces latency relative to both baselines while matching the corresponding plaintext model’s accuracy. 
+
+## 2 RELATED WORK 
+
+Privacy-Preserving Neural Network Inference. Fully homomorphic en-cryption has been widely studied as a cryptographic basis for privacy-preserving neural network inference. CryptoNets demonstrated that neural networks can be evaluated over encrypted inputs and returned as encrypted predictions, es-tablishing an early full-cloud FHE inference paradigm [6]. Since FHE schemes support additions and multiplications but not comparison-based nonlinearities, subsequent works have redesigned neural networks into FHE-compatible forms by replacing ReLU and other nonlinear activations with square or low-degree polynomial approximations [13, 2]. Other studies focus on reducing the large overhead of encrypted inference through packing, layout optimization, and auto-mated compilation. HyPHEN improves encrypted inference throughput through hybrid ciphertext packing and layout optimization [9], while Orion provides a recent framework for deep FHE inference with automated optimization across encrypted operators [5]. Recent work has also pushed practical FHE-based CNN inference further by combining packing, polynomial evaluation, and hardware-aware optimization [16]. FHEON provides configurable CKKS/OpenFHE build-ing blocks for encrypted neural networks and evaluates several CNN families, including a VGG-16 tailored to CIFAR-10, on a consumer-grade CPU [15]. Bi-CryptoNets explores a different acceleration direction by decomposing the input into sensitive and insensitive segments, processing them through ciphertext and plaintext branches, respectively [22]. These works show that FHE-compatible neural inference is feasible and can be accelerated through model, packing, com-piler, or mixed plaintext-ciphertext designs. However, they primarily focus on encrypted model execution itself, and generally do not address how an FHE-compatible CNN should be partitioned across end, edge, and cloud tiers under a unified latency objective. 
+
+Split Inference and End-Edge-Cloud Collaboration. Split inference and collaborative intelligence have been extensively studied to reduce the latency and resource burden of deep neural network inference on constrained devices. Neurosurgeon profiles layer-wise computation and communication costs to de-cide whether DNN layers should run on a mobile device or in the cloud [8]. More recent surveys and systems studies extend this line toward cloud-edge-end hierarchies, adaptive partitioning, and privacy-aware split execution [19, 4 Y. Li et al. 
+
+14]. DNN Surgery further studies layer partitioning under dynamic edge con-ditions and searches for efficient partition plans [11]. More recently, latency-and privacy-aware CNN distributed inference has considered both service la-tency and privacy risk in reliable AI systems [7]. These approaches establish the importance of model partitioning, collaborative execution, and split-point search. Nevertheless, most of them assume plaintext intermediate features or lightweight privacy metrics rather than FHE-protected remote computation. As a result, their cost models do not capture encryption latency, ciphertext expan-sion, FHE-specific kernel overhead, or the different encrypted execution costs of edge and cloud tiers. In contrast, this work adopts the established CKKS scheme without modifying its cryptographic construction and studies the placement of encrypted CNN computation across end, edge, and cloud tiers using a unified latency model for the plaintext prefix, encryption, ciphertext communication, edge-side FHE execution, and cloud-side FHE completion. 
+
+## 3 PRELIMINARIES 
+
+This section reviews the cryptographic background of the fully homomorphic en-cryption scheme CKKS and the stage-level view of convolutional neural networks on which the proposed split inference framework is built. 
+
+3.1 CKKS Scheme Scheme Overview. The Cheon–Kim–Kim–Song (CKKS) scheme [4] supports approximate arithmetic over encrypted vectors of real numbers and is therefore well suited to neural network inference. Its plaintext and ciphertext spaces are defined over the polynomial ring RQ = ZQ[X]/(XN + 1) , where the ring dimen-sion N is a power of two and Q is the ciphertext modulus. A real-valued message is mapped to a plaintext polynomial after multiplication by a scaling factor ∆
+
+that controls numerical precision, so all homomorphic results are recovered up to a bounded approximation error. Encryption and decryption are performed with a public/secret key pair, and the secret key is held exclusively by the trusted end device, so any party that processes ciphertexts without it does not obtain plaintext information under the CKKS security assumptions. 
+
+Homomorphic Operations. CKKS natively supports homomorphic addition and multiplication over ciphertexts. Operators outside addition and multipli-cation, such as comparison-based nonlinearities, are not directly available and require special handling, which is addressed in Section 5. 
+
+SIMD Packing. CKKS encodes a vector of values into the slots of a single ciphertext, enabling single-instruction multiple-data evaluation in which one ho-momorphic operation is applied to all slots simultaneously. Slot-wise reduction, as required by fully connected projections, is realized through ciphertext rota-tions and the associated summation routine. Latency-Optimal Split Inference 5
+
+3.2 Stage-Based Split Inference 
+
+A convolutional neural network can be represented as an ordered sequence L =(ℓ1, ℓ 2, . . . , ℓ M ), where each stage is a computation unit such as a convolutional layer, a block boundary, a pooling transition, or a fully connected layer. The end-to-end inference mapping is 
+
+f (x; Θ) = fM ◦ fM −1 ◦ · · · ◦ f1(x), (1) where x denotes the input sample, Θ represents the network parameters, and fm
+
+is the mapping of stage ℓm. Because the output feature tensor of one stage is the complete input required by the next stage, a CNN can be partitioned at stage boundaries without changing the inference function, provided that the original stage order and model parameters are preserved. In plaintext distributed infer-ence, the prefix of the network is executed on one device, the intermediate fea-ture tensor is transmitted to another device, and the remaining stages continue from that tensor. This stage-based execution view provides the basic feasibility of model partitioning and serves as the notation basis for the cloud-edge-end collaborative framework formalized next. 
+
+## 4 SYSTEM MODEL AND PROBLEM FORMULATION 
+
+This section introduces the privacy-preserving cloud-edge-end split inference ar-chitecture, states the threat assumptions, and formalizes the latency objective. 
+
+4.1 Inference Architecture 
+
+This work considers a three-tier collaborative inference architecture comprising end devices, edge servers, and cloud servers. Designed to reduce the process-ing cost of privacy-sensitive encrypted inference, the architecture jointly lever-ages data locality, resource asymmetry, and remote computing capacity. Its core principle is that raw user data never leave the end device, while only protected intermediate representations are transmitted for collaborative processing.   
+
+> Fig. 1. System architecture of the privacy-preserving cloud-edge-end split inference. 6Y. Li et al.
+
+End Device. As the data origin and primary trust anchor, the end device ac-quires and preprocesses input and executes the initial segment of the neural infer-ence task locally. Before any outward transmission, it encrypts the intermediate representation using an FHE scheme. After remote homomorphic computation is completed, it receives the encrypted result, decrypts it locally, and outputs the final prediction. 
+
+Edge Server. Deployed close to the end device in the conceptual architecture, the edge server acts as the first external processing tier and evaluates its assigned model segment directly on FHE ciphertexts. Upon receiving the encrypted data, the edge performs a continuous segment of homomorphic computation and then either forwards the updated ciphertext to the cloud or returns the final encrypted output to the end device when the selected plan terminates at the edge. 
+
+Cloud Server. The cloud server provides the high-capacity computing tier. It completes the remaining inference workload that is more efficiently assigned to the cloud due to computational intensity, service-scale demand, or end-to-end latency considerations. Critically, the cloud participates only in FHE-domain processing and requires no access to raw inputs, plaintext intermediate features, or the private decryption key. 
+
+4.2 Threat Model 
+
+In the threat model considered in this work, end devices are assumed to operate within a trusted security domain, whereas edge and cloud servers are located outside this trusted boundary. All participating entities are assumed to be au-thenticated and to execute the cloud-edge-end collaborative inference protocol faithfully. However, the edge and cloud are regarded as honest-but-curious ad-versaries: although they do not arbitrarily deviate from the prescribed protocol, they may attempt to infer users’ private information from the data available to them during distributed inference. In particular, a semi-honest edge or cloud server may analyze transmitted protected states or encrypted outputs in an effort to reconstruct the original input, infer sensitive feature information, or deduce the final prediction outcome. The privacy boundary does not rely on any non-collusion assumption: even if the edge and cloud combine their ciphertext observations, no external tier receives the secret key. Under these assumptions, the principal security objective of the proposed framework is to prevent the leakage of raw data, plaintext intermediate representations, and final plaintext predictions before authorized local decryption. 
+
+4.3 Problem Formulation 
+
+We formulate the privacy-preserving cloud-edge-end split inference as a con-strained decision problem over a three-tier execution path. Let the CNN be represented as an ordered stage sequence L = ( ℓ1, ℓ 2, . . . , ℓ M ). The system must determine an end-side split point q and an edge-side termination point e. Under a feasible decision tuple (q, e ), stages ℓ1 to ℓq are executed locally in the plain-text domain, stages ℓq+1 to ℓe are processed at the selected edge server over Latency-Optimal Split Inference 7
+
+protected intermediate data, and stages ℓe+1 to ℓM are completed by the cloud when e < M .The end-to-end service latency of a decision tuple is jointly determined by local prefix inference, transformation of the split activation into a protected representation, inter-tier communication, protected execution at the edge, and cloud-side completion of the residual suffix when needed. Let Ttot (q, e ) denote the total latency, which can be expressed as: 
+
+Ttot (q, e ) = Tend (q) + Tenc (q) + Tcomm (q, e ) + Tedge (q, e ) + Tcloud (e), (2) where Tend (q) denotes the latency of the plaintext prefix executed on the end device, Tenc (q) denotes the cost of encrypting the split activation before offload-ing, Tcomm (q, e ) denotes the aggregate transmission delay across the active links, 
+
+Tedge (q, e ) denotes the protected execution time incurred at the edge server, and 
+
+Tcloud (e) denotes the additional delay introduced when the cloud completes the remaining suffix, with Tcloud (M ) = 0 in terminate mode. Final-logit decryption is omitted from the optimization model because it is identical for every split can-didate; it is included in the reported absolute end-to-end latency. In the detailed model below, Tcomm (q, e ) is expanded into delays over the active end-to-edge, edge-to-cloud, cloud-to-end, or edge-to-end links. Consequently, the system aims to identify the feasible execution configura-tion that minimizes end-to-end latency while preserving functional correctness, satisfying the selected split granularity, and maintaining the privacy boundary defined by the system model. Formally, the optimization objective is: 
+
+(q∗, e ∗) = arg min 
+
+> (q,e )∈Ω
+
+Ttot (q, e ). (3) The feasible set Ω satisfies four classes of constraints, including a deployment-specific model-exposure policy. 
+
+– Structural constraints. The partitioned execution order must remain con-sistent with the original layer sequence L, ensuring that the distributed in-ference path is equivalent to the intact CNN. 
+
+– Split-granularity constraints. Candidate boundaries must follow the se-lected search granularity, either allowing convolution-layer boundaries inside a convolutional block or restricting boundaries to complete blocks and fully connected layers. 
+
+– Privacy constraints. Raw inputs, plaintext intermediate representations, and the decryption credential must remain confined to the trusted end de-vice; only protected intermediate states and protected outputs may leave the trusted domain. 
+
+– Model-exposure constraints. The cumulative fraction of model parame-ters deployed on the end device must satisfy 
+
+Wend (q) ≤ Wmax , (4) where Wend (q) is the fraction of total model parameters from the input through ℓq , and Wmax is a policy limit set by the cloud model owner to reduce model-exposure risk. 8 Y. Li et al. 
+
+## 5 Latency-Optimal Adaptive Split Inference 
+
+5.1 FHE-Compatible Stage 
+
+As discussed in Section 3.1, CKKS requires comparison-based nonlinearities to be replaced by arithmetic-compatible alternatives. We therefore replace each ReLU activation with the quadratic residual activation: 
+
+σ(z) = ( α · z)2 + z, (5) where α is a learnable scaling coefficient determined during training. This acti-vation preserves a linear residual pathway alongside a degree-2 polynomial term, which improves gradient flow compared with a pure square mapping while main-taining the same CKKS-friendly multiplicative structure. Homomorphic evaluation of this activation requires one ciphertext multipli-cation and one addition, keeping multiplicative-depth growth predictable. The linear operators, including convolution, batch normalization, and fully connected projection, retain their original algebraic form. The model is trained and de-ployed under this FHE-compatible activation from initialization. 
+
+5.2 Latency-Aware Model Partition Strategy 
+
+Prior to serving any inference request, the system executes an offline plan-ning phase. For latency planning, the ordered stage representation is recalled as f (x; Θ) = fM ◦ fM −1 ◦ · · · ◦ f1(x). Let h0 = x and hm = fm(hm−1) denote the output representation after stage ℓm. For each stage ℓm, a single forward profiling pass records the activation cardinality Am of hm and the floating-point operation count Fm required to evaluate fm for one input sample. The same checkpoint-specific profiling pass also records the parameter count of each stage and derives the cumulative end-side model exposure Wend (q). The profiler out-put is tied to the exact checkpoint and input shape used by the encrypted infer-ence pipeline. These per-stage statistics, together with the end-device compute rate, benchmark-calibrated remote FHE cost densities, inter-tier bandwidths, and CKKS configuration, form the planner input. 
+
+Cost Model. For a candidate split pair (q, e ) ∈ Ω with ℓq , ℓ e ∈ L and e > q ,the latency model is decomposed according to the three execution tiers. For remote FHE execution, stages with the same encrypted execution pat-tern are assigned to a stage-cost group G. Let FG = P 
+
+> m∈G
+
+Fm denote the profiled FLOP count of that group for one input sample, and let Ga:b denote the stage-cost groups required to execute stages ℓa through ℓb. For each remote tier d ∈ { edge , cloud }, an offline benchmark measures the wall-clock completion time T wall  
+
+> d,G
+
+for N cal  
+
+> d,G
+
+calibration samples under a fixed cryptographic and exe-cution configuration. The amortized benchmark latency and the corresponding empirical FHE cost density are defined as 
+
+eT bench  
+
+> d,G
+
+= T wall 
+
+> d,G
+
+N cal 
+
+> d,G
+
+, βd,G =
+
+eT bench 
+
+> d,G
+
+FG/10 9 . (6) Latency-Optimal Split Inference 9
+
+Accordingly, the planner estimates the FHE execution cost of group G on tier d
+
+as 
+
+T FHE  
+
+> d
+
+(G) = βd,G 
+
+FG
+
+10 9 . (7) The plaintext FLOP count serves only as a stage-size normalizer. The empirical density βd,G absorbs the effects of ciphertext arithmetic, packing, rotations, ker-nel implementation, parallel execution, and hardware. If an auxiliary operation has nonzero encrypted execution time but no profiled FLOP count, its mea-sured time is included in the associated stage-cost group. The densities must therefore be recalibrated whenever the hardware, cryptographic configuration, packing strategy, kernel implementation, or parallel execution setting changes. A tier-specific density is calibrated for every supported group, so all supported stage families remain available to the candidate search. 
+
+– End device. The end device executes the plaintext prefix from ℓ1 to ℓq . Its local computation latency is 
+
+Tend (q) = 
+
+Pqm=1 Fm
+
+Rend × 10 9 , (8) where Rend is the end device’s compute rate in GFLOPS. The split activation at stage ℓq contains Aq scalar values per sample. Under CKKS parameterized by ring dimension N , multiplicative depth D, scaling modulus size b bits, and sample-interleaved batch factor B, each ciphertext occupies Cct = 2 N ⌈(D + 1) b/ 64 ⌉ × 8 bytes. Since one ciphertext packs B
+
+interleaved samples, each sample has ⌊S/B ⌋ usable feature slots. For ref-erence, dense packing would require at least ⌈Am/⌊S/B ⌋⌉ ciphertexts per packed batch. Channel grouping, padding, and other layout constraints may increase the actual count. The layout profiler therefore records nct 
+
+> m
+
+, the ac-tual number of ciphertexts required to represent a packed batch at stage ℓm.The corresponding amortized ciphertext count and payload per sample are 
+
+Km = nct 
+
+> m
+
+B , Pm = nct 
+
+> m
+
+Cct 
+
+B . (9) Accordingly, the encryption latency at split point q is 
+
+Tenc (q) = nct 
+
+> q
+
+B τenc , (10) where τenc is an empirically calibrated per-ciphertext cost. Transmission of the split activation to the edge incurs 
+
+Tend →edge (q) = nct  
+
+> q
+
+Cct 
+
+B B end →edge 
+
+, (11) where Bend →edge is the effective end-to-edge uplink bandwidth. All payload variables P are measured in amortized bytes per sample. Let Bi→j denote a 10 Y. Li et al. 
+
+configured link rate reported in Mbps. Before evaluating the communication terms, the planner converts it to Bi→j = 10 6Bi→j /8 bytes/s. Therefore, every communication term of the form P/B i→j is equivalently 
+
+Ti→j (P ) = PBi→j
+
+= 8P
+
+10 6Bi→j
+
+. (12) This model accounts for payload serialization time only; fixed propagation delay, queueing delay, and network jitter are not included. 
+
+– Edge server. After receiving the encrypted activation, the edge server ex-ecutes stages ℓq+1 through ℓe in the ciphertext domain. Using the empirical densities defined above, its FHE execution latency is 
+
+Tedge (q, e ) = X
+
+> G∈G q+1: e
+
+βedge ,G 
+
+FG
+
+10 9 . (13) If the edge is not the terminal executor, the ciphertext after layer ℓe is forwarded to the cloud with delay 
+
+Tedge →cloud (e) = nct  
+
+> e
+
+Cct 
+
+B B edge →cloud 
+
+, (14) where Bedge →cloud is the edge-to-cloud link bandwidth. In the terminate mode (e = M ), the edge returns the final encrypted logits to the end device with 
+
+Tedge →end (M ) = nct  
+
+> M
+
+Cct 
+
+B B edge →end 
+
+, (15) where Bedge →end is the effective bandwidth of the return link from edge to the end device. 
+
+– Cloud server. The cloud server is used only in the relay mode. It completes the residual encrypted suffix from ℓe+1 to ℓM . Its FHE execution latency is 
+
+Tcloud (e) = X
+
+> G∈G e+1: M
+
+βcloud ,G 
+
+FG
+
+10 9 . (16) After the cloud obtains the encrypted logits, the return delay to the end device is 
+
+Tcloud →end (M ) = nct  
+
+> M
+
+Cct 
+
+B B cloud →end 
+
+, (17) where Bcloud →end is the effective bandwidth of the cloud-to-end return link. 
+
+Routing Modes and Total Latency. The planner evaluates two routing modes for every candidate tuple (q, e ). In the relay mode (e < M ), the edge executes stages ℓq+1 through ℓe homomorphically and forwards the resulting en-crypted state to the cloud, which completes the residual suffix ℓe+1 through ℓM .The total latency is Latency-Optimal Split Inference 11 
+
+Trelay (q, e ) = Tend (q) + Tenc (q) + Tend →edge (q) + Tedge (q, e )+ Tedge →cloud (e) + Tcloud (e) + Tcloud →end (M ). (18) In the terminate mode (e = M ), the edge completes the full remaining suffix and returns the encrypted logits directly to the end device, bypassing the cloud entirely: 
+
+Tterm (q, M ) = Tend (q) + Tenc (q) + Tend →edge (q)+ Tedge (q, M ) + Tedge →end (M ). (19) Accordingly, Ttot (q, e ) denotes the candidate end-to-end latency instantiated by Trelay (q, e ) in relay mode and by Tterm (q, M ) in terminate mode. 
+
+Split Selection. The planner enumerates candidate split pairs (q, e ) ∈ Ω with 
+
+ℓq , ℓ e ∈ L and e > q , evaluates the end-to-end latency of each candidate, and selects the latency-minimizing deployment plan. Equivalently, the split-selection procedure implements 
+
+π∗ = ( q∗, e ∗) = arg min 
+
+> (q,e )∈Ω
+
+Ttot (q, e ).
+
+Two split granularities are considered: convolution-level splitting allows bound-aries inside a convolutional block at convolution-layer granularity, whereas block-level splitting allows boundaries only between complete blocks or FC layers and does not split inside a block or an FC layer. The complete procedure is given in Algorithm 1. 
+
+5.3 End-Edge-Cloud Collaborative Inference 
+
+Once the optimal partition plan π∗ has been determined offline, each packed inference batch is processed through an online pipeline that maintains stage-consistent execution semantics across the three tiers while enforcing the privacy boundary at the end device. 
+
+Local Prefix Inference. The input batch is first processed through the plain-text prefix of the CNN from the initial layer up to the selected split point q∗.This produces the intermediate activation tensors hq∗ for the packed samples on the trusted end device. 
+
+Encrypted Feature Packaging. The intermediate activation tensors hq∗ are encrypted using a layout-aware packing strategy that preserves the structural properties of the split-point representation. When the split occurs within the con-volutional backbone, the activation retains its spatial dimensions and is packed into a channel-grouped spatial layout in which each ciphertext holds multi-channel spatial feature elements interleaved across B samples. When the split oc-curs after the transition to the classifier head, the activation is a one-dimensional feature vector and is packed into a feature-major layout with sample-interleaved slots. In both cases, the resulting ciphertext sequence Cq∗ is transmitted to the edge server over the end-to-edge uplink. The end device retains the secret key 12 Y. Li et al. 
+
+Algorithm 1 Offline Latency-Aware Split Selection 
+
+Require: CNN stage sequence L = ( ℓ1, ℓ 2, . . . , ℓ M ); feasible split-pair set Ω
+
+Require: Profiled stage FLOPs Fm and layout-specific ciphertext counts nct 
+
+> m
+
+Require: End-device compute rate Rend 
+
+Require: Configured link rates Bi→j in Mbps 
+
+Require: CKKS and planner parameters τenc , B, N, D, b ; benchmark-calibrated FHE densities βd,G 
+
+Ensure: Optimal deployment plan π∗ = ( q∗, e ∗)
+
+1: Compute per-ciphertext byte size: Cct ← 2N ⌈(D + 1) b/ 64 ⌉ × 8
+
+2: Convert each configured link rate: Bi→j ← 10 6Bi→j /8 bytes/s 3: for m = 1 to M do 
+
+4: Km ← nct 
+
+> m
+
+/B ; Pm ← KmCct 
+
+5: end for 
+
+6: Tbest ← +∞; π∗ ← ∅ 
+
+7: for each candidate split pair (q, e ) ∈ Ω do 
+
+8: Tend (q) ← Pqm=1 Fm / (Rend × 10 9)
+
+9: Tenc (q) ← Kq τenc ; Tend →edge (q) ← Pq /B end →edge 
+
+10: Tedge (q, e ) ← P 
+
+> G∈G q+1: e
+
+βedge ,G FG/10 9
+
+11: if e < M then ▷ relay mode: edge → cloud 12: Tedge →cloud (e) ← Pe/B edge →cloud 
+
+13: Tcloud (e) ← P 
+
+> G∈G e+1: M
+
+βcloud ,G FG/10 9
+
+14: Tcloud →end (M ) ← PM /B cloud →end 
+
+15: Ttot ← Tend (q) + Tenc (q) + Tend →edge (q) + Tedge (q, e )+Tedge →cloud (e) + Tcloud (e) + Tcloud →end (M )
+
+16: else ▷ terminate mode: edge → end 17: Tedge →end (M ) ← PM /B edge →end 
+
+18: Ttot ← Tend (q) + Tenc (q) + Tend →edge (q)+Tedge (q, M ) + Tedge →end (M )
+
+19: end if 
+
+20: if Ttot < T best then 
+
+21: Tbest ← Ttot ; π∗ ← (q, e )
+
+22: end if 
+
+23: end for 
+
+24: return π∗
+
+throughout and does not transmit any plaintext representation of the interme-diate features. 
+
+Edge-Side Encrypted Continuation. Upon receiving Cq∗ , the edge server resumes the CNN from layer ℓq∗+1 and executes all assigned stages up to the edge termination point e∗ entirely within the ciphertext domain. For convolutional stages, the edge applies BN-fused convolution followed by quadratic residual activation over the spatial ciphertext layout. Pooling transi-tions are realized as compact average-pooling operations, and the final pooling– flattening transition converts the spatial state into a feature-major layout. In-termediate fully connected stages evaluate the encrypted linear projection in the feature-major layout, followed by BN and the quadratic residual activation. The Latency-Optimal Split Inference 13 
+
+final classifier stage is evaluated as a linear projection and produces encrypted logits without an activation. Upon completing all assigned stages, the edge either forwards the resulting encrypted intermediate output to the cloud under the relay mode or returns the final encrypted logits directly to the end device under the terminate mode. 
+
+Cloud-Side Suffix Completion. In the relay mode, the cloud receives the encrypted state produced by the edge at layer ℓe∗ and completes the residual suffix from ℓe∗+1 to ℓM using the same homomorphic computation pattern. The cloud operates exclusively on ciphertext-domain data and does not require access to plaintext inputs, intermediate features, or the secret key. 
+
+Local Decryption with Prediction Recovery. The encrypted logits are re-turned to the end device, which applies the secret key to recover the plaintext logit tensor. For sample r, the predicted class is bcr = arg max j byr,j , where byr,j is its j-th decrypted logit. Figure 2 summarizes the model partitioning and online inference flow across the end, edge, and cloud tiers.  
+
+> Fig. 2. Model partitioning and online inference flow of the proposed privacy-preserving cloud-edge-end split inference architecture.
+
+## 6 EXPERIMENTAL PERFORMANCE 
+
+This section reports the experimental protocol, partition results, and encrypted-inference performance. 
+
+6.1 Experimental Settings Hardware Testbed. The experiments are conducted on a hybrid physical-and-emulated cloud-edge-end testbed reflecting the architecture described in Sec-tion 4. The end tier is a separate physical Raspberry Pi 4B running Ubuntu 22.04 14 Y. Li et al. 
+
+and represents a resource-constrained trusted endpoint. The edge and cloud tiers are resource-isolated Docker containers hosted on the same physical server, which is equipped with a 96-core Intel Xeon Gold 6530 processor at 2.1 GHz. The edge container is allocated 14 CPU cores and 112 GiB of RAM, whereas the cloud container is allocated 56 CPU cores and 448 GB of RAM. These allocations em-ulate compute-capacity asymmetry between the two remote tiers; they do not represent two geographically or physically separate servers. The observed edge-container peak memory usage is 46.6 GiB. Homomorphic kernel execution times are measured under the corresponding container resource limits. The bandwidth values in Table 3 are configured effective link rates used by the planner rather than measurements from wide-area network traces. Consequently, the testbed does not reproduce geographic propagation delay, network jitter, cross-region routing, or independently operated edge and cloud virtualization stacks. 
+
+Software Environment. All experiments are implemented in Python 3.8 with PyTorch [17] as the deep learning framework. Homomorphic encryption is re-alized using the OpenFHE library [1] under the CKKS scheme. Parallelism at each tier is managed via Python multiprocessing. 
+
+Model and Dataset. The underlying classifier follows a VGG16-BN back-bone [18] at 224 × 224 input resolution. Table 1 reports the stage-level struc-tural statistics of this backbone and serves as the profiling reference for subse-quent partition planning. The FHE-compatible SquareVGG16 used in the secure pipeline is derived from this backbone and is described in detail in the experi-ment design subsection below. Two benchmark datasets are used in the exper-iments: CIFAR-10 [10] (10 classes, 10,000 test images) and PathMNIST [20] (9 classes, 7,180 test images). All input images are resized to 224 × 224 pixels and normalized to the respective dataset channel statistics. 
+
+Table 1. Stage-Level Configuration of the Underlying VGG16-BN Backbone. FLOPs are reported per input sample at 224 ×224 resolution and follow the convolutional/linear profiling rule used by the partition planner. Activation size gives the number of scalar elements in the stage output.                                                                     
+
+> Stages Layer Composition †Output Shape FLOPs (M) Activation Size
+> Block I 2×Conv 3 ×3 + BN + Act. + Pool 64 ×112 ×112 3872.8 802,816 Block II 2×Conv 3 ×3 + BN + Act. + Pool 128 ×56 ×56 5549.1 401,408 Block III 3×Conv 3 ×3 + BN + Act. + Pool 256 ×28 ×28 9248.4 200,704 Block IV 3×Conv 3 ×3 + BN + Act. + Pool 512 ×14 ×14 9248.4 100,352 Block V 3×Conv 3 ×3 + BN + Act. + Pool 512 ×7×72774.5 25,088 FC1 FC + BN + Act. 4096 205.5 4,096 FC2 FC + BN + Act. 4096 33.6 4,096 FC3 Output FC ( Cclasses) C0.08 C
+> †Act.: quadratic residual activation; Pool: average pooling; C= 10 for CIFAR-10 and C= 9 for PathMNIST.
+
+6.2 Experiment Design 
+
+The evaluation proceeds in three phases: FHE-compatible model training, offline partition planning, and online encrypted inference. This subsection also defines the baselines used for comparison. Latency-Optimal Split Inference 15 
+
+Cryptographic Configuration. All encrypted inference experiments use the fixed CKKS configuration summarized in Table 2. The instantiated configuration satisfies 128-bit classical security under the homomorphic encryption security guidelines [3]. The CKKS parameters N , D, and b are fixed by multiplicative-depth, security, and numerical-correctness requirements; they are not latency-fitted cost-model parameters.                
+
+> Table 2. CKKS Parameter Configuration Used in All Experiments.
+> Parameters Value Description
+> N32768 Ring dimension
+> D7Multiplicative depth
+> b50 bits Scaling modulus size
+> S16384 SIMD slot count
+> B4Sample-interleaved batch factor
+> ⌊S/B ⌋4096 Usable feature slots per sample
+
+Phase I: FHE-Compatible Model Training. All collaborative FHE exper-iments use SquareVGG16, the homomorphic variant of the VGG16-BN back-bone described in Section 5. The model is trained from scratch under the FHE-compatible configuration defined in Section 5: the quadratic residual activation in Eq. 5, average pooling, and no clamping in the encrypted suffix. The scaling coefficient α is fixed at the value recorded in the training checkpoint metadata and is kept constant throughout inference. Separate checkpoints are trained for CIFAR-10 and PathMNIST. 
+
+Phase II: Offline Partition Planning. Before online inference, the planner enumerates the feasible split pairs and selects π∗ using Algorithm 1. Remote FHE cost densities are calibrated under the deployed cryptographic and execution configuration, and candidate end splits must satisfy the model owner’s Wmax =0.3% exposure policy. 
+
+Phase III: Online Encrypted Inference. Online measurements follow the planner-selected deployment and process packed batches of B = 4 samples. The timing boundary excludes one-time model loading, CKKS context generation, key generation, and process startup; it includes the plaintext prefix, encryp-tion, encrypted stage execution, decryption, and any layout or cache construc-tion on the online path. Each complete run processes 224 samples in 56 full packed batches. The edge uses 14 workers over four parallel rounds, whereas the cloud uses 56 workers in one round. Each FHE worker is restricted to one OpenMP/BLAS thread, and FHE timing uses critical-path wall-clock aggrega-tion. 
+
+Baseline Configuration. To assess the effectiveness of the proposed scheme, we compare it against a full-cloud FHE deployment following the CryptoNet paradigm [6]. In this benchmark-estimated baseline, the end device encrypts 9.25 input ciphertexts per sample at a cost of 9.25 τenc = 5 .910 s/sample. The 16 Y. Li et al. 
+
+cloud executes the entire encrypted inference pipeline, whose latency is assem-bled from the benchmark-calibrated stage costs under the same model, CKKS configuration, and cloud testbed. No partitioning or edge-tier offloading is em-ployed. A block-level split is also evaluated as a granularity baseline. It uses the same model, CKKS configuration, and testbed as the proposed convolution-level plan, but permits split boundaries only between complete blocks or FC layers. 
+
+6.3 Partition Results 
+
+This subsection reports the planner inputs and selected split pairs, validates the benchmark-calibrated cost model, and examines the analytical sensitivity of the selected plan. Table 3 lists the cost, policy, layout, and link parameters; the CKKS configuration appears in Table 2. The CNN stage sequence operates at individual convolution-layer granularity, yielding M = 21 candidate stages that include each convolutional layer, block-level pooling boundaries, and the three fully connected layers from FC1 through FC3. This fine-grained decomposition enables the planner to place split points at sub-block resolution. Remote FHE costs use the four measured densities βd,G directly, without nominal edge or cloud GFLOPS rates or additional multipliers. The configured link rates Bi→j are planner inputs rather than WAN measurements and are converted to bytes per second according to Eq. 12; the resulting communication terms account for payload serialization only. The parameter Wmax is a model-owner policy, and the layout profiler supplies the actual ciphertext count nct  
+
+> m
+
+at every candidate boundary. 
+
+Table 3. Planner Input Parameters.                                
+
+> Category Parameters Value Description
+> Compute Rend 1.4 GFLOPS Configured plaintext-rate normalizer FHE Cost Density
+> βedge ,conv+pool 115.982 s/GFLOP Measured edge convolution-plus-pooling density
+> βedge ,FC 256.015 s/GFLOP Measured 14-worker edge FC density
+> βcloud ,conv+pool 40.451 s/GFLOP Measured cloud convolution-plus-pooling density
+> βcloud ,FC 35.684 s/GFLOP Measured cloud FC density Policy Wmax 0.3% Maximum end-side model exposure Bandwidth
+> Bend →edge 1000 Mbps End-to-edge link
+> Bedge →cloud 10000 Mbps Edge-to-cloud link
+> Bedge →end 1000 Mbps Edge-to-end return link
+> Bcloud →end 1000 Mbps Cloud-to-end return link Planner τenc 0.639 s/ciphertext Measured amortized encryption cost Layout Profile nct
+> mStage dependent Actual ciphertext count at each candidate boundary
+
+Calibration. The edge benchmark covers the convolution-plus-pooling fam-ily. It measures 214.530 s/sample for a group containing 1.849688064 profiled GFLOPs, giving the empirical density 
+
+βedge ,conv+pool = 214 .530 1.849688064 ≈ 115 .982 s /GFLOP . (20) Latency-Optimal Split Inference 17 
+
+Under the fixed edge configuration described in the Experimental Settings, the measured FC1 critical-path time is 2946.516 s for one parallel round of 56 sam-ples, corresponding to an amortized latency of 52.616 s/sample (CV 0.88%). The complete FC1–FC3 benchmark measures 61.228 s/sample for 239,157,248 profiled FLOPs, yielding 
+
+βedge ,FC = 61 .228 239157248 /10 9 = 256 .015 s /GFLOP . (21) The same aggregate FC density is applied to individual FC stages in propor-tion to their profiled FLOPs when the planner evaluates candidate boundaries between FC layers. 
+
+Selected Split. The planner evaluates every feasible pair (q, e ) under each split granularity. Table 4 reports the selected convolution-level plan and the block-level reference plan used in the ablation. 
+
+Table 4. Selected Split Pairs Under Different Split Granularities. 
+
+Split Granularity End-side Split Point q∗ Edge-side Split Point e∗
+
+Convolution-level Block II Conv. III-1 Block-level Block II Block III 
+
+The exposure policy determines the deepest feasible end boundary. Block II requires 260,928 cumulative parameters, corresponding to 0.194% of the com-plete model and 0.995 MiB in FP32, and therefore satisfies Wmax = 0 .3% . Moving the end split to Conv. III-1 would expose 556,608 parameters, or 0.414% and 2.123 MiB, and is infeasible under this policy. Relative to Block I, Block II reduces the split activation cardinality from 802,816 to 401,408 elements, a 50% reduction. Its deployed layout contains 104 ciphertexts per packed batch, or 26 ciphertexts per sample at B = 4 ; the measured encryption latency of 16.611 s/sample gives τenc = 16 .611 /26 = 0 .639 s/ciphertext. The two search granularities then produce the assignments in Table 4. 
+
+Validation. We validate the cloud cost model on CIFAR-10. The measured suffix latency is 800.320 s/sample, comprising 519.569 s/sample of convolution (64.92%), 272.217 s/sample of pooling (34.01%), and 8.534 s/sample of FC1– FC3 computation (1.07%). Because pooling accounts for 34.01% of the suffix latency, it is folded into the preceding convolutional calibration group. Table 5 distinguishes the calibration fits from the held-out validation result. 
+
+Table 5. Validation of the Benchmark-Calibrated Cloud Cost Model on CIFAR-10.           
+
+> Validation Scope Measured (s/sample) Predicted (s/sample) Relative Error
+> Cloud Block V (held out) 118.390 112.233 −5.20%
+> Cloud FC1–FC3 (calibration) 8.534 8.534 0.00%
+> Complete cloud suffix 800.320 794.162 −0.77%
+
+18 Y. Li et al. 
+
+Table 6. Analytical Planner Sensitivity (Objectives in Seconds per Sample). 
+
+(a) Bandwidth Grid End-to-Edge Edge-to-Cloud (Mbps) (Mbps) 100 1000 10000    
+
+> 10 1122.763 1109.815 1108.520 100 1054.060 1041.113 1039.818 1000 1047.190 1034.242 1032.947 All settings: Block II / Conv. III-1
+
+(b) Effective FHE-Rate Sweep        
+
+> ρe/c Selected (q∗, e ∗)Objective
+> 0.10 Block II / Conv. III-1 1569.272 0.35 (current) 1032.947 0.70 925.682 1.00 Block II / Block V 893.101
+
+The cloud convolution-plus-pooling density is calibrated using Blocks III– IV, leaving Block V as an independent held-out group with a 5.20% predic-tion error. The cloud FC1–FC3 row is a calibration fit, and the complete suffix is an aggregate reconstruction check. Likewise, the measured edge latency of 214.530 s/sample is a calibration input, not a held-out validation result. 
+
+Analytical Deployment Sensitivity. We assess deployment sensitivity by re-running the calibrated planner without repeating FHE execution. For the band-width sweep, the current convolution-family rate ratio is fixed at 0.35 while the end-to-edge and edge-to-cloud rates vary. For the compute-rate sweep, the links are fixed at 1000 and 10000 Mbps, respectively; the cloud density is held fixed and the edge convolution-plus-pooling density is set by the effective edge/cloud FHE-rate ratio 
+
+ρe/c = 1/β edge ,conv+pool 
+
+1/β cloud ,conv+pool 
+
+= βcloud ,conv+pool 
+
+βedge ,conv+pool 
+
+.
+
+All remaining densities, CKKS parameters, and the Wmax = 0 .3% policy are held fixed in both sweeps. The bandwidth panel of Table 6 indexes end-to-edge rates by row and edge-to-cloud rates by column, both in Mbps. All nine bandwidth combinations select Block II / Conv. III-1, while the analytical objective ranges from 1032.947 to 1122.763 s/sample. The same split is selected at ρe/c = 0 .10 ,0.35, and 0.70; when the edge rate reaches the cloud rate, the edge termination moves to Block V. These are planner outputs under configured bandwidths, not additional FHE executions or geographically distributed WAN measurements; propagation delay and network jitter are not modeled. At the current configuration, the configured Rend predicts 6.730 s/sample for the plaintext prefix, whereas the measured value is 0.657 s/sample; the cloud model predicts 794.162 s/sample versus the measured 800.320 s/sample. The aggregate analytical objective is 1032.947 s/sample and omits the split-invariant decryption cost. Because its component errors offset, its proximity to the corre-sponding 1033.033 s/sample sum of measured computation and modeled com-munication is not treated as independent validation; the held-out Block V error is the relevant result. 
+
+6.4 Inference Results 
+
+Measured latency values are amortized over the 224 samples in each complete run, whereas classification accuracy is evaluated on the 1000-sample subsets Latency-Optimal Split Inference 19 
+
+Table 7. Amortized Latency on CIFAR-10 and PathMNIST. Latencies are in seconds per sample, throughput is in samples per hour, and communication is modeled under the configured link rates.                                                          
+
+> Dataset Configuration End Encrypt Edge Cloud Comm. Decrypt Total Throughput
+> CIFAR-10 Full-cloud FHE –5.910 –13350.875 0.279 0.237 13357.301 0.270 Block-level split 0.624 16.646 2753.542 1246.901 0.807 0.247 4018.771 0.896 Convolution-level split 0.657 16.611 214.530 800.320 0.915 0.246 1033.279 3.484 PathMNIST Full-cloud FHE –5.910 –13068.130 0.279 0.231 13074.550 0.275 Block-level split 0.648 16.592 2762.980 1235.234 0.807 0.224 4016.485 0.896 Convolution-level split 0.635 16.539 211.490 793.621 0.915 0.229 1023.429 3.518
+
+specified below. The deployment-sensitivity results are analytical planner out-puts rather than additional measurements. 
+
+End-to-End Latency. Table 7 combines measured split-plan components and benchmark-estimated full-cloud execution with communication modeled from profiled payloads and configured link rates. The last column is 3600 divided by the total amortized latency. The convolution-level plan requires 1033.279 s/sample on CIFAR-10 and 1023.429 s/sample on PathMNIST. These results correspond to speedups of 
+
+12 .927 × and 12 .775 × relative to full-cloud FHE and 3.889 × and 3.925 × rel-ative to the block-level alternative, respectively. Remote FHE execution remains the dominant cost. Each run contains 224 samples in 56 packed batches; multiplying the amor-tized totals by 224 gives 231454.399 s and 229247.999 s, respectively. 
+
+Accuracy Under FHE Computation. Table 8 reports top-1 accuracy for plaintext standard VGG16 (reference), plaintext SquareVGG16, and the pro-posed scheme on both datasets. The accuracy gap is reported in percentage points (pp) relative to plaintext standard VGG16. Each reported accuracy is the mean over ten runs, each evaluating a 1000-sample test subset; within each run, the compared schemes use the same sampled subset. The proposed scheme achieves 88.53% on CIFAR-10, matching the plain-text SquareVGG16 accuracy. On PathMNIST, the ciphertext-domain accuracy is 91.43%, differing from the plaintext model by only 0.01 pp, consistent with CKKS floating-point precision effects. Thus, encrypted execution introduces no meaningful accuracy degradation on either benchmark. 
+
+Table 8. Classification Accuracy on CIFAR-10 and PathMNIST.                       
+
+> Dataset Scheme Execution Mode Top-1 Acc. (%) Gap (pp)
+> CIFAR-10 Standard VGG16 Plaintext 93.40 –SquareVGG16 Plaintext 88.53 4.87 Proposed collaborative inference Hybrid (end plaintext + remote FHE) 88.53 4.87 PathMNIST Standard VGG16 Plaintext 94.62 –SquareVGG16 Plaintext 91.44 3.18 Proposed collaborative inference Hybrid (end plaintext + remote FHE) 91.43 3.19
+
+Communication Overhead. Table 9 reports the total amortized per-sample ciphertext payload summed over all active inter-tier links. The convolution-level 20 Y. Li et al. 
+
+split incurs approximately 2× the communication volume of the block-level al-ternative (276.2 MB versus 141.3 MB) because the edge-to-cloud handoff occurs after Conv. III-1 ( 256 ×56 ×56 elements) rather than after the pooled Block III output ( 256 ×28 ×28 elements). Despite this additional ciphertext traffic, the lower edge-side FHE cost makes the convolution-level plan faster overall. The full-cloud total comprises 9.25 input and 0.25 output ciphertexts per sample; only the input ciphertexts contribute to encryption cost. The communication-computation trade-off is summarized in Figure 3 . 
+
+Table 9. Amortized Communication Overhead on PathMNIST ( B = 4 ). 
+
+Configuration Amortized Ciphertext Blocks / Sample Payload (MB) 
+
+Full-cloud FHE 9.50 34.865 Block-level split 38.50 141.296 Convolution-level split 75.25 276.169 Block I Block II Conv.                       
+
+> III-1
+> Conv.
+> III-2
+> Conv.
+> III-3
+> Pool III Block IV Block V FC1 FC2 FC3
+> Model progression
+> Convolution-level split
+> Block-level split
+> Cut A: after Conv. III-1
+> 49.00 ct/sample relay
+> Cut B: after Block III
+> 12.25 ct/sample relay
+> Fine-grained Stage-to-Tier Deployment Pattern
+> End Edge Cloud
+> 050 100 150 200 250 300
+> Total payload per sample (MB)
+> Convolution-level split
+> Block-level split
+> 276.2 MB
+> 75.25 ct total
+> 141.3 MB
+> 38.50 ct total
+> Communication Contrast
+> 0500 1000 1500 2000 2500 3000 3500 4000
+> Latency per sample (s)
+> Convolution-level split
+> Block-level split
+> 1023 s
+> 4016 s
+> Latency Contrast
+> Edge Cloud
+
+Fig. 3. Split-plan communication and latency trade-off on PathMNIST. 
+
+Privacy Protection. All evaluated configurations protect transmitted states and remote computation with CKKS. Under the CKKS security assumptions and the threat model in Section 4, the external tiers receive ciphertexts but not the secret key, even if their observations are combined. The split plans there-fore preserve the same cryptographic privacy boundary as full-cloud FHE; they change only where the encrypted operators execute. The cryptographic configu-ration is reported in Table 2. 
+
+## 7 CONCLUSION 
+
+This paper presented a systems-level framework for privacy-preserving split in-ference in cloud-edge-end environments. The framework uses established CKKS-based FHE to keep raw inputs, plaintext intermediate states, and the secret key Latency-Optimal Split Inference 21 
+
+on the end device, while the edge and cloud process assigned CNN segments only in the ciphertext domain. We formulated deployment as a split-pair selection problem and developed a benchmark-calibrated latency planner that supports convolution-level and block-level partitioning. On CIFAR-10 and PathMNIST, the selected convolution-level plan achieves approximately 12 .9× speedup over full-cloud FHE and 3.9× over block-level splitting. Its amortized end-to-end latencies are 1033.279 and 1023.429 s/sample, respectively, including modeled communication under the configured link rates. The analytical sensitivity study further shows that the selected split is stable across the configured bandwidth grid and moves deeper into the edge only when the effective edge FHE rate approaches the cloud rate. The current OpenFHE implementation remains a CPU-based research pro-totype for non-interactive batch inference rather than real-time decision mak-ing. Evaluation is limited to SquareVGG16 on CIFAR-10 and PathMNIST and to a hybrid testbed that emulates edge-cloud resource asymmetry without re-producing a geographically distributed network. Future work will investigate hardware acceleration, more compact FHE-compatible architectures, improved ciphertext packing and rotation schedules, pipeline parallelism, and validation across broader model families and physically distributed deployments. 
+
+## References 
+
+1. Al Badawi, A., Bates, J., Bergamaschi, F., Cousins, D.B., Erabelli, S., Genise, N., Halevi, S., Hunt, H., Kim, A., Lee, Y., Liu, Z., Micciancio, D., Quah, I., Polyakov, Y., R.V., S., Rohloff, K., Saylor, J., Suponitsky, D., Triplett, M., Vaikuntanathan, V., Zucca, V.: Openfhe: Open-source fully homomorphic encryption library. In: Proceedings of the 10th Workshop on Encrypted Computing & Applied Homo-morphic Cryptography. p. 53–63. WAHC’22, Association for Computing Machin-ery, New York, NY, USA (2022) 2. Ao, W., Boddeti, V.N.: AutoFHE: Automated adaption of CNNs for efficient eval-uation over FHE. In: 33rd USENIX Security Symposium (USENIX Security 24) (2024) 3. Bossuat, J.P., Cammarota, R., Chillotti, I., Curtis, B., Dai, W., Gong, H., Hales, E., Kim, D., Kumara, B., Lee, C., Lu, X., Maple, C., Pedrouzo-Ulloa, A., Player, R., Polyakov, Y., Lopez, L., Song, Y., Yhee, D.: Security guidelines for implementing homomorphic encryption. IACR Communications in Cryptology 1(4) (2025) 4. Cheon, J.H., Kim, A., Kim, M., Song, Y.: Homomorphic encryption for arithmetic of approximate numbers. In: Advances in Cryptology – ASIACRYPT 2017. Lecture Notes in Computer Science, vol. 10624, pp. 409–437. Springer (2017) 5. Ebel, A., Garimella, K., Reagen, B.: Orion: A fully homomorphic encryption frame-work for deep learning. In: Proceedings of the 30th ACM International Conference on Architectural Support for Programming Languages and Operating Systems, Volume 2 (ASPLOS ’25). pp. 734–749 (2025) 6. Gilad-Bachrach, R., Dowlin, N., Laine, K., Lauter, K., Naehrig, M., Wernsing, J.: Cryptonets: Applying neural networks to encrypted data with high throughput and accuracy. In: Proceedings of the 33rd International Conference on Machine Learning. Proceedings of Machine Learning Research, vol. 48, pp. 201–210. PMLR (2016) 22 Y. Li et al. 7. Hu, Y., Xu, X., Qi, L., Zhou, X., Xia, X.: Latency- and privacy-aware convolu-tional neural network distributed inference for reliable artificial intelligence sys-tems. IEEE Transactions on Artificial Intelligence 6(2), 365–377 (2025) 8. Kang, Y., Hauswald, J., Gao, C., Rovinski, A., Mudge, T., Mars, J., Tang, L.: Neurosurgeon: Collaborative intelligence between the cloud and mobile edge. In: Proceedings of the Twenty-Second International Conference on Architectural Sup-port for Programming Languages and Operating Systems. p. 615–629. ASPLOS ’17, Association for Computing Machinery, New York, NY, USA (2017) 9. Kim, D., Park, J., Kim, J., Kim, S., Ahn, J.H.: HyPHEN: A hybrid packing method and its optimizations for homomorphic encryption-based neural networks. IEEE Access 12 , 3024–3038 (2024) 10. Krizhevsky, A.: Learning multiple layers of features from tiny images. Tech. rep., University of Toronto (2009) 11. Liang, H., Sang, Q., Hu, C., Cheng, D., Zhou, X., Wang, D., Bao, W., Wang, Y.: Dnn surgery: Accelerating dnn inference on the edge through layer partitioning. IEEE Transactions on Cloud Computing 11 (3), 3111–3125 (2023) 12. Liu, G., Dai, F., Xu, X., Fu, X., Dou, W., Kumar, N., Bilal, M.: An adaptive dnn inference acceleration framework with end-edge-cloud collaborative comput-ing. Future Generation Computer Systems 140 , 422–435 (2023) 13. Lou, Q., Jiang, L.: Hemet: A homomorphic-encryption-friendly privacy-preserving mobile neural network architecture. In: Proceedings of the 38th International Con-ference on Machine Learning. Proceedings of Machine Learning Research, vol. 139, pp. 7102–7110. PMLR (2021) 14. Malekzadeh, M., Kawsar, F.: Salted inference: Enhancing privacy while maintain-ing efficiency of split inference in mobile computing. In: Proceedings of the 25th International Workshop on Mobile Computing Systems and Applications (2024) 15. Njungle, N.B., Jahns, E., Kinsy, M.A.: FHEON: A configurable framework for developing privacy-preserving encrypted neural networks. Proceedings on Privacy Enhancing Technologies 2026 (4), 526–541 (2026), to appear 16. Park, J., Kim, D., Kim, J., Kim, S., Jung, W., Cheon, J.H., Ahn, J.H.: Toward practical privacy-preserving convolutional neural networks exploiting fully homo-morphic encryption (2023) 17. Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., Killeen, T., Lin, Z., Gimelshein, N., Antiga, L., Desmaison, A., Kopf, A., Yang, E., DeVito, Z., Raison, M., Tejani, A., Chilamkurthy, S., Steiner, B., Fang, L., Bai, J., Chintala, S.: Pytorch: An imperative style, high-performance deep learning library. In: Advances in Neural Information Processing Systems. vol. 32 (2019) 18. Simonyan, K., Zisserman, A.: Very deep convolutional networks for large-scale im-age recognition. In: International Conference on Learning Representations (2015) 19. Xu, D., He, X., Su, T., Wang, Z.: A survey on deep neural network partition over cloud, edge and end devices (2023) 20. Yang, J., Shi, R., Wei, D., Liu, Z., Zhao, L., Ke, B., Pfister, H., Ni, B.: Medmnist v2 – a large-scale lightweight benchmark for 2d and 3d biomedical image classification. Scientific Data 10 (1), 41 (2023) 21. Yang, W., Wang, H., Li, Z., Niu, Z., Wu, L., Wei, X., Su, Y., Susilo, W.: Privacy-preserving machine learning in cloud-edge-end collaborative environments. IEEE Internet of Things Journal 12 (1), 419–434 (2025) 22. Yuan, M.J., Zou, Z., Gao, W.: Bi-cryptonets: Leveraging different-level privacy for encrypted inference. In: Yang, D.N., Xie, X., Tseng, V.S., Pei, J., Huang, J.W., Lin, J.C.W. (eds.) Advances in Knowledge Discovery and Data Mining. pp. 210– 222. Springer Nature Singapore, Singapore (2024)

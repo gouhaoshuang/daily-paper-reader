@@ -1,0 +1,649 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-04T21:35:22.672292+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 6,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 10,
+    "quick_skim_target": 11,
+    "quick_selected": 10
+  },
+  "deep_dive": [
+    {
+      "id": "2608.00569v1",
+      "source": "arxiv",
+      "title": "Latency-Tolerant Cloud-Edge Collaborative Vision-Language-Action Models via Emergent Representational Specialization",
+      "abstract": "Deploying billion-parameter Vision-Language-Action (VLA) policies on mobile robots creates a systems conflict: semantic reasoning benefits from cloud GPUs, whereas closed-loop control must respond locally despite network delay and jitter. Existing hierarchical and asynchronous policies improve throughput, but their slow-path representations can still arrive stale or require explicit scheduling and delay cues. We introduce CloudEdgeVLA, a cloud-edge policy that treats temporal misalignment as a representation-learning problem. A cloud VLA encodes delayed observations into slowly varying task features, while a lightweight edge head combines the latest available cloud feature with current local vision. During training, current and randomly delayed frames are paired with the same current action target in fresh and stale paths. This objective encourages the cloud representation to preserve task-level information while the edge path supplies state-sensitive corrections. Across four LIBERO suites, CloudEdgeVLA retains 63.8--78.0% success with a 40-step uniform-delay window, whereas VLASH reaches at most 6.4% and the evaluated single-path baselines at most 3.0%. By removing blocking synchronization from the control loop, the design offers a practical route to scalable VLA deployment in which cloud models can grow while edge computation remains lightweight and responsive.",
+      "authors": [
+        "Daojie Peng",
+        "Fulong Ma",
+        "Bingtao Wang",
+        "Sheng Wang",
+        "Jun Ma"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "eess.SY"
+      ],
+      "published": "2026-08-01T10:11:59+00:00",
+      "link": "https://arxiv.org/pdf/2608.00569v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "cloud-edge collaborative policy for VLA",
+      "llm_evidence_cn": "云边协同的视觉-语言-动作策略",
+      "llm_evidence": "云边协同的视觉-语言-动作策略",
+      "canonical_evidence": "云边协同的视觉-语言-动作策略",
+      "llm_tldr_en": "CloudEdgeVLA treats cloud-edge temporal misalignment as representation learning: cloud VLA encodes delayed observations into slow task features, and a lightweight edge head fuses the latest cloud feature with local vision.",
+      "llm_tldr_cn": "在移动机器人上部署十亿级视觉-语言-动作模型面临语义推理依赖云端GPU而闭环控制需要本地响应的系统冲突。现有分层异步策略仍可能遭遇特征过期或依赖显式调度。CloudEdgeVLA将时间不对齐视为表示学习问题：云侧VLA将延迟观测编码为缓慢变化的任务特征，轻量边缘头将最新云特征与当前本地视觉融合。该方法无需显式延迟线索即可容忍网络抖动，为端云协同决策系统提供高效且鲁棒的新范式。",
+      "llm_tldr": "在移动机器人上部署十亿级视觉-语言-动作模型面临语义推理依赖云端GPU而闭环控制需要本地响应的系统冲突。现有分层异步策略仍可能遭遇特征过期或依赖显式调度。CloudEdgeVLA将时间不对齐视为表示学习问题：云侧VLA将延迟观测编码为缓慢变化的任务特征，轻量边缘头将最新云特征与当前本地视觉融合。该方法无需显式延迟线索即可容忍网络抖动，为端云协同决策系统提供高效且鲁棒的新范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.29069v1",
+      "source": "arxiv",
+      "title": "Rethinking AI Cloud Infrastructure for Agentic Serving Systems with the Aries Experimentation Framework",
+      "abstract": "Autonomous agents challenge conventional LLM serving by coupling repeated inference with persistent context and sandboxed tool execution. We present Aries, a full-stack experimentation framework that separates task semantics from execution configurations, reconstructs cross-component agent trajectories with correlated system telemetry, and exposes stateful tool execution through a consistent interface across heterogeneous sandbox substrates. We use Aries to conduct reproducible experiments on open agent harnesses and benchmarks. We complement these experiments with production traces from a commercial platform, grounding low-level systems research in observed production behavior. Our results show that (1) token-centric metrics miss non-inference bottlenecks, (2) retaining additional context yields diminishing accuracy benefits while reducing serving capacity, and (3) tool sandboxes alternate between long idle periods and short resource bursts, while current snapshot-based state management makes aggressive suspension costly. A complementary security analysis further highlights the need to reduce the sandbox attack surface. We then discuss the vision for agent-native serving systems designed around trajectory-level metrics, adaptive context management, elastic sandbox resource management, and sandboxes with minimized attack surface.",
+      "authors": [
+        "Leonid Kondrashov",
+        "Hongrui Liu",
+        "JooYoung Park",
+        "Boxi Zhou",
+        "Zonghao Liu",
+        "Chengzhi Lu",
+        "Riccardo Mancini",
+        "Esha Choukse",
+        "Haris Javaid",
+        "German Sviridov",
+        "Tao Peng",
+        "Chen Zhao",
+        "Anastasia Avdeeva",
+        "Aleksei Gusev",
+        "Marios Kogias",
+        "Luo Mai",
+        "Dmitrii Ustiugov"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-07-31T06:44:06+00:00",
+      "link": "https://arxiv.org/pdf/2607.29069v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "cloud infrastructure and telemetry framework for distributed agent serving systems",
+      "llm_evidence_cn": "面向分布式智能体服务系统的云基础设施与实验框架",
+      "llm_evidence": "面向分布式智能体服务系统的云基础设施与实验框架",
+      "canonical_evidence": "面向分布式智能体服务系统的云基础设施与实验框架",
+      "llm_tldr_en": "Aries is a full-stack experimentation framework for agentic serving systems, separating task semantics from execution configs and reconstructing cross-component trajectories with telemetry to guide cloud infrastructure.",
+      "llm_tldr_cn": "自主智能体将重复推理、持久上下文与沙箱工具执行耦合，对传统LLM服务系统构成挑战。本文提出Aries，一个全栈实验框架，解耦任务语义与执行配置，重建跨组件智能体轨迹并关联系统遥测，统一暴露有状态工具执行接口。可复现实验与生产轨迹分析表明，令牌为中心的指标能更好指导智能体服务基础设施优化，为边缘云协同智能体系统提供实验基础。",
+      "llm_tldr": "自主智能体将重复推理、持久上下文与沙箱工具执行耦合，对传统LLM服务系统构成挑战。本文提出Aries，一个全栈实验框架，解耦任务语义与执行配置，重建跨组件智能体轨迹并关联系统遥测，统一暴露有状态工具执行接口。可复现实验与生产轨迹分析表明，令牌为中心的指标能更好指导智能体服务基础设施优化，为边缘云协同智能体系统提供实验基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.00458v1",
+      "source": "arxiv",
+      "title": "BANDMAS: Causality-Inspired Semantic Packet Scheduling for Bandwidth-Efficient Multi-Agent Collaboration",
+      "abstract": "LLM-based multi-agent systems make decisions based on the aggregated information via exchanging messages across specialized agents. Forwarding every generated message among agents increases application-layer traffic. Yet, it introduces tremendous input tokens for agent processing, potentially raising inference latency and computational overhead. Existing approaches attempt to address the above issues by pruning agents or discarding redundant messages. Nevertheless, such agent-level or message-level optimization results in insufficient evidence supporting for final decisions or still containing redundant message transmissions. To address these challenges, we propose BANDMAS, a multi-agent collaboration framework that models inter-agent communications as task-oriented traffic, which enables efficient transmission via causality-inspired replay valuation. Specifically, we decompose messages into several data packets by analyzing their semantic features such as evidence and requests. The system only transmits these packets if their predicted replay-derived contribution exceeds their resource cost. Consequently, BANDMAS is able to adaptively schedule communication packets while adhering to bandwidth, latency, deadline, and receiver context constraints. On frozen Qwen3-4B traffic across SciFact, HotpotQA, and FanOutQA, our framework reduces application-layer bytes by 53.2\\% to 77.3\\% at selected caps and attains the highest mean task metric among constrained methods on all three workloads.",
+      "authors": [
+        "Jiangwen Dong",
+        "Wanyu Lin"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-08-01T05:51:51+00:00",
+      "link": "https://arxiv.org/pdf/2608.00458v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "bandwidth-efficient multi-agent collaboration through semantic packet scheduling",
+      "llm_evidence_cn": "通过语义分组调度实现带宽高效的多智能体协作",
+      "llm_evidence": "通过语义分组调度实现带宽高效的多智能体协作",
+      "canonical_evidence": "通过语义分组调度实现带宽高效的多智能体协作",
+      "llm_tldr_en": "BANDMAS schedules semantic packets based on causality to reduce redundant message transmissions in multi-agent collaboration, cutting token overhead while preserving decision quality.",
+      "llm_tldr_cn": "多智能体系统通过消息交换进行决策，但转发所有消息会引入大量输入令牌，导致推理延迟和计算开销。现有剪枝方法会损失决策证据。本文提出BANDMAS，基于因果性的语义分组调度框架，过滤冗余消息并保留关键语义包。实验显示该方法显著降低带宽消耗与令牌数，同时保持决策质量，适用于带宽受限的边缘云协同场景。",
+      "llm_tldr": "多智能体系统通过消息交换进行决策，但转发所有消息会引入大量输入令牌，导致推理延迟和计算开销。现有剪枝方法会损失决策证据。本文提出BANDMAS，基于因果性的语义分组调度框架，过滤冗余消息并保留关键语义包。实验显示该方法显著降低带宽消耗与令牌数，同时保持决策质量，适用于带宽受限的边缘云协同场景。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.00573v1",
+      "source": "arxiv",
+      "title": "TrimMoE A communication aware and adaptive depth framework for distributed edge inference",
+      "abstract": "Serving Mixture-of-Experts (MoE) large language models across distributed edge servers is bottlenecked by the cross-server expert transmission. The existing approaches mainly focus on how to reach a remote expert faster. However, in this paper, we instead consider whether a given layer, and the layers after it, need to be executed at all. To this end, a communication-aware adaptive-depth framework is proposed in this paper, termed TrimMoE, which couples layer skipping and confidence-based early exit with substitute execution and server-expert selection under a unified quality budget. Specifically, in the offline stage, TrimMoE freezes the backbone, trains the lightweight per-layer exit heads, calibrates the per-layer importance thresholds, and allocates the expert replicas by a skip/exit-aware redundancy benefit. In the online stage, a transition-aware look-ahead anticipates the token movement, so that the depth reduction targets the costliest transmissions, and besides, two feedback rules adapt the delay-quality weights and the exit threshold. Moreover, we prove that the substitution-and-skipping proxy degradation never exceeds the configured budget, and that the early exit is admitted only under a calibrated confidence gate. On a heterogeneous 10-server testbed with Switch-Base-8E, Qwen-MoE-A2.7B, and Mixtral-8x7B, TrimMoE reduces the average latency by up to 62.8%, lowers the cross-server traffic and the remote-execution ratio, and sustains high throughput under load, while keeping the task-quality degradation within a 2% bound.",
+      "authors": [
+        "Ning Li",
+        "Shuting Bai",
+        "Xin Yuan",
+        "Wenchao Xu",
+        "Athanasios V. Vasilakos",
+        "Song Guo",
+        "Haijun Zhang"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.CL"
+      ],
+      "published": "2026-08-01T10:19:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.00573v1",
+      "tags": [
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Communication-aware adaptive-depth framework for distributed edge MoE inference",
+      "llm_evidence_cn": "通信感知的自适应深度分布式边缘MoE推理框架",
+      "llm_evidence": "通信感知的自适应深度分布式边缘MoE推理框架",
+      "canonical_evidence": "通信感知的自适应深度分布式边缘MoE推理框架",
+      "llm_tldr_en": "TrimMoE couples layer skipping and early exit with substitute execution and server-expert selection to reduce cross-server expert transmission in distributed edge MoE serving.",
+      "llm_tldr_cn": "在分布式边缘服务器上服务MoE大模型时，跨服务器专家传输是主要瓶颈。现有方法只追求更快访问远端专家，本文提出通信感知的自适应深度框架TrimMoE，考虑层是否值得执行，将跳层、低置信提前退出、替代执行和服务器-专家选择统一在质量预算下。该方法从深度维度节省通信开销，为边缘协作推理提供了新的优化思路。",
+      "llm_tldr": "在分布式边缘服务器上服务MoE大模型时，跨服务器专家传输是主要瓶颈。现有方法只追求更快访问远端专家，本文提出通信感知的自适应深度框架TrimMoE，考虑层是否值得执行，将跳层、低置信提前退出、替代执行和服务器-专家选择统一在质量预算下。该方法从深度维度节省通信开销，为边缘协作推理提供了新的优化思路。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.00577v1",
+      "source": "arxiv",
+      "title": "HetRoute Heterogeneous and Cost-aware Collaborative Routing Framework for Distributed Edge MoE Inference",
+      "abstract": "Mixture-of-Experts (MoE) models have become a dominant architecture for large-scale AI services, yet deploying them over geo-distributed heterogeneous edge servers remains challenging. When the Top-k activated experts of a token are spread across multiple servers, the optimal routing depends jointly on cross-server link bandwidth, heterogeneous GPU computing capability, GPU-CPU expert loading delay, instantaneous queueing backlog, and replica-level quantization quality loss. Existing distributed inference and MoE serving methods address these factors separately and do not provide a unified framework for online multi-server collaborative routing. In this paper, we propose HetRoute, a heterogeneous-cost-aware collaborative routing framework for distributed edge MoE inference. HetRoute introduces a unified per-assignment cost model that explicitly captures four cost components: cross-server transmission, GPU-CPU offloading, GPU computation with queueing, and quantization-induced quality penalty. Guided by this model, the offline stage determines expert server placement, GPU-CPU residency, and replica precision through a routing-cost-coupled deployment algorithm, while the online stage routes the Top-k activated expert set as a whole by minimizing the bottleneck layer cost via exact enumeration or beam search. Theoretical analysis establishes fallback feasibility, a bound on the number of participating servers, per-layer optimality for small candidate domains, and online computational complexity. Trace-driven evaluation on three MoE models over a heterogeneous 10-server edge testbed shows that HetRoute reduces average inference latency by up to 59.0% and P99 latency by up to 58.0%, cuts cross-server traffic by up to 72.1%, and achieves 2.13x throughput improvement compared with representative baselines, while keeping quality degradation within the configured budget.",
+      "authors": [
+        "Xin Yuan",
+        "Ning Li",
+        "Wenchao Xu",
+        "Athanasios V. Vasilakos",
+        "Song Guo",
+        "Haijun Zhang"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.CL"
+      ],
+      "published": "2026-08-01T10:30:01+00:00",
+      "link": "https://arxiv.org/pdf/2608.00577v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Collaborative routing framework for distributed edge MoE inference",
+      "llm_evidence_cn": "面向分布式边缘MoE推理的协同路由框架",
+      "llm_evidence": "面向分布式边缘MoE推理的协同路由框架",
+      "canonical_evidence": "面向分布式边缘MoE推理的协同路由框架",
+      "llm_tldr_en": "HetRoute unifies heterogeneous and cost-aware routing for geo-distributed edge MoE serving, jointly considering bandwidth, GPU capability, loading delay, queueing, and quantization loss.",
+      "llm_tldr_cn": "Mixture-of-Experts模型在异构边缘服务器上部署时，路由决策受带宽、GPU能力、加载延迟、排队积压和量化损失等多因素影响，现有方法分别处理难以协同优化。本文提出HetRoute异构成本感知协作路由框架，统一建模多服务器在线协作路由。它能显著降低分布式边缘MoE推理的通信瓶颈，为端云协同的AI服务系统提供了关键调度方法。",
+      "llm_tldr": "Mixture-of-Experts模型在异构边缘服务器上部署时，路由决策受带宽、GPU能力、加载延迟、排队积压和量化损失等多因素影响，现有方法分别处理难以协同优化。本文提出HetRoute异构成本感知协作路由框架，统一建模多服务器在线协作路由。它能显著降低分布式边缘MoE推理的通信瓶颈，为端云协同的AI服务系统提供了关键调度方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.01148v1",
+      "source": "arxiv",
+      "title": "Latency-Optimal Adaptive Split Inference for Privacy-Preserving Cloud-Edge-End Collaboration",
+      "abstract": "Internet of Things (IoT) end devices are increasingly expected to support privacy-sensitive batch inference, yet their limited computational resources often make full local execution of convolutional neural networks impractical. This paper presents a latency-optimal adaptive split inference framework for privacy-preserving cloud-edge-end collaboration. The end device acts as the trust anchor, executes the plaintext model prefix, encrypts the split activation using fully homomorphic encryption (FHE), and keeps the secret key locally, while the edge and cloud execute assigned model segments only on FHE ciphertexts. We formulate collaborative encrypted inference as a split-pair selection problem over an end-side split point and an edge-side termination point. The proposed planner jointly models plaintext prefix execution, encryption, communication, edge-side FHE execution, and cloud-side FHE completion, and supports both convolution-level and block-level split granularities. Experiments on CIFAR-10 and PathMNIST show that the proposed convolution-level collaborative scheme achieves amortized end-to-end speedups of approximately 12.9 times over full-cloud FHE and 3.9 times over the block-level alternative, while preserving the corresponding plaintext-model accuracy. Including modeled communication, the amortized latencies are 1033.279 s/sample on CIFAR-10 and 1023.429 s/sample on PathMNIST.",
+      "authors": [
+        "Yi Li",
+        "Peng Zhang",
+        "Man Ho Au"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.DC"
+      ],
+      "published": "2026-08-02T10:59:07+00:00",
+      "link": "https://arxiv.org/pdf/2608.01148v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Cloud-edge-end collaborative split inference with latency optimization and privacy",
+      "llm_evidence_cn": "云边端协同分割推理，优化时延并保护隐私",
+      "llm_evidence": "云边端协同分割推理，优化时延并保护隐私",
+      "canonical_evidence": "云边端协同分割推理，优化时延并保护隐私",
+      "llm_tldr_en": "Proposes latency-optimal adaptive split inference for privacy-preserving cloud-edge-end collaboration, using FHE on split activations with end device as trust anchor.",
+      "llm_tldr_cn": "物联网端设备算力有限难以本地跑完整卷积网络，同时又要保护隐私。本文提出端侧作为信任锚的云边端协作自适应分割推理框架：端设备执行明文前缀层，用全同态加密保护分裂激活值，边缘和云只在密文上继续计算，并将最优切分点建模为组合优化问题。该方法在保障端云协作的同时兼顾时延最优与数据隐私，是端云协同智能系统的直接支撑技术。",
+      "llm_tldr": "物联网端设备算力有限难以本地跑完整卷积网络，同时又要保护隐私。本文提出端侧作为信任锚的云边端协作自适应分割推理框架：端设备执行明文前缀层，用全同态加密保护分裂激活值，边缘和云只在密文上继续计算，并将最优切分点建模为组合优化问题。该方法在保障端云协作的同时兼顾时延最优与数据隐私，是端云协同智能系统的直接支撑技术。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.00648v1",
+      "source": "arxiv",
+      "title": "MDGAM-Based Cooperative Task Scheduling for Communication-Constrained Distributed Multi-Agent Systems",
+      "abstract": "Cooperative task scheduling in communication-constrained distributed multi-agent systems is challenging because each agent must make decisions from partial and dynamic observations while satisfying complex practical constraints. Existing heuristics rely on handcrafted bidding rules and repeated consensus, whereas many learning-based methods assume global observations and lack explicit communication-based coordination. To address these limitations, this paper proposes a neural scheduling framework for distributed multi-robot task allocation (MRTA), consisting of a multi-decoder graph attention model (MDGAM) policy model and a critic-free group relative multi-agent policy gradient (GRMAPG) training algorithm. MDGAM uses an extended graph attention mechanism to jointly update node and edge features, and employs multiple decoders to generate task-selection decisions and communication messages. GRMAPG constructs group-relative advantages from equivalent task-planning instances to replace the critic network used in conventional MARL algorithms, thereby reducing training difficulty and improving convergence performance. Experiments under different problem scales and communication ranges show that the proposed method improves task-completion performance over existing heuristic and learning-based methods, while ablation, complexity, and generalization tests further validate the proposed innovations.",
+      "authors": [
+        "Licheng Wang",
+        "Mingtao Huang",
+        "Yuan Shen"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-08-01T13:08:16+00:00",
+      "link": "https://arxiv.org/pdf/2608.00648v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Distributed multi-agent cooperative task scheduling with communication constraints",
+      "llm_evidence_cn": "通信受限分布式多智能体协作任务调度",
+      "llm_evidence": "通信受限分布式多智能体协作任务调度",
+      "canonical_evidence": "通信受限分布式多智能体协作任务调度",
+      "llm_tldr_en": "Proposes a neural scheduling framework for distributed multi-robot task allocation using multi-decoder graph attention and group policy gradient, handling communication constraints.",
+      "llm_tldr_cn": "通信受限的分布式多智能体系统面临部分可观测和动态协作难题，现有启发式依赖手工规则，学习方法又常假设全局观测。本文提出MDGAM与GRMAPG组成的神经调度框架，面向分布式多机器人任务分配，利用图注意力与群体策略梯度实现显式通信下的协同决策。该方法有望为端云协同的多智能体任务调度提供可迁移的建模与训练范式。",
+      "llm_tldr": "通信受限的分布式多智能体系统面临部分可观测和动态协作难题，现有启发式依赖手工规则，学习方法又常假设全局观测。本文提出MDGAM与GRMAPG组成的神经调度框架，面向分布式多机器人任务分配，利用图注意力与群体策略梯度实现显式通信下的协同决策。该方法有望为端云协同的多智能体任务调度提供可迁移的建模与训练范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.00104v1",
+      "source": "arxiv",
+      "title": "Skillsets on the Chain: A Blockchain-based Zero-Trust Framework for Agentic AI Networking",
+      "abstract": "Agentic AI networking (AgentNet) systems rely heavily on third-party skillset implementations and distributed multi-agent collaboration, yet they face major claim-to-capability inconsistencies and security vulnerabilities under trust-by-declaration assumptions. To bridge this gap, this paper proposes TrustAgentNet, a dual-tier blockchain-secured zero-trust framework. Specifically, a global Chain of Skillsets (CoS) governs the lifecycle of skillset metadata with protocols empowered by specialized agents to enforce off-chain auditing while maintaining lightweight on-chain cryptographic consensus. Furthermore, transient, task-oriented Chains of Collaboration (CoC) are dynamically established to enable trustless distributed multi-agent collaboration. Theoretical analysis of the three-way trade-off among security level, task performance, and resource overhead is provided and empirically validated. Experimental results on a hardware prototype demonstrate that compared with no-blockchain trust-by-default baselines, the zero-trust overhead of TrustAgentNet is dominated by off-chain inference, while the blockchain layer incurs minor ledger costs via the ledger-IPFS storage and on/off-chain integration design. Crucially, the proposed verification pipeline achieves a flawless 100% accuracy across 50 AI models, correctly validating 40 honest skillsets and intercepting 10 adversarial ones, and generalizes to non-AI domains with an 83.91% accuracy and a 0.85 F1-score across 1478 features from 171 ClawHub skills. Adversarial experiments further show that TrustAgentNet enables autonomous skillset self-recovery against various malicious attacks.",
+      "authors": [
+        "Yayu Gao",
+        "Yong Xiao",
+        "Hao Hu",
+        "Xubo Li",
+        "Zhiwei Liu",
+        "Yingyu Li",
+        "Guangming Shi",
+        "Ping Zhang"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.NI"
+      ],
+      "published": "2026-07-31T00:24:06+00:00",
+      "link": "https://arxiv.org/pdf/2608.00104v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Trustless distributed multi-agent collaboration via chains of collaboration",
+      "llm_evidence_cn": "通过协作链实现无信任分布式多智能体协作",
+      "llm_evidence": "通过协作链实现无信任分布式多智能体协作",
+      "canonical_evidence": "通过协作链实现无信任分布式多智能体协作",
+      "llm_tldr_en": "A blockchain-based zero-trust framework secures agentic AI networking by managing skillset lifecycles and dynamically establishing task-oriented chains of collaboration for trustless multi-agent cooperation.",
+      "llm_tldr_cn": "代理式AI网络依赖第三方技能集与分布式多智能体协作，但信任声明与能力常不一致，存在安全漏洞。该文提出TrustAgentNet双链零信任框架：全局技能链治理技能集元数据，协议化智能体执行链下审计并保持轻量链上共识；同时按任务动态建立协作链，支持无信任分布式多智能体协作。实验证明该框架能有效提升技能可验证性与协作安全性，为智能体网络提供可信基础设施。",
+      "llm_tldr": "代理式AI网络依赖第三方技能集与分布式多智能体协作，但信任声明与能力常不一致，存在安全漏洞。该文提出TrustAgentNet双链零信任框架：全局技能链治理技能集元数据，协议化智能体执行链下审计并保持轻量链上共识；同时按任务动态建立协作链，支持无信任分布式多智能体协作。实验证明该框架能有效提升技能可验证性与协作安全性，为智能体网络提供可信基础设施。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.00718v1",
+      "source": "arxiv",
+      "title": "Adversarial Attacks in Multi-Agent LLM Pipelines: Unveiling Structural Vulnerabilities in Agentic AI Architectures",
+      "abstract": "Multi-agent LLM pipelines orchestrate multiple specialized language model agents into structured workflows where intermediate outputs are passed across agents to solve complex tasks. This design introduces a security gap absent in single-agent settings: once an agent accepts adversarial content, it is propagated as trusted input throughout the pipeline. We argue that this vulnerability stems from the absence of boundary verification, a security primitive that enforces explicit validation of data as it crosses inter-agent boundaries, including content, identity, execution intent, and state integrity. Without such verification, modern pipelines embed implicit trust assumptions that are not adversarially robust, giving rise to structurally distinct attack surfaces (e.g., content injection, agent impersonation, plan deviation, and memory poisoning). Leveraging annotated production traces from the GAIA and SWE-Bench benchmark, we show that these vulnerabilities arise in benign deployments and largely evade existing evaluation frameworks. We further operationalize these failure modes within a controlled multi-agent setting and evaluate them across GPT-5-mini, Claude Sonnet 4.5, and Kimi K2.5 under identical pipeline configurations. The results reveal that attack success aligns with pipeline structure rather than model capability, indicating that adversarial vulnerability is fundamentally an architectural property and motivating a shift toward pipeline-level defenses.",
+      "authors": [
+        "Faisal Haque Bappy",
+        "Tahrim Hossain",
+        "Tarannum Shaila Zaman",
+        "Raiful Hasan",
+        "Kamrul Hasan",
+        "Tariqul Islam"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-08-01T15:35:58+00:00",
+      "link": "https://arxiv.org/pdf/2608.00718v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Analyzes structural vulnerabilities in multi-agent LLM pipelines where adversarial content propagates across agents, relevant to collaboration trust",
+      "llm_evidence_cn": "分析多智能体LLM流水线中对抗性内容跨智能体传播的结构性漏洞，涉及协作信任",
+      "llm_evidence": "分析多智能体LLM流水线中对抗性内容跨智能体传播的结构性漏洞，涉及协作信任",
+      "canonical_evidence": "分析多智能体LLM流水线中对抗性内容跨智能体传播的结构性漏洞，涉及协作信任",
+      "llm_tldr_en": "Multi-agent LLM pipelines propagate adversarial content as trusted input across agents due to missing boundary verification. Highlights content, identity, intent, and state validation as essential security primitives for adversarial robustness in agentic architectures.",
+      "llm_tldr_cn": "多智能体LLM流水线将多个专业智能体编排为结构化工作流，中间输出跨智能体传递。一旦某个智能体接受对抗性内容，它会被当作可信输入在整个流水线中传播。本文指出这一漏洞源于缺少边界验证原语，并分析内容、身份、执行意图和状态完整性四类验证需求。研究强调了现代流水线中的隐含信任假设不具备对抗鲁棒性，为安全智能体架构设计提供了方向。",
+      "llm_tldr": "多智能体LLM流水线将多个专业智能体编排为结构化工作流，中间输出跨智能体传递。一旦某个智能体接受对抗性内容，它会被当作可信输入在整个流水线中传播。本文指出这一漏洞源于缺少边界验证原语，并分析内容、身份、执行意图和状态完整性四类验证需求。研究强调了现代流水线中的隐含信任假设不具备对抗鲁棒性，为安全智能体架构设计提供了方向。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.00303v1",
+      "source": "arxiv",
+      "title": "CrystalMem: Elastic Memory for Self-Evolving LLM Agents via Knowledge Crystallization",
+      "abstract": "Memory for self-evolving large language model (LLM) agents is often provisioned as if its byte budget only grows. Cloud platforms, however, adjust quotas with load and cost, and we show that capability does not follow the budget back up: after a squeeze-and-recover cycle, the agent settles below its pre-squeeze level, a gap we call memory hysteresis. The cause is structural. Deletion and one-way compression discard the material needed for later rebuilding, and we prove that any policy that only keeps or drops entries carries a residual-deficit floor. We propose CrystalMem (Crystallized Memory), an elastic memory sidecar that demotes entries across four fidelity states under a crystallization-energy schedule, orders demotions by advantage-weighted influence with dependency coupling, and recovers capability through verified recrystallization under explicit compute and byte caps. Across seven environments, seventeen methods, and six backbones, with multi-tenant serving and a physical edge-cloud deployment, CrystalMem achieves the highest restored capability in every setting and closes the loop left open by every baseline. From a 50% byte budget, CrystalMem matches the strongest budgeted baseline at full provision on every environment; at equal budgets, it leads by +4.6 pp on average.",
+      "authors": [
+        "Beining Wu",
+        "Jun Huang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-31T21:35:46+00:00",
+      "link": "https://arxiv.org/pdf/2608.00303v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Addresses elastic memory management for LLM agents running on cloud platforms, supporting edge-cloud AI agent system reliability",
+      "llm_evidence_cn": "研究云平台上LLM智能体的弹性记忆管理，支撑端云协同AI智能体系统的可靠性",
+      "llm_evidence": "研究云平台上LLM智能体的弹性记忆管理，支撑端云协同AI智能体系统的可靠性",
+      "canonical_evidence": "研究云平台上LLM智能体的弹性记忆管理，支撑端云协同AI智能体系统的可靠性",
+      "llm_tldr_en": "Identifies memory hysteresis in self-evolving LLM agents under cloud quota changes, proves a residual-deficit floor for keep/drop policies, and proposes CrystalMem, an elastic memory sidecar with four fidelity states and crystallization-energy scheduling to restore capability after squeeze-recover cycles.",
+      "llm_tldr_cn": "云平台会动态调整LLM智能体的记忆配额，但智能体在经历挤压缩放后能力无法随预算恢复，产生记忆迟滞。本文指出删除和单向压缩造成重建材料丢失，并证明仅保留/丢弃策略存在残余赤字下限。为此提出CrystalMem弹性记忆侧车，通过结晶能量调度将条目在四种保真状态间降级，并按优势排序，帮助智能体在配额波动后恢复能力，为云上弹性智能体记忆管理提供了新机制。",
+      "llm_tldr": "云平台会动态调整LLM智能体的记忆配额，但智能体在经历挤压缩放后能力无法随预算恢复，产生记忆迟滞。本文指出删除和单向压缩造成重建材料丢失，并证明仅保留/丢弃策略存在残余赤字下限。为此提出CrystalMem弹性记忆侧车，通过结晶能量调度将条目在四种保真状态间降级，并按优势排序，帮助智能体在配额波动后恢复能力，为云上弹性智能体记忆管理提供了新机制。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.00805v1",
+      "source": "arxiv",
+      "title": "AgentSLABench: Evaluating and Benchmarking Agentic Systems Under Resource Constraints",
+      "abstract": "We present AgentSLABench, a resource-aware evaluation framework for autonomous AI agents that measures correctness alongside latency, cost, compute, memory, and network usage under declared resource budgets. Unlike standard benchmarks that report only accuracy, AgentSLABench produces a multi-dimensional profile per agent per task - the same way systems profilers (perf, pprof, cProfile) measure resource consumption of code, but extended with task correctness as a first-class dimension. AgentSLABench provides 16 task environments across 6 categories (5 core: multi-hop QA, retail substitution, code generation, web shopping, travel planning; 11 extended) with isolated Docker containers, declared CPU/memory/time/network budgets, sealed test sets with SHA256 hashes, and a standardized profiling protocol. We profile 5 general-purpose baseline agents (ReAct, PlanAndSolve, Reflexion, CoT, Random) plus 4 task-specialized agents, finding that specialized agents achieve 100% success on 3/5 core tasks (fact_qa, web_shopping, travel_planning) and 66.7-83.3% on retail and code_gen, while general baselines fail entirely on 4/5 domain tasks. Crucially, we report the Efficiency-Adjusted Success Rate (EASR) - success weighted by resource consumption relative to declared budgets - revealing that high accuracy at unbounded cost is not production-viable. We release the full infrastructure, sealed test sets, and profiling results to enable reproducible, resource-aware agent evaluation.",
+      "authors": [
+        "Meher Bhaskar Madiraju",
+        "Meher Sai Preetam Madiraju"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-01T18:17:47+00:00",
+      "link": "https://arxiv.org/pdf/2608.00805v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Resource-aware benchmarking of agentic systems under CPU/memory/network budgets",
+      "llm_evidence_cn": "在资源预算下对智能体系统进行多维评测",
+      "llm_evidence": "在资源预算下对智能体系统进行多维评测",
+      "canonical_evidence": "在资源预算下对智能体系统进行多维评测",
+      "llm_tldr_en": "Introduces AgentSLABench, a resource-aware evaluation framework measuring correctness plus latency, cost, compute, memory, and network usage for autonomous AI agents.",
+      "llm_tldr_cn": "现有智能体基准只报准确率，忽略了延迟、算力、内存和网络等资源约束，而这些约束对移动端智能体至关重要。AgentSLABench提出资源感知的评测框架，在声明式CPU/内存/时间/网络预算下对每个智能体-任务组合生成多维性能画像，并内置16类任务环境。它为移动AI智能体的资源受限部署提供可复现评测手段，是端云协同智能体系统评估的重要基础设施。",
+      "llm_tldr": "现有智能体基准只报准确率，忽略了延迟、算力、内存和网络等资源约束，而这些约束对移动端智能体至关重要。AgentSLABench提出资源感知的评测框架，在声明式CPU/内存/时间/网络预算下对每个智能体-任务组合生成多维性能画像，并内置16类任务环境。它为移动AI智能体的资源受限部署提供可复现评测手段，是端云协同智能体系统评估的重要基础设施。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.00937v1",
+      "source": "arxiv",
+      "title": "Neuro-Symbolic Participation Governance for Verifiable AI Agents in Open Digital Twin Ecosystems",
+      "abstract": "Autonomous AI agents, increasingly empowered by large language models, are becoming important components of human-machine systems for high-stakes decision support in digital twin ecosystems. However, existing multi-agent systems often lack robust verification for identity, capability, and policy compliance, especially in decentralized environments spanning multiple institutions. This paper proposes a neuro-symbolic decentralized governance framework for verifiable agents in collaborative digital twin environments. By representing agents through multi-layer semantic profiles, the framework bridges probabilistic neural reasoning with deterministic institutional governance, thereby supporting trustworthy human-AI collaboration and meaningful human oversight. Capabilities are grounded in formal domain ontologies to enable machine-interpretable, policy-aware, and context-sensitive participation. These credentials, issued by organizational authorities, are validated via blockchain-based smart contracts, ensuring auditable participation without exposing sensitive data. We demonstrate the framework using a decision-support prototype with clinic, digital twin, and wearable provider agents effectively prevents unauthorized interaction and enforces institutional policies with manageable overhead. Our findings suggest that neuro-symbolic decentralized governance provides a scalable and trustworthy pathway for safe human-machine collaboration across institutional boundaries.",
+      "authors": [
+        "Juan Li",
+        "Wei Cai",
+        "Yan Bai"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-08-02T02:30:32+00:00",
+      "link": "https://arxiv.org/pdf/2608.00937v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multi-agent governance framework for collaborative digital twin environments",
+      "llm_evidence_cn": "面向协作数字孪生环境的多智能体治理框架",
+      "llm_evidence": "面向协作数字孪生环境的多智能体治理框架",
+      "canonical_evidence": "面向协作数字孪生环境的多智能体治理框架",
+      "llm_tldr_en": "A neuro-symbolic decentralized governance framework ensures verifiable AI agents in collaborative digital twin ecosystems, supporting trustworthy human-AI collaboration.",
+      "llm_tldr_cn": "现有面向数字孪生生态的多智能体系统缺乏对身份、能力和策略合规的验证，尤其在跨机构去中心化环境中。该文提出神经符号去中心化治理框架，通过多层语义剖面连接概率神经推理与确定性制度治理，实现可验证智能体协作。框架重点支撑大模型驱动智能体在开放数字孪生环境中的可信行为，从而促进跨机构人机协作与高价值决策支持。",
+      "llm_tldr": "现有面向数字孪生生态的多智能体系统缺乏对身份、能力和策略合规的验证，尤其在跨机构去中心化环境中。该文提出神经符号去中心化治理框架，通过多层语义剖面连接概率神经推理与确定性制度治理，实现可验证智能体协作。框架重点支撑大模型驱动智能体在开放数字孪生环境中的可信行为，从而促进跨机构人机协作与高价值决策支持。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.00914v1",
+      "source": "arxiv",
+      "title": "Augmented Backpressure for Decentralized Management of Agentic Networks",
+      "abstract": "Agentic foundation-model service networks handle requests spanning retrieval, planning, generation, verification, and tool use. Unlike traditional communication networks, control performance depends on queue dynamics and contextual memory states, including prefix/KV blocks, retrieved contexts, expert warm states, and verified tool outputs. These states arise from execution history and alter service work and downstream successor laws under finite local budgets. Treating them as passive caches or an independent process leaves a queueing-control gap. To this end, we propose \\emph{Memory-Augmented Backpressure} (MABP), a queue--memory control framework for stateful foundation-model service networks (SFMSNs) that jointly models commodity queues and causal contextual memory dynamics. MABP represents each request by service and state types, estimates memory-dependent work, penalties, and successor probabilities, then reads queues and resident memory each slot, selects feasible routing, transfer, activation, and service actions using a memory-dependent pressure score, and retains a budget-feasible subset of resident and newly generated objects. We prove an occupation-measure capacity outer bound with conditional tightness. We show that modeling contextual memory can strictly increase the stability region through work reduction and transition shaping, establishing a separation between memory-aware and memory-oblivious decisions. We also prove throughput and drift-plus-penalty guarantees for exact frame-MABP with bounded-loss extensions to approximate solvers.",
+      "authors": [
+        "Zuyuan Zhang",
+        "Sizhe Tang",
+        "Tian Lan"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-08-02T00:44:43+00:00",
+      "link": "https://arxiv.org/pdf/2608.00914v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Proposes queue-memory control for stateful foundation-model service networks, enabling decentralized management of distributed agentic networks",
+      "llm_evidence_cn": "提出面向有状态基础模型服务网络的队列-记忆控制框架，支撑去中心化智能体网络的分布式管理",
+      "llm_evidence": "提出面向有状态基础模型服务网络的队列-记忆控制框架，支撑去中心化智能体网络的分布式管理",
+      "canonical_evidence": "提出面向有状态基础模型服务网络的队列-记忆控制框架，支撑去中心化智能体网络的分布式管理",
+      "llm_tldr_en": "Proposes Memory-Augmented Backpressure (MABP), a queue-memory control framework for stateful foundation-model service networks, jointly modeling commodity queues and contextual memory states to enable decentralized management of agentic networks under finite budgets.",
+      "llm_tldr_cn": "智能体基础模型服务网络需要同时处理队列和上下文记忆状态（如前缀/KV块、检索上下文、工具输出），现有方法将其割裂导致控制缺口。本文提出记忆增强背压（MABP）框架，联合建模商品队列与因果记忆状态，为有状态服务网络提供分布式排队控制。该方法将记忆态纳入调度决策，提升了去中心化智能体网络在有限预算下的管理有效性。",
+      "llm_tldr": "智能体基础模型服务网络需要同时处理队列和上下文记忆状态（如前缀/KV块、检索上下文、工具输出），现有方法将其割裂导致控制缺口。本文提出记忆增强背压（MABP）框架，联合建模商品队列与因果记忆状态，为有状态服务网络提供分布式排队控制。该方法将记忆态纳入调度决策，提升了去中心化智能体网络在有限预算下的管理有效性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.00922v1",
+      "source": "arxiv",
+      "title": "From Cloud to Crowd: Democratizing LLM Service with Decentralized Edge Collaboration for RAG",
+      "abstract": "The rapid advancement of large language models (LLMs) has increased demand for scalable and cost-effective deployment, especially for mobile and edge devices. Cloud-hosted LLMs are powerful but expensive and difficult to scale due to vendor lock-in and high resource needs, resulting in high expenses and unstable performance under load. Recent efforts focus on deploying small language models (SLMs), distilled or pruned from LLMs, on resource-constrained edge devices to reduce costs and improve scalability. However, edge-based SLMs face limited knowledge coverage and notable accuracy gap compared to cloud-based LLMs. To address this, we present DEFRAG, a decentralized edge collaboration system for retrieval-augmented generation (RAG) that optimizes both retrieval and generation across heterogeneous edge devices. For retrieval, DEFRAG compresses and shares knowledge graphs, using hybrid retrieval to expand knowledge coverage. For generation, DEFRAG introduces an optimizer that adaptively selects SLMs and RAG parameters per query, balancing accuracy and cost. We implement DEFRAG on a heterogeneous edge testbed and evaluate it on benchmark QA datasets. We also test it under mobile route stress, non-uniform data placement, and a domain-specific QA workload. The results show that DEFRAG maintains stable service quality and cost efficiency under these broader settings. Results show that DEFRAG narrows the SLM-LLM accuracy gap, while reducing cost by up to 98.4% and increasing peak throughput by up to 97.8% over centralized services. These findings demonstrate the potential of DEFRAG for democratized LLM services at the edge.",
+      "authors": [
+        "Jiaxing Li",
+        "Hengzhi Wang",
+        "Feng Wang",
+        "Chi Xu",
+        "Danyang Song",
+        "Ruixiao Zhang",
+        "Edith C. H. Ngai",
+        "Jiangchuan Liu"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-08-02T01:28:34+00:00",
+      "link": "https://arxiv.org/pdf/2608.00922v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "decentralized edge collaboration for RAG service",
+      "llm_evidence_cn": "面向RAG的去中心化边缘协作系统",
+      "llm_evidence": "面向RAG的去中心化边缘协作系统",
+      "canonical_evidence": "面向RAG的去中心化边缘协作系统",
+      "llm_tldr_en": "DEFRAG presents a decentralized edge collaboration system for retrieval-augmented generation, using edge devices to collectively serve LLM workloads while reducing cloud cost and overcoming SLM knowledge gaps.",
+      "llm_tldr_cn": "云托管LLM成本高且扩展困难，边缘小型模型的准确率与知识覆盖不足。DEFRAG提出去中心化边缘协作的RAG系统，利用多个边缘设备协作聚合知识，在降低部署成本的同时提升检索增强生成质量。该系统重点关注资源受限设备上的可扩展性，为在移动与边缘设备上民主化LLM服务提供了一条协作式新路径，也为端云协同AI代理提供底层检索支撑。",
+      "llm_tldr": "云托管LLM成本高且扩展困难，边缘小型模型的准确率与知识覆盖不足。DEFRAG提出去中心化边缘协作的RAG系统，利用多个边缘设备协作聚合知识，在降低部署成本的同时提升检索增强生成质量。该系统重点关注资源受限设备上的可扩展性，为在移动与边缘设备上民主化LLM服务提供了一条协作式新路径，也为端云协同AI代理提供底层检索支撑。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.01085v1",
+      "source": "arxiv",
+      "title": "When Collaboration Becomes a Trigger: Collective Evidence-Threshold Backdoors in Multi-Agent Systems",
+      "abstract": "LLM-based multi-agent systems (MAS) extend LLM capabilities through iterative communication and shared contexts. However, this collaboration introduces a vulnerability: backdoor behavior can be activated when peer evidence reaches a hidden threshold, rather than being determined by any single message. We introduce a collective evidence-threshold backdoor paradigm for MAS and Boundary-Conditioned Backdoor Injection (BCBI), which constructs counterfactual boundary pairs to separate benign behavior before the threshold from the adversarial objective after it, and learns latent progression aligned with evidence. To mitigate this threat, we propose LAtent Transition Test-time Evaluation (LATTE), a clean-only latent-transition defense that learns benign communication dynamics and quarantines anomalous agent updates before their responses propagate. Across several benchmarks, BCBI yields selective activation with little premature activation; without knowing the attack target or trigger, LATTE limits propagation with minimal disruption.",
+      "authors": [
+        "Jia-Hao Xiao",
+        "Lei Feng",
+        "Min-Ling Zhang"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.LG"
+      ],
+      "published": "2026-08-02T08:38:44+00:00",
+      "link": "https://arxiv.org/pdf/2608.01085v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Examines how collaboration in multi-agent systems can trigger collective backdoors, directly relevant to collaboration security",
+      "llm_evidence_cn": "研究多智能体系统中协作如何触发集体后门攻击，直接关联协作安全性",
+      "llm_evidence": "研究多智能体系统中协作如何触发集体后门攻击，直接关联协作安全性",
+      "canonical_evidence": "研究多智能体系统中协作如何触发集体后门攻击，直接关联协作安全性",
+      "llm_tldr_en": "Introduces collective evidence-threshold backdoors in multi-agent systems where adversarial behavior activates only when peer evidence reaches a hidden threshold, along with BCBI injection and LATTE test-time defense using clean-only latent transitions, highlighting collaboration as a novel attack surface.",
+      "llm_tldr_cn": "多智能体系统中的协作共享上下文可能被利用：后门行为在同伴证据达到隐藏阈值时被激活。本文提出集体证据阈值后门范式与边界条件注入方法BCBI，并给出仅需干净数据的测试时防御LATTE，通过潜状态转移检测区分良性行为与对抗目标。这项工作揭示协作本身的安全风险，为可信多智能体系统提供新防线。",
+      "llm_tldr": "多智能体系统中的协作共享上下文可能被利用：后门行为在同伴证据达到隐藏阈值时被激活。本文提出集体证据阈值后门范式与边界条件注入方法BCBI，并给出仅需干净数据的测试时防御LATTE，通过潜状态转移检测区分良性行为与对抗目标。这项工作揭示协作本身的安全风险，为可信多智能体系统提供新防线。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.02031v1",
+      "source": "arxiv",
+      "title": "Learning-Based Collaborative MEC for LLM Inference with Soft-Deadline Awareness via Transformer-Enhanced PPO",
+      "abstract": "This paper investigates collaborative mobile edge computing (MEC) servers for large language model (LLM) inference under soft deadline constraints. In this system, to improve the quality of service, computations are expected to be completed within their deadlines. However, due to dependencies among tasks or subtasks, any missed deadline can lead to catastrophic consequences for the entire request. In this context, this work proposes an extended deadline mechanism with constrained flexibility. The main challenges lie in handling large-scale computations under strict latency constraints while limiting the number of allowable deadline extensions, especially in the presence of task dependencies within each request. To tackle these challenges, we develop a transformer-enhanced proximal policy optimization (PPO) framework that enables efficient collaboration among MEC servers. The proposed approach aims to maximize the number of tasks completed within their deadlines while minimizing the use of deadline extensions. By capturing temporal dependencies and cross-server interactions, the transformer improves decision-making for task migration. Simulation results demonstrate that the proposed method significantly outperforms conventional PPO and heuristic-based approaches in terms of task completion rate and overall system efficiency.",
+      "authors": [
+        "Ngoc Hung Nguyen",
+        "Bjorn Landfeldt"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.LG",
+        "cs.NI"
+      ],
+      "published": "2026-08-03T10:27:25+00:00",
+      "link": "https://arxiv.org/pdf/2608.02031v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Collaborative mobile edge computing for LLM inference with soft deadlines",
+      "llm_evidence_cn": "面向LLM推理的协作移动边缘计算，软截止时间感知",
+      "llm_evidence": "面向LLM推理的协作移动边缘计算，软截止时间感知",
+      "canonical_evidence": "面向LLM推理的协作移动边缘计算，软截止时间感知",
+      "llm_tldr_en": "This paper studies collaborative mobile edge computing (MEC) for LLM inference under soft deadlines, proposing a transformer-enhanced PPO method with an extended deadline mechanism to handle dependent tasks under latency constraints.",
+      "llm_tldr_cn": "在软截止时间约束下，协作式移动边缘计算需要为LLM推理提供服务质量保障，任务依赖使逾期代价更高。该文提出限制灵活的扩展截止机制，并结合Transformer增强PPO进行协作任务调度。实验表明该方法能在严格时延限制下有效处理大规模依赖任务，减少截止期违背。这项工作为边缘云协作的LLM推理调度提供了一种强化学习方案。",
+      "llm_tldr": "在软截止时间约束下，协作式移动边缘计算需要为LLM推理提供服务质量保障，任务依赖使逾期代价更高。该文提出限制灵活的扩展截止机制，并结合Transformer增强PPO进行协作任务调度。实验表明该方法能在严格时延限制下有效处理大规模依赖任务，减少截止期违背。这项工作为边缘云协作的LLM推理调度提供了一种强化学习方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
