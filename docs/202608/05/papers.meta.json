@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-05",
+  "date": "2026-08-05",
+  "generated_at": "2026-08-05T21:31:02",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/05/2608.03026v1-pruning-aware-multi-cluster-co-inference-for-large-ai-models-in-ai-rans",
+      "section": "quick",
+      "title_en": "Pruning-Aware Multi-Cluster Co-Inference for Large AI Models in AI-RANs",
+      "authors": "Xiaowen Cao, Zhonghao Lyu, Shicheng Chu, Zezhong Zhang, Dingzhu Wen, Guangxu Zhu, Kaibin Huang, Shuguang Cui, Jie Xu",
+      "date": "2026-08-04",
+      "pdf": "https://arxiv.org/pdf/2608.03026v1",
+      "score": "7.0",
+      "evidence": "边缘服务器协调多用户集群协同推理，结合端侧特征提取与剪枝",
+      "tldr": "大规模AI模型在资源受限分布式环境下推理困难；提出多集群协同推理框架，边缘服务器协调多个用户集群，用轻量级模型提取特征并融合，基于率失真和部分信息分解刻画剪枝与协同性能权衡，联合优化剪枝率、调度、带宽和功率；仿真表明在满足时延能耗约束下显著降低推理失真，优于现有方案，提升多集群边缘智能网络的精度与资源效率。",
+      "tags": "query:eca",
+      "abstract_en": "The increasing scale and computational demands of large artificial intelligence models (LAIMs) present significant challenges for efficient inference in resource-constrained distributed environments. In this paper, we propose a multi-cluster LAIM co-inference framework, where an edge server equipped with multiple graphics processing units (GPUs) coordinates multiple user clusters to execute inference tasks collaboratively. Within each cluster, devices capture data from diverse perspectives and employ lightweight on-device LAIMs to extract local features. These features are then transmitted to the edge server, where they are aggregated and fused to generate a more accurate inference outcome. To reveal the fundamental trade-off between model pruning and collaborative inference performance, we develop a theoretical framework that characterizes the impact of pruning ratios and device contributions using rate-distortion theory and partial information decomposition. Based on this analysis, we formulate a joint optimization problem that determines the model pruning ratio, the task scheduling strategy, the bandwidth allocation, and the transmission power, with the goal of minimizing the inference distortion while satisfying the constraints of latency, energy consumption, and server capacity. Extensive simulation results demonstrate that the proposed framework significantly outperforms existing benchmark schemes, achieving superior inference accuracy and resource efficiency in multi-cluster edge intelligence networks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/05/2608.03214v1-the-agent-operating-system-aos-a-reference-operating-architecture-for-distributed-agentic-systems",
+      "section": "quick",
+      "title_en": "The Agent Operating System (AOS): A Reference Operating Architecture for Distributed Agentic Systems",
+      "authors": "Ankur Sharma, Deep Shah",
+      "date": "2026-08-04",
+      "pdf": "https://arxiv.org/pdf/2608.03214v1",
+      "score": "7.0",
+      "evidence": "面向分布式智能体系统的参考操作架构，涵盖协调与委派等核心机制",
+      "tldr": "针对大语言模型驱动的分布式智能体系统缺乏稳定操作架构的问题，本文提出AOS（Agent Operating System）参考架构。AOS分为控制与治理平面和运行时与协调平面，前者管理意图、政策、信任、权威、置信度、审计与人类监督，后者负责代理生命周期、工作流协调、模型与工具路由、上下文与记忆协调、调度及运行时保障。平台服务等外部组件通过明确接口集成。论文定义了概念、不变量、接口对象、优化目标和部署画像，并指出权衡与开放问题。AOS不替代现有框架，而是作为组合异构组件的操作系统层，支撑可治理、可靠、可观察、可互操作的智能体系统。",
+      "tags": "query:eca",
+      "abstract_en": "Large language models have transformed artificial intelligence from isolated prediction services into components of long-running, distributed systems that reason, invoke tools, retrieve external state, delegate tasks, and act on behalf of users and organizations. The surrounding ecosystem has responded with agent frameworks, workflow engines, model-serving platforms, memory systems, communication protocols, and observability tools. These technologies improve execution, but they do not provide a stable, implementation-independent operating architecture for governing intent, selecting capabilities, preserving authority across delegation, controlling uncertainty, coordinating runtime behavior, and reconstructing why consequential actions occurred. This paper proposes the Agent Operating System (AOS), a vendor-neutral reference operating architecture for distributed agentic systems. AOS contains two internal planes: a Control & Governance Plane responsible for intent, policy, trust, authority, confidence, auditability, observability, and human oversight; and a Runtime & Coordination Plane responsible for agent lifecycle, workflow coordination, model and tool routing, context and memory coordination, scheduling, traffic management, and runtime assurance. Platform services, Linux or Windows, container runtimes, and physical infrastructure remain outside the AOS boundary and are integrated through explicit interfaces. The paper specifies AOS concepts, invariants, interface objects, optimization objectives, deployment profiles, and reliability responsibilities. It also identifies tradeoffs and unresolved research questions. AOS is not presented as a replacement for existing frameworks or infrastructure; it is proposed as the operating architecture through which heterogeneous components can be composed into governable, reliable, observable, and interoperable agentic systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/05/2608.03682v1-phyai-real-time-physical-ai-at-the-edge-scalable-rollouts-in-the-cloud",
+      "section": "quick",
+      "title_en": "PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud",
+      "authors": "Chenghua Wang, Daliang Xu, Dongqi Cai, Duojin Sun, Hao Zhang, Haoze Qian, Huaiyuan Zhang, Jinshuo Cui, Kezhao Zhao, Longxi Gao, Mengwei Xu, Rongjie Yi, Tianyue Zhang, Weikai Xie, Xiyuan Tan, Xuanzhe Liu, Yingying Qin, Yiwen Lu, Yuan Yao, Yuezhi Zu, Yunhan Guo, Ziqi Guo",
+      "date": "2026-08-04",
+      "pdf": "https://arxiv.org/pdf/2608.03682v1",
+      "score": "7.0",
+      "evidence": "面向物理AI的统一推理引擎，覆盖机载、边缘与云，支撑端边云协同部署",
+      "tldr": "物理AI策略在评估、云RL、边缘服务与机载部署中常需不同推理程序。PhyAI用单一运行时统一这些场景，以模型适配器隔离架构差异，共享执行与内核。相对官方实现提速1.40-4.65倍，Cosmos3在8卡H20上延迟从2.46s降至1.18s。支持VLA/WAM，可快速适配新模型，并引入控制时间Roofline。",
+      "tags": "query:eca",
+      "abstract_en": "Physical AI policies require inference throughout their lifecycle, including model evaluation, cloud reinforcement learning rollout, edge GPU serving, and onboard deployment. Although these settings share the same checkpoint and action semantics, they often rely on separate inference programs. To unify them, we build PhyAI, a Physical AI inference engine with a single runtime that keeps architecture-specific conditioning, solver, cache, and output logic in model adapters while sharing graph execution, kernels, memory management, and parallel services. The same codebase runs vision-language-action (VLA) models and world-action models (WAMs) on single or multiple GPUs across onboard, edge, and cloud deployments. We used the adapter interface to add MiniCPM-Robot on the day of its release. PhyAI achieves 1.40x-4.65x speedups over the official implementations of pi0, pi0.5, GR00T N1.7, and MiniCPM-Robot. On Cosmos3-Nano-Policy-DROID it reduces latency from 2.46 to 1.18 s on eight H20 GPUs (CFG=2, TP=4), a 2.08x speedup. Specialized runtimes remain faster in several configurations, so our goal is one runtime with competitive latency rather than the fastest result in every case. Detailed profiles reveal why different models need different execution policies: on a Hopper-series GPU at batch size one, the pi0.5 action expert accounts for 8.8% of FLOPs but 57.2% of latency; at batch size 32 its share drops to 13.5% and throughput reaches about 100 samples/s. Cosmos3 remains generation-dominated and gains only 14.3% throughput as batch size increases from 1 to 16. We further introduce the control-time Roofline, which distinguishes inference-bound from environment-bound control; the measured pi0.5 points on four LIBERO suites are environment-bound while Cosmos3 stays inference-bound. Code and benchmarks: https://github.com/mingti-org/phyai.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
