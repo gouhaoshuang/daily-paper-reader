@@ -1,0 +1,108 @@
+Title: Homebot: A Personal AI Agent for Conversational Home Assistance and Automation
+
+URL Source: https://arxiv.org/pdf/2608.02254v1
+
+Published Time: Tue, 04 Aug 2026 02:28:20 GMT
+
+Number of Pages: 4
+
+Markdown Content:
+# Homebot: A Personal AI Agent for Conversational Home Assistance and Automation 
+
+# Shengyuan Ye, Yixin Zhang, Han Liang, Liekang Zeng, Jiangsu Du, Mu Yuan 
+
+Contact: brandonye@foxmail.com Website: https://ysyisyourbrother.github.io/homebot 
+
+Abstract 
+
+Homebot is a locally deployable AI agent for conversational household assistance and automation. It accepts voice and instant-messaging requests through a shared runtime that combines language-model responses with registered tools and task-specific skills. The design separates common re-quest processing from session ownership: messaging history remains scoped to a channel and chat, whereas voice interac-tion is bounded by wake-word activation. For hands-free use, 
+
+Homebot combines local wake-word detection, streaming speech recognition and synthesis, and an explicit dialogue-state protocol for ending, following up, or continuing a con-versation. Clear channel, tool, and skill contracts support practical customization for household use. 
+
+1 Introduction 
+
+Recent advances in language models [ 7, 8] have expanded agent systems from text generation toward iterative reason-ing and interaction with external environments and tools [ 6 ,9 ]. This direction has produced an active ecosystem of open-source personal-agent software, including OpenClaw, nanobot, and Hermes Agent [ 1, 3 , 4 ]. These systems make language-model capabilities more accessible for individual workflows, but household assistance poses a distinct interaction and customization problem. Home activities often require help when a person is cook-ing, cleaning, or otherwise away from a keyboard [ 2, 10 ]. In these settings, voice interaction is embedded in shared physical and social environments rather than treated as a text interface with speech added at its edges [ 5]. A house-hold assistant should therefore support hands-free activation, prompt spoken feedback, and controlled multi-turn conver-sation. It must also accommodate routines, device names, and usage practices that differ across homes, while providing extension mechanisms that remain manageable for personal deployment. Unlike an individual work assistant, a shared home interface may further need to interpret requests with context appropriate to different family members. 
+
+Homebot is a locally deployable AI agent for conversational household assistance and automation. Voice, Telegram, and Feishu channels normalize requests through a shared Mes-sage Bus and Agent Runtime, which can combine language-model reasoning with registered tools and task-specific skills. This common path does not merge all history: messaging context is scoped to a channel and chat identifier, whereas every wake-word activation starts a bounded voice session. The voice channel uses local wake-word detection, streaming speech recognition, and incremental text-to-speech playback. A structured dialogue_state specifies whether playback should end the interaction, collect a follow-up answer, or re-tain a continuous multi-turn exchange. Optional speaker ver-ification supplies a member or guest signal to voice-request context; profile-conditioned long-term memory and member-specific skills remain planned extensions. This report presents Homebot ’s compact multi-channel architecture, explicit voice turn-control design, and exten-sion contracts for channels, tools, and skills. Together, these design choices provide a practical foundation for customiz-able, multi-member home assistance without proposing new speech or language models. 
+
+2 Homebot Design 2.1 Overview 
+
+Figure 1 presents Homebot as a layered request-processing ar-chitecture with five responsibilities: Channels , a Message Bus ,an Agent Runtime , Session Management , and Tools and Skills .Channels form the system boundary: voice, Telegram, and Feishu translate platform-specific user events into a common message representation and render the resulting response in the appropriate modality. The Message Bus transports these normalized inbound messages to the runtime and routes outbound responses back to their originating channel. This separation lets all supported channels reuse one request path without exposing platform protocol details to the agent. At the center of the architecture, the Agent Runtime con-structs request context, invokes the language model, and interleaves model reasoning with registered tool calls. It draws executable capabilities from the Tools and Skills layer, which separates directly callable actions from task-specific instructions and constraints. Section 2.2 describes this exe-cution path and its tool-use loop, while Section 2.5 details the corresponding extension contracts. arXiv:2608.02254v1 [cs.AI] 3 Aug 2026 Ye et al. 
+
+Figure 1: System overview of Homebot . User-facing channels route normalized messages through the message bus to the agent runtime, which constructs context, invokes tools and skills, and retrieves or persists channel-scoped session history. 
+
+Session Management is deliberately outside this execu-tion path: it determines whether a request may reuse prior conversational history, whereas the runtime processes the current request. Messaging sessions are scoped to a channel and chat identifier, so the common message path does not create cross-channel history by default (Section 2.3). Voice follows the same routing architecture after speech recog-nition, but a wake-word activation establishes a bounded interaction session; its wake-word, recognition, playback, and dialogue-state behavior are described in Section 2.4. 
+
+2.2 Agent Runtime 
+
+Each channel converts an incoming event into a common message that records its channel, chat scope, content, and available metadata. This boundary prevents the Agent Run-time from depending on platform protocols and lets a new channel reuse the same task-processing path after imple-menting input normalization and reply delivery. The Mes-sage Bus keeps inbound receipt and outbound delivery sepa-rate, allowing channel listening, agent execution, and reply presentation to progress independently without introducing distributed-system machinery. Before model execution, the Context Builder assembles sys-tem identity and platform policy, the current request, runtime metadata, session history, and skill-related context. Homebot 
+
+applies progressive disclosure to skills: skills marked always 
+
+contribute their complete instructions, whereas other usable skills are represented initially by a compact manifest con-taining their name, description, and location. A skill is task knowledge and operating guidance rather than an executable tool. When a task makes a skill relevant, the model uses the registered read_file tool to retrieve its corresponding 
+
+SKILL.md on demand; the retrieved instructions are returned as a tool result for the next reasoning step. This two-stage representation keeps broadly applicable guidance immedi-ately available while deferring specialized instructions until needed, reducing per-turn token consumption and preserv-ing effective context capacity for the active interaction. The Agent Runner then performs an iterative request– action loop, illustrated in Figure 2. The model either produces a final response directly or issues a tool call; each tool result is returned to the model as additional context before the next reasoning step. On every model request, it supplies defini-tions for all currently registered tools; it does not remove tools based on a predicted intent. If the model requests an ac-tion, Homebot verifies the tool name, converts and validates parameters against the tool schema, executes the action, and appends a normalized result to the message history. The run-ner repeats this process until the model returns no further tool call, at which point its text is delivered as the user-facing response. Thus, a factual question may finish immediately, while a request such as scheduling a reminder can require one or more tool interactions. A configurable bound pre-vents unbounded action attempts; the default maximum is 200 iterations. 
+
+2.3 Session Management 
+
+Session Management defines the lifecycle of conversational history rather than the execution of an individual request. Chat sessions use a key of the form channel:chat_id . Con-sequently, different channels and chat scopes are isolated by default. For example, a Feishu direct message uses the sender as its chat identity, while group messages use the group iden-tity. The Session Manager persists metadata and messages as JSONL files in the workspace sessions/ directory; sub-sequent requests in the same scope can therefore resolve follow-up references from prior turns. The exact /new com-mand cancels active work for the current session, clears and Homebot: A Personal AI Agent for Conversational Home Assistance and Automation 
+
+User Request LLM Reasoning Tool Call Tool Result Final Response 
+
+- -?6?
+
+> repeat as needed no tool use
+
+Figure 2: The runtime returns tool results to model reasoning and produces a final response only when no further tool use is requested. 
+
+saves its messages, and invalidates the in-memory cache. It resets history without changing the session key or creating a cross-channel identity. Voice uses a shorter-lived boundary. Each wake-word acti-vation creates a fresh key of the form voice:<UUID> . Turns that remain within the active interaction can reuse this con-text, but the session is cleaned up after normal completion, timeout, an exit command, or cancellation. This model avoids silently carrying a previous spoken exchange into a later, independent activation while still supporting bounded multi-turn speech interaction. 
+
+2.4 Voice Interaction Pipeline 
+
+Voice is a complete interaction pipeline, rather than speech input and output around a text agent. While idle, the channel continuously applies local keyword spotting to microphone audio. A wake-word match plays a brief acknowledgement, creates the interaction-scoped voice session described above, and starts streaming speech recognition. The final transcript becomes a normalized inbound message, so voice requests use the same Agent Runtime, tools, and skills as text requests. This local front end limits full speech processing and model execution to explicit interactions. The reply path is likewise incremental. The runtime re-quests a structured JSON voice response with a textual reply 
+
+and a dialogue_state . As reply text arrives, the channel splits it at sentence boundaries and feeds complete sentences to streaming text-to-speech. It can therefore begin play-back before the entire response has been generated. The final structured response supplies the turn-control state after playback completes. Homebot integrates these components, but does not train wake-word, speech-recognition, speaker-recognition, or language models. 
+
+2.4.1 Dialogue State and Turn Control. For reliable hands-free conversation, speech interaction requires an explicit 
+
+STOPPED LISTENING RECOGNIZING THINKING PLAYING 
+
+????
+
+> start wake word final spoken request first speakable reply
+
+-
+
+> silence timeout
+
+-
+
+> end
+
+
+
+> follow_up / continuous
+
+Figure 3: Voice interaction state machine. The struc-tured dialogue state determines the transition after playback. 
+
+decision about what happens after an answer. Homebot sepa-rates this decision from response text through a dialogue_ state field with three values: 
+
+• end : ends the current activation and returns the channel to wake-word listening; 
+
+• follow_up : restarts recognition with the ordinary silence timeout when the system expects another answer; 
+
+• continuous : enters a persistent multi-turn mode, for ex-ample when a user explicitly asks to discuss a topic. Once entered, this mode remains active until an exit command, such as “goodbye,” or the longer silence timeout ends the interaction. This protocol assigns semantic judgment to the model while leaving state transitions to the channel. For example, a re-quest to set an alarm without a time produces a clarifying question and the follow_up state, so recognition remains available for the user’s answer. Figure 3 summarizes the five user-visible channel states. The channel starts in STOPPED and enters LISTENING when started. A wake word moves it to RECOGNIZING ; a final spo-ken request then moves it to THINKING . The first speakable reply starts PLAYING . After playback, follow_up resumes recognition, while end returns to listening unless continu-ous mode is already active. An exit command, cancellation, or a silence timeout also clears the current interaction and returns to listening. The separation between incremental playback and final state parsing permits prompt speech with-out making the next-state decision premature. 
+
+2.4.2 Speaker Recognition and Family Personalization. Most personal home assistants implicitly assume one primary user, even though a household commonly includes several people with different routines, preferences, and references to rooms or devices. Optional speaker verification gives Homebot aYe et al. 
+
+lightweight member signal for a shared voice interface. It derives a speaker embedding from a bounded segment of the user’s speech and compares it by cosine similarity with enrolled samples. The highest-scoring member is attached to the request when its score meets the configured threshold; otherwise, the request is labeled guest . Multiple enrollment samples per member allow the comparison to use the closest available sample. The resulting member identifier enters voice-request meta-data and can condition the Agent Runtime’s current context. This enables Homebot to distinguish shared household con-text, such as device aliases and schedules, from member-specific context. The current implementation passes the member signal to the runtime. A planned profile-conditioned memory layer would retrieve and write long-term prefer-ences, routines, and personal device aliases for the recog-nized member, while retaining shared home memory for requests that concern the household. The same boundary can later support member-specific skills and other personal-ized capabilities. 
+
+2.5 Extensibility 
+
+Homebot exposes three extension boundaries. Channels im-plement a common lifecycle and sending contract, normalize platform events into inbound messages, and can optionally stream output. Built-in implementations are scanned from the package and external implementations can be discovered through Python entry points, but only channels configured as enabled are started. Tools are explicitly registered exe-cutable capabilities. Representative implementations read workspace files, send messages through the bus, search cur-rent public information, and automate a persistent browser when those optional capabilities are configured. A custom tool must declare its name, description, JSON Schema pa-rameters, and asynchronous execution method, then be ex-plicitly registered in the ToolRegistry ; placing a file in a directory does not make it callable. Finally, Skills package task knowledge and operating constraints in SKILL.md files. Workspace skills take precedence over built-in skills with the same name, and dependency requirements determine whether a skill is available. Together, these boundaries keep channel adaptation, executable actions, and task guidance extensible without changing the shared runtime path. 
+
+3 Conclusion 
+
+Homebot shows how a personal home assistant can unify voice and messaging channels behind a shared agent run-time while preserving modality-specific session boundaries. Its voice design combines wake-word activation, streaming speech, and explicit turn control to support bounded multi-turn interaction. The resulting channel, tool, and skill con-tracts provide an extensible foundation for locally deployable home assistance. 
+
+References

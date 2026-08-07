@@ -6,32 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-05
-- 运行时间：2026-08-05 21:30:51 UTC
+- 最新运行日期：2026-08-07
+- 运行时间：2026-08-07 02:02:13 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：0
-- 速读区：3
+- 本次总论文数：4
+- 精读区：3
+- 速读区：1
 
 ### 今日简报（AI）
-今日速读三篇AI系统论文，聚焦边缘智能、分布式架构与实时推理。  
-最值得关注AI-RAN大模型协同推理与Agent操作系统设计，均获7.0分。  
-建议普通读者优先从“边缘实时物理AI+云扩展”的落地思路切入。
-- 详情：[/202608/05/README](/202608/05/README)
+今日精读3篇、速读1篇，聚焦AI智能体协作安全与端侧物理AI两大方向。最值得关注的是9.0分的《WeClawArena》与《PhyAI》，前者涉及跨用户智能体网络的可审计沙箱与安全基准，后者强调边缘端实时物理AI与云端可扩展回放。建议普通读者优先了解智能体协作中的安全审计机制，再结合自身场景评估端侧AI的实际部署价值。
+- 详情：[/202608/07/README](/202608/07/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks](/202608/07/2608.03499v1-weclawarena-an-auditable-sandbox-and-benchmark-for-cross-user-agents-collaboration-and-security-in-human-centered-agent-networks)  
+   标签：评分：9.0/10、query:eca
+   evidence：直接涉及跨用户智能体协作与安全，与协作需求匹配。
+2. [PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud](/202608/07/2608.03682v2-phyai-real-time-physical-ai-at-the-edge-scalable-rollouts-in-the-cloud)  
+   标签：评分：9.0/10、query:eca
+   evidence：面向物理AI智能体的边云统一推理引擎
+3. [PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud](/202608/07/2608.03682v1-phyai-real-time-physical-ai-at-the-edge-scalable-rollouts-in-the-cloud)  
+   标签：评分：8.0/10、query:eca
+   evidence：面向物理AI策略的边缘-云端协同推理引擎
 
 ### 速读区论文标签
-1. [Pruning-Aware Multi-Cluster Co-Inference for Large AI Models in AI-RANs](/202608/05/2608.03026v1-pruning-aware-multi-cluster-co-inference-for-large-ai-models-in-ai-rans)  
+1. [Homebot: A Personal AI Agent for Conversational Home Assistance and Automation](/202608/07/2608.02254v1-homebot-a-personal-ai-agent-for-conversational-home-assistance-and-automation)  
    标签：评分：7.0/10、query:eca
-   evidence：边缘服务器协调多用户集群协同推理，结合端侧特征提取与剪枝
-2. [The Agent Operating System (AOS): A Reference Operating Architecture for Distributed Agentic Systems](/202608/05/2608.03214v1-the-agent-operating-system-aos-a-reference-operating-architecture-for-distributed-agentic-systems)  
-   标签：评分：7.0/10、query:eca
-   evidence：面向分布式智能体系统的参考操作架构，涵盖协调与委派等核心机制
-3. [PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud](/202608/05/2608.03682v1-phyai-real-time-physical-ai-at-the-edge-scalable-rollouts-in-the-cloud)  
-   标签：评分：7.0/10、query:eca
-   evidence：面向物理AI的统一推理引擎，覆盖机载、边缘与云，支撑端边云协同部署
+   evidence：本地部署的个人AI智能体，支持语音与对话式家庭辅助
 
 
 <div class="dpr-home-promo-card">

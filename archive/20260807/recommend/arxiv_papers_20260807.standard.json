@@ -1,0 +1,211 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-07T01:57:12.508456+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2608.03499v1",
+      "source": "arxiv",
+      "title": "WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks",
+      "abstract": "Recent advances in persistent personal-agent frameworks are making human-centered agent networks realistic deployment targets: each user can be served by an AI agent that acts on the user's behalf, maintains state, and communicates with other agents through social and task relations. In these networks, everyday tool use becomes multi-party owned-agent collaboration over personal workspaces, where files, records, tools, and policies are not directly visible across owners. Existing agent benchmarks study tool use and collaboration, but they do not provide an end-to-end sandbox for verifiable cross-user agent collaboration with realistic user digital workspaces or test how harmful actions can travel through the human-centered agent network. We introduce WeClawArena, an auditable benchmark and runtime sandbox for multi-party owned-agent collaboration over personal workspaces. WeClawArena targets collaborative tool-use tasks in which personal workspaces serve as both operational tools and personal constraints. The benchmark contains 124 base tasks across six cross-user task domains and expands them into 620 scenario variants, with one benign control and four attack-vector variants per base task. The sandbox records peer messages, tool calls, resource operations, governed decisions, and final workspace states. WeClawArena reports utility and attack success rate separately and audits attack success from bounded runtime evidence, supporting diagnosis of task breakdown, privacy leakage, poisoned evidence, and invalid authority paths.",
+      "authors": [
+        "Prince Zizhuang Wang",
+        "Aojie Yuan",
+        "Haiyue Zhang",
+        "Xiyang Hu",
+        "Yue Zhao",
+        "Shuli Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-04T11:42:26+00:00",
+      "link": "https://arxiv.org/pdf/2608.03499v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Cross-user AI agent collaboration and security; direct match to Collaboration requirement.",
+      "llm_evidence_cn": "直接涉及跨用户智能体协作与安全，与协作需求匹配。",
+      "llm_evidence": "直接涉及跨用户智能体协作与安全，与协作需求匹配。",
+      "canonical_evidence": "直接涉及跨用户智能体协作与安全，与协作需求匹配。",
+      "llm_tldr_en": "Presents WeClawArena, a sandbox and benchmark for auditable cross-user AI agent collaboration and security in human-centered agent networks, addressing missing end-to-end verification with realistic user workspaces.",
+      "llm_tldr_cn": "近期持久化个人智能体框架使得以人为中心的智能体网络成为实际部署目标，每个用户的智能体需要跨所有者协作访问个人工作空间。现有基准未提供端到端的可验证跨用户协作沙箱，也无法测试有害行为传播。为此本文提出WeClawArena，一个可审计的沙盒与基准，模拟真实数字工作空间，对跨用户智能体协作进行验证与安全测试。实验表明该基准能有效评估协作行为并发现安全漏洞，为智能体网络的可信部署提供支撑。",
+      "llm_tldr": "近期持久化个人智能体框架使得以人为中心的智能体网络成为实际部署目标，每个用户的智能体需要跨所有者协作访问个人工作空间。现有基准未提供端到端的可验证跨用户协作沙箱，也无法测试有害行为传播。为此本文提出WeClawArena，一个可审计的沙盒与基准，模拟真实数字工作空间，对跨用户智能体协作进行验证与安全测试。实验表明该基准能有效评估协作行为并发现安全漏洞，为智能体网络的可信部署提供支撑。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.03682v2",
+      "source": "arxiv",
+      "title": "PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud",
+      "abstract": "Physical AI policies require inference throughout their lifecycle, including model evaluation, cloud reinforcement learning rollout, edge GPU serving, and onboard deployment. Although these settings share the same checkpoint and action semantics, they often rely on separate inference programs. To unify them, we build PhyAI, a Physical AI inference engine with a single runtime that keeps architecture-specific conditioning, solver, cache, and output logic in model adapters while sharing graph execution, kernels, memory management, and parallel services. The same codebase runs vision-language-action (VLA) models and world-action models (WAMs) on single or multiple GPUs across onboard, edge, and cloud deployments. We used the adapter interface to add MiniCPM-Robot on the day of its release. PhyAI achieves 1.40x-4.65x speedups over the official implementations of pi0, pi0.5, GR00T N1.7, and MiniCPM-Robot. On Cosmos3-Nano-Policy-DROID it reduces latency from 2.46 to 1.18 s on eight H20 GPUs (CFG=2, TP=4), a 2.08x speedup. Specialized runtimes remain faster in several configurations, so our goal is one runtime with competitive latency rather than the fastest result in every case. Detailed profiles reveal why different models need different execution policies: on a Hopper-series GPU at batch size one, the pi0.5 action expert accounts for 8.8% of FLOPs but 57.2% of latency; at batch size 32 its share drops to 13.5% and throughput reaches about 100 samples/s. Cosmos3 remains generation-dominated and gains only 14.3% throughput as batch size increases from 1 to 16. We further introduce the control-time Roofline, which distinguishes inference-bound from environment-bound control; the measured pi0.5 points on four LIBERO suites are environment-bound while Cosmos3 stays inference-bound. Code and benchmarks: https://github.com/mingti-org/phyai.",
+      "authors": [
+        "Chenghua Wang",
+        "Daliang Xu",
+        "Dongqi Cai",
+        "Duojin Sun",
+        "Hao Zhang",
+        "Haoze Qian",
+        "Huaiyuan Zhang",
+        "Jinshuo Cui",
+        "Junbo Cui",
+        "Kezhao Zhao",
+        "Longxi Gao",
+        "Mengwei Xu",
+        "Rongjie Yi",
+        "Tam Sikyuen",
+        "Tianyue Zhang",
+        "Weikai Xie",
+        "Xuanzhe Liu",
+        "Yingying Qin",
+        "Yiwen Lu",
+        "Yuan Yao",
+        "Yuezhi Zu",
+        "Yunhan Guo",
+        "Yuxin Zheng",
+        "Ziqi Guo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-08-04T13:53:48+00:00",
+      "link": "https://arxiv.org/pdf/2608.03682v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "unified edge-cloud inference engine for physical AI agents",
+      "llm_evidence_cn": "面向物理AI智能体的边云统一推理引擎",
+      "llm_evidence": "面向物理AI智能体的边云统一推理引擎",
+      "canonical_evidence": "面向物理AI智能体的边云统一推理引擎",
+      "llm_tldr_en": "PhyAI provides a single inference runtime across onboard, edge, and cloud for physical AI models, enabling real-time edge serving and scalable cloud reinforcement learning rollouts.",
+      "llm_tldr_cn": "物理AI策略在评估云部署、云端强化学习回放、边缘GPU服务和机载部署等环节都需要推理，但通常依赖不同的推理程序。PhyAI构建了一个统一的物理AI推理引擎，通过模型适配器共享图执行、内核、内存管理和并行服务，同一代码库可在边缘和云端单卡或多卡上运行视觉-语言-动作模型和世界模型。实验表明该引擎能在不同部署场景下保持一致并扩展。这项工作为边缘-云端协同的具身智能体提供了统一的基础设施支持。",
+      "llm_tldr": "物理AI策略在评估云部署、云端强化学习回放、边缘GPU服务和机载部署等环节都需要推理，但通常依赖不同的推理程序。PhyAI构建了一个统一的物理AI推理引擎，通过模型适配器共享图执行、内核、内存管理和并行服务，同一代码库可在边缘和云端单卡或多卡上运行视觉-语言-动作模型和世界模型。实验表明该引擎能在不同部署场景下保持一致并扩展。这项工作为边缘-云端协同的具身智能体提供了统一的基础设施支持。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.03682v1",
+      "source": "arxiv",
+      "title": "PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud",
+      "abstract": "Physical AI policies require inference throughout their lifecycle, including model evaluation, cloud reinforcement learning rollout, edge GPU serving, and onboard deployment. Although these settings share the same checkpoint and action semantics, they often rely on separate inference programs. To unify them, we build PhyAI, a Physical AI inference engine with a single runtime that keeps architecture-specific conditioning, solver, cache, and output logic in model adapters while sharing graph execution, kernels, memory management, and parallel services. The same codebase runs vision-language-action (VLA) models and world-action models (WAMs) on single or multiple GPUs across onboard, edge, and cloud deployments. We used the adapter interface to add MiniCPM-Robot on the day of its release. PhyAI achieves 1.40x-4.65x speedups over the official implementations of pi0, pi0.5, GR00T N1.7, and MiniCPM-Robot. On Cosmos3-Nano-Policy-DROID it reduces latency from 2.46 to 1.18 s on eight H20 GPUs (CFG=2, TP=4), a 2.08x speedup. Specialized runtimes remain faster in several configurations, so our goal is one runtime with competitive latency rather than the fastest result in every case. Detailed profiles reveal why different models need different execution policies: on a Hopper-series GPU at batch size one, the pi0.5 action expert accounts for 8.8% of FLOPs but 57.2% of latency; at batch size 32 its share drops to 13.5% and throughput reaches about 100 samples/s. Cosmos3 remains generation-dominated and gains only 14.3% throughput as batch size increases from 1 to 16. We further introduce the control-time Roofline, which distinguishes inference-bound from environment-bound control; the measured pi0.5 points on four LIBERO suites are environment-bound while Cosmos3 stays inference-bound. Code and benchmarks: https://github.com/mingti-org/phyai.",
+      "authors": [
+        "Chenghua Wang",
+        "Daliang Xu",
+        "Dongqi Cai",
+        "Duojin Sun",
+        "Hao Zhang",
+        "Haoze Qian",
+        "Huaiyuan Zhang",
+        "Jinshuo Cui",
+        "Kezhao Zhao",
+        "Longxi Gao",
+        "Mengwei Xu",
+        "Rongjie Yi",
+        "Tianyue Zhang",
+        "Weikai Xie",
+        "Xiyuan Tan",
+        "Xuanzhe Liu",
+        "Yingying Qin",
+        "Yiwen Lu",
+        "Yuan Yao",
+        "Yuezhi Zu",
+        "Yunhan Guo",
+        "Ziqi Guo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-08-04T13:53:48+00:00",
+      "link": "https://arxiv.org/pdf/2608.03682v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "edge and cloud collaborative inference engine for physical AI policies",
+      "llm_evidence_cn": "面向物理AI策略的边缘-云端协同推理引擎",
+      "llm_evidence": "面向物理AI策略的边缘-云端协同推理引擎",
+      "canonical_evidence": "面向物理AI策略的边缘-云端协同推理引擎",
+      "llm_tldr_en": "PhyAI provides a single runtime for physical AI policies across onboard, edge, and cloud deployments, unifying model evaluation, cloud RL rollout, edge GPU serving, and onboard inference.",
+      "llm_tldr_cn": "物理AI策略在模型评测、云端强化学习部署、边缘GPU推理和端上部署等环节需要不同推理程序。PhyAI提出统一运行时，通过模型适配器共享图执行、内核与内存管理，使同一代码库可跨端、边、云部署VLA与世界动作模型，并支持多GPU并行服务，显著降低部署复杂度。这一设计验证了端云协同推理引擎的可行性，为边缘云协同智能体系统提供了可复用的基础设施。",
+      "llm_tldr": "物理AI策略在模型评测、云端强化学习部署、边缘GPU推理和端上部署等环节需要不同推理程序。PhyAI提出统一运行时，通过模型适配器共享图执行、内核与内存管理，使同一代码库可跨端、边、云部署VLA与世界动作模型，并支持多GPU并行服务，显著降低部署复杂度。这一设计验证了端云协同推理引擎的可行性，为边缘云协同智能体系统提供了可复用的基础设施。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.02254v1",
+      "source": "arxiv",
+      "title": "Homebot: A Personal AI Agent for Conversational Home Assistance and Automation",
+      "abstract": "\\texttt{Homebot} is a locally deployable AI agent for conversational household assistance and automation. It accepts voice and instant-messaging requests through a shared runtime that combines language-model responses with registered tools and task-specific skills. The design separates common request processing from session ownership: messaging history remains scoped to a channel and chat, whereas voice interaction is bounded by wake-word activation. For hands-free use, \\texttt{Homebot} combines local wake-word detection, streaming speech recognition and synthesis, and an explicit dialogue-state protocol for ending, following up, or continuing a conversation. Clear channel, tool, and skill contracts support practical customization for household use.",
+      "authors": [
+        "Shengyuan Ye",
+        "Yixin Zhang",
+        "Han Liang",
+        "Liekang Zeng",
+        "Jiangsu Du",
+        "Mu Yuan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-03T14:01:44+00:00",
+      "link": "https://arxiv.org/pdf/2608.02254v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "locally deployable personal AI agent for conversational home assistance",
+      "llm_evidence_cn": "本地部署的个人AI智能体，支持语音与对话式家庭辅助",
+      "llm_evidence": "本地部署的个人AI智能体，支持语音与对话式家庭辅助",
+      "canonical_evidence": "本地部署的个人AI智能体，支持语音与对话式家庭辅助",
+      "llm_tldr_en": "Homebot is a locally deployable AI agent that combines language-model responses with registered tools and skills, featuring wake-word activation, streaming speech recognition and synthesis, and explicit dialogue-state management for household automation.",
+      "llm_tldr_cn": "家庭自动化中缺乏本地化、支持语音对话的AI智能体。本文提出Homebot，一个可本地部署的对话式家庭助手，通过共享运行时将语言模型响应与工具和任务技能结合，并区分消息会话与语音会话。系统支持唤醒词激活、流式语音识别与合成以及显式对话状态管理。其清晰的信道、工具和技能契约便于家庭场景的定制部署，是端侧移动AI智能体的典型实现。",
+      "llm_tldr": "家庭自动化中缺乏本地化、支持语音对话的AI智能体。本文提出Homebot，一个可本地部署的对话式家庭助手，通过共享运行时将语言模型响应与工具和任务技能结合，并区分消息会话与语音会话。系统支持唤醒词激活、流式语音识别与合成以及显式对话状态管理。其清晰的信道、工具和技能契约便于家庭场景的定制部署，是端侧移动AI智能体的典型实现。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
