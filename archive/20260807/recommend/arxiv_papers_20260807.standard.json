@@ -1,209 +1,259 @@
 {
   "mode": "standard",
-  "generated_at": "2026-08-07T01:57:12.508456+00:00",
+  "generated_at": "2026-08-07T20:08:14.343221+00:00",
   "stats": {
     "mode": "standard",
     "tag_count": 1,
     "deep_divecandidates": 3,
     "deep_cap": 6,
     "deep_selected": 3,
-    "quick_candidates": 1,
+    "quick_candidates": 3,
     "quick_skim_target": 11,
-    "quick_selected": 1
+    "quick_selected": 3
   },
   "deep_dive": [
     {
-      "id": "2608.03499v1",
+      "id": "2608.05332v1",
       "source": "arxiv",
-      "title": "WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks",
-      "abstract": "Recent advances in persistent personal-agent frameworks are making human-centered agent networks realistic deployment targets: each user can be served by an AI agent that acts on the user's behalf, maintains state, and communicates with other agents through social and task relations. In these networks, everyday tool use becomes multi-party owned-agent collaboration over personal workspaces, where files, records, tools, and policies are not directly visible across owners. Existing agent benchmarks study tool use and collaboration, but they do not provide an end-to-end sandbox for verifiable cross-user agent collaboration with realistic user digital workspaces or test how harmful actions can travel through the human-centered agent network. We introduce WeClawArena, an auditable benchmark and runtime sandbox for multi-party owned-agent collaboration over personal workspaces. WeClawArena targets collaborative tool-use tasks in which personal workspaces serve as both operational tools and personal constraints. The benchmark contains 124 base tasks across six cross-user task domains and expands them into 620 scenario variants, with one benign control and four attack-vector variants per base task. The sandbox records peer messages, tool calls, resource operations, governed decisions, and final workspace states. WeClawArena reports utility and attack success rate separately and audits attack success from bounded runtime evidence, supporting diagnosis of task breakdown, privacy leakage, poisoned evidence, and invalid authority paths.",
+      "title": "Hierarchical Server Architecture for Agentic Science",
+      "abstract": "Agentic science is transforming the landscape of computational work, extending to scientific pipelines and workload managers. The workloads require specialized hardware within and across institutions. If assessing workload needs against environments is required for scheduling, automated discovery of resources is an essential step. In this paper, we present a hierarchical, dynamic architecture and software to discover resources across diverse cloud, edge, and HPC systems. The design enables concurrent, asynchronous negotiation, selection, and dispatch of requests for work using secretary agents. The agents probe and discover 51 real and simulated providers across 7 categories. We perform 19,973 negotiation and 6,952 selection simulations to assess reliability of decisions, demonstrating high (87.71\\%) negotiation accuracy and selection costs comparable to more traditional strategies. Designed for extensibility and currently supporting the Genesis Mission, this architecture exemplifies the importance of careful coordination between agents, discovery tools, and infrastructure for agentic science.",
       "authors": [
-        "Prince Zizhuang Wang",
-        "Aojie Yuan",
-        "Haiyue Zhang",
-        "Xiyang Hu",
-        "Yue Zhao",
-        "Shuli Jiang"
+        "Vanessa Sochat",
+        "Daniel Milroy"
       ],
-      "primary_category": "cs.AI",
+      "primary_category": "cs.DC",
       "categories": [
+        "cs.DC",
         "cs.AI"
       ],
-      "published": "2026-08-04T11:42:26+00:00",
-      "link": "https://arxiv.org/pdf/2608.03499v1",
+      "published": "2026-08-05T18:43:00+00:00",
+      "link": "https://arxiv.org/pdf/2608.05332v1",
       "tags": [
         "keyword:eca",
         "query:eca"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "Cross-user AI agent collaboration and security; direct match to Collaboration requirement.",
-      "llm_evidence_cn": "直接涉及跨用户智能体协作与安全，与协作需求匹配。",
-      "llm_evidence": "直接涉及跨用户智能体协作与安全，与协作需求匹配。",
-      "canonical_evidence": "直接涉及跨用户智能体协作与安全，与协作需求匹配。",
-      "llm_tldr_en": "Presents WeClawArena, a sandbox and benchmark for auditable cross-user AI agent collaboration and security in human-centered agent networks, addressing missing end-to-end verification with realistic user workspaces.",
-      "llm_tldr_cn": "近期持久化个人智能体框架使得以人为中心的智能体网络成为实际部署目标，每个用户的智能体需要跨所有者协作访问个人工作空间。现有基准未提供端到端的可验证跨用户协作沙箱，也无法测试有害行为传播。为此本文提出WeClawArena，一个可审计的沙盒与基准，模拟真实数字工作空间，对跨用户智能体协作进行验证与安全测试。实验表明该基准能有效评估协作行为并发现安全漏洞，为智能体网络的可信部署提供支撑。",
-      "llm_tldr": "近期持久化个人智能体框架使得以人为中心的智能体网络成为实际部署目标，每个用户的智能体需要跨所有者协作访问个人工作空间。现有基准未提供端到端的可验证跨用户协作沙箱，也无法测试有害行为传播。为此本文提出WeClawArena，一个可审计的沙盒与基准，模拟真实数字工作空间，对跨用户智能体协作进行验证与安全测试。实验表明该基准能有效评估协作行为并发现安全漏洞，为智能体网络的可信部署提供支撑。",
+      "llm_evidence_en": "Hierarchical agent-based resource discovery across cloud, edge, and HPC systems",
+      "llm_evidence_cn": "跨云、边缘与HPC的层级化智能体资源发现架构",
+      "llm_evidence": "跨云、边缘与HPC的层级化智能体资源发现架构",
+      "canonical_evidence": "跨云、边缘与HPC的层级化智能体资源发现架构",
+      "llm_tldr_en": "Presents a hierarchical dynamic architecture and software using secretary agents for automated resource discovery across cloud, edge, and HPC systems, validated through extensive negotiation and selection simulations.",
+      "llm_tldr_cn": "针对智能体科学工作负载跨异构云、边缘与HPC资源调度困难的问题，论文提出层级化动态架构，利用秘书智能体对资源进行自动化发现、异步协商、选择与分派。系统在51个真实与模拟提供方上进行大规模模拟，完成19,973次协商与6,952次选择，验证了决策可靠性。该工作是典型的分布式边缘云智能体架构，直接支撑端云协同的AI Agent系统。",
+      "llm_tldr": "针对智能体科学工作负载跨异构云、边缘与HPC资源调度困难的问题，论文提出层级化动态架构，利用秘书智能体对资源进行自动化发现、异步协商、选择与分派。系统在51个真实与模拟提供方上进行大规模模拟，完成19,973次协商与6,952次选择，验证了决策可靠性。该工作是典型的分布式边缘云智能体架构，直接支撑端云协同的AI Agent系统。",
       "llm_tags": [
         "query:eca"
       ],
       "matched_query_tag": "query:eca",
-      "matched_query_text": "Collaboration",
-      "matched_requirement_id": "req-1",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
       "selection_source": "fresh_fetch"
     },
     {
-      "id": "2608.03682v2",
+      "id": "2608.05729v1",
       "source": "arxiv",
-      "title": "PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud",
-      "abstract": "Physical AI policies require inference throughout their lifecycle, including model evaluation, cloud reinforcement learning rollout, edge GPU serving, and onboard deployment. Although these settings share the same checkpoint and action semantics, they often rely on separate inference programs. To unify them, we build PhyAI, a Physical AI inference engine with a single runtime that keeps architecture-specific conditioning, solver, cache, and output logic in model adapters while sharing graph execution, kernels, memory management, and parallel services. The same codebase runs vision-language-action (VLA) models and world-action models (WAMs) on single or multiple GPUs across onboard, edge, and cloud deployments. We used the adapter interface to add MiniCPM-Robot on the day of its release. PhyAI achieves 1.40x-4.65x speedups over the official implementations of pi0, pi0.5, GR00T N1.7, and MiniCPM-Robot. On Cosmos3-Nano-Policy-DROID it reduces latency from 2.46 to 1.18 s on eight H20 GPUs (CFG=2, TP=4), a 2.08x speedup. Specialized runtimes remain faster in several configurations, so our goal is one runtime with competitive latency rather than the fastest result in every case. Detailed profiles reveal why different models need different execution policies: on a Hopper-series GPU at batch size one, the pi0.5 action expert accounts for 8.8% of FLOPs but 57.2% of latency; at batch size 32 its share drops to 13.5% and throughput reaches about 100 samples/s. Cosmos3 remains generation-dominated and gains only 14.3% throughput as batch size increases from 1 to 16. We further introduce the control-time Roofline, which distinguishes inference-bound from environment-bound control; the measured pi0.5 points on four LIBERO suites are environment-bound while Cosmos3 stays inference-bound. Code and benchmarks: https://github.com/mingti-org/phyai.",
+      "title": "Unified Agent: Managing Interactions across Devices",
+      "abstract": "As capabilities rapidly increase, AI agents can move from running inside one app to acting across a user's devices over time. Yet existing agent systems still fall short in this scenario. This is because observations are scattered across devices and moments, but mainstream systems are not designed around this fact: a single agent that treats devices as tools lacks effective state management for all devices across time, and multi-agent systems coordinate across agents but do not maintain the compact carried state a cross-device, cross-time request needs. We argue that the agent should maintain an effectively designed state that organizes engagement evidence, stated facts, and the standing request in a compact, action-ready form for deciding its action given the current observation. To compare state designs, we construct a benchmark of user-agent interaction across devices and time. We instantiate this principle in Unified Agent, a stateful agent that carries interaction evidence across devices and moments and uses it with the current observation to act. In the default setting, it significantly outperforms our adaptations of four published designs. Across changes in multimodal large language model (MLLM) family, capability, and reasoning effort, it remains ahead of all compared systems, demonstrating that the state-design advantage is robust across MLLM settings. Our code and data will be publicly available on GitHub.",
       "authors": [
-        "Chenghua Wang",
-        "Daliang Xu",
-        "Dongqi Cai",
-        "Duojin Sun",
-        "Hao Zhang",
-        "Haoze Qian",
-        "Huaiyuan Zhang",
-        "Jinshuo Cui",
-        "Junbo Cui",
-        "Kezhao Zhao",
-        "Longxi Gao",
-        "Mengwei Xu",
-        "Rongjie Yi",
-        "Tam Sikyuen",
-        "Tianyue Zhang",
-        "Weikai Xie",
-        "Xuanzhe Liu",
-        "Yingying Qin",
-        "Yiwen Lu",
-        "Yuan Yao",
-        "Yuezhi Zu",
-        "Yunhan Guo",
-        "Yuxin Zheng",
-        "Ziqi Guo"
+        "Xinshuang Liu",
+        "Runfa Blark Li",
+        "Shaoxiu Wei",
+        "Xin Lin",
+        "Truong Nguyen"
       ],
       "primary_category": "cs.AI",
       "categories": [
         "cs.AI",
-        "cs.RO"
+        "cs.CL",
+        "cs.CV",
+        "cs.HC"
       ],
-      "published": "2026-08-04T13:53:48+00:00",
-      "link": "https://arxiv.org/pdf/2608.03682v2",
-      "tags": [
-        "keyword:eca",
-        "query:eca"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "unified edge-cloud inference engine for physical AI agents",
-      "llm_evidence_cn": "面向物理AI智能体的边云统一推理引擎",
-      "llm_evidence": "面向物理AI智能体的边云统一推理引擎",
-      "canonical_evidence": "面向物理AI智能体的边云统一推理引擎",
-      "llm_tldr_en": "PhyAI provides a single inference runtime across onboard, edge, and cloud for physical AI models, enabling real-time edge serving and scalable cloud reinforcement learning rollouts.",
-      "llm_tldr_cn": "物理AI策略在评估云部署、云端强化学习回放、边缘GPU服务和机载部署等环节都需要推理，但通常依赖不同的推理程序。PhyAI构建了一个统一的物理AI推理引擎，通过模型适配器共享图执行、内核、内存管理和并行服务，同一代码库可在边缘和云端单卡或多卡上运行视觉-语言-动作模型和世界模型。实验表明该引擎能在不同部署场景下保持一致并扩展。这项工作为边缘-云端协同的具身智能体提供了统一的基础设施支持。",
-      "llm_tldr": "物理AI策略在评估云部署、云端强化学习回放、边缘GPU服务和机载部署等环节都需要推理，但通常依赖不同的推理程序。PhyAI构建了一个统一的物理AI推理引擎，通过模型适配器共享图执行、内核、内存管理和并行服务，同一代码库可在边缘和云端单卡或多卡上运行视觉-语言-动作模型和世界模型。实验表明该引擎能在不同部署场景下保持一致并扩展。这项工作为边缘-云端协同的具身智能体提供了统一的基础设施支持。",
-      "llm_tags": [
-        "query:eca"
-      ],
-      "matched_query_tag": "query:eca",
-      "matched_query_text": "edge cloud collaborative AI agent system",
-      "matched_requirement_id": "req-4",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2608.03682v1",
-      "source": "arxiv",
-      "title": "PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud",
-      "abstract": "Physical AI policies require inference throughout their lifecycle, including model evaluation, cloud reinforcement learning rollout, edge GPU serving, and onboard deployment. Although these settings share the same checkpoint and action semantics, they often rely on separate inference programs. To unify them, we build PhyAI, a Physical AI inference engine with a single runtime that keeps architecture-specific conditioning, solver, cache, and output logic in model adapters while sharing graph execution, kernels, memory management, and parallel services. The same codebase runs vision-language-action (VLA) models and world-action models (WAMs) on single or multiple GPUs across onboard, edge, and cloud deployments. We used the adapter interface to add MiniCPM-Robot on the day of its release. PhyAI achieves 1.40x-4.65x speedups over the official implementations of pi0, pi0.5, GR00T N1.7, and MiniCPM-Robot. On Cosmos3-Nano-Policy-DROID it reduces latency from 2.46 to 1.18 s on eight H20 GPUs (CFG=2, TP=4), a 2.08x speedup. Specialized runtimes remain faster in several configurations, so our goal is one runtime with competitive latency rather than the fastest result in every case. Detailed profiles reveal why different models need different execution policies: on a Hopper-series GPU at batch size one, the pi0.5 action expert accounts for 8.8% of FLOPs but 57.2% of latency; at batch size 32 its share drops to 13.5% and throughput reaches about 100 samples/s. Cosmos3 remains generation-dominated and gains only 14.3% throughput as batch size increases from 1 to 16. We further introduce the control-time Roofline, which distinguishes inference-bound from environment-bound control; the measured pi0.5 points on four LIBERO suites are environment-bound while Cosmos3 stays inference-bound. Code and benchmarks: https://github.com/mingti-org/phyai.",
-      "authors": [
-        "Chenghua Wang",
-        "Daliang Xu",
-        "Dongqi Cai",
-        "Duojin Sun",
-        "Hao Zhang",
-        "Haoze Qian",
-        "Huaiyuan Zhang",
-        "Jinshuo Cui",
-        "Kezhao Zhao",
-        "Longxi Gao",
-        "Mengwei Xu",
-        "Rongjie Yi",
-        "Tianyue Zhang",
-        "Weikai Xie",
-        "Xiyuan Tan",
-        "Xuanzhe Liu",
-        "Yingying Qin",
-        "Yiwen Lu",
-        "Yuan Yao",
-        "Yuezhi Zu",
-        "Yunhan Guo",
-        "Ziqi Guo"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI",
-        "cs.RO"
-      ],
-      "published": "2026-08-04T13:53:48+00:00",
-      "link": "https://arxiv.org/pdf/2608.03682v1",
+      "published": "2026-08-06T08:14:33+00:00",
+      "link": "https://arxiv.org/pdf/2608.05729v1",
       "tags": [
         "keyword:eca",
         "query:eca"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "edge and cloud collaborative inference engine for physical AI policies",
-      "llm_evidence_cn": "面向物理AI策略的边缘-云端协同推理引擎",
-      "llm_evidence": "面向物理AI策略的边缘-云端协同推理引擎",
-      "canonical_evidence": "面向物理AI策略的边缘-云端协同推理引擎",
-      "llm_tldr_en": "PhyAI provides a single runtime for physical AI policies across onboard, edge, and cloud deployments, unifying model evaluation, cloud RL rollout, edge GPU serving, and onboard inference.",
-      "llm_tldr_cn": "物理AI策略在模型评测、云端强化学习部署、边缘GPU推理和端上部署等环节需要不同推理程序。PhyAI提出统一运行时，通过模型适配器共享图执行、内核与内存管理，使同一代码库可跨端、边、云部署VLA与世界动作模型，并支持多GPU并行服务，显著降低部署复杂度。这一设计验证了端云协同推理引擎的可行性，为边缘云协同智能体系统提供了可复用的基础设施。",
-      "llm_tldr": "物理AI策略在模型评测、云端强化学习部署、边缘GPU推理和端上部署等环节需要不同推理程序。PhyAI提出统一运行时，通过模型适配器共享图执行、内核与内存管理，使同一代码库可跨端、边、云部署VLA与世界动作模型，并支持多GPU并行服务，显著降低部署复杂度。这一设计验证了端云协同推理引擎的可行性，为边缘云协同智能体系统提供了可复用的基础设施。",
-      "llm_tags": [
-        "query:eca"
-      ],
-      "matched_query_tag": "query:eca",
-      "matched_query_text": "edge cloud collaborative AI agent system",
-      "matched_requirement_id": "req-4",
-      "selection_source": "fresh_fetch"
-    }
-  ],
-  "quick_skim": [
-    {
-      "id": "2608.02254v1",
-      "source": "arxiv",
-      "title": "Homebot: A Personal AI Agent for Conversational Home Assistance and Automation",
-      "abstract": "\\texttt{Homebot} is a locally deployable AI agent for conversational household assistance and automation. It accepts voice and instant-messaging requests through a shared runtime that combines language-model responses with registered tools and task-specific skills. The design separates common request processing from session ownership: messaging history remains scoped to a channel and chat, whereas voice interaction is bounded by wake-word activation. For hands-free use, \\texttt{Homebot} combines local wake-word detection, streaming speech recognition and synthesis, and an explicit dialogue-state protocol for ending, following up, or continuing a conversation. Clear channel, tool, and skill contracts support practical customization for household use.",
-      "authors": [
-        "Shengyuan Ye",
-        "Yixin Zhang",
-        "Han Liang",
-        "Liekang Zeng",
-        "Jiangsu Du",
-        "Mu Yuan"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI"
-      ],
-      "published": "2026-08-03T14:01:44+00:00",
-      "link": "https://arxiv.org/pdf/2608.02254v1",
-      "tags": [
-        "keyword:eca",
-        "query:eca"
-      ],
-      "llm_score": 7.0,
-      "llm_evidence_en": "locally deployable personal AI agent for conversational home assistance",
-      "llm_evidence_cn": "本地部署的个人AI智能体，支持语音与对话式家庭辅助",
-      "llm_evidence": "本地部署的个人AI智能体，支持语音与对话式家庭辅助",
-      "canonical_evidence": "本地部署的个人AI智能体，支持语音与对话式家庭辅助",
-      "llm_tldr_en": "Homebot is a locally deployable AI agent that combines language-model responses with registered tools and skills, featuring wake-word activation, streaming speech recognition and synthesis, and explicit dialogue-state management for household automation.",
-      "llm_tldr_cn": "家庭自动化中缺乏本地化、支持语音对话的AI智能体。本文提出Homebot，一个可本地部署的对话式家庭助手，通过共享运行时将语言模型响应与工具和任务技能结合，并区分消息会话与语音会话。系统支持唤醒词激活、流式语音识别与合成以及显式对话状态管理。其清晰的信道、工具和技能契约便于家庭场景的定制部署，是端侧移动AI智能体的典型实现。",
-      "llm_tldr": "家庭自动化中缺乏本地化、支持语音对话的AI智能体。本文提出Homebot，一个可本地部署的对话式家庭助手，通过共享运行时将语言模型响应与工具和任务技能结合，并区分消息会话与语音会话。系统支持唤醒词激活、流式语音识别与合成以及显式对话状态管理。其清晰的信道、工具和技能契约便于家庭场景的定制部署，是端侧移动AI智能体的典型实现。",
+      "llm_evidence_en": "AI agents acting across a user's devices over time",
+      "llm_evidence_cn": "AI智能体跨用户设备与时序交互的管理",
+      "llm_evidence": "AI智能体跨用户设备与时序交互的管理",
+      "canonical_evidence": "AI智能体跨用户设备与时序交互的管理",
+      "llm_tldr_en": "Argues for a unified agent with an effectively designed state that organizes engagement evidence, stated facts, and standing requests in a compact action-ready form to manage cross-device, cross-time interactions.",
+      "llm_tldr_cn": "现有AI智能体系统难以处理跨设备、跨时间的用户请求，因为观测分散而系统未围绕这一事实设计。论文提出统一智能体应维护一种紧凑、可行动的状态结构，整合参与证据、已陈述事实与待处理请求，以便在给定当前观测时辅助决策。该设计弥补了单智能体设备工具化与多智能体协调在跨设备状态管理上的不足，是移动AI智能体验证的重要进展。",
+      "llm_tldr": "现有AI智能体系统难以处理跨设备、跨时间的用户请求，因为观测分散而系统未围绕这一事实设计。论文提出统一智能体应维护一种紧凑、可行动的状态结构，整合参与证据、已陈述事实与待处理请求，以便在给定当前观测时辅助决策。该设计弥补了单智能体设备工具化与多智能体协调在跨设备状态管理上的不足，是移动AI智能体验证的重要进展。",
       "llm_tags": [
         "query:eca"
       ],
       "matched_query_tag": "query:eca",
       "matched_query_text": "mobile AI agent",
       "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.06033v1",
+      "source": "arxiv",
+      "title": "ASGE-RR: Agentic Service Graph Embedding with Revisable Reservations for Dynamic AI-Agent Calls",
+      "abstract": "AI-agent workflows often involve remote calls to models, memory stores, and tools distributed across a network. As execution progresses, these dependency calls collectively form an agentic service graph (ASG). Unlike traditional service requests, many dependency calls are revealed only at runtime. Consequently, allocating resources to a currently visible call may consume capacity later needed by a call from a higher-value workflow. We formulate this challenge as Agentic Service Graph Embedding (ASGE), an online network-control problem that maps runtime-revealed workflow calls to service replicas and network paths under capacity, cost and deadline constraints. We present ASGE-RR, an online ASGE controller with revisable reservations. ASGE-RR protects capacity for likely future calls while enforcing the constraints. ASGE-RR evaluates candidate replica-and-path mappings against predicted workflow continuations and updates reservations as new execution information becomes available.   We evaluate ASGE-RR using OpenHands and GPT Researcher workflows executed with gpt-5.6-luna and replayed over in two complementary experimental environments, a controlled Docker testbed and a WAN testbed. The investigation shows that all the evaluated AI-agent tasks expose at least one runtime-revealed dependency call that can be steered before connection establishment. Exploiting this control point, even though the experimental environments are small-scale, ASGE-RR already demonstrates noticeable potential: It completes (up to) 10% more workflow value than a same-information rolling-horizon controller and a current-call steering controller on the WAN testbed. The results suggest that runtime-revealed workflow structure creates a new network control opportunity: protecting resources for likely future calls allows more AI-agent workflows to finish in time.",
+      "authors": [
+        "Trond Vatten",
+        "Yuming Jiang"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.PF"
+      ],
+      "published": "2026-08-06T13:43:28+00:00",
+      "link": "https://arxiv.org/pdf/2608.06033v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "online network-control for runtime-revealed AI-agent calls across distributed resources",
+      "llm_evidence_cn": "面向分布式资源的AI智能体调用在线网络控制",
+      "llm_evidence": "面向分布式资源的AI智能体调用在线网络控制",
+      "canonical_evidence": "面向分布式资源的AI智能体调用在线网络控制",
+      "llm_tldr_en": "Formulates Agentic Service Graph Embedding as an online network-control problem and presents ASGE-RR, a revisable reservation controller that maps runtime-revealed workflow calls to service replicas and network paths under capacity, cost, and deadline constraints.",
+      "llm_tldr_cn": "AI智能体工作流往往依赖网络中分布式的模型、记忆和工具调用，且依赖关系在运行时才逐步显现。论文将这一挑战建模为智能体服务图嵌入（ASGE）在线网络控制问题，并提出带可修订预留的ASGE-RR控制器。该控制器在容量、成本和截止期限约束下，将动态暴露的工作流调用映射到服务副本与网络路径，优化资源分配避免高价值任务被抢占。这为分布式智能体架构下的网络编排提供了关键方法。",
+      "llm_tldr": "AI智能体工作流往往依赖网络中分布式的模型、记忆和工具调用，且依赖关系在运行时才逐步显现。论文将这一挑战建模为智能体服务图嵌入（ASGE）在线网络控制问题，并提出带可修订预留的ASGE-RR控制器。该控制器在容量、成本和截止期限约束下，将动态暴露的工作流调用映射到服务副本与网络路径，优化资源分配避免高价值任务被抢占。这为分布式智能体架构下的网络编排提供了关键方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.03833v1",
+      "source": "arxiv",
+      "title": "History Matters: Meta-policy Delegation with Heterogeneous Multi-agent Reinforcement Learning",
+      "abstract": "AI agents are expected to play an increasingly important role in future decision-making systems. In this paper, we consider collaborative systems composed of heterogeneous multi-agent systems (MAS), where their members have different capabilities and operating costs. We study how agents can delegate tasks to one another so that certain research tasks can be completed effectively under resource-constrained scenarios. We first develop a multi-agent reinforcement learning-based (MARL) delegation training that enables agents to make sequential delegation decisions while minimizing the total execution cost. We then extend this approach to MARL with prescribed delegation topologies. Furthermore, we introduce two new frameworks for collaboration and delegation in multi-agent systems. The first framework proposes that an agent's policy depends not only on the current state of the underlying Markov decision process but also on the interaction history, including previous joint actions. This history-dependent formulation can improve coordination even in fully observable environments, where conventional MARL methods typically restrict policies to depend only on the current state. The second framework proposes a novel, potentially multi-dimensional monetary mechanism to facilitate the collaboration and delegation for MAS.",
+      "authors": [
+        "Ziqing Lu",
+        "Avinash Reddy Mudireddy",
+        "Sarra Alqahtani",
+        "Weiyu Xu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-08-04T15:39:40+00:00",
+      "link": "https://arxiv.org/pdf/2608.03833v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "resource-aware multi-agent delegation for collaborative systems",
+      "llm_evidence_cn": "面向协作系统的资源感知多智能体委派机制",
+      "llm_evidence": "面向协作系统的资源感知多智能体委派机制",
+      "canonical_evidence": "面向协作系统的资源感知多智能体委派机制",
+      "llm_tldr_en": "Addressing collaboration across heterogeneous agents with different capabilities and costs, this paper develops multi-agent reinforcement learning (MARL) delegation training for sequential delegation decisions under resource constraints, extends it to prescribed delegation topologies, and introduces frameworks for collaborative task completion.",
+      "llm_tldr_cn": "异质多智能体系统成员能力与成本各异，在资源受限场景下如何高效委派任务至关重要。论文基于多智能体强化学习提出元策略委派训练，使智能体在最小化总执行成本的同时做出序列化委派决策，并扩展到指定委派拓扑。其框架支持多种协作场景，为分布式智能体协作提供了可复用的决策方法。",
+      "llm_tldr": "异质多智能体系统成员能力与成本各异，在资源受限场景下如何高效委派任务至关重要。论文基于多智能体强化学习提出元策略委派训练，使智能体在最小化总执行成本的同时做出序列化委派决策，并扩展到指定委派拓扑。其框架支持多种协作场景，为分布式智能体协作提供了可复用的决策方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.04366v1",
+      "source": "arxiv",
+      "title": "Combating Knowledge Corruption in Agent Systems: A Byzantine-Tolerant Secure Collaborative RAG Framework",
+      "abstract": "While retrieval-augmented generation systems partially address the hallucination issues in large language models, it also introduces new vulnerabilities to knowledge corruption attacks. Adversaries exploit these vulnerabilities by poisoning documents provided by RAG system to manipulate LLM outputs. To counter this threat, we propose SecureCollaRAG, a Byzantine-tolerant collaborative RAG framework leveraging Multi-source Knowledge Validation Mechanism. Our approach enables agent system to securely verify document provenance through dynamic GNN-based credibility scoring, effectively preventing stealthy knowledge corruption attacks while preserving essential domain knowledge integrity. Through extensive evaluations and formal analysis, we demonstrate that SecureCollaRAG maintains robustness against attackers under non-IID data distributions.",
+      "authors": [
+        "Zhaoqi Wang",
+        "Daqing He",
+        "Zijian Zhang",
+        "Ye Liu",
+        "Jiamou Liu",
+        "Zhirui Zeng",
+        "Zhan Qin",
+        "Zhen Li",
+        "Xin Li",
+        "Hongwei Yao",
+        "Jincheng An",
+        "Yong Liu",
+        "Yi Li",
+        "Qi Sun",
+        "Xiulei Liu",
+        "Liehuang Zhu"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-08-05T02:13:37+00:00",
+      "link": "https://arxiv.org/pdf/2608.04366v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "secure collaborative RAG framework for agent systems",
+      "llm_evidence_cn": "面向智能体系统的安全协作RAG框架",
+      "llm_evidence": "面向智能体系统的安全协作RAG框架",
+      "canonical_evidence": "面向智能体系统的安全协作RAG框架",
+      "llm_tldr_en": "SecureCollaRAG proposes a Byzantine-tolerant collaborative retrieval-augmented generation framework for agent systems; it uses dynamic graph-neural-network-based multi-source credibility scoring to verify document provenance, thereby resisting stealthy knowledge corruption while preserving domain knowledge integrity.",
+      "llm_tldr_cn": "在大模型智能体系统中，检索增强生成虽能缓解幻觉，却引入文档投毒等知识污染漏洞。为此提出拜占庭容错的安全协作检索增强生成框架，通过动态图神经网络对多源文档进行可信度评分与来源验证，在抵御隐蔽攻击的同时保持领域知识完整。大量实验表明该机制能有效阻止知识污染攻击，为智能体系统的协作安全提供支撑。",
+      "llm_tldr": "在大模型智能体系统中，检索增强生成虽能缓解幻觉，却引入文档投毒等知识污染漏洞。为此提出拜占庭容错的安全协作检索增强生成框架，通过动态图神经网络对多源文档进行可信度评分与来源验证，在抵御隐蔽攻击的同时保持领域知识完整。大量实验表明该机制能有效阻止知识污染攻击，为智能体系统的协作安全提供支撑。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.05792v1",
+      "source": "arxiv",
+      "title": "When Agentic AI Meets Integrated Sensing and Communication",
+      "abstract": "Agentic artificial intelligence (AI) is transforming Integrated Sensing and Communication (ISAC) from a function-oriented physical-layer technology into a goal-driven, closed-loop intelligent system, a paradigm we term AISAC. Existing work on learning-based sensing, resource allocation, reconfigurable intelligent surfaces (RIS), edge intelligence, multi-agent coordination, and resilient networking has developed largely in isolation. This survey unifies the literature within a six-stage closed-loop framework comprising observation, contextualization, reasoning and prediction, planning and orchestration, execution and collaboration, and feedback and resilience. It also introduces five levels of agentic maturity, ranging from physical-layer primitives to fully closed-loop agentic ISAC. We use this framework to review advances in multimodal intelligence, large language models, reinforcement learning, federated learning, RIS-assisted control, Unmanned Aerial Vehicle (UAV) and vehicular networks, and AI-native network management, and analyze privacy, security, resilience, and sustainability as cross-cutting requirements of the full perception-reasoning-action loop. An audit of representative studies against nine agentic-specific evaluation criteria shows that no system reports more than one or two of them, exposing a gap between claimed and demonstrated agentic maturity. We identify open challenges in physical-to-semantic grounding, predictive world models, real-time agent-PHY interaction, safe tool use, heterogeneous multi-agent collaboration, benchmarking, and resource-efficient autonomy.",
+      "authors": [
+        "Kai Li",
+        "Conggai Li",
+        "Sarah Ali Siddiqui",
+        "Syed Sohail Ahmed",
+        "Xin Yuan",
+        "Shenghong Li",
+        "Wei Ni"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-06T09:26:49+00:00",
+      "link": "https://arxiv.org/pdf/2608.05792v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "survey unifying edge intelligence and agent collaboration",
+      "llm_evidence_cn": "统一边缘智能与智能体协作的综述",
+      "llm_evidence": "统一边缘智能与智能体协作的综述",
+      "canonical_evidence": "统一边缘智能与智能体协作的综述",
+      "llm_tldr_en": "This survey unifies the literature on agentic AI in Integrated Sensing and Communication (ISAC) within a six-stage closed-loop framework and introduces five levels of agentic maturity, covering edge intelligence and multi-agent coordination.",
+      "llm_tldr_cn": "智能体AI正将集成感知与通信从功能导向技术转变为目标驱动的闭环系统。该综述将感知、推理、规划、执行协作与反馈等研究统一到六阶段闭环框架中，提出智能体成熟度五级模型，并融合了边缘智能与多智能体协调等方向。这为端云协同智能体系统的顶层设计提供了系统化视角。",
+      "llm_tldr": "智能体AI正将集成感知与通信从功能导向技术转变为目标驱动的闭环系统。该综述将感知、推理、规划、执行协作与反馈等研究统一到六阶段闭环框架中，提出智能体成熟度五级模型，并融合了边缘智能与多智能体协调等方向。这为端云协同智能体系统的顶层设计提供了系统化视角。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
       "selection_source": "fresh_fetch",
       "quick_tier": "7"
     }

@@ -1,20 +1,24 @@
 # 日报 · 2026-08-07
 
-- 生成时间：2026-08-07 02:02:13 UTC
-- 当次推荐总数：4
+- 生成时间：2026-08-07 20:13:55 UTC
+- 当次推荐总数：6
 - 精读区：3
-- 速读区：1
+- 速读区：3
 
 ## 今日简报（AI）
-今日精读3篇、速读1篇，聚焦AI代理协作安全与边缘物理AI；最值得关注WeClawArena（跨用户代理安全沙箱，9.0分）和PhyAI（边缘实时物理AI，9.0分）；建议优先了解AI代理协作中的安全审计与实时物理AI的实际应用场景。
+今日聚焦智能体架构与协同，精读2篇高分论文并速读3篇相关研究。
+最值得关注分层服务器架构（9.0）支撑科学智能体，以及跨设备统一代理（8.0）的交互管理。
+下一步可速读多智能体元策略和RAG安全框架，判断是否需深入精读。
 
 ## 精读区
-1. [WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks](/202608/07/2608.03499v1-weclawarena-an-auditable-sandbox-and-benchmark-for-cross-user-agents-collaboration-and-security-in-human-centered-agent-networks) （9.0/10）
-2. [PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud](/202608/07/2608.03682v2-phyai-real-time-physical-ai-at-the-edge-scalable-rollouts-in-the-cloud) （9.0/10）
-3. [PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud](/202608/07/2608.03682v1-phyai-real-time-physical-ai-at-the-edge-scalable-rollouts-in-the-cloud) （8.0/10）
+1. [Hierarchical Server Architecture for Agentic Science](/202608/07/2608.05332v1-hierarchical-server-architecture-for-agentic-science) （9.0/10）
+2. [Unified Agent: Managing Interactions across Devices](/202608/07/2608.05729v1-unified-agent-managing-interactions-across-devices) （8.0/10）
+3. [ASGE-RR: Agentic Service Graph Embedding with Revisable Reservations for Dynamic AI-Agent Calls](/202608/07/2608.06033v1-asge-rr-agentic-service-graph-embedding-with-revisable-reservations-for-dynamic-ai-agent-calls) （8.0/10）
 
 ## 速读区
-1. [Homebot: A Personal AI Agent for Conversational Home Assistance and Automation](/202608/07/2608.02254v1-homebot-a-personal-ai-agent-for-conversational-home-assistance-and-automation) （7.0/10）
+1. [History Matters: Meta-policy Delegation with Heterogeneous Multi-agent Reinforcement Learning](/202608/07/2608.03833v1-history-matters-meta-policy-delegation-with-heterogeneous-multi-agent-reinforcement-learning) （7.0/10）
+2. [When Agentic AI Meets Integrated Sensing and Communication](/202608/07/2608.05792v1-when-agentic-ai-meets-integrated-sensing-and-communication) （7.0/10）
+3. [Combating Knowledge Corruption in Agent Systems: A Byzantine-Tolerant Secure Collaborative RAG Framework](/202608/07/2608.04366v1-combating-knowledge-corruption-in-agent-systems-a-byzantine-tolerant-secure-collaborative-rag-framework) （6.0/10）
 
 ---
 使用键盘方向键可在日报/论文之间快速切换。
