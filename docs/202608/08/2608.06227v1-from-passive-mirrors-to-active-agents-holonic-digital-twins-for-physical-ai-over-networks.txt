@@ -1,0 +1,497 @@
+Title: From Passive Mirrors to Active Agents: Holonic Digital Twins for Physical AI over Networks
+
+URL Source: https://arxiv.org/pdf/2608.06227v1
+
+Published Time: Fri, 07 Aug 2026 01:20:25 GMT
+
+Number of Pages: 16
+
+Markdown Content:
+> 1
+
+# From Passive Mirrors to Active Agents: Holonic Digital Twins for Physical AI over Networks 
+
+Christo Kurisummoottil Thomas, Senior Member, IEEE, Omar Hashash, Member, IEEE, 
+
+and Walid Saad, Fellow, IEEE. 
+
+Abstract —Artificial intelligence (AI) revolutionized multiple sectors ranging from healthcare to entertainment. Remarkably, despite this progress, today’s AI tools, including deep learning and generative AI (e.g., large language models), still fail when embedded into physical systems, such as robots or vehicles that, operate under the physical laws of the real world. This limitation stems from the inability of physical AI systems to maintain reliable world models for long-horizon planning under uncertainty and to generalize to unseen scenarios. In this context, wireless networks, through their pervasive sensing and com-munication infrastructure, can act as orchestrators of physical intelligence. However, current wireless architectures optimize for throughput, latency, and reliability and cannot support real-time physical AI coordination where agents must maintain a shared spatiotemporal context. To overcome such challenges, in this paper, a network of holonic digital twins (HDT-Nets) framework is proposed to deliver the real-time physical AI inference require-ments through holonic agents that actively reason about their environment rather than passively mirror physical assets. Each HDT is realized as a hierarchical structure spanning the physical agent and the network edge, reasoning autonomously at the local level while cooperating with neighboring HDTs to form larger collectively intelligent units at the network level. In HDT-Net, causal Markov blankets (MBs) spanning sensing, communication, and control domains determine which agents must coordinate and enable counterfactual reasoning over multi-domain interven-tions. Active inference, operating within these boundaries, unifies perception, action, and learning by minimizing expected free energy, simultaneously deciding what beliefs to transmit based on their cognitive value to the receiver. Category theory guar-antees that these transmitted beliefs preserve semantic structure when crossing between heterogeneous agents with incompatible representations. Finally, integrated information theory provides a quantifiable metric to capture when collective intelligence exceeds independent operation and how network intelligence evolves through coordinated learning and information exchange. 
+
+I. I NTRODUCTION 
+
+Physical AI represents systems that do not just process information in the digital realm but they must perceive, reason, and act under the laws of the physical world [1]. Unlike current generations of AI that operate on curated datasets and well-defined input-output spaces, physical AI systems must be able to perform spatial and temporal reasoning, act under dynamic uncertainty, coordinate with other physical agents, and continuously adapt to a dynamic world in real-time. Such requirements become indispensable because the physical world does not tolerate failures, whether caused by a single agent’s perception errors or by emergent conflicts when multiple agents interact in a shared environment. 
+
+Christo Kurisummoottil Thomas is with Department of Electrical and Computer Engineering, Worcester Polytechnic Institute, Worcester, MA, USA, Walid Saad and Omar Hashash are with the Bradley Department of Electrical and Computer Engineering, Virginia Tech, Alexandria, VA, USA. Emails: {cthomas2@wpi.edu, omarnh@vt.edu and walids@vt.edu }
+
+The work of Omar Hashash and Walid Saad were supported by the U.S. National Science Foundation under Grant CNS-2210254. 
+
+The root causes of such failures stem from several limita-tions. First, physical AI systems often do not have a reliable model of themselves or their environment as physical actors. They cannot predict how their own actions will play out in the real world, and therefore cannot always plan for failure, adapt to changing conditions, or recover when reality diverges from expectation. Second, today’s AI models are data-driven models that learn statistical correlations from training data but have limited ability to reason about the effect of change caused by their own actions and change caused by exogenous disturbances [2]. Third, physical tasks require long-horizon planning under deep uncertainty stemming from physical laws. Yet current AI architectures cannot maintain accurate beliefs about the world, grounded in its governing laws, over the extended time horizons that physical tasks require. Fourth, models trained in simulations encounter distribution and do-main shift upon deployment in the real world governed by physical laws that give rise to unforeseen scenarios. No single physical AI agent can sense its entire environment, sustain long-horizon inference under real-time constraints, or recover from failure in isolation. Herein, due to their pervasiveness and access to heterogeneous sensing infrastructure, wireless cellular systems such as 6G have a unique opportunity to act, not only as communication providers, but rather as orchestra-tors of physical intelligence . Particularly, due to their pervasive deployment across the same physical environments in which agents operate, 6G systems can serve as a cognitive medium that enables collective inference at scale, allowing physically distributed agents to pool observations, coordinate actions, and reason jointly about a shared world that no single agent can fully observe. However, current wireless networks are typically designed as passive data transport layers, and, thus, they still cannot support the real-time inference and collective reasoning 
+
+that is required to operate and coordinate physical AI at scale. This is because the real-time operations required of closed-loop physical action are categorically different from those of streaming or cloud inference. Any inference update communi-cated over the air but not synchronized perfectly with the real world dynamics could result in hazardous consequences on the 
+
+safe operation of physical AI systems [3]. This requires the wireless network to provide a shared spatiotemporal context among agents, ensuring that distributed belief updates, sensing, and control actions remain coherent across space and time. The above challenge has catalyzed a fundamental archi-tectural shift. As envisioned in our prior work [1], network infrastructure must transition from pure data pipes into dis-tributed inference and reasoning engines by deploying AI compute directly at the network edge. The core challenge here is enabling networked agents to reason collectively, coordinate beliefs, and act under physical constraints. This, in turn, arXiv:2608.06227v1 [cs.NI] 6 Aug 2026 2
+
+requires the network to actively participate in the perception-decision-action loop by providing a shared spatiotemporal context that ensures agents perceive the same physical reality at the same moment, make decisions grounded in synchronized world models, and commit to coordinated actions within the tight timing windows that safe physical operation demands. This results in following challenges in future network design. First, current networks have not addressed how transmission decisions should be governed by the cognitive value a packet carries to a receiving agent operating under uncertainty in the physical world. Unlike conventional notions on value of information [4], cognitive value measures how much a transmitted belief improves the receiving agent’s world model about causally relevant hidden states, thereby enabling ac-curate sensing, timely communication, and effective control decisions in the physical environment. Cognitive value is critical for physical AI systems since an agent operating on an inaccurate or outdated world model risks irreversible physical harm, making the cognitive value of each transmission a safety-critical quantity rather than a traditional quality-of-service measure. Second, closed-loop physical action requires that inference updates are perfectly synchronized with real-world dynamics since any misalignment between communi-cated beliefs and the physical state of the world can result in hazardous consequences for safe operation [3]. Third, physical AI agents with different sensor modalities and AI architectures encode the world in incompatible representational spaces .However, existing network frameworks provide no mechanism for aligning, or composing these heterogeneous representations in a way that preserves their semantic structure for collective inference. Finally, and most fundamentally, the network lacks theory of mind [5] and [6] capabilities that can allow it to predict how physical AI agents will interpret and act upon transmitted beliefs, and cannot adapt their computing, sensing and communication resources to agents’ evolving cognitive states and coordination requirements. Overcoming these challenges requires the network to evolve into a cognitive infrastructure that (a) prioritizes transmis-sions based on their cognitive value to downstream agents, (b) maintains tight spatiotemporal synchronization between communicated beliefs and physical dynamics, (c) aligns het-erogeneous representations into a shared semantic space for collective inference, and (d) models and adapts to the evolving beliefs and actions of agents to enable coordinated decision-making in real time. The transition to a cognitive infrastructure requires a computational abstraction in which representations of the physical world, agent states, and their causal interactions can be continuously inferred, synchronized, and acted upon across the network. Digital twins (DTs) [7] naturally provide such an abstraction. By maintaining virtual representations of physical agents and their environment, DTs allow physical AI systems to reason about future outcomes, align heterogeneous observations, and support coordinated decision-making. At their core, these capabilities are enabled by an underlying world model that defines how the twin represents the world and captures its underlying dynamics. A world model [8] is essentially the computational substrate in which the DT lives and can be defined as a structured representation of physics, geometry, causality, and uncertainty that enables agents to mentally simulate the consequences of actions and reason about what would happen under interventions rather than merely predicting what has been observed. However, existing DT implementations [7], [9]–[16] treat twins primarily as passive simulators for prediction or offline optimization. Such a design for DTs is not suitable for physical AI systems that must maintain accurate beliefs about a rapidly changing physical world, act under deep uncertainty about hidden states, and coordinate with neighboring agents within the tight spa-tiotemporal constraints that safe physical operation demands. Realizing the vision of cognitive DTs that actively perceive, infer, and act within a shared physical world naturally leads to the emergence of collective intelligence , where individ-ual HDTs compose into progressively larger cognitive units whose integrated world models capture world structure that no single agent can represent alone. However, achieving this collective intelligence means that the network must actively direct sensing resources toward observations that most reduce collective uncertainty, maintain safety-critical control loops where millisecond-scale delays cause physical catastrophes, and support belief exchange where agents transmit inferred beliefs about hidden states rather than raw sensor measure-ments. These capabilities must hold even under damaged infrastructure, environmental non-stationarity, and mission-critical time constraints. Meeting these requirements motivates a fundamentally new network architecture in which every physical AI agent is paired with a cognitive twin that reasons, senses, and coordinates on its behalf. 
+
+A. Key Contribution: A Vision of Holonic Digital Twins 
+
+The main contribution of this paper is to present the transformative concept of a networked holonic digital twins (HDTs), called HDT-Nets, that can address the aforementioned challenges. The term holonic , originating from Koestler’s syn-thesis of the Greek holos (whole) and the suffix on (part) [17], captures the defining structural property of our framework, where each twin is simultaneously an autonomous cognitive agent that maintains its own causal world model and reasons independently about its local environment, and a cooperative part of progressively larger cognitive units whose collective intelligence exceeds what any individual achieves alone. The 
+
+6G network orchestrates this holonic composition by providing the shared spatiotemporal context, communication resources, and edge computation through which individual HDTs dis-cover coordination partners, exchange beliefs about the world, and compose into collectively intelligent agents at the network level. We adopt a holonic architecture because physical AI coordination satisfies all three conditions under which holonic decomposition has been established as the only viable struc-tural principle [18], [19]. This includes bounded onboard com-putation that limits each agent’s reasoning capacity, dynamic environments that induce domain and distribution shift faster than any data-driven model can retrain, and demanding safety-critical constraints where failure to coordinate in real time leads to irreversible physical harm. As illustrated in Fig. 1, in our envisioned HDT-Net, every physical AI agent is paired with a holonic digital twin realized as a hierarchical twin spanning both the physical agent and the network edge, where 3
+
+the agent-side twin maintains a causal world model grounded in local sensor observations, while the network-side twin en-ables real-time distributed inference through collective belief coordination, multi-agent fusion, and resource orchestration across the 6G infrastructure. To enable these capabilities, we construct HDTs through four interconnected fundamental pil-lars that synthesize causal reasoning, compositional structure, adaptive learning, and collective coordination. 
+
+First, real-time distributed inference requires the network to dynamically partition into autonomous reasoning agents based on the causal structure of the underlying cyber-physical system, determining which agents must coordinate, what in-formation must cross agent boundaries, and when coordination is worth its communication cost. To formalize this, causal Markov blankets (MBs) [20] provide a principled framework for partitioning cyber-physical networks into autonomous AI agents by defining the boundary of each HDT. In partic-ular, MBs identify the minimal set of variables that must be exchanged for coordination while preserving conditional independence from the rest of the system. These blankets define physical AI agent boundaries by identifying sensory states (observations flowing in), active states (actions flowing out), and internal states (beliefs about the world maintained within). Further, MBs allow deciding with whom to coordinate based on causal relevance with respect to physical AI task, when to initiate coordination to meet safety-critical deadlines, and how much information to exchange to balance decision quality against communication latency. Here, the beliefs are computed using a causal generative model that mimics the physics that lead to generation of the observed data. Further, causality enables counterfactual reasoning via do-calculus that answers “what would happen if” queries essential for physical AI control. Second, scalable physical AI coordination requires that heterogeneous agents with incompatible sensor modalities and world model representations compose their beliefs coher-ently without sacrificing semantic consistency. This is known as compositionality , without which, independently developed agents may each reason correctly in isolation yet produce contradictory joint decisions when coordinating in the shared physical environment. Category theory [21] provides the math-ematical foundation for this compositionality and operates at the interfaces between HDTs . It provides formal guarantees that semantic structure involving the causal relationships, temporal ordering, and geometric structure is preserved when heterogeneous agents coordinate, regardless of their internal implementation differences. Third, while MBs define agent boundaries and category theory ensures compositional guar-antees, we still require a principled mechanism for how each HDT perceives its environment, directs sensing resources, selects communication and control actions, and continuously learns from experience. Active inference , operating on the causal generative world model , provides this unified frame-work by casting perception, sensing, action selection, and learning as a single optimization objective [22]. Intuitively, an agent maintains an internal model of the world and selects actions that both achieve its goals and reduce uncertainty about its environment. This is formalized through the minimiza-tion of expected free energy, which can be interpreted as a combination of “goal mismatch” (how far outcomes are from desired ones) and “uncertainty” (how unsure the agent is about the world). Consequently, when the agent’s model is confi-dent, minimizing this objective drives goal-directed behavior; when uncertainty is high, it instead drives active sensing and information gathering to improve the model before acting. This eliminates the need for separately engineered perception, planning, sensing, and control subsystems, replacing them with a single principled objective grounded in the causal generative model of the physical world. Fourth, coordinating multiple active inference agents through wireless networks, however, requires a measure of coordination effectiveness that quantifies whether collective intelligence emerges through sensing and communication or merely consumes resources. Traditional wireless networks optimize physical-layer key performance indicators (KPIs), whereby MAC schedulers and routing protocols cannot dis-tinguish between transmissions that genuinely improve col-lective intelligence and those whose coordination overhead degrades performance. This leads to either bandwidth waste through excessive belief synchronization impacting physical AI real-time operation or mission failures from insufficient information sharing. Towards this end, the use of integrated information theory (IIT) [23] can address this challenge by deriving a network-level measure called spatiotemporal in-tegrated information Φ computed over the collective state of multiple HDTs. Φ quantifies how much a network of coordinating agents collectively exceeds the sum of what each agent could achieve independently in terms of resolving uncertainty about the shared physical environment and exe-cuting coordinated actions toward mission goals. We extend IIT with collective intelligence growth dynamics, formalizing how Φ evolves through continuous learning, physical coupling where agents share constraints or environment, and belief exchanges. Furthermore, we propose that future 6G networks must treat sensing, computation, and communication resources not merely as infrastructure to be optimized for physical layer quality of service (QoS) metrics but as instruments for actively cultivating collective intelligence, allocating them in proportion to their contribution to Φ rather than to immediate task performance. Overall, HDT-Net realizes a network where every physical AI agent is paired with a cognitive twin that lives within a causal world model, actively directs sensing resources toward observations that most reduce uncertainty about hidden world states, and coordinates beliefs with neighboring twins through causally grounded wireless interfaces. The network thereby serves as a distributed System 2 reasoning engine [24] that elevates physical AI coordination beyond fast reactive control to deliberative causal inference over MB boundaries, enabling agents to reason about hidden states, anticipate the conse-quences of actions before committing to them, and coordinate through shared world models rather than raw sensory reflexes. This architecture enables three capabilities essential for physi-cal AI at scale: a) a shared spatiotemporal context that ensures distributed agents perceive, decide, and act within a common physical reference frame; b) safety-critical coordination where 4
+
+the cognitive value of every transmission is evaluated against its impact on downstream physical actions; and c) seamless navigation of the physical world through pervasive connectiv-ity that sustains collective intelligence even as agents move, missions evolve, and infrastructure degrades. In summary, it is imperative to design networks that must evolve from passive data processors to active cognitive systems that reason about their environment, understand their own uncertainty and that of others, coordinate through meaning rather than bits, and modulate integration based on principled measures of collec-tive intelligence. HDT-Net provides the theoretical framework and architectural blueprint that facilitates this transformation. The rest of this paper is organized as follows. Section II critiques current DT approaches and establishes the case for cognitive agents. Section III formalizes causal MBs for network partitioning and compositional reasoning. Section IV develops active inference for wireless networks, showing how it enables perception-action loops and introduces IIT for multi-agent coordination. Section VI concludes with open research directions. II. F ROM PASSIVE MIRRORS TO ACTIVE AGENTS :THE CASE FOR HOLONIC DIGITAL TWINS 
+
+A. HDT-Nets over Wireless Networks 
+
+The holonic DTs in HDT-Net are twins of physical AI agents, such as robots, drones, and vehicles, and the physical environment in which they operate, not merely twins of the wireless network itself . The 6G wireless network facilitates the operation of HDT-Net by serving as the cognitive medium through which HDTs exchange beliefs and collectively reason about the shared physical world. The overall system comprises physical agents and network infrastructure, a communication layer that streams sensor measurements and state updates to virtual replicas, and a cyber component that maintains digital representations of the physical system’s state for prediction and optimization. Using the DT’s simulation capability to evaluate hypothetical scenarios and predict their outcomes, operators can test new physical AI control configurations, simulate fault scenarios, and optimize parameters in a risk-free digital environment before applying changes to the live network. However, despite these advantages, current DT im-plementations lack the holonic property. This is because they cannot reason autonomously about their own uncertainty, com-pose with heterogeneous neighbors into larger cognitive units, or adapt their coordination boundaries as missions evolve. This limits traditional DT’s ability to support trustworthy and real-time physical AI operation. 
+
+B. Fundamental Limitations of Current Approaches 1) Limitation 1: Passive Observation Without Active Cogni-tion: Existing DT frameworks for wireless networks [7], [9]– [16] focus on synchronization between physical and virtual replicas and emphasizes simulation fidelity for visualization, predictive maintenance and control optimization. Current im-plementations span radio access network (RAN) optimization [9], network planning [10], edge computing orchestration [11], and spectrum management [12]. Recent advances leverage generative AI including large language models and diffusion models for network optimization [13], differentiable ray trac-ing for learning radio propagation environments [15], and foundation models pretrained on massive wireless channel datasets [16] demonstrating significant improvements in chan-nel prediction accuracy. However, these DT frameworks [7], [9]–[16] built on statistical AI solutions do not reason about the world. They receive sensor measurements, update a statis-tical world model, and compute control and communication policies. But they do so reactively, without any mechanism to assess the reliability of their own predictions, identify what they do not know, or direct sensing resources to fill knowledge gaps. This passive relationship with the physical world creates a fundamental epistemic limitation , which means the twin cannot identify what it does not know. When the physical AI network enters an unfamiliar regime, perhaps due to an unseen environmental change, or adversarial source, the twin will continue to make predictions based on its existing model, unaware that these predictions are unreliable, thereby hinder-ing the safe operation of physical AI systems. Second, current DT architectures treat sensing as an external data source or some side information rather than manipulating the sensing resources to reduce epistemic uncertainty. Instead, physical AI systems require DTs that actively control sensing resources to reduce epistemic uncertainty, directing the network to acquire causally relevant information needed for reliable decision-making under uncertainty. 
+
+2) Limitation 2: Absence of Compositional Guarantees for Heterogeneous Agents: Physical AI systems comprise het-erogeneous agents with fundamentally incompatible internal semantic representations about the world. In such a system, physical AI coordination requires agents to fuse complemen-tary information from multiple neighbors to build a more complete picture of the shared environment than any single agent can achieve alone. For example, consider a disaster response scenario via collaborative inference using ground robots and vehicles, aerial drones, and human extended reality (XR) user. Here, ground robots maintain occupancy grid maps from LiDAR, aerial drones build 3D environment models from cameras, vehicles track dynamic objects via radar, and human operators reason through natural language and visual interfaces. When the ground robot attempts to fuse the infor-mation received from other agents to update its world model, conflicts arise between representations that describe the same physical reality in incompatible ways. These representational conflicts propagate directly into the robot’s action decisions, resulting in plans that appear individually rational but prove collectively catastrophic when executed in the shared physical environment. Current DT approaches, that use data-driven multimodal data fusion methods [25], provide no formal mech-anism to resolve such conflicts while preserving the causal and geometric structure that each agent relies upon for correct decision-making, making scalable heterogeneous physical AI coordination impossible without compositional guarantees. 
+
+3) Limitation 3: Data-Driven Models Without Causal Un-derstanding: The dominant methodology for DT model-ing employs data-driven approaches including generative AI trained on historical data to predict network and physical agent behavior [16], [26], [27]. While powerful for capturing statistical correlations, these approaches exhibit several limi-tations. First, they require massive training datasets covering 5
+
+Fig. 1: Overview of Proposed HDT-Net. 
+
+all scenarios the physical AI network might encounter. But physical AI environments are inherently non-stationary and may encounter unexpected scenarios that may occur due to emergent interactions among the agents. No historical dataset can anticipate all futures. Moreover, neural models extrapolate poorly beyond their training distribution since they learn purely statistical associations between inputs and outputs [2]. For example, in the disaster response scenario, a correlational model accurately learns that robot positions could be corre-lated with channel quality degradation. But it cannot answer: “If I command this robot to move behind the metal shelving, will the link fail before it completes its task?” Such counter-factual reasoning about physical interventions requires causal understanding that correlation-based models lack. Finally, these models provide point predictions without principled uncertainty quantification. A DT might predict that a robot will reach its target location in 4 seconds, but how reliable is this prediction? How does uncertainty about obstacle positions, floor stability, or neighboring agent trajectories propagate into uncertainty about mission success? Without answers to these questions that require understanding how the data is generated, the DT cannot guide risk-aware decision making and hence are not trustworthy in physical AI applications . These limita-tions extend to recent agentic AI frameworks that coordinate multiple LLM-based agents through message passing over reliable wireless channels [28]. While agentic AI has gained significant attention for task decomposition and collaborative problem solving, these frameworks rely on statistical models that lack causal understanding of the physical world and coordinate heuristically without evaluating whether a given exchange genuinely improves the receiver’s uncertainty about the physical environment. Physical AI coordination requires agents that reason about hidden physical states through causal world models, justify every inter-agent transmission by its cognitive value to the receiver, and formally quantify when coordination genuinely exceeds independent operation rather than merely consuming resources. 
+
+4) Limitation 4: Data Synchronization via Centralized Processing: Current physical-virtual twin synchronization schemes assume centralized processing in which raw sensing data is communicated to a central location, processed there, and then decisions are distributed back. This architecture was appropriate when computation was expensive and endpoints were passive sensors. Physical AI coordination fundamentally inverts this model. Autonomous robots, drones, and vehicles must perform distributed inference about their environment and coordinate through belief exchange, not centralized data aggregation. Consider a team of ground robots navigating a collapsed building. The traditional centralized approach requires each robot to stream its full LiDAR point cloud to a central server for processing, which then communi-cates navigation decisions back. Under damaged infrastructure where communication links are intermittent and latency is unpredictable, this leads to delayed decisions that can hinder the safe operation of physical AI systems. With physical AI agents, each robot HDT must maintain a world model that predicts obstacle positions, assesses structural stability, and infers neighboring agents’ trajectories through theory-of-mind reasoning. These HDTs can further coordinate by exchanging inferred beliefs such as “northeast corridor has 
+
+90 percent probability of collapse within 60 seconds” or “agent 3 trajectory will intersect this position in 200ms” . Such information enables distributed collision avoidance and mission planning while consuming a fraction of the band-6
+
+width that raw sensor streaming would require. Centralized processing cannot support this because the round-trip latency to a central server exceeds the time available for safety-critical decisions, and because link failures under damaged infrastructure make centralized coordination inherently fragile. What is required instead is a network that provides a shared spatiotemporal context among distributed agents by ensuring that belief updates, sensing decisions, and control actions are synchronized so that physically coupled agents can act as a single coordinated system. 
+
+C. The Case for Holonic Digital Twins 
+
+To address the above limitations of traditional DTs, we envision HDTs as cognitive agents that live within and con-tinuously refine causal world models of their physical envi-ronment. Unlike the statistical world models of passive DTs that are updated periodically from sensor streams, a HDT’s world model is the active substrate through which agents perceive hidden states, simulates the consequences of actions before executing them, resolves uncertainty through targeted sensing, and coordinates with neighboring agents through belief exchange. Hence, a cognitive DT uses its world model as a reasoning engine for intervention, actively participating in the perception-decision-action loop of its physical counterpart rather than observing it from the outside. Realizing this vision requires three foundational shifts in how DTs are designed, deployed, and coordinated across the network. 1) From observation to causal inference: The HDT should actively maintain generative causal models P (st|μt, a t) that explain how hidden environmental states μt at time t, which may include channel conditions, physical obstacles, neigh-boring agent intentions, and interference sources, causally give rise to observed measurements st which can be cross-layer data such as channel estimates, LiDAR point clouds, sensor readings, upon performing an action at. This requires probabilistic inference over belief distributions Q(μt|s1: t)
+
+that quantify both aleatoric uncertainty inherent in stochastic physical processes and epistemic uncertainty arising from incomplete observations or model misspecification [29]. Crit-ically, these beliefs must support interventional queries via do-calculus: given current beliefs, the HDT should predict 
+
+P (μt+r |do (a), s 1: t) which is the causal effect of potential actions on future states. Furthermore, this should enable coun-terfactual reasoning essential for tackling unforeseen scenar-ios, performing theory of mind reasoning to infer other HDT beliefs and actions and ensuring accurate control decisions even under adversity. 2) From centralized to collective intelligence: Physical AI coordination requires distributed frameworks where agents compose beliefs from heterogeneous neighbors while preserv-ing causal consistency, enabling collective inference that is both bandwidth-efficient and compatible with safety-critical latency constraints. While distributed robotics frameworks for multi-robot SLAM, consensus-based control, and decentral-ized task allocation [30] enable agents to coordinate without a central server, they exchange raw measurements and point state estimates without evaluating how the transmitted infor-mation reduces uncertainty at the receiver or whether it is causally relevant to the receiver’s next decision. Contrary to this, HDTs must determine which agents are causally relevant to each other’s decision-making and prioritize transmissions that maximize cognitive value at the receiver. Based on this causal structure, agents must dynamically establish coordi-nation relationships, wherein they exchange semantic beliefs when causal coupling justifies communication overhead or op-erate independently when causal influences are negligible. This measured, adaptive HDT integration optimizes the tradeoff between collective intelligence and real-time bandwidth and latency constraints .3) From data to meaning to cognitive value: Communication between HDTs should transmit beliefs rather than raw data, since what a neighboring agent requires is not a replica of another agent’s sensor measurements, but an update to its own world model about hidden states it cannot directly observe. For example, a ground robot does not require a drone’s raw camera frames. Instead, it requires the drone’s inferred belief about structural stability in the region it is about to enter, along with the associated uncertainty so that it can appropriately weight this information against its own observations. The network must therefore evaluate each transmission by its cognitive value, how much the transmitted belief reduces the receiver’s uncertainty about causally relevant hidden states and improves its next physical action, rather than by the number of bits it carries. This belief-centric communication enables each receiving agent to update its causal world model with complementary information from neighbors, thereby resolving collective uncertainty that no single agent can resolve indepen-dently. We provide a detailed comparison of the capabilities enabled by HDT-Net vs traditional DTs in Table I. The foundational four pillars of HDT-Net form a single computational chain across sensing, communication, computing and control do-mains rather than independent contributions. MBs determine 
+
+with whom each HDT must coordinate based on causal rel-evance to its mission. Active inference determines what to transmit by evaluating the cognitive value of each potential belief exchange. Category theory determines how to translate beliefs and understand each other at the interface between het-erogeneous HDTs whose internal world model representations may be incompatible. Spatiotemporal integrated information 
+
+Φ determines whether the resulting coordination leads to collective intelligence that justifies its communication cost, feeding back into communication topology adaptation when it does not. The following sections present the HDT-Net architecture for 6G networks, developed upon these pillars. III. C AUSAL MARKOV BLANKETS FOR COMPOSITIONAL 
+
+PHYSICAL AI C OORDINATION 
+
+Enabling HDTs for physical AI coordination requires ad-dressing a fundamental design challenge absent from tradi-tional wireless networks. This involves determining which de-vices should reason jointly versus independently, at what level of abstraction, and with what functional boundaries, based on the causal structure of the mission rather than on fixed network architecture. These decisions cannot be predetermined by net-work architecture, protocol layers, or physical proximity. They 7
+
+TABLE I: Comparison of Traditional Digital Twins and Holonic Digital Twins (HDT-Nets).                                 
+
+> Capability Traditional DT HDT-Net (Proposed) World Model & Reasoning
+> World model for prediction ✓✓
+> Causal world model (physics, geometry, causality) ✗✓
+> Epistemic uncertainty quantification ✗✓
+> Counterfactual reasoning via do-calculus ✗✓
+> Sensing & Perception
+> Passive sensing from data streams ✓✓
+> Active sensing to reduce epistemic uncertainty ✗✓
+> Long-horizon planning under uncertainty ✗✓
+> Coordination & Composition
+> Centralized data aggregation ✓✗
+> Compositional fusion with semantic consistency guarantees ✗✓
+> Theory of mind for neighboring agents ✗✓
+> Network-Level Intelligence
+> Physical-layer KPI optimization ✓✓
+> Cognitive value-driven transmission decisions ✗✓
+> Collective intelligence measurement ( Φ)✗✓
+> Adaptive coordination topology ✗✓
+> Shared spatiotemporal context for physical AI swarms ✗✓
+
+depend on the causal structure of the mission, specifically how agents influence each other through shared spectrum, environ-ment, or goals, how sensing observations provide information about hidden states, and how control decisions causally affect mission outcomes. Considering the disaster response example, the system must determine whether each ground robot requires its own reasoning twin, whether aerial drones should share a single twin or maintain independent ones, and whether the network edge should host regional twins coordinating multiple robots. These decisions depend not on hardware boundaries but on causal dependencies. Robots operating in separated building sections have minimal causal coupling and should maintain independent twins, while robots navigating shared debris fields have strong causal interdependencies requiring coordinated twins that reason jointly about collision avoidance and structural stability. Causal MBs formalize this partitioning by defining agent communication boundaries based on how information causally flows through the cyber-physical system. In other words, MBs classify physical AI agents in terms of how they can interact efficiently in terms of communication, sensing and computing resources, with their environment via wireless network [31]. We begin by formalizing the MB concept, then extend it to HDTs, and finally show how this partitions wireless networks into compositional cognitive agents. 
+
+A. Dynamic MB Partition Across Sensing, Communication, and Control Domains 
+
+We consider the generative world model of a physical AI agent as a joint distribution over all sensing, communica-tion, and control variables in its environment, represented as a directed acyclic graph (DAG) that encodes the causal dependencies among these variables, hence forming a causal Bayesian network. Sensory states s comprise multimodal observations flowing into the agent across all domains. Active states a are communication and control actions flowing out from the agent to affect the physical and network environment across domains. Internal states μ are hidden variables shielded from direct external influence, representing the agent’s beliefs maintained through cross-domain fusion. Examples of distinct states across sensing, communication and control are detailed in Table II. The internal states μ are updated through sensory observations but never directly observed themselves, represent-ing what the agent believes is true about the integrated sensing-communication-control environment rather than ground truth. An MB of a variable X in a causal Bayesian network is the minimal set of variables that renders X conditionally indepen-dent of all other variables. Here, X represents a state variable of interest such as an agent’s physical configuration, a DT’s in-ternal belief, an environment condition, or a network resource parameters. The MB comprises parents Pa (X) representing direct causal drivers of X such as control inputs, sensory observations, or neighboring agents’ actions; children Ch (X)
+
+representing variables directly caused by X such as measured observations, communication quality metrics, or downstream control decisions; and co-parents CoP (X) representing other causal factors that influence X’s effects, such as environmental conditions affecting multiple agents simultaneously or other agents’ states that create coupling through shared resources. The MB is therefore MB (X) = Pa (X) ∪ Ch (X) ∪ CoP (X).More formally: 
+
+P (X|MB (X), W \ MB (X)) = P (X|MB (X)) , (1) where W represents all variables in the network. Since the MB is defined on a causal DAG, it enables interventional and counterfactual reasoning over sensing, communication, and control variables. This allows each HDT to answer queries such as “If I direct this sensing beam toward the northeast corridor, allocate additional bandwidth to this agent, or com-8
+
+mand this robot to halt, how would my belief about the physical world change?”. Hence, this enables predicting the causal consequence of actions on the agent’s world model before they are executed in the physical environment. For an intervention do (A) on variables outside MB (X), with 
+
+X ∈ { s, a }: P (X|do (A), MB (X)) = P (X|MB (X)) . This means that variables outside the MB have no causal influence on the agent’s internal beliefs. Consequently, the agent need not sense, communicate with, or respond to any entity outside its MB, enabling principled pruning of sensing resources, com-munication links, and coordination relationships to only those that causally matter for the agent’s mission. This interventional property distinguishes causal reasoning from mere correlation and proves critical for efficient real-time autonomous decision-making under resource constraints. However, traditional MB formulations assume static partitions where distinct network parameters maintain fixed roles as internal, boundary, or ex-ternal states. This restriction fails for physical AI coordination under mobile agents, highly dynamic wireless channels, and time varying coordination requirements or tasks. Recent work on dynamic MB detection [31] addresses this limitation by allowing blanket elements to transition between roles over time while preserving conditional independence structure. For HDT-Net, dynamic blankets enable causality-aware integration of sensing, communication, and control. In practice, each HDT tracks its blanket boundaries by periodically evaluating the conditional mutual information between its internal states and candidate boundary variables using local observations. When causal coupling with a neighboring agent increases, for instance two robots converging on a shared corridor, the neigh-bor’s states enter the blanket and a coordination link is estab-lished. When coupling decreases, those states exit the blanket and the link is released. The cognitive value metric defined in Section IV provides a computationally efficient proxy for this adaptation. When the cognitive value of transmissions across an existing link drops below the communication cost, the causal coupling justifying that link has weakened, triggering blanket contraction. Conversely, when an HDT’s expected free energy remains high despite local observations, unresolved uncertainty about states outside its current blanket triggers exploration of new coordination links. The active inference loop thereby drives MB adaptation as a byproduct of free energy minimization rather than requiring a separate blanket detection algorithm. 
+
+B. Compositional MBs via Categorical Structures 
+
+Individual MBs define single-agent boundaries, but scal-able physical AI systems require composing hundreds or thousands of agents performing distributed inference across multiple spatial and temporal scales. For example, in the dis-aster response scenario, aerial drones with wide-area thermal imaging must fuse observations with ground robots using LiDAR for performing high-resolution structural assessment of collapsed buildings to maximize mission effectiveness. These multi-scale coordination scenarios require compositional MBs where smaller HDTs combine through belief exchange to form larger cognitive units exhibiting collective intelligence. This capability enables hierarchical, cross-scale reasoning and coordination, allowing the system to integrate complementary sensing modalities, resolve partial and uncertain observations, and make globally consistent decisions that no individual agent could achieve alone. Compositional structure ensures that blankets at different hierarchical levels preserve conditional independence while enabling coordinated inference. However, efficient HDT composition is hindered by semantic misalign-ment , where heterogeneous agents with different sensor modal-ities and world models produce beliefs that conflict rather than fuse coherently when combined. Traditional AI systems operate as closed black boxes where internal representations and reasoning processes remain opaque and incompatible across vendors and AI agents. Successful coordination re-quires heterogeneous agents to align their world models and exchange beliefs despite incompatible internal representations and implementations. MB boundaries define precisely what information crosses agent boundaries versus what remains proprietary (agent-specific internal representations and algo-rithms). Category theory further formalizes how abstraction levels compose with guaranteed consistency, and how different agent world model implementations can interoperate through standardized interfaces. 
+
+1) Category Theory Primer for HDTs: We formalize HDT composition through the category NetHDT . Objects in this category are HDT states (s, a, μ ), whereas morphisms are structure-preserving transformations between states which in-cludes belief updates from new observations, state transitions from executed actions, and coordination protocols exchang-ing semantic information across MB boundaries. Morphism composition respects temporal causality : where belief update 
+
+f : A → B followed by state transition g : B → C yields the composed operation g ◦ f : A → C, which preserves the temporal ordering among the events. Each state possesses an identity morphism id A : A → A representing no change. This structure satisfies associativity (h ◦ g) ◦ f = h ◦ (g ◦ f ) and identity laws id B ◦ f = f = f ◦ id A, guaranteeing that the order of grouping operations does not affect outcomes while preserving causal temporal ordering, critical for distributed multi-agent coordination where updates occur asynchronously. 
+
+2) Functorial Mappings Between Abstraction Levels: Phys-ical AI coordination requires agents to reason at multiple levels simultaneously. A ground robot must reason about centimeter-level obstacle geometry, while the edge server coordinating fifty such robots must reason about zone-level congestion and task allocation. A HDT must also predict what its neighbors believe about the shared environment, even when those neighbors use entirely different sensor modalities and world model representations. These multi-level reasoning capabilities require mappings between abstraction levels that preserve the causal relationships agents rely upon for correct decision-making. Category theory formalizes such mappings as functors: a functor F : C → D maps objects and morphisms from category C to category D while preserving composition 
+
+F (g ◦ f ) = F (g) ◦ F (f ) and identity F (id A) = id F (A).The preservation means that a functor cannot introduce causal relationships that do not exist in the source, nor destroy causal relationships that do. For physical AI networks, we define three functors that enable multi-level reasoning. 9
+
+TABLE II: MB Partition for Cyber-Physical DTs in Integrated Sensing, Communication, and Control Systems               
+
+> Component Domain Examples Sensory States
+> Communication Channel state information (CSI) estimates from pilots, received signal strength indicator (RSSI) measurements from users, ACK/NACK feedback from transmissions Sensing Radar returns for object detection, LiDAR point clouds for environment mapping, Internet of Things (IoT) sensor readings (temperature, position, velocity) Control State feedback from controlled agents (vehicle positions, drone trajectories, robot joint angles), task completion acknowledgments, safety alerts Cross-domain Traffic arrival statistics, interference measurements, quality-of-service metrics
+> Active States
+> Communication Transmit power levels, beam configurations, resource block allocations, handover commands Sensing Sensing beam directions, radar waveform parameters, measurement scheduling decisions Control Trajectory commands to autonomous vehicles, task assignments to robots, motion planning waypoints, safety intervention commands Cross-domain Joint sensing-communication beam patterns, resource allocation balancing communication and control latency
+> Internal States
+> Communication Estimated channel matrices, user mobility models, interference pattern predictions, traffic demand forecasts Sensing Environment maps (obstacles, dynamic objects), target tracking filters, clutter statistics Control Agent state estimates (positions, velocities, intentions), task progress models, safety constraint repre-sentations Integrated Joint channel-environment models (how obstacles affect propagation), communication-aware motion planning (network topology constraints on control), uncertainty representations across all domains
+
+The physical-to-virtual functor ΦDT maps physical world entities and events to their DT world model representations. This is the mapping that turns the real world into the twin’s internal model, formalized as the causal generative model in Section IV. Crucially, this functor preserves causal structure, ensuring that if physical event A causes physical event B or object A is related to object B, then the digital representation 
+
+ΦDT (A) maintains the same causal relationship to ΦDT (B) in the twin’s world model, enabling valid counterfactual reason-ing about interventions. The abstraction functor Φabs maps detailed HDT states to coarse-grained representations (via a many to one mapping) for hierarchical reasoning. For example, instantaneous LiDAR point clouds from individual ground robots become aggregate obstacle maps at the edge server HDT, and per-robot collision avoidance decisions become coordinated formation plans at the team level. This enables an HDT at the edge server to coordinate in real-time hun-dreds of agents through low-dimensional causal abstractions capturing coordination-relevant information, rather than using full dimensional observations which wastes bandwidth and time. The theory of mind functor ΦToM formalizes how a HDT models what a neighboring agent believes about the shared environment. In particular, ΦToM maps the internal belief state 
+
+μi of agent i to a prediction ˆμj of what agent j believes about the same physical environment, despite the two agents using incompatible world model representations. Without this capa-bility, an agent sending a belief update to a neighbor has no way of knowing whether that update is redundant, surprising, or contradictory from the neighbor’s perspective. Crucially, theory of mind is what makes cognitive value of information computable. To evaluate how much a message will reduce the receiver’s expected free energy, the sender must first estimate what the receiver currently believes and how the message would alter that belief. Without ΦToM , the cognitive value in (4) cannot be evaluated, and transmission decisions fall back to heuristic scheduling that treats all messages as equally valuable. By assessing the cognitive value of a potential trans-mission via theory of mind before committing communication resources, each HDT directs bandwidth toward messages that most improve collective physical AI performance. In [5], we showed that agents can learn such metacognitive capabilities in a self-supervised manner, generalizing from first-person self-reflective inference to third-person reasoning about other agents’ goals and beliefs through analogical reasoning. ΦToM 
+
+provides the categorical formalization of this capability, map-ping the internal belief state μi of agent i to a prediction 
+
+ˆμj of what agent j believes, despite the two agents using incompatible world model representations. 
+
+3) Compositional HDTs via Pullbacks: When multiple HDTs must coordinate through shared physical states or joint action constraints, we require a compositional operation that preserves each twin’s individual MB structure while creating the joint structure needed for coordination. Category theory provides this through the pullback construction. Consider two physical AI agents HDT 1 and HDT 2 with states (s1, a 1, μ 1)
+
+and (s2, a 2, μ 2) that must coordinate through a shared physical resource or constraint. For instance, an aerial drone and ground robot jointly estimating structural stability of a damaged building share observations of the same structure, or multiple autonomous vehicles navigating an intersection share the con-straint that their trajectories must remain collision-free. The pullback HDT combines sensory states as s1 × s2, constrains active states such that (a1, a 2) satisfy joint physical feasibility requirements, and represents joint beliefs μ1,2 that factor according to conditional independence: P (μ1, μ 2|s1, s 2) =
+
+P (μ1|s1, s shared ) · P (μ2|s2, s shared ), where sshared represents observations of shared physical states that both twins observe or constraints both must satisfy. This is illustrated in Fig. 2. This factorization preserves each twin’s individual MB by ensuring that beliefs about agent-specific local states remain conditionally independent given shared interface observations. This avoids unnecessary coupling that could lead to redun-dant information exchange and bandwidth wastage, while still ensuring coordination where physical causality demands it. While pullback formalizes composition of MBs, it does not alone guarantee semantic consistency , which means that heterogeneous twins with different sensor modalities or world model representations must maintain compatible beliefs about shared physical states at their interface. This can be achieved via natural transformations. 10 
+
+4) Natural Transformations for Multi-Agent Interoperabil-ity: Different HDT implementations encode the same physical phenomena in fundamentally different semantic representa-tions, and hence different semantic languages . For example, when a drone sends a belief update to a ground robot, the drone’s message is expressed in visual embeddings while the robot reasons in geometric structural models. Without a principled translation mechanism, these incompatible repre-sentations produce conflicting or meaningless updates when fused. Natural transformations provide the categorical ma-chinery for translating between semantic languages while preserving meaning. Consider disaster response coordination where an aerial drone HDT represents building structural state using visual feature embeddings from learned neural encoders, while a ground robot HDT represents the same building using geometric structural models with explicit load-bearing wall positions and stress distributions. These are distinct semantic languages since vendor A’s language has no explicit geometric primitives and encode damage as vectors in learned embedding space, while vendor B’s language has no learned features, encoding damage as stress tensor fields over geometric primitives. Both observe the same damaged structure but use mutually incompatible semantic languages to represent internal beliefs. Natural transformations between time-indexed functors pro-vide translations between these semantic languages. We model the mission timeline as a category Time whose objects are discrete time steps t = 0 , 1, 2, . . . and whose morphisms t →
+
+t+1 represent the causal passage of one inference cycle. Each agent’s semantic evolution is then a functor from this timeline into its own representation category: FA : Time → Cat A
+
+maps each time step to the drone’s current visual embedding state and each morphism to the belief update triggered by new imagery, while FB : Time → Cat B maps each time step to the robot’s current geometric model state and each morphism to the structural model update from new sensor data. A natural transformation α : FA ⇒ FB translates between semantic languages while preserving belief update semantics. When the drone updates its visual embedding beliefs with new imagery via functor fA, this update must correspond to equivalent updates in the robot’s geometric model via functor fB . This semantic interoperability is achieved via natural transformation that ensures what is communicated over the air, i.e. αt+1 (fA(st)) ensures semantic alignment, thanks to its commutative property: αt+1 ◦ fA = fB ◦ αt. This commutativity guarantees that translating then updating yields the same beliefs as updating then translating, enabling the drone to communicate “northeast corner shows severe struc-tural damage” in a form the robot can interpret for navigation planning. Heterogeneous physical AI agents thereby maintain coherent shared world models despite incompatible internal semantic languages, with natural transformations ensuring semantic consistency at MB boundaries. In short, natural transformations enable heterogeneous agent interoperability where agents using incompatible internal rep-resentations, exchange semantic information over wireless channels while ensuring semantic interoperability despite dif-ferent implementation choices. Pullback composition guaran-DT 1,2
+
+DT 1 DT 2
+
+Shared State 
+
+π1 π2
+
+f1 f2      
+
+> f1◦π1=f2◦π2
+
+Fig. 2: Pullback diagram for composing digital twins. The composite DT 1,2 projects to individual DTs via π1 and π2, which then map to shared state via f1 and f2. The pullback property ensures f1 ◦ π1 =  
+
+> f2◦π2, maintaining consistency on shared components.
+
+tees that independently developed HDTs compose through standardized wireless interfaces with well-defined behavior rather than undefined interactions. Functorial abstraction en-ables hierarchical coordination where edge servers reason over aggregated states while physical agents maintain fine-grained beliefs, with the agents partitioned across distinct MB levels in a way as to ensure real-time distributed inference. Category theory hence provides the formal foundation ensuring HDTs can be built modularly, verified independently, and composed systematically through wireless networks while preserving semantic consistency. IV. C OMPOSITIONAL ACTIVE INFERENCE AND EMERGENT 
+
+COLLECTIVE INTELLIGENCE 
+
+Causal MBs determine how the network partitions into autonomous reasoning agents and govern how causal infor-mation flows across agent boundaries. Herein, each blanket define the minimal set of sensing, communication and control variables a HDT must intervene upon and the beliefs that must be exchanged to perform accurate distributed inference without wasting communication resources. However, blanket structure alone does not prescribe how each HDT should update its beliefs from incoming observations, select actions across sensing, communication, and control domains, or con-tinuously refine its world model from experience. Active infer-ence provides this missing optimization principle that enables collective intelligence among the networked HDTs within these boundaries [32]. Rather than implementing perception, planning, and control as separate engineered subsystems, each HDT executes a single computational objective called 
+
+variational free energy minimization (VFE) . The solution to VFE simultaneously produces belief updates about hidden world states, joint sensing, communication and control action selection that balances goal achievement against uncertainty reduction, and continuous learning that refines the causal generative model from experience. Physical AI systems, how-ever, comprise many such agents coordinating via wireless links across distinct spatial and temporal scales. This creates challenges that single-agent active inference does not address. To address these challenges, we first show how active inference instantiates the perception-action loop of physical AI agents within MB boundaries. We then show that active inference has categorical structure, enabling HDTs to compose via 11 
+
+pullbacks with provable free energy bounds. We next derive conditions under which networked HDTs, organized across hierarchical MB levels, collectively behave as a single active inference agent at each scale, showing that genuine collective intelligence emerges bottom-up from local free energy min-imization through wireless belief exchange rather than from top-down centralized coordination. Finally, we introduce IIT as the measure that quantifies when this collective intelligence exceeds independent operation, and derive growth dynamics that govern how it evolves over mission timescales. 
+
+A. The Generative Model and Variational Inference 
+
+At the heart of active inference lies a generative model encoding the causal structure of how hidden states give rise to observations. For physical AI coordination through wireless networks, this model must span integrated sensing, communi-cation, and control domains. The generative model factorizes as P (˜ s, ˜μ, π ) = P (μ0) QTt=0 P (st|μt)P (μt+1 |μt, a t)P (π),where ˜s and ˜μ denote sequences of observations and states, at
+
+is the action at time t determined by policy π, and the factors represent initial state distribution, observation likelihood cap-turing how physical and network conditions cause sensor mea-surements, state transition dynamics governing how actions causally affect future states, and policy prior encoding task preferences. Perception corresponds to the HDT maintaining approximate posterior beliefs Q(μt) that minimize variational free energy: 
+
+F = KL Q(μt) ∥ P (μt|s<t , a <t )| {z }
+
+> complexity
+
+− EQ[ln P (st|μt)] 
+
+| {z }
+
+> accuracy
+
+. (2) The complexity term, measured as the Kullback-Leibler (KL) divergence between approximate and true poste-rior distribution about the beliefs μt is written as 
+
+KL Q(μt) ∥ P (μt|s<t , a <t ) = EQ(μt) ln Q(μt)ln P (μt|s<t ,a <t ) , where 
+
+s<t and a<t denote all observations and actions prior to time 
+
+t and P (μt|s<t , a <t ) is the true belief posterior. It penalizes unnecessary departure from what the HDT already knew about the physical world, while the accuracy term rewards beliefs that correctly predict incoming sensor observations. Minimiz-ing (2) thus updates the HDT’s world model to best explain incoming observations while staying anchored to its causal prior. Action selection corresponds to minimizing expected free energy over future policies: 
+
+G(π) = EQ
+
+DKL [Q(sτ |π) ∥ P (sτ )] | {z }
+
+> pragmatic value
+
++ EQ
+
+H[P (sτ |μτ )] | {z }
+
+> epistemic value
+
+,
+
+(3) where the pragmatic term drives the HDT toward preferred future observations (goal achievement) and the epistemic term drives actions that reduce ambiguity about hidden states (uncertainty reduction). The critical property of (3) is that exploration and exploitation are not separately engineered. For example, a disaster response ground robot exploits known collision-free paths when its belief about obstacle positions is sharp, and explores cautiously when uncertainty is high, with the balance determined entirely by the ratio of pragmatic to epistemic cost at the current belief state. A HDT that cannot yet explain its observations well prioritizes to spend more sensing and communication resources to gather information before committing to goal-directed movement. 
+
+Learning further closes the loop where as actions produce new observations, the parameters of the generative model are updated to improve future predictions. This step refines both the observation likelihood P (st|μt) and the state transition model P (μt+1 |μt, a t) from experience. This is not a separate learning phase but a continuous process co-occurring with perception and action. The same VFE objective that drives belief updates also drives model improvement, ensuring that learning is always performed with the goal of reducing surprise about the physical environment. 
+
+1) Cognitive Value of a Transmission: The perception-action-learning loop above governs a single HDT. When multiple HDTs coordinate over a shared wireless network, real-time constraints, coupled with limited bandwidth, make it essential to quantify the extent to which a received message improves the receiver’s ability to sense, decide, and act. Herein, the expected free energy decomposition in (3) provides a principled formalization of the cognitive value of information . When agent i transmits a belief message mi→j to agent j,the cognitive value of that transmission is the reduction in agent j’s expected free energy induced by incorporating the received belief into its posterior: 
+
+V(mi→j ) ≜ Gj
+
+ π∗ 
+
+> j
+
+Qj (μ) − Gj
+
+ π∗ 
+
+> j
+
+Qj (μ | mi→j ), (4) where Qj (s) is agent j’s prior belief over hidden physical states and Qj (s | mi→j ) is the updated posterior after receiving the message. Because the EFE decomposes into epistemic and pragmatic terms, cognitive value inherits the same decompo-sition: V(mi→j ) = ∆ Ve(mi→j )
+
+| {z }
+
+> reduction in state uncertainty
+
++ ∆ Vp(mi→j )
+
+| {z }
+
+> improvement in goal alignment
+
+. (5) The epistemic component captures how much the received belief reduces agent j’s uncertainty about causally relevant hidden states, while the pragmatic component captures how much the updated belief enables agent j to select actions closer to its preferred outcomes. For instance, a drone evaluating whether to transmit its structural assessment to a ground robot computes the cognitive value by estimating how much that assessment would reduce the robot’s uncertainty about obstacle states governing its next navigation decision. Unlike classical value of information [4], which measures reduction in statistical uncertainty independent of the decision context, cognitive value is inherently action-coupled . A message carries zero cognitive value if it reduces uncertainty about states that are causally irrelevant to the receiver’s current policy selection, regardless of how much Shannon information it contains. A communication link is worth maintaining when the aggregate cognitive value it carries exceeds its communication cost, and should be pruned otherwise. However, pairwise cognitive value exchange alone does not guarantee that a network of HDTs constitutes a coherent collective agent. 
+
+B. Networked HDTs and the Emergence of Collective Intelli-gence via Hierarchical Twins 
+
+Each HDT may correctly maximize the cognitive value of its own transmissions and correctly minimize its own VFE, yet 12 
+
+the composed system lacks a principled free energy objective of its own. This makes it impossible to reason about collective behavior, plan hierarchically, or guarantee stability when the network topology changes. Resolving this requires showing that a network of HDTs, each minimizing its own VFE through wireless belief exchange, can itself be understood as a single active inference agent at the collective scale. 
+
+1) From Individual HDTs to a Collective Agent: Consider 
+
+N HDTs {R i}Ni=1 deployed across a physical AI network. When these HDTs coordinate through wireless links, each twin’s active states include belief transmissions and each twin’s sensory states include received beliefs from neighbors. The inward-facing components of the MB, ain  
+
+> i
+
+and sin  
+
+> i
+
+, mediate inter-HDT coupling, while the outward-facing components, 
+
+aout  
+
+> i
+
+and sout  
+
+> i
+
+, interface with the physical AI agent and its environment: ai = ( aout  
+
+> i
+
+, a in  
+
+> i
+
+), si = ( sout  
+
+> i
+
+, s in  
+
+> i
+
+). With this de-composition, the causal chain through which HDT i influences HDT j is fully determined: 
+
+μi → ain  
+
+> i
+
+→ ηij → sin  
+
+> j
+
+→ μj , i̸ = j, (6) where ηij is the shared wireless channel state mediating communication between twins i and j. Because all inter-HDT influence flows through the wireless interface rather than through direct coupling of internal states, each HDT’s world model implementation remains proprietary behind its blanket boundary. Semantic translation between heterogeneous implementations is handled entirely at the boundary by the natural transformations of Section III-C4, with no requirement for shared internal representations across agents. The explicit appearance of ηij in (6) means that wireless channel degrada-tion enters the free energy accounting directly. A deteriorating link reduces the cognitive value of sin  
+
+> j
+
+, raises Fj , and triggers either a link recovery action or a reduction of coordination scope, all as consequences of VFE minimization rather than as separately engineered layered protocol decisions. The coupling structure (6) produces a blanket of blankets :the outward-facing components {sout  
+
+> i
+
+, a out  
+
+> i
+
+} jointly constitute a collective MB that screens the aggregate internal beliefs μcol =
+
+{μi, s in  
+
+> i
+
+, a in  
+
+> i
+
+}Ni=1 from the collective external environment ηcol ,defined as all physical world states outside the ensemble that influence it only through the outward-facing blanket components {sout  
+
+> i
+
+, a out  
+
+> i
+
+}. When two structural conditions hold, a) timescale separation ( τlocal ≪ τcoord , reflecting that onboard inference at millisecond timescales is faster than wireless coordination at tens-of-millisecond timescales) and b) the existence of a collective non-equilibrium steady-state density 
+
+p(zcol ), the collective autonomous states αcol = ( μcol , a col )
+
+obey the gradient flow [33]: 
+
+˙αcol ∝ ∇ αcol log p(scol , a col , μ col ). (7) Equation (7) states that the HDT network, viewed as a whole, obeys the same gradient flow that governs any individual active inference agent. The collective is not merely a set of agents that coordinate; it is itself a cognitive agent that perceives, acts, and learns at a higher abstraction level, without introducing any principle beyond those governing individual HDTs. This formally resolves both failure modes: the network is not merely coordinating but genuinely reasoning collectively, and the composed system has a well-defined VFE objective of its own. 
+
+2) Collective Intelligence as Recursive Free Energy Min-imization: Because the collective agent minimizes its own VFE, it inherits all properties of individual active inference at the network level. The collective expected free energy decomposes as: 
+
+Gcol (πcol ) = 
+
+> N
+
+X
+
+> i=1
+
+Gi(πi) − X
+
+> (i,j )∈E
+
+I(μi; μj | sshared ,ij ) + Ccomm ,
+
+(8) where E is the set of active wireless links and Ccomm 
+
+captures the free energy cost of wireless belief exchange which includes encoding distortion, transmission energy, and scheduling delay. Minimizing (8) simultaneously drives each HDT toward its local mission objective, rewards coordination links whose mutual information exceeds their communication cost, and drops links whose coordination benefit is negative. The network thereby self-organizes its coordination topology. Links carrying informative belief updates are maintained, links whose mutual information falls below their communication cost are released, and new links form when epistemic coupling between agents exceeds the activation threshold. This self-organizing property directly resolves the challenge of how network topology should be optimized for epistemic rather than throughput objectives. In short, topology is not optimized separately but emerges as a consequence of collective free energy minimization. 
+
+C. Spatio-Temporal Integrated Information and Collective Intelligence 
+
+Quantifying when collective intelligence genuinely emerges requires a measure that captures both the irreducibility of integration and the spatiotemporal structure of coordination. Inspired by IIT [23], which measures how much a system’s collective behavior exceeds the sum of its parts, we define the 
+
+spatiotemporal integrated information for HDT-Net with joint sensing-communication-control state x = {(si, a i, μ i)}Ni=1 as:            
+
+> Φ( x,R,∆t) = min
+> P∈ P ST (R,∆t)
+> "
+> I(xpast ;xfuture )−X
+> p∈P
+> I(xpast
+> p;xfuture
+> p)
+> #
+> ,
+> (9)
+
+where PST (R, ∆t) is the set of partitions that separate agents by spatial region R and temporal synchronization window ∆t,with each partition P = {p1, p 2, . . . , p K } dividing the N
+
+HDTs into K disjoint groups, and xp = {(si, a i, μ i)}i∈P
+
+denotes the joint state of all HDTs assigned to group p.The mutual information terms I are computed over time-directed state transitions capturing causal dependencies rather than mere correlation. Specifically, the measure asks how much would collective inference degrade if agents within spatial proximity R lost temporal synchronization beyond ∆t?When ΦST is high, the agents in that spatiotemporal region form a genuinely integrated cognitive unit whose coordination cannot be partitioned without significant inference loss. When 
+
+ΦST is low, agents operate near-independently and coordi-nation overhead outweighs its benefit, allowing the network to release communication resources for other uses. Critically, because the mutual information is computed over time-directed transitions, ΦST captures causal dependencies and directed information flow, not mere correlation. For example, during 13 
+
+disaster response wide-area search with spatially separated robots, low ΦST ≈ 0 indicates independent operation suffices since agents have uncorrelated observations within the region. During survivor extraction requiring multi-modal sensor fusion and human oversight, high ΦST ≫ 0 indicates tight integration is essential since any partition preventing coordination within the spatiotemporal window causes mission failure. To reveal the structure of collective intelligence and guide sensing, communication, and computing resource allocation, 
+
+Φ can be decomposed into three components: Φ =Φs
+
+|{z} 
+
+> integration across co-temporal agents
+
++ Φt
+
+|{z} 
+
+> integration across time within agents
+
++ Φc
+
+|{z} 
+
+> irreducible spatiotemporal coupling
+
+. Φs mea-sures how much collective inference degrades when spatially separated agents are partitioned at a single time instant, capturing the value of fusing information from heterogeneous agents. Φt measures how much each agent’s predictive capac-ity depends on its own historical trajectory, capturing the value of persistent world model memory. Φc is the component that cannot be attributed to either spatial or temporal integration alone. It quantifies the irreducible spatiotemporal coupling that arises when agents must not only observe complementary re-gions of the environment but do so in a temporally coordinated manner to maintain a coherent shared context. This cross term is the shared spatiotemporal context that is enabled HDT-Net. It vanishes when agents share spatial coverage but operate asynchronously, or when agents are temporally synchronized but observe redundant spatial regions. 
+
+D. Intelligence Growth Through Coordinated Learning 
+
+When physical AI agents first enter a shared environment, each HDT operates from its own local observations with limited knowledge of neighboring agents’ states, yielding low 
+
+Φ across the region. As agents begin exchanging beliefs through wireless links, their world models progressively align and complement one another, resolving uncertainties that no single agent can address alone. The network’s objective is to accelerate this transition from independent operation to integrated collective cognition by maximizing the rate at which 
+
+Φ grows over the mission horizon. The network’s objective is to accelerate this transition from independent operation to integrated collective cognition by maximizing the rate at which ΦST grows over the mission horizon. This is captured by a growth-aware objective that balances immediate physical AI task performance against the development of collective intelligence: 
+
+J = X
+
+> t
+
+rt
+
+| {z } 
+
+> immediate task reward
+
++ α Φ( T )
+
+| {z } 
+
+> terminal intelligence
+
++ β
+
+Z T
+
+> 0
+
+˙Φ( t) dt 
+
+| {z }
+
+> intelligence growth
+
+. (10) The first term drives each HDT toward its immediate mission objective. The second term rewards the level of spatiotemporal integration achieved by mission end, ensuring the network does not sacrifice collective coherence for short-term gains. The third term rewards the rate of intelligence growth through-out the mission, incentivizing early investment in coordination structures that enable progressively more demanding mission phases. The weights α and β encode mission structure: when future coordination failures are catastrophic and unrecoverable, 
+
+β is high and the network prioritizes intelligence growth; when the mission is short and coordination patterns are stable, immediate reward dominates. The network drives Φ growth by jointly optimizing across four resource dimensions. Sensing resources are directed toward observations that most reduce collective uncertainty about hidden states within the spatiotemporal region, growing 
+
+Φs by filling gaps in spatial coverage that no single agent can address. Communication resources are optimized to prioritize belief exchanges whose cognitive value is highest, growing 
+
+Φc by tightening temporal synchronization among causally coupled agents. Computation resources maintain and refine each HDT’s generative world model, growing Φt by extending the predictive horizon over which each agent can anticipate future states. Control policies coordinate agent trajectories and task assignments to increase causal coupling where coordina-tion is needed, physically positioning agents to maximize the spatiotemporal integration that sensing, communication, and computation resources can then sustain. The central insight is that 6G physical AI networks are not static cognitive systems but evolving intelligences, and managing this evolution is as critical as optimizing instantaneous performance. Just as a network with high but static Φ cannot adapt when missions change or networks are disrupted, a network that continuously refines its collective world model through coordinated sensing, belief exchange, and causal discovery becomes increasingly capable over time, turning the network itself into a learning asset rather than a fixed infrastructure. V. O PEN PROBLEMS AND CHALLENGES OF NETWORKED 
+
+PHYSICAL AI S YSTEMS  
+
+> •
+
+Challenge 1: Cognitive Traffic Generation and Belief-Centric Communication Metrics. In physical AI systems, traffic generation is driven by cognitive value, with agents transmitting only when communication is expected to reduce uncertainty of other agents world models or improve decision-making. As a result, traffic arrivals depend on evolving beliefs, uncertainty estimates, and coordination needs, rather than fixed sampling rates or exogenous processes. This leads to bursty, correlated traf-fic patterns, where transmission rates spike collectively when agents encounter novel scenarios requiring coordi-nation. Characterizing such traffic requires new models in which transmission decisions optimize expected cognitive value in (4), coupling arrival processes with distributed cognitive state evolution. This necessitates a shift from traditional performance metrics such as bit error rate to 
+
+belief fidelity , which quantifies how effectively a received message reduces epistemic uncertainty at the receiving HDT and improves collective intelligence. Formally, this calls for a new rate–belief–distortion framework, where distortion is measured not by reconstruction error but by the KL divergence between the posterior achieved under the actual channel and that under an ideal noiseless channel. Such a formulation captures how wireless im-pairments degrade collective causal inference rather than 14 
+
+signal fidelity. Moreover, it naturally induces a notion of 
+
+cognitive capacity , defined as the maximum achievable reduction in belief uncertainty per unit system resource, thereby jointly characterizing the impact of communica-tion constraints, computational limitations, and inference dynamics on overall performance.  
+
+> •
+
+Challenge 2: Latency degrades beliefs, and packet loss is a safety issue. Classical networked control systems mea-sure latency cost through age-of-information metrics [34] quantifying how stale state estimates degrade control per-formance in linear dynamical systems. In contrast, physi-cal AI agents must maintain internal world models tightly synchronized to the real-world dynamics they represent. When a belief update arrives late over a congested wire-less channel, its value depends on how much the receiving agent’s model has evolved during the delay interval due to its interactions with the world, not merely on the age of the underlying measurement. During high-uncertainty periods when agents encounter novel scenarios, delayed beliefs may destabilize subsequent actions, potentially causing safety violations. During low-uncertainty periods when agents operate confidently within known envi-ronments, identical delays cause negligible degradation. Beyond staleness, differential latency across multiple communication links can cause agents to misinterpret the temporal causality of events. When two correlated belief updates arrive in an order that reverses their true causal sequence, the receiving agent constructs a world model in which effects appear to precede their causes, producing control decisions grounded in a physically impossible causal history [3]. For physical AI systems operating un-der tight safety margins, such causal misattribution means that the agent acts confidently on a world model that is not merely stale but structurally incorrect. Existing age-of-information frameworks measure staleness uniformly and are unable to capture this coupling between net-work delay statistics and time-varying agent uncertainty. Here, an open problem is defining world model belief age metrics that quantify information value decay as a function of both wireless channel delay and receiving agent’s epistemic state evolution, then deriving bounds and scheduling policies that prioritize transmissions when delay costs are highest.  
+
+> •
+
+Challenge 3: Network topology determines collective intelligence. In physical AI systems, the communication graph structure determines which agents share beliefs about which environment states. Fully connected topolo-gies enable complete observation pooling, minimizing collective uncertainty but saturates wireless spectrum and energy budgets. Sparse topologies conserve resources but leave agents uninformed about environment regions they cannot directly sense. The optimal topology must minimize collective uncertainty subject to wireless chan-nel capacity, energy availability, and computational and sensing capabilities. They must adapt dynamically based on MB boundaries as mission requirements evolve and agents move through environments with time-varying channel conditions. While traditional methods minimize hop count, maximize throughput, or optimize coverage assuming fixed traffic demands, physical AI topology design must minimize an epistemic objective, specifically collective uncertainty over environment states, subject to wireless resource constraints across a combinatorial space of graph structures under mobility, fading, and interference. The optimization couples graph combina-torics with distributed probabilistic inference, where link addition or removal changes not just routing efficiency but the information fusion structure determining which agents can update which beliefs. No existing topology design framework addresses this coupling between net-work structure and collective epistemic state . 
+
+> •
+
+Challenge 4: Network-Enabled Shared Temporal Context for Physically Coupled Swarms. The collective gradient flow of (7) describes networked HDTs evolving together as a single cognitive agent, but this description is only coherent if the network ensures that agents commit to coordinated actions within a synchronized spatiotemporal context window. Physical AI swarms executing tightly coupled tasks such as collaborative manipulation, forma-tion flight, or synchronized assembly require the network to actively provide a shared temporal context in which all agents receive belief updates and commit to actions at the same physical instant. When this network-provided temporal alignment is absent, the swarm degenerates into a collection of individually rational agents whose actions are physically misaligned. The open problem is co-designing belief delivery, inference scheduling, and action commitment across the wireless infrastructure such that a network of HDTs acts as a single coordinated organism with deterministic timing guarantees, a requirement that none of the existing wireless synchronization standards address for cognitive multi-agent systems.  
+
+> •
+
+Challenge 5: Scalable Computation of Spatiotemporal Integration. Computing Φ exactly requires evaluating mutual information across all spatiotemporal partitions of the HDT-Net, which is intractable for large physical agent populations. Practical deployment of HDT-Net requires scalable approximations that preserve the measure’s abil-ity to distinguish genuine collective intelligence from coordination overhead. Promising directions include local approximations that compute Φ over MB neighborhoods rather than the full network, hierarchical decomposition that exploits the holonic structure to bound network-level integration from agent-level and team-level estimates, and online incremental updates that track Φ changes as agents enter or leave spatiotemporal regions without full recomputation. Initial evidence that IIT-based measures are computable in practice comes from our prior work on causal semantic communication [35], where integrated information was computed over structural causal mod-els to identify semantic content elements and quantify irreducible integration, demonstrating feasibility within individual agent neighborhoods. Extending these results to network-scale Φ across hundreds of agents remains an open challenge. The key constraint is that the approxima-tion error must remain small enough to preserve correct 15 
+
+resource allocation decisions, since overestimating Φ
+
+wastes communication resources on unnecessary coordi-nation while underestimating it causes agents to operate independently when collective inference is essential for safe physical AI operation.  
+
+> •
+
+Challenge 6: Adversarial Resilience and Trust in Holonic Coordination. When one or more HDTs are compromised by adversarial attack, the beliefs they transmit across MB boundaries may be intentionally misleading, cor-rupting neighboring agents’ world models and degrading collective intelligence. While the blanket structure con-fines direct influence to causal neighbors, a compromised agent at a critical position in the coordination topology can propagate corrupted beliefs through chains of le-gitimate updates. Open problems include a) developing distributed trust mechanisms where each HDT evaluates the consistency of received beliefs against its own local observations and the predictions of its theory of mind functor, b) designing blanket reconfiguration protocols that isolate suspected adversarial agents by dynamically restructuring coordination boundaries, and c) quantifying the resilience of Φ under partial compromise to determine how many agents can be corrupted before collective intelligence degrades below mission-critical thresholds. Unlike conventional network security that protects data integrity at the bit level, adversarial resilience in HDT-Net must protect belief integrity at the semantic level, ensuring that the collective world model remains causally consistent even when individual agents inject false causal claims about the physical environment. VI. C ONCLUSION 
+
+In this paper, we have introduced HDT-Net, a frame-work that transforms wireless networks from passive data transport into holonic reasoning systems for physical AI, where each twin operates as an autonomous cognitive agent while composing into progressively larger collective units that adapt and grow smarter than any individual agent can alone. By grounding network partitioning in causal MBs, ensuring compositional consistency through category theory, unifying perception-action-learning through active inference, and quantifying collective intelligence through spatiotempo-ral integrated information ΦST , HDT-Net enables networks that reason about what they do not know, transmit beliefs whose cognitive value is measured by their impact on the receiver’s next physical action, and actively cultivate collective intelligence as a first-class network resource. The transition from 5G to 6G is not about faster pipes but about networks that understand uncertainty, coordinate through meaning rather than bits, and grow collectively smarter over time. HDT-Net provides the theoretical foundation for this transformation. REFERENCES [1] W. Saad, O. Hashash, C. K. Thomas, C. Chaccour, M. Debbah, N. Man-dayam, and Z. Han, “Artificial general intelligence (AGI)-native wireless systems: A journey beyond 6G,” Proceedings of the IEEE , 2025. [2] C. K. Thomas, C. Chaccour, W. Saad, M. Debbah, and C. S. Hong, “Causal reasoning: Charting a revolutionary course for next-generation AI-native wireless networks,” IEEE Vehicular Technology Magazine ,vol. 19, no. 1, Mar. 2024. [3] P. Popovski, “Time, simultaneity, and causality in wireless networks with sensing and communications,” IEEE Open Journal of the Communica-tions Society , vol. 5, pp. 1693–1709, 2024. [4] R. A. Howard, “Information value theory,” IEEE Transactions on Systems Science and Cybernetics , vol. 2, no. 1, pp. 22–26, 1966. [5] L. Wang, R. Shelim, W. Saad, and N. Ramakrishna, “Metamind: General and cognitive world models in multi-agent systems by meta-theory of mind,” arXiv preprint arXiv:2603.00808 , 2026. [6] L. Wang, R. Shelim, W. Saad, and N. Ramakrishnan, “Dmwm: Dual-mind world model with long-term imagination,” Advances in Neural Information Processing Systems , vol. 38, pp. 4911–4945, 2026. [7] L. U. Khan, W. Saad, D. Niyato, Z. Han, and C. S. Hong, “Digital-twin-enabled 6G: Vision, architectural trends, and future directions,” IEEE Communications Magazine , vol. 60, no. 1, pp. 74–80, Jan. 2022. [8] Y. LeCun, “A path towards autonomous machine intelligence,” OpenRe-view , vol. 62, no. 1, 2022, version 0.9.2, 2022-06-27. [9] M. Manalastas, M. U. B. Farooq, S. M. A. Zaidi, H. N. Qureshi, Y. Sambo, and A. Imran, “From simulators to digital twins for enabling emerging cellular networks: A tutorial and survey,” IEEE Communica-tions Surveys & Tutorials , vol. 27, no. 4, pp. 2693–2732, 2024. [10] A. Masaracchia, V. Sharma, M. Fahim, O. A. Dobre, and T. Q. Duong, “Digital twin for open RAN: Toward intelligent and resilient 6G radio access networks,” IEEE Communications Magazine , vol. 61, no. 11, pp. 112–118, 2023. [11] A. P. Plageras and K. E. Psannis, “Digital twins and multi-access edge computing for IIoT,” Virtual Reality & Intelligent Hardware , vol. 4, no. 6, pp. 521–534, 2022. [12] H. Nguyen-Kha, V. N. Ha, T. Nguyen, E. Lagunas, J. Grotz, S. Chatzino-tas, and B. Ottersten, “Digital-twin-aided dynamic spectrum sharing and resource management in integrated satellite-terrestrial networks,” arXiv preprint arXiv:2602.09191 , 2026. [13] T. Li, Q. Long, H. Chai, S. Zhang, F. Jiang, H. Liu, W. Huang, D. Jin, and Y. Li, “Generative ai empowered network digital twins: Architecture, technologies, and applications,” ACM Computing Surveys , vol. 57, no. 6, pp. 1–43, 2025. [14] M. Haider, I. Ahmed, Z. Hassan, K. Hasan, and H. Poor, “Llm-integrated digital twins for hierarchical resource allocation in 6g networks,” arXiv preprint arXiv:2506.18293 , 2025. [15] J. Hoydis, F. A. Aoudia, S. Cammerer, F. Euchner, M. Nimier-David, S. T. Brink, and A. Keller, “Learning radio environments by dif-ferentiable ray tracing,” IEEE Transactions on Machine Learning in Communications and Networking , vol. 2, pp. 1527–1539, 2024. [16] S. Alikhani, G. Charan, and A. Alkhateeb, “Large wireless model (lwm): A foundation model for wireless channels,” arXiv preprint arXiv:2411.08872 , 2024. [17] A. Koestler, The Ghost in the Machine , 1968. [18] H. A. Simon, The Sciences of the Artificial , 3rd ed. Cambridge, MA: MIT Press, 1996. [19] P. Valckenaers, H. V. Brussel, and T. Holvoet, “Fundamentals of holonic systems and their implications for self-adaptive and self-organizing systems,” in Proceedings of the Second IEEE International Conference on Self-Adaptive and Self-Organizing Systems Workshops , 2008, pp. 168–173. [20] J.-P. Pellet and A. Elisseeff, “Using markov blankets for causal structure learning,” Journal of Machine Learning Research , vol. 9, no. 7, 2008. [21] M. Barr and C. Wells, Category theory for computing science . Prentice Hall New York, 1990, vol. 1. [22] K. Friston, T. FitzGerald, F. Rigoli, P. Schwartenbeck, and G. Pezzulo, “Active inference: a process theory,” Neural computation , vol. 29, no. 1, pp. 1–49, 2017. [23] G. Tononi, M. Boly, M. Massimini, and C. Koch, “Integrated information theory: from consciousness to its physical substrate,” Nature Reviews Neuroscience , vol. 17, no. 7, pp. 450–461, 2016. [24] D. Kahneman, Thinking, fast and slow . macmillan, 2011. [25] B. Salehi, G. Reus-Muns, D. Roy, Z. Wang, T. Jian, J. Dy, S. Ioannidis, and K. Chowdhury, “Deep learning on multimodal sensor data at the wireless edge for vehicular network,” IEEE Transactions on Vehicular Technology , vol. 71, no. 7, pp. 7639–7655, 2022. [26] R. Dong, C. She, W. Hardjawana, Y. Li, and B. Vucetic, “Deep learning for hybrid 5G services in mobile edge computing systems: Learn from a digital twin,” IEEE Transactions on Wireless Communications , vol. 18, no. 10, pp. 4692–4707, 2019. [27] M. Groshev, C. Guimar˜ aes, J. Mart´ ın-P´ e´ erez, and A. de la Oliva, “Toward intelligent cyber-physical systems: Digital twin meets artificial intelligence,” IEEE Communications Magazine , vol. 59, no. 8, pp. 14– 20, 2021. [28] K. T. Tran, D. Dao, M. D. Nguyen, Q. V. Pham, B. O’Sullivan, and H. D. Nguyen, “Multi-agent collaboration mechanisms: A survey of llms,” arXiv preprint arXiv:2501.06322 , 2025. [29] E. H¨ ullermeier and W. Waegeman, “Aleatoric and epistemic uncertainty in machine learning: An introduction to concepts and methods,” Machine Learning , vol. 110, no. 3, pp. 457–506, 2021. [30] Y. Rizk, M. Awad, and E. W. Tunstel, “Cooperative heterogeneous multi-robot systems: A survey,” ACM Computing Surveys (CSUR) , vol. 52, no. 2, pp. 1–31, 2019. [31] J. Beck and M. J. D. Ramstead, “Dynamic markov blanket detection for macroscopic physics discovery,” arXiv preprint arXiv:2502.21217 , Feb 2025. [32] O. Hashash, C. K. Thomas, W. Saad, M. Debbah, K. Friston, and A. Razi, “Active inference as the test-time scaling law for physical AI agents,” 2026, in preparation. 16 
+
+[33] B. de Vries, “Active inference for physical ai agents: An engineering perspective,” arXiv preprint arXiv:2603.20927 , 2026. [34] A. Kosta, N. Pappas, and V. Angelakis, “Age of information: A new concept, metric, and tool,” Foundations and Trends in Networking ,vol. 12, no. 3, pp. 162–259, 2017. [35] C. K. Thomas, W. Saad, and Y. Xiao, “Causal Semantic Communication for Digital Twins: A Generalizable Imitation Learning Approach,” IEEE Journals on Selected Areas in Information Theory , vol. 4, pp. 698–717, Nov. 2023.

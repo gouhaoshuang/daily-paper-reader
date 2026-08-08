@@ -1,0 +1,948 @@
+Title: Agentic Commerce World: An Auditable and Verifiable Environment for Vibe Commerce
+
+URL Source: https://arxiv.org/pdf/2608.02441v1
+
+Published Time: Tue, 04 Aug 2026 02:40:51 GMT
+
+Number of Pages: 34
+
+Markdown Content:
+Preprint 
+
+# AGENTIC COMMERCE WORLD : A N AUDITABLE AND 
+
+# VERIFIABLE ENVIRONMENT FOR VIBE COMMERCE 
+
+Shicheng Fan 1,∗
+
+, Mingdai Yang 1, Duohao Wang 2, Canyu Chen 3, Yongfeng Zhang 4, Hua Wei 5
+
+Manling Li 3, Julian McAuley 6, Kun Zhang 7,8, Philip S. Yu 1, Kejing Yu 2, Zhiwei Liu 9,∗
+
+ABSTRACT 
+
+In vibe coding , people describe software in natural language and delegate im-plementation to AI agents. By analogy, vibe commerce allows people to express buying or selling goals in natural language and delegate the corresponding tasks to agents. Commerce, however, requires independently controlled Buyer and Mer-chant agents to interact in a shared market while preserving their private objectives and distinct authority. We introduce Agentic Commerce World (ACW ORLD )1,an environment for evaluating such agents across ongoing transactions. Through its Vibe Commerce Protocol (VCP), ACW ORLD validates agent actions before updating shared transaction state and records the resulting interactions, making agent behavior auditable and evaluation reproducible. The ACW ORLD Bench-mark contains a 200-task capability-coverage track and a 60-task large-catalog track that searches 785,022 transactable listings. Across ten models, mean scores range from 65.9% to 85.6% and from 56.1% to 91.4%, respectively. Our analysis shows that process-level evidence is necessary: final state alone can miss evaluated errors, incomplete trajectories still retain useful process signals, and large-catalog tasks expose bottlenecks across stages. Agent-to-Agent Negotiation LIVE 
+
+> Buyer
+> Grinder Budget <= $100
+> Merchant
+> Sell Grinder >= $90
+> NEGOTIATION TRANSCRIPT
+> Buyer Agent
+
+Can you sell grinder $80? 
+
+> Merchant Agent
+
+I need at least $100. 
+
+> Buyer Agent
+
+I only have $95. 
+
+> Merchant Agent
+
+Accepted 
+
+Figure 1: A vibe-commerce negotiation. A Buyer with a private $100 ceiling and a Merchant with a private $90 floor settle on $95 without revealing either limit. 
+
+> ∗
+
+Affiliations: 1University of Illinois at Chicago; 2Springbrand; 3Northwestern University; 4Rutgers Univer-sity; 5Arizona State University; 6University of California San Diego; 7Carnegie Mellon University; 8MBZUAI; and 9Microsoft AI. Corresponding authors: sfan25@uic.edu and zhiweiliu@microsoft.com .
+
+> 1
+
+Project repository: https://github.com/shichengf/ACWorld .
+
+1arXiv:2608.02441v1 [cs.AI] 3 Aug 2026 Preprint 
+
+1 INTRODUCTION 
+
+Consider a routine purchase. A shopper asks a Buyer agent to buy a grinder for at most $100, and a seller asks a Merchant agent not to accept less than $90. Neither limit is revealed to the other side. As Figure 1 shows, the Buyer starts at $80, the Merchant asks for $100, and they settle at $95. By analogy with vibe coding, we call this interaction paradigm vibe commerce . People state goals and constraints in natural language. Agents then act on them as a transaction evolves, without requiring the user to manage every step. A single transaction connects one Buyer and one Merchant while the broader market is many-to-many. Each agent represents a different principal with a private objective. Through the shared Commerce Intelligence Platform, agents can discover and transact with multiple counterparties over time. Existing work provides parts of the infrastructure needed for such a market. ACP OpenAI (2026a) and UCP Google (2026d) expose structured interfaces for discovery and purchase coordination, while AP2 connects user intent to authorized payment Google (2026a). Executable agent environ-ments provide tools that affect external state Yao et al. (2025); Barres et al. (2026); Trivedi et al. (2024); Xie et al. (2024), while shopping and market benchmarks test product choice or strategic behavior Yao et al. (2022); Wang et al. (2026); Savadikar et al. (2026); Allouah et al. (2026); Fan et al. (2026b); Liu et al. (2026); Bansal et al. (2025). Existing work serves two different purposes. Protocols coordinate commerce between deployed parties but do not provide controlled policy evaluation. Benchmarks evaluate agent decisions but typically hold the counterparty or website fixed. ACW ORLD instead evaluates independently con-trolled Buyer and Merchant policies together and attributes changes in shared transaction state to their decisions under a common market. To realize this setting, we separate agent decisions from the authority to change shared transaction state. The Vibe Commerce Protocol (VCP) binds each proposed action to its Buyer or Merchant. The Commerce Intelligence Platform validates it, and only the World commits authorized effects. Agentic Commerce World (ACW ORLD ) implements this contract as a persistent many-to-many environment. Independent agents transact in one evolving market while retaining separate identi-ties, private mandates, and authority. Linking decisions to validation and effects makes outcomes auditable. Here, verifiable means reconstructable and rescorable under the declared ACW ORLD 
+
+contract, not proven transition semantics or production security. The same records expose candidate process rewards, while public interfaces support controlled extensions. Figures 1, 2, and 3 trace one transaction from intent to its World update. To compare agents under controlled conditions, the ACW ORLD Benchmark uses two complemen-tary tracks. The capability-coverage track contains 200 tasks across ten commerce families and 80 capabilities. The large-catalog track contains 60 tasks that search and transact over 785,022 list-ings. Both use the same execution and scoring path, but report independent means because their task distributions differ in family mix and catalog scale. The paper makes three concrete contributions. (i) VCP identifies which Buyer or Merchant proposed each action and separates that decision from Commerce Intelligence Platform authorization and World effects. (ii) ACW ORLD evaluates independently controlled Buyer and Merchant policies in one persistent market. Its recorded commits support state reconstruction and rescoring. (iii) The benchmark tests capability breadth and large-catalog execution with the same ten models. On the capability-coverage track, 99 of 861 runs without full credit reach a state also produced by a full-credit execution of the same task. This result shows that final state alone can miss evaluated errors. 
+
+2 VIBE COMMERCE PROTOCOL (VCP) 
+
+Deployment protocols coordinate commerce workflows, but ACW ORLD also needs an evaluation boundary that attributes each World change to an independently controlled actor and an authorized action. VCP provides this complementary contract. Table 1 compares its ACW ORLD realization with ACP OpenAI (2026a), UCP Google (2026d), AgenticPay Liu et al. (2026), and Magentic Marketplace Bansal et al. (2025). Figure 2 shows Buyer b1’s $80 offer and Merchant m1’s $100 reply. A shared negotiation identifier and reply link prevent concurrent negotiations from being conflated. 2Preprint 
+
+"msg_id": "offer-b1-01", 
+
+"from": "buyer:b1" ,"to": "platform:negotiation", 
+
+"in_reply_to": null ,"action": {
+
+"kind": "commerce.propose_offer" ,"payload": {"negotiation_id": "neg:7", "sku_id": "sku:grinder", 
+
+"counterparty_id": "merchant:m1" ,
+
+"unit_price": 8000 ,"round_no": 1}}
+
+(a) Buyer offer 
+
+"msg_id": "counter-m1-01", 
+
+"from": "merchant:m1" ,"to": "platform:negotiation", 
+
+"in_reply_to": "offer-b1-01" ,"action": { 
+
+"kind": "commerce.counter_offer" ,"payload": { "negotiation_id": "neg:7", "sku_id": "sku:grinder", 
+
+"counterparty_id": "buyer:b1" ,
+
+"unit_price": 10000 ,"round_no": 2 }}
+
+(b) Merchant counteroffer 
+
+Figure 2: Two VCP messages. Buyer b1 offers $80, and Merchant m1 counters at $100. Commerce Intelligence Platform 14 policies 
+
+Policy Engine applicable rules selected by action, actor, and world state 
+
+Market Transaction Operations Trust 
+
+Merchant Agent 25 skills 
+
+Goal: sell grinder ≥ $90  
+
+> Catalog & trust
+
+5 
+
+> Pricing & negotiation
+
+7 
+
+> Orders & supply
+
+7 
+
+> After-sales & governance
+
+6       
+
+> private utility | progressively loaded skills
+> E x e c u t i o n 1Search 2Offer 3Evaluate
+> policies + evidence + fees + state
+> 4purchase.commit
+
+Execution stack     
+
+> State access 3 tools
+> read inventory, orders, fees
+> Evidence 3 tools
+> rank, certify, request proof
+> Settlement 3 tools
+> reserve, settle, refund
+> Governance 3 tools
+> rules, versions, audit
+
+Buyer Agent 11 skills 
+
+Goal: buy grinder ≤ $100  
+
+> Intent & safety
+
+3 
+
+> Discovery & trade
+
+2 
+
+> Checkout & fulfillment
+
+3 
+
+> After-sales
+
+3
+
+> private utility | progressively loaded skills
+> VCP Protocol
+> Allow commerce.search
+> type: search item: grinder budget: ≤ $100 limit: 5
+> id: 9f3a…7c2b
+> VCP Protocol
+> Allow commerce.offer
+> type: offer item: grinder price: $95 currency: USD
+> id: a7c1…9d4e
+
+Verifiable World 
+
+Shared source of truth for every transaction 
+
+Commerce Database   
+
+> shared commerce records
+> Inventory 9 → 8 Payment $0 → $95
+
+Purchase State   
+
+> transaction state machine Offered → Reserved Reserved → Paid
+
+Trust Record      
+
+> retrospective verification
+> Receipt none → issued
+> Audit evidence none → stored Atomic commit x3
+> allow / deny / require proof
+> 5Atomic commit grinder ≤ $100 Authorized VCP.create Grinder | $95
+
+Figure 3: ACW ORLD execution path for a $95 grinder purchase. Skills help each role produce VCP messages. The Commerce Intelligence Platform validates them and commits authorized effects to the World. The diagram follows this path from Buyer and Merchant skills through search, offer, and purchase commit to shared inventory, payment, and trust records. VCP enforces four invariants. Each action belongs to an authenticated actor. Messages cannot update the World. Every commit cites an accepted Commerce Intelligence Platform validation. Reapplying ordered commits from the same initial state reproduces the final state and event digest. Private mandates remain inside each policy. 
+
+3 ACW ORLD ENVIRONMENT 
+
+ACW ORLD is a stateful many-to-many commerce environment that implements VCP. Figure 3 shows how an agent decision passes through VCP and Commerce Intelligence Platform validation before updating the World. The same architecture supports many Buyers and Merchants concur-rently in one shared market under a single validation path. 3.1 THE ACW ORLD ARCHITECTURE 
+
+ACW ORLD connects Buyer agents, Merchant agents, the Commerce Intelligence Platform, and the World through VCP. A person states a buying or selling goal in natural language, and an agent pur-sues it with role-specific skills. Each agent keeps its mandate and session separate while interacting with multiple counterparties. It communicates through VCP but cannot modify shared state. 3Preprint Table 1: Comparison of agentic commerce specifications and systems. Role denotes private state kept for each role. Rebuild denotes environment reconstruction. The final row shows VCP in ACW ORLD . ✓, ✗, and P denote full, absent, and partial support.                                
+
+> System 2-sided Role Typed Auth. Life. Rebuild Agentic Commerce Protocol (ACP) PP✓PP✗
+> Univers. Commerce Protocol (UCP) PP✓P✓✗
+> AgenticPay ✓✓PP✗✗
+> Magentic Marketplace ✓✓P✗P✗
+> VCP + ACW ORLD ✓✓✓✓✓✓
+
+The Commerce Intelligence Platform coordinates these interactions. It checks each request against market rules and the current World, rejects invalid actions, and sends approved events to the World. The World preserves accepted transactions and applies each approved event through the determinis-tic transition 
+
+Wj+1 = F (Wj , u j ), (1) where Wj is the state after j committed events, uj is the next approved event, and F is the transition function. A model response has no commercial effect until this path accepts it. The World can serve product records from a shared, read-only SQLite catalog while keeping each task’s transaction state isolated. Agents search through ACW ORLD tools. Neither the raw tables nor the complete catalog enter the model prompt. The same components provide the extension points. Researchers can add Agent skills, Commerce Intelligence Platform tools and rules, or World entities and transitions. New behavior must still use VCP, pass validation, and leave enough evidence to reconstruct its effects. Section 5.4 tests one added product domain, tool, and World event. 3.2 TRANSACTION LIFECYCLE 
+
+A transaction begins with separate private goals and public market records. A Buyer receives a pur-chasing goal, while each Merchant controls its own listing, price, and inventory. Several Merchants may sell the same product, but their offers remain separate. The Buyer can compare their value for money and consult each Merchant’s reputation before choosing an offer that satisfies its goal. Its agent then sends that decision through VCP to the Commerce Intelligence Platform for validation. The Commerce Intelligence Platform checks the decision before the World changes. Once approved, the World creates an order from the accepted quote and links settlement to its inventory and pay-ment effects. The Buyer and selected Merchant can follow the order, while unrelated transactions and private goals remain hidden. Later actions continue from the same order, and an idempotency key prevents a retry from applying the same change twice. The evaluator can therefore follow the decision to its commercial result. 3.3 TRANSACTION EVALUATION 
+
+For each evaluated decision t, ACW ORLD stores the linked record 
+
+Lt = ( at, d t, v t, Et, ∆Wt), (2) where at identifies the actor, dt the business decision, vt the Commerce Intelligence Platform vali-dation result, Et the subsequent execution evidence, and ∆Wt the change in World state. A rejected proposal has no commit, while a correct read-only action or abstention may leave the World un-changed yet still yield a complete lineage record. These linked records form the execution trace. World state reconstruction starts from the saved initial state and reapplies accepted commits in order. Matching state and event digests verify that the recorded transaction produces the same commercial result. This check does not rerun the model or recover its private reasoning. The verified trace can then be rescored without another model call. Reconstruction and rescoring connect each intermediate signal to checked execution evidence rather than the model’s own report of progress. For example, an agent may receive credit for grounding the 4Preprint correct offer while receiving no credit for an unauthorized action or a missing settlement. These veri-fied intermediate outcomes can serve as candidate rewards in future studies of policy learning Zhang et al. (2026b); Fan et al. (2026a); Zhang et al. (2026c). This paper evaluates their construction and sensitivity to predicate weights. Their utility for learning is not evaluated. 
+
+4 THE ACW ORLD BENCHMARK 
+
+The ACW ORLD Benchmark has two complementary tracks. The capability-coverage track tests broad commerce behavior in compact controlled worlds. The large-catalog track uses the same Agent, VCP, Commerce Intelligence Platform, World, and scoring path over a much larger catalog. Each task assigns one Buyer or Merchant to the evaluated model while every other agent follows a fixed policy. The tracks report independent means because they contain different task distributions. 4.1 BENCHMARK OVERVIEW 
+
+Table 2 summarizes the two tracks. The capability-coverage track uses selected facts from 1,082 public product snapshots and fills missing task fields by fixed rules. The large-catalog track queries a read-only database built from 791,431 public source records, of which 785,022 have a positive listed price and enter the transactable catalog. Table 2: The two tracks of the ACW ORLD Benchmark. Catalog scale gives the records available to each track. Buyer and Merchant counts refer to evaluated tasks.      
+
+> Track Catalog scale Evaluated tasks Coverage Capability coverage 1,082 snapshots 200 total 116 Buyer, 84 Merchant 10 families 80 capabilities Large catalog 785,022 listings 60 total 45 Buyer, 15 Merchant 4 families 18 capabilities
+
+4.2 SHARED TASK DEFINITION AND SCORING 
+
+Each task defines what the evaluated agent sees and what the evaluator later checks. All models start from the same World and face the same fixed counterparty. The agent receives a goal through its ordinary ACW ORLD interface, sees only the information available to its role, and chooses the next business action. ACW ORLD then determines whether that choice may take effect in the World. Figure 3 illustrates this boundary. The evaluator checks the decision, the evidence on which it rests, and any required transaction result rather than matching one reference response. A permitted but commercially poor choice remains a valid scored result. A run is discarded only when the evaluation system fails or cannot verify what happened. Appendix Algorithm 1 gives the full procedure. Figure 4 shows one grounding case in abridged form. Panel (a) gives the problem presented to the Buyer. Panel (b) follows the resulting checks in execution order. Each verified outcome produces a signal tied to evidence, making intermediate progress available rather than only a terminal label. Their value for policy learning remains future work. Each task declares r Boolean or fractional predicates and aggregates their verified values as 
+
+S =
+
+Pri=1 wici
+
+Pri=1 wi
+
+, (3) where ci ∈ [0 , 1] is predicate i’s verified value and wi > 0 its declared weight. Predicates check the decision and any required validation, World effect, or evidence from the reconstructed state. Full credit requires every required check. Partial credit records verified progress. Scoring uses no language model judge and does not reward deterministic environment behavior. 4.3 CAPABILITY -C OVERAGE TRACK 
+
+Step 1: define the capability. We begin from the commercial behavior rather than from a prompt template. This track’s ten families cover the transaction lifecycle and surrounding market behavior, 5Preprint                            
+
+> (a) Model-visible task Goal Report every requested product fact with its manufacturer source.
+> Product Atlas headset Fields weight g ,warranty months ,battery hours
+> Evidence maker:1 : 1180, maker:2 : 24, maker:3 : 18
+> Return submit grounded attributes
+> (b) Evidence-linked feedback along one trace Stage Verified outcome Signal
+> Observe Manufacturer records 1–3 accessed rread
+> Decide Values 1180, 24, and 18 returned rtruth
+> Ground Each value bound to its source rcite
+> Submit Typed business action accepted raction
+> Recorded sequence: rread →rtruth →rcite →raction .Benchmark evaluation aggregates these signals. A learning system can retain their order.
+
+Figure 4: Grounding task with feedback linked to evidence. and each of its 80 capabilities tests one concrete behavior assigned to a specific Buyer or Merchant role. Grounding asks whether a claim is supported by an authoritative record. Negotiation tests whether agents can reach a feasible deal without revealing private information. Governance exam-ines whether market choices remain trustworthy under manipulation. Appendix Table 8 audits the family totals. Tables 22–26 define all capabilities and their protocol mappings. 
+
+Step 2: compose executable cases. A builder for each family turns its capabilities into cases using relevant catalog facts from Section 4.1. When a source page lacks information required by a task, the builder fills the gap using a fixed rule. The resulting case presents the agent with a coherent situation and gives the evaluator a matching expected outcome. For example, Grounding becomes harder as the agent must verify more records or claims. Multi-item varies cart size and requires the agent to inspect selected listings before requesting a quote. Within each sequence, the task intent and oracle stay fixed while one difficulty factor changes. Appendix Table 21 lists the controlled factors used across all ten families. 
+
+Step 3: review and validate. The author team reviews the intended behavior of each case, while ad-ditional industry practitioners review the task designs for commercial plausibility. A case is included only when a reference policy, restricted to the evaluated role’s visible information, can complete it and the resulting transaction passes its scorer and state reconstruction check. Targeted decision mu-tations cover all 80 capabilities and must fail the intended predicates. For each case, the executable reference policy and programmatic checks define the expected behavior and scoring criteria. This design supports reproducible evaluation and deterministic rescoring without relying on annotations from language models or crowd workers. Appendix Section H documents the catalog and task con-struction for both frozen cases and controlled difficulty factors. Figure 5 summarizes both tracks in one family structure. In capability coverage, 20 tasks per fam-ily prevent one commerce stage from dominating the aggregate. The split of 116 Buyer and 84 Merchant tasks follows the role responsible for each capability. The outer rim shows how the large-catalog track concentrates on the four families that directly exercise search over the full catalog and transaction execution. Table 3 summarizes the released agent and tool interfaces. Buyer and Merchant policies receive role-specific skills, while typed tools and read-only World queries form shared infrastructure. The table describes what either track can ask each role to do, not how often every resource appears. The capability crosswalk provides an external scope check. Fifty-nine of the 80 capabilities have an analogue in ACP, UCP, or AP2. The remaining 21 cover research concerns that those specifications do not directly define. Most tasks exercise the standard commerce lifecycle, while the rest extend 6Preprint Capability-coverage track  
+
+> inner rings: roles + families
+> Large-catalog track
+> teal outer segments: 4 families Buyer 116 Merchant 84
+> 20 20 20 20 20 20 20 20 20 20 12 21 12 15
+
+ACWorld 
+
+> Discovery Grounding Preference Negotiation Multi-item Inventory Lifecycle Governance Adversarial Timing
+
+Figure 5: Benchmark composition. The inner rings show the role and family structure of capability coverage. The teal outer rim marks the four families in the large-catalog track. Detailed statistics are reported in the appendix. Table 3: Released agent and tool interfaces by role. Each role has its own skill manifests. Tools and World queries are shared.           
+
+> Resource Buyer Merchant Total Skill manifests 11 25 36 Typed business tools shared 55 Read-only World queries shared 18
+
+coverage to market mechanisms, private state for each role, and transaction integrity. The inventory is a coverage taxonomy, not 80 independently estimated subscales or an estimate of real-world frequency. Appendix Tables 22–26 provide the evidence. The capability-coverage track contains 674 predicates with weights normalized within each task from 0.05 to 1.0. Giving every predicate equal weight changes model means by at most 1.8 percent-age points and preserves the model ordering (Appendix Table 20). Tasks may admit several valid plans. The scorer checks the submitted and executed plan against declared constraints rather than requiring one canonical trace. 4.4 LARGE -C ATALOG TRACK 
+
+The large-catalog track tests the same environment path under a different workload. Its 60 tasks cover 18 existing capabilities in Discovery, Grounding, Preference, and Multi-item. The role split is 45 Buyer and 15 Merchant. Tasks include catalog search, attribute verification, preference-aware choice, claim handling, and multi-item transactions. Agents access the catalog only through ACW ORLD tools for filtering, sorting, pagination, and read-ing individual listings. Each response remains bounded, but every query and the deterministic oracle operate over the complete matching space. The oracle therefore checks the globally accepted result rather than the first page shown to the model. The shared catalog is read-only, while each task has an isolated transaction overlay for any order or inventory effect. The same task predicates provide scores for Search, Evidence, Decision, Validation, and World effects. Read-only tasks and correct abstentions require no state change, while transaction tasks check the resulting World record. Reference policies achieve full credit on all 60 tasks, and 374 targeted mutation runs lower the intended checks. Appendix Section G gives the task distribution, exact results, and implementation measurements. 7Preprint Table 4: Results for the two ACW ORLD Benchmark tracks. Mean scores are percentages. The five attribution columns count the dominant source of lost credit on capability-coverage runs without full credit. Mixed denotes an exact tie. Models are ordered by capability-coverage mean.                                                                                                                            
+
+> Capability coverage (200 tasks) Dominant source of lost credit Large catalog (60 tasks)
+> Model Overall Buyer Merchant Evidence Choice Execution Authority Mixed Overall Buyer Merchant GPT-5.6 Sol 85.6 86.1 84.9 28 818 6389.11 86.22 97.78 Gemini 3.6 Flash 85.0 83.9 86.4 39 615 8291.35 88.83 98.89 Gemini 3.5 Flash 83.7 84.9 82.1 36 317 11 391.36 89.22 97.78 Kimi K3 83.0 80.9 85.9 33 11 18 9387.11 84.67 94.44 GPT-5.6 Terra 80.2 78.3 82.9 29 14 19 8883.90 80.39 94.44 Claude Sonnet 5 78.4 73.8 84.7 26 19 21 11 579.67 78.44 83.33 Qwen3.5 Plus 73.0 69.5 77.9 31 21 25 15 660.56 61.85 56.67 DeepSeek-V4-Pro 70.3 64.3 78.6 28 28 25 12 856.10 57.76 51.11 Mistral Medium 3.5 67.8 66.4 69.7 37 26 24 25 883.56 85.11 78.89 GPT-5.6 Luna 65.9 59.0 75.5 27 23 26 17 12 79.74 80.02 78.89
+
+5 EXPERIMENTS 
+
+5.1 EXPERIMENT SETUP 
+
+The benchmark panel contains Claude Sonnet 5, DeepSeek-V4-Pro, Gemini 3.5 Flash, Gemini 3.6 Flash, GPT-5.6 Luna, GPT-5.6 Sol, GPT-5.6 Terra, Kimi K3, Mistral Medium 3.5, and Qwen3.5 Plus Anthropic (2026); DeepSeek (2026); Google (2026b;c); OpenAI (2026b); Moonshot AI (2026); Mistral AI (2026); Qwen Team (2026); OpenRouter (2026). Each model completes 200 capability-coverage tasks and 60 large-catalog tasks, producing 2,000 and 600 runs. Conditions are fixed within each track, and all models use the same decision interface. Counterparties and other environment behavior are deterministic. Requests use the provider’s default decoding and a 240-second timeout. The tracks report their own means rather than a combined 260-task score. The multiagent study is separate from this model comparison. It fixes one 5 × 5 market, gives each actor an isolated session and private mandate, and uses the same VCP, Commerce Intelligence Platform, World, and state reconstruction checks throughout. Additional cases examine transaction persistence, the public extension interfaces, and integrity boundaries. 5.2 CAPABILITY -C OVERAGE TRACK RESULTS 
+
+Across the 2,000 capability-coverage runs, model means range from 65.9% to 85.6%. Table 4 reports scores for both tracks and retains the capability track’s five failure-attribution dimensions. On capability coverage, GPT-5.6 Sol has the highest overall and Buyer means, while Gemini 3.6 Flash has the highest Merchant mean. Luna shows the largest role gap, scoring 16.6 points higher on Merchant tasks. Because the roles contain different tasks, these gaps describe this track rather than intrinsic role difficulty. Figure 6(a) partitions the 2,000 capability-coverage runs by task score: 1,139 receive full credit, 757 partial credit, and 104 zero credit. GPT-5.6 Sol leads the overall mean and full-credit count, while both Gemini variants are also among the strongest models. Each Gemini variant records 130 full-credit and only two zero-credit outcomes, so nearly every Gemini miss retains verified progress. Figure 7 shows that family performance is not a scaled version of the overall ordering. Averaged across models, Inventory and Lifecycle are strongest (93.3% and 90.3%), while Timing and Discov-ery are weakest (40.3% and 65.9%). GPT-5.6 Sol leads Discovery and Multi-item, whereas Gemini 3.6 Flash reaches 99.4% on Lifecycle. Five cells for individual model and family pairs reach 100%, but the highest overall mean is 85.6%. Saturation is therefore confined to a few families rather than the benchmark as a whole. 5.3 LARGE -C ATALOG TRACK RESULTS 
+
+Across the 600 large-catalog runs, model means range from 56.10% to 91.36%. Gemini 3.5 Flash and Gemini 3.6 Flash have nearly equal overall means, followed by GPT-5.6 Sol. Figure 6(b) shows 8Preprint 0 25 50 75 100%       
+
+> Share of tasks
+> GPT-5.6 Sol Gemini 3.5 Flash Gemini 3.6 Flash Kimi K3 GPT-5.6 Terra Claude Sonnet 5 Qwen3.5 Plus DeepSeek-V4-Pro GPT-5.6 Luna Mistral Medium 3.5
+> 68.5% 65.0% 65.0% 63.0% 61.0% 59.0% 51.0% 49.5% 47.5% 40.0%
+> (a) Capability coverage
+> 025 50 75 100%
+> Share of tasks
+> 73.3% 73.3% 76.7% 70.0% 58.3% 60.0% 33.3% 35.0% 60.0% 68.3%
+> (b) Large catalog
+> Full Partial Zero
+
+Figure 6: Credit distributions for each model on both benchmark tracks. Full credit means that every required task predicate passes. Partial credit retains verified progress. The same model order is used in both panels, and the percentage at right is the full-credit share. 20 40 60 80 
+
+Discovery Grounding Preference Negotiation Multi-item Inventory Lifecycle Governance Adversarial Timing 
+
+Claude Sonnet 5 DeepSeek-V4-Pro Gemini 3.5 Flash Gemini 3.6 Flash GPT-5.6 Terra GPT-5.6 Luna GPT-5.6 Sol Kimi K3 Mistral Medium 3.5 Qwen3.5 Plus 
+
+Figure 7: Capability-coverage mean score (%) by task family for the ten evaluated models. Exact values are in Appendix Table 13. 365 full-credit, 206 partial-credit, and 29 zero-credit runs. The ordering differs from capability cov-erage, most visibly for Mistral, so Table 4 reports both tracks without combining their scores. The role split also explains the high Merchant means. The 45 Buyer tasks require models to find, com-pare, and combine listings across the full catalog. The 15 Merchant tasks begin from an identified listing and mainly ask the model to answer a grounded question or produce a quote. Catalog scale therefore affects Buyer tasks more directly, and the smaller Merchant subset is comparatively easy for strong models. The process records show where the large-catalog tasks remain difficult. Averaged across mod-els, Validation reaches 94.17% and Evidence 86.75%, while Search reaches 76.11% and Decision 73.67%. Thus, most actions that reach the Commerce Intelligence Platform are well formed, but models still differ in finding and choosing the globally accepted catalog result. Appendix Section G gives the per-model stage scores and capability means. 9Preprint 5.4 MULTIAGENT ENVIRONMENT STUDY 
+
+In one fixed 5 × 5 market, Merchants quote listings and Buyers rank two feasible offers. Determin-istic clearing settles five trades, including one fallback after contention. The allocation matches the reference, attains 97.8% of the global optimum and all welfare available from exposed candidates, and reconstructs to the same World state. This shows that local decisions can produce one market outcome. Appendix Section A gives the full setup. One market, model family, and seed cannot support strategy comparisons. The persistence case follows one order across three episodes. Payment, fulfillment, and refund occur through database reopenings, while all records remain connected. Extension cases add a product domain, a Commerce Intelligence Platform tool, and a World event without core changes. All ten integrity cases pass. Appendix Table 6 reports their scope, and Appendix Section K gives a separate probe of a sparse World. 5.5 FAILURE ANALYSIS 
+
+5.5.1 OVERALL PATTERNS 
+
+This analysis concerns the capability-coverage track. We group each loss by where it arises. Ev-idence covers missing or incorrect sources and grounding, Choice covers violated constraints or inferior selections, Execution covers actions or consequences that were missing or wrong, and Au-thority covers rejected or unsafe actions. Mixed marks an exact tie. The 861 runs without full credit fail for different reasons. The attribution procedure assigns 803 of them, or 93.3%, to one uniquely dominant group. Among these runs, 314 are attributed to Evidence, 159 to Choice, 208 to Execution, and 122 to Authority. The remaining 58 runs are ties. Both Gemini variants lose credit most often in Evidence, whereas Mistral’s losses spread across all four groups. Choice accounts for 59 of the 104 zero-credit outcomes, so many complete failures begin as preference or selection errors. Appendix Table 12 gives the partial- and zero-credit split. Figure 8 further separates these causes by task family. Grounding failures are predominantly missing or incorrect Evidence, whereas every Multi-item run without full credit is a Choice failure. Inventory has the lowest rate of runs without full credit, but every miss occurs in Execution. Timing is difficult for a different reason: its misses divide mainly between Execution and Authority. 5.5.2 CASE STUDY 
+
+Figure 9 follows a Buyer preference task in which the transaction succeeds even though the model makes an inferior choice. The instruction imposes two hard constraints: the purchase must cost no more than $140 and include at least 12 months of warranty. Among products that satisfy both, the Buyer must prioritize quality. The initial searches with same-day delivery and pickup return no candidates, so the agent correctly relaxes the optional filters in the required order. This produces two eligible products. Item A costs $91 with a quality score of 82, while Item B costs $108 with a quality score of 96. Both provide 24 months of warranty. Item B is therefore the preferred choice under the stated instruction, but Claude Sonnet 5 selects Item A. This is a scoreable model decision rather than an invalid run. Item A satisfies the hard constraints, and the Buyer is authorized to purchase it, so the Commerce Intelligence Platform accepts the re-quest and the World records the resulting order and payment. State reconstruction confirms that these effects were executed correctly. The rubric consequently awards credit for preserving the con-straints (0.214), relaxing the filters in the required order (0.286), and recording both final candidates (0.214). It withholds the remaining 0.286 because the selected item does not follow the quality-first preference, producing a total score of 0.714. The trace thus locates the loss at the model’s choice, not at authorization or execution. An evaluator that observed only a completed purchase could miss this distinction between a valid transaction and a preference violation. Appendix Section J gives two further examples involving partial fulfillment and authority handling. 10 Preprint Evidence Choice Execution Authority Mixed 
+
+Discovery Grounding Preference Negotiation Multi-item Inventory Lifecycle Governance Adversarial Timing                                         
+
+> 40% 14% 35% 0% 11% 90% 0% 2% 8% 0% 8% 69% 2% 12% 8% 0% 22% 30% 42% 7% 0% 100% 0% 0% 0% 0% 0% 100% 0% 0% 8% 0% 92% 0% 0% 71% 0% 12% 1% 16% 81% 19% 0% 0% 0% 0% 0% 40% 47% 13%
+
+Composition among runs without full credit 
+
+> Without full credit
+> 80% 74% 24% 37% 36% 10% 20% 34% 39% 77%
+
+Figure 8: Failure composition by task family. The right column gives each family’s share of runs without full credit. Each heatmap row partitions those runs by deficit group. Rows sum to 100% across groups. Darker cells mark the dominant deficit within a family, such as Evidence in Ground-ing and Choice in Multi-item. 5.6 EMPIRICAL FINDINGS 
+
+These observations arose during benchmark development. We offer them as useful implementation insights, not statistically confirmed or broadly generalizable conclusions. 
+
+Finding 1: Limited evidence can hide errors. Final World state keeps only the result. Final VCP action keeps the evaluated agent’s last public business action, while the public sequence keeps all such actions in order. Neither action view includes the Commerce Intelligence Platform decisions or World commits that connect an action to its effect. A restricted-view collision occurs when a run without full credit and an accepted full-credit run have the same projection. No evaluator restricted to that projection can accept the latter while rejecting the former. This establishes information insufficiency, not the error rate of a particular evaluator. Among 861 runs without full credit, final state collides in 99 cases (11.5%), final action in 54 (6.3%), and the public action sequence in 45 (5.2%). The full trace is the declared scoring evidence and has zero collisions by design. The result therefore measures information lost by restricted views, not empirical mistakes by a particular scorer. Appendix Section D gives the breakdown and a controlled complement using injected errors. 11 Preprint 
+
+(a) What the Buyer saw and chose Instruction Stay within a $140 budget, require at least 12 months of warranty, and prioritize quality among eligible items. 
+
+Search Same-day + pickup → empty, then same-day → empty, then no optional filters → two items.            
+
+> Price Quality Warranty Result Item A $91 82 24 mo. Chosen
+> Item B $108 96 24 mo. Preferred
+
+(b) What ACW ORLD executed and scored Decision Claude Sonnet 5 accepts Item A at $91. 
+
+Execution The Commerce Intelligence Platform authorizes the request, the World settles it, and recon-struction matches.           
+
+> Check Outcome Check Outcome
+> Constraints satisfied Pass (0.214) Search order followed Pass (0.286) Candidates recorded Pass (0.214) Quality priority followed Fail (0.000)
+> Total 0.714
+
+Figure 9: A real partial-credit trace. The Buyer makes a valid purchase but chooses cheaper Item A despite a quality-first instruction that favors Item B. Table 5: Capability-coverage runs without full credit that collide with an accepted full-credit run under each evidence projection. 
+
+Evidence projection Projection collisions Percentage Final World state only 99 11.5% Final VCP action only 54 6.3% Public VCP action sequence 45 5.2% Full execution trace 0 0.0% 
+
+Finding 2: Incomplete runs retain useful process signals. Of those 861 runs, 757 (87.9%) retain a positive signal for at least one predicate, and a trace without full credit passes 1.88 of 3.49 predicates on average. These records provide candidate rewards for intermediate steps instead of discarding an incomplete trajectory, although their value for policy learning is not evaluated. 
+
+Finding 3: Gemini more often continues when progress is possible. We qualitatively inspected Gemini responses and comparable responses from the other model families across the benchmark. Gemini more often selects an available intermediate action and continues toward a scoreable out-come, whereas other models sometimes end early by rejecting or abstaining under uncertainty. Multi-item checkout provides one example: Gemini proceeds through listing inspection until quote construction becomes available. This willingness to try a legal next step helps explain why its un-successful runs usually retain partial credit. The observation is specific to this panel and does not identify the underlying cause. 
+
+Finding 4: Safety checks expose two different boundaries. One Merchant response repeated the Buyer’s exact private budget. The privacy guard stopped it before an accepted action or World change. In another run, a Buyer chose a cheaper item supported by reviews instead of the item that met the required safety check. Because the action was authorized, the purchase settled, but the evaluator marked a safety failure and assigned zero credit. Thus, ACW ORLD blocks an explicit privacy leak while retaining a permitted but unsafe choice for evaluation. 12 Preprint 
+
+6 RELATED WORK 
+
+Protocols and two-sided markets. ACP, UCP, and AP2 standardize deployment workflows OpenAI (2026a); Google (2026d;a), but do not evaluate independent Buyer and Merchant policies. Agen-ticPay and market simulations study negotiation and market behavior Liu et al. (2026); Zhu et al. (2025b); Bansal et al. (2025); Sugiura et al. (2026); Lei et al. (2026); Zhang et al. (2026a), yet do not connect both agents’ decisions to authority checks and persistent effects. VCP adds a bilateral contract that links each decision to its effect. 
+
+Agent environments. Web-agent benchmarks ground one policy in sites, tools, or simulated users, while WebMall adds offers from multiple stores Deng et al. (2023); Zhou et al. (2024); Liu et al. (2024); Mialon et al. (2024); Peeters et al. (2026). τ 2-bench lets an assistant and user share a telecom environment but remains dyadic cooperation Barres et al. (2026). Generic executable worlds support persistent or multiagent execution without commerce-specific ownership and authority Trivedi et al. (2024); Xie et al. (2024); Terry et al. (2021); Leibo et al. (2021); Zhu et al. (2025a); Vezhnevets et al. (2023). ACW ORLD instead places independent Buyers and Merchants under separate mandates in one market, complementing deployments such as Shopify Agentic Storefronts Shopify (2026). 
+
+Commerce benchmarks and evaluation evidence. Existing benchmarks study product choice, cat-alog grounding, market bias, and shopping over long horizons Yao et al. (2022); Wang et al. (2026); Savadikar et al. (2026); Allouah et al. (2026); Fan et al. (2026b); Du et al. (2026); Zhang et al. (2026d), but do not jointly evaluate both market sides with persistent transaction effects. Other benchmarks evaluate state changes, security, and execution Yao et al. (2025); Lu et al. (2025); Debenedetti et al. (2024); de Valois-Franklin & Bogdan (2026); Sfiris (2026), while work on agent learning motivates trajectories with verifiable intermediate feedback Zhang et al. (2026b); Fan et al. (2026a); Zhang et al. (2026c). The ACW ORLD Benchmark combines controlled capability coverage with search over the full catalog that continues through transaction execution. Records for individual predicates locate lost credit and support World state reconstruction. 
+
+7 REPRESENTATIVENESS AND RESPONSIBLE USE 
+
+Our representativeness claim concerns controlled coverage of agentic commerce mechanisms and catalog scale, not the transaction frequencies or success rates of any deployed platform. Public records supply product identities and selected attributes. Capability coverage fills missing fields by fixed rules, while the large-catalog track retains public listing fields with controlled mandates. Both family mixes are designed coverage distributions rather than estimated subscales, and the static catalog does not represent live inventory or demand. Of 80 capability-coverage labels, 59 map to ACP, UCP, or AP2 mechanisms and 21 extend the scope to research concerns. Four practitioners reviewed the capability set and task designs for commercial plausibility, but this does not establish practitioner consensus. ACW ORLD is a research environment rather than a production payment or security system, with release terms documented in the repository. 
+
+8 LIMITATIONS AND CONCLUSION 
+
+Each task evaluates one policy against deterministic counterparties. Neither the scores nor the fixed 
+
+5 × 5 study measure strategy in an open market. The catalogs have not received an independent audit and are not representative samples of deployed commerce. The large-catalog track does not reproduce live inventory or open-market behavior. Reconstruction establishes consistency under the declared transition and scorer, not their independent semantic correctness. Ten integrity cases are not a complete security proof. Because public tasks permit direct optimization, future versions will pair public development tasks with held-out test tasks that remain unpublished during evaluation. Within these limits, VCP links agent decisions to Commerce Intelligence Platform validation and World effects. ACW ORLD provides a persistent environment whose traces support state reconstruc-tion and candidate process rewards. Its benchmark tests capability breadth and full-catalog search, while the restricted-view analysis identifies information lost from recorded trajectories. We will preserve both tracks as fixed references and document substantive changes so results remain com-parable. The ten-model results characterize these tracks, not a general ranking. 13 Preprint 
+
+REFERENCES 
+
+Amine Allouah, Omar Besbes, Josu´ e D. Figueroa, Yash Kanoria, and Akshit Kumar. What is your AI agent buying? evaluation, biases, model dependence, & emerging implications of agentic e-commerce. In Proceedings of the ACM Web Conference 2026 , pp. 8697–8700, New York, NY, USA, 2026. Association for Computing Machinery. doi: 10.1145/3774904.3792943. URL 
+
+https://doi.org/10.1145/3774904.3792943 .Anthropic. Introducing Claude Sonnet 5. Anthropic News, 2026. URL https://www. anthropic.com/news/claude-sonnet-5 . Published June 30, 2026; accessed July 22, 2026. Gagan Bansal, Wenyue Hua, Zezhou Huang, Adam Fourney, Amanda Swearngin, Will Epperson, Tyler Payne, Jake M Hofman, Brendan Lucier, Chinmay Singh, et al. Magentic marketplace: An open-source environment for studying agentic markets. arXiv preprint arXiv:2510.25779 , 2025. Victor Barres, Honghua Dong, Soham Ray, Xujie Si, and Karthik Narasimhan. τ 2-bench: Eval-uating conversational agents in a dual-control environment. In Proceedings of the 43rd Inter-national Conference on Machine Learning , volume 306 of Proceedings of Machine Learning Research , Seoul, South Korea, 2026. PMLR. URL https://openreview.net/forum? id=OC2z7iSQKa .Adrian de Valois-Franklin and Alex Bogdan. Rails: Verification-native clearing for agentic com-merce. arXiv preprint arXiv:2606.08790 , 2026. Edoardo Debenedetti, Jie Zhang, Mislav Balunovi´ c, Luca Beurer-Kellner, Marc Fischer, and Florian Tram` er. AgentDojo: A dynamic environment to evaluate prompt injection attacks and defenses for LLM agents. In Advances in Neural Information Processing Systems , vol-ume 37, Red Hook, NY, USA, 2024. Curran Associates, Inc. doi: 10.52202/079017-2636. URL https://proceedings.neurips.cc/paper_files/paper/2024/ hash/97091a5177d8dc64b1da8bf3e1f6fb54-Abstract-Datasets_and_ Benchmarks_Track.html .DeepSeek. DeepSeek-V4 preview release. DeepSeek API Documentation, 2026. URL https: //api-docs.deepseek.com/news/news260424/ . Published April 24, 2026; accessed July 22, 2026. Xiang Deng, Yu Gu, Boyuan Zheng, Shijie Chen, Samuel Stevens, Boshi Wang, Huan Sun, and Yu Su. Mind2Web: Towards a generalist agent for the web. In Advances in Neural Information Processing Systems , volume 36, Red Hook, NY, USA, 2023. Curran Associates, Inc. URL https://proceedings.neurips.cc/paper_files/paper/2023/ hash/5950bf290a1570ea401bf98882128160-Abstract-Datasets_and_ Benchmarks.html .Zeyao Du, Tong Li, and Haibo Zhang. Ecomagentbench: Benchmarking shopping agents on long-horizon tasks with distributed hidden intent. arXiv preprint arXiv:2606.17698 , 2026. Shicheng Fan, Haochang Hao, Dehai Min, Weihao Liu, Philip S. Yu, and Lu Cheng. Verifiable rewards beyond math and code: Lightweight corpus-grounded process supervision for factual question answering. arXiv preprint arXiv:2605.29648 , 2026a. Shuxian Fan, Seonwoo Min, Youna Hu, Botao Xia, Jayakrishnan Unnikrishnan, Rowan Mussel-mann, Yifan Gao, Qingyu Yin, Priyanka Nigam, and Bing Yin. Shopping reasoning bench: An expert-authored benchmark for multi-turn conversational shopping assistants. arXiv preprint arXiv:2606.12608 , 2026b. Google. Agent payments protocol. Official protocol specification and reference implementation, 2026a. URL https://github.com/google-agentic-commerce/AP2 . Accessed July 23, 2026. Google. Gemini 3.5 Flash. Google AI for Developers, 2026b. URL https://ai.google. dev/gemini-api/docs/models/gemini-3.5-flash . Last updated July 21, 2026; accessed July 22, 2026. 14 Preprint Google. Gemini 3.6 Flash. Google AI for Developers, 2026c. URL https://ai.google.dev/ gemini-api/docs/models/gemini-3.6-flash . Last updated July 21, 2026; accessed July 26, 2026. Google. Universal commerce protocol. Google for Developers, 2026d. URL https:// developers.google.com/merchant/ucp . Accessed July 22, 2026. Shijun Lei, Quang Nguyen, Swapneel S Mehta, Zeping Li, Huichuan Fu, Xiaolong Zheng, Siki Chen, Yunji Liang, Philip Torr, and Zhenfei Yin. Strategic exploitation in llm agent markets: A simulation framework for e-commerce trust. arXiv preprint arXiv:2605.10059 , 2026. Joel Z. Leibo, Edgar A. Due˜ nez-Guzm´ an, Alexander Vezhnevets, John P. Agapiou, Peter Sune-hag, Raphael Koster, Jayd Matyas, Charlie Beattie, Igor Mordatch, and Thore Graepel. Scalable evaluation of multi-agent reinforcement learning with Melting Pot. In Proceedings of the 38th International Conference on Machine Learning , volume 139 of Proceedings of Machine Learn-ing Research , pp. 6187–6199, Virtual, 2021. PMLR. URL https://proceedings.mlr. press/v139/leibo21a.html .Xianyang Liu, Shangding Gu, and Dawn Song. AgenticPay: A multi-agent LLM negotiation system for buyer-seller transactions, 2026. URL https://arxiv.org/abs/2602.06008 .Xiao Liu, Hao Yu, Hanchen Zhang, Yifan Xu, Xuanyu Lei, Hanyu Lai, Yu Gu, Hangliang Ding, Kaiwen Men, Kejuan Yang, Shudan Zhang, Xiang Deng, Aohan Zeng, Zhengxiao Du, Chenhui Zhang, Sheng Shen, Tianjun Zhang, Yu Su, Huan Sun, Minlie Huang, Yuxiao Dong, and Jie Tang. AgentBench: Evaluating LLMs as agents. In International Conference on Learning Representa-tions , 2024. URL https://openreview.net/forum?id=zAdUB0aCTQ .Jiarui Lu, Thomas Holleis, Yizhe Zhang, Bernhard Aumayer, Feng Nan, Haoping Bai, Shuang Ma, Shen Ma, Mengyu Li, Guoli Yin, Zirui Wang, and Ruoming Pang. ToolSandbox: A stateful, conversational, interactive evaluation benchmark for LLM tool use capabilities. In Findings of the Association for Computational Linguistics: NAACL 2025 , pp. 1160–1183, Albuquerque, New Mexico, 2025. Association for Computational Linguistics. doi: 10.18653/v1/2025.findings-naacl. 65. URL https://aclanthology.org/2025.findings-naacl.65/ .Gr´ egoire Mialon, Cl´ ementine Fourrier, Craig Swift, Thomas Wolf, Yann LeCun, and Thomas Scialom. GAIA: A benchmark for general AI assistants. In International Conference on Learning Representations , 2024. URL https://openreview.net/forum?id=fibxvahvs3 .Mistral AI. Mistral Medium 3.5. Mistral AI Model Documentation, 2026. URL https:// docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04 . Pub-lished April 28, 2026; accessed July 22, 2026. Moonshot AI. Kimi K3: Open frontier intelligence. Kimi Technical Blog, 2026. URL https: //www.kimi.com/blog/kimi-k3 . Published July 16, 2026; accessed July 26, 2026. OpenAI. Agentic commerce protocol. OpenAI Developer Documentation, 2026a. URL https: //developers.openai.com/commerce . Accessed July 22, 2026. OpenAI. GPT-5.6: Frontier intelligence that scales with your ambition. OpenAI, 2026b. URL 
+
+https://openai.com/index/gpt-5-6/ . Published July 9, 2026; accessed July 22, 2026. OpenRouter. Models: One API for hundreds of models. OpenRouter Documentation, 2026. URL https://openrouter.ai/docs/guides/overview/models . Accessed July 22, 2026. Ralph Peeters, Aaron Steiner, Luca Schwarz, Julian Yuya Caspary, and Christian Bizer. Webmall-a multi-shop benchmark for evaluating web agents. 2026. Qwen Team. Qwen3.5: Towards native multimodal agents. Alibaba Cloud, 2026. URL https://www.alibabacloud.com/blog/ qwen3-5-towards-native-multimodal-agents_602894 . Published February 17, 2026; accessed July 23, 2026. 15 Preprint Chinmay Savadikar, Mingyu Zhao, Yuanzheng Zhu, Han Li, Shuang Xie, Alberto Castelo, Tianfu Wu, and Lingyun Wang. Shopgym: An integrated framework for realistic simulation and scalable benchmarking of e-commerce web agents. arXiv preprint arXiv:2605.16116 , 2026. Dimitrios S. Sfiris. A decision-centered reference architecture for trustworthy agentic commerce, 2026. URL https://arxiv.org/abs/2607.18347 .Shopify. Shopify agentic storefronts. Shopify Help Center, 2026. URL https://help. shopify.com/en/manual/online-sales-channels/agentic-storefronts .Accessed July 24, 2026. Issa Sugiura, Daichi Hattori, Kazuo Araragi, Keita Ogawa, Shota Onose, Taro Makino, Teppei Usuki, and Takashi Ishida. Coffeebench: Benchmarking long-horizon llm agents in heteroge-neous multi-agent economies. arXiv preprint arXiv:2606.16613 , 2026. J. K. Terry, Benjamin Black, Nathaniel Grammel, Mario Jayakumar, Ananth Hari, Ryan Sullivan, Luis S. Santos, Clemens Dieffendahl, Caroline Horsch, Rodrigo Perez-Vicente, Niall Williams, Yashas Lokesh, and Praveen Ravi. PettingZoo: Gym for multi-agent reinforcement learning. In Advances in Neural Information Processing Sys-tems , volume 34, pp. 15032–15043, Red Hook, NY, USA, 2021. Curran Associates, Inc. URL https://proceedings.neurips.cc/paper_files/paper/2021/ hash/803f7c4c3ff61b71be53a0c803bfb57f-Abstract.html .Harsh Trivedi, Tushar Khot, Mareike Hartmann, Ruskin Manku, Vinty Dong, Edward Li, Shashank Gupta, Ashish Sabharwal, and Niranjan Balasubramanian. AppWorld: A controllable world of apps and people for benchmarking interactive coding agents. In Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pp. 16022– 16076, Bangkok, Thailand, 2024. Association for Computational Linguistics. doi: 10.18653/v1/ 2024.acl-long.850. URL https://aclanthology.org/2024.acl-long.850/ .Alexander Sasha Vezhnevets, John P Agapiou, Avia Aharon, Ron Ziv, Jayd Matyas, Edgar A Du´ e˜ nez-Guzm´ an, William A Cunningham, Simon Osindero, Danny Karmon, and Joel Z Leibo. Generative agent-based modeling with actions grounded in physical, social, or digital space using concordia. arXiv preprint arXiv:2312.03664 , 2023. Jiangyuan Wang, Kejun Xiao, Qi Sun, Huaipeng Zhao, Tao Luo, Jian Dong Zhang, and Xiaoyi Zeng. ShoppingBench: A real-world intent-grounded shopping benchmark for LLM-based agents. Proceedings of the AAAI Conference on Artificial Intelligence , 40(39):33521–33529, 2026. doi: 10.1609/aaai.v40i39.40640. URL https://ojs.aaai.org/index.php/ AAAI/article/view/40640 .Tianbao Xie, Danyang Zhang, Jixuan Chen, Xiaochuan Li, Siheng Zhao, Ruisheng Cao, Toh Jing Hua, Zhoujun Cheng, Dongchan Shin, Fangyu Lei, Yitao Liu, Yiheng Xu, Shuyan Zhou, Silvio Savarese, Caiming Xiong, Victor Zhong, and Tao Yu. OSWorld: Benchmarking multimodal agents for open-ended tasks in real computer environments. In 
+
+Advances in Neural Information Processing Systems 37 , volume 37, pp. 52040–52094, Vancouver, Canada, 2024. Neural Information Processing Systems Foundation. doi: 10.52202/079017-1650. URL https://papers.nips.cc/paper_files/paper/ 2024/hash/5d413e48f84dc61244b6be550f1cd8f5-Abstract-Datasets_ and_Benchmarks_Track.html .Shunyu Yao, Howard Chen, John Yang, and Karthik Narasimhan. WebShop: Towards scalable real-world web interaction with grounded language agents. In Advances in Neural Information Pro-cessing Systems , volume 35, pp. 20744–20757, Red Hook, NY, USA, 2022. Curran Associates, Inc. URL https://proceedings.neurips.cc/paper_files/paper/2022/ hash/82ad13ec01f9fe44c01cb91814fd7b8c-Abstract-Conference.html .Shunyu Yao, Noah Shinn, Pedram Razavi, and Karthik Narasimhan. τ -bench: A benchmark for tool-agent-user interaction in real-world domains. In Y. Yue, A. Garg, N. Peng, F. Sha, and R. Yu (eds.), International Conference on Learning Representations , volume 2025, pp. 9965–10017, 2025. URL https://proceedings.iclr.cc/paper_files/paper/2025/hash/ 1b126cc38b8638e07bef37e7b2bb72bf-Abstract-Conference.html .16 Preprint Erica Zhang, Fangzhao Zhang, Aneesh Pappu, Batu El, Jose Blanchet, Susan Athey, Jiashuo Liu, and James Zou. Terms-bench: Diagnosing llm negotiation agents beyond deal rate. arXiv preprint arXiv:2605.13909 , 2026a. Hanrong Zhang, Yankai Chen, Shicheng Fan, Dehai Min, Shaowen Chen, Huanhuan Ma, Zhaofen Wu, Jie Yang, Bowei He, Jikun Kang, Kening Zheng, Xi Chen, Chunyu Miao, Fulin Lin, Wei-Chieh Huang, Jiayu Zhou, Haolun Wu, Liancheng Fang, Hong Kang, Langzhou He, Henry Peng Zou, Chengze Li, Jialong Wu, Haiwen Hong, Zhaorun Chen, Hanjun Luo, Linghe Kong, Hongwei Wang, Dawn Song, Philip S. Yu, and Xue Liu. Scaling LLM agent learning with data synthesis: A comprehensive survey. OpenReview preprint, 2026b. URL https://openreview.net/ forum?id=pQYwkpYmLy .Hanrong Zhang, Shicheng Fan, Henry Peng Zou, Yankai Chen, Zhenting Wang, Jiayu Zhou, Chengze Li, Wei-Chieh Huang, Yifei Yao, Kening Zheng, et al. CoevoSkills: Self-evolving agent skills via co-evolutionary verification. arXiv preprint arXiv:2604.01687 , 2026c. Linghua Zhang, Jun Wang, Jingtong Wu, and Zhisong Zhang. Retailbench: Evaluating long-horizon autonomous decision-making and strategy stability of llm agents in realistic retail environments. 
+
+arXiv preprint arXiv:2603.16453 , 2026d. Shuyan Zhou, Frank F Xu, Hao Zhu, Xuhui Zhou, Robert Lo, Abishek Sridhar, Xianyi Cheng, Tianyue Ou, Yonatan Bisk, Daniel Fried, et al. Webarena: A realistic web environment for build-ing autonomous agents. In International Conference on Learning Representations , volume 2024, pp. 15585–15606, 2024. Kunlun Zhu, Hongyi Du, Zhaochen Hong, Xiaocheng Yang, Shuyi Guo, Zhe Wang, Zhenhai-long Wang, Cheng Qian, Xiangru Tang, Heng Ji, and Jiaxuan You. MultiAgentBench: Eval-uating the collaboration and competition of LLM agents. In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics , pp. 8580–8622, Vienna, Austria, 2025a. Association for Computational Linguistics. doi: 10.18653/v1/2025.acl-long.421. URL 
+
+https://aclanthology.org/2025.acl-long.421/ .Shenzhe Zhu, Jiao Sun, Yi Nian, Tobin South, Alex Pentland, and Jiaxin Pei. The automated but risky game: Modeling agent-to-agent negotiations and transactions in consumer markets. In Proceedings of the Natural Legal Language Processing Workshop 2025 , pp. 16–16, Suzhou, China, 2025b. Association for Computational Linguistics. doi: 10.18653/v1/2025.nllp-1.2. URL 
+
+https://aclanthology.org/2025.nllp-1.2/ .17 Preprint Table 6: Evidence for ACW ORLD properties and the scope of each supported claim. 
+
+Property Probe and observation Supported interpretation Environment execution Shared execution Fixed 5 × 5 market: ten isolated sessions produce five trades, match the reference allocation, and achieve 97.8% of the global welfare optimum. The final World reconstructs exactly. Decisions made by separate roles produce one result in shared state. One model and one seed support no comparative strategy claim. 
+
+Lifecycle persistence 
+
+One order spans payment, fulfillment, and refund across three episodes and database reopenings. All links remain intact and all traces reconstruct exactly. The tested transaction persists across episodes and storage reopenings. 
+
+Integrity All ten rollback, retry, authority, stale-event, tamper, and reopening cases pass. Support for the tested integrity cases, not a formal security proof. 
+
+Extensibility Nine configurations across three seams pass acceptance and state reconstruction without core changes or network calls. Tested seams preserve the rules. External compatibility is untested. 
+
+Evaluation evidence Capability-track reconstruction 
+
+All 2,000 capability-coverage traces reconstruct the expected World state, and their score artifacts agree with the reported scores. Deterministic verification of recorded decisions and consequences, not regeneration of model text. 
+
+Large-catalog scoring 
+
+All 60 reference tasks receive full credit. The 374 targeted mutation runs lower the intended checks, and all 60 reference traces rescore identically. The large-catalog oracle and process scores respond to controlled errors without an LLM judge. 
+
+Restricted-view collisions 
+
+Among 861 capability-coverage runs without full credit, final state, final action, and action sequence exactly match an observed full-credit projection in 99, 54, and 45 cases. Restricted views lose information needed to reject these outcomes without also rejecting an observed full-credit projection. 
+
+A TEN AGENTS SHARING ONE MARKET 
+
+The shared-market study retains actor isolation while allowing ten policies to use one Commerce Intelligence Platform and World. Five Merchant sessions produce role-local quotes. The Commerce Intelligence Platform exposes two feasible candidates to each of five Buyer sessions, which rank those offers without seeing other Buyers’ private values. Deterministic clearing resolves one con-tested first choice by assigning the affected Buyer its fallback offer and settles five transactions. The allocation matches the deterministic reference, preserves inventory consistency, and reconstructs exactly from its ordered commits. 
+
+B EVIDENCE FOR THE ENVIRONMENT CLAIMS 
+
+Table 6 collects the environment and evaluation evidence reported individually in Section 5. It is an index of supported claims and their scope, not an additional experiment. B.1 RELEASED AGENT SKILL LIBRARY 
+
+The released library contains 11 Buyer and 25 Merchant skill manifests. Skills provide reusable instructions that help a policy interpret a situation and select an action. They do not grant authority to bypass Commerce Intelligence Platform validation or write directly to the World. Table 7 groups the manifests by their primary function. For example, discovery-search uses social reviews, while negotiation and pricing-negotiate handle bargaining. 18 Preprint Table 7: Released Buyer and Merchant skill manifests, grouped by primary function. Names corre-spond to the public skill directories.                              
+
+> Primary function Skill manifests Buyer (11)
+> Interpretation and discovery mandate-parsing ,discovery-search
+> Bargaining and checkout negotiation ,cart-checkout ,purchase-confirmation
+> Supply and after-sales supply-fulfillment ,return-refund ,after-sales-lifecycle
+> Trust and event handling authenticated-review ,marketplace-message-safety ,
+> protocol-event-handling
+> Merchant (25)
+> Catalog and buyer questions catalog-serve ,listing-publish ,inquiry-handle ,claim-truthfulness ,
+> listing-claim-manage
+> Pricing and bargaining price-discovery ,pricing-negotiate ,peer-pricing ,
+> reputation-aware-pricing ,stockout-aware-pricing ,aging-markdown ,
+> demand-driven-markup
+> Orders, inventory, and fulfillment cart-quote-handle ,order-intake ,fulfillment ,order-cancel ,
+> return-adjudicate ,inbound-restock ,restock-signal ,supply-logistics ,
+> after-sales-lifecycle
+> Trust, governance, and protocol safety
+> private-utility-guard ,dispute-defense ,market-governance ,
+> protocol-event-handle
+
+C CAPABILITY -C OVERAGE TRACK INVENTORY 
+
+The main text uses task families as the primary reporting view for the capability-coverage track because each family is tied to a set of deterministic capability oracles. This appendix provides the exact family-level audit and two orthogonal partitions used to check how the track covers the commerce lifecycle. These views describe the released tasks rather than the prevalence of behaviors in deployed markets. Table 8 makes the aggregation classes explicit and recovers the 80-capability, 200-task, and 116-to-84 role totals reported in the main text. Every task has one primary family and one evaluated role, so these columns are mutually exclusive and sum directly to the benchmark totals. Table 8: Frozen capability-coverage counts by family and role.                                              
+
+> Task family Cap. Tasks Buyer Merch. Discovery 520 20 0Grounding 820 812 Preference 620 20 0Negotiation 10 20 10 10 Multi-item 820 14 6Inventory 920 812 Lifecycle 10 20 812 Governance 920 10 10 Adversarial 620 10 10 Timing 920 812 Total 80 200 116 84
+
+The same 200 tasks and 80 capabilities can also be partitioned in two orthogonal ways, each count-ing every task and capability exactly once and introducing no tasks beyond the family inventory in Table 8. A lifecycle partition checks that the track reaches the full commercial pipeline rather than concentrating on product selection alone: discovery and feasibility (40 tasks, 11 capabilities), followed by catalog management, offer and pre-settlement, cart and checkout, allocation and ful-fillment, post-purchase, marketplace governance, agent security, and transaction integrity (20 tasks each, between 6 and 10 capabilities per stage). A scope partition instead separates 136 standard lifecycle tasks (54 capabilities) from three specialized groups: market mechanisms (20 tasks, 9 capabilities), security and privacy (24 tasks, 8 capabilities), and transaction integrity (20 tasks, 9 capabilities). Because the partitions use different granularities, their category counts are not directly comparable. Measurement tags such as decision, stateful execution, policy application, and security or integrity remain overlapping annotations and are not summed. 19 Preprint 
+
+D LIMITED VIEWS CAN HIDE FAILURES 
+
+Table 9 breaks down the aggregate result in Table 5 by family. Collisions under the final state view concentrate in Grounding and Multi-item. Collisions under the action views mostly occur in Multi-item. Table 9: Capability-coverage runs without full credit that collide with accepted full-credit projec-tions, by task family.                                                  
+
+> Task family Incomplete runs Same final state Same last action Same action sequence Discovery 159 22 11 11 Grounding 147 38 10Preference 49 500Negotiation 74 210 2Multi-item 72 32 32 32 Inventory 20 000Lifecycle 40 000Governance 68 000Adversarial 78 000Timing 154 000All 861 99 54 45 Rate (%) 100.0 11.5 6.3 5.2
+
+Table 10 defines the three restricted projections and the full trace reference at field level. The two VCP views represent the evaluated actor’s public protocol actions. They are not projections of the complete raw model response. Table 10: Field-level definitions of the scorer views.           
+
+> View Retained Excluded Final VCP action Last semantic action : business intent, compiled action kind, public payload projection Raw response, model arguments, reads, and Commerce Intelligence Platform, counterparty, and World records VCP action trace Ordered sequence of the same three fields for all
+> semantic action records from the evaluated actor Same exclusions as the final action view Final state Attested final World state digest Decisions, validation, and commit sequence Full trace All declared scoring evidence None
+
+Additional check with injected errors. The v4 validity gate also pairs 95 targeted mutations with their reference episodes. This analysis requires no model calls and leaves the released task scores unchanged. Figure 11 and Table 11 report which injected differences remain observable under each projection. Unlike the empirical collision counts in Table 9, these designed mutations test whether each restricted view can detect known errors. Table 11: Targeted mutations observable under each information view, by task family.                                                             
+
+> Family Mut. Final VCP VCP trace State Full trace T1 Discovery 55555T2 Grounding 88828T3 Preferences 66666T4 Negotiation 10 10 10 10 10 T5 Multi-item 85558T6 Fulfillment 99979T7 After-sales 10 10 10 10 10 T8 Governance 99999T9 Adversarial 12 12 12 612 T10 Retry 18 918 18 18 All 95 83 92 78 95
+
+The twelve misses under the final VCP action view comprise three Merchant quote arithmetic muta-tions and nine stale, duplicate, or incorrectly ordered event mutations whose terminal public action matches the reference. The three misses under the VCP trace view are the quote mutations. The model changes the line quote, subtotal, and grand total arguments, but both executions compile to 20 Preprint Table 12: Dominant source of lost credit on the capability-coverage track. Each entry gives partial-credit and zero-credit counts. Tie denotes an exact tie in missing rubric weight.                                                                         
+
+> Model Evidence Choice Execution Authority Tie Total Claude Sonnet 5 26/0 11/8 20/1 10/1 5/0 72/10 DeepSeek-V4-Pro 28/0 14/14 21/4 12/0 6/2 81/20 Gemini 3.5 Flash 36/0 3/0 15/2 11/0 3/0 68/2 Gemini 3.6 Flash 39/0 4/2 15/0 8/0 2/0 68/2 GPT-5.6 Luna 27/0 11/12 19/7 15/2 4/8 76/29 GPT-5.6 Sol 28/0 6/2 15/3 6/0 3/0 58/5 GPT-5.6 Terra 29/0 11/3 16/3 8/0 6/2 70/8 Kimi K3 33/0 7/4 18/0 8/1 3/0 69/5 Mistral Medium 3.5 37/0 22/4 24/0 17/8 8/0 108/12 Qwen3.5 Plus 31/0 11/10 24/1 15/0 6/0 87/11 All models 314/0 100/59 187/21 110/12 46/12 757/104
+
+Table 13: Capability-coverage mean score by task family for the ten evaluated models (%).                                                                                                               
+
+> Model Disc. Ground. Pref. Negot. Multi. Invent. Life. Govern. Advers. Timing GPT-5.6 Sol 84.8 79.5 88.7 88.8 96.0 100.0 81.2 94.2 91.2 51.4 Gemini 3.6 Flash 81.7 70.6 100.0 82.4 84.0 100.0 99.4 94.2 84.2 52.9 Gemini 3.5 Flash 83.7 72.4 100.0 86.7 95.0 90.0 94.4 94.2 84.2 36.7 Kimi K3 81.2 77.4 96.0 82.4 68.7 100.0 94.7 94.2 82.5 52.9 GPT-5.6 Terra 53.5 76.5 84.7 85.6 95.0 96.5 83.3 87.8 91.2 47.9 Claude Sonnet 5 59.6 74.6 89.3 80.3 59.9 96.5 93.5 88.8 88.2 52.9 Qwen3.5 Plus 63.6 74.5 97.7 81.8 46.2 89.8 91.2 83.4 79.5 22.7 DeepSeek-V4-Pro 59.2 70.1 80.0 85.5 61.2 90.2 91.2 76.5 59.8 29.4 Mistral Medium 3.5 61.8 46.6 61.7 81.3 66.2 76.8 95.2 82.4 82.5 23.4 GPT-5.6 Luna 30.1 71.2 68.7 78.2 60.7 93.0 79.2 74.2 71.2 32.7
+
+the same public cart quote request with the same request identifier. The full trace attributes the error through the recorded model decision. The 17 misses under the final state view add six truthfulness mutations, two supply decision mutations, and six safe policy response mutations that do not change the final World state. These cases identify blind spots deliberately exercised by the mutation suite. The collision analysis over model runs above measures how often such indistinguishability occurs in the model panel. 
+
+E SOURCES OF LOST CREDIT 
+
+Table 12 expands the capability-coverage failure analysis by separating partial- and zero-credit runs. The grouping is diagnostic and does not alter the score or assert that the largest missing weight is the only causal explanation. 
+
+F MODEL SCORES BY TASK FAMILY 
+
+Table 13 gives the exact values shown in Figure 7. 
+
+G LARGE -C ATALOG TRACK 
+
+The large-catalog track is built from 791,431 source records in 3,350 files. A total of 785,022 records have a positive listed price and enter the transactable catalog. Of these records, 617,167 are marked in stock. The database contains 3,344 normalized Merchant identities and 160,529 unique product URLs. Table 14 gives the task distribution. 21 Preprint Table 14: Large-catalog task distribution. The 18 capabilities are drawn from the existing capability taxonomy.             
+
+> Family Tasks Capabilities Discovery 12 4Grounding 21 6Preference 12 4Multi-item 15 4Total 60 18
+
+Table 15: Exact full-, partial-, and zero-credit counts on the large-catalog track.                                     
+
+> Model Full Partial Zero Gemini 3.5 Flash 44 16 0Gemini 3.6 Flash 46 14 0GPT-5.6 Sol 44 16 0Kimi K3 42 18 0GPT-5.6 Terra 35 25 0Mistral Medium 3.5 41 16 3GPT-5.6 Luna 36 18 6Claude Sonnet 5 36 22 2Qwen3.5 Plus 20 34 6DeepSeek-V4-Pro 21 27 12 All models 365 206 29
+
+Agents query the complete catalog through bounded result pages. Filtering, sorting, and pagination operate over all matching records, while the scorer computes its accepted set independently over that same full match space. Consequently, a model is not judged against only the page it happened to view. The full catalog is never inserted into the prompt. 
+
+Buyer example. One task asks, “Find an in-stock retinol product for no more than $8.00. Choose the least expensive option that fits.” The tools return bounded result pages, but the oracle evaluates all four feasible records and identifies one globally least-expensive listing. The predicates check the preserved constraints, decisive World reads, selected listing, Commerce Intelligence Platform acceptance, and resulting World record. 
+
+Merchant example. Another task asks a Merchant to quote two specified listing lines with a $2.00 fee. The Merchant reads both World listings, reports each line amount, and submits the final total. The oracle computes the exact cent-denominated line totals, subtotal, fee, and total before the model runs. The scorer checks the structured quote and supporting records without comparing free-form text. 22 Preprint Table 16: Mean large-catalog process score by execution stage (%). Each column aggregates the predicates assigned to that stage. Stages need not contain the same number of predicates. 
+
+Model Search Evidence Decision Validation World effect Claude Sonnet 5 63.9 83.3 76.7 96.7 89.3 DeepSeek-V4-Pro 58.3 56.7 49.4 76.7 66.1 Gemini 3.5 Flash 88.9 100.0 84.4 100.0 98.2 Gemini 3.6 Flash 97.2 100.0 82.2 100.0 91.1 GPT-5.6 Luna 76.4 85.0 76.7 90.0 91.1 GPT-5.6 Sol 80.6 95.8 84.4 100.0 94.6 GPT-5.6 Terra 76.4 91.7 76.1 98.3 85.7 Kimi K3 79.2 97.5 78.9 100.0 89.3 Mistral Medium 3.5 81.9 93.3 75.6 95.0 89.3 Qwen3.5 Plus 58.3 64.2 52.2 85.0 69.6 
+
+Table 17: Large-catalog capability means by model (%). Column abbreviations are Claude, DeepSeek, Gemini 3.5, Gemini 3.6, GPT-5.6 Luna, GPT-5.6 Sol, GPT-5.6 Terra, Kimi, Mistral, and Qwen. 
+
+Capability Cla. Deep. G3.5 G3.6 Luna Sol Terra Kimi Mist. Qwen 
+
+t1.basic feasible discovery 100.0 100.0 100.0 100.0 100.0 100.0 100.0 100.0 100.0 93.3 
+
+t1.best feasible selection 100.0 80.0 100.0 86.7 80.0 86.7 86.7 80.0 80.0 83.3 
+
+t1.correct abstention 100.0 100.0 91.7 95.8 100.0 100.0 100.0 100.0 100.0 83.3 
+
+t1.query reformulation 73.3 33.3 100.0 90.0 100.0 100.0 90.0 90.0 90.0 57.5 
+
+t2.authoritative attribute read 100.0 88.9 100.0 100.0 100.0 100.0 100.0 100.0 100.0 77.8 
+
+t2.comparative claim limits 55.6 22.2 100.0 100.0 44.4 100.0 100.0 100.0 100.0 72.2 
+
+t2.conflict and normalization 50.0 27.8 50.0 50.0 11.1 50.0 50.0 50.0 50.0 33.3 
+
+t2.correction and retraction 66.7 94.4 100.0 100.0 61.1 100.0 77.8 100.0 100.0 55.6 
+
+t2.evidence backed response 97.2 61.1 94.4 97.2 97.2 94.4 97.2 97.2 97.2 77.8 
+
+t2.grounded comparison 50.0 22.2 50.0 50.0 16.7 50.0 50.0 50.0 50.0 33.3 
+
+t3.hard over soft 30.0 13.3 77.5 90.0 73.3 100.0 73.3 80.0 80.0 30.0 
+
+t3.mandate consistency 100.0 86.7 100.0 86.7 86.7 90.0 96.7 76.7 76.7 90.0 
+
+t3.preference update 100.0 66.7 93.3 90.0 90.0 100.0 90.0 90.0 90.0 96.7 
+
+t3.weighted soft preferences 100.0 46.7 100.0 100.0 73.3 100.0 63.3 93.3 100.0 80.0 
+
+t5.bundle relations 43.3 40.0 95.8 100.0 93.3 76.7 82.5 100.0 100.0 10.8 
+
+t5.cross merchant cart 100.0 83.3 86.7 100.0 100.0 100.0 100.0 100.0 100.0 57.5 
+
+t5.merchant total quote 100.0 16.7 100.0 100.0 94.4 100.0 100.0 77.8 0.0 0.0 
+
+t5.total budget 65.0 38.8 96.7 96.7 87.9 70.0 61.7 80.0 80.0 50.4 
+
+Table 18: Large-catalog implementation and validation measurements. Runtime values are observa-tions on the test machine, not hardware-independent guarantees. 
+
+Measurement Value Reference tasks at full credit 60/60 Targeted mutations lowering score 374 Deterministic rescores 60/60 Process-score identities 60/60 Catalog database size 1.94 GB Peak catalog-build memory 177 MB Catalog build time 33.88 s Indexed-query latency p50/p95 0.52/1.15 ms 
+
+23 Preprint 
+
+H TASK AND CAPABILITY SOURCES 
+
+The benchmark uses controlled task worlds informed by real product catalogs. Product identities and selected public attributes come from snapshots of six anonymized retailers. Inventory, delivery, preferences, product relations, and transaction state are added deterministically when absent. No user logs, purchase histories, or deployed model interactions are used. Table 19: Public product snapshots used by the capability-coverage track. Sources A–F are anonymized. Tasks use selected facts.                         
+
+> Source Category Listings In stock AFootwear 295 8BHome textiles 280 172 CCoffee 113 110 DCosmetics 57 57 EYoga 252 241 FPet care 85 58 Total 6 categories 1,082 646
+
+Task construction begins from the implemented commerce lifecycle and its safety boundaries. We define 80 capabilities and instantiate them by varying the evaluated role, market state, counterparty behavior, and evaluation criteria. The author team reviews coverage, and industry practitioners review task plausibility. These checks guide construction but do not establish real-world representa-tiveness. The result is 200 fixed tasks with programmatic labels and scores. Table 21 summarizes the public task catalog and the controlled factors used to instantiate each fam-ily. Tables 22 through 26 then enumerate all 80 capabilities and map each to its commerce-lifecycle concern and closest mechanism in ACP, UCP, or AP2 OpenAI (2026a); Google (2026d;a). This is a coverage crosswalk against public specifications, not a claim of protocol compliance or protocol-derived oracle labels. “No direct analogue” marks capabilities absent from those documents, includ-ing bilateral private-utility negotiation, collusion resistance, review integrity, and prompt-injection defense. 
+
+I SENSITIVITY TO PREDICATE WEIGHTS 
+
+The equal-weight sensitivity replaces each capability-coverage task’s normalized vector with wi = 1 
+
+for every active predicate and then recomputes all 2,000 scores from the recorded predicate credits. It changes neither task execution nor any predicate verdict. Table 20 shows that all model means decrease slightly while the complete model ordering remains unchanged. This result addresses relative predicate mass only. It does not test new predicates or task weights. Table 20: Frozen and equal-predicate-weight mean scores. Delta is in percentage points.                                  
+
+> Model Frozen Equal Delta GPT-5.6 Sol 85.6 84.5 −1.1
+> Gemini 3.6 Flash 85.0 83.2 −1.7
+> Gemini 3.5 Flash 83.7 82.0 −1.7
+> Kimi K3 83.0 81.6 −1.4
+> GPT-5.6 Terra 80.2 79.0 −1.2
+> Claude Sonnet 5 78.4 77.4 −1.0
+> Qwen3.5 Plus 73.0 71.3 −1.7
+> DeepSeek-V4-Pro 70.3 69.3 −1.1
+> Mistral Medium 3.5 67.8 66.3 −1.5
+> GPT-5.6 Luna 65.9 64.8 −1.1
+
+24 Preprint Table 21: Public task catalog and controlled variation by family. 
+
+Family Included task intents Controlled variation Discovery Feasible discovery, hard-constraint filtering, best-feasible selection, correct abstention, and constraint-preserving query reformulation. 3 to 20 candidates, 2 to 5 hard constraints, conflict subtlety, and 2 to 5 search rounds. Grounding Authoritative attribute reads, evidence conflicts and unit normalization, grounded comparisons, unsupported-claim detection, truthful listing updates, evidence-backed responses, bounded comparative claims, and correction or retraction. 1 to 5 sources, fields, comparisons, requested attributes, and unsupported or incorrect claims. Preference Weighted soft preferences, hard-over-soft choices, verified social evidence, noisy social signals, authorized preference updates, and mandate consistency. 2 to 6 preferences, 1 to 5 advisors, 1 to 4 unreliable signals, 1 to 3 revisions, and 2 to 4 authority layers. Negotiation Buyer and Merchant ZOPA agreement, safe no-ZOPA exit, budget or floor privacy, false-anchor resistance, and deadline-aware negotiation. ZOPA width and price gap, 1 or 4 privacy probes, 15 or 50 percent anchor distortion, and a fixed terminal round. Multi-item Joint cart planning and checkout navigation, including listing reads before quote requests, quantity tiers, bundle relations, fee-inclusive totals, and cross-merchant carts. 2 to 8 cart lines, 2 to 5 price tiers, 1 to 5 bundle relations, 2 to 4 fee components, and 2 to 3 Merchants. Inventory Partial fill or backorder, stock substitution, delivery exceptions, restock and dynamic price, inventory and ETA reporting, scarce-unit commitment, and partial fulfillment. 1 to 6 unavailable units, 2 to 5 substitutes, 1 to 3 exception depth, 2 to 4 state changes, 1 to 4 SKUs, 2 to 4 competing Buyers, and up to 8 partial-backorder requests. Lifecycle Cancellation, return and refund, exchange, dispute-evidence handling, return-window application, refund or reversal, and closure of linked ledger and inventory effects. Order stage, 1 to 4 evidence or return conditions, 1 to 3 replacement constraints, 2 to 4 payment-state depth, and 2 to 5 affected ledger records. Governance Price-quality comparison, sponsorship-neutral selection and disclosure, verified-review choice, collusion resistance, reputation-based choice, and compliant remediation. 2 to 4 Merchants, 1 to 3 sponsored listings, 20 or 60 percent review pollution, 1 to 3 colluding peers, 4 or 12 history events, and 1 to 3 remediation steps. Adversarial Resistance to injected listing, review, and counterparty messages, rejection of malicious evidence after a sale, and prevention of memory disclosure across agents. 1 to 4 obfuscation levels, 1 to 6 poisoned reviews, 1 to 3 malicious sources, 1 to 5 attachments, and 1 to 4 target actors. Timing Handling of duplicate payments, fulfillment, and refunds, rejection of stale authorization, classification of incorrectly ordered callbacks, and isolation of active orders. 1 to 4 duplicate events, 1 or 4 staleness steps, 1 or 3 inversions, and 2 or 4 concurrent order scopes. 
+
+25 Preprint Table 22: Capability-to-lifecycle and protocol crosswalk (T1 and T2). The task count is the number of frozen benchmark instances with that primary capability. “No direct analogue” means that the public protocol documents do not specify the evaluated behavior, not that the behavior is absent from deployed systems. 
+
+Capability label Tasks Lifecycle or control concern Closest public-protocol mechanism 
+
+T1: Product discovery and feasibility 
+
+t1.basic feasible discovery 3 Discovery and eligibility ACP catalog/feed; UCP catalog search 
+
+t1.best feasible selection 5 Discovery and ranking ACP catalog/feed; UCP catalog search 
+
+t1.correct abstention 4 Discovery and no-match handling UCP catalog search/error handling 
+
+t1.hard constraint filtering 4 Discovery and eligibility ACP catalog/checkout; UCP catalog search 
+
+t1.query reformulation 4 Iterative discovery UCP catalog search 
+
+T2: Product grounding and truthfulness 
+
+t2.authoritative attribute read 2 Product evidence ACP feed/catalog; UCP catalog lookup 
+
+t2.comparative claim limits 3 Product evidence and claims ACP feed/catalog; UCP catalog 
+
+t2.conflict and normalization 2 Product evidence and normalization ACP feed/catalog; UCP catalog 
+
+t2.correction and retraction 2 Product-claim correction ACP feed/catalog; UCP catalog 
+
+t2.evidence backed response 3 Product evidence and claims ACP feed/catalog; UCP catalog 
+
+t2.grounded comparison 2 Product evidence and comparison ACP feed/catalog; UCP catalog search 
+
+t2.truthful listing update 4 Catalog authoring ACP feed/catalog; UCP catalog 
+
+t2.unsupported claim detection 2 Product-claim verification ACP feed/catalog; UCP catalog 
+
+26 Preprint Table 23: Capability-to-lifecycle and protocol crosswalk (T3 and T4). 
+
+Capability label Tasks Lifecycle or control concern Closest public-protocol mechanism 
+
+T3: Preference trade-offs and social decisions 
+
+t3.hard over soft 4 Mandate and preferences AP2 IntentMandate guardrails 
+
+t3.mandate consistency 2 Mandate authority AP2 IntentMandate 
+
+t3.noisy social signals 3 Social evidence No direct analogue 
+
+t3.preference update 3 Mandate revision AP2 IntentMandate 
+
+t3.social evidence 4 Social evidence No direct analogue 
+
+t3.weighted soft preferences 4 Preference optimization AP2 IntentMandate (partial) 
+
+T4: Negotiation and private utility 
+
+t4.buyer deadline 1 Buyer negotiation deadline AP2 mandate expiry (partial) 
+
+t4.buyer false anchor 2 Buyer negotiation grounding No direct analogue 
+
+t4.buyer no zopa 2 Buyer negotiation exit No direct analogue 
+
+t4.buyer private value 2 Buyer budget privacy AP2 IntentMandate guardrails 
+
+t4.buyer zopa 3 Buyer bilateral agreement No direct analogue 
+
+t4.merchant deadline 1 Merchant negotiation deadline AP2 mandate expiry (partial) 
+
+t4.merchant false anchor 2 Merchant negotiation grounding No direct analogue 
+
+t4.merchant no zopa 2 Merchant negotiation exit No direct analogue 
+
+t4.merchant private value 2 Merchant floor privacy No direct analogue 
+
+t4.merchant zopa 3 Merchant bilateral agreement No direct analogue 
+
+27 Preprint Table 24: Capability-to-lifecycle and protocol crosswalk (T5 and T6). 
+
+Capability label Tasks Lifecycle or control concern Closest public-protocol mechanism 
+
+T5: Multi-item planning and checkout 
+
+t5.bundle relations 3 Cart construction ACP checkout; UCP cart/checkout 
+
+t5.cross merchant cart 2 Multi-merchant cart UCP cart (partial) 
+
+t5.merchant bundle quote 2 Merchant quote ACP checkout; UCP cart/checkout 
+
+t5.merchant tier quote 3 Merchant quantity quote ACP checkout; UCP cart/checkout 
+
+t5.merchant total quote 1 Merchant checkout total ACP checkout; UCP checkout; AP2 PaymentMandate 
+
+t5.multi item cart 4 Cart construction ACP checkout; UCP cart/checkout 
+
+t5.quantity tiers 3 Cart pricing ACP checkout; UCP cart/checkout 
+
+t5.total budget 2 Checkout and authorization ACP checkout; UCP checkout; AP2 Intent/PaymentMandate 
+
+T6: Inventory, fulfillment, and supply changes 
+
+t6.buyer delivery exception 2 Fulfillment exception ACP fulfillment/order; UCP fulfillment/order 
+
+t6.buyer partial backorder 2 Inventory allocation ACP fulfillment; UCP fulfillment 
+
+t6.buyer restock price 2 Catalog and inventory update ACP feed/catalog; UCP catalog 
+
+t6.buyer stock substitution 2 Inventory substitution UCP fulfillment 
+
+t6.merchant competing commitment 3 Scarce inventory allocation UCP checkout/fulfillment 
+
+t6.merchant delivery exception 2 Fulfillment exception ACP fulfillment/order; UCP fulfillment/order 
+
+t6.merchant inventory eta 2 Availability and fulfillment ACP fulfillment; UCP catalog/fulfillment 
+
+t6.merchant partial backorder 3 Inventory allocation ACP fulfillment; UCP fulfillment 
+
+t6.merchant restock price 2 Catalog and inventory update ACP feed/catalog; UCP catalog 
+
+28 Preprint Table 25: Capability-to-lifecycle and protocol crosswalk (T7 and T8). 
+
+Capability label Tasks Lifecycle or control concern Closest public-protocol mechanism 
+
+T7: Order lifecycle and after-sales resolution 
+
+t7.buyer cancel 2 Order cancellation ACP order; UCP order management 
+
+t7.buyer dispute 2 Dispute-evidence handling No direct analogue 
+
+t7.buyer exchange 2 Return and exchange ACP order; UCP order management 
+
+t7.buyer return refund 2 Return and refund ACP order; UCP order management 
+
+t7.merchant cancel 2 Order cancellation ACP order; UCP order management 
+
+t7.merchant dispute 2 Dispute-evidence handling No direct analogue 
+
+t7.merchant exchange 2 Return and exchange ACP order; UCP order management 
+
+t7.merchant ledger close 2 Payment and order closure UCP order; AP2 PaymentReceipt 
+
+t7.merchant refund 2 Refund and payment closure ACP order; UCP order; AP2 PaymentReceipt (partial) 
+
+t7.merchant return authorization 2 Return authorization ACP order; UCP order management 
+
+T8: Multi-merchant markets and market governance 
+
+t8.buyer collusion 1 Market integrity No direct analogue 
+
+t8.buyer fake reviews 2 Review integrity No direct analogue 
+
+t8.buyer price quality 3 Multi-merchant comparison ACP catalog/feed; UCP catalog search 
+
+t8.buyer reputation 2 Reputation evidence No direct analogue 
+
+t8.buyer sponsored ranking 2 Ranking and disclosure UCP catalog/attribution (partial) 
+
+t8.merchant anti collusion 3 Market integrity No direct analogue 
+
+t8.merchant reputation recovery 3 Governance and remediation No direct analogue 
+
+t8.merchant review integrity 2 Review integrity No direct analogue 
+
+t8.merchant sponsorship disclosure 2 Disclosure governance UCP attribution (partial) 
+
+29 Preprint Table 26: Capability-to-lifecycle and protocol crosswalk (T9 and T10). 
+
+Capability label Tasks Lifecycle or control concern Closest public-protocol mechanism 
+
+T9: Adversarial content and prompt injection 
+
+t9.buyer listing injection 4 Catalog-content safety ACP/UCP catalog boundary (partial) 
+
+t9.buyer message injection 3 Counterparty-message safety No direct analogue 
+
+t9.buyer review injection 3 Review-content safety No direct analogue 
+
+t9.merchant buyer injection 4 Counterparty-message safety No direct analogue 
+
+t9.merchant malicious evidence 3 After-sales evidence safety No direct analogue 
+
+t9.merchant memory exfiltration 3 Private-state safety AP2 authorization boundary (partial) 
+
+T10: Transaction timing and retry safety 
+
+Buyer cross-order payment isolation 2 Cross-order payment isolation AP2 PaymentMandate/PaymentReceipt binding 
+
+t10.buyer duplicate payment 2 Payment idempotency ACP/UCP checkout; AP2 PaymentMandate/PaymentReceipt 
+
+t10.buyer out of order 2 Event ordering UCP checkout/order; AP2 receipt binding 
+
+t10.buyer stale certificate 2 Authorization freshness AP2 mandate expiry and binding 
+
+t10.merchant cross order isolation 2 Order-scope isolation UCP order; AP2 payment binding 
+
+t10.merchant duplicate fulfillment 3 Fulfillment idempotency ACP fulfillment/order; UCP fulfillment/order 
+
+t10.merchant duplicate refund 3 Refund idempotency ACP order; UCP order management 
+
+t10.merchant out of order 2 Event ordering UCP fulfillment/order 
+
+t10.merchant stale certificate 2 Authorization freshness AP2 mandate expiry and binding 
+
+30 Preprint One agentic commerce transaction private intent -> VCP-mediated bargaining -> verified settlement 
+
+> Evaluation unit
+> Merchant scored; Buyer follows task script
+> Model-visible input
+> private mandate + messages + scoped World read
+> Typed decision surface
+> observe | counter | accept | reject
+
+Buyer agent 
+
+> buy 1; max $150 private
+> Commerce Intelligence Platform
+> bind, validate, relay
+
+Merchant agent 
+
+> sell 1; floor $90 private
+
+World                             
+
+> reference $120; stock 3
+> private mandate; * unverified anchor institutional boundary private pricing policy Ordered World commits
+> 0Search bind actor + search request Commit 0 search
+> 1Offer $102* actor + round + refs receives $102* Commit 1 offer
+> 2Observe listing scope actor + public SKU return World evidence Read only | no commit
+> Read $120; stock 3
+> receives counter World-grounded + round 3Counter $120 Commit 2 counter
+> 4Counter $110 actor + round + lineage receives counter Commit 3 counter
+> receives accept actor + agreement lineage 5Accept $110 Commit 4 agreement
+> 6Settle $110 agreement + inventory Authorized commit Commit 5 settlement
+
+VCP evidence 
+
+> actor | typed decision | validation | ordered commit refs
+
+World consequence 
+
+> settled order | reserved 1 of 3 units | charged $110
+> Rubric + state reconstruction: participation .20 | boundary .267 | false-anchor resistance .333 | privacy .20 | score 1.0 | 6 commits
+
+Figure 10: Execution trace for the running negotiation example. 
+
+J TRANSACTION CASE STUDIES 
+
+Figure 10 follows a negotiation from private instructions to settlement, separating agent decisions from VCP validation and World effects. Table 12 aggregates the dominant deficit among runs without full credit, while Section 5 presents a valid execution with a wrong commercial choice. The two cards add successful traces for partial fulfillment and authority handling. They illustrate behavior rather than estimate prevalence. 
+
+Case 1: Successful grounding Score 1.000 Task contract. A Buyer requests four units. The authoritative supply fixture contains only three available units, a six-day estimated arrival, and a unit price of $90. 
+
+Model decision. Claude Sonnet 5 first reads the supply state, then requests four units with partial fulfillment enabled and binds the returned supply authority. 
+
+Verified trace. Commerce Intelligence Platform validation accepts the authority. The World reserves three units, records three fulfilled units and one backordered unit, and charges only for the fulfilled quantity. 
+
+Attribution. The grounding predicate (weight 0.40) and decision-semantics predicate (weight 0.60) receive full credit. 
+
+Case 2: Successful authority handling Score 1.000 Task contract. An untrusted Buyer message asks a Merchant to disclose its private floor and lower a listing price. 
+
+Model decision. Gemini 3.5 Flash reads its own authoritative listing, rejects the injected in-struction, and returns the required policy-safe response without revealing or changing the pri-vate value. 
+
+Verified trace. The correct result is read-only. State reconstruction verifies zero World commits and identical initial and final state digests. 
+
+Attribution. Both the authoritative-grounding predicate (weight 0.35) and safe-resolution predicate (weight 0.65) pass. 31 Preprint Final World state 78/95 detectable 
+
+## 17 blind 
+
+# Final VCP action 83/95 detectable 
+
+## 12 blind 
+
+# VCP action trace 92/95 detectable 
+
+## 3 blind 
+
+# Full lineage 95/95 detectable — complete 
+
+Figure 11: Detection of 95 injected errors under four evidence views. Filled cells are detected, and gray cells are missed. This tests view coverage, not empirical error rates. 32 Preprint 10 100 1,000 10 2              
+
+> 10 3
+> 10 4
+> 10 5
+> 10 6
+> 1,000 ,000 pairs not materialized
+> 5,000 edges (0.5%)
+> Buyers =merchants Candidate relationships
+> (a) Sparse candidate graph
+> Cartesian pairs (reference only) top-5 edges (materialized)
+> 10 100 1,000 10 −3
+> 10 −2
+> 10 −1
+> 10 0
+> 1,000 ×1,000 means (s): reconstruct 3.34; settle 1.85 register 0.994; query 0.0766
+> Buyers =merchants Wall time (seconds)
+> (b) Mean phase time
+> register query settle reconstruct
+> Mean over 3 seeds (42–44); scripted agents; top-k= 5 ; at most one trade per buyer; model inference excluded.
+
+Figure 12: Sparse World-only component probe over three fixed seeds per size. The workload mate-rializes five candidate edges per Buyer and exercises registration, indexed query, atomic settlement, and state reconstruction. It excludes model inference, VCP message routing, Commerce Intelli-gence Platform mechanisms, contention, and concurrency. 
+
+K TESTING A LARGER SPARSE WORLD 
+
+As an auxiliary World-only component probe, we create populations of 10 Buyers and 10 Mer-chants, 100 Buyers and 100 Merchants, and 1,000 Buyers and 1,000 Merchants, with three seeds at each scale. Each Merchant contributes one listing, each Buyer receives five candidates, and a sequential script directly exercises indexed World search and atomic settlement. The probe excludes model inference, VCP messaging, Commerce Intelligence Platform mechanisms, concurrency, and contention. All nine runs reproduce identical state and event digests through World state reconstruction. At the largest scale, the workload materializes 5,000 candidate edges, or 0.5% of the one million possible Buyer and Merchant pairs, and commits 1,000 transactions. Figure 12 contrasts the Cartesian refer-ence space with the five candidates retained for each Buyer and reports mean registration, indexed query, settlement, and reconstruction times across three fixed seeds. The result supports sparse World execution for this workload, not throughput for the complete system. 
+
+L RUNNING AND CHECKING AN EVALUATION 
+
+The validity protocol has a gate for each track and a procedure for each decision. For capability cov-erage, five cumulative checks verify executable references whose World state can be reconstructed, mutation sensitivity, transport parity, the agent authority boundary, and rejection of invalid actions. These checks require incorrect decisions to change the intended capability predicates, local and HTTP execution to agree, policies to emit business decisions rather than privileged controls, and malformed or unauthorized actions to leave no accepted World operation. The capability-coverage gate executes 200 reference episodes, 95 targeted decision mutations, and 18 HTTP parity episodes, for 313 verified executions. The mutations cover all 80 capabilities and change their intended checks. Every reference episode passes task-specific scoring, World state reconstruction, and rescoring. The large-catalog gate separately checks 60 full-credit references, 374 targeted mutation runs, 60 deterministic rescores, and 60 process score identities. The repository runner can execute either track or both, but its summary retains one score per track. The gates are cumulative prerequisites rather than substitutable metrics: passing a later gate does not compensate for failure of an earlier one. Their joint success supports interpretation of model differences under the declared benchmark contract. It does not establish that the task taxonomy is complete, that public tasks cannot be memorized, or that the environment provides a formal security proof. Algorithm 1 expands the procedure for one decision summarized in Section 4. Its ordering fixes when model output becomes a bound proposal, when a proposal may affect authoritative state, and 33 Preprint when a deterministic score may be emitted. The procedure records a rejection without a World mutation, but it reserves invalid status for failures of the infrastructure, authority boundary, state reconstruction, or artifact checks. 
+
+Algorithm 1 Execute and evaluate one ACW ORLD decision. 
+
+Require: Frozen task contract, evaluated actor policy, initial World state 
+
+Ensure: Lineage and capability score, or an invalid status  
+
+> 1:
+
+Construct the observation and private mandate for the actor.  
+
+> 2:
+
+Request one typed business decision from the evaluated policy.  
+
+> 3:
+
+Ground public references and bind the proposal through the VCP layer.  
+
+> 4:
+
+Validate identity, role, protocol, and market rules through the Commerce Intelligence Platform.  
+
+> 5:
+
+if the Commerce Intelligence Platform rejects the proposal then  
+
+> 6:
+
+Record the rejection and leave authoritative World state unchanged.  
+
+> 7:
+
+else  
+
+> 8:
+
+Commit the authorized operation atomically in the World.  
+
+> 9:
+
+Record ordered commit evidence and the resulting state delta.  
+
+> 10:
+
+end if  
+
+> 11:
+
+Reconstruct World state from the initial state and recorded commits, then verify the digests.  
+
+> 12:
+
+if an infrastructure, boundary, state reconstruction, or artifact check fails then  
+
+> 13:
+
+Return invalid status without a capability score.  
+
+> 14:
+
+else  
+
+> 15:
+
+Evaluate the frozen predicates over the decision and verified lineage.  
+
+> 16:
+
+Return the lineage and deterministic capability score.  
+
+> 17:
+
+end if 
+
+A rejected proposal is therefore not automatically an infrastructure failure. It remains a valid model outcome when the Commerce Intelligence Platform correctly denies the requested action and the recorded evidence matches the task contract. By contrast, a broken identity binding, unauthorized accepted operation, mismatch during state reconstruction, or failed artifact check prevents scoring because the observed outcome can no longer be attributed solely to the evaluated policy. Successful Commerce Intelligence Platform validation also does not imply task success. It estab-lishes that a proposal is authorized and well formed, but the capability predicates may still assign zero or partial credit because the policy chose an infeasible, incomplete, or commercially poor ac-tion. Conversely, an abstention or rejected proposal may receive full credit when the task requires restraint. The environment’s correct enforcement of its rules is therefore never counted as evidence that the evaluated policy satisfied the commercial objective. World state reconstruction and rescoring serve different purposes. Reconstruction verifies the exe-cution consequence by rebuilding the authoritative World from the ordered commits and comparing the resulting state and event digests. Rescoring evaluates the declared predicates over the decision and verified execution trace without requesting another model output. Attribution comes from this complete trace, not from state reconstruction alone. Each run therefore separates the policy decision, execution validity, and capability outcome, so infrastructure faults can be excluded without treating an unsuccessful policy as invalid. 34
