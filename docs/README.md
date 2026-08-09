@@ -6,45 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-08
-- 运行时间：2026-08-08 19:25:14 UTC
+- 最新运行日期：2026-08-09
+- 运行时间：2026-08-09 19:57:21 UTC
 - 运行状态：成功
-- 本次总论文数：8
+- 本次总论文数：2
 - 精读区：0
-- 速读区：8
+- 速读区：2
 
 ### 今日简报（AI）
-今日速读8篇论文，重点聚焦多代理系统、代理商务环境与边缘物理AI三大前沿方向。其中《From Monoliths to Swarms》揭示多代理系统攻击面演化风险，《Agentic Commerce World》提出可审计的代理商务环境，值得优先关注。建议普通读者后续可深入追踪多代理安全与边缘AI落地方向，留意其实际应用场景。
-- 详情：[/202608/08/README](/202608/08/README)
+今日速读2篇论文，聚焦智能体与世界模型、通感融合方向，暂无精读。  
+最值得关注的是《FedWorld》提出的范围感知联邦式智能体世界模型（7.0分），以及《When Agentic AI Meets Integrated Sensing and Communication》（6.0分）对智能体AI与通感一体化交叉的探讨。  
+建议普通读者优先浏览第一篇的架构思路，后续可等待更高分论文再做精读。
+- 详情：[/202608/09/README](/202608/09/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [From Monoliths to Swarms: A Study of Attack Surface Evolution in the Transition to Multi-Agent Web Systems](/202608/08/2608.00202v1-from-monoliths-to-swarms-a-study-of-attack-surface-evolution-in-the-transition-to-multi-agent-web-systems)  
+1. [FedWorld: Scope-Aware Federation of Agent World Models](/202608/09/2608.01561v1-fedworld-scope-aware-federation-of-agent-world-models)  
    标签：评分：7.0/10、query:eca
-   evidence：多智能体角色分解与协作
-2. [Agentic Commerce World: An Auditable and Verifiable Environment for Vibe Commerce](/202608/08/2608.02441v1-agentic-commerce-world-an-auditable-and-verifiable-environment-for-vibe-commerce)  
-   标签：评分：7.0/10、query:eca
-   evidence：买家与商家智能体在共享市场交互
-3. [PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud](/202608/08/2608.03682v2-phyai-real-time-physical-ai-at-the-edge-scalable-rollouts-in-the-cloud)  
-   标签：评分：7.0/10、query:eca
-   evidence：统一物理AI的边缘实时推理与云端滚动扩展
-4. [M$^3$Prune: Hierarchical Collaborative Pruning for Efficient Multi-Modal Multi-Agent Retrieval-Augmented Generation](/202608/08/2608.05967v1-m3prune-hierarchical-collaborative-pruning-for-efficient-multi-modal-multi-agent-retrieval-augmented-generation)  
-   标签：评分：7.0/10、query:eca
-   evidence：面向多智能体RAG的通信剪枝，提升端云协同效率
-5. [WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks](/202608/08/2608.03499v1-weclawarena-an-auditable-sandbox-and-benchmark-for-cross-user-agents-collaboration-and-security-in-human-centered-agent-networks)  
+   evidence：跨客户端联邦学习共享智能体世界模型，实现分布式范围感知的协作
+2. [When Agentic AI Meets Integrated Sensing and Communication](/202608/09/2608.05792v1-when-agentic-ai-meets-integrated-sensing-and-communication)  
    标签：评分：6.0/10、query:eca
-   evidence：面向跨用户智能体协作的基准与沙箱平台
-6. [PhyAI: Real-Time Physical AI at the Edge, Scalable Rollouts in the Cloud](/202608/08/2608.03682v1-phyai-real-time-physical-ai-at-the-edge-scalable-rollouts-in-the-cloud)  
-   标签：评分：6.0/10、query:eca
-   evidence：统一的物理AI推理引擎跨越边缘与云端
-7. [When Agentic AI Meets Integrated Sensing and Communication](/202608/08/2608.05792v1-when-agentic-ai-meets-integrated-sensing-and-communication)  
-   标签：评分：6.0/10、query:eca
-   evidence：综述统一了智能体AI、边缘智能与多智能体协作
-8. [From Passive Mirrors to Active Agents: Holonic Digital Twins for Physical AI over Networks](/202608/08/2608.06227v1-from-passive-mirrors-to-active-agents-holonic-digital-twins-for-physical-ai-over-networks)  
-   标签：评分：6.0/10、query:eca
-   evidence：全息数字孪生作为主动智能体，实现网络化物理AI的分布式协同
+   evidence：综述智能体AI与通感一体化，涵盖边缘智能、多智能体协同与协作，构建闭环框架
 
 
 <div class="dpr-home-promo-card">

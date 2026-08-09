@@ -1,0 +1,93 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-09T19:56:35.820205+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.01561v1",
+      "source": "arxiv",
+      "title": "FedWorld: Scope-Aware Federation of Agent World Models",
+      "abstract": "Large language model (LLM) agents learn world dynamics from local interaction experience to support subsequent planning and action selection. However, the experience available to a single client is often incomplete, which motivates sharing knowledge across clients. Existing federated methods mainly aggregate model parameters, while agent memory-sharing methods commonly pool trajectories, memories, or rules without checking whether they remain valid for each client. This assumption is problematic because the same abstract action may produce different effects under different policies, environments, or exception conditions. Consequently, a rule supported by most clients may overwrite correct knowledge held by a minority client. To address this problem, we propose FEDWORLD, a scope-aware federated world-model protocol that exchanges structured abstract transition rules. Each client converts private transitions into normalized rules, and the server aligns related rules to identify each rule supporting and contradicting evidence across clients. The resulting evidence determines whether a rule is shared, cluster-specific, private, or unresolved. Each target client retains its local rules and accepts federated updates only for uncovered cases whose inferred scope is compatible; ambiguous rules are withheld. Experiments on $τ$-bench and ALFWorld show that FEDWORLD reduces negative transfer under conflicting dynamics while retaining useful cross-client transfer, leading to fewer state regressions, repeated actions, and excess steps, as well as higher task success.",
+      "authors": [
+        "Yuchao Hou"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-08-03T00:37:52+00:00",
+      "link": "https://arxiv.org/pdf/2608.01561v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "federated learning across clients to share agent world models, enabling distributed scope-aware collaboration",
+      "llm_evidence_cn": "跨客户端联邦学习共享智能体世界模型，实现分布式范围感知的协作",
+      "llm_evidence": "跨客户端联邦学习共享智能体世界模型，实现分布式范围感知的协作",
+      "canonical_evidence": "跨客户端联邦学习共享智能体世界模型，实现分布式范围感知的协作",
+      "llm_tldr_en": "Proposes FedWorld, a scope-aware federation framework for LLM agent world models, enabling clients to share knowledge while respecting validity across different policies and environments.",
+      "llm_tldr_cn": "该论文针对大语言模型智能体在本地经验不完整的问题，提出FedWorld框架，对智能体世界模型进行范围感知的联邦聚合，避免少数客户端的正确规则被多数客户端的无效规则覆盖。通过按范围共享跨客户端的轨迹、记忆或规则，提升各客户端在后续规划与动作选择中的准确性，为分布式多智能体协作提供了可靠知识共享方案。",
+      "llm_tldr": "该论文针对大语言模型智能体在本地经验不完整的问题，提出FedWorld框架，对智能体世界模型进行范围感知的联邦聚合，避免少数客户端的正确规则被多数客户端的无效规则覆盖。通过按范围共享跨客户端的轨迹、记忆或规则，提升各客户端在后续规划与动作选择中的准确性，为分布式多智能体协作提供了可靠知识共享方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.05792v1",
+      "source": "arxiv",
+      "title": "When Agentic AI Meets Integrated Sensing and Communication",
+      "abstract": "Agentic artificial intelligence (AI) is transforming Integrated Sensing and Communication (ISAC) from a function-oriented physical-layer technology into a goal-driven, closed-loop intelligent system, a paradigm we term AISAC. Existing work on learning-based sensing, resource allocation, reconfigurable intelligent surfaces (RIS), edge intelligence, multi-agent coordination, and resilient networking has developed largely in isolation. This survey unifies the literature within a six-stage closed-loop framework comprising observation, contextualization, reasoning and prediction, planning and orchestration, execution and collaboration, and feedback and resilience. It also introduces five levels of agentic maturity, ranging from physical-layer primitives to fully closed-loop agentic ISAC. We use this framework to review advances in multimodal intelligence, large language models, reinforcement learning, federated learning, RIS-assisted control, Unmanned Aerial Vehicle (UAV) and vehicular networks, and AI-native network management, and analyze privacy, security, resilience, and sustainability as cross-cutting requirements of the full perception-reasoning-action loop. An audit of representative studies against nine agentic-specific evaluation criteria shows that no system reports more than one or two of them, exposing a gap between claimed and demonstrated agentic maturity. We identify open challenges in physical-to-semantic grounding, predictive world models, real-time agent-PHY interaction, safe tool use, heterogeneous multi-agent collaboration, benchmarking, and resource-efficient autonomy.",
+      "authors": [
+        "Kai Li",
+        "Conggai Li",
+        "Sarah Ali Siddiqui",
+        "Syed Sohail Ahmed",
+        "Xin Yuan",
+        "Shenghong Li",
+        "Wei Ni"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-06T09:26:49+00:00",
+      "link": "https://arxiv.org/pdf/2608.05792v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "surveys agentic AI with edge intelligence, multi-agent coordination and collaboration, unifying closed-loop agent frameworks",
+      "llm_evidence_cn": "综述智能体AI与通感一体化，涵盖边缘智能、多智能体协同与协作，构建闭环框架",
+      "llm_evidence": "综述智能体AI与通感一体化，涵盖边缘智能、多智能体协同与协作，构建闭环框架",
+      "canonical_evidence": "综述智能体AI与通感一体化，涵盖边缘智能、多智能体协同与协作，构建闭环框架",
+      "llm_tldr_en": "A survey unifying agentic AI and ISAC into a goal-driven closed-loop framework, covering edge intelligence, multi-agent collaboration and resilience, and defining agentic maturity levels.",
+      "llm_tldr_cn": "该综述提出AISAC范式，将通感一体化从物理层技术转变为目标驱动的闭环智能系统，并给出观察、情境化、推理预测、规划编排、执行协作和反馈弹性六阶段框架。文中梳理了包括边缘智能、多智能体协调和弹性网络在内的既有工作，指出这些研究此前彼此孤立；引入五级智能体成熟度模型，将智能体从物理层原语演进到全闭环系统，为边缘云协作智能体系统指明了演进路径与研究缺口。",
+      "llm_tldr": "该综述提出AISAC范式，将通感一体化从物理层技术转变为目标驱动的闭环智能系统，并给出观察、情境化、推理预测、规划编排、执行协作和反馈弹性六阶段框架。文中梳理了包括边缘智能、多智能体协调和弹性网络在内的既有工作，指出这些研究此前彼此孤立；引入五级智能体成熟度模型，将智能体从物理层原语演进到全闭环系统，为边缘云协作智能体系统指明了演进路径与研究缺口。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
