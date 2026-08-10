@@ -6,29 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-09
-- 运行时间：2026-08-09 19:57:21 UTC
+- 最新运行日期：2026-08-10
+- 运行时间：2026-08-10 19:54:59 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：0
+- 本次总论文数：3
+- 精读区：1
 - 速读区：2
 
 ### 今日简报（AI）
-今日速读2篇论文，聚焦智能体与世界模型、通感融合方向，暂无精读。  
-最值得关注的是《FedWorld》提出的范围感知联邦式智能体世界模型（7.0分），以及《When Agentic AI Meets Integrated Sensing and Communication》（6.0分）对智能体AI与通感一体化交叉的探讨。  
-建议普通读者优先浏览第一篇的架构思路，后续可等待更高分论文再做精读。
-- 详情：[/202608/09/README](/202608/09/README)
+今日精读多智能体强化学习在线流量调度，速读自主智能体分类框架与全息数字孪生两篇论文。最值得关注的是8.0分的《Multi-Agent Reinforcement Learning for Online Traffic Scheduling in Time-Sensitive Application》，其调度方法具有实践价值。建议优先精读该论文，再按兴趣浏览两篇速读文章作为延伸。
+- 详情：[/202608/10/README](/202608/10/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Multi-Agent Reinforcement Learning for Online Traffic Scheduling in Time-Sensitive Application](/202608/10/2608.05346v1-multi-agent-reinforcement-learning-for-online-traffic-scheduling-in-time-sensitive-application)  
+   标签：评分：8.0/10、query:eca
+   evidence：移动边缘计算中的多智能体强化学习流量调度
 
 ### 速读区论文标签
-1. [FedWorld: Scope-Aware Federation of Agent World Models](/202608/09/2608.01561v1-fedworld-scope-aware-federation-of-agent-world-models)  
-   标签：评分：7.0/10、query:eca
-   evidence：跨客户端联邦学习共享智能体世界模型，实现分布式范围感知的协作
-2. [When Agentic AI Meets Integrated Sensing and Communication](/202608/09/2608.05792v1-when-agentic-ai-meets-integrated-sensing-and-communication)  
+1. [ASTELD: A Six-Axis Classification Framework for Autonomous AI Agents - Design, Evaluation, and an OpenClaw Case Study](/202608/10/2608.05201v1-asteld-a-six-axis-classification-framework-for-autonomous-ai-agents---design-evaluation-and-an-openclaw-case-study)  
    标签：评分：6.0/10、query:eca
-   evidence：综述智能体AI与通感一体化，涵盖边缘智能、多智能体协同与协作，构建闭环框架
+   evidence：面向AI智能体的六轴分类框架，含部署拓扑维度，可用于边云分布式智能体架构
+2. [From Passive Mirrors to Active Agents: Holonic Digital Twins for Physical AI over Networks](/202608/10/2608.06227v1-from-passive-mirrors-to-active-agents-holonic-digital-twins-for-physical-ai-over-networks)  
+   标签：评分：6.0/10、query:eca
+   evidence：面向网络的分布式代理架构
 
 
 <div class="dpr-home-promo-card">

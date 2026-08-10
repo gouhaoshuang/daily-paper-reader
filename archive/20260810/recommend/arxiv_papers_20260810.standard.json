@@ -1,0 +1,154 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-10T19:51:50.739655+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.05346v1",
+      "source": "arxiv",
+      "title": "Multi-Agent Reinforcement Learning for Online Traffic Scheduling in Time-Sensitive Application",
+      "abstract": "Time-sensitive networking (TSN) is increasingly integrated into mobile edge computing (MEC) to support applications with stringent latency requirements, such as extended reality (XR). However, existing TSN scheduling solutions predominantly rely on static optimization techniques or centralized learning models that are based on fixed traffic patterns, limiting their effectiveness in dynamic environments. In practice, MEC environments often host multiple co-located XR traffic flows whose characteristics evolve over time, creating complex inter-queue dependencies that current schedulers fail to capture. Addressing these challenges requires adaptive, decentralized scheduling mechanisms capable of coordinating multiple TSN queues under varying traffic conditions. To this end, this paper proposes a multi-agent reinforcement learning (MARL) framework for TSN scheduling, where each TSN queue is modeled as an autonomous agent. The Heterogeneous-Agent Proximal Policy Optimization (HAPPO) algorithm is employed to explicitly model inter-agent dependencies and jointly optimize service delivery across queues. The simulation results demonstrate that the proposed approach reduces average frame waiting times by up to 26.8% and worst-case delays by approximately 16.8%, highlighting its effectiveness in dynamic XR-driven MEC scenarios.",
+      "authors": [
+        "Marcos Carvalho",
+        "Fatih Temiz",
+        "Shavbo Salehi",
+        "Melike Erol-Kantarci",
+        "Daniel F. Macedo"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI"
+      ],
+      "published": "2026-08-05T19:06:42+00:00",
+      "link": "https://arxiv.org/pdf/2608.05346v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multi-agent RL for traffic scheduling in mobile edge computing",
+      "llm_evidence_cn": "移动边缘计算中的多智能体强化学习流量调度",
+      "llm_evidence": "移动边缘计算中的多智能体强化学习流量调度",
+      "canonical_evidence": "移动边缘计算中的多智能体强化学习流量调度",
+      "llm_tldr_en": "The paper proposes a multi-agent reinforcement learning approach for online traffic scheduling in time-sensitive networking within mobile edge computing. The decentralized mechanism coordinates multiple TSN queues to adapt to dynamic XR traffic, reducing latency and improving efficiency.",
+      "llm_tldr_cn": "针对现有TSN调度依赖静态优化或集中式模型、难以适应移动边缘计算中动态XR流量的问题，论文提出一种多智能体强化学习方案，以分布式方式协调多个TSN队列，实时调整调度策略。实验表明该方法在动态多流场景下能有效降低时延并提升网络利用率。",
+      "llm_tldr": "针对现有TSN调度依赖静态优化或集中式模型、难以适应移动边缘计算中动态XR流量的问题，论文提出一种多智能体强化学习方案，以分布式方式协调多个TSN队列，实时调整调度策略。实验表明该方法在动态多流场景下能有效降低时延并提升网络利用率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.05201v1",
+      "source": "arxiv",
+      "title": "ASTELD: A Six-Axis Classification Framework for Autonomous AI Agents - Design, Evaluation, and an OpenClaw Case Study",
+      "abstract": "Autonomous AI agent platforms differ substantially in architecture, security, tool integration, execution, autonomy, and deployment, yet the field lacks a common classification scheme for comparing these design choices. We propose ASTELD, an operational six-axis classification framework for autonomous AI agents: Architecture pattern, Security posture, Tool integration model, Execution paradigm, Level of autonomy and human control, and Deployment topology. ASTELD is constructed by synthesizing prior agent taxonomies with observable platform properties and explicit category-assignment rules. We evaluate its discriminative and explanatory utility by mapping eight representative frameworks and by using OpenClaw as an in-depth case study. The resulting profiles separate all eight platforms under their dominant configurations and reveal three cross-platform patterns: a security-accessibility diagonal, strong execution-architecture coupling, and capability convergence with persistent architectural differentiation. We further classify 50+ OpenClaw derivatives and find that innovation concentrates on the Security, Execution, and Deployment axes, indicating that ASTELD can explain where ecosystem fragmentation occurs. The OpenClaw case study also supplies a six-category vulnerability taxonomy, evidence from five institutional assessments, and adoption and governance analyses that connect platform coordinates to observed risks. These results position ASTELD as a reproducible method for comparing agent platforms, identifying unoccupied design regions, guiding framework selection, and organizing future empirical research. The analysis also exposes a consequential empty region: none of the evaluated systems combines local-first deployment with enterprise-grade security.",
+      "authors": [
+        "Siyuan Li",
+        "Peng Shu",
+        "Churan Yu",
+        "Peilong Wang",
+        "Ruidong Zhang",
+        "Bowen Guo",
+        "Xinliang Li",
+        "Ruiyu Yan",
+        "Arif Hassan Zidan",
+        "Yi Pan",
+        "Wei Ruan",
+        "Lifeng Chen",
+        "Junhao Chen",
+        "Zhaojun Ding",
+        "Yiwei Li",
+        "Zhengliang Liu",
+        "Haixing Dai",
+        "Lin Zhao",
+        "Yu Bao",
+        "Xiang Li",
+        "Wei Zhang",
+        "Tianming Liu"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-08-05T05:05:20+00:00",
+      "link": "https://arxiv.org/pdf/2608.05201v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "six-axis classification framework for AI agents including deployment topology, useful for edge-cloud agent architecture",
+      "llm_evidence_cn": "面向AI智能体的六轴分类框架，含部署拓扑维度，可用于边云分布式智能体架构",
+      "llm_evidence": "面向AI智能体的六轴分类框架，含部署拓扑维度，可用于边云分布式智能体架构",
+      "canonical_evidence": "面向AI智能体的六轴分类框架，含部署拓扑维度，可用于边云分布式智能体架构",
+      "llm_tldr_en": "Proposes ASTELD, a six-axis classification framework covering architecture, security, tool integration, execution, autonomy, and deployment topology for autonomous AI agents, evaluated on eight frameworks.",
+      "llm_tldr_cn": "为解决自主AI智能体平台架构差异大、缺乏统一分类标准的问题，提出ASTELD六轴分类框架，覆盖架构模式、安全、工具集成、执行、自主性与部署拓扑；通过映射八个典型框架验证其区分与解释能力，为智能体系统的比较与边缘部署设计提供了参考分类学。",
+      "llm_tldr": "为解决自主AI智能体平台架构差异大、缺乏统一分类标准的问题，提出ASTELD六轴分类框架，覆盖架构模式、安全、工具集成、执行、自主性与部署拓扑；通过映射八个典型框架验证其区分与解释能力，为智能体系统的比较与边缘部署设计提供了参考分类学。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.06227v1",
+      "source": "arxiv",
+      "title": "From Passive Mirrors to Active Agents: Holonic Digital Twins for Physical AI over Networks",
+      "abstract": "Despite advances in artificial intelligence (AI) across multiple sectors, today's AI tools, including deep learning and generative AI, still fail when embedded into physical systems, such as robots and vehicles operating under real-world physical laws. This stems from their inability to maintain reliable world models for long-horizon planning under uncertainty and generalize to unseen scenarios. In this context, wireless networks, through pervasive sensing and communication, can orchestrate physical intelligence. However, current architectures optimize throughput, latency, and reliability and cannot support real-time physical AI coordination, requiring agents to maintain shared spatiotemporal context. To address these challenges, a network of holonic digital twins (HDT-Nets) framework is proposed to deliver real-time physical AI inference through holonic agents that actively reason about their environment rather than passively mirror physical assets. Each HDT is realized as a hierarchical structure spanning the physical agent and network edge, reasoning autonomously at the local level while cooperating with neighboring HDTs to form collectively intelligent units. In HDT-Net, causal Markov blankets spanning sensing, communication, and control determine which agents must coordinate and enable counterfactual reasoning over multi-domain interventions. Active inference within these boundaries unifies perception, action, and learning by minimizing expected free energy while deciding which beliefs to transmit based on their cognitive value to the receiver. Category theory ensures that transmitted beliefs preserve semantic structure across heterogeneous agents with incompatible representations. Finally, integrated information theory quantifies when collective intelligence exceeds independent operation and how network intelligence evolves through coordinated learning and information exchange.",
+      "authors": [
+        "Christo Kurisummoottil Thomas",
+        "Omar Hashash",
+        "Walid Saad"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI",
+        "cs.IT",
+        "eess.SY"
+      ],
+      "published": "2026-08-06T16:17:43+00:00",
+      "link": "https://arxiv.org/pdf/2608.06227v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Distributed agent architecture over networks",
+      "llm_evidence_cn": "面向网络的分布式代理架构",
+      "llm_evidence": "面向网络的分布式代理架构",
+      "canonical_evidence": "面向网络的分布式代理架构",
+      "llm_tldr_en": "Proposes holonic digital twins as active agents for physical AI over networks, enabling distributed coordination with shared spatiotemporal context.",
+      "llm_tldr_cn": "为解决物理AI在真实世界长期规划与泛化困难，提出全息数字孪生作为主动代理，通过网络协调分布式智能体，维护共享时空上下文，支撑实时物理世界交互。",
+      "llm_tldr": "为解决物理AI在真实世界长期规划与泛化困难，提出全息数字孪生作为主动代理，通过网络协调分布式智能体，维护共享时空上下文，支撑实时物理世界交互。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

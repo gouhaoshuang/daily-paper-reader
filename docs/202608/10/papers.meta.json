@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-10",
+  "date": "2026-08-10",
+  "generated_at": "2026-08-10T19:55:05",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/10/2608.05346v1-multi-agent-reinforcement-learning-for-online-traffic-scheduling-in-time-sensitive-application",
+      "section": "deep",
+      "title_en": "Multi-Agent Reinforcement Learning for Online Traffic Scheduling in Time-Sensitive Application",
+      "authors": "Marcos Carvalho, Fatih Temiz, Shavbo Salehi, Melike Erol-Kantarci, Daniel F. Macedo",
+      "date": "2026-08-05",
+      "pdf": "https://arxiv.org/pdf/2608.05346v1",
+      "score": "8.0",
+      "evidence": "移动边缘计算中的多智能体强化学习流量调度",
+      "tldr": "时间敏感网络与移动边缘计算结合以支持XR等低延迟应用，但现有调度依赖静态优化或中心化学习，难以应对动态多流环境。本文提出多智能体强化学习框架，将每个TSN队列建模为自主智能体，采用异构智能体近端策略优化（HAPPO）显式建模队列间依赖并联合优化服务交付。实验表明该方法显著降低平均帧等待时间达26.8%，最坏情况延迟降低约16.8%，验证了在动态XR驱动的MEC场景中的有效性。",
+      "tags": "query:eca",
+      "abstract_en": "Time-sensitive networking (TSN) is increasingly integrated into mobile edge computing (MEC) to support applications with stringent latency requirements, such as extended reality (XR). However, existing TSN scheduling solutions predominantly rely on static optimization techniques or centralized learning models that are based on fixed traffic patterns, limiting their effectiveness in dynamic environments. In practice, MEC environments often host multiple co-located XR traffic flows whose characteristics evolve over time, creating complex inter-queue dependencies that current schedulers fail to capture. Addressing these challenges requires adaptive, decentralized scheduling mechanisms capable of coordinating multiple TSN queues under varying traffic conditions. To this end, this paper proposes a multi-agent reinforcement learning (MARL) framework for TSN scheduling, where each TSN queue is modeled as an autonomous agent. The Heterogeneous-Agent Proximal Policy Optimization (HAPPO) algorithm is employed to explicitly model inter-agent dependencies and jointly optimize service delivery across queues. The simulation results demonstrate that the proposed approach reduces average frame waiting times by up to 26.8% and worst-case delays by approximately 16.8%, highlighting its effectiveness in dynamic XR-driven MEC scenarios.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/10/2608.05201v1-asteld-a-six-axis-classification-framework-for-autonomous-ai-agents---design-evaluation-and-an-openclaw-case-study",
+      "section": "quick",
+      "title_en": "ASTELD: A Six-Axis Classification Framework for Autonomous AI Agents - Design, Evaluation, and an OpenClaw Case Study",
+      "authors": "Siyuan Li, Peng Shu, Churan Yu, Peilong Wang, Ruidong Zhang, Bowen Guo, Xinliang Li, Ruiyu Yan, Arif Hassan Zidan, Yi Pan, Wei Ruan, Lifeng Chen, Junhao Chen, Zhaojun Ding, Yiwei Li, Zhengliang Liu, Haixing Dai, Lin Zhao, Yu Bao, Xiang Li, Wei Zhang, Tianming Liu",
+      "date": "2026-08-05",
+      "pdf": "https://arxiv.org/pdf/2608.05201v1",
+      "score": "6.0",
+      "evidence": "面向AI智能体的六轴分类框架，含部署拓扑维度，可用于边云分布式智能体架构",
+      "tldr": "自主智能体平台在架构、安全、工具集成、执行、自主性和部署等方面差异显著，但缺乏统一分类方案。本文提出ASTELD六轴分类框架，合成既有分类学与可观察属性，成功区分八个代表性平台，并识别出安全-可访问性对角线、执行-架构耦合等跨平台模式。对50余个OpenClaw衍生品分析显示创新集中于安全、执行与部署轴，同时暴露本地优先与企业级安全设计空白。该框架为平台比较、选型及实证研究提供可复现基础。",
+      "tags": "query:eca",
+      "abstract_en": "Autonomous AI agent platforms differ substantially in architecture, security, tool integration, execution, autonomy, and deployment, yet the field lacks a common classification scheme for comparing these design choices. We propose ASTELD, an operational six-axis classification framework for autonomous AI agents: Architecture pattern, Security posture, Tool integration model, Execution paradigm, Level of autonomy and human control, and Deployment topology. ASTELD is constructed by synthesizing prior agent taxonomies with observable platform properties and explicit category-assignment rules. We evaluate its discriminative and explanatory utility by mapping eight representative frameworks and by using OpenClaw as an in-depth case study. The resulting profiles separate all eight platforms under their dominant configurations and reveal three cross-platform patterns: a security-accessibility diagonal, strong execution-architecture coupling, and capability convergence with persistent architectural differentiation. We further classify 50+ OpenClaw derivatives and find that innovation concentrates on the Security, Execution, and Deployment axes, indicating that ASTELD can explain where ecosystem fragmentation occurs. The OpenClaw case study also supplies a six-category vulnerability taxonomy, evidence from five institutional assessments, and adoption and governance analyses that connect platform coordinates to observed risks. These results position ASTELD as a reproducible method for comparing agent platforms, identifying unoccupied design regions, guiding framework selection, and organizing future empirical research. The analysis also exposes a consequential empty region: none of the evaluated systems combines local-first deployment with enterprise-grade security.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/10/2608.06227v1-from-passive-mirrors-to-active-agents-holonic-digital-twins-for-physical-ai-over-networks",
+      "section": "quick",
+      "title_en": "From Passive Mirrors to Active Agents: Holonic Digital Twins for Physical AI over Networks",
+      "authors": "Christo Kurisummoottil Thomas, Omar Hashash, Walid Saad",
+      "date": "2026-08-06",
+      "pdf": "https://arxiv.org/pdf/2608.06227v1",
+      "score": "6.0",
+      "evidence": "面向网络的分布式代理架构",
+      "tldr": "现有AI在物理环境中因缺乏可靠世界模型而失效，无线网络虽可协调但传统架构难以支持实时物理智能。本文提出HDT-Nets框架，通过层次化holonic数字孪生将被动镜像转为主动推理体，利用因果马尔可夫毯协调感知-通信-控制，并借助主动推理与范畴论实现跨异构智能体的语义保持及集体智能涌现。该框架统一了感知、行动与学习，为物理AI实时协调提供了新范式。",
+      "tags": "query:eca",
+      "abstract_en": "Despite advances in artificial intelligence (AI) across multiple sectors, today's AI tools, including deep learning and generative AI, still fail when embedded into physical systems, such as robots and vehicles operating under real-world physical laws. This stems from their inability to maintain reliable world models for long-horizon planning under uncertainty and generalize to unseen scenarios. In this context, wireless networks, through pervasive sensing and communication, can orchestrate physical intelligence. However, current architectures optimize throughput, latency, and reliability and cannot support real-time physical AI coordination, requiring agents to maintain shared spatiotemporal context. To address these challenges, a network of holonic digital twins (HDT-Nets) framework is proposed to deliver real-time physical AI inference through holonic agents that actively reason about their environment rather than passively mirror physical assets. Each HDT is realized as a hierarchical structure spanning the physical agent and network edge, reasoning autonomously at the local level while cooperating with neighboring HDTs to form collectively intelligent units. In HDT-Net, causal Markov blankets spanning sensing, communication, and control determine which agents must coordinate and enable counterfactual reasoning over multi-domain interventions. Active inference within these boundaries unifies perception, action, and learning by minimizing expected free energy while deciding which beliefs to transmit based on their cognitive value to the receiver. Category theory ensures that transmitted beliefs preserve semantic structure across heterogeneous agents with incompatible representations. Finally, integrated information theory quantifies when collective intelligence exceeds independent operation and how network intelligence evolves through coordinated learning and information exchange.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
