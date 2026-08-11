@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-11",
+  "date": "2026-08-11",
+  "generated_at": "2026-08-11T20:59:41",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/11/2608.07775v1-androidreality-how-far-are-mobile-agents-from-the-real-world",
+      "section": "deep",
+      "title_en": "AndroidReality: How Far Are Mobile Agents from the Real World?",
+      "authors": "Xiaoou Liu, Longchao Da, Hanyang Chen, Yuan Ling, Hua Wei",
+      "date": "2026-08-07",
+      "pdf": "https://arxiv.org/pdf/2608.07775v1",
+      "score": "8.0",
+      "evidence": "面向移动智能体鲁棒性评估的扰动基准与框架",
+      "tldr": "移动智能体在干净基准上表现优异，但真实部署中因环境扰动性能骤降。为此提出AndroidReality扰动框架，依据MDP从状态、转移、动作三轴分类真实界面变化，构建可控制的扰动基准。评估发现显著鲁棒性缺口和四类常见错误，进而提出无需训练的测试时自省恢复（TTIR）机制。该工作将鲁棒性纳入移动智能体评估，以基准扰动作为压力测试和暴露潜在弱点的有效手段。",
+      "tags": "query:eca",
+      "abstract_en": "Mobile agents have achieved promising results on clean online benchmarks such as AndroidWorld, yet their performance often degrades sharply in real-world deployment due to environmental variations and imperfect interface conditions. In this work, we introduce AndroidReality, a perturbation-based framework for evaluating and improving the robustness of mobile agents. Through a Markov Decision Process (MDP) perspective, we organize real-world interface variability into a principled taxonomy of perturbations along three axes: state, transition, and action. Guided by this taxonomy, we build a perturbed mobile benchmark on top of AndroidWorld with realistic and controllable perturbation injections, enabling systematic robustness evaluation of mobile agents. Our evaluation reveals substantial robustness gaps and four recurring error categories, motivating a simple training-free Test-Time Introspective Recovery (TTIR) mechanism that mitigates these failures on both perturbed and clean settings. Together, these results position robustness as a missing dimension in mobile agent evaluation and establish benchmark perturbation as an effective tool for both stress testing and surfacing latent weaknesses of mobile agents.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/11/2608.08605v1-forestbench-a-unified-graph-framework-for-evaluating-multi-agent-collaboration",
+      "section": "deep",
+      "title_en": "ForestBench: A Unified Graph Framework for Evaluating Multi-Agent Collaboration",
+      "authors": "Guo Chen, Ziwen Li, Reed Li, Yu Lu, Haibo Shi, Bingbing Xu, Junjie Huang",
+      "date": "2026-08-09",
+      "pdf": "https://arxiv.org/pdf/2608.08605v1",
+      "score": "8.0",
+      "evidence": "统一图框架评估多智能体协作，直接对应协作需求",
+      "tldr": "多智能体系统评估因执行轨迹异构而缺乏统一标准；结果型基准忽略协作过程，LLM评判则依赖额外推理且不稳定。本文提出将原生轨迹映射为共享空间下的统一协作图，与查询特定的参考森林比较，该森林由多种已验证的成功图组成。基于此法构建ForestBench，过滤844个协作必要查询，预计算每查询10个参考图，评估6种MAS框架，可在毫秒级完成评分，为多样化协作轨迹比较提供可复用结构基础。",
+      "tags": "query:eca",
+      "abstract_en": "Multi-agent systems (MAS) built on Large Language Models (LLMs) are proliferating rapidly, but their heterogeneous execution traces provide no common basis for evaluation across methods. Outcome-only benchmarks discard collaborations, whereas LLM-as-Judge evaluation requires additional, model-dependent inference and can vary with the LLM and rubric. We introduce a generalizable evaluation framework that maps native MAS traces into a shared space of unified collaboration graphs, enabling different methods to be evaluated under the same representation, reference set, and metric panel. Candidate graphs are compared with a query-specific reference forest. Each forest is a benchmark-provided collection of verified-success graphs: it records diverse ways in which representative MAS methods can complete the task, rather than prescribing a unique optimal process. Instantiating the framework as ForestBench, we filter $844$ collaboration-necessary queries from seven public datasets, precompute ten successful target-conditioned reference graphs per query, and evaluate six representative MAS frameworks. Controlled backbone, reference-construction, and perturbation studies test the stability and scope of evaluation. Once the benchmark forests are built, ForestBench scores a trace in milliseconds without further LLM inference, providing a reusable structural basis for comparing diverse MAS collaboration traces.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/11/2608.08037v1-skillsmith-enhancing-locally-deployed-agents-via-automatic-skill-construction-and-evolution",
+      "section": "quick",
+      "title_en": "SkillSmith: Enhancing Locally Deployed Agents via Automatic Skill Construction and Evolution",
+      "authors": "Xinle Jiang, Remy Xie, Ming Tang",
+      "date": "2026-08-08",
+      "pdf": "https://arxiv.org/pdf/2608.08037v1",
+      "score": "7.0",
+      "evidence": "通过自动技能构建增强本地部署智能体，弥合本地与云端智能体能力差距",
+      "tldr": "本地部署的开源小模型智能体在任务效果上远逊于云端闭源大模型，主要因缺乏环境规则和操作流程等知识。为此提出SkillSmith框架，由云端智能体探索自动构建技能，本地智能体执行反馈进化技能，以非参数化方式为冻结的本地模型供给上下文高效知识。在AppWorld和WorkBench上，Qwen3.6-27B借助自动生成的技能达到与云端前沿模型相当的效果，平均动作数从36.1降至9.9。无需专家编写即可显著提升本地智能体能力，并泛化至其他小模型。",
+      "tags": "query:eca",
+      "abstract_en": "LLM-based agent frameworks now act as personal assistants for multi-step tasks. Existing agent frameworks such as OpenClaw commonly follow the Cloud Agent depolyment mode using closed-source cloud LLMs as backbone model, which may expose private user information and incur repeated LLM-calling costs. Local Agents address these deployment concerns by depolying frontier open-source SLMs on user-controlled devices, but their task effectiveness still lags far behind Cloud Agents. Through diagnostic analysis, we reveal that the limited effectiveness of Local Agents with frontier SLM backbones mainly comes from missing environment knowledge caused by limited backbone model scale including environment rules and operation procedures. To supply such knowledge non-parametrically, context-efficiently, and without expert authoring, we present SkillSmith, a Cloud--Local Agent collaboration framework that uses Skill as a context-efficient knowledge carrier, automatic constructs Skill from Cloud Agent task exploration and evolves Skill using Local Agent execution feedback to enhance a frozen Local Agent. Experiments on daily agent task datasets AppWorld and WorkBench show that the automatically generated Skill enables the Local Agent with Qwen3.6-27B(SLM) to achieve task effectiveness comparable to Cloud Agents with frontier LLMs, outperform the strongest non-parametric baselines, reduce average actions per task from 36.1 to 9.9 on AppWorld-Normal, and generalize to other SLM backbone models without rerunning Skill construction.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/11/2608.09251v1-morse-task-oriented-multi-agent-system-with-mixture-of-role-subtask-experts",
+      "section": "quick",
+      "title_en": "MoRSE: Task-Oriented Multi-Agent System with Mixture of Role-Subtask Experts",
+      "authors": "Peiwen Li, Shiyang Zhang, Yangtian Zhang, Sizhuang He, David van Dijk, Rex Ying",
+      "date": "2026-08-10",
+      "pdf": "https://arxiv.org/pdf/2608.09251v1",
+      "score": "6.0",
+      "evidence": "基于角色-子任务专家专门化的任务导向多智能体系统，提升协作效果",
+      "tldr": "大模型多智能体系统现有方法多依赖粗粒度提示级区分，未针对不同子任务做参数自适应，导致智能体异质性与专门化不足，成为复杂长程任务瓶颈。MoRSE提出在任务结构层将任务分解为依赖感知DAG，为智能体分配明确角色-子任务；在参数层构建动态角色-子任务LoRA专家，结合原型语义路由器，低成本实现参数级专门化。采用分层组相对策略优化与两层信用分配，稳定训练专家与路由器。在代码生成多骨干基准上显著提升整体与分步性能，且训练所得专门化可泛化至未见任务类别与领域。",
+      "tags": "query:eca",
+      "abstract_en": "Large language model-based multi-agent systems have recently shown strong potential for complex, long-horizon tasks. However, existing methods mainly rely on coarse prompt-level differentiation without parameter adaptation for diverse subtasks, resulting in insufficient inter-agent heterogeneity and limited specialized capability that bottleneck performance on tasks with complex requirements. To address this, we introduce a Task-Oriented Multi-Agent System with Mixture of Role-Subtask Experts (MoRSE) that distinguishes agents with (role, subtask)-conditional specialization at both the task structure and parameter levels. To make agents' responsibility explicit at the task structure level, we formulate a task-oriented multi-agent system that decomposes each task into a dependency-aware Directed Acyclic Graph of subtasks and assigns each agent a specific (role, subtask), introducing task-level specialization across collaborating agents. Additionally, to address the diverse role and subtask parameter adaptation demands, we propose a dynamic Mixture of (role, subtask) LoRA Experts module with a prototype-based semantic router for subtasks, augmenting agents with parameter-level specialization on a shared LLM substrate cost-effectively. Then, to co-optimize experts and router stably under sparse task rewards, we further propose a hierarchical group-relative policy optimization with two-layer credit assignment that isolates expert updates from the cross-route variance introduced by routing decisions, disentangling expert quality from routing quality. Experiments on code-generation benchmarks across three backbones demonstrate the effectiveness of our approach, with improvements in both whole-task and step-wise performance, and the gains from trained specialization generalize across held-out task categories and domains.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -6,29 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-10
-- 运行时间：2026-08-10 19:54:59 UTC
+- 最新运行日期：2026-08-11
+- 运行时间：2026-08-11 20:59:36 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：1
+- 本次总论文数：4
+- 精读区：2
 - 速读区：2
 
 ### 今日简报（AI）
-今日精读多智能体强化学习在线流量调度，速读自主智能体分类框架与全息数字孪生两篇论文。最值得关注的是8.0分的《Multi-Agent Reinforcement Learning for Online Traffic Scheduling in Time-Sensitive Application》，其调度方法具有实践价值。建议优先精读该论文，再按兴趣浏览两篇速读文章作为延伸。
-- 详情：[/202608/10/README](/202608/10/README)
+今日精读速读共4篇论文，聚焦移动Agent现实表现与多智能体协作框架。最值得关注的是《AndroidReality》（8.0分）揭示移动Agent离真实世界尚存差距，以及《ForestBench》（8.0分）用统一图框架评测多Agent协作。建议优先精读这两篇高分论文，快速把握移动智能体落地的关键瓶颈与评测方法。
+- 详情：[/202608/11/README](/202608/11/README)
 
 ### 精读区论文标签
-1. [Multi-Agent Reinforcement Learning for Online Traffic Scheduling in Time-Sensitive Application](/202608/10/2608.05346v1-multi-agent-reinforcement-learning-for-online-traffic-scheduling-in-time-sensitive-application)  
+1. [AndroidReality: How Far Are Mobile Agents from the Real World?](/202608/11/2608.07775v1-androidreality-how-far-are-mobile-agents-from-the-real-world)  
    标签：评分：8.0/10、query:eca
-   evidence：移动边缘计算中的多智能体强化学习流量调度
+   evidence：面向移动智能体鲁棒性评估的扰动基准与框架
+2. [ForestBench: A Unified Graph Framework for Evaluating Multi-Agent Collaboration](/202608/11/2608.08605v1-forestbench-a-unified-graph-framework-for-evaluating-multi-agent-collaboration)  
+   标签：评分：8.0/10、query:eca
+   evidence：统一图框架评估多智能体协作，直接对应协作需求
 
 ### 速读区论文标签
-1. [ASTELD: A Six-Axis Classification Framework for Autonomous AI Agents - Design, Evaluation, and an OpenClaw Case Study](/202608/10/2608.05201v1-asteld-a-six-axis-classification-framework-for-autonomous-ai-agents---design-evaluation-and-an-openclaw-case-study)  
+1. [SkillSmith: Enhancing Locally Deployed Agents via Automatic Skill Construction and Evolution](/202608/11/2608.08037v1-skillsmith-enhancing-locally-deployed-agents-via-automatic-skill-construction-and-evolution)  
+   标签：评分：7.0/10、query:eca
+   evidence：通过自动技能构建增强本地部署智能体，弥合本地与云端智能体能力差距
+2. [MoRSE: Task-Oriented Multi-Agent System with Mixture of Role-Subtask Experts](/202608/11/2608.09251v1-morse-task-oriented-multi-agent-system-with-mixture-of-role-subtask-experts)  
    标签：评分：6.0/10、query:eca
-   evidence：面向AI智能体的六轴分类框架，含部署拓扑维度，可用于边云分布式智能体架构
-2. [From Passive Mirrors to Active Agents: Holonic Digital Twins for Physical AI over Networks](/202608/10/2608.06227v1-from-passive-mirrors-to-active-agents-holonic-digital-twins-for-physical-ai-over-networks)  
-   标签：评分：6.0/10、query:eca
-   evidence：面向网络的分布式代理架构
+   evidence：基于角色-子任务专家专门化的任务导向多智能体系统，提升协作效果
 
 
 <div class="dpr-home-promo-card">
