@@ -6,32 +6,44 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-11
-- 运行时间：2026-08-11 20:59:36 UTC
+- 最新运行日期：2026-08-12
+- 运行时间：2026-08-12 21:08:11 UTC
 - 运行状态：成功
-- 本次总论文数：4
-- 精读区：2
-- 速读区：2
+- 本次总论文数：8
+- 精读区：3
+- 速读区：5
 
 ### 今日简报（AI）
-今日精读速读共4篇论文，聚焦移动Agent现实表现与多智能体协作框架。最值得关注的是《AndroidReality》（8.0分）揭示移动Agent离真实世界尚存差距，以及《ForestBench》（8.0分）用统一图框架评测多Agent协作。建议优先精读这两篇高分论文，快速把握移动智能体落地的关键瓶颈与评测方法。
-- 详情：[/202608/11/README](/202608/11/README)
+今日精读聚焦 6G 会话编排与高效 Agent 系统，速读覆盖自进化、人机协作与烹饪控制。最值得看 9 分的《Conversational Orchestration for Organic 6G》与 8 分的《EASy》，前者直指 6G 关键架构，后者给出 Agent 效率优化路径。建议普通读者优先从这两篇入手，把握 Agent 与通信融合的前沿趋势。
+- 详情：[/202608/12/README](/202608/12/README)
 
 ### 精读区论文标签
-1. [AndroidReality: How Far Are Mobile Agents from the Real World?](/202608/11/2608.07775v1-androidreality-how-far-are-mobile-agents-from-the-real-world)  
+1. [Conversational Orchestration for Organic 6G](/202608/12/2608.10714v1-conversational-orchestration-for-organic-6g)  
+   标签：评分：9.0/10、query:eca
+   evidence：LLM驱动的域智能体实现跨越边缘-云连续体的去中心化编排
+2. [EASy: Towards Efficient LLM-Based Agentic System](/202608/12/2608.04588v1-easy-towards-efficient-llm-based-agentic-system)  
    标签：评分：8.0/10、query:eca
-   evidence：面向移动智能体鲁棒性评估的扰动基准与框架
-2. [ForestBench: A Unified Graph Framework for Evaluating Multi-Agent Collaboration](/202608/11/2608.08605v1-forestbench-a-unified-graph-framework-for-evaluating-multi-agent-collaboration)  
+   evidence：通过强化学习协调多个LLM智能体并优化执行效率
+3. [ForestBench: A Unified Graph Framework for Evaluating Multi-Agent Collaboration](/202608/12/2608.08605v2-forestbench-a-unified-graph-framework-for-evaluating-multi-agent-collaboration)  
    标签：评分：8.0/10、query:eca
-   evidence：统一图框架评估多智能体协作，直接对应协作需求
+   evidence：用统一协作图评估多智能体协作
 
 ### 速读区论文标签
-1. [SkillSmith: Enhancing Locally Deployed Agents via Automatic Skill Construction and Evolution](/202608/11/2608.08037v1-skillsmith-enhancing-locally-deployed-agents-via-automatic-skill-construction-and-evolution)  
+1. [Co-Evolution in Agentic Systems: Toward Self-Directed Evolution Beyond Human Design](/202608/12/2608.10299v1-co-evolution-in-agentic-systems-toward-self-directed-evolution-beyond-human-design)  
    标签：评分：7.0/10、query:eca
-   evidence：通过自动技能构建增强本地部署智能体，弥合本地与云端智能体能力差距
-2. [MoRSE: Task-Oriented Multi-Agent System with Mixture of Role-Subtask Experts](/202608/11/2608.09251v1-morse-task-oriented-multi-agent-system-with-mixture-of-role-subtask-experts)  
+   evidence：综述多智能体协同进化，涵盖协作与组织适应
+2. [AgentPanel: Toward a New Paradigm for Human--AI Collaboration in Exploring Scientific Questions](/202608/12/2608.03283v1-agentpanel-toward-a-new-paradigm-for-human--ai-collaboration-in-exploring-scientific-questions)  
    标签：评分：6.0/10、query:eca
-   evidence：基于角色-子任务专家专门化的任务导向多智能体系统，提升协作效果
+   evidence：多智能体论坛支持人机协作探索科学问题
+3. [Embedding Large Language Models into Flow Controls: An Agentic Framework for Adaptive and Trustworthy Automated Cooking](/202608/12/2608.04768v1-embedding-large-language-models-into-flow-controls-an-agentic-framework-for-adaptive-and-trustworthy-automated-cooking)  
+   标签：评分：6.0/10、query:eca
+   evidence：多智能体协作将用户意图转化为程序
+4. [Abstractions for Network Intelligence: A Reference Architecture for AI at the Wireless Edge](/202608/12/2608.09640v1-abstractions-for-network-intelligence-a-reference-architecture-for-ai-at-the-wireless-edge)  
+   标签：评分：6.0/10、query:eca
+   evidence：面向无线边缘AI的参考架构，支持智能应用与网络协同交互
+5. [Sheaf-Based Federated Representation Learning](/202608/12/2608.10016v1-sheaf-based-federated-representation-learning)  
+   标签：评分：6.0/10、query:eca
+   evidence：面向异构智能体的联邦表示学习，通过几何对齐实现协作
 
 
 <div class="dpr-home-promo-card">

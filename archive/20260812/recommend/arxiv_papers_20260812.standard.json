@@ -1,0 +1,369 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-12T21:01:18.518754+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2608.10714v1",
+      "source": "arxiv",
+      "title": "Conversational Orchestration for Organic 6G",
+      "abstract": "The Organic 6G vision of a network of networks spanning an edge-cloud continuum complemented by non-terrestrial resources requires, to realize its promise, service provisioning that is simple to operate, scalable across independently administered domains, and agile under domain churn (i.e., domains dynamically joining and leaving). Despite advances in cross-domain orchestration, many proposals rely on heavy integration fabrics, multi-layer coordinators, and deep telemetry pipelines that hinder deployability and amplify coordination overhead. We propose a lightweight, decentralized conversational orchestration framework based on Large Language Model (LLM)-driven domain agents. Each domain remains autonomous: an agent observes local state via tools, reasons in a closed loop, and exchanges summaries with neighboring agents over an Agent-to-Agent (A2A) overlay aligned with data-plane coupling. Fast feasible placement is enabled by periodic, routing-like dissemination of reachability advertisements (latency, bottleneck bandwidth, and compute capacity), while safe re-optimization, scaling, and migration are handled through event-driven requests and negotiation. To meet real-time constraints, we deploy a compact reasoning model trained with verifier-based self-verification and periodically refined online via shadow updates. Simulations show manageable, near-linear control-plane overhead as domains scale and during domain joins, and robust decision quality, including recovery after objective changes. We close by outlining future research directions for principled, secure, and uncertainty-aware agentic orchestration in Organic 6G.",
+      "authors": [
+        "Masoud Shokrnezhad",
+        "Tarik Taleb"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.AI",
+        "cs.DC",
+        "cs.ET",
+        "cs.MA"
+      ],
+      "published": "2026-08-11T09:32:52+00:00",
+      "link": "https://arxiv.org/pdf/2608.10714v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "LLM-driven domain agents for decentralized orchestration across edge-cloud continuum",
+      "llm_evidence_cn": "LLM驱动的域智能体实现跨越边缘-云连续体的去中心化编排",
+      "llm_evidence": "LLM驱动的域智能体实现跨越边缘-云连续体的去中心化编排",
+      "canonical_evidence": "LLM驱动的域智能体实现跨越边缘-云连续体的去中心化编排",
+      "llm_tldr_en": "Presents a lightweight decentralized conversational orchestration framework using LLM-driven domain agents to manage services across the edge-cloud continuum in Organic 6G.",
+      "llm_tldr_cn": "有机6G愿景要求跨边缘-云和非地面资源的服务编排简单、可扩展且能应对域动态变化。本文提出一种基于大语言模型域智能体的轻量级去中心化会话式编排框架，每个域保持自治，由智能体通过工具观测本地状态、闭环推理并与其他域协商，避免重型集成和多层协调开销。该框架有望简化跨域服务提供，提升6G网络的敏捷性和可部署性。",
+      "llm_tldr": "有机6G愿景要求跨边缘-云和非地面资源的服务编排简单、可扩展且能应对域动态变化。本文提出一种基于大语言模型域智能体的轻量级去中心化会话式编排框架，每个域保持自治，由智能体通过工具观测本地状态、闭环推理并与其他域协商，避免重型集成和多层协调开销。该框架有望简化跨域服务提供，提升6G网络的敏捷性和可部署性。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.04588v1",
+      "source": "arxiv",
+      "title": "EASy: Towards Efficient LLM-Based Agentic System",
+      "abstract": "Agentic systems have emerged as a promising paradigm for solving complex tasks by coordinating specialized LLM-based agents. However, most existing systems primarily optimize task success while giving limited consideration to execution efficiency under practical constraints such as executor capability and computational cost. Existing router-based methods have limited ability to reason over rich, evolving task contexts, multi-step dependencies, and intermediate execution feedback, and often generalize poorly to unseen executors. We propose EASy, a trainable agentic framework that jointly optimizes task performance and computational efficiency through reinforcement learning. EASy equips an LLM-based orchestrator with explicit knowledge of the capability and cost profiles of heterogeneous executors, enabling context-sensitive coordination beyond performance-only routing. It further introduces a milestone-plan-act workflow that decomposes complex tasks into manageable milestones, constructs dependency-aware execution graphs, assigns suitable executors, and parallelizes independent steps while adapting subsequent decisions to intermediate outcomes. To train the orchestrator, we develop a tree-structured rollout procedure that explores alternative milestone decompositions and execution plans, together with multi-component rewards that capture task correctness, execution efficiency, and trajectory completeness. Extensive experiments on mathematical reasoning, embodied decision-making, and deep research benchmarks show that EASy consistently achieves stronger performance-efficiency trade-offs than strong agentic baselines.",
+      "authors": [
+        "Junnan Liu",
+        "Linhao Luo",
+        "Thuy-Trang Vu",
+        "Gholamreza Haffari"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-08-05T08:50:36+00:00",
+      "link": "https://arxiv.org/pdf/2608.04588v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "trainable agentic framework coordinating specialized LLM-based agents via RL",
+      "llm_evidence_cn": "通过强化学习协调多个LLM智能体并优化执行效率",
+      "llm_evidence": "通过强化学习协调多个LLM智能体并优化执行效率",
+      "canonical_evidence": "通过强化学习协调多个LLM智能体并优化执行效率",
+      "llm_tldr_en": "EASy is a trainable LLM-based agentic framework using RL to jointly optimize task performance and computational efficiency, equipping an orchestrator with executor capability and cost profiles.",
+      "llm_tldr_cn": "现有LLM智能体系统多只优化任务成功率，忽视执行效率和成本约束。EASy提出一个可训练的智能体编排框架，通过强化学习让编排器显式感知执行者能力与成本画像，联合优化任务性能和计算开销。相比基于路由的方法，EASy能更好推理动态任务上下文和多步依赖。实验表明其在多种未见执行者上具有更好的泛化性和效率。",
+      "llm_tldr": "现有LLM智能体系统多只优化任务成功率，忽视执行效率和成本约束。EASy提出一个可训练的智能体编排框架，通过强化学习让编排器显式感知执行者能力与成本画像，联合优化任务性能和计算开销。相比基于路由的方法，EASy能更好推理动态任务上下文和多步依赖。实验表明其在多种未见执行者上具有更好的泛化性和效率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.08605v2",
+      "source": "arxiv",
+      "title": "ForestBench: A Unified Graph Framework for Evaluating Multi-Agent Collaboration",
+      "abstract": "Multi-agent systems (MAS) built on Large Language Models (LLMs) are proliferating rapidly, but their heterogeneous execution traces provide no common basis for evaluation across methods. Outcome-only benchmarks discard collaborations, whereas LLM-as-Judge evaluation requires additional, model-dependent inference and can vary with the LLM and rubric. We introduce a generalizable evaluation framework that maps native MAS traces into a shared space of unified collaboration graphs, enabling different methods to be evaluated under the same representation, reference set, and metric panel. Candidate graphs are compared with a query-specific reference forest. Each forest is a benchmark-provided collection of verified-success graphs: it records diverse ways in which representative MAS methods can complete the task, rather than prescribing a unique optimal process. Instantiating the framework as ForestBench, we filter $844$ collaboration-necessary queries from seven public datasets, precompute ten successful target-conditioned reference graphs per query, and evaluate six representative MAS frameworks. Controlled backbone, reference-construction, and perturbation studies test the stability and scope of evaluation. Once the benchmark forests are built, ForestBench scores a trace in milliseconds without further LLM inference, providing a reusable structural basis for comparing diverse MAS collaboration traces.",
+      "authors": [
+        "Guo Chen",
+        "Ziwen Li",
+        "Reed Li",
+        "Yu Lu",
+        "Haibo Shi",
+        "Bingbing Xu",
+        "Junjie Huang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-09T09:38:52+00:00",
+      "link": "https://arxiv.org/pdf/2608.08605v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "unified collaboration graphs for evaluating multi-agent collaboration",
+      "llm_evidence_cn": "用统一协作图评估多智能体协作",
+      "llm_evidence": "用统一协作图评估多智能体协作",
+      "canonical_evidence": "用统一协作图评估多智能体协作",
+      "llm_tldr_en": "Introduces ForestBench, a graph-based framework that maps heterogeneous multi-agent traces into shared collaboration graphs for unified evaluation of collaboration quality.",
+      "llm_tldr_cn": "多智能体系统的执行轨迹异构，难以在不同方法间统一评估协作质量。本文提出ForestBench，将原生多智能体轨迹映射为统一的协作图，并以基准提供的验证成功图作为参考森林进行对比。该框架在统一表示、参考集和指标体系下评估候选图，无需额外模型推理，为多智能体协作提供可泛化的评测基础，对端云协同AI系统中的协作评估具有直接价值。",
+      "llm_tldr": "多智能体系统的执行轨迹异构，难以在不同方法间统一评估协作质量。本文提出ForestBench，将原生多智能体轨迹映射为统一的协作图，并以基准提供的验证成功图作为参考森林进行对比。该框架在统一表示、参考集和指标体系下评估候选图，无需额外模型推理，为多智能体协作提供可泛化的评测基础，对端云协同AI系统中的协作评估具有直接价值。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.10299v1",
+      "source": "arxiv",
+      "title": "Co-Evolution in Agentic Systems: Toward Self-Directed Evolution Beyond Human Design",
+      "abstract": "Agentic systems are increasingly expected to improve after deployment, yet single-entity self-evolution is often bounded by a static learning context, such as fixed tasks and feedback. This survey focuses on co-evolution in agentic systems, a multi-component form of self-evolution in which multiple agents and their environment impose adaptive pressure on one another. To organize existing papers, we propose a progressive three-stage taxonomy that traces how the system gradually sheds human-engineered constraints. Agent--Agent Co-Evolution studies how agents adapt through dynamic peers, including adversarial, collaborative, and organizational adaptation. Agent--Environment Co-Evolution extends this loop to adaptive tasks, feedback, and interaction spaces that change with the agents. Meta Co-Evolution further explores the possibility of making the evolution mechanism itself evolvable. We also discuss open challenges in evaluating such systems, scaling them across multiple components, and keeping increasingly autonomous evolutionary processes safe and controllable. This survey provides a unified foundation for building robust and open-ended agentic systems that can improve beyond fixed human-designed paths.",
+      "authors": [
+        "Qing Zong",
+        "Jiayu Liu",
+        "Junhao Shen",
+        "Zecong Tang",
+        "Linsi Wu",
+        "Yuxuan Liu",
+        "Rui Wang",
+        "Zhaowei Wang",
+        "Weiqi Wang",
+        "Cheng Qian",
+        "Xiusi Chen",
+        "Yangqiu Song"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-08-10T23:10:40+00:00",
+      "link": "https://arxiv.org/pdf/2608.10299v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "survey of agent-agent co-evolution including collaborative adaptation",
+      "llm_evidence_cn": "综述多智能体协同进化，涵盖协作与组织适应",
+      "llm_evidence": "综述多智能体协同进化，涵盖协作与组织适应",
+      "canonical_evidence": "综述多智能体协同进化，涵盖协作与组织适应",
+      "llm_tldr_en": "Surveys co-evolution in agentic systems, proposing a three-stage taxonomy from agent-agent to agent-environment co-evolution, covering collaborative and organizational adaptation.",
+      "llm_tldr_cn": "智能体系统往往被静态任务和反馈限制，难以自持续进化。本综述聚焦智能体系统中的协同进化，提出“智能体-智能体”到“智能体-环境”的三阶段分类体系，涵盖对抗、协作与组织适应等多种自适应压力。该框架为设计可自我导向进化的多智能体系统提供了理论视角，对协作式端云AI智能体的长期演进具有启示意义。",
+      "llm_tldr": "智能体系统往往被静态任务和反馈限制，难以自持续进化。本综述聚焦智能体系统中的协同进化，提出“智能体-智能体”到“智能体-环境”的三阶段分类体系，涵盖对抗、协作与组织适应等多种自适应压力。该框架为设计可自我导向进化的多智能体系统提供了理论视角，对协作式端云AI智能体的长期演进具有启示意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.03283v1",
+      "source": "arxiv",
+      "title": "AgentPanel: Toward a New Paradigm for Human--AI Collaboration in Exploring Scientific Questions",
+      "abstract": "Identifying promising scientific ideas remains an important challenge in research practice. Researchers commonly rely on small-group discussions or one-to-one interactions with a single large language model, yet these approaches often expose them to only a limited range of perspectives and directions. We present AgentPanel, a multi-agent forum for human--AI collaboration in scientific exploration. Heterogeneous agents asynchronously discuss scientific questions in a forum-style environment, while researchers can submit questions, browse and organize candidate ideas, engage agents in follow-up interactions, and optionally generate post-hoc summary reports. We evaluate AgentPanel in terms of idea quality, exploration breadth, interaction effectiveness, candidate-selection efficiency, and practical utility. Offline experiments show that AgentPanel outperforms a centralized multi-agent debate baseline. A human study with 20 participants further shows that users value AgentPanel for perspective diversity and exploration support. In experience-based comparisons with commonly used LLM tools, 65\\% of participants favored AgentPanel for both breadth of research directions and overall suitability for early-stage exploration. The platform is publicly available at https://agentpanel.cc/.",
+      "authors": [
+        "Zhiyao Cui",
+        "Qianyi Wang",
+        "Haoyang Yan",
+        "Yiqun Zhang",
+        "Siyue Ren",
+        "Hangfan Zhang",
+        "Zelin Tan",
+        "Hao Li",
+        "Chunjiang Mu",
+        "Dexian Cai",
+        "Shao Zhang",
+        "Chen Zhang",
+        "Meng Li",
+        "Jianan Chai",
+        "Yuting Fan",
+        "Zichao Ye",
+        "Xiaolei Yang",
+        "Xinyao Lu",
+        "Yuyang Yu",
+        "Wenjie Lou",
+        "Xiaosong Wang",
+        "Fenghua Ling",
+        "Shiyang Feng",
+        "Mao Su",
+        "Qiaosheng Zhang",
+        "Bo Zhang",
+        "Yang Chen",
+        "Lei Bai",
+        "Shuyue Hu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-04T07:58:15+00:00",
+      "link": "https://arxiv.org/pdf/2608.03283v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent forum for human-AI collaboration; collaborative exploration framework",
+      "llm_evidence_cn": "多智能体论坛支持人机协作探索科学问题",
+      "llm_evidence": "多智能体论坛支持人机协作探索科学问题",
+      "canonical_evidence": "多智能体论坛支持人机协作探索科学问题",
+      "llm_tldr_en": "AgentPanel introduces a multi-agent forum where heterogeneous agents asynchronously discuss scientific questions with human researchers, supporting idea exploration and follow-up interactions, and evaluates idea quality and exploration breadth.",
+      "llm_tldr_cn": "针对研究者依赖小组讨论或单一模型导致视野受限的问题，本文提出AgentPanel，一个多智能体论坛式人机协作平台。异构智能体异步讨论科学问题，研究者可提交问题、整理思路并参与后续互动，还可生成总结报告。实验评估表明该平台有效提升了想法质量与探索广度，为多智能体协作探索开辟了新范式。",
+      "llm_tldr": "针对研究者依赖小组讨论或单一模型导致视野受限的问题，本文提出AgentPanel，一个多智能体论坛式人机协作平台。异构智能体异步讨论科学问题，研究者可提交问题、整理思路并参与后续互动，还可生成总结报告。实验评估表明该平台有效提升了想法质量与探索广度，为多智能体协作探索开辟了新范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.04768v1",
+      "source": "arxiv",
+      "title": "Embedding Large Language Models into Flow Controls: An Agentic Framework for Adaptive and Trustworthy Automated Cooking",
+      "abstract": "Automated cooking robots have traditionally relied on predefined procedures and rule-based control, ensuring stable execution but offering limited personalization, whereas recent large-model approaches support natural language interaction but often suffer from opaque decision making and unreliable execution in real kitchens. To address this challenge, this paper proposes an agentic framework that systematically decomposes personalized cooking requirements into structured and verifiable control programs rather than directly mapping language to actions. Multiple AI agents collaboratively transform user intents into canonical recipes, workflow programs with explicit flow control, and executable Python code grounded in an atomic action library. The system consists of three tightly coupled stages: offline recipe-to-code generation through multiple agents, online closed-loop execution with supervisory intervention enabled by multimodal perception, and post-run adaptation that updates user preference models for long-term personalization. Real-world experiments on a physical cooking platform demonstrate that the proposed framework achieves reliable task completion, transparent execution logic, and effective anomaly handling across diverse personalized scenarios, validating its practicality for trustworthy automated cooking in real environments.",
+      "authors": [
+        "Zihan Song",
+        "Hongwei Huang",
+        "Yueshuo Sun",
+        "Yonglin Tian",
+        "Fei-Yue Wang",
+        "Bai Li"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-05T12:33:12+00:00",
+      "link": "https://arxiv.org/pdf/2608.04768v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multiple AI agents collaboratively transform user intents; agentic framework",
+      "llm_evidence_cn": "多智能体协作将用户意图转化为程序",
+      "llm_evidence": "多智能体协作将用户意图转化为程序",
+      "canonical_evidence": "多智能体协作将用户意图转化为程序",
+      "llm_tldr_en": "This paper presents an agentic framework that uses multiple collaborating AI agents to convert personalized cooking requirements into verifiable workflow programs and executable code, emphasizing trust and adaptability.",
+      "llm_tldr_cn": "针对自动烹饪机器人依赖预定义流程、缺乏个性化与可解释性的问题，本文提出一个智能体框架，将用户个性化需求分解为结构化且可验证的控制程序。多个AI智能体协作将用户意图转换为规范食谱、显式流程控制的编程和可执行Python代码，从而在保持稳定执行的同时提升自适应性与可靠性。该工作展示了多智能体协作在任务分解与可验证执行中的通用价值。",
+      "llm_tldr": "针对自动烹饪机器人依赖预定义流程、缺乏个性化与可解释性的问题，本文提出一个智能体框架，将用户个性化需求分解为结构化且可验证的控制程序。多个AI智能体协作将用户意图转换为规范食谱、显式流程控制的编程和可执行Python代码，从而在保持稳定执行的同时提升自适应性与可靠性。该工作展示了多智能体协作在任务分解与可验证执行中的通用价值。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.09640v1",
+      "source": "arxiv",
+      "title": "Abstractions for Network Intelligence: A Reference Architecture for AI at the Wireless Edge",
+      "abstract": "Networks are increasingly adopting AI as are AI applications leveraging networks. Awareness sharing between networks and AI applications promises to unlock higher levels of network utilization and application performance, but is inadequately supported in the current architecture of the Internet. In this paper, we describe a reference architecture that abstractly enables the synergistic interaction of intelligent applications and the intelligent network, via an information waist, and also supports the network intelligence services in the emerging intelligence plane in networks. We discuss the rationale for our AI-EDGE architecture, its functional requirements, and the core abstractions. We present a reference component-level design of the core abstractions to support experimentation and development on existing platforms for wireless networking (i.e., based on O-RAN cellular networks) and edge computing (i.e., based on 3GPP Edge App and ETSI MEC). Moreover, we provide representative use cases from the perspective of different types of users that demonstrate the benefits of the architecture in contexts of awareness sharing, portability, prototyping, and validation.",
+      "authors": [
+        "Salil Reddy",
+        "Haohuang Wen",
+        "Ness Shroff",
+        "Venki Ramaswamy",
+        "Zhiqiang Lin",
+        "Elisa Bertino",
+        "Jim Kurose",
+        "Anish Arora"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-08-10T14:21:50+00:00",
+      "link": "https://arxiv.org/pdf/2608.09640v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "reference architecture for AI at wireless edge, supporting interaction between intelligent apps and network",
+      "llm_evidence_cn": "面向无线边缘AI的参考架构，支持智能应用与网络协同交互",
+      "llm_evidence": "面向无线边缘AI的参考架构，支持智能应用与网络协同交互",
+      "canonical_evidence": "面向无线边缘AI的参考架构，支持智能应用与网络协同交互",
+      "llm_tldr_en": "Proposes a reference architecture enabling synergistic interaction between intelligent applications and the intelligent network via an information waist, supporting network intelligence services at the wireless edge.",
+      "llm_tldr_cn": "现有互联网架构难以支持智能应用与智能网络之间的感知共享，限制了网络利用率和应用性能。本文提出AI-EDGE参考架构，通过信息腰线抽象实现智能应用与智能网络的协同交互，并支持新兴网络智能面中的智能服务。该架构给出了功能需求、核心抽象和参考组件级设计，为无线边缘AI应用与网络的协作提供了系统化蓝图。该工作为端边协同的智能应用部署奠定了架构基础。",
+      "llm_tldr": "现有互联网架构难以支持智能应用与智能网络之间的感知共享，限制了网络利用率和应用性能。本文提出AI-EDGE参考架构，通过信息腰线抽象实现智能应用与智能网络的协同交互，并支持新兴网络智能面中的智能服务。该架构给出了功能需求、核心抽象和参考组件级设计，为无线边缘AI应用与网络的协作提供了系统化蓝图。该工作为端边协同的智能应用部署奠定了架构基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.10016v1",
+      "source": "arxiv",
+      "title": "Sheaf-Based Federated Representation Learning",
+      "abstract": "Heterogeneous federated systems require agents to learn and exchange informative representations despite differences in data distributions, sensing modalities, model architectures, latent dimensionalities, and local learning objectives. To address this challenge, we propose Sheaf-based Federated Representation Learning (SFRL), a general framework that jointly optimizes local objectives with a manifold-constrained geometric alignment regularizer based on learnable sheaf restriction maps. Unlike most existing approaches, SFRL does not assume a shared global latent space. Instead, global consistency emerges from the alignment of neighboring latent representations through orthogonal transformations and isometric embeddings. This alignment is enforced by a quadratic gluing regularizer induced by the sheaf Laplacian, whose learnable restriction maps adapt the geometry to the observed data. The penalty is evaluated on a small set of shared pilot samples, ensuring scalability and communication efficiency. We develop a decentralized algorithm for solving SFRL, termed Sheaf-FRL, which alternates between gradient updates of the local models and closed-form Procrustes updates of the edge-wise restriction maps. We further establish convergence of Sheaf-FRL to first-order stationary points in both deterministic and stochastic settings. As an application, we consider a cooperative classification task in the context of semantic communication, under model and data heterogeneity. Our results show that Sheaf-FRL outperforms baseline approaches in terms of local and post-communication classification accuracy across different levels of local distribution shift and exhibits greater robustness to latent-space dimensionality compression.",
+      "authors": [
+        "Gabriele D'Acunto",
+        "Enrico Grimaldi",
+        "Valeria Avino",
+        "Mario Edoardo Pandolfo",
+        "Leonardo Di Nino",
+        "Sergio Barbarossa",
+        "Paolo Di Lorenzo"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MA",
+        "eess.SP"
+      ],
+      "published": "2026-08-08T16:38:34+00:00",
+      "link": "https://arxiv.org/pdf/2608.10016v1",
+      "tags": [
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "federated learning across heterogeneous agents with geometric alignment",
+      "llm_evidence_cn": "面向异构智能体的联邦表示学习，通过几何对齐实现协作",
+      "llm_evidence": "面向异构智能体的联邦表示学习，通过几何对齐实现协作",
+      "canonical_evidence": "面向异构智能体的联邦表示学习，通过几何对齐实现协作",
+      "llm_tldr_en": "Proposes SFRL to align representations across heterogeneous federated agents without a shared global latent space, using sheaf-based geometric regularization.",
+      "llm_tldr_cn": "该文提出基于层片（Sheaf）的联邦表示学习框架SFRL，解决异构联邦系统中各智能体在数据分布、模型结构等差异下的表示交换问题。方法通过可学习的限制映射和流形约束对齐邻居表示，无需共享全局潜空间。实验表明在异构设定下能提升表示一致性与下游性能。为联邦与多智能体协作提供了新的几何对齐工具。",
+      "llm_tldr": "该文提出基于层片（Sheaf）的联邦表示学习框架SFRL，解决异构联邦系统中各智能体在数据分布、模型结构等差异下的表示交换问题。方法通过可学习的限制映射和流形约束对齐邻居表示，无需共享全局潜空间。实验表明在异构设定下能提升表示一致性与下游性能。为联邦与多智能体协作提供了新的几何对齐工具。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
