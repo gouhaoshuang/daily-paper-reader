@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-13",
+  "date": "2026-08-13",
+  "generated_at": "2026-08-13T20:13:00",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/13/2608.11840v1-user-assisted-collaborative-distributed-inference-for-efficient-qos-aware-autoscaling",
+      "section": "deep",
+      "title_en": "User-Assisted Collaborative Distributed Inference for Efficient QoS-Aware Autoscaling",
+      "authors": "Alfreds Lapkovskis, Ali Beikmohammadi, Sindri Magnússon, Praveen Kumar Donta",
+      "date": "2026-08-12",
+      "pdf": "https://arxiv.org/pdf/2608.11840v1",
+      "score": "8.0",
+      "evidence": "用户协助的协同分布式推理直接契合边缘云协同AI智能体系统的资源协作模式",
+      "tldr": "AI推理服务需求快速增长，集中式服务基础设施成本高昂。为此提出用户辅助的协作分布式推理系统，将专用基础设施与用户贡献资源相结合：专用资源保障服务质量基线，志愿资源动态吸收增长需求。基于高维生成马尔可夫模型支撑仿真与调度优化，模拟显示分布式调度随用户规模扩大优势愈发明显，能显著提升请求完成率、降低P99延迟并大幅削减专用资源消耗，为绿色高效的基础设施自动扩缩容提供了可行方案。",
+      "tags": "query:eca",
+      "abstract_en": "Growing demand for artificial intelligence (AI) inference services requires scalable infrastructure, yet centralized serving costs rise with demand. We propose a collaborative distributed inference system combining dedicated infrastructure with resources contributed by service users. Dedicated resources provide baseline capacity for maintaining quality of service (QoS), while volunteered resources absorb increasing demand without proportional growth in centralized infrastructure. To capture stochastic and dynamic interactions among users, resources, tasks, and policies, we develop a high-dimensional generative Markov model with structured temporal factorization. The model supports simulation and provides a foundation for task scheduling and QoS-aware resource allocation optimization. We evaluate the system across user populations, resource capacities, and centralized and distributed scheduling policies. Simulations show that distributed scheduling becomes increasingly advantageous as the user population grows, improving request completion and P99 latency while substantially reducing dedicated resource consumption. These results demonstrate the feasibility of user-assisted collaborative inference for infrastructure-efficient autoscaling.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/13/2608.11965v1-developing-llm-based-multi-agent-systems-in-software-engineering-a-mixed-method-experience-report",
+      "section": "deep",
+      "title_en": "Developing LLM-based Multi-Agent Systems in Software Engineering: A Mixed-Method Experience Report",
+      "authors": "Mariama Celi Serafim De Oliveira, Motunrayo Osatohanmen Ibiyo, Marco Gianrusso, Claudio Di Sipio, Davide Di Ruscio, Phuong T. Nguyen",
+      "date": "2026-08-12",
+      "pdf": "https://arxiv.org/pdf/2608.11965v1",
+      "score": "8.0",
+      "evidence": "关于开发LLM多智能体系统的经验报告，直接涉及智能体协作与协调",
+      "tldr": "LLM多智能体系统在软件工程中应用日益广泛，但开发者常面临技术选型、协调规则与角色设计等挑战。本文采用混合方法进行经验报告：先定量评估主流开源MAS框架的文档与能力，再通过README.md摘要任务对部分框架进行定性比较。结果显示现有框架基本覆盖核心组件，但缺少代理遥测等高级特性，且各框架摘要效果无显著差异。研究总结了经验教训与挑战，为研究者与从业者选择合适的MAS框架提供实践指导。",
+      "tags": "query:eca",
+      "abstract_en": "The proliferation of Generative Artificial Intelligence (Gen AI) powered by large language models (LLMs) has transformed the software development process, introducing new paradigms for code generation, debugging, testing, and maintenance. While early applications focused on leveraging single, independent LLMs to assist developers with isolated tasks, recent advances have shifted toward multi-agent systems (MAS) that orchestrate multiple LLM-based agents working collaboratively toward common objectives. Despite their promising potential, using MAS encompasses a set of challenges for developers who have to carefully select the right technology, devise proper coordination rules, and design specific roles for the involved agents. In this paper, we provide a comprehensive overview of the existing tools and frameworks for implementing MAS in software engineering. First, we conducted a quantitative analysis of the most relevant open source MAS frameworks by evaluating their documentation, features, and capabilities from the developers' perspective. Second, we performed a qualitative evaluation of a subset of the selected frameworks by implementing a common use case: the summarization of README.MD files. The findings show that the selected frameworks provide a good coverage of fundamental components of MAS, though advanced features such as telemetry of agents are still missing. In addition, the empirical evaluation shows that there is no significant difference in terms of ROUGE scores considering the summarization task. Finally, we provide a set of lessons learned and challenges that can help researchers and practitioners to select a suitable MAS framework according to their needs.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/13/2608.11524v1-descriptive-dispatch-of-computational-work",
+      "section": "quick",
+      "title_en": "Descriptive Dispatch of Computational Work",
+      "authors": "Vanessa Sochat, Daniel Milroy",
+      "date": "2026-08-12",
+      "pdf": "https://arxiv.org/pdf/2608.11524v1",
+      "score": "6.0",
+      "evidence": "基于智能体跨多集群环境的计算工作调度，与分布式边缘云代理编排具有可迁移性",
+      "tldr": "代理技术正被用于多集群科学工作流的调度，但动态作业转换与异构集群提交面临诸多挑战。本文设计并评估了一个调度代理，在432次运行中覆盖五种特征维度和四种提示风格，整体成功率达97.9%。多集群实验表明，加入描述性元数据后，220个作业的成功执行率由48%提升至87%，消除了架构不匹配，并使十个应用中的五个性能最高提升3.3倍。这验证了描述性元数据对调度可靠性和性能的关键作用，为新型代理式编排提供了依据。",
+      "tags": "query:eca",
+      "abstract_en": "Agents powered by AI/ML are becoming ingrained in orchestration. Dispatch of work is the task of receiving a request, transforming it for a workload manager, and successfully submitting it. Running scientific workflows across multi-cluster environments introduces substantial challenges of dynamic job transformation, dispatch, and submission to heterogeneous clusters. These tasks are well-suited to agents, which can receive textual instructions for work, prepare job specifications, and dispatch. In this work, we assess the reliability of a dispatch agent across 432 runs, testing all possible combinations of five feature dimensions across four prompt styles. The agent is highly reliable (97.9% success). We test a full orchestration to submit, queue, match, score, select, transform, and dispatch in a multi-cluster experiment. We find that descriptive metadata increases successful execution from 48% to 87% of 220 submitted jobs, eliminating architecture mismatch, and improving performance for five of ten measurable applications by up to 3.3x.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

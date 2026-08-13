@@ -1,0 +1,134 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-13T20:09:26.433519+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2608.11840v1",
+      "source": "arxiv",
+      "title": "User-Assisted Collaborative Distributed Inference for Efficient QoS-Aware Autoscaling",
+      "abstract": "Growing demand for artificial intelligence (AI) inference services requires scalable infrastructure, yet centralized serving costs rise with demand. We propose a collaborative distributed inference system combining dedicated infrastructure with resources contributed by service users. Dedicated resources provide baseline capacity for maintaining quality of service (QoS), while volunteered resources absorb increasing demand without proportional growth in centralized infrastructure. To capture stochastic and dynamic interactions among users, resources, tasks, and policies, we develop a high-dimensional generative Markov model with structured temporal factorization. The model supports simulation and provides a foundation for task scheduling and QoS-aware resource allocation optimization. We evaluate the system across user populations, resource capacities, and centralized and distributed scheduling policies. Simulations show that distributed scheduling becomes increasingly advantageous as the user population grows, improving request completion and P99 latency while substantially reducing dedicated resource consumption. These results demonstrate the feasibility of user-assisted collaborative inference for infrastructure-efficient autoscaling.",
+      "authors": [
+        "Alfreds Lapkovskis",
+        "Ali Beikmohammadi",
+        "Sindri Magnússon",
+        "Praveen Kumar Donta"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.AI",
+        "cs.LG",
+        "cs.NI",
+        "cs.PF"
+      ],
+      "published": "2026-08-12T09:28:43+00:00",
+      "link": "https://arxiv.org/pdf/2608.11840v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Collaborative distributed inference with user-contributed resources directly matches edge-cloud collaborative AI agent systems",
+      "llm_evidence_cn": "用户协助的协同分布式推理直接契合边缘云协同AI智能体系统的资源协作模式",
+      "llm_evidence": "用户协助的协同分布式推理直接契合边缘云协同AI智能体系统的资源协作模式",
+      "canonical_evidence": "用户协助的协同分布式推理直接契合边缘云协同AI智能体系统的资源协作模式",
+      "llm_tldr_en": "Proposes a collaborative distributed inference system combining dedicated infrastructure with user-contributed resources, supporting QoS-aware autoscaling via a structured temporal-factorized generative Markov model to absorb demand without proportional infrastructure growth.",
+      "llm_tldr_cn": "集中式AI推理服务成本随需求增长而上升，扩展性受限。本文提出协同分布式推理系统，将专用基础设施与用户贡献资源结合，专用资源维持QoS基线，志愿资源吸收需求波动。通过结构化时间因子分解的高维生成马尔可夫模型刻画随机动态，为任务调度与自动伸缩提供基础。实验证明该方法能在不比例扩展中心设施的情况下维持服务质量。",
+      "llm_tldr": "集中式AI推理服务成本随需求增长而上升，扩展性受限。本文提出协同分布式推理系统，将专用基础设施与用户贡献资源结合，专用资源维持QoS基线，志愿资源吸收需求波动。通过结构化时间因子分解的高维生成马尔可夫模型刻画随机动态，为任务调度与自动伸缩提供基础。实验证明该方法能在不比例扩展中心设施的情况下维持服务质量。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.11965v1",
+      "source": "arxiv",
+      "title": "Developing LLM-based Multi-Agent Systems in Software Engineering: A Mixed-Method Experience Report",
+      "abstract": "The proliferation of Generative Artificial Intelligence (Gen AI) powered by large language models (LLMs) has transformed the software development process, introducing new paradigms for code generation, debugging, testing, and maintenance. While early applications focused on leveraging single, independent LLMs to assist developers with isolated tasks, recent advances have shifted toward multi-agent systems (MAS) that orchestrate multiple LLM-based agents working collaboratively toward common objectives. Despite their promising potential, using MAS encompasses a set of challenges for developers who have to carefully select the right technology, devise proper coordination rules, and design specific roles for the involved agents. In this paper, we provide a comprehensive overview of the existing tools and frameworks for implementing MAS in software engineering. First, we conducted a quantitative analysis of the most relevant open source MAS frameworks by evaluating their documentation, features, and capabilities from the developers' perspective. Second, we performed a qualitative evaluation of a subset of the selected frameworks by implementing a common use case: the summarization of README.MD files. The findings show that the selected frameworks provide a good coverage of fundamental components of MAS, though advanced features such as telemetry of agents are still missing. In addition, the empirical evaluation shows that there is no significant difference in terms of ROUGE scores considering the summarization task. Finally, we provide a set of lessons learned and challenges that can help researchers and practitioners to select a suitable MAS framework according to their needs.",
+      "authors": [
+        "Mariama Celi Serafim De Oliveira",
+        "Motunrayo Osatohanmen Ibiyo",
+        "Marco Gianrusso",
+        "Claudio Di Sipio",
+        "Davide Di Ruscio",
+        "Phuong T. Nguyen"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-08-12T11:53:44+00:00",
+      "link": "https://arxiv.org/pdf/2608.11965v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "experience report on developing LLM-based multi-agent systems, directly addresses collaboration and coordination",
+      "llm_evidence_cn": "关于开发LLM多智能体系统的经验报告，直接涉及智能体协作与协调",
+      "llm_evidence": "关于开发LLM多智能体系统的经验报告，直接涉及智能体协作与协调",
+      "canonical_evidence": "关于开发LLM多智能体系统的经验报告，直接涉及智能体协作与协调",
+      "llm_tldr_en": "Presents a mixed-method experience report on developing LLM-based multi-agent systems in software engineering, covering technology selection, coordination rules, and agent role design.",
+      "llm_tldr_cn": "基于LLM的多智能体系统在软件工程中显示出潜力，但开发中面临技术选型、协调规则设计和角色划分等挑战。本文通过混合方法经验报告，系统总结了开发这类系统时的实践经验和教训，涵盖了技术选型、智能体角色设计与协调机制等方面，为开发者提供指导。",
+      "llm_tldr": "基于LLM的多智能体系统在软件工程中显示出潜力，但开发中面临技术选型、协调规则设计和角色划分等挑战。本文通过混合方法经验报告，系统总结了开发这类系统时的实践经验和教训，涵盖了技术选型、智能体角色设计与协调机制等方面，为开发者提供指导。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.11524v1",
+      "source": "arxiv",
+      "title": "Descriptive Dispatch of Computational Work",
+      "abstract": "Agents powered by AI/ML are becoming ingrained in orchestration. Dispatch of work is the task of receiving a request, transforming it for a workload manager, and successfully submitting it. Running scientific workflows across multi-cluster environments introduces substantial challenges of dynamic job transformation, dispatch, and submission to heterogeneous clusters. These tasks are well-suited to agents, which can receive textual instructions for work, prepare job specifications, and dispatch. In this work, we assess the reliability of a dispatch agent across 432 runs, testing all possible combinations of five feature dimensions across four prompt styles. The agent is highly reliable (97.9% success). We test a full orchestration to submit, queue, match, score, select, transform, and dispatch in a multi-cluster experiment. We find that descriptive metadata increases successful execution from 48% to 87% of 220 submitted jobs, eliminating architecture mismatch, and improving performance for five of ten measurable applications by up to 3.3x.",
+      "authors": [
+        "Vanessa Sochat",
+        "Daniel Milroy"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-08-12T00:27:05+00:00",
+      "link": "https://arxiv.org/pdf/2608.11524v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Agent-based dispatch across multi-cluster environments parallels distributed edge-cloud agent orchestration",
+      "llm_evidence_cn": "基于智能体跨多集群环境的计算工作调度，与分布式边缘云代理编排具有可迁移性",
+      "llm_evidence": "基于智能体跨多集群环境的计算工作调度，与分布式边缘云代理编排具有可迁移性",
+      "canonical_evidence": "基于智能体跨多集群环境的计算工作调度，与分布式边缘云代理编排具有可迁移性",
+      "llm_tldr_en": "Evaluates a dispatch agent for scientific workflows across multi-cluster environments, testing 432 runs with five feature dimensions and four prompt styles, achieving 97.9% reliability in job transformation, dispatch, and submission to heterogeneous clusters.",
+      "llm_tldr_cn": "在多集群环境中，工作负载的动态转换与提交面临异构集群调度挑战，非常适合由AI智能体承担。本文评估了一个描述式调度智能体在432次运行中的可靠性，覆盖五种特征维度和四种提示风格，总体成功率达97.9%。这一结果表明智能体可有效完成面向异构集群的任务调度与编排，为分布式边缘云代理架构提供了实证基础。",
+      "llm_tldr": "在多集群环境中，工作负载的动态转换与提交面临异构集群调度挑战，非常适合由AI智能体承担。本文评估了一个描述式调度智能体在432次运行中的可靠性，覆盖五种特征维度和四种提示风格，总体成功率达97.9%。这一结果表明智能体可有效完成面向异构集群的任务调度与编排，为分布式边缘云代理架构提供了实证基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
