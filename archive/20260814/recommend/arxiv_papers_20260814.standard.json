@@ -1,0 +1,218 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-14T21:01:20.138029+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.13394v1",
+      "source": "arxiv",
+      "title": "Heterogeneity-Aware Belief Synchronization for Semantic Communication in AI-Native 6G Networks",
+      "abstract": "6G networks will not be serving as communication infrastructures only; rather, they are expected to evolve into intelligent systems, where thousands of autonomous artificial intelligence (AI) agents are interconnected. The agents are deployed across a wide range of platforms including low Earth orbit (LEO) satellites, high-altitude platforms (HAPs), unmanned aerial vehicles (UAVs), edge servers, and terrestrial devices. These agents continuously observe their environment and exchange information. Semantic communication provides an efficient mechanism for exchanging meaningful information instead of raw data. However, its effectiveness depends on the communicating agents having sufficiently aligned beliefs to correctly interpret and decode the transmitted messages. This assumption becomes difficult to satisfy in the 6G network where heterogeneous AI models operate under diverse computational constraints and continuously acquire different knowledge from their local environments. This article presents a heterogeneity-aware belief synchronization framework for 6G AI-native networks. It uses latent translation models deployed on multi-access edge computing (MEC) servers. These models translate belief updates from one agent to agent-specific knowledge without requiring joint training and a homogeneous architecture of models. By exchanging compact belief updates through a latent translation model only when necessary, the framework preserves privacy, reduces synchronization cost, and minimizes local knowledge drift. We validate the framework through a case study on a multi-layered terrestrial/non-terrestrial network. Results demonstrate that it maintains low synchronization cost, measured by the number of parameters transmitted, and low belief alignment error across the heterogeneous agents in the case study.",
+      "authors": [
+        "Muhammad Hannan Akram",
+        "Muhammad Abubakar Rashid",
+        "Wassi Haider Kabir",
+        "Haejoon Jung",
+        "Kapal Dev",
+        "Syed Ali Hassan"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-08-13T15:53:15+00:00",
+      "link": "https://arxiv.org/pdf/2608.13394v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Addresses autonomous AI agents across edge servers, satellites and devices exchanging semantic information, central to edge-cloud collaborative agent systems.",
+      "llm_evidence_cn": "研究边缘服务器、卫星和设备上自治AI智能体的语义信息交换，是端云协同智能体系统的核心问题。",
+      "llm_evidence": "研究边缘服务器、卫星和设备上自治AI智能体的语义信息交换，是端云协同智能体系统的核心问题。",
+      "canonical_evidence": "研究边缘服务器、卫星和设备上自治AI智能体的语义信息交换，是端云协同智能体系统的核心问题。",
+      "llm_tldr_en": "Addresses belief alignment for semantic communication among AI agents on heterogeneous edge-cloud platforms; proposes heterogeneity-aware belief synchronization so distributed agents correctly interpret exchanged information in AI-native 6G networks.",
+      "llm_tldr_cn": "针对6G网络中分布在边缘服务器、卫星、无人机和地面设备上的自主AI智能体进行语义通信时信念不一致的问题，提出异构感知的信念同步方法。通过感知各平台异质性并同步信念，保证智能体在交换高层语义消息时能够正确解读。实验表明该方法有效支持大规模分布式智能体的语义协作，为端云协同智能系统提供了关键同步机制。",
+      "llm_tldr": "针对6G网络中分布在边缘服务器、卫星、无人机和地面设备上的自主AI智能体进行语义通信时信念不一致的问题，提出异构感知的信念同步方法。通过感知各平台异质性并同步信念，保证智能体在交换高层语义消息时能够正确解读。实验表明该方法有效支持大规模分布式智能体的语义协作，为端云协同智能系统提供了关键同步机制。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.11676v1",
+      "source": "arxiv",
+      "title": "XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication",
+      "abstract": "Heterogeneous multi-agent LLM systems, where agents are powered by different model families, can outperform homogeneous configurations by reducing redundant reasoning patterns. Yet existing communication protocols either operate through text, discarding the sender's internal representations, or require architectural homogeneity for latent-level transfer. We identify the entity grounding problem in cross-architecture communication: cross-attention bridges that transfer continuous representations across different LLM families suffer from rare-token compression collapse, where entity identity is lost in the continuous bottleneck (bridge-only F1 ~30%). We propose XBRIDGE, a decode-free communication protocol that addresses this through two mechanisms. Lexical Anchor Mapping (LAM) maps the sender's original context tokens to the receiver's vocabulary, providing discrete entity anchors. A Latent Enrichment Bridge (LEB) lets the receiver query the sender's hidden states for contextual enrichment. The entity anchors ground the bridge's contextual signals to specific entities through the receiver's own self-attention. Across three model families (Llama, Qwen, and Mistral), seven benchmarks, and both communication directions, XBRIDGE outperforms text-based communication on all seven tasks for each model pair while achieving 11x lower latency, and in a same-architecture setting it also exceeds a KV-sharing baseline on six of seven tasks. LEB requires only 264M trainable parameters (3.8% of the receiver), is trained on a small balanced sample set, and adds negligible inference overhead.",
+      "authors": [
+        "Wooseong Yang",
+        "Wei-Chieh Huang",
+        "Weizhi Zhang",
+        "Yu Wang",
+        "Philip S. Yu",
+        "Junhyun Lee"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-12T05:32:33+00:00",
+      "link": "https://arxiv.org/pdf/2608.11676v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Proposes a decode-free communication protocol for heterogeneous multi-agent LLM systems, enhancing multi-agent collaboration.",
+      "llm_evidence_cn": "提出面向异构多智能体大语言模型系统的免解码通信协议，增强智能体间协作能力。",
+      "llm_evidence": "提出面向异构多智能体大语言模型系统的免解码通信协议，增强智能体间协作能力。",
+      "canonical_evidence": "提出面向异构多智能体大语言模型系统的免解码通信协议，增强智能体间协作能力。",
+      "llm_tldr_en": "XBRIDGE introduces an entity-grounded latent bridge for heterogeneous LLM agents, preventing rare-token compression collapse and enabling decode-free cross-architecture communication.",
+      "llm_tldr_cn": "针对异构大语言模型智能体在跨架构通信中实体信息丢失的难题，提出XBRIDGE协议。它采用实体锚定的潜在桥接，无需解码即可在来自不同模型家族的智能体间传递连续表征，避免罕见词压缩造成的实体身份崩塌。实验表明该方法显著提升桥接F1，为异构多智能体协作提供了新的通信机制。",
+      "llm_tldr": "针对异构大语言模型智能体在跨架构通信中实体信息丢失的难题，提出XBRIDGE协议。它采用实体锚定的潜在桥接，无需解码即可在来自不同模型家族的智能体间传递连续表征，避免罕见词压缩造成的实体身份崩塌。实验表明该方法显著提升桥接F1，为异构多智能体协作提供了新的通信机制。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.12921v1",
+      "source": "arxiv",
+      "title": "Discovering Efficient and Explainable Communication Topologies for LLM-based Multi-Agent Systems via Causal Inference",
+      "abstract": "The performance of large language model (LLM)-based multi-agent systems (MAS) largely depends on effective communication topologies. Existing topology generation methods, however, typically learn communication topologies through black-box optimization driven solely by task-level rewards. While effective, such optimization provides little insight into why particular communication edges are selected, making it difficult to identify the critical communication subgraphs responsible for successful collaboration. To address this limitation, we propose E2-Explainer, a model-agnostic framework for providing interpretable explanations of communication topologies produced by arbitrary topology generators. Specifically, we formulate topology explanation as a causal attribution problem that identifies compact communication subgraphs supported by edge-level evidence of task preservation. We obtain this evidence with a Granger-style objective that measures how masking each communication channel changes the task outcome and the stability of the final response. The resulting budgeted subgraphs are then distilled into an amortized explainer, enabling efficient post-hoc explanation without repeated edge-level evaluations at deployment. Extensive experiments on multiple reasoning and coding benchmarks demonstrate that E2-Explainer identifies critical communication subgraphs that preserve successful collaboration. These subgraphs can also be executed directly to prune redundant communication edges, substantially reducing communication costs while maintaining competitive task performance.",
+      "authors": [
+        "Junzhi Li",
+        "Peng He",
+        "Qirui Ji",
+        "Wei Wang",
+        "Lixiang Liu",
+        "Chuxiong Sun"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-08-13T08:03:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.12921v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Explainable communication topologies for LLM-based multi-agent systems, directly addresses collaboration",
+      "llm_evidence_cn": "针对LLM多代理系统的通信拓扑可解释性，直接研究多代理协作机制",
+      "llm_evidence": "针对LLM多代理系统的通信拓扑可解释性，直接研究多代理协作机制",
+      "canonical_evidence": "针对LLM多代理系统的通信拓扑可解释性，直接研究多代理协作机制",
+      "llm_tldr_en": "This paper proposes E2-Explainer, a model-agnostic framework that provides interpretable explanations of communication topologies in LLM-based multi-agent systems, identifying critical subgraphs for successful collaboration.",
+      "llm_tldr_cn": "LLM多代理系统的通信拓扑对协作性能至关重要，但现有生成方法难以解释边选择的理由。本文提出E2-Explainer，一个模型无关的框架，通过因果推断为任意拓扑生成器提供可解释的通信拓扑说明，帮助识别对成功协作关键的子图。该方法为理解和优化多代理协作提供了新的工具，对端云协同代理的通信设计具有借鉴意义。",
+      "llm_tldr": "LLM多代理系统的通信拓扑对协作性能至关重要，但现有生成方法难以解释边选择的理由。本文提出E2-Explainer，一个模型无关的框架，通过因果推断为任意拓扑生成器提供可解释的通信拓扑说明，帮助识别对成功协作关键的子图。该方法为理解和优化多代理协作提供了新的工具，对端云协同代理的通信设计具有借鉴意义。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.13476v1",
+      "source": "arxiv",
+      "title": "MARC v1: An Open-Source Multi-Agent Framework for Clinical AI Reasoning and Coordination",
+      "abstract": "We present Multi-Agent Reasoning and Coordination (MARC), an open-source framework that replaces monolithic LLM prompting with deterministic multi-agent orchestration for clinical reasoning. MARC coordinates role-specialized agents for extraction, reasoning, answer generation, and evaluation, with explicit context passing and traceable intermediate outputs, enabling stage-wise failure attribution. We additionally introduce a Decomposer module that generates task-specific agent prompts from a plain-language description, eliminating manual prompt engineering. The framework supports both API-based and local CPU-compatible deployments and is entirely configurable via YAML, without code modifications. MARC is designed to be model-agnostic, interpretable, and accessible to clinical domain experts without programming expertise. The full framework is available at https://github.com/Penn-RAIL/MARC-v1.",
+      "authors": [
+        "Saisha Shetty",
+        "Satvik Tripathi",
+        "Austin Lin",
+        "Colin Zhao",
+        "Theodore Kim",
+        "Don Enwerem",
+        "Jacinta Arnold",
+        "Shahriar Faghani",
+        "Tessa S Cook"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-08-13T17:00:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.13476v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "deterministic multi-agent orchestration with role-specialized agents and auto-generated prompts",
+      "llm_evidence_cn": "确定性多智能体编排，协调特化角色代理并自动生成提示",
+      "llm_evidence": "确定性多智能体编排，协调特化角色代理并自动生成提示",
+      "canonical_evidence": "确定性多智能体编排，协调特化角色代理并自动生成提示",
+      "llm_tldr_en": "Replaces monolithic LLM prompting with deterministic multi-agent orchestration for clinical reasoning, introducing a Decomposer to auto-generate agent prompts; supports API/local CPU deployment and YAML configuration.",
+      "llm_tldr_cn": "临床推理中单体大模型提示存在难以定位失败环节、提示工程繁琐等问题。MARC以确定性多智能体编排替代单体提示，协调抽取、推理、答案生成与评估等角色，并引入Decomposer模块根据自然语言描述自动生成智能体提示。框架支持API与本地CPU部署，全部通过YAML配置，无需修改代码，为可溯源的多智能体协调提供通用开源方案。",
+      "llm_tldr": "临床推理中单体大模型提示存在难以定位失败环节、提示工程繁琐等问题。MARC以确定性多智能体编排替代单体提示，协调抽取、推理、答案生成与评估等角色，并引入Decomposer模块根据自然语言描述自动生成智能体提示。框架支持API与本地CPU部署，全部通过YAML配置，无需修改代码，为可溯源的多智能体协调提供通用开源方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.13420v1",
+      "source": "arxiv",
+      "title": "Enhancing Virtual Agents through SLMs and Edge-Computing: An Exploratory Evaluation of Think and Memory Processes",
+      "abstract": "Embodied intelligent virtual agents are expected to operate as persistent, adaptive, and context-aware entities within complex virtual and Metaverse worlds. However, implementing cognitively capable agents in such environments is conceptually and technologically challenging. Among a range of blueprints and development approaches, the Cognitive Embodied Agent Architecture (CEAA) has been developed as an implementation-oriented framework for architecting components of perception, memory, reasoning, planning, and embodied action. Considering the recent advances in edge computing and generative AI language models, this paper explores the use of Small Language Models (SLMs) to support edge-based operation of selected CEAA components, focusing on \"Think\" and \"Memory\" as processes central to cognitive orchestration and persistence of virtual agents in interactive virtual worlds. An edge-based virtual agent gateway system was developed and evaluated on an NVIDIA Jetson Orin NX using Qwen2.5 models of different sizes, exploring the system's capability to process service requests and handle memory-driven conversations. A series of simulation experiments evaluated routing accuracy, memory-read performance, and latency, demonstrating an SLM-driven prototype agent system that partially implements selected CEAA processes to support the development of embodied agents whose cognitive \"brain\" can operate efficiently and contextually for interactive experiences in immersive virtual worlds.",
+      "authors": [
+        "Aimilios Hadjiliasi",
+        "Louis Nisiotis"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-13T16:12:52+00:00",
+      "link": "https://arxiv.org/pdf/2608.13420v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Explores edge computing with small language models for virtual agents",
+      "llm_evidence_cn": "探索利用边缘计算与小语言模型增强虚拟智能体",
+      "llm_evidence": "探索利用边缘计算与小语言模型增强虚拟智能体",
+      "canonical_evidence": "探索利用边缘计算与小语言模型增强虚拟智能体",
+      "llm_tldr_en": "Explores using Small Language Models and edge computing for embodied virtual agents, showing that SLMs can support edge-based operation; directly relevant to distributed edge-cloud agent architecture.",
+      "llm_tldr_cn": "该论文针对具身智能体在虚拟环境中的认知能力实现难题，提出基于CEAA框架，利用小语言模型和边缘计算支持智能体的思考与记忆过程。实验探索表明，SLMs能够在边缘端运行，为智能体提供低延迟的认知功能。其价值在于验证了边缘部署智能体组件的可行性，为端云协同智能体系统提供了技术基础，但尚未涉及云侧协作与整体分布式架构。",
+      "llm_tldr": "该论文针对具身智能体在虚拟环境中的认知能力实现难题，提出基于CEAA框架，利用小语言模型和边缘计算支持智能体的思考与记忆过程。实验探索表明，SLMs能够在边缘端运行，为智能体提供低延迟的认知功能。其价值在于验证了边缘部署智能体组件的可行性，为端云协同智能体系统提供了技术基础，但尚未涉及云侧协作与整体分布式架构。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

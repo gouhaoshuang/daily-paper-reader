@@ -6,31 +6,35 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-13
-- 运行时间：2026-08-13 20:12:53 UTC
+- 最新运行日期：2026-08-14
+- 运行时间：2026-08-14 21:05:02 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：2
-- 速读区：1
+- 本次总论文数：5
+- 精读区：3
+- 速读区：2
 
 ### 今日简报（AI）
-今日精读2篇、速读1篇，聚焦QoS自动扩缩容与LLM多智能体软件工程应用。  
-最值得关注：用户辅助协作推理可高效优化自动扩缩容，且LLM多智能体在软件工程中已有实证经验。  
-下一步可尝试将LLM多智能体协作模式融入实际运维场景，并验证自动扩缩容策略的落地效果。
-- 详情：[/202608/13/README](/202608/13/README)
+今日精读聚焦AI原生6G语义通信与异构LLM通信，速读覆盖临床多智能体及边缘SLM。最值得关注的是《Heterogeneity-Aware Belief Synchronization》与《XBridge》，分别拿下9.0和8.0高分。下一步可优先了解XBridge如何用实体锚定潜桥实现异构模型高效协作。
+- 详情：[/202608/14/README](/202608/14/README)
 
 ### 精读区论文标签
-1. [User-Assisted Collaborative Distributed Inference for Efficient QoS-Aware Autoscaling](/202608/13/2608.11840v1-user-assisted-collaborative-distributed-inference-for-efficient-qos-aware-autoscaling)  
+1. [Heterogeneity-Aware Belief Synchronization for Semantic Communication in AI-Native 6G Networks](/202608/14/2608.13394v1-heterogeneity-aware-belief-synchronization-for-semantic-communication-in-ai-native-6g-networks)  
+   标签：评分：9.0/10、query:eca
+   evidence：研究边缘服务器、卫星和设备上自治AI智能体的语义信息交换，是端云协同智能体系统的核心问题。
+2. [XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication](/202608/14/2608.11676v1-xbridge-entity-grounded-latent-bridge-for-heterogeneous-llm-communication)  
    标签：评分：8.0/10、query:eca
-   evidence：用户协助的协同分布式推理直接契合边缘云协同AI智能体系统的资源协作模式
-2. [Developing LLM-based Multi-Agent Systems in Software Engineering: A Mixed-Method Experience Report](/202608/13/2608.11965v1-developing-llm-based-multi-agent-systems-in-software-engineering-a-mixed-method-experience-report)  
+   evidence：提出面向异构多智能体大语言模型系统的免解码通信协议，增强智能体间协作能力。
+3. [Discovering Efficient and Explainable Communication Topologies for LLM-based Multi-Agent Systems via Causal Inference](/202608/14/2608.12921v1-discovering-efficient-and-explainable-communication-topologies-for-llm-based-multi-agent-systems-via-causal-inference)  
    标签：评分：8.0/10、query:eca
-   evidence：关于开发LLM多智能体系统的经验报告，直接涉及智能体协作与协调
+   evidence：针对LLM多代理系统的通信拓扑可解释性，直接研究多代理协作机制
 
 ### 速读区论文标签
-1. [Descriptive Dispatch of Computational Work](/202608/13/2608.11524v1-descriptive-dispatch-of-computational-work)  
+1. [MARC v1: An Open-Source Multi-Agent Framework for Clinical AI Reasoning and Coordination](/202608/14/2608.13476v1-marc-v1-an-open-source-multi-agent-framework-for-clinical-ai-reasoning-and-coordination)  
+   标签：评分：7.0/10、query:eca
+   evidence：确定性多智能体编排，协调特化角色代理并自动生成提示
+2. [Enhancing Virtual Agents through SLMs and Edge-Computing: An Exploratory Evaluation of Think and Memory Processes](/202608/14/2608.13420v1-enhancing-virtual-agents-through-slms-and-edge-computing-an-exploratory-evaluation-of-think-and-memory-processes)  
    标签：评分：6.0/10、query:eca
-   evidence：基于智能体跨多集群环境的计算工作调度，与分布式边缘云代理编排具有可迁移性
+   evidence：探索利用边缘计算与小语言模型增强虚拟智能体
 
 
 <div class="dpr-home-promo-card">
