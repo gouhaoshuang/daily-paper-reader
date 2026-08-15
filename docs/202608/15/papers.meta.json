@@ -1,0 +1,39 @@
+{
+  "label": "2026-08-15",
+  "date": "2026-08-15",
+  "generated_at": "2026-08-15T20:11:01",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202608/15/2608.13030v1-intersage-the-secure-and-verifiable-interoperability-protocol-for-an-internet-of-agents",
+      "section": "quick",
+      "title_en": "InterSAGE: The Secure and Verifiable Interoperability Protocol for An Internet of Agents",
+      "authors": "Zhenhua Zou, Sheng Guo, Qiuyang Zhan, Lepeng Zhao, Shuo Li, Zhuotao Liu",
+      "date": "2026-08-13",
+      "pdf": "https://arxiv.org/pdf/2608.13030v1",
+      "score": "7.0",
+      "evidence": "面向智能体跨组织边界的可信互操作协议",
+      "tldr": "互联网智能体跨组织协作时，现有协议只定义消息交换，却无法证明代理的身份、授权、能力与责任。InterSAGE 提出四层信任原生协议套件：持久身份层绑定开发者、代码与部署上下文；发现层使用 DID 可验证凭证声明能力；信任协商层实现单调能力衰减与两级访问控制；问责层通过内核审计轨迹绑定使用与执行痕迹。该设计补充 MCP、A2A 等通信协议，让信任语义显式、可移植、可验证，无需共识账本。",
+      "tags": "query:eca",
+      "abstract_en": "The emerging Internet of Agents enables LLM-powered agents to discover peers, invoke tools, and delegate tasks across organizational boundaries. Existing protocols increasingly define how agents exchange messages, but not how an agent proves its identity, authorization, advertised capabilities, or accountability after delegation. We present InterSAGE, a trust-native protocol suite that supplies this missing security substrate alongside, rather than in place of, communication protocols. InterSAGE comprises four layers: Persistent Identity, Discovery, Trust Negotiation, and Accountability. Its four core primitives are: (1) Agent Identity Cards that bind developer, code package, operator, and deployment context; (2) capability-aware discovery using DID-bound Verifiable Credential manifests; (3) trust negotiation combining monotonic capability attenuation with two-tier access control; and (4) kernel-mediated cryptographic audit trails that bind usage, delegation, and execution traces to agent identity without a consensus ledger. InterSAGE is designed to complement MCP, A2A, ANP, and AG-UI, allowing communication protocols to evolve independently while keeping trust semantics explicit, portable, and verifiable. We compare InterSAGE with more than 50 efforts spanning agent protocols, decentralized identity, OAuth/OIDC extensions, zero-trust governance, delegation, and audit architectures. We show that no prior architecture jointly enforces persistent identity, capability-aware discovery, trust negotiation, and accountability as a unified four-layer trust substrate for secure agent interoperability.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/15/2608.09023v1-ai-ai-co-creation-outperforms-human-pairs-in-creative-tasks",
+      "section": "quick",
+      "title_en": "AI-AI co-creation outperforms human pairs in creative tasks",
+      "authors": "Yingyue Luna Luan, Luning Sun, Yeun Joon Kim, Jindong Wang, Xing Xie",
+      "date": "2026-08-10",
+      "pdf": "https://arxiv.org/pdf/2608.09023v1",
+      "score": "6.0",
+      "evidence": "AI-AI协作优于人类组合",
+      "tldr": "以往研究普遍认为AI创造力有限，单系统或人机协作难以超越人类，但这可能源于缺乏类似人类社会的迭代互动。本研究设计AI-AI双智能体协同，比较互补角色、相同角色、单一AI和人类配对四种条件。在三个开放任务中，AI-AI协同的创造性和新颖性均优于单AI和人类配对，且互补角色在复杂任务中产生更实用的方案。结果表明，结构化迭代的多智能体协同能充分发挥AI的创造潜力。",
+      "tags": "query:eca",
+      "abstract_en": "Prior research often finds that AI creativity is limited: single systems rarely outperform humans, and human-AI collaboration does not exceed human output. We argue these conclusions underestimate AI's potential because most studies do not allow iterative, multi-agent exchanges that mirror the social processes underpinning human creativity. We conducted an experiment comparing four conditions: (i) AI-AI co-creation with complementary generator-evaluator roles, (ii) AI-AI co-creation with identical roles, (iii) single-AI creation, and (iv) human-human co-creation. Across three open-ended tasks, 1,212 ideas were rated by trained judges on creativity, novelty, and usefulness. Both AI-AI co-creation conditions consistently outperformed single-AI creation and human pairs on creativity and novelty. Usefulness varied by task: complementary roles yielded the most useful solutions in the broadest and most socially complex task, suggesting role differentiation is advantageous when problems require both imaginative ideation and practical refinement. Human pairs performed worst, consistent with production losses in group creativity. These findings indicate that structured, iterative multi-agent AI co-creation can exceed single-AI and human-human ideation.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

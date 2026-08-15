@@ -1,0 +1,98 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-15T20:08:58.282188+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.13030v1",
+      "source": "arxiv",
+      "title": "InterSAGE: The Secure and Verifiable Interoperability Protocol for An Internet of Agents",
+      "abstract": "The emerging Internet of Agents enables LLM-powered agents to discover peers, invoke tools, and delegate tasks across organizational boundaries. Existing protocols increasingly define how agents exchange messages, but not how an agent proves its identity, authorization, advertised capabilities, or accountability after delegation. We present InterSAGE, a trust-native protocol suite that supplies this missing security substrate alongside, rather than in place of, communication protocols. InterSAGE comprises four layers: Persistent Identity, Discovery, Trust Negotiation, and Accountability. Its four core primitives are: (1) Agent Identity Cards that bind developer, code package, operator, and deployment context; (2) capability-aware discovery using DID-bound Verifiable Credential manifests; (3) trust negotiation combining monotonic capability attenuation with two-tier access control; and (4) kernel-mediated cryptographic audit trails that bind usage, delegation, and execution traces to agent identity without a consensus ledger. InterSAGE is designed to complement MCP, A2A, ANP, and AG-UI, allowing communication protocols to evolve independently while keeping trust semantics explicit, portable, and verifiable. We compare InterSAGE with more than 50 efforts spanning agent protocols, decentralized identity, OAuth/OIDC extensions, zero-trust governance, delegation, and audit architectures. We show that no prior architecture jointly enforces persistent identity, capability-aware discovery, trust negotiation, and accountability as a unified four-layer trust substrate for secure agent interoperability.",
+      "authors": [
+        "Zhenhua Zou",
+        "Sheng Guo",
+        "Qiuyang Zhan",
+        "Lepeng Zhao",
+        "Shuo Li",
+        "Zhuotao Liu"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.MA",
+        "cs.NI"
+      ],
+      "published": "2026-08-13T10:00:13+00:00",
+      "link": "https://arxiv.org/pdf/2608.13030v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "secure interoperability protocol for agents across organizational boundaries",
+      "llm_evidence_cn": "面向智能体跨组织边界的可信互操作协议",
+      "llm_evidence": "面向智能体跨组织边界的可信互操作协议",
+      "canonical_evidence": "面向智能体跨组织边界的可信互操作协议",
+      "llm_tldr_en": "InterSAGE provides a trust-native protocol suite with identity, discovery, trust negotiation, and accountability layers for secure agent interoperability across organizations.",
+      "llm_tldr_cn": "智能体互联网中，智能体能够跨组织发现同伴、调用工具和委派任务，但现有协议未说明如何证明身份、授权和问责。InterSAGE提出以信任为本的协议套件，包含持久身份、发现、信任协商和问责四层，并提供智能体身份卡等核心原语。该协议在通信协议之外补充安全底座，为智能体协作提供可信基础设施。",
+      "llm_tldr": "智能体互联网中，智能体能够跨组织发现同伴、调用工具和委派任务，但现有协议未说明如何证明身份、授权和问责。InterSAGE提出以信任为本的协议套件，包含持久身份、发现、信任协商和问责四层，并提供智能体身份卡等核心原语。该协议在通信协议之外补充安全底座，为智能体协作提供可信基础设施。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.09023v1",
+      "source": "arxiv",
+      "title": "AI-AI co-creation outperforms human pairs in creative tasks",
+      "abstract": "Prior research often finds that AI creativity is limited: single systems rarely outperform humans, and human-AI collaboration does not exceed human output. We argue these conclusions underestimate AI's potential because most studies do not allow iterative, multi-agent exchanges that mirror the social processes underpinning human creativity. We conducted an experiment comparing four conditions: (i) AI-AI co-creation with complementary generator-evaluator roles, (ii) AI-AI co-creation with identical roles, (iii) single-AI creation, and (iv) human-human co-creation. Across three open-ended tasks, 1,212 ideas were rated by trained judges on creativity, novelty, and usefulness. Both AI-AI co-creation conditions consistently outperformed single-AI creation and human pairs on creativity and novelty. Usefulness varied by task: complementary roles yielded the most useful solutions in the broadest and most socially complex task, suggesting role differentiation is advantageous when problems require both imaginative ideation and practical refinement. Human pairs performed worst, consistent with production losses in group creativity. These findings indicate that structured, iterative multi-agent AI co-creation can exceed single-AI and human-human ideation.",
+      "authors": [
+        "Yingyue Luna Luan",
+        "Luning Sun",
+        "Yeun Joon Kim",
+        "Jindong Wang",
+        "Xing Xie"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY"
+      ],
+      "published": "2026-08-10T02:25:28+00:00",
+      "link": "https://arxiv.org/pdf/2608.09023v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "AI-AI collaboration outperforms human pairs",
+      "llm_evidence_cn": "AI-AI协作优于人类组合",
+      "llm_evidence": "AI-AI协作优于人类组合",
+      "canonical_evidence": "AI-AI协作优于人类组合",
+      "llm_tldr_en": "Shows that iterative multi-agent AI-AI co-creation, with generator-evaluator roles, consistently outperforms single-AI creation and human-human co-creation across three open-ended creative tasks.",
+      "llm_tldr_cn": "以往研究常认为AI创造力有限，因为多数实验不允许迭代的多智能体交互。本文设计了AI-AI共创、相同角色AI共创、单一AI及人类共创四种条件，在1212个创意上评估。结果表明互补的生成-评估角色AI-AI共创在创造力、新颖性和有用性上持续超越单AI和人类组合，说明多智能体协作释放了AI的创造潜力。",
+      "llm_tldr": "以往研究常认为AI创造力有限，因为多数实验不允许迭代的多智能体交互。本文设计了AI-AI共创、相同角色AI共创、单一AI及人类共创四种条件，在1212个创意上评估。结果表明互补的生成-评估角色AI-AI共创在创造力、新颖性和有用性上持续超越单AI和人类组合，说明多智能体协作释放了AI的创造潜力。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
