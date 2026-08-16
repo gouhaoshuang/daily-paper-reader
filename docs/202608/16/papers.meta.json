@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-16",
+  "date": "2026-08-16",
+  "generated_at": "2026-08-16T19:46:40",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/16/2608.09620v1-a-semantic-communication-approach-to-fiducial-marker-processing-in-5g-enabled-edge-slam",
+      "section": "deep",
+      "title_en": "A Semantic Communication Approach to Fiducial Marker Processing in 5G-Enabled Edge SLAM",
+      "authors": "Boris Radovanovic, Vukan Ninkovic, Katarina Vidojevic, Buda Bajic Papuga, Dejan Vukobratovic",
+      "date": "2026-08-10",
+      "pdf": "https://arxiv.org/pdf/2608.09620v1",
+      "score": "9.0",
+      "evidence": "面向边缘SLAM的端云协同分割推理",
+      "tldr": "自主机器人在5G边缘计算中卸载感知任务，但传统标记检测难以高效分割。本文提出语义分割推理框架，将DeepTag风格CNN在机器人与边缘间分区，传输中间特征。在真实5G测试床上验证，关键点估计准确，并量化不同分割点的通信-计算权衡。为通信感知的机器人视觉部署提供实用指导。",
+      "tags": "query:eca",
+      "abstract_en": "Autonomous robots increasingly rely on edge computing to offload computationally intensive perception tasks while maintaining real-time operation over 5G networks. However, conventional fiducial marker detection pipelines provide limited opportunities for efficient task partitioning, making them poorly suited for communication-aware edge deployment. This paper proposes a semantic split inference framework for fiducial marker processing in 5G-enabled Edge SLAM. A DeepTag-inspired convolutional neural network is partitioned between the robot and the edge server, where intermediate feature representations serve as task-oriented semantic information transmitted over the wireless link. The framework is integrated into a ROS2-based robotic architecture and characterized over a real 5G communication testbed. Experimental results demonstrate accurate keypoint estimation, illustrate the impact on downstream pose estimation, and quantify the communication--computation trade-offs associated with different split points, providing practical insights for communication-aware deployment of deep visual perception in connected robotic systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/16/2608.11632v1-beyond-memory-a-transactional-continuity-kernel-for-long-lived-ai-agents",
+      "section": "quick",
+      "title_en": "Beyond Memory: A Transactional Continuity Kernel for Long-Lived AI Agents",
+      "authors": "Jun He, Deying Yu",
+      "date": "2026-08-12",
+      "pdf": "https://arxiv.org/pdf/2608.11632v1",
+      "score": "6.0",
+      "evidence": "面向长生命周期智能体的状态治理基础设施，可用于分布式智能体系统",
+      "tldr": "持久化AI代理长期运行会积累版本化状态，但仅靠存储保留无法确定权威状态，模型、工具和后台线程的无序更新易导致状态污染和越权。为此提出Continuity Kernel (CK)，一种激活契约，将候选评估与原子激活分离，通过短事务校验所有权、权威性、新鲜度与效果唯一性，并给出Commit/Reject/Quarantine/Defer四种处置。只有Commit才原子推进分支头并安装完整单元。在包含280万状态与550万转换的模型上验证零违规，为长生命周期代理提供可审计的状态连续性治理基础设施。",
+      "tags": "query:eca",
+      "abstract_en": "Persistent AI agents accumulate versioned state across long horizons, but storage retention alone does not identify authoritative state. Without an explicit control plane, unmediated updates by models, tools, and background workers risk stale overwrites, un-audited exposures, and self-authorizing privilege escalation. We argue that agent state governance is an infrastructural activation problem, defining continuity as an unbroken, authorized lineage of accepted branch heads. We present the Continuity Kernel (CK), an activation contract that decouples off-commit candidate evaluation from atomic state activation. Untrusted components propose typed changes against an exact predecessor head or typed absence. A short activation transaction revalidates ownership, pre-state authority, freshness, and effect uniqueness, recording one stable disposition (Commit, Reject, Quarantine, or Defer). Only Commit atomically advances the branch head and installs the complete accepted unit (state, authority, lineage, effects, outcome, and receipt). A bounded executable model verifies the protocol across 2,808,230 reachable states and 5,526,474 state-changing transitions with zero invariant violations.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/16/2608.12649v1-proactive-computing",
+      "section": "quick",
+      "title_en": "Proactive Computing",
+      "authors": "Joonhee Lee",
+      "date": "2026-08-12",
+      "pdf": "https://arxiv.org/pdf/2608.12649v1",
+      "score": "6.0",
+      "evidence": "主动计算综述，结合分布式边缘与移动连接，对端云协同智能体系统有参考价值",
+      "tldr": "计算系统正从被动反应工具转向主动感知、解释、预测并提前行动。本文提出主动计算范式，将其与反应式、上下文感知等区分，并视为感知、理解、决策、行动与治理的系统级集成问题。综述技术使能、设计空间与挑战，指出预测到行动鸿沟及社会技术问题。核心贡献在于论证关键挑战不是提升预测精度，而是决定何时、如何及是否代表用户行动。",
+      "tags": "query:eca",
+      "abstract_en": "Computing systems are moving from reactive tools toward systems that sense, interpret, predict, and act before explicit user requests. This transition is enabled by the global scale of mobile connectivity, the rapid expansion of wearable and ambient sensing, advances in machine learning and foundation models, distributed edge infrastructure, and physical actuation. We define \\emph{proactive computing} as a paradigm in which systems infer user context, anticipate future needs or risks, and initiate information delivery or actions at an appropriate time. This survey distinguishes proactive computing from reactive, context-aware, adaptive, and predictive computing, and frames proactivity as a system-level integration problem across sensing, understanding, decision making, action, and governance. We review the technological enablers of proactive computing, organize its design space, analyze technical challenges such as uncertainty-aware triggering and the prediction-to-action gap, and discuss socio-technical issues involving user acceptance, trust, privacy, accountability, fairness, and sustainability. We argue that the key research challenge is not merely improving prediction accuracy, but determining when, how, and whether systems should act on behalf of users.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

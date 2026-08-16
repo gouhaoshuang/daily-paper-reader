@@ -6,27 +6,33 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-15
-- 运行时间：2026-08-15 20:10:56 UTC
+- 最新运行日期：2026-08-16
+- 运行时间：2026-08-16 19:46:34 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：0
+- 本次总论文数：3
+- 精读区：1
 - 速读区：2
 
 ### 今日简报（AI）
-今日速读2篇论文，聚焦智能体互操作协议与AI协作创意研究。最值得关注的是《InterSAGE》提出安全可验证的智能体互操作协议（7.0分），以及《AI-AI co-creation》发现AI协作在创意任务中优于人类搭档（6.0分）。建议普通读者优先了解智能体协议的技术框架，再结合创意实验结论思考人机协作潜力。
-- 详情：[/202608/15/README](/202608/15/README)
+今日精读1篇、速读2篇，重点围绕5G边缘SLAM与AI代理方向。
+
+最值得关注的是《A Semantic Communication Approach to Fiducial Marker Processing in 5G-Enabled Edge SLAM》（9.0分），语义通信赋能边缘SLAM标记处理。
+
+建议优先精读该高价值论文，其余两篇（AI代理连续性、主动计算）可作扩展速览。
+- 详情：[/202608/16/README](/202608/16/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [A Semantic Communication Approach to Fiducial Marker Processing in 5G-Enabled Edge SLAM](/202608/16/2608.09620v1-a-semantic-communication-approach-to-fiducial-marker-processing-in-5g-enabled-edge-slam)  
+   标签：评分：9.0/10、query:eca
+   evidence：面向边缘SLAM的端云协同分割推理
 
 ### 速读区论文标签
-1. [InterSAGE: The Secure and Verifiable Interoperability Protocol for An Internet of Agents](/202608/15/2608.13030v1-intersage-the-secure-and-verifiable-interoperability-protocol-for-an-internet-of-agents)  
-   标签：评分：7.0/10、query:eca
-   evidence：面向智能体跨组织边界的可信互操作协议
-2. [AI-AI co-creation outperforms human pairs in creative tasks](/202608/15/2608.09023v1-ai-ai-co-creation-outperforms-human-pairs-in-creative-tasks)  
+1. [Beyond Memory: A Transactional Continuity Kernel for Long-Lived AI Agents](/202608/16/2608.11632v1-beyond-memory-a-transactional-continuity-kernel-for-long-lived-ai-agents)  
    标签：评分：6.0/10、query:eca
-   evidence：AI-AI协作优于人类组合
+   evidence：面向长生命周期智能体的状态治理基础设施，可用于分布式智能体系统
+2. [Proactive Computing](/202608/16/2608.12649v1-proactive-computing)  
+   标签：评分：6.0/10、query:eca
+   evidence：主动计算综述，结合分布式边缘与移动连接，对端云协同智能体系统有参考价值
 
 
 <div class="dpr-home-promo-card">

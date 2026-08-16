@@ -1,0 +1,129 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-16T19:43:51.045616+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.09620v1",
+      "source": "arxiv",
+      "title": "A Semantic Communication Approach to Fiducial Marker Processing in 5G-Enabled Edge SLAM",
+      "abstract": "Autonomous robots increasingly rely on edge computing to offload computationally intensive perception tasks while maintaining real-time operation over 5G networks. However, conventional fiducial marker detection pipelines provide limited opportunities for efficient task partitioning, making them poorly suited for communication-aware edge deployment. This paper proposes a semantic split inference framework for fiducial marker processing in 5G-enabled Edge SLAM. A DeepTag-inspired convolutional neural network is partitioned between the robot and the edge server, where intermediate feature representations serve as task-oriented semantic information transmitted over the wireless link. The framework is integrated into a ROS2-based robotic architecture and characterized over a real 5G communication testbed. Experimental results demonstrate accurate keypoint estimation, illustrate the impact on downstream pose estimation, and quantify the communication--computation trade-offs associated with different split points, providing practical insights for communication-aware deployment of deep visual perception in connected robotic systems.",
+      "authors": [
+        "Boris Radovanovic",
+        "Vukan Ninkovic",
+        "Katarina Vidojevic",
+        "Buda Bajic Papuga",
+        "Dejan Vukobratovic"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI",
+        "cs.RO"
+      ],
+      "published": "2026-08-10T13:59:11+00:00",
+      "link": "https://arxiv.org/pdf/2608.09620v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Edge-cloud collaborative split inference for edge SLAM",
+      "llm_evidence_cn": "面向边缘SLAM的端云协同分割推理",
+      "llm_evidence": "面向边缘SLAM的端云协同分割推理",
+      "canonical_evidence": "面向边缘SLAM的端云协同分割推理",
+      "llm_tldr_en": "Addresses communication-aware edge deployment for fiducial marker processing in 5G edge SLAM by proposing a semantic split inference framework that partitions a DeepTag-style CNN between robot and edge server, transmitting intermediate features over the wireless link and integrating with ROS2.",
+      "llm_tldr_cn": "该论文面向5G网络下的边缘SLAM场景，解决传统基准标记检测流水线难以高效切分、不适合通信感知边缘部署的问题。作者提出一种语义分割推理框架，将DeepTag风格卷积神经网络划分到机器人和边缘服务器，中间层特征作为任务导向语义信息经无线链路上传。框架已集成到ROS2机器人系统，在保持实时性的同时降低通信负载。这一边缘云协同推理范式为端云协同AI智能体提供了典型参考。",
+      "llm_tldr": "该论文面向5G网络下的边缘SLAM场景，解决传统基准标记检测流水线难以高效切分、不适合通信感知边缘部署的问题。作者提出一种语义分割推理框架，将DeepTag风格卷积神经网络划分到机器人和边缘服务器，中间层特征作为任务导向语义信息经无线链路上传。框架已集成到ROS2机器人系统，在保持实时性的同时降低通信负载。这一边缘云协同推理范式为端云协同AI智能体提供了典型参考。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.11632v1",
+      "source": "arxiv",
+      "title": "Beyond Memory: A Transactional Continuity Kernel for Long-Lived AI Agents",
+      "abstract": "Persistent AI agents accumulate versioned state across long horizons, but storage retention alone does not identify authoritative state. Without an explicit control plane, unmediated updates by models, tools, and background workers risk stale overwrites, un-audited exposures, and self-authorizing privilege escalation. We argue that agent state governance is an infrastructural activation problem, defining continuity as an unbroken, authorized lineage of accepted branch heads. We present the Continuity Kernel (CK), an activation contract that decouples off-commit candidate evaluation from atomic state activation. Untrusted components propose typed changes against an exact predecessor head or typed absence. A short activation transaction revalidates ownership, pre-state authority, freshness, and effect uniqueness, recording one stable disposition (Commit, Reject, Quarantine, or Defer). Only Commit atomically advances the branch head and installs the complete accepted unit (state, authority, lineage, effects, outcome, and receipt). A bounded executable model verifies the protocol across 2,808,230 reachable states and 5,526,474 state-changing transitions with zero invariant violations.",
+      "authors": [
+        "Jun He",
+        "Deying Yu"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-08-12T04:28:49+00:00",
+      "link": "https://arxiv.org/pdf/2608.11632v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "State governance infrastructure for long-lived agents, applicable to distributed agent systems",
+      "llm_evidence_cn": "面向长生命周期智能体的状态治理基础设施，可用于分布式智能体系统",
+      "llm_evidence": "面向长生命周期智能体的状态治理基础设施，可用于分布式智能体系统",
+      "canonical_evidence": "面向长生命周期智能体的状态治理基础设施，可用于分布式智能体系统",
+      "llm_tldr_en": "Persistent AI agents accumulate state but lack authoritative identification, risking stale overwrites and authorization issues. The paper presents the Continuity Kernel (CK), an activation contract decoupling candidate evaluation from atomic state activation to enforce audited, authorized state continuity for long-lived agents.",
+      "llm_tldr_cn": "持久化AI智能体在长生命周期中累积版本化状态，但仅靠存储保留无法识别权威状态，模型、工具和后台任务的无序更新可能导致旧数据覆盖、未审计暴露以及权限越权。论文将智能体状态治理定义为基础设施激活问题，提出连续性内核（CK），将提交前候选评估与原子状态激活解耦，并通过短激活事务重新验证所有权。该机制确保状态连续性是一条可审计、可授权的分支头谱系，为长期运行的智能体提供了关键的状态治理基础设施。",
+      "llm_tldr": "持久化AI智能体在长生命周期中累积版本化状态，但仅靠存储保留无法识别权威状态，模型、工具和后台任务的无序更新可能导致旧数据覆盖、未审计暴露以及权限越权。论文将智能体状态治理定义为基础设施激活问题，提出连续性内核（CK），将提交前候选评估与原子状态激活解耦，并通过短激活事务重新验证所有权。该机制确保状态连续性是一条可审计、可授权的分支头谱系，为长期运行的智能体提供了关键的状态治理基础设施。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.12649v1",
+      "source": "arxiv",
+      "title": "Proactive Computing",
+      "abstract": "Computing systems are moving from reactive tools toward systems that sense, interpret, predict, and act before explicit user requests. This transition is enabled by the global scale of mobile connectivity, the rapid expansion of wearable and ambient sensing, advances in machine learning and foundation models, distributed edge infrastructure, and physical actuation. We define \\emph{proactive computing} as a paradigm in which systems infer user context, anticipate future needs or risks, and initiate information delivery or actions at an appropriate time. This survey distinguishes proactive computing from reactive, context-aware, adaptive, and predictive computing, and frames proactivity as a system-level integration problem across sensing, understanding, decision making, action, and governance. We review the technological enablers of proactive computing, organize its design space, analyze technical challenges such as uncertainty-aware triggering and the prediction-to-action gap, and discuss socio-technical issues involving user acceptance, trust, privacy, accountability, fairness, and sustainability. We argue that the key research challenge is not merely improving prediction accuracy, but determining when, how, and whether systems should act on behalf of users.",
+      "authors": [
+        "Joonhee Lee"
+      ],
+      "primary_category": "cs.CY",
+      "categories": [
+        "cs.CY"
+      ],
+      "published": "2026-08-12T23:18:40+00:00",
+      "link": "https://arxiv.org/pdf/2608.12649v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Survey on proactive computing with distributed edge and mobile connectivity, useful for edge-cloud agent systems",
+      "llm_evidence_cn": "主动计算综述，结合分布式边缘与移动连接，对端云协同智能体系统有参考价值",
+      "llm_evidence": "主动计算综述，结合分布式边缘与移动连接，对端云协同智能体系统有参考价值",
+      "canonical_evidence": "主动计算综述，结合分布式边缘与移动连接，对端云协同智能体系统有参考价值",
+      "llm_tldr_en": "Defines proactive computing as systems that sense, predict, and act before explicit requests, enabled by mobile and distributed edge infrastructure. Surveys requirements and governance, providing a framework relevant to edge-cloud collaborative AI agents.",
+      "llm_tldr_cn": "传统计算是被动的，而主动计算让系统感知、预测并在用户请求前行动。该综述提出主动计算这一范式，强调其依赖移动连接、可穿戴与环境感知、分布式边缘基础设施以及基础模型等支撑。文章区分了主动计算与反应式、上下文感知等概念，并将其建模为感知、理解、决策、执行与治理的系统级集成问题。对设计端云协同的移动AI智能体具有框架参考价值，但未直接给出智能体实现或系统架构。",
+      "llm_tldr": "传统计算是被动的，而主动计算让系统感知、预测并在用户请求前行动。该综述提出主动计算这一范式，强调其依赖移动连接、可穿戴与环境感知、分布式边缘基础设施以及基础模型等支撑。文章区分了主动计算与反应式、上下文感知等概念，并将其建模为感知、理解、决策、执行与治理的系统级集成问题。对设计端云协同的移动AI智能体具有框架参考价值，但未直接给出智能体实现或系统架构。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
