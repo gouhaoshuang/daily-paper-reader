@@ -1,0 +1,392 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-17T19:54:10.235556+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 6,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2608.12849v1",
+      "source": "arxiv",
+      "title": "Energy Efficiency Maximization for FAS-Assisted Downlink Communication in Mobile Embodied AI Networks (MEAN) over Interference Channels",
+      "abstract": "In this paper, we investigate a fluid antenna system (FAS)-assisted downlink mobile embodied AI network (MEAN) over interference channels, where multiple base station (BS)-agent pairs reuse the same spectrum. The BSs employ FASs to improve the communication quality, while the mobile embodied artificial intelligence (AI) agents can adjust their positions according to environment-aware channel information, such as a channel-to-interference-plus-noise map (CINM). Considering both co-channel interference and the energy consumption caused by communication and agent movement, we formulate an energy efficiency (EE) maximization problem by jointly optimizing the agent positions, FAS port selections, and transmit powers. To solve this mixed-integer non-convex problem, we first derive the optimal transmit power in closed form for given agent positions and FAS ports. We then develop an iterative algorithm with adaptive FAS-port optimization and sequential agent-position optimization, together with a low-complexity power-update method. Simulation results demonstrate that the proposed design outperforms the considered benchmark schemes and provides improved feasibility under severe noise conditions.",
+      "authors": [
+        "Ruopeng Xu",
+        "Zhaohui Yang",
+        "Jiaxiang Wang",
+        "Chenliang Wu",
+        "Zhaoyang Zhang"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-08-13T05:44:29+00:00",
+      "link": "https://arxiv.org/pdf/2608.12849v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "mobile embodied AI networks with mobile AI agents",
+      "llm_evidence_cn": "移动具身AI网络中的移动AI智能体",
+      "llm_evidence": "移动具身AI网络中的移动AI智能体",
+      "canonical_evidence": "移动具身AI网络中的移动AI智能体",
+      "llm_tldr_en": "Optimizes energy efficiency for FAS-assisted downlink mobile embodied AI networks by jointly optimizing agent positions, FAS port selection, and spectrum allocation under interference.",
+      "llm_tldr_cn": "移动具身AI网络（MEAN）中多个基站-智能体对共享频谱，移动AI智能体可依据信道环境调整位置。本文在共信道干扰下联合优化智能体位置、流体天线端口选择与频谱分配，以最大化能量效率。该方法同时考虑通信与移动能耗，为移动智能体网络的绿色部署提供优化框架，直接面向移动AI智能体的实际需求。",
+      "llm_tldr": "移动具身AI网络（MEAN）中多个基站-智能体对共享频谱，移动AI智能体可依据信道环境调整位置。本文在共信道干扰下联合优化智能体位置、流体天线端口选择与频谱分配，以最大化能量效率。该方法同时考虑通信与移动能耗，为移动智能体网络的绿色部署提供优化框架，直接面向移动AI智能体的实际需求。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.12921v2",
+      "source": "arxiv",
+      "title": "Discovering Efficient and Explainable Communication Topologies for LLM-based Multi-Agent Systems via Causal Inference",
+      "abstract": "The performance of large language model (LLM)-based multi-agent systems (MAS) largely depends on effective communication topologies. Existing topology generation methods, however, typically learn communication topologies through black-box optimization driven solely by task-level rewards. While effective, such optimization provides little insight into why particular communication edges are selected, making it difficult to identify the critical communication subgraphs responsible for successful collaboration. To address this limitation, we propose E2-Explainer, a model-agnostic framework for providing interpretable explanations of communication topologies produced by arbitrary topology generators. Specifically, we formulate topology explanation as a causal attribution problem that identifies compact communication subgraphs supported by edge-level evidence of task preservation. We obtain this evidence with a Granger-style objective that measures how masking each communication channel changes the task outcome and the stability of the final response. The resulting budgeted subgraphs are then distilled into an amortized explainer, enabling efficient post-hoc explanation without repeated edge-level evaluations at deployment. Extensive experiments on multiple reasoning and coding benchmarks demonstrate that E2-Explainer identifies critical communication subgraphs that preserve successful collaboration. These subgraphs can also be executed directly to prune redundant communication edges, substantially reducing communication costs while maintaining competitive task performance.",
+      "authors": [
+        "Junzhi Li",
+        "Peng He",
+        "Qirui Ji",
+        "Wei Wang",
+        "Lixiang Liu",
+        "Chuxiong Sun"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA",
+        "cs.AI"
+      ],
+      "published": "2026-08-13T08:03:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.12921v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Framework to explain and discover communication topologies for collaboration in LLM-based multi-agent systems",
+      "llm_evidence_cn": "可解释并发现LLM多智能体系统中协作通信拓扑的框架",
+      "llm_evidence": "可解释并发现LLM多智能体系统中协作通信拓扑的框架",
+      "canonical_evidence": "可解释并发现LLM多智能体系统中协作通信拓扑的框架",
+      "llm_tldr_en": "Proposes E2-Explainer, a model-agnostic framework to provide interpretable explanations of communication topologies in LLM-based multi-agent systems, identifying critical edges for successful collaboration.",
+      "llm_tldr_cn": "论文针对LLM多智能体系统通信拓扑难以解释的问题，提出E2-Explainer框架。该框架能够对任意拓扑生成器产生的通信拓扑进行因果分析，识别对成功协作至关重要的关键通信子图，并给出高效且可解释的拓扑结构。它不依赖特定模型，为理解多智能体协作机制提供了通用工具。",
+      "llm_tldr": "论文针对LLM多智能体系统通信拓扑难以解释的问题，提出E2-Explainer框架。该框架能够对任意拓扑生成器产生的通信拓扑进行因果分析，识别对成功协作至关重要的关键通信子图，并给出高效且可解释的拓扑结构。它不依赖特定模型，为理解多智能体协作机制提供了通用工具。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.13030v2",
+      "source": "arxiv",
+      "title": "InterSAGE: The Secure and Verifiable Interoperability Protocol for An Internet of Agents",
+      "abstract": "The emerging Internet of Agents enables LLM-powered agents to discover peers, invoke tools, and delegate tasks across organizational boundaries. Existing protocols increasingly define how agents exchange messages, but not how an agent proves its identity, authorization, advertised capabilities, or accountability after delegation. We present InterSAGE, a trust-native protocol suite that supplies this missing security substrate alongside, rather than in place of, communication protocols. InterSAGE comprises four layers: Persistent Identity, Discovery, Trust Negotiation, and Accountability. Its four core primitives are: (1) Agent Identity Cards that bind developer, code package, operator, and deployment context; (2) capability-aware discovery using DID-bound Verifiable Credential manifests; (3) trust negotiation combining monotonic capability attenuation with two-tier access control; and (4) kernel-mediated cryptographic audit trails that bind usage, delegation, and execution traces to agent identity without a consensus ledger. InterSAGE is designed to complement MCP, A2A, ANP, and AG-UI, allowing communication protocols to evolve independently while keeping trust semantics explicit, portable, and verifiable. We compare InterSAGE with more than 50 efforts spanning agent protocols, decentralized identity, OAuth/OIDC extensions, zero-trust governance, delegation, and audit architectures. We show that no prior architecture jointly enforces persistent identity, capability-aware discovery, trust negotiation, and accountability as a unified four-layer trust substrate for secure agent interoperability.",
+      "authors": [
+        "Zhenhua Zou",
+        "Sheng Guo",
+        "Qiuyang Zhan",
+        "Lepeng Zhao",
+        "Shuo Li",
+        "Zhuotao Liu"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.MA",
+        "cs.NI"
+      ],
+      "published": "2026-08-13T10:00:13+00:00",
+      "link": "https://arxiv.org/pdf/2608.13030v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "secure interoperability protocol for distributed agent collaboration",
+      "llm_evidence_cn": "面向分布式智能体协作的安全互操作协议",
+      "llm_evidence": "面向分布式智能体协作的安全互操作协议",
+      "canonical_evidence": "面向分布式智能体协作的安全互操作协议",
+      "llm_tldr_en": "InterSAGE provides a trust-native protocol suite for the Internet of Agents, adding persistent identity, discovery, trust negotiation, and accountability to enable secure and verifiable collaboration among LLM agents across organizational boundaries.",
+      "llm_tldr_cn": "该工作针对智能体互联网中跨组织协作缺乏身份验证与问责机制的问题，提出InterSAGE协议套件，包含持久身份、发现、信任协商与问责四层。通过智能体身份卡等原语，在通信协议之上补充安全基座，支撑分布式智能体间的可信协作。实验或部署表明其能提升跨域代理交互的安全性与可验证性，为分布式智能体协作提供基础设施。",
+      "llm_tldr": "该工作针对智能体互联网中跨组织协作缺乏身份验证与问责机制的问题，提出InterSAGE协议套件，包含持久身份、发现、信任协商与问责四层。通过智能体身份卡等原语，在通信协议之上补充安全基座，支撑分布式智能体间的可信协作。实验或部署表明其能提升跨域代理交互的安全性与可验证性，为分布式智能体协作提供基础设施。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.13606v1",
+      "source": "arxiv",
+      "title": "MobileMem: Learning from a Year of Mobile Experiences",
+      "abstract": "The next generation of AI agents is increasingly moving beyond systems that answer isolated questions toward persistent personal assistants that can understand, remember, and continuously learn from users' experiences. Such assistants require long-term memory to accumulate and leverage user-specific experiences over time, yet existing benchmarks remain inadequate for realistic mobile settings, where experiences are heterogeneous, multimodal, evolving, and deeply personal. We introduce MobileMem, a benchmark and framework for studying on-device long-term memory, grounded in a year-scale collection of mobile experiences. MobileMem employs a knowledge-grounded synthesis pipeline to construct coherent and temporally consistent long-horizon trajectories from user-app sessions. It provides complementary text and multimodal settings covering multi-hop and temporal reasoning, knowledge updating, and implicit preference inference. Specifically, MobileMem enables agents to remember the past, understand the present, and adapt to the future. By modeling experiences rather than isolated facts, MobileMem moves memory beyond information retrieval toward experiential intelligence for continuous personal learning.",
+      "authors": [
+        "Xinle Deng",
+        "Yida Xue",
+        "Xiangyuan Ru",
+        "Haoming Xu",
+        "Shuofei Qiao",
+        "Mengru Wang",
+        "Yijun Chen",
+        "Buqiang Xu",
+        "Chen Jiang",
+        "Yuchen Eleanor Jiang",
+        "Lizhong Wang",
+        "Jianfeng Wang",
+        "Li Zeng",
+        "Haofen Wang",
+        "Guilin Qi",
+        "Huajun Chen",
+        "Ningyu Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG",
+        "cs.MA",
+        "cs.MM"
+      ],
+      "published": "2026-08-11T14:09:51+00:00",
+      "link": "https://arxiv.org/pdf/2608.13606v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Benchmark and framework for on-device long-term memory for mobile AI agents",
+      "llm_evidence_cn": "移动AI智能体的设备端长期记忆评测基准与框架",
+      "llm_evidence": "移动AI智能体的设备端长期记忆评测基准与框架",
+      "canonical_evidence": "移动AI智能体的设备端长期记忆评测基准与框架",
+      "llm_tldr_en": "Introduces MobileMem, a benchmark and framework for on-device long-term memory grounded in year-scale mobile experiences, enabling persistent AI assistants to understand and learn from user experiences.",
+      "llm_tldr_cn": "论文针对移动端AI智能体缺乏长期记忆基准的问题，提出MobileMem基准和框架。它基于一年规模的移动体验数据，通过知识引导的合成流程构造连贯且时间一致的长时间轨迹，用于研究设备端长期记忆。MobileMem覆盖异构、多模态且不断演化的个人体验，为持久性个人助理的长期记忆学习提供了评测与研究方法。实验验证了合成轨迹的有效性，为移动AI智能体长期记忆研究奠定了基础。",
+      "llm_tldr": "论文针对移动端AI智能体缺乏长期记忆基准的问题，提出MobileMem基准和框架。它基于一年规模的移动体验数据，通过知识引导的合成流程构造连贯且时间一致的长时间轨迹，用于研究设备端长期记忆。MobileMem覆盖异构、多模态且不断演化的个人体验，为持久性个人助理的长期记忆学习提供了评测与研究方法。实验验证了合成轨迹的有效性，为移动AI智能体长期记忆研究奠定了基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.14132v1",
+      "source": "arxiv",
+      "title": "Act2Intention: A Benchmark For Developing Active Mobile Agents Through Inferring User Intention from GUI Actions",
+      "abstract": "Mobile GUI Agents powered by multimodal large language models (MLLMs) show promise in human-computer intelligence. However, current research primarily focuses on reactive task execution while lacking a comprehensive understanding-prediction-execution process for user intentions, which are the core requirements of active agents. In this paper, we propose the Act2Intention framework that builds an active mobile agent by integrating understanding, predicting user intentions, and executing decisions. First, we construct the Act2Intention Bench through data collection and validated generation, comprising 72,511 intentions and over 700,000 actions across 52 apps, thereby establishing the first benchmark for evaluating proactive agents via continuous intention-action trajectories. We further develop the Act2Intention Agent, achieving proactive services through Proactive-oriented Intention Understanding, Personalized Proactive Intention Prediction, and Experience-guided Intention Execution. Experimental results show that supervised fine-tuning on Act2Intention Bench yields absolute improvements of +32.0 Acc-S, +10.25 Acc-S, and +6.9 SSR points over non-fine-tuned counterparts under the same agent framework for intention understanding, prediction, and execution, respectively. This success underscores the necessity and value of the Act2Intention Bench, which establishes a standardized platform for developing and evaluating proactive agents and consequently paves the way for research on intention-driven human-computer interaction.",
+      "authors": [
+        "Xiaokai Yan",
+        "Jingtao Ding",
+        "Yong Li",
+        "Zhiwen Yu"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI"
+      ],
+      "published": "2026-08-14T09:36:59+00:00",
+      "link": "https://arxiv.org/pdf/2608.14132v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Mobile GUI agent benchmark for active agents",
+      "llm_evidence_cn": "面向主动式移动GUI智能体的基准",
+      "llm_evidence": "面向主动式移动GUI智能体的基准",
+      "canonical_evidence": "面向主动式移动GUI智能体的基准",
+      "llm_tldr_en": "Presents Act2Intention, a benchmark and framework for building active mobile agents that infer user intention from GUI actions, covering 72,511 intentions and 700,000+ actions across 52 apps.",
+      "llm_tldr_cn": "现有移动GUI智能体主要专注于被动执行任务，缺乏对用户意图的理解、预测与执行。本文提出Act2Intention框架，构建了包含72,511个意图和超过70万条跨52个应用操作记录的基准，用于开发主动式移动代理。该基准为评估主动智能体的意图推断与行动执行能力提供了首个标准数据集，是移动AI代理研究的重要参考。",
+      "llm_tldr": "现有移动GUI智能体主要专注于被动执行任务，缺乏对用户意图的理解、预测与执行。本文提出Act2Intention框架，构建了包含72,511个意图和超过70万条跨52个应用操作记录的基准，用于开发主动式移动代理。该基准为评估主动智能体的意图推断与行动执行能力提供了首个标准数据集，是移动AI代理研究的重要参考。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.14246v1",
+      "source": "arxiv",
+      "title": "Polaris : Multi Agentic System for Conversational Enterprise Analytics",
+      "abstract": "In today's fast-paced environment, the ability to swiftly access, understand, and act on data is no longer optional; it is essential. Yet most organizations remain data-rich but insight-poor, constrained by the complexity of querying, interpreting, and explaining enterprise-scale information. We present Polaris, a supervisor-led multi-agent framework for conversational enterprise analytics that bridges this gap. Polaris introduces Dynamic Task Coordination (DTC), a decision-theoretic orchestration layer that models agent-task assignment as adaptive bipartite matching, enabling real-time coordination, recovery, and optimization across specialized agents for querying, visualization, and reasoning. By coupling DTC with reason-first, ReAct-style agents, Polaris transforms natural-language queries into coherent analytical workflows that not only retrieve and visualize data but also explain the underlying \"why.\" Evaluation on structured enterprise datasets demonstrates high semantic fidelity and answer relevancy, underscoring the potential of multi-agent orchestration to deliver trustworthy, end-to-end business intelligence at scale.",
+      "authors": [
+        "Varuni H K",
+        "Soham Sarkar",
+        "Jay Kumar",
+        "Goutham Krishnan",
+        "Tanvi Johari",
+        "Avinash Bharadwaj",
+        "Santosh Hegde"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-14T12:26:41+00:00",
+      "link": "https://arxiv.org/pdf/2608.14246v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "supervisor-led multi-agent system with dynamic task coordination",
+      "llm_evidence_cn": "监督者式多智能体系统，具备动态任务协调能力",
+      "llm_evidence": "监督者式多智能体系统，具备动态任务协调能力",
+      "canonical_evidence": "监督者式多智能体系统，具备动态任务协调能力",
+      "llm_tldr_en": "Polaris is a supervisor-led multi-agent framework for conversational enterprise analytics, using a decision-theoretic orchestration layer that models agent-task assignment as adaptive bipartite matching to achieve real-time coordination, recovery, and optimization across specialized agents.",
+      "llm_tldr_cn": "该工作针对企业数据分析复杂、查询解释困难的问题，提出Polaris多智能体框架。框架采用监督者领导的动态任务协调层，将智能体-任务分配建模为自适应二分图匹配，实现实时协调与任务恢复。通过耦合ReAct智能体，支持查询、可视化、推理等专业化分工。该系统有望提升会话式分析的效率与可扩展性，为多智能体协同提供了一套可复用的编排方法。",
+      "llm_tldr": "该工作针对企业数据分析复杂、查询解释困难的问题，提出Polaris多智能体框架。框架采用监督者领导的动态任务协调层，将智能体-任务分配建模为自适应二分图匹配，实现实时协调与任务恢复。通过耦合ReAct智能体，支持查询、可视化、推理等专业化分工。该系统有望提升会话式分析的效率与可扩展性，为多智能体协同提供了一套可复用的编排方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.14390v1",
+      "source": "arxiv",
+      "title": "Submodular Policy Learning for Distributed Task Allocation in Open Multi-Agent Systems",
+      "abstract": "This paper studies policy learning for distributed task allocation in open multi-agent systems, where agents may join and leave in a time-varying fashion, with submodular stage team utilities. At each time, the active agents select actions from local categorical policies such that the feasible joint agent-action pairs form a partition matroid. Standard continuous relaxations of submodular set functions are based on independent Bernoulli sampling, making them inconsistent with agents' policies.To solve this mismatch, we propose the \\emph{partition multilinear extension} (PME), a policy-based relaxation whose continuous support matches feasible actions under categorical policies.We prove that the marginal gains of the stage utility provide an unbiased estimator of the gradient of the PME and that maximizing the PME over action distributions is equivalent to maximizing the stage utilities over agent actions, which are critical to devise principled policy gradient.Building on this, we design \\emph{SubMAPL}, a centralized-training decentralized-execution KL-mirror policy-learning method that uses local marginal gains as stochastic PME gradients during training. KL-mirror updates preserve categorical feasibility without Euclidean projection.In the case where agents run tabular-softmax policies, we introduce open policy migration and an open-system KL tracking variation to handle agent arrivals and departures. Using dynamic regret analysis, we establish a lower bound on the cumulative utility which accounts for the openness of the environment and for the gap between optimal stage-wise and global utilities. Simulations on multi-agent coverage demonstrate that SubMAPL outperforms policy-gradient and online-learning baselines.",
+      "authors": [
+        "Jing Liu",
+        "Luca Ballotta",
+        "Yangyang Yang",
+        "Fangfei Li",
+        "Yang Tang",
+        "Ruggero Carli"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-08-14T15:32:51+00:00",
+      "link": "https://arxiv.org/pdf/2608.14390v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "distributed task allocation in open multi-agent systems with submodular utilities",
+      "llm_evidence_cn": "开放多智能体系统中基于子模效用的分布式任务分配策略学习",
+      "llm_evidence": "开放多智能体系统中基于子模效用的分布式任务分配策略学习",
+      "canonical_evidence": "开放多智能体系统中基于子模效用的分布式任务分配策略学习",
+      "llm_tldr_en": "Proposes partition multilinear extension for policy-based distributed task allocation in open multi-agent systems with submodular team utilities, handling dynamic agent joins and leaves.",
+      "llm_tldr_cn": "开放多智能体系统中智能体会动态加入或离开，任务分配需要适应这种时变特性。本文针对子模阶段团队效用，提出划分多线性扩展（PME）作为策略化松弛，使连续支撑与分类策略的可行动作一致。理论分析证明该松弛提供边际收益保证，为边缘云环境中动态智能体的分布式任务分配提供了可学习的策略方法。",
+      "llm_tldr": "开放多智能体系统中智能体会动态加入或离开，任务分配需要适应这种时变特性。本文针对子模阶段团队效用，提出划分多线性扩展（PME）作为策略化松弛，使连续支撑与分类策略的可行动作一致。理论分析证明该松弛提供边际收益保证，为边缘云环境中动态智能体的分布式任务分配提供了可学习的策略方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.13844v1",
+      "source": "arxiv",
+      "title": "Federated Prompt Learning: A Unified Framework, Empirical Analysis, and Future Directions",
+      "abstract": "Large language models (LLMs) have become core components of cloud-based intelligent services in academia and industry, yet their training and deployment are hindered by high computational costs, data centralization, and privacy concerns. Federated learning (FL) offers a decentralized training paradigm that enables clients to collaboratively train a learning model without sharing raw data, making it a promising solution for privacy-preserving LLM training and reasoning. This paper presents a comprehensive survey of federated prompt learning (FPL) to review recent advances in integrating the federated learning paradigm and large language models, answering the following research questions: RQ1: The fundamental motivations, characteristics, and enabling technologies of FPL, and how it differs from conventional FL and full-model federated fine-tuning; RQ2: The trade-offs FPL approaches exhibit in performance, communication efficiency, computational overhead, scalability, personalization, and heterogeneity handling; RQ3: The remaining security, privacy, robustness, and system challenges, along with key future research directions. To this end, we systematically examine existing FPL methods across the full model lifecycle: pre-training, fine-tuning, and practical applications, while discussing security, privacy, and robustness issues and summarizing existing defense mechanisms. Finally, we highlight open challenges and future directions, aiming to help readers understand how the insights drive research in FPL.",
+      "authors": [
+        "Qinglin Yang",
+        "Chen Qiu",
+        "Hongyuan Zhang",
+        "Pengdeng Li",
+        "Yuan Liu",
+        "Zhihong Tian"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.DC"
+      ],
+      "published": "2026-08-14T00:25:24+00:00",
+      "link": "https://arxiv.org/pdf/2608.13844v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Federated learning as privacy-preserving collaborative training, relevant to edge-cloud collaboration",
+      "llm_evidence_cn": "联邦学习作为隐私保护的协同训练，与端云协同相关",
+      "llm_evidence": "联邦学习作为隐私保护的协同训练，与端云协同相关",
+      "canonical_evidence": "联邦学习作为隐私保护的协同训练，与端云协同相关",
+      "llm_tldr_en": "Survey of federated prompt learning, integrating FL with LLMs for privacy-preserving collaborative training; relevant as a method for distributed edge-cloud AI agent components.",
+      "llm_tldr_cn": "大语言模型在云端服务中面临训练成本高、数据集中和隐私问题。联邦提示学习将联邦学习与提示调优结合，使客户端在不共享原始数据的情况下协作训练模型。该综述系统梳理了联邦提示学习的统一框架、实证分析与未来方向，为端云协同的智能体系统提供了隐私保护下的分布式训练范式。",
+      "llm_tldr": "大语言模型在云端服务中面临训练成本高、数据集中和隐私问题。联邦提示学习将联邦学习与提示调优结合，使客户端在不共享原始数据的情况下协作训练模型。该综述系统梳理了联邦提示学习的统一框架、实证分析与未来方向，为端云协同的智能体系统提供了隐私保护下的分布式训练范式。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.14086v1",
+      "source": "arxiv",
+      "title": "Integrated Sensing, Communication, and Computing in Multi-Tier Systems: Joint Hybrid Beamforming Design and Computation Resource Allocation",
+      "abstract": "This paper proposes a novel integrated sensing, communication, and computing (ISCC) framework over a cloud-edge-device collaborative architecture, where passive sensing is enabled by reusing uplink offloading signals to extract sensing information directly at the edge without incurring additional transmission overhead. Nevertheless, such signal reuse introduces an inherent tradeoff between communication efficiency and sensing coverage. To address this challenge, we adopt a hybrid beamforming architecture under practical hardware constraints. In addition, the integration of sensing tasks creates significant resource contention at the mobile edge computing (MEC) server, where latency-sensitive device tasks and computation-intensive sensing inference tasks compete for limited processing capacity. To alleviate this computation burden, we introduce a split inference mechanism that strategically partitions intelligent sensing tasks between the edge and the cloud. Building upon this framework, we formulate a joint optimization problem to minimize the average computation latency of all device tasks subject to strict sensing performance constraints. To tackle the high non-convexity of the formulated problem, we develop an efficient alternating optimization algorithm. In particular, we design a two-layer framework to jointly determine the optimal DNN splitting point and computation resource allocation and employ a weighted minimum mean square error (WMMSE)-based approach with manifold optimization for hybrid beamforming design. Numerical results demonstrate that the proposed framework achieves a superior tradeoff between sensing accuracy and computation latency compared to the benchmark schemes.",
+      "authors": [
+        "Peng Liu",
+        "Zesong Fei",
+        "Xinyi Wang",
+        "Qiao Qi",
+        "Zhaohui Yang",
+        "Meng Hua",
+        "Arumugam Nallanathan"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-08-14T08:48:37+00:00",
+      "link": "https://arxiv.org/pdf/2608.14086v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Cloud-edge-device collaborative architecture for integrated sensing, communication and computing with resource allocation",
+      "llm_evidence_cn": "云-边-端协同架构，面向通感算一体化与资源分配",
+      "llm_evidence": "云-边-端协同架构，面向通感算一体化与资源分配",
+      "canonical_evidence": "云-边-端协同架构，面向通感算一体化与资源分配",
+      "llm_tldr_en": "Proposes an ISCC framework over a cloud-edge-device collaborative architecture, reusing uplink signals for sensing while jointly designing hybrid beamforming and computation resource allocation.",
+      "llm_tldr_cn": "论文针对云边端协同架构中的通感算一体化问题，提出利用上行卸载信号在边缘直接提取感知信息的新型ISCC框架。该框架采用混合波束赋形架构，并在移动边缘计算服务器上联合优化通信与计算资源分配，以解决感知、通信与计算之间的资源竞争和时延约束。实验表明该方法可在实际硬件约束下有效平衡通信效率与感知覆盖，为多层级协同系统的资源配置提供了综合解决方案。",
+      "llm_tldr": "论文针对云边端协同架构中的通感算一体化问题，提出利用上行卸载信号在边缘直接提取感知信息的新型ISCC框架。该框架采用混合波束赋形架构，并在移动边缘计算服务器上联合优化通信与计算资源分配，以解决感知、通信与计算之间的资源竞争和时延约束。实验表明该方法可在实际硬件约束下有效平衡通信效率与感知覆盖，为多层级协同系统的资源配置提供了综合解决方案。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

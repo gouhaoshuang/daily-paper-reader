@@ -1,0 +1,740 @@
+Title: Energy Efficiency Maximization for FAS-Assisted Downlink Communication in Mobile Embodied AI Networks (MEAN) over Interference Channels
+
+URL Source: https://arxiv.org/pdf/2608.12849v1
+
+Published Time: Fri, 14 Aug 2026 00:33:45 GMT
+
+Number of Pages: 6
+
+Markdown Content:
+# Energy Efficiency Maximization for FAS-Assisted Downlink Communication in Mobile Embodied AI Networks (MEAN) over Interference Channels 
+
+Ruopeng Xu ∗, Zhaohui Yang ∗, Jiaxiang Wang †, Chenliang Wu ∗, Zhaoyang Zhang ∗∗College of Information Science and Electronic Engineering, Zhejiang University, Hangzhou, China 
+
+†Department of Engineering, King’s College London, London, UK E-mails: (ruopengxu, yang zhaohui, chenliangwu, ning ming)@zju.edu.cn, jiaxiang.wang@kcl.ac.uk, 
+
+Abstract —In this paper, we investigate a fluid antenna system (FAS)-assisted downlink mobile embodied AI network (MEAN) over interference channels, where multiple base station (BS)-agent pairs reuse the same spectrum. The BSs employ FASs to improve the communication quality, while the mobile embodied artificial intelligence (AI) agents can adjust their positions accord-ing to environment-aware channel information, such as a channel-to-interference-plus-noise map (CINM). Considering both co-channel interference and the energy consumption caused by communication and agent movement, we formulate an energy effi-ciency (EE) maximization problem by jointly optimizing the agent positions, FAS port selections, and transmit powers. To solve this mixed-integer non-convex problem, we first derive the optimal transmit power in closed form for given agent positions and FAS ports. We then develop an iterative algorithm with adaptive FAS-port optimization and sequential agent-position optimization, together with a low-complexity power-update method. Simulation results demonstrate that the proposed design outperforms the considered benchmark schemes and provides improved feasibility under severe noise conditions. 
+
+Index Terms —Fluid antenna system (FAS), mobile embodied artificial intelligence networks (MEAN), interference channel 
+
+I. I NTRODUCTION 
+
+The development of artificial intelligence (AI) has booted a series of communication paradigms in sixth generation (6G) communication [1]–[4]. As one of them, mobile embodied AI networks (MEAN) enable intelligent embodied agents to interact with physical environments while communicating with base stations (BSs) for information exchange and task execu-tion [5]. Different from conventional communication terminals with fixed locations, embodied agents can actively adjust their positions according to environmental and communication conditions. Such mobility provides additional spatial degrees of freedom for improving wireless communication qualities, especially when channel information at different locations can be obtained from environment-aware databases such as channel knowledge map (CKM) [6] and channel gain map (CGM) [7]. However, moving an agent to a position with better communication conditions also introduces additional movement energy consumption. Therefore, an energy-efficient design requires a trade-off between the communication gain obtained from agent movement and its associated energy cost. 
+
+This work was supported by the National Natural Science Foundation of China (NSFC) under Grants 62394292, 62394290. 
+
+Fluid antenna systems (FASs) provide another promising approach to exploiting spatial channel variations [8]–[11]. By dynamically selecting among multiple preset antenna ports, an FAS can adapt its effective channel while requiring only a single RF chain, showing a promising potential to improve communication performance and energy efficiency (EE) [12], [13]. When FAS is introduced into an MEAN, both port selection and agent mobility can be used to improve commu-nication quality. Such a design is relevant to scenarios, such as a smart manufacturing case, where multiple BSs simulta-neously deliver control commands and task data to mobile embodied agents. To improve spectrum utilization, different BS-agent pairs may reuse the same frequency band, which inevitably introduces co-channel interference among receivers. Consequently, each agent receives not only the desired signal from its associated BS but also interference from other BSs. In this case, changing the FAS port of one BS affects not only its desired link but also the interference experienced by other agents. Meanwhile, agent movement further changes both the desired and interference channels. Therefore, agent positions, FAS port selections, and BS transmit powers become coupled. Existing studies have investigated environment-aware wire-less communication using channel information [5]–[7], as well as FAS-enabled communication designs [8]–[13]. However, jointly exploiting agent mobility and FAS spatial flexibility in an MEAN over interference channels remains a research gap. Moreover, transmit powers in the communication design are supposed to be coordinated with both agent movement and FAS port selection strategies to satisfy quality of service (QoS) of communications while maintaining high EE, which requires a joint design of agent positions, FAS port selections, and transmit powers. Motivated by the above observations, in this paper, we investigate an FAS-assisted downlink MEAN with multiple BS-agent pairs sharing the same spectrum. We formulate an EE maximization problem that jointly optimizes the agent-position assignment, FAS port selection, and BS transmit power under the corresponding constraints. The key contributions of this paper include:  
+
+> •
+
+We investigate an FAS-assisted downlink communication in MEAN over interference channels, where multiple BS-agent pairs share the same spectrum. In the considered model, the communication system accounts for the co-arXiv:2608.12849v1 [eess.SP] 13 Aug 2026 channel interference among multiple BS-agent pairs, as well as the additional movement energy consumed by agents when seeking better communication conditions. This establishes a joint movement and communication design framework that captures the trade-off between communication performance improvement and mobility-induced energy consumption.  
+
+> •
+
+We formulate an EE maximization problem by jointly optimizing agent positions, FAS port selections, and transmit powers. To solve this problem, we first derive the optimal transmit power vector in closed form for given agent positions and FAS ports. Based on this result, we develop an iterative optimization algorithm that adaptively performs exhaustive or alternating FAS-port optimization according to the size of the port-selection space, and sequentially optimizes the agent positions. In addition, a low-complexity power-update method based on the Sherman–Morrison identity is developed to reduce the computational complexity of position optimization.  
+
+> •
+
+We evaluate the proposed FAS-assisted MEAN design through extensive Monte Carlo simulations and compare its EE performance with several benchmark schemes under different numbers of FAS ports, transmission data sizes, and noise power levels. Simulation results demon-strate that the proposed scheme consistently achieves the best EE performance and provides improved feasibility under severe noise conditions, validating the effectiveness of the proposed algorithm. II. S YSTEM MODEL 
+
+As illustrated in Fig. 1, we consider an interference channel with K BS-agent pairs, where each pair consists of one BS equipped with a fluid antenna (FA) and an agent uti-lizing a fixed-position antenna (FPA) served by the BS. To improve spectrum utilization, we consider a frequency-reuse transmission scenario, in which all BS-agent pairs share the same spectrum band. During the transmission, we assume that agents can freely move within the region D, size of d1 × d2,where channel conditions vary between different positions. The channel-to-interference-plus-noise map (CINM) can provide channel information, similar to the CKM, CGM, etc., plus the information about interference and noise. With the help of CINM, each agent can adjust its spatial position to find better channels to receive signals from its associated BS. To describe spatial relations, we introduce two-dimensional (2D) Cartesian coordinate system, where the locations of the 
+
+k-th BS and the k-th agent are bk = [ xbk , y bk ]T and ak =[xak , y ak ]T , respectively, and (·)T is the transpose operation. 
+
+A. FAS-Aided Communication Model 
+
+For the k-th BS-agent pair, we assume that the k-th BS is equipped with a 2D FAS, which includes only one RF chain and Nk = N 1 
+
+> k
+
+× N 2 
+
+> k
+
+preset ports, where the N ik ports are uniformly distributed along a linear space of length W ikλ for 
+
+i ∈ { 1, 2}, and take up a grid surface size of Wk = W 1 
+
+> k
+
+×Base station k     
+
+> Channel-to-interference-plus-noise map database
+> Agent k at position 𝒂𝒂𝑘𝑘
+> 0
+> 𝑾𝑾 𝟏𝟏 𝛌𝛌
+> 𝑾𝑾 𝟐𝟐 𝛌𝛌
+> 𝑵𝑵𝟏𝟏
+> ports
+> 𝑵𝑵 𝟐𝟐 ports
+> Activated port of the 2D FAS
+> Agent k at position 𝒂𝒂𝑘𝑘
+> moving distance 𝑑𝑑𝑘𝑘
+> Desired link
+> Interference link
+> Agent movement
+> Agent before/after moving /2D fluid antenna system (FAS)
+
+Fig. 1. An Illustration of the proposed communication system. 
+
+W 2 
+
+> k
+
+λ2 with λ being the carrier wavelength. For simplicity of notation, for the (n1, n 2)-th port, we can note it as the l-th port, with the mapping relationship l = ( n1 − 1) N 2 
+
+> k
+
++ n2.Based on this, we denote channel between the l-th port of FAS belonging the k-th BS and the j-th agent by 
+
+glk,j = √αk,j hlk,j , (1) where hlk,j stands for small-scale fading [14], and √αk,j 
+
+denotes large-scale fading, which can be defined as [15] 
+
+αk,j = C0
+
+ψk,j 
+
+|| bk − aj || β
+
+> 2
+
+, ∀j, k ∈ K , (2) where C0 is the large-scale reference constant, ψk,j is an independent and identically distributed (i.i.d.) Gamma random variable, β is the path-loss exponent with typical values ranging from 2 to 6 [16], and K = {1, . . . , K }.We exploit the spatial correlation between FAS ports to model hlk,j , which can be described as 
+
+Rk,j = E[hk,j hHk,j ] = 
+
+
+
+1 R1,2 
+
+> k,j
+
+. . . R1,N k
+
+> k,j
+
+R2,1 
+
+> k,j
+
+1 . . . R2,N k
+
+> k,j
+
+... ... ...
+
+RNk ,1 
+
+> k,j
+
+RNk ,2 
+
+> k,j
+
+. . . 1
+
+ , (3) where hk,j = [ h1 
+
+> k,j
+
+, . . . , h Nk 
+
+> k,j
+
+]T , and entry Rx,y k,j is the spatial correlation between the x-th port and the y-th port of FAS. In particular, the spatial correlation between the (n1, n 2)-th port and (˜ n1, ˜n2)-th port can be mathematically described as [17] 
+
+R(n1,n 2),(˜ n1,˜n2)
+
+> k,j
+
+= j0
+
+2π
+
+s |n1 − ˜n1|
+
+N 1 
+
+> k
+
+− 1 W 1
+
+> k
+
+2
+
++
+
+ |n2 − ˜n2|
+
+N 2 
+
+> k
+
+− 1 W 2
+
+> k
+
+2
+
+ , (4) where j0(·) is the spherical Bessel function of the first kind. The aim for the agent k is to receive the target signal from the k-th BS, but it also receives interference signals from other BSs. Thus, the received signal at agent k can be given as 
+
+yk = √pkαk,k eHk hk,k sk +
+
+> K
+
+X 
+
+> j=1 ,j ̸=k
+
+√pj αj,k eHj hj,k sj + ηk,
+
+(5) where ek is a one-hot vector for BS k to choose the FAS port, 
+
+pk is the transmit power, sk ∼ CN (0 , 1) is the transmitted signal of BS k following complex Gaussian distribution with a zero mean and a unit variance, and ηk ∼ CN (0, σ2) is the additive white Gaussian noise (AWGN) in agent k. Then, the signal-to-interference-plus-noise ratio ( SINR ) of the k-th agent’s received signal at position ak can be expressed as 
+
+γk = pkαk,k |eHk hk,k |2
+
+PKj=1 ,j ̸ =k pj αj,k |eHj hj,k |2 + σ2 , (6) based on which, the achievable rate for the k-th BS-agent pair can be given as 
+
+Rk = B log 2(1 + γk), (7) where B is the bandwidth shared by all BS-agent pairs. 
+
+B. Agent Movement Energy Model 
+
+Although each agent can move to find better channels to re-ceive signals, moving from the start point to its destination also introduces extra energy consumption beyond communication. From the perspective of EE, there is a trade-off between the improvement of achievable rate and the extra system energy consumption, both caused by the agent movement. To quantify the trade-off, we first model the energy con-sumption caused by agent movement. If we denote the initial and target positions of agent k as a0 
+
+> k
+
+and ak, respectively, the moving distance of agent k can be denoted by dk(ak, a0
+
+> k
+
+).We can discretize the feasible area D for agents to move into M candidate points. Specifically, we denote the Cartesian coordinate of the m-th position as μm = [xμm , y μm ]T .Then, the target position of the agent k can be expressed as 
+
+ak = PMm=1 xm,k μm, where we define X = [ x1, . . . , xK ],and xk = [ x1,k , . . . , x M,k ]T , ∀k ∈ K .With an initial position and a chosen target position, agents can invoke tools, such as LLMs, to obtain the route plans. We assume a planar and obstacle-free region 1, where each agent can move at a constant speed of v directly from its initial location to any candidate position along a feasible straight-line path. Then, the movement energy consumption can be modeled as [18] 
+
+Emove  
+
+> k
+
+= ( τr + τav2 + τc
+
+v )dk(ak, a0
+
+> k
+
+) (a)
+
+≥ τ0|| ak − a0
+
+> k
+
+|| 2, (8) where τr , τa, and τc are constant coefficients related to the agent material and the environment [18], τ0 = τr + 
+
+> 322/3
+
+(τaτ 2 
+
+> c
+
+)1/3, and || · || is the Euclidean norm. The equality 
+
+(a) holds because Emove  
+
+> k
+
+is a convex function of v, and it reaches its minimum value when v∗ = ( τc 
+
+> 2τa
+
+)1/3.As a result, we can describe the EE performance after the agent k moves from position a0 
+
+> k
+
+to the target position ak as 
+
+EE k = Blog 2(1 + γk)tk
+
+τ0|| PMm=1 xm,k μm − a0
+
+> k
+
+|| 2 + pktk
+
+, (9)           
+
+> 1This assumption allows us to focus on the coupling between agent movement and wireless resource allocation. In environments with obstacles, the Euclidean distance can be replaced by the exact route planning results without altering the overall optimization framework.
+
+where tk = Lk/R k is the transmission duration, and Lk is the total amount of data to be transmitted. 
+
+C. Problem Formulation 
+
+Then, we can formulate the EE maximization problem as 
+
+max 
+
+> p,X,E
+> K
+
+X
+
+> k=1
+
+Blog 2(1 + γk)tk
+
+τ0|| PMm=1 xm,k μm − a0
+
+> k
+
+|| 2 + pktk
+
+, (10) s.t. xm,k ∈ { 0, 1}, ∀k ∈ K , ∀m ∈ M , (10a) 
+
+> M
+
+X
+
+> m=1
+
+xm,k = 1 , ∀k ∈ K , (10b) 
+
+> K
+
+X
+
+> k=1
+
+xm,k ≤ 1, ∀m ∈ M , (10c) 
+
+en,k ∈ { 0, 1}, ∀n ∈ N k, ∀k ∈ K , (10d) 
+
+> Nk
+
+X
+
+> n=1
+
+en,k = 1 , ∀k ∈ K , (10e) 
+
+Blog 2(1 + γk) ≥ Rmin  
+
+> k
+
+, ∀k ∈ K , (10f) 
+
+0 < p k ≤ P max  
+
+> k
+
+, ∀k ∈ K , (10g) where M = {1, . . . , M }, Nk = {1, . . . , N k}, Nmax =max k∈K {Nk}, E = [ˆ e1, . . . , ˆeK ], ˆek = [ eTk , 0TNmax −Nk ]T ,
+
+0a is a zero vector of size a × 1, Rmin  
+
+> k
+
+is the minimum required achievable rate for the k-th BS-agent pair to ensure transmission QoS, and P max  
+
+> k
+
+is the maximum transmit power for the BS k.III. P ROPOSED ALGORITHM 
+
+A. Optimal Power Control for Fixed Movement and FAS Ports 
+
+Given the agent-position assignment matrix X, and the FAS port selection matrix E, problem (10) is reduced to a transmit power control problem, which can be reformulated as 
+
+max 
+
+> p
+> K
+
+X
+
+> k=1
+
+LkBlog 2(1 + pk |gk,k |2     
+
+> PKj=1 ,j ̸=kpj|gj,k |2+σ2
+
+)
+
+τ0dkBlog 2(1 + pk |gk,k |2     
+
+> PKj=1 ,j ̸=kpj|gj,k |2+σ2
+
+) + pkLk
+
+,
+
+(11) s.t. Blog 2(1 + pk|gk,k |2
+
+PKj=1 ,j ̸ =k pj |gj,k |2 + σ2 ) ≥ Rmin  
+
+> k
+
+, ∀k ∈ K ,
+
+(11a) 
+
+0 < p k ≤ P max  
+
+> k
+
+, ∀k ∈ K , (11b) where gj,k = √αj,k eHj hj,k is the effective channel from BS 
+
+j to the agent k.Based on (11a) , we can obtain the following inequality as 
+
+pk ≥
+
+> K
+
+X 
+
+> j=1 ,j ̸=k
+
+θk|gj,k |2
+
+|gk,k |2 pj + θkσ2
+
+|gk,k |2 , ∀k ∈ K . (12) where θk = 2 Rmin   
+
+> k/B
+
+− 1. Furthermore, the above inequalities can be written as p ≥ Fp + u, where the entries in F hold 
+
+Fk,k = 0 , Fk,j = θk|gj,k |2/|gk,k |2 for j̸ = k, and the entries in u can be given by uk = θkσ2/|gk,k |2.For fixed X and E, we can easily prove that the objective function of the problem (11) is strictly decreasing with respect to each transmit power component over feasible region. There-fore, the optimal power vector is the minimum feasible power vector satisfying the QoS constraints. and if ρ(F) < 1, where 
+
+ρ(·) denotes the spectral radius of a matrix, the minimum feasible power vector is given by 
+
+p⋆ = ( I − F)−1u, (13) According to the Perron-Frobenius theorem [19], since F is entry-wise nonnegative, ρ(F) < 1 guarantees that I−F is non-singular and that its inverse is also entry-wise nonnegative. Consequently, we can obtain the result shown in (13). If 
+
+ρ(F) ≥ 1 or any entry of p⋆ exceeds P max  
+
+> k
+
+, the current movement and FAS port selection are considered infeasible. 
+
+B. Problem Reformulation and Port Selection Strategies 
+
+With the results shown in (13), the original problem (10) can be reformulated as 
+
+max  
+
+> X,E
+
+Φ( X, E) = 
+
+> K
+
+X
+
+> k=1
+
+Lk
+
+τ0dk(X) + Lk
+
+> Rmin
+> k
+
+p⋆k(X, E) , (14) s.t. ρ(F(X, E)) < 1, (14a) 
+
+0 < p ⋆k(X, E) ≤ P max  
+
+> k
+
+, ∀k ∈ K , (14b) 
+
+(10a) − (10e) ,
+
+where dk(X) = || PMm=1 xm,k μm − a0
+
+> k
+
+|| 2, p⋆k(X, E) = [( I −
+
+F(X, E)) −1u(X, E)] k and [·]k is the k-th entry of a vector. For a given agent-position assignment X, the remaining FAS-port selection problem is a finite discrete optimization problem. Specifically, the total number of possible combina-tions of port selections is Ncomb = Π Kk=1 Nk. We adopt an adaptive search strategy according to the size of this discrete search space. When Ncomb ≤ Nth , where Nth denotes a predefined computational-budget threshold, all possible port selections are exhaustively evaluated, and the globally optimal port selection for a given X is obtained as 
+
+E⋆(X) = arg max  
+
+> E
+
+Φ( X, E), (15) where infeasible combinations that violate the constraint (14a) or the constraint (14b) will be discarded. When Ncomb > N th , an exhaustive search becomes com-putationally prohibitive. We therefore optimize the FAS-port selections of different BSs in an alternating manner. Let t =1, 2, . . . denote the index of the alternating iteration, and let 
+
+E(t) denote the port-selection matrix obtained after completing the t-th iteration. Given E(t−1) , the BSs are sequentially updated. When updating BS k in the t-th iteration, the vectors 
+
+{e(t) 
+
+> j
+
+}j<k and {e(t−1)  
+
+> j
+
+}j>k are fixed, while ek is optimized over all its feasible one-hot configurations. Mathematically, we can update e(t) 
+
+> k
+
+by solving the following problem as 
+
+e(t) 
+
+> k
+
+= arg max 
+
+> ek
+
+Φ( X, [e(t)1 , . . . , e(t)
+
+> k−1
+
+, ek, e(t−1)  
+
+> k+1
+
+, . . . , e(t−1)  
+
+> K
+
+]) ,
+
+(16) s.t. (10d) , (10e) , (14a) , (14b) .
+
+When port selections do not change between two iterations, i.e., E(t) = E(t−1) , we find the solution with the given X.
+
+C. Agent Position Optimization for Given Port Selections 
+
+With fixed E, directly enumerating all feasible position as-signments requires a combinatorial search over M !/(M − K)! 
+
+possibilities and is therefore computationally prohibitive for a large M . Thus, we optimize the position of each agent sequentially, following a Gauss–Seidel update manner similar to the port optimization above. During the t-th iteration, we update the position of the agent k by solving 
+
+x(t) 
+
+> k
+
+= arg max 
+
+> xk
+
+Φ([ x(t)1 , . . . , x(t)
+
+> k−1
+
+, xk, x(t−1)  
+
+> k+1
+
+, . . . , x(t−1)  
+
+> K
+
+], E),
+
+(17) s.t. (10a) − (10c) , (14a) , (14b) .
+
+in which an exhaustive search can be performed to find the solution but with a large amount of matrix inversion operations required if directly recomputing (13) for every candidate position with a large size of M . Therefore, we propose the Lemma 1 to reduce computational cost power control update. 
+
+Lemma 1: Let Xk→m denote the assignment obtained by relocating agent k to candidate position m while keeping all other agents fixed. Correspondingly, we define Fk→m =
+
+F(Xk→m, E) and uk→m = u(Xk→m, E). Then, the updated power control vector p⋆k→m can be calculated by 
+
+p⋆k→m = p⋆(X, E) + [Q−1]:,k (δk→m − ξTk→mp⋆)1 + ξTk→m[Q−1]:,k 
+
+, (18) where Q = I − F(X, E), ξTk→m = [ I − Fk→m]k, : − [Q]k, :,
+
+δk→m = [ uk→m]k − [u(X, E)] k, and [·]k, : and [·]:,k denote the k-the row and k-th column of a matrix, respectively. 
+
+Proof 1: See Appendix A. Based on (18), the optimal power response associated with each candidate position can be evaluated without recomputing a matrix inverse. Moreover, for each position m, the candidate assignment is feasible if 0 < [p⋆k→m]j ≤ P max  
+
+> j
+
+, ∀j ∈ K .Among all feasible candidates, agent k selects the position yielding the largest value of (17). After all K agents are sequentially updated, one position-optimization sweep is com-pleted. The procedure is repeated until X(t) = X(t−1) .
+
+D. Overall Algorithm and Complexity Analysis 
+
+The overall optimization algorithm is summarized in Al-gorithm 1. Let IE , IX , and IO denote the numbers of FAS-port iterations, position-assignment iterations, and outer iter-ations required for convergence, respectively. For each FAS-port selection, evaluating p⋆ through (13) requires solving a 
+
+K × K linear system, whose complexity is O(K3). Hence, the complexity of the FAS-port optimization is 
+
+CE =
+
+
+
+O Ncomb K3 , Ncomb ≤ Nth ,
+
+O
+
+
+
+IE K3 PKk=1 Nk
+
+
+
+, Ncomb > N th . (19) 1 4 9 16 25 36 49 64 81 
+
+> Number of FAS ports, N
+> 050 100 150 200 250
+> Maximized energy efficiency, EE (Mbits/Joule)
+> Proposed FPA RP 1e3 Ave Random Transmit Power RP 1e3 Best
+
+(a) 1 1.5 2 2.5 3 3.5 4 4.5 5 
+
+> Total transmission data, L (Gbits)
+> 050 100 150 200 250 300
+> Maximized energy efficiency, EE (Mbits/Joule)
+> Proposed FPA RP 1e3 Ave Random Transmit Power RP 1e3 Best
+
+(b) -95 -90 -85 -80 -75 -70 -65 -60 -55      
+
+> Noise power, 2(dBm)
+> 050 100 150 200 250 300 350 400 450
+> Maximized energy efficiency, EE (Mbits/Joule)
+> Proposed FPA RP 1e3 Ave Random Transmit Power RP 1e3 Best
+> -80 40 50 60
+> Proposed vs FPA near -80 dBm
+> -80 -75 -70 020 40
+> FPA vs RP 1e3 Best near -75 dBm
+
+(c) Fig. 2. Energy efficiency of the system versus the (a) Number of ports N , (b) Total transmission data L, (c) Noise power σ2 .
+
+Algorithm 1: The Proposed Optimization Algorithm for Solving Problem (10) 
+
+Input: Feasible p(0) , X(0) and E(0) , threshold Nth 
+
+Output: X⋆, E⋆, and p⋆ 
+
+> 1
+
+Initialize r = 0 and obtain p⋆ according to (13);  
+
+> 2
+
+repeat  
+
+> 3
+
+Fix X(r); 
+
+> 4
+
+if Ncomb ≤ Nth then  
+
+> 5
+
+Obtain E(r+1) by the exhaustive search in (15), with p⋆ evaluated by (13);  
+
+> 6
+
+else  
+
+> 7
+
+Initialize E(r+1) = E(r); 
+
+> 8
+
+repeat  
+
+> 9
+
+Sequentially update ek according to (16), and update p⋆ by (13);  
+
+> 10
+
+until the FAS-port selection converges ; 
+
+> 11
+
+end  
+
+> 12
+
+Fix E(r+1) ; 
+
+> 13
+
+Initialize X(r+1) = X(r); 
+
+> 14
+
+repeat  
+
+> 15
+
+Sequentially update xk according to (17), and update p⋆ using (18) in Lemma 1;  
+
+> 16
+
+until the position assignment converges ; 
+
+> 17
+
+r ← r + 1 ; 
+
+> 18
+
+until X(r) = X(r−1) and E(r) = E(r−1) ; 
+
+> 19
+
+return X⋆ = X(r), E⋆ = E(r), and p⋆;For the agent position optimization, by exploiting the results in Lemma 1, each candidate can be evaluated using O(K)
+
+vector operations. Considering all M candidate positions for 
+
+K agents together, the complexity of one position optimization iteration is CX = O M K 2. Therefore, the overall computa-tional complexity of Algorithm 1 is OIO
+
+ CE + IX M K 2 .IV. S IMULATION RESULTS 
+
+In our simulations, we assume that there are 4 pairs of BS-agents and M = 200 × 200 candidate positions. Without loss of generality, we assume that the FAS of each BS has the same structure parameters, and specifically, we set N1 = · · · =
+
+NK = N = 4 and W1 = · · · = WK = W = 1 . Besides, we set P max 1 = · · · = P max  
+
+> K
+
+= 30 dBm , σ2 = −90 dBm ,
+
+B = 3 MHz , Nth = 10 5, and Rmin = 1 Mbps . We launch Monte Carlo simulations to evaluate the EE performance of our proposed algorithm, labeled as Proposed , and compare it with benchmark schemes: FPA , which uses an FPA at the BS with optimizing transmit power and agent positions; RP 1e3 Ave 
+
+and RP 1e3 best both randomly choose the agent positions 
+
+1000 times with optimizing transmit power and FAS port selections, and calculate the average and best EE performance of them, respectively; Random Transmit Power , in which each BS transmits the signals using a random transmit power and optimizes agents positions and FAS port selections. Fig. 2(a) illustrates the EE performance of the system versus the number of ports N of each FAS. When N = 1, the proposed scheme and FPA achieve nearly the same EE since no port-selection gain is available. As N increases, the EE of the proposed scheme increases, while FPA remains unchanged because it uses a fixed antenna port. The improvement comes from the additional spatial degrees of freedom provided by FAS, which allow more favorable desired-link and interference conditions to be selected. The random-position baselines also benefit from increasing N , but remain below the proposed scheme because the agent positions are not optimized. The EE gain gradually saturates for large N , as the fixed FAS aperture leads to stronger correlation among increasingly dense ports and hence a diminishing port-selection gain. Fig. 2(b) shows the EE performance of the system versus the total transmission data L. The EE generally increases with L,and the proposed scheme maintains the highest performance over the considered range. When L is relatively small, the mechanical energy required for movement accounts for a larger portion of the total energy consumption, limiting the benefit of agent movement. As L increases, this fixed movement energy cost is amortized over more transmitted data, and the benefit of jointly optimizing the agent positions, FAS ports, and transmit powers becomes more pronounced. The reduced slope at large 
+
+L indicates that the EE gradually approaches saturation as the impact of the fixed movement energy on the overall EE decreases with increasing L.Fig. 2(c) demonstrates the EE performance of the system versus the noise power σ2. As the noise power increases, a higher transmit power is required to satisfy the minimum-rate constraint, making the problem more likely to become infeasible under the maximum transmit power constraint. The proposed scheme maintains the highest EE over the entire considered range. As highlighted in the zoom-in regions, around −80 dBm , performance of the proposed algorithm becomes close to that of FPA as the benefit of FAS port selection decreases under increased noise. When the noise power further increases, FPA fails to find feasible solutions beyond −75 dBm , whereas the benchmark schemes using FAS can still obtain feasible solutions at −70 dBm , showing that the additional spatial degrees of freedom provided by FAS enlarge the feasible operating range. In comparison, the proposed scheme remains feasible up to −60 dBm and becomes infeasible only at higher noise levels, indicating that the proposed algorithm further extends the feasible operating range under severe noise conditions. V. C ONCLUSION 
+
+In this paper, we investigated the EE maximization problem for FAS-assisted downlink communication over interference channels in MEAN. By jointly considering the communication energy consumption and agent movement energy, we formu-lated an EE maximization problem that jointly optimizes the agent positions, FAS port selections, and transmit powers. To solve this problem, we first derived the optimal transmit power for given agent positions and FAS ports, and then developed an iterative optimization algorithm with adaptive FAS port selection and sequential agent position optimization. A low-complexity power update method was further developed to reduce the computational cost during position optimization. Simulation results demonstrated that the proposed scheme achieves higher EE than the considered benchmark schemes, validating the effectiveness of the proposed algorithm. APPENDIX APROOF OF LEMMA 1We define Qk→m = I − Fk→m. Then, we have 
+
+Qk→m = Q + ϵkξTk→m, (20) where ϵk denotes the k-th standard basis vector in RK . Ac-cording to Sherman–Morrison identity [20], if ξTk→mQ−1ϵk̸ =
+
+−1, the inverse of Qk→m can be given by 
+
+Q−1 
+
+> k→m
+
+= Q−1 − Q−1ϵkξTk→mQ−1
+
+1 + ξTk→mQ−1ϵk
+
+. (21) As a result, the updated power control vector after the agent 
+
+k moving to position μm can be calculated as 
+
+p⋆k→m = Q−1
+
+> k→m
+
+uk→m
+
+= Q−1u + δk→mQ−1ϵk − Q−1ϵkξTk→mQ−1(u + δk→mϵk)1 + ξk→mT Q−1ϵk
+
+= p⋆ + Q−1ϵk(δk→m − ξk→mT Q−1u)1 + ξk→mT Q−1ϵk
+
+= p⋆ + [Q−1]:,k (δk→m − ξTk→mp⋆)1 + ξTk→m[Q−1]:,k 
+
+,
+
+which proves the equality of (18). REFERENCES [1] W. Xu, Z. Yang, D. W. K. Ng, R. Schober, H. V. Poor, Z. Zhang, and X. You, “A new path to integrated learning and communication (ILAC): Large AI models leveraging hyperdimensional computing,” 
+
+IEEE Transactions on Communications , 2026. [2] Y. Cang, M. Chen, and Z. Yang, “Cooperative detection for MEC-aided multi-static ISAC systems,” IEEE Journal on Selected Areas in Communications , vol. 44, pp. 545–561, 2026. [3] J. Wang, Y. Yang, Z. Yang, C. Huang, M. Chen, Z. Zhang, and M. Shikh-Bahaei, “Generative AI empowered semantic feature multiple access (SFMA) over wireless networks,” IEEE Transactions on Cognitive Communications and Networking , vol. 11, no. 2, pp. 791–804, 2025. [4] Z. Yang, M. Chen, Z. Zhang, and C. Huang, “Energy efficient semantic communication over wireless networks with rate splitting,” IEEE J. Sel. Areas Commun. , vol. 41, no. 5, pp. 1484–1495, 2023. [5] C. Wu, Z. Zhao, J. Wang, R. Xu, C. Zhu, Z. Yang, and Z. Zhang, “Joint communication and computation design for mobile embodied AI network (MEAN),” arXiv preprint arXiv:2605.14300 , 2026. [6] Y. Zeng and X. Xu, “Toward environment-aware 6g communications via channel knowledge map,” IEEE Wireless Communications , vol. 28, no. 3, pp. 84–91, 2021. [7] H. Sun, L. Zhu, and R. Zhang, “Channel gain map estimation for wireless networks based on scatterer model,” IEEE Transactions on Wireless Communications , 2025. [8] Z. Zhang, K.-K. Wong, H. Jiang, F. R. Ghadi, H. Shin, and Y. Zhang, “Finite-aperture fluid antenna array design: Analysis and algorithm,” 
+
+IEEE Wireless Communications Letters , 2026. [9] Y. Zhao, P. Yang, S. Yang, Y. Xiao, G. Wu, A. Manolova, and H. Shin, “Fluid antenna systems: A dof-driven paradigm for future multifunc-tional networks,” IEEE Network , pp. 1–9, 2026. [10] K.-K. Wong, A. Shojaeifard, K.-F. Tong, and Y. Zhang, “Fluid antenna systems,” IEEE Transactions on Wireless Communications , vol. 20, no. 3, pp. 1950–1962, 2020. [11] Z. Qu, J. Luo, S. Wang, and G. Taricco, “Secure transmission via sub-symbol precoding and port switching in fluid antenna system,” in ICC 2026 - IEEE International Conference on Communications , 2026, pp. 1–6. [12] R. Xu, S. Zhang, Z. Yang, M. Chen, Z. Zhang, and K.-K. Wong, “Fluid antenna relay (FAR)-assisted communication with hybrid relaying scheme selection,” in ICC 2026-IEEE International Conference on Communications . IEEE, 2026, pp. 1–6. [13] R. Xu, S. Zhang, Z. Yang, Y. Chen, M. Chen, Z. Zhang, and K.-K. Wong, “On performance of fluid antenna relay (FAR)-assisted AAV-NOMA wireless network,” in 2026 IEEE Wireless Communications and Networking Conference Workshops (WCNCW) . IEEE, 2026, pp. 1–6. [14] R. Xu, Z. Yang, Z. Zhang, M. Shikh-Bahaei, K. Huang, and D. Niyato, “Energy efficient fluid antenna relay (FAR)-assisted wireless communi-cations,” IEEE Journal on Selected Areas in Communications , vol. 44, pp. 1160–1176, 2026. [15] A. Laourine, M.-S. Alouini, S. Affes, and A. St´ ephenne, “On the capacity of generalized-K fading channels,” IEEE Transactions on Wireless Communications , vol. 7, no. 7, pp. 2441–2445, 2008. [16] A. Yang, Z. He, C. Xing, Z. Fei, and J. Kuang, “The role of large-scale fading in uplink massive MIMO systems,” IEEE Transactions on Vehicular Technology , vol. 65, no. 1, pp. 477–483, 2015. [17] W. K. New, K.-K. Wong, H. Xu, K.-F. Tong, and C.-B. Chae, “An information-theoretic characterization of MIMO-FAS: Optimization, diversity-multiplexing tradeoff and q-outage capacity,” IEEE Transac-tions on Wireless Communications , vol. 23, no. 6, pp. 5541–5556, 2024. [18] J. Topi´ c, B. ˇ Skugor, and J. Deur, “Neural network-based modeling of electric vehicle energy demand and all electric range,” Energies , vol. 12, no. 7, p. 1396, 2019. [19] J. Zander, “Performance of optimum transmitter power control in cellular radio systems,” IEEE Transactions on Vehicular Technology , vol. 41, no. 1, pp. 57–62, 1992. [20] J. Sherman and W. J. Morrison, “Adjustment of an inverse matrix corresponding to a change in one element of a given matrix,” The Annals of Mathematical Statistics , vol. 21, no. 1, pp. 124–127, 1950.

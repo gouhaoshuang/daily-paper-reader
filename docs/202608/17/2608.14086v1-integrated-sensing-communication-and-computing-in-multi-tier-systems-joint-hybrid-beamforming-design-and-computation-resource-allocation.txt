@@ -1,0 +1,2363 @@
+Title: Integrated Sensing, Communication, and Computing in Multi-Tier Systems: Joint Hybrid Beamforming Design and Computation Resource Allocation
+
+URL Source: https://arxiv.org/pdf/2608.14086v1
+
+Published Time: Mon, 17 Aug 2026 00:35:39 GMT
+
+Number of Pages: 16
+
+Markdown Content:
+> 1
+
+# Integrated Sensing, Communication, and Computing in Multi-Tier Systems: Joint Hybrid Beamforming Design and Computation Resource Allocation 
+
+Peng Liu, Zesong Fei, Senior Member, IEEE , Xinyi Wang, Member, IEEE , Qiao Qi, Member, IEEE ,Zhaohui Yang, Member, IEEE , Meng Hua, Senior Member, IEEE , and Arumugam Nallanathan, Fellow, IEEE 
+
+Abstract —This paper proposes a novel integrated sensing, communication, and computing (ISCC) framework over acloud–edge–device collaborative architecture, where passive sens-ing is enabled by reusing uplink offloading signals to extract sens-ing information directly at the edge without incurring additional transmission overhead. Nevertheless, such signal reuse introduces an inherent tradeoff between communication efficiency and sensing coverage. To address this challenge, we adopt a hybrid beamforming architecture under practical hardware constraints. In addition, the integration of sensing tasks creates significant resource contention at the mobile edge computing (MEC) server, where latency-sensitive device tasks and computation-intensive sensing inference tasks compete for limited processing capacity. To alleviate this computation burden, we introduce a split infer-ence mechanism that strategically partitions intelligent sensing tasks between the edge and the cloud. Building upon this frame-work, we formulate a joint optimization problem to minimize the average computation latency of all device tasks subject to strict sensing performance constraints. To tackle the high non-convexity of the formulated problem, we develop an efficient alternating optimization algorithm. In particular, we design a two-layer framework to jointly determine the optimal DNN splitting point and computation resource allocation and employ a weighted minimum mean square error (WMMSE)-based approach with manifold optimization for hybrid beamforming design. Numerical results demonstrate that the proposed framework achieves a superior tradeoff between sensing accuracy and computation latency compared to the benchmark schemes. Keywords: Integrated sensing and communication (ISAC), cloud–edge–end computing, hybrid beamforming, split inference. 
+
+I. I NTRODUCTION 
+
+With the evolution toward sixth-generation (6G) wireless networks, emerging applications such as extended reality (XR), intelligent transportation, smart homes, and immersive 
+
+Peng Liu, Zesong Fei, and Xinyi Wang are with the School of Information and Electronics, Beijing Institute of Technology, Beijing 100081, China (e-mail: bit peng liu@163.com, feizesong@bit.edu.cn, bit wangxy@163.com). Qiao Qi is with the School of Information Science and Technol-ogy, Hangzhou Normal University, Hangzhou 311121, China (email: qiqiao@hznu.edu.cn). Zhaohui Yang is with the College of Information Science and Electronic Engineering, Zhejiang University, Hangzhou, 310027, China (email: yang zhaohui@zju.edu.cn). Meng Hua is with the Department of Electrical and Electronic En-gineering, Imperial College London, London SW7 2AZ, UK. (e-mail: m.hua@imperial.ac.uk). Arumugam Nallanathan is with the School of Electronic Engineer-ing and Computer Science, Queen Mary University of London, E1 4NS London, U.K., and also with the Department of Electronic Engineering, Kyung Hee University, Yongin-si, Gyeonggi-do 17104, South Korea (E-mail: a.nallanathan@qmul.ac.uk). 
+
+human–machine interaction are expected to be natively sup-ported [1]. These applications impose stringent latency and computational requirements, which pose significant challenges to the limited processing capability and energy budget of end devices. To address this limitation, mobile edge com-puting (MEC) has been widely recognized as a key enabling paradigm by offloading computation tasks to edge servers in close proximity to end devices, thereby reducing execution latency and device-side computation burden [2]. Motivated by this paradigm, extensive research efforts have focused on MEC-enabled wireless networks [3]–[5]. In [3], the authors investigated multi-user MEC systems enabled by multiple-input multiple-output (MIMO) techniques, where beamform-ing vectors and computation resources were jointly optimized to improve energy efficiency. To cope with the limited com-putation capacity of MEC servers, the authors in [4] and [5] investigated cloud–edge–end collaborative computing archi-tectures, in which task partitioning and computation resource allocation were optimized to further reduce task processing latency. Beyond the provision of computation capability, future wireless networks are also expected to possess environmental sensing functionality to support a wide range of intelligent applications, such as autonomous driving and XR. To this end, integrated sensing and communication (ISAC) has emerged as a promising paradigm by unifying sensing and communication through shared spectral and hardware resources, enabling efficient spectrum utilization and reduced hardware cost [6]. However, the devices with limited computation capability are generally incapable of processing the massive volumes of sensing data collected under ISAC in real time, especially for intelligent sensing tasks, such as complex target detection and classification based on deep neural network (DNN) models [7]. To address this issue, integrating ISAC with MEC en-ables sensing data offloading to nearby MEC servers, thereby reducing device-side computation burden and supporting real-time intelligent sensing [8]. Along this line, the authors in [9] exploited ISAC signals to simultaneously perform envi-ronmental sensing and sensing data offloading. Through joint beamforming and computation resource allocation design, the proposed scheme reduced the processing latency and energy consumption of sensing tasks. In [10], an autonomous aerial vehicle (AAV)-enabled ISAC–MEC framework was consid-ered, where sensing data collected by AAVs were transmitted to MEC servers for processing, and the AAV trajectory and beamforming were jointly optimized to maximize the through-arXiv:2608.14086v1 [eess.SP] 14 Aug 2026 2
+
+Table I: Comparison between our work and the existing ISCC works                                
+
+> Reference ISAC Cloud-edge-device MIMO Hybrid beamforming DNN split inference Uplink sensing by offloading signal Cooperative sensing
+> [9] ✓✓
+> [10] ✓
+> [11] ✓✓
+> [12] ✓✓
+> [13] ✓✓✓
+> [14] ✓✓✓✓
+> [15] ✓✓✓
+> Our work ✓✓✓✓✓✓✓
+
+put. To improve the reliability of task offloading, Huang et al. 
+
+proposed a short-packet sensing data offloading scheme and optimized the packet length to ensure a low decoding error probability while reducing device energy consumption [11]. The author in [12] investigated joint radio and computation re-source allocation in ISCC systems and minimized sensing task completion latency under detection probability constraints. In [13]–[15], this framework was further extended to a three-tier cloud–edge–end architecture, where ISAC beamforming were designed to enable hierarchical task processing and further reduce sensing task processing latency. Despite the significant potential of integrating MEC with ISAC, directly offloading sensing data inevitably occupies valuable uplink bandwidth and may compete with device com-putation data offloading for limited wireless resources. Fortu-nately, recent advances in communication-signal-based sensing [16], [17] and bistatic sensing [18], [19] techniques have shown that reliable environmental sensing can be achieved by reusing the received communication data signals [17], [20]. Inspired by these observations, this paper considers a novel integrated sensing, communication, and computing (ISCC) architecture, in which the base station (BS) performs passive sensing by exploiting the uplink offloading signals transmitted by multiple devices, such that sensing data are generated at the edge, thus avoiding the need for additional sensing data offloading. Nevertheless, this architecture also introduces new challenges. On the one hand, efficient sensing and computa-tion offloading require sufficient spatial degrees of freedom at both devices and the BS to enable flexible control of beam directions and sensing resolution. However, in practical systems, large-scale antenna arrays are often constrained by a limited number of radio-frequency (RF) chains and hardware cost, rendering fully digital beamforming impractical. On the other hand, although migrating sensing tasks from the devices to the edge can effectively alleviate device-side computation burden, it also requires MEC servers to simultaneously han-dle computation offloading and sensing-related processing, thereby increasing their computation load. In particular, DNN-based sensing inference introduces non-negligible computa-tional workloads. For example, recent millimeter-wave radar perception networks require tens to hundreds of GFLOPs per inference [21]. Therefore, efficient allocation of MEC/cloud computation resources and appropriate DNN execution strate-gies are essential to balance the heterogeneous workloads in ISCC systems. To address these challenges, hybrid beamforming [22] and split inference [23] have been regarded as two promising enabling techniques for ISCC systems. Hybrid beamform-ing enables efficient spatial processing by jointly designing analog and digital beamformers under limited RF chains, providing a flexible tradeoff between sensing performance and communication efficiency [24]. Meanwhile, split inference enables adaptive partitioning of DNN models across edge and cloud layers, allowing computation workloads to be dis-tributed among heterogeneous computing tiers and reducing the computation burden at individual nodes [25]. Although our previous studies [14] have demonstrated the effectiveness of split inference in three-tier ISCC architectures, they mainly focused on active sensing paradigms, where sensing tasks require additional communication resources, and adopted fully digital beamforming architectures [12]–[15]. To overcome these limitations, this work investigates a passive uplink signal reuse sensing framework with hybrid beamforming, where uplink communication signals from multiple devices are ex-ploited for collaborative sensing without additional sensing transmissions. Under this framework, sensing inference and device computation tasks share MEC and cloud computing resources, resulting in stronger coupling among communi-cation, sensing, and computation processes. Therefore, the joint design of hybrid beamforming and multi-tier computation resource allocation under passive uplink sensing remains a challenging and insufficiently investigated problem in ISCC systems. Based on the above analysis, we incorporate uplink sensing, split inference and hybrid beamforming into the cloud–edge–device collaborative computing system with the device computation tasks jointly executed by the devices, the MEC server, and the cloud server. In addition to exploiting the uplink offloading signals from multiple devices for coop-erative target detection, the BS collaborates with the cloud server to accomplish DNN-based sensing inference tasks. The differences between our work and existing ISCC works are summarized in Table I, and the main contributions of this paper are summarized as follows:  
+
+> •
+
+We propose a novel ISCC-enabled cloud–edge–device hierarchical computing architecture, in which uplink com-putation offloading signals are exploited to enable co-operative sensing without introducing dedicated sensing transmissions. Moreover, by incorporating cloud–edge collaborative DNN inference, the proposed framework 3
+
+effectively supports computation-intensive sensing tasks while alleviating the computation burden at the MEC server.  
+
+> •
+
+We systematically investigate the intrinsic coupling among sensing, communication, and computation in the considered ISCC system. By characterizing the impact of hybrid beamforming, DNN split inference, and het-erogeneous computation resources on both sensing per-formance and task execution latency, we formulate a joint optimization problem that minimizes average device task execution latency under explicit sensing performance constraints.  
+
+> •
+
+To tackle the nonconvexity of the resulting joint op-timization problem, we develop an efficient alternat-ing optimization algorithm. Specifically, we propose a two-layer optimization framework to jointly determine the DNN splitting point and multi-tier computation re-source allocation, where closed-form optimal solutions for computation resource allocation are derived via the Karush–Kuhn–Tucker (KKT) conditions, and the opti-mal DNN partitioning point is obtained through one-dimension search. Furthermore, we develop a weighted minimum mean square error (WMMSE)-based optimiza-tion approach combining manifold optimization to jointly optimize the hybrid transmit beamformer and combiner. Finally, leveraging the equalization principle of task execution latency, we obtain the optimal closed-form partition ratio for device computation tasks. Through numerical results, we demonstrate the performance advantages of the proposed scheme in reducing device task execution latency. Compared to benchmark schemes without split inference, the proposed scheme achieves lower computa-tion latency and a better tradeoff between latency and detection probability. Furthermore, with additional sensing functionality and hybrid array architectures, the proposed scheme incurs only marginal latency degradation compared to three-tier com-puting systems without sensing requirements and fully digital array-based benchmarks. The remainder of this paper is organized as follows. Section II presents the system model and the problem formulation. Section III proposes an alternating optimization algorithm to solve the formulated problem. Simulation results are provided in Section IV to demonstrate the effectiveness of the proposed scheme. Finally, Section V concludes the paper. II. S YSTEM MODEL 
+
+As illustrated in Fig. 1, we consider a cloud–edge–device collaborative computing system consisting of one cloud server, one BS, and K devices indexed by K = {1, . . . , K }. The BS is equipped with an MEC server and connected to the cloud server via optical fiber. Each device has a computation-intensive task, which is divisible (e.g., image or video process-ing) [4], [5], and can be partitioned into multiple segments for parallel processing. To fully exploit the computing capabilities at different tiers and reduce the overall execution latency, each device adopts a partial offloading strategy, splitting its task into three portions executed locally, at the MEC server, and at Cloud Inference Edge Inference    
+
+> Target Device 1 Device Device 2 MEC Server
+> Cloud Server
+> Uplink signal Optical fiber
+> Computational Task
+> Sensing Task
+> K
+> DNN split point
+> DNN split point
+
+Fig. 1: The ISCC-enabled three-tier cloud-edge-device net-work architecture. the cloud, respectively. We define αk, βk, and γk as the task partition ratios for locally, the MEC server, and at the cloud, respectively, satisfying αk + βk + γk = 1 .Both the BS and the devices employ a hybrid array architec-ture to achieve high array gain while reducing hardware cost. The BS is equipped with N antennas and NRF RF chains for receiving uplink offloading data, while each device is equipped with M antennas and MRF RF chains for transmission. Meanwhile, the uplink signals transmitted by K devices are also exploited for cooperative target detection. Specifically, we adopt a decoding-then-sensing framework [16], [26], [27], where the BS first decodes the offloaded data from all devices and then performs matched filtering on the received signals using the reconstructed signals. In this manner, user-specific sensing signals can be extracted and utilized for cooperative detection. Meanwhile, time synchronization between the BS and the devices is assumed to be achieved through over-the-air synchronization and calibration mechanisms 1 [29]–[31]. Besides executing the computation tasks offloaded by the devices, the BS also performs a DNN-based sensing task, such as post-detection target classification and recognition. Specifically, the BS preprocesses the received echo signals using the short-time Fourier transform (STFT) [32] to generate target-related spectrograms, which are then fed into a pre-trained DNN model for target classification (e.g., pedestrians and vehicles). To fully leverage the hierarchical computing architecture and alleviate the computation load on the MEC server, we adopt a cloud–edge collaborative inference scheme, where the MEC server executes the early layers of the DNN and the cloud server processes the remaining layers to produce the final inference results. Since the feature dimensional-ity is significantly compressed at certain intermediate layers (e.g., pooling layers), this split strategy not only reduces the computation load at the MEC server but also mitigates the edge–cloud offloading latency. For clarity, we provide a detailed system flow diagram in Fig. 2.    
+
+> 1In this work, ideal synchronization is assumed to characterize the achiev-able performance of the proposed framework, following a common assumption in cooperative sensing and ISAC studies [17], [28], [29]. Although advanced synchronization techniques can provide highly accurate synchronization in practical systems [30], [31], residual synchronization errors may arise due to hardware imperfections. The robust sensing designs under synchronization uncertainties will be investigated in future work. 4Computational Task Partition Computational Task Offloading Local Computing
+> Devices
+> Offloaded Data Decoding
+> Computational
+> Task Offloading MEC
+> Computing
+> Target Detection DNN Early Layers
+> Inference
+> Cloud Computing DNN Later Layers Inference Intermediate Feature Offloading Device Computational Task Sensing Inference Task
+> MEC
+> Server
+> Cloud Server
+> bg
+> +
+> a
+> g
+> b
+
+Fig. 2: System flow diagram. 
+
+A. Communication Model 
+
+Let FD,k ∈ CMRF ×d and FRF ,k ∈ CM ×MRF denote the digital and analog transmit beamforming matrices of device 
+
+k, respectively, where d denotes the number of data streams of each device. Let VD,k ∈ CNRF ×d and VRF ∈ CN ×NRF 
+
+represent the digital combining matrices for device k and analog combining matrices at the BS, respectively. Since the analog beamforming matrices FRF ,k and combining matri-ces VRF are implemented via phase shifters, each of their elements is subject to a constant-modulus constraint, i.e., 
+
+|[FRF ,k ]i,j | = 1, |[VRF ]i,j | = 1, ∀k, i, j . By defining the hybrid receive combining matrices as Vk = VRF VD,k , the received signal after hybrid combining at the BS at time t can be expressed as 
+
+rk(t) = VHk HkFRF ,k FD,k sk
+
+| {z }
+
+> desired signal
+
+(t)+ VHkKX 
+
+> i̸=k
+
+HiFRF ,i FD,i si
+
+| {z }
+
+> interference
+
+(t) + VHk nc
+
+| {z } 
+
+> noise
+
+(t), (1) where sk(t) ∈ Cd×1 denotes the data stream of device k’s to be offloaded to BS, and nc(t) ∼ CN (0 , σ 2 
+
+> c
+
+IN ) repre-sents the additive white Gaussian noise (AWGN) at the BS. 
+
+Hk ∈ CN ×M denotes the uplink channel matrix from device k
+
+to the BS. In this paper, we adopt the mmWave channel model in [18], [33]. Since sensing and communication signals share the same propagation environment in uplink ISAC systems, the environmental scattering (clutter) components are incor-porated into the channel model to characterize the realistic propagation characteristics. When a sensing target is present, 
+
+Hk is modeled as 
+
+Hk = Hscatter  
+
+> k
+
++ Ak, (2) where Hscatter  
+
+> k
+
+= Pnc,k  
+
+> i=1
+
+ζk,i a(θi)bH (ϕk,i ) represents the static environmental clutter components, and Ak =
+
+ej2πf Dk, 0tζk, 0a(θ0)bH (ϕk, 0) ∈ CN ×M denotes the target-reflected component. When the target is absent, we have 
+
+Hk = Hscatter  
+
+> k
+
+. Here, nc,k denotes the total number of propagation clusters associated with device k. The vectors 
+
+a(θi) = [1 , ej2πδ sin( θi), . . . , ej2π(N −1) δ sin( θi)]T ∈ CN ×1
+
+and b(ϕk,i ) = [1 , ej2πδ sin( ϕk,i ), . . . , ej2π(M −1) δ sin( ϕk,i )]T ∈
+
+CM ×1 are the receive and transmit steering vectors, respec-tively, where δ is the normalized antenna spacing. The parame-ters θi, ϕk,i , and ζk,i denote the elevation angle, azimuth angle, and complex path gain of the i-th cluster, respectively, which can be obtained through measurement-based characterization or geometry-based modeling of environmental scattering clus-ters [34], [35]. θ0, ϕk, 0, and f Dk, 0, ζ k, 0 correspond to the elevation angle, azimuth angle, Doppler frequency shift, and reflection coefficient of the device–target–BS link 2.Let Fk = FRF ,k FD,k denote the hybrid transmit beam-forming matrices of device k. When a capacity-lossless linear minimum mean square error (LMMSE) digital receiver is adopted [37], the maximum achievable offloading rate of device k can be expressed as 
+
+Rk = B log det( INRF + VH
+
+> RF
+
+HkFk(Fk)H HHk VRF Υ−1 
+
+> k
+
+).
+
+(3) where B denotes the signal bandwidth and Υk denotes the interference-plus-noise covariance matrix, which is given by 
+
+Υk =
+
+> K
+
+X
+
+> i̸=k
+
+VH
+
+> RF
+
+HiFiFHi HHi VRF + σ2VH
+
+> RF
+
+VRF . (4) 
+
+B. Sensing Model 
+
+For the sensing process, the BS first applies background subtraction or filtering techniques to suppress undesired echo components caused by the clutters 3 [24], [40]. After this preprocessing, the effective sensing signal at the BS can be expressed as [17], [36] 
+
+rs(t) = 
+
+> K
+
+X
+
+> k=1
+
+AkFRF ,k FD,k sk (t − τk, 0) + ns (t) , (5) where ns(t) denotes the effective sensing noise after pre-processing. τk, 0 denote the propagation delay of the de-vice–target–BS path. After decoding the data symbols of each device, we exploit them to perform matched filtering on the received sensing signal rs(t)4. The output of the matched filter 
+
+> 2
+
+We focus on detecting the existence of a target within a given area. Therefore, the target-related parameters θ0, ϕk, 0, and ζk, 0 are fixed for analytical tractability [17], [36]. 
+
+> 3
+
+We assume that static clutter can be suppressed through Doppler-based moving target indication (MTI/MTD) [38] and angle-of-arrival (AoA) discrim-ination using space–time adaptive processing (STAP) [39]. Signals reflected by moving scatterers cannot be fully eliminated and are therefore treated as sensing targets to enhance environmental awareness. 
+
+> 4
+
+Since communication links generally require a very low bit-error rate, we assume that the decoded data symbols used for matched filtering suffer from negligible decoding errors. Under this assumption, the decoding process does not noticeably distort the sensing reference, thus enabling reliable sensing performance [26], [27]. 5
+
+corresponding to device k is given by 
+
+Yk = 1
+
+√T
+
+Z T
+
+> 0
+
+rs(t) sHk (t − τk)e −j2πf t dt, 
+
+= 1
+
+√T
+
+> K
+
+X
+
+> i=1
+
+AiFi
+
+Z T
+
+> 0
+
+si(t − τi)sHk (t − τk)e −j2πf t dt 
+
++ 1
+
+√T
+
+Z T
+
+> 0
+
+ns(t) sHk (t − τk)e −j2πf t dt. 
+
+(6) where T denotes the observation interval of the matched filter. Assuming that the data symbols of different devices are temporally white, mutually uncorrelated, and unit-power, the cross-correlation terms with i̸ = k average out over a sufficiently long T , while the autocorrelation term for i = k
+
+satisfies R T 
+
+> 0
+
+sk(t − τk)sHk (t − τk) dt ≈ T Id. By matched-filtering (6) using a delayed and Doppler-shifted version of 
+
+sk(t), the propagation delay τk, 0 and the Doppler frequency 
+
+f Dk, 0 can be estimated. Consequently, the matched filter output can be approximated as [17] 
+
+Yk ≈ √T AkFk + Nk, (7) where Nk ≜ 1√T
+
+R T 
+
+> 0
+
+n(t) sHk (t − τk) dt is the filtered noise matrix. Stacking all matched–filter outputs and vectorizing yields 
+
+yS = vec( Y1)T , . . . , vec( YK )T T ≈ ˆg + ˆ n, (8) where 
+
+ˆg = √T vec( A1F1)T , . . . , vec( AK FK )T T ,
+
+ˆn = vec( N1)T , . . . , vec( NK )T T . (9) Thus, the binary hypothesis testing problem can be written as (H0 : yS = ˆ n,
+
+H1 : yS = ˆ g + ˆ n, (10) where H0 and H1 denote the absence and presence of the target, respectively. The probability density functions (PDFs) of yS under H0 and H1 are given by 
+
+
+
+P(yS |H 0) = 1(πσ 2)D exp 
+
+
+
+− 1
+
+σ2 yHS yS
+
+
+
+,
+
+P(yS |H 1) = 1(πσ 2)D exp 
+
+
+
+− 1
+
+σ2 (yS − ˆg)H (yS − ˆg)
+
+
+
+,
+
+(11) where D denotes the dimension of yS . Applying the Ney-man–Pearson criterion, the log-likelihood ratio test is written as 
+
+ln P(yS |H 1)
+
+P(yS |H 0) = − 1
+
+σ2 (yS − ˆg)H (yS − ˆg) + 1
+
+σ2 yHS yS
+
+> H1
+
+≷
+
+> H0
+
+η, 
+
+(12) where η denotes the detection threshold corresponding to a prescribed false alarm probability Pfa . The corresponding detection probability is given by 
+
+PD = Q Q−1(Pfa ) −√2∥ˆg∥
+
+σ
+
+!
+
+, (13) where Q(·) denotes the Gaussian Q-function, defined as 
+
+Q(x) = 1√2π
+
+R ∞ 
+
+> x
+
+e−t2/2 dt. To guarantee reliable detection performance, we impose the detection probability requirement 
+
+PD ≥ P min  
+
+> D
+
+, where P min  
+
+> D
+
+denotes the minimum required detection probability. By exploiting the monotonicity of Q(·),this constraint can be equivalently expressed as 
+
+∥ˆg∥2 ≥ σ2
+
+> s
+
+2
+
+
+
+Q−1(Pfa ) − Q−1(P min  
+
+> D
+
+)
+
+2
+
+≜ Γ. (14) Since ∥ˆg∥2 = T PKk=1 Tr  AkFkFHk AHk
+
+, the detection probability constraint is equivalently written as 
+
+T
+
+> K
+
+X
+
+> k=1
+
+Tr  AkFkFHk AHk
+
+ ≥ Γ. (15) 
+
+C. Device computation task Model 
+
+For the computation tasks generated by the devices, we adopt a commonly used task model in MEC research, charac-terized by (Ik, c k) [4], [5], where Ik represents the task input size (in bits) and ck denotes the computation intensity, defined as the number of CPU cycles required to process one bit of data. Accordingly, the total required CPU cycles for device 
+
+k are given by Ikck. The task is partitioned and executed in parallel across the local device, the MEC server, and the cloud server with partition ratios αk, βk, and γk, respectively, satisfying 
+
+αk + βk + γk = 1 , ∀k ∈ K . (16) The corresponding computation overhead is expressed as follows. 
+
+1) Local Execution: Let f L 
+
+> k
+
+denote the local CPU frequency of the device k. Then, the local execution latency and the local computing power consumption can be respectively expressed as 
+
+T L 
+
+> k
+
+= αkIkck
+
+f L
+
+> k
+
+, pL 
+
+> k
+
+= κ(f L 
+
+> k
+
+)3, ∀k ∈ K , (17) where κ denotes power coefficient related to the hardware architecture. 
+
+2) MEC Server Execution: The execution latency at the MEC server consists of the uplink offloading delay tO 
+
+> k
+
+from the device to the BS and the computing delay tM 
+
+> k
+
+at the MEC server, expressed as 5
+
+T E 
+
+> k
+
+= tO 
+
+> k
+
++ tM 
+
+> k
+
+= (βk + γk)Ik
+
+Rk
+
++ βkIkck
+
+f M
+
+> k
+
+, ∀k ∈ K . (18) where f M 
+
+> k
+
+represents the CPU frequency allocated to device k
+
+at the MEC server. 
+
+3) Cloud Server Execution: The cloud execution la-tency consists of the device–MEC offloading delay tO 
+
+> k
+
+, the MEC–cloud transmission delay tB 
+
+> k
+
+, and the computing delay 
+
+tC 
+
+> k
+
+at the cloud server, expressed as 
+
+T C 
+
+> k
+
+= tO 
+
+> k
+
++ tB 
+
+> k
+
++ tC 
+
+> k
+
+= (βk + γk)Ik
+
+Rk
+
++ γkIk
+
+rb
+
++ γkIkck
+
+f C
+
+> k
+
+, ∀k ∈ K .
+
+(19) 
+
+> 5Since the MEC and cloud servers are powered by stable wired infrastruc-tures, their energy supply is generally considered sufficient and is therefore not treated as a limiting factor in this work. 6
+
+where rb denotes the optical fiber transmission rate between the MEC server and the cloud server, and f C 
+
+> k
+
+represents the computing frequency allocated to device k at the cloud server. Since the computation results are typically much smaller than the original computation data, the feedback latency from the cloud and MEC servers is neglected, as in [4], [5]. Accordingly, for the computation task generated by device 
+
+k, the overall task completion time is determined by the slowest computing branch among the local execution, MEC execution, and cloud execution, and is therefore given by 
+
+T tot  
+
+> k
+
+= max  T L 
+
+> k
+
+, T E 
+
+> k
+
+, T C 
+
+> k
+
+, ∀k ∈ K . (20) 
+
+D. Sensing Inference Task Model 
+
+Besides partitioning device computation tasks among the local devices, MEC server, and cloud server, the consid-ered cloud–edge–device architecture also enables collaborative processing of computation-intensive sensing inference tasks. To this end, a DNN split-inference strategy is introduced to distribute sensing inference workloads between the MEC and cloud servers. The selected split point determines not only the DNN layers executed at the MEC and cloud servers, which affects their computation workloads, but also the size of intermediate features transmitted through the MEC-cloud link. Consequently, it influences the allocation of computation and communication resources and the optimal task partitioning decisions in the cloud–edge–device architecture. After target detection, the BS employs a DNN-based model for target classification. Specifically, the echo signals asso-ciated with the detected targets are first transformed into time–frequency spectrograms via the STFT 6 [32]. These spec-trograms are then fed into a pre-trained DNN to extract semantic features and classify the targets into categories (e.g., pedestrians and vehicles) [7]. To reduce the computational burden on the MEC server, we adopt a split-inference strategy, where the early layers of the DNN are executed at the MEC server and the remaining layers are processed at the cloud server for collaborative inference. We use floating-point operations (FLOPs) to characterize the computation resources required by different DNN layers. For clarity, the set of pre-trained DNN layers is denoted by L={1, . . . , L }, where the FLOPs required by the l-th layer are denoted by z(l), which depends on its layer type Ξ( l). The main computation load of the DNN originates from fully connected (FC), convolutional (CV), and max-pooling (MP) layers, with the FLOPs of each layer type given by [25] 
+
+z(l) = 
+
+
+
+(2 a(l − 1) − 1) a(l), Ξ( l) = FC ,
+
+(2 b(l − 1) c(l)2 − 1) d(l)e(l)b(l), Ξ( l) = CV ,b(l)c2(l)d(l)e(l), Ξ( l) = MP ,
+
+(21) 
+
+> 6Radar preprocessing operations, such as STFT and GMTI, may introduce non-negligible computational overhead. In this work, they are regarded as conventional front-end processing modules completed before DNN inference, whose complexity depends on radar configurations and hardware implemen-tations [41], rather than the resource allocation considered herein. Therefore, their latency is modeled as a fixed sensing overhead independent of the optimization variables in our framework [42], [43]. The end-to-end joint optimization of radar signal preprocessing and DNN-based inference is left for future work.
+
+where a(l), b(l), c(l), d(l), and e(l) respectively represent the number of neurons in the l-th layer, the number of channels, the filter size, and the height and width of the corresponding output feature map. The inference latency of the DNN-based sensing task, denoted by T I
+
+> 0
+
+, consists of the inference delay at the MEC server tM 
+
+> 0
+
+, the transmission delay of intermediate features from the MEC server to the cloud server tB 
+
+> 0
+
+, and the inference delay at the cloud server tC 
+
+> 0
+
+. Let ls denote the splitting point. Then, T I 
+
+> 0
+
+can be expressed as 
+
+T I 
+
+> 0
+
+= tM 
+
+> 0
+
++tB 
+
+> 0
+
++tC 
+
+> 0
+
+=
+
+Pls 
+
+> l=1
+
+z(l)
+
+ρM 
+
+> 0
+
+f M
+
+> 0
+
++ q(ls)
+
+rb
+
++
+
+PLl=ls+1 z(l)
+
+ρC 
+
+> 0
+
+f C
+
+> 0
+
+, (22) where ρM 
+
+> 0
+
+and ρC 
+
+> 0
+
+denote the FLOPs per CPU cycle of the MEC server and cloud server; q(ls) denotes the output data size (in bits) of the ls-th layer, which is uniquely determined by Ξ( ls),and f M 
+
+> 0
+
+and f C 
+
+> 0
+
+denote the allocated CPU frequencies for the sensing task at the MEC and cloud servers, respectively. It is observed from (22) that the choice of the splitting point ls not only determines how the computation burden of the sensing task is distributed between the MEC server and the cloud server, but also affects the size of the intermediate features that need to be transmitted. By appropriately selecting ls,the inference latency of the sensing task can be effectively reduced. 
+
+E. Problem Formulation 
+
+The primary objective of this work is to minimize the execution latency of device computation tasks in a cloud– edge–device collaborative computing architecture. However, the introduction of sensing functionality couples the commu-nication and computation processes at both the physical and resource allocation layers, leading to intricate tradeoffs that impact overall task execution latency. These interdependencies manifest in two key aspects.  
+
+> •
+
+At the physical layer , spatial coupling arises due to signal reuse in the considered ISCC architecture, where the BS performs passive sensing by reusing uplink com-putation offloading signals. This leads to an tradeoff in hybrid beamforming design: to reduce transmission latency, beamforming should focus energy toward the BS to maximize offloading rates, whereas satisfying detection probability constraints requires sufficient beamforming gain toward target directions. Consequently, hybrid beam-forming must balance between communication directivity and sensing coverage in the spatial domain.  
+
+> •
+
+At the computation layer , resource coupling arises due to shared computing resources. Unlike conventional MEC systems, the MEC server in the proposed architecture serves as a common pool for both device computa-tion offloading and DNN-based sensing inference tasks. Through split inference, sensing tasks consume a portion of edge and cloud computing resources determined by the DNN splitting point ls. While executing more sens-ing layers at the MEC server reduces sensing inference latency, it limits computation resources for device tasks, potentially increasing overall execution latency. Conse-quently, the competition for limited resources requires 7
+
+joint optimization of task offloading ratios and sensing model partitioning strategies. Based on the above analysis, we model sensing performance requirements, including detection probability and inference latency, as system constraints and formulate a joint optimiza-tion problem to minimize the average execution latency of computation tasks across all devices 7. Specifically, by jointly optimizing the task partition ratios α, β, and γ, multi-tier computation resource allocation f L, f M, f C, hybrid beam-forming matrices {Fk, Vk}, and the DNN splitting point ls,the proposed framework minimizes the average latency of all device tasks while ensuring the required sensing quality 8. The resulting optimization problem is formulated as follows: 
+
+min      
+
+> fL,fM,fC,l s
+> Fk,Vk,α,β,γ
+
+1
+
+K
+
+> K
+
+X
+
+> k=1
+
+T tot  
+
+> k
+
+(23) s.t. 
+
+> K
+
+X
+
+> k=0
+
+f M 
+
+> k
+
+≤ f Mth ,
+
+> K
+
+X
+
+> k=0
+
+f C 
+
+> k
+
+≤ f Cth , (23a) 
+
+0 ≤ f L 
+
+> k
+
+≤ f Lth , pL 
+
+> k
+
+≤ P Lth , ∀k ∈ K , (23b) 
+
+|Fk|2 
+
+> F
+
+≤ P Oth , ∀k ∈ K , (23c) 
+
+|[FRF ,k ]i,j | = 1 , ∀k ∈ K , i, j, (23d) 
+
+|[VRF ]i,j | = 1 , ∀i, j, (23e) 
+
+T
+
+> K
+
+X
+
+> k=1
+
+Tr  AkFkFHk AHk
+
+ ≥ Γ, (23f) 
+
+αk + βk + γk = 1 , ∀k ∈ K , (23g) 
+
+0 ≤ αk, β k, γ k ≤ 1, ∀k ∈ K , (23h) 
+
+T I 
+
+> 0
+
+≤ T Ith , (23i) 
+
+ls ∈ { 1, · · · , L }, (23j) where f Lth , f Mth , and f Cth denote the computational capacities of device k, the MEC server, and the cloud server, respectively; 
+
+P Lth and P Oth represent the power budgets for local computation and signal transmission at the device, respectively; and T Ith 
+
+denotes the maximum tolerable latency of the sensing task. The complicated coupling among variables in the objec-tive function, together with the constant-modulus constraints (23d)–(23e) and the non-convex detection probability con-straint (23f), renders problem (23) highly non-convex and computationally intractable. Moreover, the incorporation of hybrid beamforming and the integer-valued DNN splitting point variable further exacerbates the optimization challenge. 
+
+> 7In this work, the DNN model is assumed to be pre-trained and fixed, and split inference only partitions the model between the MEC and cloud servers without changing the model architecture or parameters. Under sufficiently accurate intermediate-feature transmission, the classification accuracy remains unchanged with different split points. When feature quantization or compres-sion is considered, different split points may result in different intermediate-feature payloads and accuracy degradation, whose impact is further evaluated in the simulation results.
+> 8The average computation latency is adopted to capture overall system efficiency in multi-device scenarios and is widely used in MEC studies [4], [13]. The proposed framework can also be extended to fairness-oriented objectives (e.g., min–max latency) by introducing an auxiliary worst-case latency variable, without changing the subproblem structure.
+
+III. P ROPOSED ALGORITHM 
+
+In this section, we propose an alternating optimization (AO) algorithm to efficiently solve problem (23), which integrates closed-form derivation, WMMSE reformulation, and manifold optimization techniques. Specifically, by exploiting the block-wise structure of the problem (23), we decompose it into the following three subproblems:  
+
+> •
+
+Computation resource allocation and DNN split-ting point optimization: For the joint optimization of 
+
+{f L, f M, f C} and ls, we leverage a hierarchical de-coupling strategy and develop a two-layer optimization framework. In the inner layer, given a fixed splitting point 
+
+ls, we derive the closed-form solutions of {f L, f M, f C}.In the outer layer, we search over the candidate ls and select the one that yields the minimum execution latency.  
+
+> •
+
+Hybrid beamforming and combining matrices op-timization: For the optimization subproblem involving 
+
+{Fk}∀k, {Vk}∀k, we first transform the original for-mulation into a tractable form via the WMMSE ap-proach. Then, we jointly optimize the digital beamform-ers/combiners and their analog counterparts using the SCA technique, together with a manifold optimization algorithm augmented with penalty terms.  
+
+> •
+
+Task partition optimization: For the subproblem with respect to {α, β, γ}, by exploiting the equalization prin-ciple inherent in the min-max objective, we derive the optimal closed-form solutions for the task partition ratios. In the following, we present the implementation details of each part. 
+
+A. Computation Resource Allocation and DNN splitting point Optimization 
+
+In this subsection, we optimize computation resource allo-cation {f L, f M, f C} and DNN splitting point ls while fixing 
+
+{{ Fk}∀k, {Vk}∀k, α, β, γ}. Since ls represents the discrete DNN layer partition between the MEC and cloud servers, the optimization problem involves both discrete split decisions and continuous resource allocation variables. Therefore, we reformulate this subproblem into a two-layer optimization framework to separate the discrete split decision from the continuous resource allocation variables, thereby avoiding the mixed-integer optimization and facilitating the derivation of closed-form solutions for the continuous variables. The inner-layer optimization problem is expressed as 
+
+(Inner ) : min    
+
+> fL,fM,fC,ˆttot
+> k
+
+1
+
+K
+
+> K
+
+X
+
+> k=1
+
+ˆttot  
+
+> k
+
+(24) s.t. ˆttot  
+
+> k
+
+≥ αkIkck
+
+f L
+
+> k
+
+, ∀k ∈ K , (24a) 
+
+ˆttot  
+
+> k
+
+≥ tO 
+
+> k
+
++ βkIkck
+
+f M
+
+> k
+
+, ∀k ∈ K , (24b) 
+
+ˆttot  
+
+> k
+
+≥ tO 
+
+> k
+
++ tB 
+
+> k
+
++ γkIkck
+
+f C
+
+> k
+
+, ∀k ∈ K ,
+
+(24c) (23a) , (23b) , (23i) ,8
+
+where tO 
+
+> k
+
+and tB 
+
+> k
+
+are constant latency terms independent of the optimization variables {f L, f M, f C}, and ˆttot  
+
+> k
+
+are introduced auxiliary variables. The outer-layer optimization problem is then given by 
+
+(Outer ) : min 
+
+> ls
+
+1
+
+K
+
+> K
+
+X
+
+> k=1
+
+T tot  
+
+> k
+
+(25) s.t. ls ∈ { 1, · · · , L }. (26) Considering that the solution space of the outer-layer op-timization problem is discrete and finite, we can obtain the optimal solution to this subproblem by performing a one-dimensional search over ls, and solving the inner-layer prob-lem for each ls. To further reduce the computational com-plexity incurred by repeatedly solving the inner-layer problem, we derive the optimal closed-form solutions of {f L, f M, f C}.Specifically, since each device seeks to minimize its local execution latency by utilizing the maximum feasible local computing frequency under its power and capacity constraints, it is straightforward to show that the optimal local computing frequency of device k is given by 
+
+f L∗ 
+
+> k
+
+= min 
+
+(
+
+f Lth , 3
+
+r P Lth 
+
+κ
+
+)
+
+, ∀k ∈ K . (27) Then, we analytically derive the closed-form solutions of 
+
+{f L, f M, f C} by exploiting KKT conditions [44]. Due to the complicated constraint structure of problem (24), we develop a two-stage Lagrangian framework to facilitate this derivation. In particular, the partial Lagrangian of (24), associated with con-straints (24a)–(24c) while keeping the remaining constraints in the feasible set, is given by 
+
+Lp = 1
+
+K
+
+> K
+
+X
+
+> k=1
+
+ˆttot  
+
+> k
+
++ λL
+
+> k
+
+ αkIkck
+
+f L
+
+> k
+
+− ˆttot 
+
+> k
+
+
+
++
+
+λM
+
+> k
+
+
+
+tO 
+
+> k
+
++ βkIkck
+
+f M
+
+> k
+
+− ˆttot 
+
+> k
+
+
+
++ λC
+
+> k
+
+
+
+tO 
+
+> k
+
++ tB 
+
+> k
+
++ γkIkck
+
+f C
+
+> k
+
+− ˆttot 
+
+> k
+
+
+
+,
+
+(28) where λ = {λL
+
+> k
+
+, λ M 
+
+> k
+
+, λ C 
+
+> k
+
+}∀k∈K are the Lagrange multipliers. Accordingly, the dual problem of problem (24) is formulated as 
+
+max 
+
+> λ
+
+eLp(λ), (29) where eLp is the dual function given by 
+
+eLp(λ) = min   
+
+> fCfM,ˆttot
+> k
+
+Lp,
+
+s.t. (23a) , (23i) . (30) Since problem (24) is convex, solving the dual problem (30) is equivalent to solving the primal problem (24). By iteratively maximizing the dual function in (30) and updating the associated Lagrange multipliers, problem (24) can be optimally solved. Denoting the iteration index as it , next, we present the derivation of the closed-form solutions for f M and 
+
+f C, as well as the updating rule of λ.
+
+1) Updating f M and f C: For notational convenience, we define D1 = 
+
+> Pls l=1 z(l)
+> ρM
+> 0
+
+and D2 = 
+
+> PLl=ls +1 z(l)
+> ρC
+> 0
+
+. Accordingly, the Lagrangian function of (30) with given λ(it ) can be formulated as 
+
+Lc = Lp + Λ M
+
+> K
+
+X
+
+> k=0
+
+f M 
+
+> k
+
+− f Mth 
+
+!
+
++ΛC
+
+> K
+
+X
+
+> k=0
+
+f C 
+
+> k
+
+− f Cth 
+
+!
+
++ μ
+
+ D1
+
+f M
+
+> 0
+
++ D2
+
+f C
+
+> 0
+
++ tB 
+
+> 0
+
+− T Ith 
+
+
+
+,
+
+(31) where ΛM, ΛC, and μ are the Lagrange multipliers. When the split strategy is fixed, D1, D2, and tB 
+
+> 0
+
+are constants. By applying the KKT conditions ∂Lc 
+
+> ∂f M
+> k
+
+= 0 and ∂Lc 
+
+> ∂f C
+> k
+
+= 0 , the optimal closed-form solutions of f M and f C are derived as follows 
+
+f M∗ 
+
+> k
+
+=
+
+s
+
+λM(it ) 
+
+> k
+
+βkIkck
+
+ΛM , f C∗ 
+
+> k
+
+=
+
+s
+
+λC(it ) 
+
+> k
+
+γkIkck
+
+ΛC , ∀k ∈ K ,
+
+(32) 
+
+f M∗ 
+
+> 0
+
+=
+
+r μD 1
+
+ΛM , f C∗ 
+
+> 0
+
+=
+
+r μD 2
+
+ΛC . (33) Since the computation resource allocation for sensing tasks, 
+
+f M∗ 
+
+> 0
+
+and f C∗ 
+
+> 0
+
+cannot be zero or infinite, it follows from (32) and (33) that ΛM, ΛC, μ ̸ = 0 . According to the complementary slackness condition, constraints (23a) and (23i) must hold with equality at the optimum. Therefore, by substituting (32) and (33) into constraint (23a), we obtain 
+
+ΛM(μ) = 
+
+PKk=1 
+
+q
+
+λM(it ) 
+
+> k
+
+βkIkck + √μD 1
+
+f Cth 
+
+
+
+> 2
+
+,
+
+ΛC(μ) = 
+
+PKk=1 
+
+q
+
+λC(it ) 
+
+> k
+
+γkIkck + √μD 2
+
+f Cth 
+
+
+
+> 2
+
+.
+
+(34) By substituting (34) into (23i), we obtain 
+
+s
+
+ΛM(μ)D1
+
+μ +
+
+s
+
+ΛM(μ)D2
+
+μ = T Ith − tB 
+
+> 0
+
+. (35) We observe that the only remaining unknown variable in (35) is μ, which can be obtained via a bisection search. Once 
+
+μ is determined, the corresponding values of ΛM and ΛC, as well as the f M∗ and f C∗ can be accordingly obtained. 
+
+2) Updating λ: After updating f M and f C, the Lagrange multiplier can be updated using the gradient descent method (GDM) [44], i.e., 
+
+λL(it +1)  
+
+> k
+
+= λM(it ) 
+
+> k
+
++ η
+
+
+
+T L( it ) 
+
+> k
+
+− ˆttot( it )
+
+> k
+
+
+
+,λM(it +1)  
+
+> k
+
+= λM(it ) 
+
+> k
+
++ η
+
+
+
+T M( it ) 
+
+> k
+
+− ˆttot( it )
+
+> k
+
+
+
+,λC(it +1)  
+
+> k
+
+= λC(it ) 
+
+> k
+
++ η
+
+
+
+T C( it ) 
+
+> k
+
+− ˆttot( it )
+
+> k
+
+
+
+,
+
+(36) where η denotes the step size of the GDM, T L( it ) 
+
+> k
+
+, T M( it ) 
+
+> k
+
+, and 
+
+T C( it ) 
+
+> k
+
+represent the local, MEC server, and cloud execution latencies, respectively, evaluated at the computing frequencies obtained in the it -th iteration from (32), (33), and (34). 9
+
+Algorithm 1 Two-layer optimization algorithm for 
+
+{f L, f M, f C} and ls
+
+Input: Hybrid beamforming and combining matrices {Fk}∀k,
+
+{Vk}∀k, and task partition α, β, γ. 
+
+> 1:
+
+Initialize λ0 and it = 0 . 
+
+> 2:
+
+for ls = 1 : L do  
+
+> 3:
+
+repeat  
+
+> 4:
+
+Obtain the optimal local computing frequency f L
+
+according to (27).  
+
+> 5:
+
+Obtain the optimal MEC server and cloud server computation resource allocation f M and f C according to (32) and (33).  
+
+> 6:
+
+Update λ(it +1) according to (36).  
+
+> 7:
+
+Update it = it + 1 . 
+
+> 8:
+
+until the objective value of (24) converges.  
+
+> 9:
+
+Record the objective value for the current ls. 
+
+> 10:
+
+end for Output: Computation resource allocation {f L, f M, f C} and DNN splitting point ls that yields the minimum objective value. 
+
+Summary: To solve the subproblem with respect to 
+
+{f L, f M, f C} and ls, we decompose it into a two-layer structure according to the types of variables. For the outer-layer optimization involving the discrete variable ls, a one-dimensional search is performed to determine the optimal splitting point. For the inner-layer optimization problem re-garding computation resource allocation, we employ a two-stage Lagrangian framework to derive the optimal closed-form solutions, and provide the corresponding Lagrange multiplier update rules. For clarity, the proposed two-layer optimization algorithm is summarized in Algorithm 1. 
+
+B. Hybrid Beamforming and Combining Optimization 
+
+Next, we optimize the hybrid beamforming matrices 
+
+{Fk}∀k and combining matrices {Vk}∀k under given 
+
+{α, β, γ, f L, f M, f C, l s}. The corresponding subproblem can be reformulated as 
+
+min  
+
+> Fk,Vk
+
+1
+
+K
+
+> K
+
+X
+
+> k=1
+
+(βk + γk)Ik
+
+Rk
+
+, (23c) − (23f) . (37) The objective of (37) is highly non-convex, since it involves a sum of terms with log-determinant expressions in the denom-inator. To handle this issue in a tractable manner, we adopt the SCA technique to linearly approximate it at a given point bRk,i.e., 
+
+(βk + γk)Ik
+
+Rk
+
+≈ (βk + γk)Ik
+
+ˆRk
+
+− (βk + γk)Ik
+
+ˆR2
+
+> k
+
+(Rk − ˆRk)= − (βk + γk)Ik
+
+ˆR2
+
+> k
+
+Rk + 2( βk + γk)Ik
+
+ˆRk
+
+. (38) By defining ωk = (βk +γk )Ik
+
+> bR2
+> k
+
+and omitting the constant terms, the subproblem (37) can be transformed into a weighted sum-rate maximization problem: 
+
+max  
+
+> Fk,Vk
+> K
+
+X
+
+> k=1
+
+ωkRk, s.t. (23c) − (23f) . (39) Subsequently, by leveraging the equivalence between the WMMSE formulation and the sum-rate expression [13], the objective function of problem (39) can be rewritten as 
+
+min   
+
+> Wk,Fk,Vk
+> K
+
+X
+
+> k=1
+
+ωk(Tr (WkEk) − log det( Wk)) , (40) where {Wk}∀k are the introduced auxiliary variables, and Ek
+
+denotes the MSE matrix of device k associated with Fk and 
+
+Vk, which is given by 
+
+Ek = E
+
+h
+
+(rk(t) − sk(t)) ( rk(t) − sk(t)) H i
+
+= Id − VHk HkFk − FHk HHk Vk
+
++
+
+> K
+
+X
+
+> i=1
+
+VHk HiFi(Fi)H HHi Vk + σ2VHk Vk.
+
+(41) Then, by exploiting the tractable structure of (40), we employ the block coordinate descent (BCD) technique to alternately update the digital and analog transmit beamforming matrices FD,k and FRF ,k , the digital and analog combining matrices VD,k and VRF , as well as the auxiliary variables 
+
+Wk, thereby solving problem (39). 
+
+1) Updating FD,k : With given {FRF ,k , VD,k , VRF , Wk},the optimization subproblem with respect to FD,k is reformu-lated as 
+
+min 
+
+> FD,k
+> K
+
+X
+
+> k=1
+
+ωkTr (WkEk) (42) s.t. (23c) , (23f) .
+
+It can be observed that (23f) is the only non-convex com-ponent in problem (42). To address this issue, we adopt the SCA technique to linearize it at a given point bFD,k as 
+
+> K
+
+X
+
+> k=1
+
+h
+
+2Re 
+
+n
+
+Tr 
+
+
+
+AkFRF ,k FD,k bFH
+
+> D,k
+
+FH
+
+> RF ,k
+
+AHk
+
+o 
+
+− Tr 
+
+
+
+AkFRF ,k bFD,k bFH
+
+> D,k
+
+FH
+
+> RF ,k
+
+AHk
+
+i 
+
+≥ Γ/T. 
+
+(43) After replacing constraint (23f) with (43), problem (42) is transformed into a convex problem and can be efficiently solved using the interior-point method. 
+
+2) Updating FRF ,k : When {FD,k , VD,k , VRF , Wk} are fixed, the optimization of the analog beamforming matrices 
+
+FRF ,k is subject to the constant-modulus constraint, as well as the power and detection probability constraints. To improve tractability, we incorporate constraints (23c) and (23f) into the objective function as penalty terms, and reformulate the subproblem as 
+
+min 
+
+> FRF ,k
+> K
+
+X
+
+> k=1
+
+ωkTr (WkEk) + 
+
+> K
+
+X
+
+> k=1
+
+υ1,k 
+
+|FRF ,k FD,k |2 
+
+> F
+
+− P Oth 
+
++210 
+
+∇hRF =2 ωkHHk VRF 
+
+
+
+SV H
+
+> RF
+
+Hk bFRF ,k FD,k − VD,k Wk
+
+
+
+FH 
+
+> D,k
+
++ 4 υ1,k (|bFRF ,k FD,k |2 
+
+> F
+
+− P Oth )bFRF ,k FD,k FH
+
+> D,k
+
++4 υ2
+
+> K
+
+X
+
+> k=1
+
+Tr 
+
+
+
+Ak bFRF ,k FD,k FH 
+
+> D,k
+
+bFH
+
+> RF ,k
+
+AHk
+
+
+
+− Γ
+
+T
+
+!
+
+AHk Ak bFRF ,k FD,k FH
+
+> D,k
+
+.
+
+(48) 
+
++ υ2
+
+"
+
+Γ
+
+T −
+
+> K
+
+X
+
+> k=1
+
+Tr  AkFRF ,k FD,k FH
+
+> D,k
+
+FH
+
+> RF ,k
+
+AHk
+
+#+
+
+> 2
+
+(44) s.t. (23d) .
+
+where [·]+ denotes max {· , 0}. The penalty factors {υ1,k } and 
+
+υ2 are initialized as 1 and gradually increased across iterations by multiplying them by a scaling factor ι = 10 . To determine whether the penalized constraints are sufficiently satisfied, we define the maximum normalized constraint violation as 
+
+ϵpen = max 
+
+(
+
+max 
+
+> k
+
+h
+
+∥FRF ,k FD,k ∥2 
+
+> F
+
+− P Oth 
+
+i+
+
+P Oth 
+
+,
+
+h Γ 
+
+> T
+
+− PKk=1 Tr 
+
+
+
+AkFRF ,k FD,k FH
+
+> D,k
+
+FH
+
+> RF ,k
+
+AHk
+
+i +
+
+Γ/T 
+
+)
+
+.
+
+(45) The penalty update is terminated when ϵpen ≤ 10 −4; other-wise, the penalty factors are multiplied by ι and the optimiza-tion is repeated. With the iterative increase of the penalty fac-tors, constraint violations are progressively suppressed, driving the obtained solution toward the feasible region of the original problem [45], [46]. Based on the above transformation, the feasible region of subproblem (44) becomes a complex circle manifold F = {FRF ,k |[FRF ,k ]i,j | = 1 , ∀i, j }. Accordingly, subproblem (44) is recast as an unconstrained optimization problem over the manifold F, enabling the application of Riemannian optimization methods. The tangent space of the manifold at the point bFRF ,k is given by 
+
+SbFRF ,k F =
+
+n
+
+Z ∈ CM ×MRF Re bFRF ,k ⊙ Z = 0
+
+o
+
+, (46) where Z denotes a tangent vector at bFRF ,k . Denoting the objective function (44) by hRF (FRF ,k ), the corresponding Riemannian gradient grad hRF is obtained by projecting its Euclidean gradient ∇hRF onto the tangent space SbFRF ,k F,i.e., 
+
+grad hRF = ∇hRF − Re ∇hRF ⊙ F∗ 
+
+> RF ,k
+
+⊙ bFRF ,k . (47) Defining S = PKk=1 VD,k WkVH
+
+> D,k
+
+, the Euclidean gradient 
+
+∇hRF is given in (48) at the top of the next page. Then, the variable FRF ,k is updated along the Riemannian gradient direction as 
+
+F(n+1) RF ,k =
+
+ F(n)RF ,k + ψ grad hRF 
+
+
+
+> i,j
+
+ F(n)RF ,k + ψ grad hRF 
+
+
+
+> i,j
+
+, ∀i, j, (49) where n denotes iteration index and ψ is the step size. 
+
+3) Updating VD,k : Given {FRF ,k , FD,k , VRF , Wk}, the optimization problem with respect to the digital combining matrices {VD,k } is a well-known linear MMSE estimation problem, for which the optimal digital combiner is achieved by the linear MMSE receiver. Therefore, the optimal VD,k is given by 
+
+V⋆ 
+
+> D,k
+
+= J−1VH
+
+> RF
+
+HkFk, (50) where J = PKi=1 VH
+
+> RF
+
+HiFi(Fi)H HHi VRF + σ2VH
+
+> RF
+
+VRF 
+
+denotes the covariance matrix of the received signal at the BS. 
+
+4) Updating VRF : The optimization of the analog combin-ing matrix VRF proceeds in a manner similar to that of FRF ,k .Specifically, let gRF denote the objective function of the subproblem (40) with respect to VRF . Then, the corresponding Riemannian gradient can be expressed as 
+
+grad gRF = ∇gRF − Re ∇gRF ⊙ V∗ 
+
+> RF
+
+⊙ bVRF , ∀i, j. (51) By defining C = PKi=1 HiFiFHi HHi + σ2I, the Euclidean gradient ∇gRF is expressed as 
+
+2
+
+> K
+
+X
+
+> k=1
+
+ωkWk
+
+
+
+C bVRF VD,k VH 
+
+> D,k
+
+− HkFRF ,k FD,k VH
+
+> D,k
+
+
+
+.
+
+(52) Subsequently, VRF is updated along the obtained Rieman-nian gradient direction as 
+
+V(n+1) RF =
+
+ V(n)RF + ψ grad gRF 
+
+
+
+> i,j
+
+ V(n)RF + ψ grad gRF 
+
+
+
+> i,j
+
+. (53) 
+
+5) Updating Wk : By fixing {FD,k , FRF ,k , VD,k , VRF },problem (40) reduces to an unconstrained convex problem. The optimal Wk is obtained by applying the first-order optimality condition, leading to 
+
+W∗ 
+
+> k
+
+= ( E∗
+
+> k
+
+)−1. (54) 
+
+Summary: By employing the WMMSE reformulation, the optimization subproblem with respect to {Fk}∀k and {Vk}∀k
+
+is converted into a WMMSE problem. The variables FD,k ,
+
+FRF ,k , VD,k , VRF , and Wk are then updated in an alternating manner using SCA, manifold optimization, and closed-form solutions until convergence. The detailed algorithmic proce-dure for solving subproblem (37) is summarized in Algorithm 2. 
+
+C. Task Partition Optimization 
+
+In this subsection, we optimize the task partitioning ratios 
+
+α, β, γ under given f L, f M, f C, {Fk}∀k, {Vk}∀k . The cor-responding optimization subproblem can be expressed as 
+
+min 
+
+> α,β,γ
+
+1
+
+K
+
+> K
+
+X
+
+> k=1
+
+max  T L 
+
+> k
+
+, T E 
+
+> k
+
+, T C 
+
+> k
+
+(55) 11 
+
+Algorithm 2 WMMSE-SCA based optimization algorithm for 
+
+{Fk}∀k and {Vk}∀k
+
+Input: Computation resource allocation {f L, f M, f C}, DNN splitting point ls, task partition {α, β, γ}, penalty scaling factor ι, penalty violation threshold ϵth pen , and convergence threshold ϵ. 
+
+> 1:
+
+Initialize bRk, ωk, υ1,k , and υ2. 
+
+> 2:
+
+repeat  
+
+> 3:
+
+Update FD,k by solving problem (42) using the SCA technique.  
+
+> 4:
+
+repeat  
+
+> 5:
+
+Update FRF ,k based on (49).  
+
+> 6:
+
+until ∥grad hRF ∥F ≤ ϵ 
+
+> 7:
+
+Calculate the maximum normalized constraint viola-tion ϵpen according to (45).  
+
+> 8:
+
+if ϵpen > ϵ th pen then  
+
+> 9:
+
+Update υ1,k ← ιυ 1,k , ∀k, and υ2 ← ιυ 2. 
+
+> 10:
+
+end if  
+
+> 11:
+
+Update VD,k based on (50).  
+
+> 12:
+
+repeat  
+
+> 13:
+
+Update VRF based on (53).  
+
+> 14:
+
+until ∥grad gRF ∥F ≤ ϵ 
+
+> 15:
+
+Update Wk based on (54).  
+
+> 16:
+
+Update bRk = Rk and ωk = (βk +γk )Ik
+
+> bR2
+> k
+
+. 
+
+> 17:
+
+until the objective value of problem (39) converges. 
+
+Output: Hybrid beamforming and combining matrices 
+
+{Fk}∀k and {Vk}∀k.s.t. (23g) , (23h) .
+
+The subproblem (55) is a linear programming problem and can be directly solved using existing optimization tools such as CVX. To reduce computational complexity, we derive its optimal closed-form solution. Specifically, since the problem attains its optimal value when T L 
+
+> k
+
+= T E 
+
+> k
+
+= T C 
+
+> k
+
+, ∀k, the following equations hold: 
+
+αkIkck
+
+f L
+
+> k
+
+= (βk + γk)Ik
+
+Rk
+
++ βkIkck
+
+f M
+
+> k
+
+, ∀k ∈ K ,αkIkck
+
+f L
+
+> k
+
+= (βk + γk)Ikck
+
+Rk
+
++ γkIk
+
+rb
+
++ γkIkck
+
+f C
+
+> k
+
+, ∀k ∈ K .
+
+(56) By solving (56) and defining etL 
+
+> k
+
+= Ik ck 
+
+> fL
+> k
+
+, etO 
+
+> k
+
+= Ik 
+
+> Rk
+
+, etM 
+
+> k
+
+=  
+
+> Ikck
+> fM
+> k
+
+, and etC 
+
+> k
+
+= Ik 
+
+> rb
+
++ Ik ck 
+
+> fC
+> k
+
+, we obtain the closed-form solutions of α, β, and γ as 
+
+α⋆k = etL
+
+> k
+
+etM
+
+> k
+
+etL
+
+> k
+
+etM 
+
+> k
+
++ etL
+
+> k
+
+etC 
+
+> k
+
++ etO 
+
+> k
+
+etM 
+
+> k
+
++ etO 
+
+> k
+
+etC 
+
+> k
+
++ etM 
+
+> k
+
+etC
+
+> k
+
+,β⋆k = etL
+
+> k
+
+etC
+
+> k
+
+etL
+
+> k
+
+etM 
+
+> k
+
++ etL
+
+> k
+
+etC 
+
+> k
+
++ etO 
+
+> k
+
+etM 
+
+> k
+
++ etO 
+
+> k
+
+etC 
+
+> k
+
++ etM 
+
+> k
+
+etC
+
+> k
+
+,γ⋆k = etO 
+
+> k
+
+etM 
+
+> k
+
++ etO 
+
+> k
+
+etC 
+
+> k
+
++ etM 
+
+> k
+
+etC
+
+> k
+
+etL
+
+> k
+
+etM 
+
+> k
+
++ etL
+
+> k
+
+etC 
+
+> k
+
++ etO 
+
+> k
+
+etM 
+
+> k
+
++ etO 
+
+> k
+
+etC 
+
+> k
+
++ etM 
+
+> k
+
+etC
+
+> k
+
+.
+
+(57) 
+
+D. Overall Algorithm 
+
+Based on the algorithms introduced in the previous sub-sections, we now present the overall framework 9 for solving problem (23). Specifically, {f L, f M, f C} and ls are optimized using Algorithm 1, {Fk}∀k and {Vk}∀k are optimized using Algorithm 2, and α, β, γ are updated according to (57). These variables are alternately optimized until convergence. Since problem (23) is non-convex, the proposed AO algorithm ob-tains a suboptimal stationary solution rather than the globally optimal solution. In practice, the optimization is performed periodically rather than for each uplink round, and the obtained resource allocation and DNN split decisions can be reused for multiple uplink rounds, thereby amortizing the optimization overhead. The overall computational complexity of the proposed framework is mainly dominated by Algorithm 1 and Algo-rithm 2. The complexity of Algorithm 1 primarily comes from the one-dimensional search and the closed-form up-dates, which is on the order of O(LK ). The complex-ity of Algorithm 2 arises from employing the interior-point [44] method to solve optimization problem (42), as well as the gradient computation and matrix inver-sion operations, resulting in a computational complex-ity of O  K3d3M 3RF + KM N M RF + KM N N RF + N 3RF 
+
+.Therefore, the overall complexity of the proposed algo-rithm is O(it O (LK + it I K3d3M 3RF + it I KM N M RF +
+
+it I KM N N RF + it I N 3RF )) , where it I and it O denote the number of iterations required by Algorithm 2 and the overall algorithm, respectively. The convergence of the proposed AO algorithm can be guaranteed by the iterative optimization process. Specifically, each subproblem is optimized with the remaining variables fixed, and the obtained solution achieves a non-increasing ob-jective value compared with the previous iteration. Moreover, the objective function is lower bounded by zero due to the non-negativity of latency terms. Therefore, the objective value is monotonically non-increasing over the outer iterations and converges to a finite value. IV. N UMERICAL RESULTS 
+
+In this section, we evaluate the performance of the proposed scheme. We first present the simulation settings, followed by a comprehensive analysis of the simulation results. 
+
+A. System Setup and Benchmarks 
+
+Unless otherwise specified, the following simulation settings are considered. The BS is located at (0 m, 0 m) and is equipped with N = 64 receive antennas and NRF = 8 RF chains. A total of K = 4 devices are randomly distributed within a rectangular area of [0 m, 100 m] × [−50 m, 50 m], and each device is equipped with M = 8 transmit antennas and 
+
+MRF = 4 RF chains. The center of area of interest is located 
+
+> 9Although the proposed AO algorithm requires more than twenty sec-onds with the CVX toolbox, this runtime mainly comes from the interior-point based solver. In practice, optimization can be accelerated on field programmable gate arrays (FPGA) platforms, achieving microsecond-level execution latency [47]. 12
+
+Table II: Simulation Parameters.                                  
+
+> Parameters Value
+> Computational capacity of cloud server fCth 250 Gcycles/s Computational capacity of the MEC server fMth 50 Gcycles/s Computational capacity of device k f Lth 5 Gcycles/s Device k’s task size Ik4 MB Signal bandwidth B100 MHz Noise power spectral density -174 dBm/Hz Maximum transmit power of each device POth 30 dBm computation intensity ck1000 cycles/bit FLOPs per CPU cycle at the MEC server ρM
+> 04 FLOPs/cycle FLOPs per CPU cycle at the cloud server ρC
+> 08 FLOPs/cycle The transmission rate from MEC server to cloud rb100 Mbit/s Initial penalty factors {υ1,k },υ21Penalty factor update coefficient ι10
+
+at [15 m, 30 m]. For the DNN-based sensing task, we consider the classical AlexNet architecture for target classification, whose network structure and parameters are detailed in [7]. In addition, we set the detection probability threshold as 
+
+P min  
+
+> D
+
+= 0 .95 , the false alarm probability as Pfa = 1 e−5,and the maximum tolerable latency of the sensing task as 
+
+T Ith = 8 ms. The noise power spectral density is set to -174dBm/Hz. The MEC-cloud transmission rate rb is set to 100 Mbit/s, which is independent of the uplink transmission rate 
+
+Rk. The penalty factors {υ1,k } and υ2 in (44) are initialized as 1 and updated by multiplying a factor of ι = 10 during iterations until the penalty constraints are sufficiently satisfied. Other key parameters are summarized in Table II. To ensure statistical reliability, Monte Carlo simulations are conducted, and the results are averaged over 150 independent runs. To demonstrate the effectiveness of the proposed framework, we consider the following five benchmark schemes under the same parameter settings for comparison.  
+
+> •
+
+Three-tier computing system without integrated sens-ing (TTWS) [5] : The TTWS scheme focuses on cloud–edge–device collaborative computation and task offloading, but does not take sensing requirement into account.  
+
+> •
+
+Fully digital array architecture (FDA) scheme [3] : In the FDA scheme, both the devices and the BS employ fully digital arrays for beamforming and combining.  
+
+> •
+
+Equal-ratio task partitioning (ERTP) scheme : In the ERTP scheme, each device task is evenly partitioned among local, MEC server, and cloud computing.  
+
+> •
+
+Fixed computation resource allocation (FCRA) scheme [13] : In the FCRA scheme, the computation resources at the MEC and cloud servers are evenly allocated to each device task.  
+
+> •
+
+Non-split inference (NSI) scheme : In the NSI scheme, the DNN-based sensing task is wholly executed at the MEC server without model splitting. 
+
+B. Convergence Performance 
+
+In Fig. 3, we present the convergence behavior of the proposed overall algorithm under different MEC server com-1 2 3 4 5 6 7 8 9 10 0.2 0.25 0.3 0.35 0.4 0.45 0.5 
+
+Fig. 3: The convergence behavior of overall algorithm. 2 2.5 3 3.5 4 4.5 50.1 0.15 0.2 0.25 0.3 0.35  
+
+> 44.005 0.2202 0.2206
+
+Fig. 4: Average execution latency versus task size Ik.putational capacities f Mth and signal bandwidths B. It can be observed that the algorithm converges within a finite number of iterations for all parameter configurations. Moreover, as f Mth 
+
+and B increase, the average task execution latency across all devices decreases accordingly. This is because more available MEC computation resource helps reduce the processing la-tency of computing tasks, while a larger bandwidth improves the data offloading rate. 
+
+C. The Average Execution Latency and Sensing Performance 
+
+Fig. 4 illustrates the average task execution latency across all devices under different schemes. It is observed that the latency increases approximately linearly with the task size Ik
+
+for all schemes. Moreover, the proposed framework consis-tently achieves a lower latency than ERTP, FCRA, and NSI schemes. In ERTP scheme, computation tasks are proportion-ally distributed among the cloud, MEC server, and devices, making the system more susceptible to bottlenecks caused by specific tiers, such as limited local computing capability or constrained edge–cloud transmission rates. By contrast, the proposed framework adaptively adjusts task partitioning ratios according to the processing capabilities of different tiers, thereby reducing the overall latency. Compared with the FCRA scheme, which allocates identical computation resources to all users, the proposed framework performs com-putation resource allocation based on heterogeneous channel conditions and device capabilities, leading to higher overall 13 
+
+Table III: Computational complexity comparison of different schemes.                                                                                                               
+
+> Scheme Computational Complexity
+> TTWS O it O(K+it IK3d3M3
+> RF +it IKM N N RF +it IKM N M RF +it IN3
+> RF )
+> FDA O it O(LK +it IK3d3M3+it IN3)
+> ERTP O it O(LK +it IK3d3M3
+> RF +it IKM N N RF +it IKM N M RF +it IN3
+> RF )
+> FCRA O it O(L+it IK3d3M3
+> RF +it IKM N N RF +it IKM N M RF +it IN3
+> RF )
+> NSI O it O(K+it IK3d3M3
+> RF +it IKM N N RF +it IKM N M RF +it IN3
+> RF )
+> Proposed O it O(LK +it IK3d3M3
+> RF +it IKM N N RF +it IKM N M RF +it IN3
+> RF )2345678910 0.2 0.25 0.3 0.35 0.4 0.45 0.5
+
+Fig. 5: Average execution latency versus number of devices 
+
+K.system utility. Furthermore, by incorporating split inference, it enables cooperative task execution between the cloud and MEC servers, alleviating the computation burden at the MEC server. The optimized partition point also reduces the size of forwarded feature data, resulting in a lower latency than the NSI scheme. In addition, the performance of the proposed scheme approaches that of the TTWS and FDA schemes. The comparison with TTWS indicates that joint hybrid beam-forming and computation resource allocation can effectively mitigate the latency induced by sensing functionalities, while the comparison with FDA demonstrates the effectiveness of the proposed hybrid beamforming design in approaching fully digital array performance. In Fig. 5, we present the average execution latency versus the number of devices K. As K increases, the latency of all schemes generally rises, while the proposed algorithm consis-tently approaches the performance of the TTWS scheme. For the ERTP scheme, which adopts proportional task partitioning, the latency remains nearly unchanged for small K, as it is primarily constrained by limited local computing capability. However, when K ≥ 8, the reduced offloading rate becomes the dominant bottleneck, resulting in a noticeable increase in latency. By contrast, the proposed scheme is less sensitive to variations in K owing to its flexible task partitioning capability. Moreover, as K grows, the performance of the FCRA scheme gradually approaches that of the proposed scheme, since the latency becomes dominated by offloading delay and the gain from computation resource allocation diminishes. In addition, the FDA scheme exhibits the smallest latency variation with increasing K, owing to its sufficient 0.75 0.8 0.85 0.9 0.95 0.2 0.22 0.24 0.26 0.28 0.3 0.32 0.34 0.36 0.38 0.4 
+
+Fig. 6: Average execution latency versus detection probability 
+
+P min D .RF chains that enable beamforming and reception with higher spatial degrees of freedom, thereby mitigating the interference introduced by a larger number of devices. Furthermore, to evaluate the computational overhead intro-duced by added sensing mechanisms, we provide a complex-ity comparison among the proposed scheme and benchmark schemes in Table III. Although the proposed framework in-troduces additional optimization components, the complexity increase remains limited by exploiting the closed-form solu-tions for computation resource allocation and task partition variables, as well as the finite search space of DNN split points. Moreover, by adopting a hybrid beamforming architec-ture with a limited number of RF chains, the proposed scheme reduces the dimension of beamforming optimization variables and achieves lower computational complexity compared with the FDA scheme. Fig. 6 illustrates the average execution latency under dif-ferent detection probability thresholds P min D . It is observed that the latency increases with P min D , since achieving a higher detection probability requires the ISAC beam to place greater emphasis on sensing, which degrades the offloading rate and consequently increases the task execution latency. This reveals an inherent tradeoff between sensing and computation perfor-mance. By contrast, the FDA scheme is almost insensitive to variations in P min D , owing to its larger number of RF chains and higher spatial degrees of freedom, which enable more efficient simultaneous sensing and task offloading. In addition, as the available transmit power P Oth decreases, the execution latency increases and becomes more sensitive to P min D . This is because a lower transmit power budget forces the ISAC beam 14 10 -6 10 -5 10 -4 10 -3 10 -2 10 -1 
+
+> 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+> 10 -3
+> 0.98 1
+
+Fig. 7: Detection probability versus the false alarm probability 
+
+Pfa .10 -5 
+
+> 10 -4
+> 10 -3
+> 10 -2
+> 10 -1
+> 0.4 0.5 0.6 0.7 0.8 0.9 1
+
+Fig. 8: Detection probability versus decoding BER. to place greater emphasis on sensing to satisfy the detection requirement, thereby reducing the effective offloading rate. Fig. 7 shows the trade-off between detection probability and false alarm probability of the proposed scheme, FDA, and TTWS. Benefiting from the explicit consideration of the target detection constraint, the proposed scheme achieves a higher detection probability than TTWS and exhibits almost the same detection performance as FDA. Moreover, as the required detection probability threshold P min D increases, the achieved detection probability also improves, indicating that the proposed scheme can adaptively adjust the beamforming design to meet more stringent sensing requirements. Fig. 8 shows the impact of decoding BER and residual tim-ing errors τs on sensing performance. It can be observed that the detection probability increases as the BER decreases, since more accurate symbol reconstruction provides a more reliable matched-filter reference. When the BER is below 10 −2, the performance degradation caused by decoding errors becomes negligible. Moreover, the impact of residual synchronization errors is evaluated by introducing fractional timing offsets τs
+
+relative to the symbol duration Ts. We observe that small timing errors only cause limited degradation, while larger timing offsets lead to more noticeable performance loss due to the mismatch between the received signal and the matched-filter reference. To further demonstrate the effectiveness of cooperative sens-ing, we investigate the impact of the number of cooperative 1 2 3 4 5 600.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+
+Fig. 9: Detection probability versus number of cooperative devices. 6 7 8 9 10 11 12 13 14 15 16 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55           
+
+> (a) 60 70 80 90 100 110 120 130 140 150 160 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8
+> (b)
+
+Fig. 10: Average execution latency versus maximum tolerable latency T Ith of the sensing task. (a) AlexNet. (b) VGG. devices on the detection performance. As shown in Fig. 9, the detection probability increases significantly with the number of cooperative devices. This is because more cooperative devices provide additional uplink sensing signals, enabling BS to exploit more sensing observations and improve the detection capability. Moreover, a higher transmit power threshold leads to better sensing performance due to the enhanced received signal quality. These results verify the effectiveness of the pro-posed cooperative sensing mechanism, where multiple devices collaboratively contribute to target detection. To further illustrate the tradeoff between computation and 15 
+
+TABLE IV: Classification accuracy under different DNN split points and intermediate-feature quantization levels.                                                         
+
+> Split point Feature dimension 32-bit 16-bit 8-bit 2-bit Non-split baseline –99.56% 99.56% 99.56% 99.56% feat2 27 ×27 ×96 99.56% 99.56% 99.33% 52.89% feat5 13 ×13 ×384 99.56% 99.56% 99.56% 70.00% feat12 6×6×256 99.56% 99.56% 99.56% 94.67% avgpool 6×6×256 99.56% 99.56% 99.56% 94.67% fc6 4096 99.56% 99.56% 99.56% 96.00% fc7 4096 99.56% 99.56% 99.56% 95.50%
+
+sensing, Fig. 10 presents the device task execution latency versus the maximum tolerable sensing latency T Ith under different DNN architectures including AlexNet and VGG. It is observed that the execution latency decreases as T Ith 
+
+increases, since a relaxed sensing latency constraint allows the MEC and cloud servers to allocate more computation resources to device tasks. Moreover, the proposed scheme is less sensitive to variations in T Ith than the NSI scheme, owing to its cloud–edge cooperative inference enabled by flexible split design, whereas NSI relies on fully MEC-based processing. When T Ith is sufficiently large, the performance gap between the two schemes becomes smaller, since only a small portion of MEC computation resources is required for sensing, making split inference less beneficial. Similar performance trends are observed for both AlexNet and VGG architectures, indicating that the effectiveness of the proposed split-inference framework is not limited to a specific DNN architecture. Furthermore, both the performance gain of the proposed scheme over the NSI scheme and the average execu-tion latency increase with the computation intensity of device tasks ck.To evaluate the impact of intermediate-feature quantization on the classification accuracy of split inference, we further conduct simulations under different DNN split points and quantization bit-widths. In Table IV. we can observe that, with 32-bit and 16-bit intermediate-feature representations, all split points achieve the same classification accuracy as the non-split baseline (99.56%). This verifies that the split inference does not affect the classification performance when suffi-ciently accurate intermediate-feature transmission is adopted. However, when the intermediate features are aggressively quantized to 2 bits, the classification accuracy decreases due to the information loss introduced by quantization. Moreover, earlier split points (e.g., feat2 and feat5) are more sensitive to low-bit quantization because they contain larger and less abstract intermediate representations, while deeper split points exhibit better robustness. These results demonstrate that the accuracy invariance assumption holds under sufficiently accu-rate intermediate-feature transmission, whereas the impact of feature compression should be considered for practical MEC-cloud deployment. V. C ONCLUSION 
+
+This paper investigated a novel ISCC architecture that enables passive sensing by leveraging uplink offloading signals in the cloud-edge-device collaborative computing system. The results revealed that sensing introduces non-negligible com-putation latency due to the strong coupling among commu-nication, computation, and sensing. To address this issue, we developed an alternating optimization algorithm to minimize the average computation latency under sensing constraints by jointly optimizing ISAC beamforming, DNN splitting, task partitioning, and computation resource allocation. The proposed framework achieves latency performance close to conventional three-tier computing architectures without sens-ing, while providing a better tradeoff between computation latency and sensing performance than existing benchmarks. These findings indicate that sensing should be treated as a fundamental component requiring cross-layer joint design in ISCC systems. REFERENCES [1] D. C. Nguyen, M. Ding, P. N. Pathirana, A. Seneviratne, J. Li, D. Niyato, O. Dobre, and H. V. Poor, “6G internet of things: A comprehensive survey,” IEEE Internet Things J. , vol. 9, no. 1, pp. 359–383, Jan. 2022. [2] Y. Chen, K. Li, Y. Wu, J. Huang, and L. Zhao, “Energy efficient task offloading and resource allocation in air-ground integrated mec systems: A distributed online approach,” IEEE Trans. Mobile Comput. , vol. 23, no. 8, pp. 8129–8142, Aug. 2024. [3] M. Wang, S. Shi, D. Zhang, C. Wu, and Y. Wang, “Joint computation offloading and resource allocation for MIMO-NOMA assisted multi-user MEC systems,” IEEE Trans. Commun. , vol. 71, no. 7, pp. 4360–4376, July 2023. [4] J. Ren, G. Yu, Y. He, and G. Y. Li, “Collaborative cloud and edge computing for latency minimization,” IEEE Trans. Veh. Technol. , vol. 68, no. 5, pp. 5031–5044, May 2019. [5] C. Kai, H. Zhou, Y. Yi, and W. Huang, “Collaborative cloud-edge-end task offloading in mobile-edge computing networks with limited communication capability,” IEEE Trans. Cogn. Commun. Netw. , vol. 7, no. 2, pp. 624–634, June 2021. [6] Y. Li, F. Liu, Z. Du, W. Yuan, Q. Shi, and C. Masouros, “Frame structure and protocol design for sensing-assisted NR-V2X communications,”           
+
+> IEEE Trans. Mobile Comput. , vol. 23, no. 12, pp. 11 045–11 060, Dec 2024. [7] N. Pandey and S. S. Ram, “Classification of automotive targets using inverse synthetic aperture radar images,” IEEE Trans. Intell. Veh. , vol. 7, no. 3, pp. 675–689, Sept. 2022. [8] D. Wen, Y. Zhou, X. Li, Y. Shi, K. Huang, and K. B. Letaief, “A survey on integrated sensing, communication, and computation,” IEEE Commun. Surv. Tutor. , vol. 27, no. 5, pp. 3058–3098, Oct. 2025. [9] C. Ding, J. Wang, H. Zhang, M. Lin, and G. Y. Li, “Joint MIMO precoding and computation resource allocation for dual-function radar and communication systems with mobile edge computing,” IEEE J. Sel. Areas Commun. , vol. 40, no. 7, pp. 2085–2102, Mar. 2022. [10] S. Xu, Z. Liu, L. Zhao, Z. Liu, X. Wang, Z. Fei, and A. Nallanathan, “Joint trajectory and beamforming optimization for AAV-relayed inte-grated sensing and communication with mobile edge computing,” IEEE Trans. Mobile Comput. , vol. 24, no. 10, pp. 11 180–11 192, May 2025. [11] N. Huang, C. Dou, Y. Wu, L. Qian, B. Lin, H. Zhou, and X. Shen, “Mo-bile edge computing aided integrated sensing and communication with short-packet transmissions,” IEEE Trans. Wireless Commun. , vol. 23, no. 7, pp. 7759–7774, Jul. 2024. 16
+
+[12] P. Liu, X. Wang, Z. Fei, Y. Wu, J. Xu, and A. Nallanathan, “Latency minimization oriented radio and computation resource allocations for 6g v2x networks with iscc,” IEEE Transactions on Communications ,vol. 73, no. 12, pp. 15 851–15 865, Dec. 2025. [13] P. Liu et al. , “Joint offloading and beamforming design in integrating sensing, communication, and computing systems: A distributed ap-proach,” IEEE Trans. Commun. , vol. 73, no. 7, pp. 4697–4712, July 2025. [14] ——, “Toward intelligent edge sensing for ISCC network: Joint multi-tier DNN partitioning and beamforming design,” IEEE Trans. Wireless Commun. , vol. 25, pp. 6774–6789, 2026. [15] P. Liu, Z. Fei, X. Wang, Y. Zhou, Y. Zhang, and F. Liu, “Joint beam-forming and offloading design for integrated sensing, communication, and computation system,” IEEE Trans. Veh. Technol. , vol. 74, no. 9, pp. 14 933–14 937, Sept. 2025. [16] S. Lu, F. Liu, Y. Xiong, Z. Du, Y. Cui, S. Li, W. Yuan, J. Yang, and S. Jin, “Sensing with random communication signals,” IEEE Network ,vol. 40, no. 1, pp. 98–106, Jan. 2026. [17] Y. Cang, M. Chen, and Z. Yang, “Cooperative detection for MEC-aided multi-static ISAC systems,” IEEE J. Sel. Areas Commun. , vol. 44, pp. 545–561, Sept. 2026. [18] L. Zhao, Z. Ni, Y. Feng, J. Li, X. Bu, and J. Andrew Zhang, “High-resolution uplink sensing in millimeter-wave ISAC systems,” IEEE Trans. Commun. , vol. 73, no. 11, pp. 12 680–12 695, Nov. 2025. [19] Z. Wei, H. Liu, H. Li, W. Jiang, Z. Feng, H. Wu, and P. Zhang, “Integrated sensing and communication enabled cooperative passive sensing using mobile communication system,” IEEE Trans. Mobile Comput. , vol. 24, no. 9, pp. 7805–7821, Dec 2025. [20] P. Huang, F. Liu, F. Dong, and Z. Wang, “Uplink collaborative sensing with OFDM communication signals,” in ICC 2025 , 2025. [21] H. Yan, Y. Li, L. Wang, and S. Chen, “Learning omni-dimensional spatio-temporal dependencies for millimeter-wave radar perception,” 
+
+Remote Sensing , vol. 16, no. 22, Nov. 2024. [22] Z. Cheng, Z. He, and B. Liao, “Hybrid beamforming design for OFDM dual-function radar-communication system,” IEEE J. Sel. Topics Signal Process. , vol. 15, no. 6, pp. 1455–1467, Nov. 2021. [23] M. Gao, R. Shen, L. Shi, W. Qi, J. Li, and Y. Li, “Task partitioning and offloading in DNN-task enabled mobile edge computing networks,” 
+
+IEEE Trans. Mobile Comput. , vol. 22, no. 4, pp. 2435–2445, Apr. 2023. [24] X. Wang et al. , “Partially-connected hybrid beamforming design for integrated sensing and communication systems,” IEEE Trans. Commun. ,vol. 70, no. 10, pp. 6648–6660, Oct. 2022. [25] J. Lee, H. Lee, and W. Choi, “Wireless channel adaptive DNN split inference for resource-constrained edge devices,” IEEE Commun. Lett. ,vol. 27, no. 6, pp. 1520–1524, Jun. 2023. [26] H. Ma, X. Cai, G. Yang, H. Li, F. Xia, and Y. Liu, “Coding-enhanced range and velocity estimation in uplink OFDM-ISAC systems,” in 2025 8th ICET , 2025, pp. 221–225. [27] R. Gangula, S. Velumani, and T. Melodia, “Bistatic sensing in 5G NR,” 2025. [Online]. Available: https://arxiv.org/abs/2505.12555 [28] Z. Ni, J. A. Zhang, X. Huang, and R. P. Liu, “Frequency-time resource allocation for multiuser uplink ISAC systems,” IEEE Trans. Veh. Tech-nol. , vol. 73, no. 12, pp. 18 893–18 906, Dec. 2024. [29] X. Chen, Z. Feng, J. A. Zhang, Z. Wei, X. Yuan, P. Zhang, and J. Peng, “Downlink and uplink cooperative joint communication and sensing,” 
+
+IEEE Trans. Veh. Technol. , vol. 73, no. 8, pp. 11 318–11 332, Aug. 2024. [30] Z. Wang, C. Zhang, W. Zheng, X. Wen, and Z. Lu, “TAPv2: An approach towards sub-microsecond level timing accuracy over air interface,” IEEE Trans. Veh. Technol. , vol. 71, no. 4, pp. 3995–4009, Apr. 2022. [31] J. M. Merlo and J. A. Nanzer, “High accuracy wireless time synchro-nization for distributed antenna arrays,” in 2022 IEEE AP-S/URSI , 2022, pp. 1966–1967. [32] G. Li, S. Wang, J. Li, R. Wang, X. Peng, and T. X. Han, “Wireless sens-ing with deep spectrogram network and primitive based autoregressive hybrid channel model,” in 2021 IEEE SPAWC , 2021, pp. 481–485. [33] S. Jeong, J. Kang, O. Simeone, and S. Shamai, “Cell-free MIMO perceptive mobile networks: Cloud vs. edge processing,” IEEE Trans. Veh. Technol. , vol. 74, no. 6, pp. 9520–9532, June 2025. [34] Z. Zhang, R. He, B. Ai, M. Yang, Y. Niu, Z. Zhong, Y. Li, X. Zhang, and J. Li, “A cluster-based statistical channel model for integrated sensing and communication channels,” IEEE Trans. Wireless Commun. , vol. 23, no. 9, pp. 11 597–11 611, Sept. 2024. [35] Q. Ye, Y. Huang, Q. Luo, Z. Hu, Z. Zhang, Q. Zhao, Y. Su, S. Hu, and G. Yang, “A general integrated sensing and communication channel model combined with scattering clusters,” IEEE Trans. Veh. Technol. ,vol. 74, no. 5, pp. 6892–6906, May. 2025. [36] X. Song, X. Yu, J. Xu, and D. W. K. Ng, “Detection in bistatic ISAC with deterministic sensing and Gaussian information signals,” 2025. [Online]. Available: https://arxiv.org/abs/2511.10897 [37] D. Palomar, J. Cioffi, and M. Lagunas, “Joint Tx-Rx beamforming design for multicarrier MIMO channels: a unified framework for convex optimization,” IEEE Trans. Signal Process. , vol. 51, no. 9, pp. 2381– 2401, Sept. 2003. [38] M. Mao and X. Han, “Optimization research on radar signal processing technology based on MTI-MTD,” in 2023 IEEE 3rd ICDSCA , 2023, pp. 480–486. [39] W. Melvin, “Space-time adaptive radar performance in heterogeneous clutter,” IEEE Trans. Aerosp. Electron. Syst. , vol. 36, no. 2, pp. 621– 633, Apr. 2000. [40] J. A. Zhang, F. Liu, C. Masouros, R. W. Heath, Z. Feng, L. Zheng, and A. Petropulu, “An overview of signal processing techniques for joint communication and radar sensing,” IEEE J. Sel. Topics Signal Process. ,vol. 15, no. 6, pp. 1295–1315, Nov. 2021. [41] M. Yang, J. Yang, Y. Hou, and C. Jin, “Implementation architecture of signal processing in pulse doppler radar system based on FPGA,” The Journal of Engineering , vol. 2019, no. 21, pp. 7335–7338, Oct. 2019. [42] X. Li and S. Bi, “Optimal AI model splitting and resource allocation for device-edge co-inference in multi-user wireless sensing systems,” IEEE Trans. Wireless Commun. , vol. 23, no. 9, pp. 11 094–11 108, Sept. 2024. [43] C. Deng, X. Fang, and X. Wang, “Integrated sensing, communication, and computation with adaptive DNN splitting in multi-UAV networks,” 
+
+IEEE Trans. Wireless Commun. , vol. 23, no. 11, pp. 17 429–17 445, Nov. 2024. [44] S. Boyd and L. Vandenberghe, Convex Optimization . Cambridge University Press, 2004. [45] X. Wang, Z. Fei, and Q. Wu, “Integrated sensing and communication for ris-assisted backscatter systems,” IEEE Internet Things J. , vol. 10, no. 15, pp. 13 716–13 726, Aug. 2023. [46] X. Wang, Z. Fei, J. A. Zhang, and J. Xu, “Partially-connected hybrid beamforming design for integrated sensing and communication sys-tems,” IEEE Trans. Commun. , vol. 70, no. 10, pp. 6648–6660, Oct. 2022. [47] J. L. Jerez, P. J. Goulart, S. Richter, G. A. Constantinides, E. C. Kerrigan, and M. Morari, “Embedded online optimization for model predictive control at megahertz rates,” IEEE Trans. Autom. Control. , vol. 59, no. 12, pp. 3238–3251, Oct. 2014.
