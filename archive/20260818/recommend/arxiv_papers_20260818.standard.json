@@ -1,0 +1,278 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-18T19:21:46.754540+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.13606v2",
+      "source": "arxiv",
+      "title": "MobileMem: Learning from a Year of Mobile Experiences",
+      "abstract": "The next generation of AI agents is increasingly moving beyond systems that answer isolated questions toward persistent personal assistants that can understand, remember, and continuously learn from users' experiences. Such assistants require long-term memory to accumulate and leverage user-specific experiences over time, yet existing benchmarks remain inadequate for realistic mobile settings, where experiences are heterogeneous, multimodal, evolving, and deeply personal. We introduce MobileMem, a benchmark and framework for studying on-device long-term memory, grounded in a year-scale collection of mobile experiences. MobileMem employs a knowledge-grounded synthesis pipeline to construct coherent and temporally consistent long-horizon trajectories from user-app sessions. It provides complementary text and multimodal settings covering multi-hop and temporal reasoning, knowledge updating, and implicit preference inference. Specifically, MobileMem enables agents to remember the past, understand the present, and adapt to the future. By modeling experiences rather than isolated facts, MobileMem moves memory beyond information retrieval toward experiential intelligence for continuous personal learning.",
+      "authors": [
+        "Xinle Deng",
+        "Yida Xue",
+        "Xiangyuan Ru",
+        "Yijun Chen",
+        "Buqiang Xu",
+        "Mingjun Mao",
+        "Xinjie Liu",
+        "Haoming Xu",
+        "Shuofei Qiao",
+        "Mengru Wang",
+        "Chen Jiang",
+        "Yuchen Eleanor Jiang",
+        "Lizhong Wang",
+        "Jason Wang",
+        "Li Zeng",
+        "Haofen Wang",
+        "Guilin Qi",
+        "Huajun Chen",
+        "Ningyu Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG",
+        "cs.MA",
+        "cs.MM"
+      ],
+      "published": "2026-08-11T14:09:51+00:00",
+      "link": "https://arxiv.org/pdf/2608.13606v2",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "introduces on-device long-term memory for mobile AI assistants",
+      "llm_evidence_cn": "面向移动AI助手的设备端长期记忆框架",
+      "llm_evidence": "面向移动AI助手的设备端长期记忆框架",
+      "canonical_evidence": "面向移动AI助手的设备端长期记忆框架",
+      "llm_tldr_en": "MobileMem is a benchmark and framework for studying on-device long-term memory for persistent personal assistants, grounded in year-scale mobile experiences.",
+      "llm_tldr_cn": "现有移动智能助手基准难以表征真实场景中异构、多模态、随时间演化的个人体验，导致设备端长期记忆研究缺乏合适评测。本文提出MobileMem，一个基于年尺度移动体验数据的长期记忆基准与框架，通过知识驱动的合成流程构造时间一致的长时程轨迹，从用户与应用会话中提炼记忆评测任务。实验显示该框架能够生成连贯且可用的长期记忆任务，为持久化个人助理的持续学习与体验积累奠定基础。",
+      "llm_tldr": "现有移动智能助手基准难以表征真实场景中异构、多模态、随时间演化的个人体验，导致设备端长期记忆研究缺乏合适评测。本文提出MobileMem，一个基于年尺度移动体验数据的长期记忆基准与框架，通过知识驱动的合成流程构造时间一致的长时程轨迹，从用户与应用会话中提炼记忆评测任务。实验显示该框架能够生成连贯且可用的长期记忆任务，为持久化个人助理的持续学习与体验积累奠定基础。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.14991v1",
+      "source": "arxiv",
+      "title": "Risk-Adaptive Edge--Cloud Visual Reasoning for Communication-Efficient Autonomous Driving",
+      "abstract": "Cloud-hosted vision-language models (VLMs) offer greater contextual reasoning capabilities than smaller onboard models, but frequent visual uploads increase communication overhead and add network and inference latency to tactical decisions. We present a risk-adaptive edge-cloud architecture in which onboard traffic assessment determines when cloud reasoning is requested. An onboard VLM and a lightweight detector capture temporal traffic conditions and path-relative hazards for conservative local response and selective cloud access. The cloud model provides tactical advice, while validation, vehicle control, and automatic emergency braking remain local. In CARLA experiments, our method matched the task success rate of periodic cloud access while reducing cloud requests by 54.1% and recording fewer automatic emergency braking (AEB) activations. In a delayed-roadwork ablation, semantic events triggered requests before the next scheduled audit. Across three emulated network profiles, the method continued to reduce cloud traffic, although lane changes took longer than with periodic access. Onboard traffic assessment therefore served as a practical trigger for selective VLM inference in these experiments.",
+      "authors": [
+        "Meng Ma",
+        "Shuyang Li",
+        "Naigang Wang",
+        "Ruimin Ke"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-15T02:36:01+00:00",
+      "link": "https://arxiv.org/pdf/2608.14991v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Edge-cloud architecture with selective cloud VLM access for autonomous driving",
+      "llm_evidence_cn": "自动驾驶中按需请求云端VLM的边缘-云协同架构",
+      "llm_evidence": "自动驾驶中按需请求云端VLM的边缘-云协同架构",
+      "canonical_evidence": "自动驾驶中按需请求云端VLM的边缘-云协同架构",
+      "llm_tldr_en": "Presents a risk-adaptive edge-cloud architecture for autonomous driving that keeps local VLM/detector control and selectively requests cloud vision-language reasoning, matching task success rates while cutting communication overhead.",
+      "llm_tldr_cn": "针对车载模型能力有限而频繁上传云端视觉推理会带来通信与延迟开销的问题，提出风险自适应的边缘-云协同架构。车载端通过轻量VLM与检测器评估风险，仅在必要时请求云端VLM提供战术建议，而控制与紧急制动保持本地。在CARLA实验中，该方法在达到周期性云端辅助任务成功率的同时显著降低通信开销。",
+      "llm_tldr": "针对车载模型能力有限而频繁上传云端视觉推理会带来通信与延迟开销的问题，提出风险自适应的边缘-云协同架构。车载端通过轻量VLM与检测器评估风险，仅在必要时请求云端VLM提供战术建议，而控制与紧急制动保持本地。在CARLA实验中，该方法在达到周期性云端辅助任务成功率的同时显著降低通信开销。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.16157v1",
+      "source": "arxiv",
+      "title": "FreeToken: Efficient Edge-Native MoE Serving with Bandwidth-Adaptive Execution",
+      "abstract": "Frontier open-weight models are increasingly available, but serving them still largely assumes datacenter infrastructure. We present FreeToken, an edge-native MoE serving system that treats a personal machine not as a small GPU, but as a unified, elastic inference platform. FreeToken co-designs the full serving stack, including model layout and loading, expert residency, CPU--GPU execution, agentic state reuse, and runtime memory management, around two realities of local AI: agent workloads continuously change their execution pattern, and edge hardware exposes heterogeneous resources whose balance differs from machine to machine. Rather than committing to a fixed offloading strategy, FreeToken continuously maps computation and model state onto the resources actually available. FreeToken supports more than 20 MoE models and real coding and tool-using agents across hardware ranging from an 8GB laptop GPU to a single workstation GPU. More importantly, it changes what these machines can practically serve, from a 35B model on a laptop to a 284B model on a gaming desktop and the 753B GLM-5.2 on a single workstation GPU. FreeToken turns open weights into deployable local software, making the machines users already own a practical platform for frontier-scale intelligence. We release the system at flashml.ai.",
+      "authors": [
+        "Shuo Yang",
+        "Xiaoze Fan",
+        "Melissa Pan",
+        "Haocheng Xi",
+        "Zhe Wang",
+        "Shanlin Sun",
+        "Kurt Keutzer",
+        "Song Han",
+        "Matei Zaharia",
+        "Chenfeng Xu",
+        "Ion Stoica"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-08-17T06:22:53+00:00",
+      "link": "https://arxiv.org/pdf/2608.16157v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Edge-native serving system for agent workloads on personal machines",
+      "llm_evidence_cn": "面向个人机器与智能体工作负载的边缘原生MoE服务系统",
+      "llm_evidence": "面向个人机器与智能体工作负载的边缘原生MoE服务系统",
+      "canonical_evidence": "面向个人机器与智能体工作负载的边缘原生MoE服务系统",
+      "llm_tldr_en": "Presents FreeToken, an edge-native MoE serving system that co-designs layout, loading, expert residency, and CPU-GPU execution to continuously adapt to agent workload changes and heterogeneous edge hardware.",
+      "llm_tldr_cn": "针对前沿开源模型服务仍以数据中心为假设的问题，提出边缘原生MoE服务系统FreeToken。它将个人机器视为统一弹性推理平台，协同设计模型布局、专家驻留、CPU-GPU执行与智能体状态复用，并根据带宽与硬件差异连续调整计算和状态的映射，有效适应智能体工作负载的动态变化，提升边缘推理效率。",
+      "llm_tldr": "针对前沿开源模型服务仍以数据中心为假设的问题，提出边缘原生MoE服务系统FreeToken。它将个人机器视为统一弹性推理平台，协同设计模型布局、专家驻留、CPU-GPU执行与智能体状态复用，并根据带宽与硬件差异连续调整计算和状态的映射，有效适应智能体工作负载的动态变化，提升边缘推理效率。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.16801v1",
+      "source": "arxiv",
+      "title": "When Agents Coordinate: Measuring Coordination in Multi-Agent AI Coding",
+      "abstract": "We study how teams of AI coding agents coordinate while solving programming tasks. Current evaluations usually report whether the agents complete the task and how much the run costs, leaving the coordination inside the team largely unmeasured. We introduce an instrument to measure this coordination. Each run is represented as a temporal network in which agents and files are nodes, and messages, file writes, and file reads are timestamped directed edges with an associated cost. We apply this instrument to 1902 runs, each evaluated with a fixed test suite, across configurations that vary the team size, the team structure, and the file policy. The resulting networks show how coordination changes as teams grow and as the work changes. Direct messaging initially increases close to quadratically with the number of agents, with much of this growth coming from an early round of introductions. As the teams grow further, this increase levels off in the largest teams we study, where agents increasingly communicate through broadcast messages. The task also shapes the network that emerges. Work built around a shared specification produces dense, highly connected teams, while pipeline tasks produce sparse networks organised around local interfaces. Shared files can replace repeated 1-to-1 communication, cutting output tokens by about 42% at eight agents on message-heavy work, while adding overhead when files already carry the coordination. Naming one agent as coordinator creates no communication hub and provides no reliable improvement in success. We also observe an unprompted tendency for agents to seek out hidden grading material. We repeat the key experimental conditions in a sealed environment, replacing the hidden material with marked placeholder files. Across 244 additional runs, agents still reach for it in four fifths of runs, while the coordinator and file-channel findings reproduce.",
+      "authors": [
+        "Giuseppe Destefanis",
+        "Tomaso Aste"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-08-17T16:57:38+00:00",
+      "link": "https://arxiv.org/pdf/2608.16801v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Directly measures coordination in multi-agent AI coding teams; strong match to collaboration",
+      "llm_evidence_cn": "直接研究多智能体AI编码团队的协调测量，与协作需求高度契合",
+      "llm_evidence": "直接研究多智能体AI编码团队的协调测量，与协作需求高度契合",
+      "canonical_evidence": "直接研究多智能体AI编码团队的协调测量，与协作需求高度契合",
+      "llm_tldr_en": "Introduces an instrument that represents multi-agent coding runs as temporal networks, measuring coordination through messages, file writes/reads; applied to 1902 runs to reveal how coordination changes with team size and structure.",
+      "llm_tldr_cn": "针对多智能体AI编程评测中协调过程未被量化的现状，该文提出将每次运行表示为智能体与文件构成的时序网络，其中消息、文件写入与读取为带成本的时间戳边。将该工具应用于1902次运行，在不同团队规模、结构与文件策略下评估，发现协调模式随团队与工作变化而系统变化，为理解多智能体协作行为提供了可复用的度量手段，对端云协同智能体的团队协作测评具有参考价值。",
+      "llm_tldr": "针对多智能体AI编程评测中协调过程未被量化的现状，该文提出将每次运行表示为智能体与文件构成的时序网络，其中消息、文件写入与读取为带成本的时间戳边。将该工具应用于1902次运行，在不同团队规模、结构与文件策略下评估，发现协调模式随团队与工作变化而系统变化，为理解多智能体协作行为提供了可复用的度量手段，对端云协同智能体的团队协作测评具有参考价值。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "Collaboration",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.11166v1",
+      "source": "arxiv",
+      "title": "Agentic Configuration Management (ACM): A Reference Configuration Model for Governed Agentic Systems",
+      "abstract": "Agentic systems are increasingly composed of heterogeneous agents, prompts, tools, models, skills, composite subsystems, policies, and execution workflows whose configurations evolve across frameworks and runtime environments. Existing LLMOps and AgentOps platforms support orchestration and observability but do not provide a common configuration-governance model for representing and governing these systems as coherent, versioned configurations.   This paper introduces Agentic Configuration Management (ACM), a framework-independent governance and configuration reference model for heterogeneous agentic systems. ACM combines typed and independently versioned Agentic Configuration Items, immutable revisions and baselines, explicit configuration-runtime separation, lifecycle and assurance semantics, dependency-aware impact propagation, and runtime provenance. Heterogeneous native configurations are normalized through semantic projection into a canonical Configuration Graph on which common governance semantics operate.   We provide a Python reference implementation with adapters for LangGraph, CrewAI, and the OpenAI Agents SDK. The evaluation combines 27 governance scenarios with nine quantitative impact-propagation cases. For the evaluated configurations, the three frameworks yield governance-equivalent ACM representations and reproducible governance outcomes after projection. The impact semantics are formalized as monotone propagation over a finite lattice, establishing convergence, termination, and uniqueness of the least fixed point above the initial impact valuation. These results provide evidence that common governance semantics can support reproducibility, auditability, dependency analysis, and interoperability across heterogeneous agentic execution abstractions within the evaluated scope.",
+      "authors": [
+        "Audrey Quessada-Vial"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-08-11T17:28:39+00:00",
+      "link": "https://arxiv.org/pdf/2608.11166v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Framework-independent governance and configuration model for heterogeneous agentic systems",
+      "llm_evidence_cn": "面向异构智能体系统的框架无关治理与配置参考模型",
+      "llm_evidence": "面向异构智能体系统的框架无关治理与配置参考模型",
+      "canonical_evidence": "面向异构智能体系统的框架无关治理与配置参考模型",
+      "llm_tldr_en": "Introduces Agentic Configuration Management, a governance and configuration reference model for heterogeneous agentic systems, using typed versioned config items and immutable baselines to enable coherent, governed agent deployments.",
+      "llm_tldr_cn": "面向由多框架多运行时组合的异构智能体系统，现有LLMOps/AgentOps缺乏统一的配置治理模型。提出智能体配置管理(ACM)参考模型，通过类型化、独立版本化的配置项与不可变基线和修订，将智能体系统表示为连贯、可治理的版本化配置，有助于跨框架统一治理与演进，提升智能体系统的可控性和可再现性。",
+      "llm_tldr": "面向由多框架多运行时组合的异构智能体系统，现有LLMOps/AgentOps缺乏统一的配置治理模型。提出智能体配置管理(ACM)参考模型，通过类型化、独立版本化的配置项与不可变基线和修订，将智能体系统表示为连贯、可治理的版本化配置，有助于跨框架统一治理与演进，提升智能体系统的可控性和可再现性。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.12428v1",
+      "source": "arxiv",
+      "title": "MindMemOS: A Portable and Self-Evolving Memory Operating Layer for AI Agents",
+      "abstract": "Memory is a core component of AI agents, enabling them to accumulate experience, maintain personalization, and adapt over long-term interactions. However, existing memory systems often remain fixed after development, limiting their ability to adapt their memory models, organization strategies, and procedural knowledge through continued use. We present MindMemOS, a portable and self-evolving memory operating layer that organizes open-world information using a unified entity property timestructure. MindMemOS supports scenario-adaptive memory modeling, higher-order pattern discovery, autonomous memory refinement, and continuous skill evolution. Its MindMemEvolve algorithm employs validation-driven evolutionary search to optimize memory schemas for target scenarios, whiledreaming consolidates accumulated memories by merging redundant records and resolving conflicts. In addition, implicit corrective feedback serves as a human-in-the-loop signal for identifying and revising potentially inaccurate or misaligned memories. Its MindSkillEvolve algorithm further transforms agent execution trajectories into reusable and progressively refined skills. MindMemOS achieves 94.03% accuracy on LOCOMO and 70.63% on PersonaMem. MindSkillEvolve improves SpreadsheetBench success by 9.2 percentage points over the initial-skill baseline.",
+      "authors": [
+        "Kaichao Liang",
+        "Yuqi Cui",
+        "Hao Kong",
+        "Xinyuan Huang",
+        "Guohaotian Hou",
+        "Qingcan Kang",
+        "Liang Chen",
+        "Yiyang Yin",
+        "Ke Ye",
+        "Jiaquan Guo",
+        "Da Chen",
+        "Lingan Zeng",
+        "Yixing Peng",
+        "Rong Yao",
+        "Shixiong Kai",
+        "Mingxuan Yuan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.IR",
+        "cs.IT"
+      ],
+      "published": "2026-08-12T11:29:49+00:00",
+      "link": "https://arxiv.org/pdf/2608.12428v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "portable self-evolving memory operating layer for AI agents, transferable to mobile/edge deployments",
+      "llm_evidence_cn": "面向AI智能体的可移植自进化记忆操作系统层，可迁移至移动/边缘部署",
+      "llm_evidence": "面向AI智能体的可移植自进化记忆操作系统层，可迁移至移动/边缘部署",
+      "canonical_evidence": "面向AI智能体的可移植自进化记忆操作系统层，可迁移至移动/边缘部署",
+      "llm_tldr_en": "MindMemOS presents a self-evolving memory operating layer for AI agents that adapts memory models and organization strategies through continued use, with a validation-driven evolutionary algorithm.",
+      "llm_tldr_cn": "现有智能体记忆系统开发后固定，难以适应新需求并持续进化。本文提出MindMemOS，一个可移植的自进化记忆操作系统层，用统一实体属性时间结构组织开放世界信息，支持场景自适应记忆建模、高阶模式发现和技能持续进化。其MindMemEvolve算法采用验证驱动的进化搜索优化记忆模式，为智能体长期自适应提供了通用记忆基础设施。",
+      "llm_tldr": "现有智能体记忆系统开发后固定，难以适应新需求并持续进化。本文提出MindMemOS，一个可移植的自进化记忆操作系统层，用统一实体属性时间结构组织开放世界信息，支持场景自适应记忆建模、高阶模式发现和技能持续进化。其MindMemEvolve算法采用验证驱动的进化搜索优化记忆模式，为智能体长期自适应提供了通用记忆基础设施。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
