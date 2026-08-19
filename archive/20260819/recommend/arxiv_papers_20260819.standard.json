@@ -1,0 +1,183 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-19T20:38:56.685029+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2608.15241v1",
+      "source": "arxiv",
+      "title": "LOCAL: Enabling Learning On-device Contiguously for Agent LLMs",
+      "abstract": "On-device LLM agents interact repeatedly with users on local hardware, producing private traces that are valuable for adaptation but should not be sent to a remote trainer. Ideally, such agents would learn contiguously---adapting from every interaction without pausing or suspending user-facing inference---yet existing inference runtimes assume stable weights and existing RL systems assume separated resources, so neither can support this continuity. We present LOCAL, the first single-GPU runtime that enables contiguous on-device learning for LLM agents. The key insight is that GPU scheduling, adapter version management, and KV-cache validity cannot be handled by independent subsystems: adapter updates invalidate cached KV tensors from older versions, and cache retention affects the memory available for training. LOCAL makes adapter version, task priority, and cache state visible to three cooperating components---a cooperative scheduler, a version-aware KV-cache manager, and a multi-agent model runtime---that share this state to keep scheduling, execution, and cache maintenance mutually consistent. On a single 24 GB GPU with 7B-class models, LOCAL lowers foreground queue-wait p95 by 3.1x over FIFO, lowers p95 time-to-first-token (TTFT) by 1.55x versus non-preemptible training, cuts post-publish first-hit prefill p99 by 25.6% and cross-agent TTFT p99 by 21.9%, and keeps background learning progressing under tight KV budgets.",
+      "authors": [
+        "Xinxin Liu",
+        "Jiaxin Li",
+        "Zibo Wang",
+        "Yun Ji",
+        "Zhangqi Zhu",
+        "Qing Hu",
+        "Zhibin Wang",
+        "Rong Gu",
+        "Sheng Zhong",
+        "Chen Tian"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-08-15T14:03:14+00:00",
+      "link": "https://arxiv.org/pdf/2608.15241v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "On-device LLM agent runtime with contiguous local learning directly addresses mobile AI agent adaptation",
+      "llm_evidence_cn": "面向设备端LLM代理的连续本地学习运行时，直接支持移动AI代理的个性化适配",
+      "llm_evidence": "面向设备端LLM代理的连续本地学习运行时，直接支持移动AI代理的个性化适配",
+      "canonical_evidence": "面向设备端LLM代理的连续本地学习运行时，直接支持移动AI代理的个性化适配",
+      "llm_tldr_en": "LOCAL is the first single-GPU runtime enabling contiguous on-device learning for agent LLMs, jointly managing GPU scheduling, adapter versioning, and KV-cache validity to avoid interruption of user-facing inference.",
+      "llm_tldr_cn": "设备端LLM代理与用户反复交互，产生的私有轨迹适合本地适配，但现有推理运行时假设权重固定，强化学习系统又假设资源分离，无法支持连续学习。LOCAL提出首个单GPU运行时，通过联合管理GPU调度、适配器版本和KV缓存有效性，使代理在每次交互中持续学习且不中断用户推理。实验证明其在保持服务连续性的同时完成适配，为移动AI代理个性化部署提供了关键支撑。",
+      "llm_tldr": "设备端LLM代理与用户反复交互，产生的私有轨迹适合本地适配，但现有推理运行时假设权重固定，强化学习系统又假设资源分离，无法支持连续学习。LOCAL提出首个单GPU运行时，通过联合管理GPU调度、适配器版本和KV缓存有效性，使代理在每次交互中持续学习且不中断用户推理。实验证明其在保持服务连续性的同时完成适配，为移动AI代理个性化部署提供了关键支撑。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "mobile AI agent",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.15502v1",
+      "source": "arxiv",
+      "title": "EcoVLA: Energy-Efficient Device-Edge Co-Inference for Vision-Language-Action Models under Real-Time Constraints",
+      "abstract": "Vision-Language-Action (VLA) models have emerged as a promising foundation for Embodied AI, but their high inference cost poses significant challenges for deployment in robotic systems. In practice, on-device inference is constrained by limited compute capacity and energy budgets, struggling to simultaneously satisfy real-time control and energy efficiency requirements. Alternatively, offloading the inference workload to an edge server is susceptible to fluctuations in system conditions, introducing unpredictable latency risks. Device-edge co-inference offers a promising solution, but systematic research tailored to VLA models remains scarce, particularly a unified co-inference framework that jointly addresses real-time constraints and system-level energy efficiency. Thus, we propose EcoVLA, an adaptive device-edge co-inference framework for VLA models that maximizes system energy efficiency under real-time constraints. EcoVLA first introduces a unified stage-level abstraction over different VLA paradigms, establishing an architecture-agnostic co-inference design space. It then formulates a joint device-edge-network latency and energy prediction model to enable rapid runtime evaluation of candidate co-inference schemes. Building on this, EcoVLA continuously selects the energy-optimal scheme satisfying real-time constraints with millisecond-level overhead, adapting to runtime variations in network and system states. Furthermore, EcoVLA incorporates a lightweight transmission mechanism for inter-stage intermediate tensors to reduce the communication overhead incurred by cross-device collaboration. Experimental results across VLA models show that EcoVLA improves system energy efficiency by up to 236% over existing co-inference approaches under a 20 Hz action output frequency constraint, while consistently maintaining SLO satisfaction under dynamic network and edge workload conditions.",
+      "authors": [
+        "Ao Zhou",
+        "Bo Dai",
+        "Le Yu",
+        "Xingyu Liu",
+        "Zeyu Hao",
+        "Lingkun Long",
+        "Chunming Hu",
+        "Jianlei Yang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-08-16T03:08:40+00:00",
+      "link": "https://arxiv.org/pdf/2608.15502v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "device-edge co-inference framework for VLA models aligns with edge cloud collaborative AI agent system",
+      "llm_evidence_cn": "面向VLA模型的设备-边缘协同推理，契合端云协同AI智能体系统主题",
+      "llm_evidence": "面向VLA模型的设备-边缘协同推理，契合端云协同AI智能体系统主题",
+      "canonical_evidence": "面向VLA模型的设备-边缘协同推理，契合端云协同AI智能体系统主题",
+      "llm_tldr_en": "Presents EcoVLA, an energy-efficient device-edge co-inference framework for Vision-Language-Action models, balancing real-time control and energy efficiency in robotic deployment.",
+      "llm_tldr_cn": "面向视觉-语言-动作（VLA）模型的部署，设备端算力与能耗有限，云端卸载又面临延迟波动。为此提出EcoVLA设备-边缘协同推理框架，在统一方案中联合优化能耗与实时性。实验表明其在满足实时控制约束的同时显著降低能耗。该框架为端云协同AI智能体系统提供了高能效协同推理的系统级方法。",
+      "llm_tldr": "面向视觉-语言-动作（VLA）模型的部署，设备端算力与能耗有限，云端卸载又面临延迟波动。为此提出EcoVLA设备-边缘协同推理框架，在统一方案中联合优化能耗与实时性。实验表明其在满足实时控制约束的同时显著降低能耗。该框架为端云协同AI智能体系统提供了高能效协同推理的系统级方法。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "edge cloud collaborative AI agent system",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.17282v1",
+      "source": "arxiv",
+      "title": "DeAR: Decentralized Agentic Reasoning via Capability Grounding and Collaborative Thought Navigation",
+      "abstract": "Existing agentic reasoning systems typically rely on centralized protocols. This design introduces routing bottlenecks and static role allocations that often fail when handling complex multimodal queries. We propose DeAR (Decentralized Agentic Reasoning), a framework that shifts from central control to autonomous peer-to-peer collaboration. DeAR is built on three mechanisms: (1) decentralized capability grounding for query-dependent agent specialization, (2) thought map navigation for targeted peer interactions, and (3) topology update for adaptive error correction. Evaluations across 9 diverse multimodal reasoning and text-based QA benchmarks indicate that DeAR consistently outperforms recent baseline methods, validating that decentralized and adaptive collaboration among agents enhances accuracy in knowledge-intensive reasoning tasks. The source code will be available at https://open_upon_acceptance.",
+      "authors": [
+        "Xing Wei",
+        "Changmeng Zheng",
+        "XiaoYong Wei",
+        "Xiufen Ye",
+        "Qing Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-18T02:26:13+00:00",
+      "link": "https://arxiv.org/pdf/2608.17282v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "decentralized multi-agent reasoning architecture",
+      "llm_evidence_cn": "去中心化多智能体推理架构",
+      "llm_evidence": "去中心化多智能体推理架构",
+      "canonical_evidence": "去中心化多智能体推理架构",
+      "llm_tldr_en": "DeAR shifts agentic reasoning from centralized control to autonomous peer-to-peer collaboration via capability grounding, thought map navigation, and topology update, outperforming baselines on multitask benchmarks.",
+      "llm_tldr_cn": "现有智能体推理系统依赖中心化协议，存在路由瓶颈和角色分配僵化的问题。DeAR提出去中心化智能体推理框架，通过能力锚定、思维图导航和拓扑更新实现自主对等协作，避免中心瓶颈。在9个多模态和文本问答基准上，DeAR一致优于近期基线方法，验证了去中心化协作推理的有效性，为分布式智能体系架构提供了新思路。",
+      "llm_tldr": "现有智能体推理系统依赖中心化协议，存在路由瓶颈和角色分配僵化的问题。DeAR提出去中心化智能体推理框架，通过能力锚定、思维图导航和拓扑更新实现自主对等协作，避免中心瓶颈。在9个多模态和文本问答基准上，DeAR一致优于近期基线方法，验证了去中心化协作推理的有效性，为分布式智能体系架构提供了新思路。",
+      "llm_tags": [
+        "query:eca"
+      ],
+      "matched_query_tag": "query:eca",
+      "matched_query_text": "distributed edge cloud agent architecture",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.17774v1",
+      "source": "arxiv",
+      "title": "Edge-Native Embodied Intelligence for Action-Aware Wireless Edge Networks",
+      "abstract": "Embodied intelligence is shifting artificial intelligence from passive digital perception toward active physical interaction. However, foundation-model-enabled embodied agents face a fundamental tension between open-world cognition and resource-constrained deployment. On-device models are limited by computation, memory, and energy budgets, whereas cloud-centric solutions introduce latency and reliability risks over dynamic wireless links. Edge general intelligence provides a promising cognitive backbone, but existing frameworks still lack physical grounding, action awareness, and mechanisms for actively acquiring useful physical experience. To address these limitations, this article introduces edge-native embodied intelligence (ENEI), an action-aware wireless edge framework that integrates embodied agents, the 6G communication and networking fabric, and edge cognitive services into a 6G-mediated bidirectional edge-embodiment loop. Along the edge-to-embodiment axis, confidence-aware assistance and edge-driven generative adaptation enhance local autonomy under out-of-distribution (OOD) conditions. Along the embodiment-to-edge axis, value-of-experience guided active embodied federated learning enables physical actions to generate informative experience for continuous edge model evolution. The 6G fabric supports both directions through goal-oriented transmission and programmable radio-resource allocation. Two case studies on OOD drone navigation and mobility-driven federated learning illustrate the feasibility and communication efficiency of the proposed mechanisms. ENEI provides a unified perspective in which edge cognition strengthens embodied action, while embodied agency actively enriches edge cognition, laying the foundation for scalable, adaptive, and self-evolving embodied wireless systems.",
+      "authors": [
+        "Yiru Wang",
+        "Chuanao Jiang",
+        "Jiahui Cui",
+        "Zide Fan",
+        "Lei Wang",
+        "Zehui Xiong",
+        "Dong In Kim"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "eess.SP"
+      ],
+      "published": "2026-08-18T13:39:12+00:00",
+      "link": "https://arxiv.org/pdf/2608.17774v1",
+      "tags": [
+        "keyword:eca",
+        "query:eca"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "edge-native embodied intelligence architecture balancing on-device and cloud limitations for action-aware wireless edge agents",
+      "llm_evidence_cn": "面向行动感知无线边缘智能体的边缘原生生具身智能架构，平衡端侧与云端局限",
+      "llm_evidence": "面向行动感知无线边缘智能体的边缘原生生具身智能架构，平衡端侧与云端局限",
+      "canonical_evidence": "面向行动感知无线边缘智能体的边缘原生生具身智能架构，平衡端侧与云端局限",
+      "llm_tldr_en": "Presents edge-native embodied intelligence (ENEI), an action-aware framework for wireless edge networks where edge general intelligence grounds foundation-model agents physically while avoiding on-device resource limits and cloud latency; relevant to mobile/edge AI agent systems.",
+      "llm_tldr_cn": "大模型驱动的具身智能体面临开放世界认知与资源受限部署的矛盾，端侧模型受算力与能耗限制，云端方案又在无线链路上引入时延和可靠性风险。论文提出边缘原生生具身智能（ENEI），以边缘通用智能作为认知主干，引入行动感知和物理经验获取机制。该框架为端边云协同下的具身智能体部署提供了行动感知的系统化思路，但其重点在边缘侧而非显式端云协作。",
+      "llm_tldr": "大模型驱动的具身智能体面临开放世界认知与资源受限部署的矛盾，端侧模型受算力与能耗限制，云端方案又在无线链路上引入时延和可靠性风险。论文提出边缘原生生具身智能（ENEI），以边缘通用智能作为认知主干，引入行动感知和物理经验获取机制。该框架为端边云协同下的具身智能体部署提供了行动感知的系统化思路，但其重点在边缘侧而非显式端云协作。",
+      "llm_tags": [
+        "query:eca:composite"
+      ],
+      "matched_query_tag": "query:eca:composite",
+      "matched_query_text": "Papers central to 端云协同的AI Agent论文, especially work that connects or combines: Collaboration; e; mobile AI agent; edge cloud collaborative AI agent system; distributed edge cloud agent architecture.",
+      "matched_requirement_id": "req-composite-eca",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
