@@ -6,36 +6,39 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-19
-- 运行时间：2026-08-19 20:42:41 UTC
+- 最新运行日期：2026-08-20
+- 运行时间：2026-08-20 20:46:53 UTC
 - 运行状态：成功
-- 本次总论文数：4
+- 本次总论文数：5
 - 精读区：3
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-今日精读聚焦端侧Agent LLM持续学习与VLA模型能效协同推理，速读关注边缘具身智能。
+今日精读3篇、速读2篇，核心聚焦边缘智能与AI服务系统架构。
 
-最值得关注《LOCAL》的端侧连续学习机制（9.0分），以及《EcoVLA》在实时约束下的设备-边缘协同推理方案（8.0分）。
+最值得关注：边缘原生的具身智能框架（9/10）与Agentic工作负载的服务系统分析（8/10），分别指向端侧实时决策与大模型服务优化。
 
-建议优先阅读这两篇高分论文，深入理解端侧智能与边缘协作的落地路径。
-- 详情：[/202608/19/README](/202608/19/README)
+建议优先浏览这两篇的结论与系统设计，其余可先速读摘要，后续按需精读。
+- 详情：[/202608/20/README](/202608/20/README)
 
 ### 精读区论文标签
-1. [LOCAL: Enabling Learning On-device Contiguously for Agent LLMs](/202608/19/2608.15241v1-local-enabling-learning-on-device-contiguously-for-agent-llms)  
+1. [Edge-Native Embodied Intelligence for Action-Aware Wireless Edge Networks](/202608/20/2608.17774v1-edge-native-embodied-intelligence-for-action-aware-wireless-edge-networks)  
    标签：评分：9.0/10、query:eca
-   evidence：面向设备端LLM代理的连续本地学习运行时，直接支持移动AI代理的个性化适配
-2. [EcoVLA: Energy-Efficient Device-Edge Co-Inference for Vision-Language-Action Models under Real-Time Constraints](/202608/19/2608.15502v1-ecovla-energy-efficient-device-edge-co-inference-for-vision-language-action-models-under-real-time-constraints)  
+   evidence：面向无线边缘网络的边缘原生生智能，解决边云协同AI智能体系统问题。
+2. [From LLM Inference to Agentic Workloads: Characterization and Implications for Serving Systems](/202608/20/2608.15127v1-from-llm-inference-to-agentic-workloads-characterization-and-implications-for-serving-systems)  
    标签：评分：8.0/10、query:eca
-   evidence：面向VLA模型的设备-边缘协同推理，契合端云协同AI智能体系统主题
-3. [DeAR: Decentralized Agentic Reasoning via Capability Grounding and Collaborative Thought Navigation](/202608/19/2608.17282v1-dear-decentralized-agentic-reasoning-via-capability-grounding-and-collaborative-thought-navigation)  
+   evidence：刻画智能体工作负载与服务系统影响，直接为分布式边缘云智能体架构提供依据
+3. [Bayesian Partner Modelling enables Adaptive Replanning for LLM Coordination](/202608/20/2608.18490v1-bayesian-partner-modelling-enables-adaptive-replanning-for-llm-coordination)  
    标签：评分：8.0/10、query:eca
-   evidence：去中心化多智能体推理架构
+   evidence：LLM协作，贝叶斯伙伴建模，自适应重规划
 
 ### 速读区论文标签
-1. [Edge-Native Embodied Intelligence for Action-Aware Wireless Edge Networks](/202608/19/2608.17774v1-edge-native-embodied-intelligence-for-action-aware-wireless-edge-networks)  
+1. [Adaptive Unequal Error Protection for Semantic Split Learning over Wireless Channels](/202608/20/2608.16227v1-adaptive-unequal-error-protection-for-semantic-split-learning-over-wireless-channels)  
    标签：评分：7.0/10、query:eca
-   evidence：面向行动感知无线边缘智能体的边缘原生生具身智能架构，平衡端侧与云端局限
+   evidence：面向无线边缘云推断的任务感知语义分割学习与非等差错保护
+2. [Adversarial Review: Structured Disagreement for Grounded Agentic Code Review](/202608/20/2608.18167v1-adversarial-review-structured-disagreement-for-grounded-agentic-code-review)  
+   标签：评分：7.0/10、query:eca
+   evidence：带对抗批判的极简协作代码评审
 
 
 <div class="dpr-home-promo-card">
