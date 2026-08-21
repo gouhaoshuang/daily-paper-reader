@@ -1,0 +1,428 @@
+Title: When Do LLM Agents Help? Deadline-Aware Mixed-Criticality Task Scheduling at the Autonomous-Vehicle Edge
+
+URL Source: https://arxiv.org/pdf/2608.19557v1
+
+Published Time: Fri, 21 Aug 2026 00:19:54 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+> 1
+
+# When Do LLM Agents Help? Deadline-Aware Mixed-Criticality Task Scheduling at the Autonomous-Vehicle Edge 
+
+Reza Zakerian Westcliff University r.zakerian.8143@westcliff.edu 
+
+Abstract —Autonomous vehicles offload latency-sensitive per-ception tasks to nearby mobile edge computing (MEC) servers, where a missed safety-critical task is unsafe rather than merely degraded. Large language models (LLMs) are increasingly pro-posed as adaptive, explainable schedulers, yet evidence of when they help is scarce. We study deadline-aware, mixed-criticality scheduling on heterogeneous MEC servers, where time-critical (TC) tasks must be protected at a controlled cost to best-effort traffic, and ask whether a multi-agent LLM control layer improves on a strong heuristic. We answer in two steps. First we build the heuristic: a windowed contract-net auction that orders each admission window time-critical-first by earliest deadline and places tasks by earliest-finish-time. Across 60 instances on three topologies and 15 baselines under an identical online constraint, it attains a TC completion rate of 0.902 , above every baseline (Holm-corrected p < 0.001 ; best baseline 0.838 ) and at 0.87 of a CP-SAT upper bound. Second, we add the LLM control plane. A controlled decomposition traces the scheduler’s advantage to two ordinary factors, the batching horizon and time-critical-first ordering; the auction, the per-window LLM policy, and online adaptation add nothing while the load is stationary, where the heuristic is already near-optimal. Under a mid-run surge of safety-critical tasks the picture changes, and the LLM control plane gains significantly over both the static heuristic and the bandit. LLM orchestration therefore earns its cost only when non-stationarity opens headroom a fixed policy cannot use. We report control-plane latency and rationale, and release all code and seeded instances. 1
+
+Index Terms —Autonomous vehicles, mobile edge computing, task scheduling, large language models, multi-agent systems, contract-net protocol, deadline-aware scheduling, mixed critical-ity. 
+
+I. I NTRODUCTION 
+
+# AUTONOMOUS vehicles perceive their environment by continuously processing data from cameras, LiDAR, and radar, and much of this computation is offloaded to nearby mobile edge computing (MEC) servers through roadside units (RSUs) to meet stringent timing constraints [1], [3]. The edge scheduler that assigns these offloaded tasks to heterogeneous servers must operate online and must complete as many tasks as possible before their deadlines. The setting is inherently 
+
+mixed-criticality : a missed time-critical (TC) task, such as obstacle detection feeding the control loop, can be unsafe, whereas a missed best-effort non-time-critical (NTC) task, such as an infotainment or map-update request, is merely 
+
+> 1
+
+Code at: https://github.com/rezarz98/multi-agents-llm-edge-scheduling. 
+
+degraded [12], [13]. The scheduler must therefore protect time-critical work while limiting the collateral cost to best-effort traffic. Existing approaches each solve part of this problem. Clas-sical dispatching rules are online and deadline-aware, but myopic and blind to placement [4], [5]. Mapping heuristics choose servers well, yet optimise makespan rather than dead-lines [7], [10]. Metaheuristic and deep-reinforcement-learning (DRL) schedulers optimise a fixed instance or train offline, so they adapt poorly once conditions change [15], [20]. Large language models (LLMs) have emerged as general reasoners and the control core of multi-agent systems [23], [24], and a fast-growing literature applies them to scheduling and resource management [25]. Their appeal is adaptivity with natural-language interpretability. Their obstacle is cost: LLM inference is orders of magnitude slower than a heuristic dispatch, so a model cannot sit on the per-task critical path. This leaves an architectural question that, to our knowledge, has not been answered with rigorous evidence for autonomous-vehicle edge scheduling: can a lightweight LLM control layer, kept off the critical path, improve on a competitive deadline-aware scheduler, and if so, when? We answer in two steps, and the answer turns out to be conditional. First we build the scheduler, a windowed contract-net auction in which a broker announces release-ordered admission windows, per-server agents bid, and each task is placed by earliest-finish-time, with time-critical prior-ity enforced through ordering rather than admission refusal. Second, we add a lightweight LLM control plane of broker, edge, and monitor agents that set policy once per window, and test it against strong non-LLM controls. The scheduler proves near-optimal while the workload is stationary, which leaves an adaptive layer nothing to recover; only when a mid-run surge opens headroom does the LLM control plane help. The evaluation is built to make that answer trustworthy. All 
+
+15 baselines run under the same online constraint. We generate 
+
+60 independent instances and report paired significance tests with effect sizes. We compute the CP-SAT offline optimum to bound what any scheduler could achieve. Finally, we decompose our own method, removing one component at a time, to locate the source of its advantage. Our contributions are as follows:  
+
+> •
+
+A simple, optimum-anchored scheduler for deadline-aware, mixed-criticality autonomous-vehicle task offload-arXiv:2608.19557v1 [cs.DC] 20 Aug 2026 2
+
+ing. It admits tasks in windows, protects time-critical work by ordering rather than by refusing best-effort traffic, and places each task on the server that can finish it soonest, all realised as a contract-net auction. Across three topologies and 60 instances it outperforms 15 
+
+standard baselines and reaches 0.87 of a CP-SAT upper bound, an optimality gap of at most 13% (Sec. VI-A).  
+
+> •
+
+A controlled decomposition that locates the advantage. Two ordinary factors are responsible, the batching hori-zon and time-critical-first ordering, rather than the auction or any learned component. A windowed time-critical-first heuristic reproduces the full method within confidence intervals, and neither an LLM control plane nor online adaptation, by an LLM monitor or a UCB1 bandit, improves on it while the load is stationary (Sec. VI-B).  
+
+> •
+
+An evidence-based answer to when LLM orchestration helps. Under a non-stationary surge of safety-critical tasks, where the static heuristic is no longer near-optimal, the LLM control plane gains over both that heuristic and a non-LLM bandit ( +0 .005 , p = 0 .004 ). It gives no benefit under stationary load or capacity loss (Sec. VI-C). We pair this with measurements of control-plane latency, decision frequency, and rationale (Sec. VI-D). The rest of the paper is organised as follows. Sec. II reviews related work; Sec. III presents the system model and problem formulation; Sec. IV describes the proposed scheduler and its two planes; Sec. V details the experimental setup; and Sec. VI reports the results. Sec. VII concludes. II. R ELATED WORK 
+
+Dispatching rules and real-time scheduling. First-come-first-served (FCFS), earliest-deadline-first (EDF) [4], earliest-due-date (EDD), earliest-feasible-deadline-first (EFDF), critical-ratio (CR), cost-over-time (COVERT), and efficient-resource-allocation (ERA) rules [1], [6], together with least-laxity-first (LLF) [5], order pending tasks from local features. They are cheap and naturally online, but they look only one task ahead and say nothing about which server should run it. 
+
+Heterogeneous mapping. Min-Min, Max-Min [7], [8], Suf-ferage [9], and HEFT [10] map independent tasks to machines to minimise makespan. Maheswaran et al. [9] distinguish im-mediate and batch dynamic modes for online use, a distinction we adopt so that every baseline is treated fairly. These methods place tasks well, but they are deadline-agnostic. 
+
+Learning-based scheduling. Metaheuristics such as PSO [14], [15] and GA [16], [17], and DRL from the Deep Q-Network [18] and its double variant [19] to edge makespan minimisation [20] and MEC offloading [21], learn capable policies. Both families pay for that strength: they optimise a fixed instance or train offline, which makes them slow to adapt and hard to interpret online. 
+
+Mixed-criticality scheduling. Vestal’s model [12] and the survey of Burns and Davis [13] formalise systems that mix criticality levels; our TC/NTC weighting is a simple two-level instance of this setting, adapted to throughput maximisation for vehicular offloading.                                             
+
+> TABLE I SUMMARY OF NOTATION .Symbol Meaning
+> T={t1, . . . , t n}set of nindependent tasks
+> tri, t direlease time and deadline of ti
+> twi, t siworkload (MI) and file size (KB) of ti
+> κi∈ { TC ,NTC }criticality class of ti
+> E={ec 1, . . . , ec m}heterogeneous edge computing servers (ECS)
+> cjk, r jk, τ jkPU jof ec k; its rate; its free time
+> δap
+> i, δ br
+> i, δ bs
+> i,k vehicle–RSU, broker, base-station delays
+> Ci(cjk)completion time of tion PU cjk
+> xi∈ { 0,1}1if ticompletes before its deadline
+> wTC , w NTC objective weights (TC, NTC)
+> Wauction (admission) window size
+> Rmonitor review period
+
+LLMs for systems. LLMs are capable reasoners [23] and multi-agent controllers [24], and a recent literature applies them to scheduling and resource management [25]. Cost rules out putting them in a data-plane role. We differ from this work in two ways: we confine LLM reasoning to a periodic control plane, and we measure its contribution against non-LLM controls and an offline optimum rather than reporting only the cases where it succeeds. The result is a conditional claim instead of an absolute one. No single family above covers the setting we need. We therefore begin from a model that makes deadlines, criticality, and placement explicit at once. III. S YSTEM MODEL AND PROBLEM FORMULATION 
+
+We extend the two-layer hierarchical autonomous-vehicle MEC architecture of Zakerian and Gholami [1] with a con-trol layer, and add task-criticality classes and a weighted-throughput objective; the resulting three-layer design (vehicles, RSUs, edge servers, control plane) is shown in Fig. 1, and Table I summarises the notation. 
+
+A. Task and Delay Model 
+
+Vehicles generate tasks ti = ⟨tri , t di , t wi , t si , κ i⟩ with release 
+
+tri , deadline tdi > t ri , workload twi (MI), file size tsi , and class 
+
+κi; each must complete within [tri , t di ]. Servers ec k host non-preemptive processing units (PUs) cjk of rate rjk, available at 
+
+τ jk . The computation delay is twi /r jk. Communication delay is incurred in transit, overlapping any queueing at the PU: ti
+
+arrives at server ec k at time tri + δap  
+
+> i
+
++ δbr  
+
+> i
+
++ δbs 
+
+> i,k
+
+, summing the vehicle-to-RSU access hop δap  
+
+> i
+
+, the RSU-to-broker relay 
+
+δbr  
+
+> i
+
+, and the broker-to-server link δbs 
+
+> i,k
+
+; it then contends for the PU, which it occupies for its processing time alone. Hence 
+
+Ci(cjk) = max 
+
+
+
+τ jk , t ri + δap  
+
+> i
+
++ δbr  
+
+> i
+
++ δbs 
+
+> i,k
+
+
+
++ twi
+
+rjk
+
+. (1) This corrects a common additive form that adds all com-munication after the PU becomes free and thereby double-counts delay under contention. A task completes if and only if 
+
+Ci(cjk) ≤ tdi on its assigned PU, that is, xi = 1[Ci(cjk) ≤ tdi ].A task that cannot meet its deadline is dropped and does not occupy a PU. 3Device MEC control Edge computing                               
+
+> ECS ec 1(edge agent) ECS ec 2(edge agent) ECS ec 3(edge agent) ECS ec 4(edge agent)
+> tasks (5G)
+> policy
+> CNP auction: announce/award , bids
+> Vehicle v1Vehicle v2Vehicle v3Vehicle v4
+> RSUs (5G relay)
+> Broker agent (CNP auctioneer) Monitor agent (adaptation)
+> c1c2c3c1c2c3c1c2c3c1c2c3
+
+Fig. 1. Three-layer autonomous-vehicle MEC architecture with broker, edge, and monitor agents. 
+
+B. Objective and Complexity 
+
+With weights wTC > w NTC > 0, the scheduler chooses online an ordering and an assignment to maximise weighted on-time throughput, 
+
+max 
+
+> n
+
+X
+
+> i=1
+
+w(κi) xi, (2) subject to each PU serving one task at a time, non-preemptively, using at any time t only tasks with tri ≤ t. The primary measure is the time-critical completion rate TCR TC =  P  
+
+> i:κi=TC
+
+xi
+
+ |{ i : κi = TC }| , with (2) as secondary. This generalizes the maximum-processed-tasks objective of [1] to the mixed-criticality setting. 
+
+Proposition 1: Maximising weighted on-time throughput (2) is NP-hard. 
+
+Proof sketch. Even the single-machine special case with re-lease dates, minimizing the weighted number of late jobs (1 | rj | P wj Uj ), equivalently maximizing the weighted num-ber of on-time jobs, is strongly NP-hard [11]; our unrelated-machine, communication-delay setting is a generalization. This hardness motivates heuristic and, potentially, learned schedulers, and frames the offline optimum we compute in Sec. V as a bound rather than an operational target. 
+
+C. Modelling Assumptions 
+
+Three idealisations are worth stating. First, communication delays are deterministic functions of file size and path; a stochastic-channel study is future work. Second, dropped tasks are removed at zero cost, which grants every scheduler perfect infeasibility foresight and mildly advantages methods that explicitly test feasibility, including ours. Third, there is no queueing at the RSU or broker. These are standard for this class of study but should temper absolute-rate interpretation; our comparisons hold all of them fixed across methods. IV. P ROPOSED SCHEDULER 
+
+We build the scheduler in four steps: why the cost of LLM inference dictates a two-plane design; the deterministic data Control plane LLM agents, once per window (slow)     
+
+> Data plane deterministic, once per task (fast)
+> policies parameterise the data plane
+> Edge agents
+> {a1,,aK}
+> bidding policy Broker agent auction policy Monitor agent fast-path parameters Windowed CNP auction (TC-first EDF order) Deadline-feasible bidding Earliest-finish-time placement
+
+Fig. 2. Two-plane design: LLM agents set policy, deterministic auction dispatches tasks. 
+
+plane that dispatches every task; the LLM control plane that configures it; and the full procedure with its cost and its fallback. 
+
+A. Design Rationale 
+
+The cost of LLM inference, rather than any property of the scheduling problem, dictates the architecture. A model call takes seconds, whereas an admission decision must be taken in the time it takes a PU to free; placing a language model on the per-task path is therefore not a tuning choice but an impossibility. Any useful role for an LLM here must be one in which it is consulted rarely and its output is reused many times. This leads to a two-plane separation (Fig. 2). A deterministic 
+
+data plane dispatches every task using fixed arithmetic on PU clocks. A lightweight control plane of LLM agents sets the parameters that the data plane obeys, once per admission window. Because the control plane is invoked per window rather than per task, the number of model calls scales with 
+
+n/W and is independent of the task arrival rate; the data plane’s latency is unaffected by the presence or absence of the LLM. The separation also makes the empirical question of this paper well posed: the two planes can be enabled and disabled independently, so the contribution of LLM reasoning can be measured against the same data plane running under a fixed policy. 
+
+B. Data Plane: Windowed Contract-Net 1) Windows and decision epochs: Released tasks are grouped into admission windows of W tasks in release order, and the scheduler handles one window at a time. A window 
+
+ω is complete only once its W th task has been released. We therefore define its decision epoch tcl  
+
+> ω
+
+as the release time of that last task, the earliest instant at which the window’s contents are known. This horizon carries most of the scheduler’s advantage (Sec. VI-B), so it is worth being precise about what it does and does not provide. It grants an intra-window ordering looka-head : the scheduler sees all W tasks before committing to any of them, and can order them by criticality and deadline instead of reacting to one arrival at a time. It grants no foreknowledge 4
+
+of unreleased work. Tasks enter windows strictly in release order, and by the max in (1) no task begins before it physically arrives at its server. The window size W thus trades accuracy against delay. A larger window orders more tasks jointly and raises time-critical completion, but it also holds every decision until tcl  
+
+> ω
+
+, a delay that grows with W at a fixed arrival rate. We use W =40 
+
+throughout and report the full sweep in Sec. VI-B. 
+
+2) Bidding: Within a window, scheduling follows the contract-net protocol [22]. The broker announces the window’s tasks to the m edge agents, one per server. For each announced task ti, the agent of server ec k evaluates (1) across its own PUs and replies with a single bid, the earliest completion time it can offer, 
+
+bi,k = min j Ci(cjk), (3) together with a feasibility flag 1[ bi,k ≤ tdi ] marking whether that bid meets the task’s deadline. Bids are computed from locally held state only, namely the agent’s own PU rates and free times, so no global schedule needs to be materialised. 
+
+3) Ordering and award: The broker sorts the window time-critical-first , and by earliest deadline within each criticality class, then awards tasks in that order. Each task is awarded to the agent offering the earliest feasible bid, ties broken by current load; the winning agent executes the task on the PU that produced its bid, and updates that PU’s free time τ jk before the next award. A task with no feasible bid is dropped and occupies no PU. We call this rule windowed TC-EDF+EFT : earliest-deadline-first ordering applied time-critical-first (TC-EDF), with earliest-finish-time (EFT) placement, over windows of size W . Two properties matter for the analysis that follows. First, criticality is enforced purely by ordering , never by refusing best-effort work. An NTC task is delayed behind TC tasks but still bids and can still win, so critical traffic is protected by contention rather than by admission policy. Second, every step of the loop is arithmetic on PU clocks, so the data plane is deterministic and no LLM sits on this path. Greedy EFT placement is not the only reasonable choice, and Sec. VI-B quantifies what it costs relative to spreading load across all deadline-feasible servers. 
+
+C. Control Plane: LLM Agents 
+
+Once per window, three agent types set the fast-path param-eters Θ that the data plane will obey. Each agent receives a compact JSON description of the current state: per-server load and free-time summaries, rolling completion and deadline-miss counts by class, and the current value of Θ. Each replies through a constrained output schema, so a reply is either a valid parameter assignment or a detectable failure, never free text the data plane must interpret. The three roles differ in scope. Edge agents set a bidding policy from local load. The broker agent sets the tie-break rule and decides whether to drop best-effort tasks that provably cannot finish in time, freeing capacity earlier than waiting for them to fail. The monitor agent works on a slower cadence: every R windows it reviews the rolling statistics and adapts Θ,namely the ordering policy (strict EDF versus a randomised 
+
+Algorithm 1 Windowed contract-net scheduler (with optional control plane) 
+
+Require: tasks T , servers E, window size W , review period 
+
+R 
+
+> 1:
+
+Θ ← default fast-path parameters  
+
+> 2:
+
+partition T into release-ordered windows of size W 
+
+> 3:
+
+for each window ω with index q do  
+
+> 4:
+
+broker announces ω; edge agents report load  
+
+> 5:
+
+(optional) edge/broker agents set policy ▷ LLM  
+
+> 6:
+
+if q mod R = 0 then adapt Θ via monitor (LLM) or bandit  
+
+> 7:
+
+end if  
+
+> 8:
+
+order ω time-critical-first, EDF within class, using Θ 
+
+> 9:
+
+for each task ti in the ordered window do  
+
+> 10:
+
+collect bids {bi,k }; award earliest feasible bid  
+
+> 11:
+
+execute ti; update τ jk ; record xi 
+
+> 12:
+
+end for  
+
+> 13:
+
+end for  
+
+> 14:
+
+return per-class completion statistics top-k EDF) and the degree of best-effort deferral. Every monitor decision is logged with the natural-language rationale the model gave for it, which we examine in Sec. VI-D. The monitor’s authority is deliberately small. With W =40 
+
+and R=2 , a 200 -task instance yields five windows and two review points, so the monitor acts at most twice. This bounds how much it can contribute, and we return to the point when interpreting its null result. Adaptation and LLM reasoning are separable, so we sep-arate them. As a non-LLM control we implement a UCB1 bandit over the identical parameter set, with the same review cadence and the same authority over Θ. Any advantage the LLM shows over this control therefore cannot be credited to the mere presence of an adaptive loop, which is what makes the comparison in Sec. VI-C informative rather than merely favourable. 
+
+D. Procedure, Cost, and Fallback 
+
+Algorithm 1 states the full procedure. The control plane occupies lines 4–7 and runs once per window; the data plane occupies lines 8–12, which order the window under the current Θ and then dispatch its tasks deterministically. Setting the optional lines 5 and 6 aside recovers the pure heuristic scheduler used as the static control throughout Sec. VI. 
+
+Data-plane cost. For n tasks, m servers of P PUs each, every announced task draws one bid per server and each bid minimises over that server’s PUs, giving O(nmP ) finish-time evaluations in total. Ordering contributes O(n log W ) across all windows, which is dominated by the bidding term for any realistic m and P . The cost is independent of Θ, so enabling the control plane does not change data-plane complexity. 
+
+Control-plane cost. Each window issues one call per edge agent and one to the broker, and the monitor is consulted every 
+
+R windows, so the number of model calls per instance is 
+
+l nW
+
+m
+
+(m + 1) + 
+
+j nW R 
+
+k
+
+= O
+
+ nm W
+
+
+
+, (4) 5
+
+which for the configuration used here ( n=200 , W =40 , m=4 ,
+
+R=2 ) gives 27 calls, matching the live measurement in Sec. VI-D. The critical property is the 1/W factor: model cost falls as the horizon grows, while data-plane cost does not, so the two planes can be sized independently. 
+
+Fallback. Because control-plane latency is not bounded by the window duration, a deployment cannot assume a policy update will arrive before the window it was requested for. The data plane therefore always holds a committed Θ and proceeds with it if no reply has arrived, falling back to the last committed value or to the heuristic default. Sec. VI-D measures the latency that makes this necessary. V. E XPERIMENTAL SETUP 
+
+Instances. Each instance has 200 tasks with a 60 /40 
+
+TC/NTC split. Release times, deadlines, workloads, and file sizes are resampled independently from the empirical marginals of a contended reference benchmark, giving fresh realisations of the same statistical character. We evaluate 20 
+
+seeds on each of three MEC topologies (two four-server, one six-server), 60 instances in total; the same task core is used across topologies so that only the network differs. The load is contended but not saturated, which is what makes the benchmark discriminative. Averaged over instances, 
+
+98 .5% of TC tasks are feasible in isolation , meaning some PU could complete them in an otherwise-empty system. Only about 1.5% are therefore impossible by construction, and the rest of the shortfall below that ceiling comes from contention, which is exactly what a scheduler can act on. 
+
+Baselines and controls. We compare against 15 baselines. All of them run through one shared event-driven online 
+
+dispatch engine that exposes only released tasks: a decision is taken whenever a server frees, over whatever has arrived by that instant. This is the online-consistent (immediate-mode [9]) form of each heuristic, and using a single engine ensures no method sees information the others lack. The proposed auction differs in one respect, and we state plainly what it gains from that. It batches each release-ordered window (W =40 ) before dispatching it, which grants the intra-window ordering lookahead defined in Sec. IV without breaching release-time causality. Part of its margin over the unbatched baselines in Table II is therefore the horizon itself rather than the auction. Sec. VI-B separates the two by evalu-ating windowed list schedulers directly. We further run three online decomposition controls (EDF+EFT, TC-EDF+EFT, and EDF with random placement) and a UCB1-bandit variant of the auction. 
+
+Ceiling. For each instance, we compute the feasibility ceiling (TC tasks completable on some PU absent contention) and the CP-SAT offline optimum (maximum weighted on-time throughput under (1)), reporting each scheduler’s weighted throughput as a fraction of the solver’s rigorous upper bound (/UB; higher is better, 1.0 meaning the bound is met). 
+
+Metrics and statistics. The primary metric is TCR TC ;we also report the best-effort completion rate TCR NTC and weighted throughput ( wTC =2 , w NTC =1 ). Makespan is near-identical across methods (about 49 time units) and non-discriminative, so we omit it. We report mean ± 95% CI and, referenced to the proposed auction, paired Wilcoxon signed-rank tests with Holm–Bonferroni correction and Cliff’s-delta effect sizes, exploiting the fact that every scheduler runs on the identical instances. 
+
+Implementation. All schedulers are in Python; PSO, GA, and DDQN hyperparameters and convergence are in Ap-pendix A. LLM agents use a lightweight model (Claude Haiku) with structured outputs, and responses are cached, and Sec. VI-D reports live latency separately. Unless noted, W =40 
+
+and R=2 . We denote by CNP the auction with a heuristic control plane, CNP-LLM the auction with LLM broker and edge agents, HAS (hierarchical agentic scheduler) the full method that adds the LLM monitor, and CNP-bandit the bandit variant. VI. R ESULTS 
+
+We report the results in the order the questions arise. Sec. VI-A establishes that the scheduler is strong and how close to optimal it is; Sec. VI-B asks which of its components is responsible; Sec. VI-C asks when, if ever, the LLM control plane adds anything; and Sec. VI-D measures what that plane costs to run. 
+
+A. Overall Comparison 
+
+Table II and Fig. 3 report the 60 -instance comparison. The windowed contract-net scheduler attains TCR TC = 0 .902 ±
+
+0.009 , significantly above every baseline (Holm p < 0.001 ,Cliff’s δ from −0.57 to −0.96 ). The strongest baseline, GA, reaches 0.838 , and the DRL baseline reaches 0.791 .The scheduler also records the highest weighted throughput (274 .9), the objective it optimises. Deadline-agnostic mapping heuristics and DRL sit at the bottom for a straightforward reason: optimising makespan or a learned proxy does not make deadlines easier to meet. Protecting time-critical work has a price, and the table shows it. The best-effort rate of CNP ( TCR NTC = 0 .731 ) is the lowest in the comparison, and its unweighted completion (0.834 ) trails EDF with random placement ( 0.849 ). This is the intended consequence of time-critical-first ordering under the 2 : 1 weighting, and it is the same mechanism that lifts weighted throughput above every deadline-agnostic method. The optimum shows how much room is left. The scheduler operates at 0.874 of the rigorous CP-SAT upper bound, an optimality gap of 12 .6% , and at about 0.92 of the feasibility ceiling ( 0.985 ). Most of the residual is the intrinsic cost of deciding online rather than with full knowledge of the future. 
+
+B. Decomposition: Where the Advantage Comes From 
+
+Table III varies the three factors of the scheduler one at a time over the same 60 instances: task ordering (plain EDF versus time-critical-first EDF), placement (earliest-finish-time versus a random deadline-feasible server), and the batching horizon W . Three findings follow. First, the batching horizon is the largest lever. Holding ordering and placement fixed at time-critical-first and EFT, 
+
+TCR TC climbs from 0.795 at W =1 , where there is no lookahead at all, to 0.896 at W =40 and 0.942 at W =200 .6
+
+TABLE II MAIN COMPARISON AGAINST ALL BASELINES OVER 60 INSTANCES .Method TCR TC TCR NTC Wt. thr. Wt./UB Cliff’s δ pHolm 
+
+CNP 0.902 ±0.009 0.731 274.9 0.874 ref. ref. CNP-bandit ‡ 0.901 ±0.009 0.732 274.9 0.874 −0.01 0.465 EDF+rand † 0.846 ±0.014 0.854 271.3 0.863 −0.57 <0.001 GA 0.838 ±0.012 0.818 266.5 0.847 −0.68 <0.001 PSO 0.830 ±0.013 0.816 264.6 0.841 −0.72 <0.001 LLF 0.815 ±0.013 0.830 262.1 0.833 −0.81 <0.001 CR 0.813 ±0.014 0.832 261.6 0.832 −0.80 <0.001 ERA 0.809 ±0.014 0.790 257.3 0.818 −0.81 <0.001 TCEDF+EFT † 0.809 ±0.014 0.785 257.0 0.817 −0.82 <0.001 COVERT 0.805 ±0.013 0.822 259.0 0.824 −0.85 <0.001 HEFT 0.802 ±0.012 0.819 258.1 0.821 −0.89 <0.001 EDD / EFDF † 0.801 ±0.013 0.816 257.5 0.819 −0.88 <0.001 Max-Min 0.800 ±0.013 0.820 257.7 0.819 −0.89 <0.001 EDF 0.799 ±0.013 0.812 256.6 0.816 −0.90 <0.001 Sufferage 0.795 ±0.013 0.813 255.9 0.814 −0.92 <0.001 FCFS 0.795 ±0.013 0.809 255.5 0.812 −0.90 <0.001 DDQN 0.791 ±0.013 0.819 255.4 0.812 −0.91 <0.001 Min-Min 0.779 ±0.012 0.793 250.5 0.796 −0.96 <0.001 Mean over 60 instances; the 95% CI is shown for the primary metric 
+
+TCR TC only. Wt. thr. is weighted on-time throughput ( wTC =2 , wNTC =1 )and Wt./UB expresses it as a fraction of the CP-SAT upper bound (higher is better). Cliff’s δ and the Holm-corrected paired-Wilcoxon p are referenced to CNP, with negative δ indicating a method weaker than CNP. Proposed method in bold. †EDD and EFDF coincide on these instances; EDF+rand and TC-EDF+EFT are the online decomposition controls. ‡Bandit variant of the proposed auction, not a baseline. 0.75 0.80 0.85 0.90 0.95 1.00 TC completion rate (mean ± 95% CI) 
+
+> Min-Min DDQN FCFS Sufferage EDF EDF+EFT Max-Min EDD EFDF HEFT COVERT TCEDF+EFT ERA CR LLF PSO GA EDF+rand CNP-bandit CNP
+> feasibility ceiling 0.985
+> windowed auction (CNP / bandit) online decomposition controls baselines
+
+Fig. 3. Time-critical completion rate by method; dashed line marks the feasibility ceiling. 
+
+Second, time-critical-first ordering supplies the other half of the gain, but it reallocates work rather than creating it. At W =40 it raises TCR TC from 0.851 under plain EDF to 
+
+0.896 , while best-effort completion falls from 0.845 to 0.731 .Ordering does nothing at W =1 , since a window of one task cannot be reordered. Third, greedy EFT placement is not the best choice. Spread-ing load across all deadline-feasible servers beats it on both classes ( 0.877 against 0.851 at W =40 under EDF), because EFT keeps sending work to the earliest-finishing, and usually fastest, PU and leaves slower servers idle until they are needed. 
+
+TABLE III FACTORIAL DECOMPOSITION BY ORDERING , PLACEMENT , AND BATCHING HORIZON .Ordering Place W =1 W =40 W =200 
+
+EDF EFT 0.795 (0.808) 0.851 (0.845) 0.869 (0.867) EDF rand 0.836 (0.850) 0.877 (0.877) 0.889 (0.893) TC-first EFT 0.795 (0.808) 0.896 (0.731) 0.942 (0.630) TC-first rand 0.836 (0.850) 0.917 (0.762) 0.957 (0.617) 
+
+The same effect explains an ordering in Table II that looks odd at first glance: the online EDF+random control reaches 
+
+0.846 and outranks online EDF+EFT, which coincides with the plain EDF rule at 0.799 . We keep EFT in the auction for its determinism and per-server locality, and accept the small measured cost in TCR TC .Together these results place the advantage outside the auc-tion. The windowed TC-EDF+EFT list scheduler at W =40 
+
+reaches 0.896 and so reproduces the full auction ( 0.902 )within their confidence intervals, which means the contract-net machinery adds nothing over the list scheduler it implements. The UCB1 bandit tells the same story, matching the static auction ( 0.901 against 0.902 ; Holm p = 0 .465 ). While the load is stationary the heuristic already runs near-optimal, leaving no headroom for adaptation to exploit, whether by an LLM or otherwise. 
+
+C. When LLM Orchestration Helps: Non-Stationary Load 
+
+Every workload so far has been stationary, and that is precisely the condition under which adaptation has nothing to offer. We therefore introduce two disruptions on the same instances: a mid-run surge of 40 tightly-deadlined safety-critical tasks, modelling a cluster of vehicles converging on a busy intersection, and a mid-run edge-server outage. The two differ in an important way. Under the surge the static heuristic is no longer near-optimal: its TCR TC falls to about 0.76 while the offline optimum stays near 0.83 , leaving roughly 7 points that a better policy could in principle recover. Under an outage there is far less to recover, because earliest-finish-time placement already reroutes work around the lost server. Table IV and Fig. 4 report the outcome. The LLM control plane produces a small but statistically significant improve-ment over the static heuristic (CNP-LLM +0 .005 , p = 0 .004 ;HAS +0 .006 , p = 0.005 ), whereas CNP-bandit does not (p = 0.571 ). Since both adapt the same parameters, the difference points to the LLM’s context-aware, zero-shot per-window decisions rather than to adaptation in general. Under an outage, and on stationary load (Sec. VI-B), nothing beats the static heuristic significantly. Adding the monitor on top of the per-window agents changes little, as HAS and CNP-LLM perform comparably. The benefit is therefore real but conditional. It appears only when non-stationarity opens room a better policy can recover, and even then it captures a modest fraction of that room. 7                                        
+
+> TABLE IV COMPLETION RATES UNDER SURGE AND OUTAGE DISRUPTIONS .Condition Method TCR TC ∆p
+> Surge static (heuristic) 0.7573 ±0.0125 n/a n/a CNP-bandit 0.7569 ±0.0125 −0.0004 0.571 CNP-LLM 0.7626 ±0.0123 +0 .0053 0.004
+> HAS 0.7633 ±0.0124 +0 .0060 0.005
+> Outage static (heuristic) 0.8810 ±0.0168 n/a n/a CNP-bandit 0.8796 ±0.0174 −0.0014 0.223 CNP-LLM 0.8824 ±0.0161 +0 .0014 0.313 HAS 0.8805 ±0.0167 −0.0005 0.916 static CNP-bandit CNP-LLM HAS
+> 0.73 0.74 0.75 0.76 0.77 0.78 TC completion rate
+> **
+> *p< 0.01 vs static
+> (a) Surge
+> static CNP-bandit CNP-LLM HAS
+> 0.85 0.86 0.87 0.88 0.89 0.90 0.91
+> (b) Outage
+> Fig. 4. Completion rate under surge and outage; note the truncated y-axes.
+
+D. LLM Control-Plane Analysis 
+
+A gain matters only if the layer producing it can be deployed, so we measured what the control plane costs. On a held-out instance with live model calls it issues 27 schema-constrained calls at a mean latency of 3.0 s (median 2.8 s, 95th percentile 4.3 s). That is orders of magnitude slower than a data-plane window, which confirms the constraint the architecture was built around: the LLM must stay off the per-task path and adapt on a slow cadence. It also has a practical consequence. At realistic arrival rates a per-window call would not return in time, so a deployment needs the stale-policy fallback of Sec. IV, either the last committed Θ or the heuristic default. We also checked whether the model’s explanations can be trusted. The monitor changed its parameters at one of the two review points, and its logged rationales are accurate in the sense that they cite the observed TC and NTC deadline-miss rates and the parameter change follows from what they cite. In one case it raised best-effort deferral as the NTC miss rate spiked during the surge. Because responses are cached, each reported decision is a single sample, and measuring how much LLM output varies across seeds and model scales remains future work. 
+
+E. Threats to Validity 
+
+Results are from a simulator with deterministic channels and a single primary workload size; absolute rates would differ on a physical vehicular testbed, though the structural ordering of deadline-aware versus deadline-agnostic methods should persist. The disruption benefit, while significant, is small and shown for a specific surge model, and other non-stationarities may differ. The LLM findings depend on a lightweight model; a model-scale and sampling-variance study is future work, as are richer stochastic-channel and RSU/broker-queueing models. VII. C ONCLUSION 
+
+We asked when a multi-agent LLM control layer helps deadline-aware, mixed-criticality task scheduling for au-tonomous vehicles at the mobile edge. The answer has two parts. Our scheduler, a windowed contract-net auction that is in essence a time-critical-first EDF list scheduler with earliest-finish-time placement, outperforms 
+
+15 standard baselines and reaches 0.87 of a CP-SAT upper bound. Decomposing it showed that the advantage comes from the batching horizon and time-critical-first ordering, not from the auction and not from any learned component. While the load stays stationary the heuristic is already close to optimal, and neither an LLM control plane nor online adaptation improves on it. When a surge of safety-critical tasks arrives mid-run, the picture changes: the LLM control plane gains significantly over both that heuristic and a non-LLM bandit, which isolates a genuine, if conditional, benefit to LLM reasoning. For practitioners the message is simple. LLM orchestration earns its cost only when non-stationarity opens headroom a fixed policy cannot use, and even then the gain is modest, so the layer should be justified by the variability of the workload rather than adopted by default. Future work will examine broader forms of non-stationarity, larger models and their sampling variance, and a physical vehicular testbed with stochastic channels. APPENDIX ABASELINE HYPERPARAMETERS AND CONVERGENCE 
+
+PSO used 24 particles, 30 iterations, w=0 .7, c1=c2=1 .5.GA used a population of 30 , 30 generations, tournament size 
+
+3, blend crossover, Gaussian mutation (rate 0.1), and elitism 
+
+2. DDQN used a two-layer MLP ( 64 hidden units), double-Q targets, a replay buffer of 5000 , a target update every 500 steps, 
+
+ϵ annealed from 1.0 to 0.05 , and 60 training episodes, with the action selecting among the three earliest-deadline ready tasks. PSO and GA optimise per-task priorities and DDQN trains over the full instance, an offline advantage over the strictly-online proposed method that they nonetheless fail to convert. Fig. 5 shows convergence: PSO and GA plateau within the allotted budget, and DDQN’s episode return stabilizes. REFERENCES [1] R. Zakerian and H. Gholami, “SARS: A resource selection algorithm for autonomous driving tasks in heterogeneous mobile edge computing,” in                     
+
+> Proc. Int. Conf. Computational Science and Computational Intelligence (CSCI) , Cham, Switzerland: Springer Nature, 2024, pp. 285–301. [2] W. Shi, J. Cao, Q. Zhang, Y. Li, and L. Xu, “Edge computing: Vision and challenges,” IEEE Internet Things J. , 3(5):637–646, 2016. [3] Y. Mao, C. You, J. Zhang, K. Huang, and K. B. Letaief, “A survey on mobile edge computing: The communication perspective,” IEEE Commun. Surveys Tuts. , 19(4):2322–2358, 2017. [4] C. L. Liu and J. W. Layland, “Scheduling algorithms for multiprogram-ming in a hard-real-time environment,” J. ACM , 20(1):46–61, 1973. [5] M. L. Dertouzos and A. K. Mok, “Multiprocessor online scheduling of hard-real-time tasks,” IEEE Trans. Softw. Eng. , 15(12):1497–1506, 1989. 80510 15 20 25 30 Iteration / generation 245 246 247 248 249 250 Best fitness
+> (a) Metaheuristic convergence PSO GA 010 20 30 40 50 60 Training episode 195 200 205 210 Episode return (b) DDQN training 5-ep moving avg
+
+Fig. 5. Convergence on one instance: (a) PSO and GA best fitness; (b) DDQN raw and 5-episode-averaged return. [6] M. L. Pinedo, Scheduling: Theory, Algorithms, and Systems , 5th ed., Springer, 2016. [7] O. H. Ibarra and C. E. Kim, “Heuristic algorithms for scheduling independent tasks on nonidentical processors,” J. ACM , 24(2):280–289, 1977. [8] T. D. Braun et al. , “A comparison of eleven static heuristics for mapping a class of independent tasks onto heterogeneous distributed computing systems,” J. Parallel Distrib. Comput. , 61(6):810–837, 2001. [9] M. Maheswaran, S. Ali, H. J. Siegel, D. Hensgen, and R. F. Freund, “Dynamic mapping of a class of independent tasks onto heterogeneous computing systems,” J. Parallel Distrib. Comput. , 59(2):107–131, 1999. [10] H. Topcuoglu, S. Hariri, and M.-Y. Wu, “Performance-effective and low-complexity task scheduling for heterogeneous computing,” IEEE Trans. Parallel Distrib. Syst. , 13(3):260–274, 2002. [11] J. K. Lenstra, A. H. G. Rinnooy Kan, and P. Brucker, “Complexity of machine scheduling problems,” Ann. Discrete Math. , 1:343–362, 1977. [12] S. Vestal, “Preemptive scheduling of multi-criticality systems with varying degrees of execution time assurance,” in Proc. IEEE RTSS , 2007, pp. 239–243. [13] A. Burns and R. I. Davis, “A survey of research into mixed criticality systems,” ACM Comput. Surv. , 50(6):82, 2017. [14] J. Kennedy and R. Eberhart, “Particle swarm optimization,” in Proc. IEEE ICNN , 1995, pp. 1942–1948. [15] B. Wang, J. Cheng, J. Cao, C. Wang, and W. Huang, “Integer particle swarm optimization based task scheduling for device-edge-cloud coop-erative computing to improve SLA satisfaction,” PeerJ Comput. Sci. ,8:e893, 2022. [16] D. E. Goldberg, Genetic Algorithms in Search, Optimization, and Machine Learning , Addison-Wesley, 1989. [17] Y. Wang, P. Zhang, B. Wang, Z. Zhang, Y. Xu, and B. Lv, “A hybrid PSO and GA algorithm with rescheduling for task offloading in device-edge-cloud collaborative computing,” Cluster Comput. , 2024. [18] V. Mnih et al. , “Human-level control through deep reinforcement learn-ing,” Nature , 518(7540):529–533, 2015. [19] H. van Hasselt, A. Guez, and D. Silver, “Deep reinforcement learning with double Q-learning,” in Proc. AAAI , 2016, pp. 2094–2100. [20] L. Zeng, Q. Liu, S. Shen, and X. Liu, “Improved double deep Q network-based task scheduling algorithm in edge computing for makespan optimization,” Tsinghua Sci. Technol. , 29(3):806–817, 2024. [21] T. Liu, Y. Zhang, Y. Zhu, W. Tong, and Y. Yang, “Online computation offloading and resource scheduling in mobile-edge computing,” IEEE Internet Things J. , 8(8):6649–6664, 2021. [22] R. G. Smith, “The contract net protocol: High-level communication and control in a distributed problem solver,” IEEE Trans. Comput. , C-29(12):1104–1113, 1980. [23] T. B. Brown et al. , “Language models are few-shot learners,” in Proc. NeurIPS , 2020, pp. 1877–1901. [24] L. Wang et al. , “A survey on large language model based autonomous agents,” Front. Comput. Sci. , 18(6):186345, 2024. [25] P. Jadhav, H. Jin, E. Deelman, and P. Balaprakash, “Evaluating the effi-cacy of LLM-based reasoning for multiobjective HPC job scheduling,” arXiv preprint arXiv:2506.02025, 2025.

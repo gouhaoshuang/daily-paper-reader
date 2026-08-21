@@ -6,39 +6,35 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-20
-- 运行时间：2026-08-20 20:46:53 UTC
+- 最新运行日期：2026-08-21
+- 运行时间：2026-08-21 20:42:43 UTC
 - 运行状态：成功
 - 本次总论文数：5
-- 精读区：3
-- 速读区：2
+- 精读区：1
+- 速读区：4
 
 ### 今日简报（AI）
-今日精读3篇、速读2篇，核心聚焦边缘智能与AI服务系统架构。
-
-最值得关注：边缘原生的具身智能框架（9/10）与Agentic工作负载的服务系统分析（8/10），分别指向端侧实时决策与大模型服务优化。
-
-建议优先浏览这两篇的结论与系统设计，其余可先速读摘要，后续按需精读。
-- 详情：[/202608/20/README](/202608/20/README)
+今日聚焦5篇智能体论文，精读自动驾驶边缘场景下LLM智能体的截止时间感知任务调度。最值得看：LLM智能体在混合关键性调度中有潜力，但需警惕多智能体系统安全与资源供给瓶颈。建议普通读者从企业级多智能体分析平台入手，观察自动化决策的实际落地价值。
+- 详情：[/202608/21/README](/202608/21/README)
 
 ### 精读区论文标签
-1. [Edge-Native Embodied Intelligence for Action-Aware Wireless Edge Networks](/202608/20/2608.17774v1-edge-native-embodied-intelligence-for-action-aware-wireless-edge-networks)  
-   标签：评分：9.0/10、query:eca
-   evidence：面向无线边缘网络的边缘原生生智能，解决边云协同AI智能体系统问题。
-2. [From LLM Inference to Agentic Workloads: Characterization and Implications for Serving Systems](/202608/20/2608.15127v1-from-llm-inference-to-agentic-workloads-characterization-and-implications-for-serving-systems)  
+1. [When Do LLM Agents Help? Deadline-Aware Mixed-Criticality Task Scheduling at the Autonomous-Vehicle Edge](/202608/21/2608.19557v1-when-do-llm-agents-help-deadline-aware-mixed-criticality-task-scheduling-at-the-autonomous-vehicle-edge)  
    标签：评分：8.0/10、query:eca
-   evidence：刻画智能体工作负载与服务系统影响，直接为分布式边缘云智能体架构提供依据
-3. [Bayesian Partner Modelling enables Adaptive Replanning for LLM Coordination](/202608/20/2608.18490v1-bayesian-partner-modelling-enables-adaptive-replanning-for-llm-coordination)  
-   标签：评分：8.0/10、query:eca
-   evidence：LLM协作，贝叶斯伙伴建模，自适应重规划
+   evidence：在移动边缘计算服务器上采用多智能体LLM控制层进行期限感知的混合关键性调度，属于边缘云智能代理系统。
 
 ### 速读区论文标签
-1. [Adaptive Unequal Error Protection for Semantic Split Learning over Wireless Channels](/202608/20/2608.16227v1-adaptive-unequal-error-protection-for-semantic-split-learning-over-wireless-channels)  
-   标签：评分：7.0/10、query:eca
-   evidence：面向无线边缘云推断的任务感知语义分割学习与非等差错保护
-2. [Adversarial Review: Structured Disagreement for Grounded Agentic Code Review](/202608/20/2608.18167v1-adversarial-review-structured-disagreement-for-grounded-agentic-code-review)  
-   标签：评分：7.0/10、query:eca
-   evidence：带对抗批判的极简协作代码评审
+1. [Bounded Agents: Delegation Security for Multi-Agent AI Systems](/202608/21/2608.15888v1-bounded-agents-delegation-security-for-multi-agent-ai-systems)  
+   标签：评分：6.0/10、query:eca
+   evidence：面向访问云服务的多智能体协作，提供委托授权链与安全隔离机制
+2. [Task-Aware Harness Provisioning for LLM Agents in Mission-Critical Infrastructure Operations](/202608/21/2608.17433v1-task-aware-harness-provisioning-for-llm-agents-in-mission-critical-infrastructure-operations)  
+   标签：评分：6.0/10、query:eca
+   evidence：面向智能体任务的环境配置按需供给，可迁移到资源受限的边缘云运维场景
+3. [A Multi-Agent Platform for Automated Enterprise Analytics and Insight Generation](/202608/21/2608.18740v1-a-multi-agent-platform-for-automated-enterprise-analytics-and-insight-generation)  
+   标签：评分：6.0/10、query:eca
+   evidence：由五个专门智能体顺序协作完成企业分析的多智能体平台
+4. [The Evaluation Context Protocol (ECP): A Portable Contract for AI Agent Evaluation](/202608/21/2608.19263v1-the-evaluation-context-protocol-ecp-a-portable-contract-for-ai-agent-evaluation)  
+   标签：评分：6.0/10、query:eca
+   evidence：提出可移植的智能体评估协议，适用于分布式智能体系统的评测
 
 
 <div class="dpr-home-promo-card">
