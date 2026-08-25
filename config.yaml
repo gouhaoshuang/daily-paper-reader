@@ -25,3 +25,62 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: mobile-agent
+      description: 手机端Agent与任务执行的检索主题
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: mobile agent
+          keyword_cn: 移动端智能体
+          query: mobile agent that performs tasks on behalf of user
+        - keyword: smartphone task automation
+          keyword_cn: 智能手机任务自动化
+          query: automation of tasks on smartphone using software agents
+        - keyword: on-device agent
+          keyword_cn: 设备端智能体
+          query: agent running locally on device for task completion
+        - keyword: mobile app automation
+          keyword_cn: 移动应用自动化
+          query: automating operations within mobile applications via agent
+        - keyword: mobile agent framework
+          keyword_cn: 移动端智能体框架
+          query: framework for building agents on mobile devices
+      intent_queries:
+        - query: How can AI agents execute tasks autonomously on mobile devices?
+          query_cn: AI智能体如何在移动设备上自主执行任务？
+          enabled: true
+          source: manual
+          note: ''
+        - query: What are the key techniques for building on device task execution agents?
+          query_cn: 构建设备端任务执行智能体的关键技术有哪些？
+          enabled: true
+          source: manual
+          note: ''
+        - query: Challenges in deploying agents for mobile task automation
+          query_cn: 在移动任务自动化中部署智能体的挑战
+          enabled: true
+          source: manual
+          note: ''
+        - query: Evaluation of mobile agent frameworks for task execution
+          query_cn: 移动端任务执行智能体框架的评估
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-08-25T10:15:19.453Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
