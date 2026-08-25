@@ -1,0 +1,3494 @@
+{
+  "top_k": 200,
+  "generated_at": "2026-08-25T12:00:40.867484+00:00",
+  "papers": [
+    {
+      "id": "aaai-2026-40241",
+      "source": "AAAI-2026-Accepted",
+      "title": "Mobile-Agent-RAG: Driving Smart Multi-Agent Coordination with Contextual Knowledge Empowerment for Long-Horizon Mobile Automation",
+      "abstract": "Mobile agents show immense potential, yet current state-of-the-art (SoTA) agents exhibit inadequate success rates on real-world, long-horizon, cross-application tasks. We attribute this bottleneck to the agents' excessive reliance on static, internal knowledge within MLLMs, which leads to two critical failure points: 1) strategic hallucinations in high-level planning and 2) operational errors during low-level execution on user interfaces (UI). The core insight of this paper is that high-level planning and low-level UI operations require fundamentally distinct types of knowledge. Planning demands high-level, strategy-oriented experiences, whereas operations necessitate low-level, precise instructions closely tied to specific app UIs. Motivated by these insights, we propose Mobile-Agent-RAG, a novel hierarchical multi-agent framework that innovatively integrates dual-level retrieval augmentation. At the planning stage, we introduce Manager-RAG to reduce strategic hallucinations by retrieving human-validated comprehensive task plans that provide high-level guidance. At the execution stage, we develop Operator-RAG to improve execution accuracy by retrieving the most precise low-level guidance for accurate atomic actions, aligned with the current app and subtask. To accurately deliver these knowledge types, we construct two specialized retrieval-oriented knowledge bases. Furthermore, we introduce Mobile-Eval-RAG, a challenging benchmark for evaluating such agents on realistic multi-app, long-horizon tasks. Extensive experiments demonstrate that  Mobile-Agent-RAG significantly outperforms SoTA baselines, improving task completion rate by 11.0% and step efficiency by 10.2%, establishing a robust paradigm for context-aware, reliable multi-agent mobile automation.",
+      "authors": [
+        "Yuxiang Zhou",
+        "Jichang Li",
+        "Yanhao Zhang",
+        "Haonan Lu",
+        "Guanbin Li"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 35",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 35"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/40241",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/40241/44202",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.1211",
+      "source": "ACL-2026-Findings",
+      "title": "Me-Agent: A Personalized Mobile Agent with Two-Level User Habit Learning for Enhanced Interaction",
+      "abstract": "Large Language Model (LLM)-based mobile agents have made significant performance advancements. However, these agents often follow explicit user instructions while overlooking personalized needs, leading to significant limitations for real users, particularly without personalized context: (1) inability to interpret ambiguous instructions, (2) lack of learning from user interaction history, and (3) failure to handle personalized instructions. To alleviate the above challenges, we propose Me-Agent, a learnable and memorable personalized mobile agent. Specifically, Me-Agent incorporates a two-level user habit learning approach. At the prompt level, we design a user preference learning strategy enhanced with a Personal Reward Model to improve personalization performance. At the memory level, we design a Hierarchical Preference Memory, which stores users’ long-term memory and app-specific memory in different level memory. To validate the personalization capabilities of mobile agents, we introduce User FingerTip, a new benchmark featuring numerous ambiguous instructions for daily life. Extensive experiments on User FingerTip and general benchmarks demonstrate that Me-Agent achieves state-of-the-art performance in personalization while maintaining competitive instruction execution performance.",
+      "authors": [
+        "Shuoxin Wang",
+        "Chang Liu",
+        "Gowen Loo",
+        "Lifan Zheng",
+        "Kaiwen Wei",
+        "Huanqian Yan",
+        "Xinyi Zeng",
+        "Jingyuan Zhang",
+        "Yu Tian"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.1211/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.1211.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.1491",
+      "source": "ACL-2026-Findings",
+      "title": "LearnAct: Few-Shot Mobile GUI Agent with a Unified Demonstration Benchmark",
+      "abstract": "Mobile GUI agents show promise in automating tasks but face significant generalization challenges in long-tail scenarios. While learning from few-shot demonstrations is an emerging solution, its progress is hindered by two critical gaps: the lack of a comprehensive benchmark for systematic evaluation on mobile devices, and the absence of a systematic framework designed to learn from demonstrations in this domain. To address these gaps, we introduce LearnGUI , the first comprehensive benchmark designed for studying demonstration-based learning in mobile agents, comprising 2,252 offline and 101 online tasks. We further develop LearnAct , a modular agent framework engineered to systematically extract, retrieve, and leverage knowledge from visual demonstrations. Extensive evaluations across six backbone models validate our approach: LearnAct achieves dramatic improvements for general-purpose models (e.g., Gemini-2.5-Pro: 38.5%→58.9%) and specialized models alike (e.g., UI-TARS-7B-SFT’s online success rate: 18.1%→32.8%), demonstrating consistent gains across model architectures. Our work provides a robust benchmark and a systematic framework, paving the way for more adaptable and practical mobile agents. Our code and data are publicly available at https://lgy0404.github.io/LearnAct/ .",
+      "authors": [
+        "Guangyi Liu",
+        "Pengxiang Zhao",
+        "Liang Liu (陆亮)",
+        "Zhiming Chen",
+        "Yuxiang Chai",
+        "Yaozhen Liang",
+        "Wenhao Wang",
+        "Siheng Chen",
+        "Zhengxi Lu",
+        "Shuai Ren",
+        "Hao Wang",
+        "Shibo He",
+        "Yong Liu",
+        "Wenchao Meng"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.1491/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.1491.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.1487",
+      "source": "ACL-2026-Long",
+      "title": "InquireMobile: Teaching VLM-based Mobile Agent to Request Human Assistance via Reinforcement Fine-Tuning",
+      "abstract": "Recent advances in Vision-Language Models (VLMs) have enabled mobile agents to perceive and interact with real-world mobile environments based on human instructions. However, the current fully autonomous paradigm poses potential safety risks when model understanding or reasoning capabilities are insufficient. To address this challenge, we first introduce InquireBench , a comprehensive benchmark specifically designed to evaluate mobile agents’ capabilities in safe interaction and proactive inquiry with users, encompassing 5 categories and 22 sub-categories, where most existing VLM-based agents demonstrate near-zero performance. In this paper, we aim to develop an interactive system that actively seeks human confirmation at critical decision points. To achieve this, we propose InquireMobile , a novel model inspired by reinforcement learning, featuring a two-stage training strategy and an interactive pre-action reasoning mechanism. Finally, our model achieves an 46.8% improvement in inquiry success rate and the best overall success rate among existing baselines on InquireBench. The project page is available at https://bit-aqh.github.io/InquireMobile/homepage/ .",
+      "authors": [
+        "Qihang Ai",
+        "Pi Bu",
+        "Yue Cao",
+        "Yingyao Wang",
+        "Jihao Gu",
+        "Jingxuan Xing",
+        "Zekun Zhu",
+        "Wei Jiang",
+        "Zhicheng Zheng",
+        "Jun Song",
+        "Yuning Jiang"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.1487/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.1487.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.184",
+      "source": "ACL-2026-Findings",
+      "title": "A3: Android Agent Arena for Mobile GUI Agents with Essential-State Procedural Evaluation",
+      "abstract": "The advancement of Large Language Models (LLMs) and Multimodal Large Language Models (MLLMs) has catalyzed the development of mobile graphic user interface (GUI) AI agents, which is designed to autonomously perform tasks on mobile devices. However, a significant gap persists in mobile GUI agent evaluation, where existing benchmarks predominantly rely on either static frame assessments such as AndroidControl or offline static apps such as AndroidWorld and thus fail to capture agent performance in dynamic, real-world online mobile apps. To address this gap, we present Android Agent Arena (A3), a novel \"essential-state\" based procedural evaluation system for mobile GUI agents. A3 introduces a benchmark of 100 tasks derived from 20 widely-used, dynamic online apps across 20 categories from the Google Play Store, ensuring evaluation comprehension. A3 also presents a novel \"essential-state\" based procedural evaluation method that leverages MLLMs as reward models to progressively verify task completion and process achievement. This evaluation approach address the limitations of traditional function based evaluation methods on online dynamic apps. Furthermore, A3 includes a toolkit to streamline Android device interaction, reset online environment and apps and facilitate data collection from both human and agent demonstrations. The complete A3 system, including the benchmark and tools, will be publicly released to provide a robust foundation for future research and development in mobile GUI agents.",
+      "authors": [
+        "Yuxiang Chai",
+        "Shunye Tang",
+        "Han Xiao",
+        "Weifeng Lin",
+        "Hanhao Li",
+        "Jiayu Zhang",
+        "Liang Liu (陆亮)",
+        "Pengxiang Zhao",
+        "Guangyi Liu",
+        "Guozhi Wang",
+        "Shuai Ren",
+        "Rongduo Han",
+        "Haining Zhang",
+        "Siyuan Huang",
+        "Hongsheng Li"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.184/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.184.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.431",
+      "source": "ACL-2026-Long",
+      "title": "OS-Sentinel: Towards Safety-Enhanced Mobile GUI Agents via Hybrid Validation in Realistic Workflows",
+      "abstract": "Computer-using agents powered by Vision-Language Models (VLMs) have demonstrated human-like capabilities in operating digital environments like mobile platforms. While these agents hold great promise for advancing digital automation, their potential for unsafe operations, such as system compromise and privacy leakage, is raising significant concerns. Detecting these safety concerns across the vast and complex operational space of mobile environments presents a formidable challenge that remains critically underexplored. To establish a foundation for mobile agent safety research, we introduce MobileRisk-Live, a dynamic sandbox environment accompanied by a safety detection benchmark comprising realistic trajectories with fine-grained annotations. Built upon this, we propose OS-Sentinel, a novel hybrid safety detection framework that synergistically combines a Formal Verifier for detecting explicit system-level violations with a VLM-based Contextual Judge for assessing contextual risks and agent actions. Experiments show that achieves 10%–30% improvements over existing approaches across multiple metrics. Further analysis provides critical insights that foster the development of safer and more reliable autonomous mobile agents. Our code, environment, and data are available at https://qiushisun.github.io/OS-Sentinel-Home/.",
+      "authors": [
+        "Qiushi Sun",
+        "Mukai Li",
+        "Zhoumianze Liu",
+        "Zhihui Xie",
+        "Fangzhi Xu",
+        "Zhangyue Yin",
+        "Kanzhi Cheng",
+        "Zehao Li",
+        "Zichen Ding",
+        "Qi Liu",
+        "Zhiyong Wu",
+        "Zhuosheng Zhang",
+        "Ben Kao",
+        "Lingpeng Kong"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.431/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.431.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.1422",
+      "source": "ACL-2026-Long",
+      "title": "Mobile-R1: Towards Interactive Capability for VLM-Based Mobile Agent via Systematic Training",
+      "abstract": "Vision-language model-based mobile agents have gained the ability to understand complex instructions and mobile screenshots, benefiting from reinforcement learning paradigms like Group Relative Policy Optimization (GRPO). However, existing approaches centers on offline training or local action-level rewards often trap agents in local optima, hindering effective exploration and error correction with the environment. Crucially, we find that directly applying task-level rewards often leads to convergence difficulties due to the sparse nature of GUI interactions. To address these challenges, we present Mobile-R1 , a systematic training recipe that bridges atomic action execution and strategic task completion. We propose a hierarchical curriculum consisting of three stages: (1) format alignment for reasoning structure, (2) on-policy exploration with verifiable action feedback to ground basic execution, and (3) multi-turn task-level training with realistic environment to unlock exploration and self-correction. This hierarchical strategy effectively bootstraps the agent, significantly enhancing its capability for exploration and self-correction (the “Eureka” moments). Furthermore, addressing the critical scarcity of diverse GUI data in non-English ecosystems, we contribute a comprehensive Chinese mobile dataset covering 28 applications with 24,521 high-quality manual annotations, and establish a rigorous benchmark with 500 trajectories. We will open source all resources, including the dataset, benchmark, model weight, and codes: https://mobile-r1.github.io/Mobile-R1/ .",
+      "authors": [
+        "Jihao Gu",
+        "Qihang Ai",
+        "Yingyao Wang",
+        "Pi Bu",
+        "Jingxuan Xing",
+        "Yue Cao",
+        "Zekun Zhu",
+        "Wei Jiang",
+        "Ziming Wang",
+        "Yingxiu Zhao",
+        "Ming-Liang Zhang",
+        "Jun Song",
+        "Yuning Jiang",
+        "Bo Zheng"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.1422/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.1422.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "aaai-2026-40230",
+      "source": "AAAI-2026-Accepted",
+      "title": "EcoAgent: An Efficient Device-Cloud Collaborative Multi-Agent Framework for Mobile Automation",
+      "abstract": "To tackle increasingly complex tasks, recent research on mobile agents has shifted towards multi-agent collaboration. Current mobile multi-agent systems are primarily deployed in the cloud, leading to high latency and operational costs. A straightforward idea is to deploy a device–cloud collaborative multi-agent system, which is nontrivial, as directly extending existing systems introduces new challenges: (1) reliance on cloud-side verification requires uploading mobile screenshots, compromising user privacy; and (2) open-loop cooperation lacking device-to-cloud feedback, underutilizing device resources and increasing latency. To overcome these limitations, we propose EcoAgent, a closed-loop device-cloud collaborative multi-agent framework designed for privacy-aware, efficient, and responsive mobile automation. EcoAgent integrates a novel reasoning approach, Dual-ReACT, into the cloud-based Planning Agent, fully exploiting cloud reasoning to compensate for limited on-device capacity, thereby enabling device-side verification and lightweight feedback. Furthermore, the device-based Observation Agent leverages a Pre-understanding Module to summarize screen content into concise textual descriptions, significantly reducing token usage and device-cloud communication overhead while preserving privacy. Experiments on AndroidWorld demonstrate that EcoAgent matches the task success rates of fully cloud-based agents, while reducing resource consumption and response latency.",
+      "authors": [
+        "Biao Yi",
+        "Xueyu Hu",
+        "Yurun Chen",
+        "Shengyu Zhang",
+        "Hongxia Yang",
+        "Fan Wu"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 35",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 35"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/40230",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/40230/44191",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.1518",
+      "source": "ACL-2026-Findings",
+      "title": "OpenPhone: Mobile Agentic Foundation Models",
+      "abstract": "With the advancement of multimodal large language models (MLLMs), building GUI agent systems has become an increasingly promising direction—especially for mobile platforms, given their rich app ecosystems and intuitive touch interactions. Yet mobile GUI agents face a critical dilemma: truly on-device models (4B or smaller) lack sufficient performance, while capable models (starting from 7B) are either too large for mobile deployment or prohibitively costly (e.g., cloud-only closed-source MLLMs). To resolve this, we propose OpenPhone, a mobile GUI agent system that leverages device-cloud collaboration to tap the cost-efficiency of on-device models and the high capability of cloud models, while avoiding their drawbacks. Specifically, OpenPhone enhances Qwen2.5-VL-3B via two-stage SFT→GRPO training on synthetic GUI data for strong decision-making, integrates an efficient long-reasoning mechanism to utilize historical interactions under tight resources, and defaults to on-device execution—only escalating challenging subtasks to the cloud via real-time complexity assessment. Experiments on the online AndroidLab benchmark and diverse apps show OpenPhone matches or nears larger models, with a significant reduction in cloud costs.",
+      "authors": [
+        "Yangqin Jiang",
+        "Chao Huang"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.1518/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.1518.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.1439",
+      "source": "ACL-2026-Findings",
+      "title": "DaMo: Data Mixing Optimizer in Fine-tuning Multimodal LLMs for Mobile Phone Agents",
+      "abstract": "Mobile Phone Agents (MPAs) have emerged as a promising research direction due to their broad applicability across diverse scenarios. While Multimodal Large Language Models (MLLMs) serve as the foundation for MPAs, their effectiveness in handling multiple mobile phone tasks simultaneously remains limited. Although multitask supervised fine-tuning (SFT) is widely adopted for multitask learning, existing approaches struggle to determine optimal training data compositions for peak performance. To address this challenge, we propose DaMo (Data Mixture Optimizer) – a novel solution employing a trainable network that predicts optimal data mixtures by forecasting downstream task performance for any given dataset ratio. To support comprehensive evaluation, we introduce PhoneAgentBench, the first specialized benchmark to evaluate MLLMs on multimodal mobile phone tasks, comprising 1,235 QA pairs spanning diverse real-world industrial mobile application scenarios. Demonstrating strong predictive capability (R²=0.81) in small-scale pilot experiments, DaMo efficiently extrapolates optimal data mixing configurations. Our results show DaMo achieves 3.06% average score improvement on PhoneAgentBench and open-source benchmarks, including BFCL-v3, MME-Reasoning, MME-Perception, and OCRBench, compared to alternative methods. Through predicting optimal data mixture only on open-source benchmarks, DaMo outperforms other approaches by 6.70% in terms of average score. Moreover, DaMo improves the metrics by 12.74% than other methods when used solely for MLLM optimization on the BFCL-v3 task. Notably, DaMo maintains robust scalability, preserving its effectiveness when applied to other model architectures.",
+      "authors": [
+        "Kai Shi",
+        "Jun Yang",
+        "Ni Yang",
+        "Binqiang Pan",
+        "Qingsong Xie",
+        "Zhangchao",
+        "Zhenyu Yang",
+        "Tianhuang Su",
+        "Haonan Lu"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.1439/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.1439.pdf",
+      "tags": [
+        "keyword:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.316",
+      "source": "ACL-2026-Long",
+      "title": "MAS-Bench: A Unified Benchmark for Shortcut-Augmented Hybrid Mobile GUI Agents",
+      "abstract": "Shortcuts such as APIs and deep-links have emerged as efficient complements to flexible GUI operations, fostering a promising hybrid paradigm for MLLM-based mobile automation. However, systematic evaluation of GUI–shortcut hybrid agents remains largely underexplored. To bridge this gap, we introduce **MAS-Bench**, a benchmark that pioneers the evaluation of GUI-shortcut hybrid agents with a specific focus on the mobile domain. Beyond merely using predefined shortcuts, MAS-Bench assesses an agent’s capability to *autonomously generate* shortcuts by discovering and creating reusable, low-cost workflows. It features 139 complex tasks across 11 real-world applications, a knowledge base of 88 predefined shortcuts (APIs, deep-links, RPA scripts), and 9 evaluation metrics. Experiments demonstrate that hybrid agents achieve up to 68.3% success rate and 39% greater execution efficiency than GUI-only counterparts. Furthermore, our evaluation framework effectively reveals the quality gap between predefined and agent-generated shortcuts, validating its capability to assess shortcut generation methods. MAS-Bench addresses the lack of systematic benchmarks for GUI-shortcut hybrid mobile agents, providing a foundational platform for future advancements in creating more efficient and robust intelligent agents.",
+      "authors": [
+        "Pengxiang Zhao",
+        "Guangyi Liu",
+        "Yaozhen Liang",
+        "Weiqing He",
+        "Zhengxi Lu",
+        "Wenhao Wang",
+        "Yuehao Huang",
+        "Yuxiang Chai",
+        "Zhaolu Kang",
+        "Yaxuan Guo",
+        "Hao Wang",
+        "Kexin Zhang",
+        "Liang Liu (陆亮)",
+        "Yong Liu"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.316/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.316.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.788",
+      "source": "ACL-2026-Findings",
+      "title": "\"Penny Wise, Pixel Foolish\": Bypassing Price Constraints in Multimodal Agents via Visual Adversarial Perturbations",
+      "abstract": "The rapid proliferation of Multimodal Large Language Models (MLLMs) has ushered in the era of the “Agentic Economy,” where Mobile Agents autonomously execute high-stakes financial transactions. While these agents demonstrate impressive operational capabilities, their adversarial robustness remains a glaring blind spot. In this paper, we identify a systemic vulnerability termed Visual Dominance Hallucination (VDH), where imperceptible adversarial visual cues can act as a “super-stimulus,” overriding textual price evidence in our evaluated screenshot-based price-constrained settings and forcing the agent into irrational economic decisions. We propose PriceBlind, a stealthy, white-box adversarial attack framework for controlled screenshot-based evaluation. Unlike prior works that rely on conspicuous artifacts like pop-ups, PriceBlind exploits the modality gap in CLIP-based encoders via a novel Semantic-Decoupling Loss. Rather than literally making a luxury item “look cheap,” this regularizer weakens the consistency between high-price text and visual value cues by aligning the image embedding with a low-cost/value-associated anchor region while preserving pixel-level fidelity. On our main E-ShopBench benchmark with clear price constraints, screenshot-based white-box evaluation yields ASRs around 80% on the evaluated agents. Under the evaluated single-turn coordinate-selection protocol in a simplified layout-aware setting, our Ensemble-DI-FGSM strategy also yields non-trivial black-box transfer, with ASR roughly 35–41% across GPT-4o, Gemini-1.5-Pro, and Claude-3.5-Sonnet. In the same screenshot-based setting, standard robust encoders reduce ASR only partially, while a Verify-then-Act stack with robust encoders lowers ASR to below 10% at some clean-accuracy cost.",
+      "authors": [
+        "Jiachen Qian",
+        "Zhaolu Kang"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.788/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.788.pdf",
+      "tags": [
+        "keyword:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.278",
+      "source": "ACL-2026-Long",
+      "title": "MobileWorld: Benchmarking Autonomous Mobile Agents in Agent-User Interactive and MCP-Augmented Environments",
+      "abstract": "While AndroidWorld has become the dominant mobile-use benchmark due to its reproducible environment and deterministic evaluation, recent agents achieving over 90% success rates indicate saturation and motivate the need for greater challenge. In addition, its environment lacks key application categories, such as e-commerce and enterprise communication, and does not reflect realistic mobile-use scenarios characterized by vague user instructions and hybrid tool usage. We introduce MobileWorld, a substantially more challenging benchmark with 201 tasks across 20 applications that reflects real-world usage through long-horizon, cross-application workflows requiring nearly twice as many steps (27.8 vs. 14.3) and featuring significantly more multi-app tasks (62.2% vs. 9.5%) than AndroidWorld. MobileWorld balances production-grade utility and reproducible evaluation using open-source alternatives to industry standards (e.g., Mattermost for Slack), enabling full observability through source code modification and direct database access. Beyond standard GUI manipulation, MobileWorld introduces novel task categories including agent-user interaction and Model Context Protocol (MCP)-augmented tasks for evaluating agents in user-aware, hybrid-tool scenarios. We develop a planner-executor framework with extended action spaces supporting user interactions and MCP calls. Results show a sharp performance drop from AndroidWorld, with the best agentic framework and end-to-end model achieving 51.7% and 20.9% success rates, respectively, highlighting substantial room for future research.",
+      "authors": [
+        "Quyu Kong",
+        "Xu Zhang",
+        "Zhenyu Yang",
+        "Nolan Gao",
+        "Chen Liu",
+        "Panrong Tong",
+        "Chenglin Cai",
+        "Hanzhang Zhou",
+        "Jianan Zhang",
+        "Liangyu Chen",
+        "Zhidan Liu",
+        "Steven Hoi",
+        "Yue Wang"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.278/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.278.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.2064",
+      "source": "ACL-2026-Long",
+      "title": "DAC-Bench: A Decision-Aware Benchmark for Compositional Mobile GUI Tasks",
+      "abstract": "Mobile GUI agents powered by LMMs can perceive screens and follow instructions, yet existing benchmarks largely target short, linear workflows and step-level accuracy, offering limited insight into long-horizon planning and decision-making under branching structures. We present DAC-Bench, a decision-aware benchmark with compositional tasks comprising 830 episodes and 11,345 action steps across 35 applications on Android and iOS. Tasks are organized into Sequential, Conjunctive, Conditional, and Hierarchical structures, reflecting real-world multi-step and branching interaction patterns. To complement standard step-level evaluation, we introduce weighted longest common subsequence to capture length-sensitive progress and decision accuracy for branch correctness. Evaluations across 7 diverse agents show substantial performance degradation compared to prior benchmarks, with success rates dropping below 5% on 6–8 step tasks and branch accuracy averaging 38%, highlighting challenges in conditional decision-making. By exposing these failure modes, DAC-Bench provides a challenging and diagnostic benchmark for advancing decision-aware mobile GUI agents. Our code and dataset are available at: https://github.com/YuqingZhangMirror12/DAC-Bench.",
+      "authors": [
+        "Yuqing Zhang",
+        "Honghui Sheng",
+        "Xueyu Hu",
+        "Shengyu Zhang",
+        "Fei Wu"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.2064/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.2064.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.668",
+      "source": "ACL-2026-Findings",
+      "title": "MobileBench-OL: A Comprehensive Chinese Benchmark for Evaluating Mobile GUI Agents in Real-World Environment",
+      "abstract": "Recent advances in mobile Graphical User Interface (GUI) agents highlight the growing need for comprehensive evaluation benchmarks. While new online benchmarks offer more realistic testing than offline ones, they tend to focus on the agents’ task instruction-following ability while neglecting their reasoning and exploration ability. Moreover, these benchmarks do not consider the random noise in real-world mobile environments. This leads to a gap between benchmarks and real-world environments. To addressing these limitations, we propose MobileBench-OL, an online benchmark with 1080 tasks from 80 Chinese apps. It measures task execution, complex reasoning, and noise robustness of agents by including 5 subsets, which set multiple evaluation dimensions. We also provide an auto-eval framework with a reset mechanism, enabling stable and repeatable real-world benchmarking. Evaluating 13 leading GUI agents on MobileBench-OL shows significant room for improvement to meet real-world requirements. Human evaluation further confirms that MobileBench-OL can reliably measure the performance of leading GUI agents in real environments.",
+      "authors": [
+        "Qinzhuo Wu",
+        "Zhizhuo Yang",
+        "Hanhao Li",
+        "Pengzhi Gao",
+        "Wei Liu",
+        "Jian Luan"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.668/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.668.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "aaai-2026-40187",
+      "source": "AAAI-2026-Accepted",
+      "title": "Agent-SAMA: State-Aware Mobile Assistant",
+      "abstract": "Mobile Graphical User Interface (GUI) agents aim to autonomously complete tasks within or across apps based on user instructions. While recent Multimodal Large Language Models (MLLMs) enable these agents to interpret UI screens and perform actions, existing agents remain fundamentally reactive. They reason over the current UI screen but lack a structured representation of the app navigation flow, lim-\niting GUI agents’ ability to understand execution context, detect unexpected execution results, and recover from errors. We introduce Agent-SAMA, a state-aware multi-agent framework that models app execution as a Finite State Machine (FSM), treating UI screens as states and user actions as transitions. Agent-SAMA implements four specialized agents that collaboratively construct and use FSMs in real time to guide task planning, execution verification, and recovery. We evaluate Agent-SAMA on two types of benchmarks: cross-\napp (Mobile-Eval-E, SPA-Bench) and mostly single-app (AndroidWorld). On Mobile-Eval-E, Agent-SAMA achieves an 84.0% success rate and a 71.9% recovery rate. On SPA-Bench, it reaches an 80.0% success rate with a 66.7% recovery rate. Compared to prior methods, Agent-SAMA improves task success by up to 12% and recovery success by 13.8%. On AndroidWorld, Agent-SAMA achieves a 63.7%\nsuccess rate, outperforming the baselines. Our results demonstrate that structured state modeling enhances robustness and can serve as a lightweight, model-agnostic memory layer for future GUI agents.",
+      "authors": [
+        "Linqiang Guo",
+        "Wei Liu",
+        "Yi Wen Heng",
+        "Tse-Hsun (Peter) Chen",
+        "Yang Wang"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 35",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 35"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/40187",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/40187/44148",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.1299",
+      "source": "ACL-2026-Long",
+      "title": "MAGNET: Towards Adaptive GUI Agents with Memory-Driven Knowledge Evolution",
+      "abstract": "Mobile GUI agents powered by large foundation models enable autonomous task execution in applications, but frequent updates that alter UI appearance and reorganize workflows cause agents trained on historical data to fail. Despite these surface changes, we observe that functional semantics and task intents remain fundamentally stable. Building on this insight, we introduce MAGNET, a memory-driven adaptive agent framework with dual-level memory: stationary memory that links diverse visual features to stable functional semantics for robust action grounding and procedural memory that captures stable task intents across varying workflows. Furthermore, we propose a dynamic memory evolution mechanism that continuously refines both memories by prioritizing frequently accessed knowledge. Evaluations on the online benchmark AndroidWorld demonstrate substantial improvements over memory-augmented baselines, while offline benchmarks confirm consistent gains under distribution shifts. These results validate that leveraging stable structures across interface changes improves agent performance and generalization in evolving software environments.",
+      "authors": [
+        "Libo Sun",
+        "Jiwen Zhang (张霁雯)",
+        "Siyuan Wang (王思远)",
+        "Zhongyu Wei (魏忠钰)"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.1299/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.1299.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.2106",
+      "source": "ACL-2026-Long",
+      "title": "JARVIS or Ultron? A Survey on the Safety and Security Threats of Computer-Using Agents",
+      "abstract": "Recently, AI-driven interactions with computing devices have advanced from basic prototype tools to sophisticated, LLM-based systems that emulate human-like operations in graphical user interfaces. We are now witnessing the emergence of Computer-Using Agents (CUAs), capable of autonomously performing tasks such as navigating desktop applications, web pages, and mobile apps. However, as these agents grow in capability, they also introduce novel safety and security risks. Vulnerabilities in LLM-driven reasoning, with the added complexity of integrating multiple software components and multimodal inputs, further complicate the security landscape. In this paper, we present a systematization of knowledge on the safety and security threats of CUAs. We conduct a comprehensive literature review and distill our findings along four research objectives: (i) define the CUA that suits safety analysis; (ii) categorize current safety threats among CUAs; (iii) propose a comprehensive taxonomy of existing defensive strategies; (iv) summarize prevailing benchmarks, datasets, and evaluation metrics used to assess the safety and performance of CUAs. Building on these insights, our work provides future researchers with a structured foundation for exploring unexplored vulnerabilities and offers practitioners actionable guidance in designing and deploying secure Computer-Using Agents.",
+      "authors": [
+        "Ada Chen",
+        "Yongjiang Wu",
+        "Junyuan Zhang",
+        "Jingyu Xiao",
+        "Shu Yang",
+        "Jen-tse Huang",
+        "Kun Wang",
+        "Wenxuan Wang",
+        "Shuai Wang"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.2106/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.2106.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.681",
+      "source": "ACL-2026-Findings",
+      "title": "D-Artemis: A Deliberative Cognitive Framework for Mobile GUI Multi-Agents",
+      "abstract": "Graphical User Interface (GUI) agents aim to automate a wide spectrum of human tasks by emulating user interaction. Despite rapid advancements, current approaches are hindered by several critical challenges: data bottleneck in end-to-end training, high cost of delayed error detection, and risk of contradictory guidance. Inspired by the human cognitive loop of Thinking, Alignment, and Reflection, we present D-Artemis—a novel deliberative framework in this paper. D-Artemis leverages a fine-grained, app-specific tip retrieval mechanism to inform its decision-making process. It also employs a proactive Pre-execution Alignment stage, where Thought-Action Consistency (TAC) Check module and Action Correction Agent (ACA) work in concert to mitigate the risk of execution failures. A post-execution Status Reflection Agent (SRA) completes the cognitive loop, enabling strategic learning from experience. Crucially, D-Artemis enhances the capabilities of general-purpose Multimodal large language models (MLLMs) for GUI tasks without the need for training on complex trajectory datasets, demonstrating strong generalization. D-Artemis achieves SOTA among open-source general models on AndroidWorld (75.8%) and ScreenSpot-V2 (96.8%). Extensive ablation studies further demonstrate the significant contribution of each proposed component.",
+      "authors": [
+        "Hongze Mi",
+        "Yibo Feng",
+        "WenJie Lu",
+        "Yuqi Wang",
+        "Jinyuan Li",
+        "Song Cao",
+        "He Cui",
+        "Tengfei Tian",
+        "Xuelin Zhang",
+        "Haotian Luo",
+        "Di Sun",
+        "Jun Fang",
+        "Hua Chai",
+        "Naiqiang Tan",
+        "Gang Pan"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.681/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.681.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "aaai-2026-39974",
+      "source": "AAAI-2026-Accepted",
+      "title": "ProBench: Benchmarking GUI Agents with Accurate Process Information",
+      "abstract": "With the deep integration of artificial intelligence and interactive technology, Graphical User Interface (GUI) Agent, as the carrier connecting goal-oriented natural language and real-world devices, has received widespread attention from the community. Contemporary benchmarks aim to evaluate the comprehensive capabilities of GUI agents in GUI operation tasks, generally determining task completion solely by inspecting the final screen state. However, GUI operation tasks consist of multiple chained steps while not all critical information is presented in the final few pages. Although a few research has begun to incorporate intermediate steps into evaluation, accurately and automatically capturing this process information still remains an open challenge. To address this weakness, we introduce ProBench, a comprehensive mobile benchmark with over 200 challenging GUI tasks covering widely-used scenarios. \nRemaining the traditional State-related Task evaluation, we extend our dataset to include Process-related Task and design a specialized evaluation method. A newly introduced Process Provider automatically supplies accurate process information, enabling presice assessment of agent's performance. Our evaluation of advanced GUI agents reveals significant limitations for real-world GUI scenarios. These shortcomings are prevalent across diverse models, including both large-scale generalist models and smaller, GUI-specific models. A detailed error analysis further exposes several universal problems, outlining concrete directions for future improvements.",
+      "authors": [
+        "Leyang Yang",
+        "Ziwei Wang",
+        "Xiaoxuan Tang",
+        "Sheng Zhou",
+        "Dajun Chen",
+        "Wei Jiang",
+        "Yong Li"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 32",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 32"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/39974",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/39974/43935",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.1680",
+      "source": "ACL-2026-Findings",
+      "title": "Dynamic Tool Dependency Retrieval for Lightweight Function Calling",
+      "abstract": "Function calling agents powered by Large Language Models (LLMs) select external tools to automate complex tasks. On-device agents typically use a retrieval module to select relevant tools, improving performance and reducing context length. However, existing retrieval methods rely on static and limited inputs, failing to capture multi-step tool dependencies and evolving task context. This limitation often introduces irrelevant tools that mislead the agent, degrading efficiency and accuracy. We propose Dynamic Tool Dependency Retrieval (DTDR), a lightweight retrieval method that conditions on both the initial query and the evolving tool calling plan. DTDR models tool dependencies from function calling demonstrations, enabling adaptive retrieval as plans unfold. We benchmark DTDR against state-of-the-art retrieval methods across multiple datasets and LLM backbones, evaluating retrieval precision, downstream task accuracy, and computational efficiency. Additionally, we explore strategies to integrate retrieved tools into prompts. Our results show that DTDR improves function calling success rates between 23% and 104% compared to state-of-the-art static retrievers.",
+      "authors": [
+        "Bhrij Patel",
+        "Davide Belli",
+        "Amir Jalalirad",
+        "Maximilian Arnold",
+        "Aleksandr Ermolov",
+        "Bence Major"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.1680/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.1680.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.1669",
+      "source": "ACL-2026-Long",
+      "title": "PersonalAlign: Hierarchical Implicit Intent Alignment for Personalized GUI Agent with Long-Term User-Centric Records",
+      "abstract": "While GUI agents have shown strong performance under explicit and completion instructions, real-world deployment requires aligning with users’ more complex implicit intents. In this work, we highlight Hierarchical Implicit Intent Alignment for Personalized GUI Agent (**PersonalAlign**), a new agent task that requires agents to leverage long-term user records as persistent context to resolve omitted preferences in vague instructions and anticipate latent routines by user state for proactive assistance. To facilitate this study, we introduce **AndroidIntent**, a benchmark designed to evaluate agents’ ability in resolving vague instructions and providing proactive suggestions through reasoning over long-term user records. We annotated 775 user-specific preferences and 215 routines from 20k long-term records across different users for evaluation. Furthermore, we introduce Hierarchical Intent Memory Agent (**HIM-Agent**), which maintains a continuously updating personal memory and hierarchically organizes user preferences and routines for personalization. Finally, we evaluate a range of GUI agents on AndroidIntent, including GPT-5, Qwen3-VL, and UI-TARS, further results show that HIM-Agent significantly improves both execution and proactive performance by 15.7% and 7.3%.",
+      "authors": [
+        "Yibo Lyu",
+        "Gongwei Chen",
+        "Rui Shao",
+        "Weili Guan",
+        "Liqiang Nie"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.1669/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.1669.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.1122",
+      "source": "ACL-2026-Findings",
+      "title": "Towards Scalable Lightweight GUI Agents via Multi-role Orchestration",
+      "abstract": "Autonomous Graphical User Interface (GUI) agents powered by Multimodal Large Language Models (MLLMs) enable digital automation on end-user devices. While scaling both parameters and data has yielded substantial gains, advanced methods still suffer from prohibitive deployment costs on resource-constrained devices. When facing complex in-the-wild scenarios, lightweight GUI agents are bottlenecked by limited capacity and poor task scalability under end-to-end episodic learning, impeding multi-agent systems (MAS) adaptation, while training multiple skill-specific experts remains costly. Can we strike an effective trade-off in this cost–scalability dilemma, enabling lightweight MLLMs to participate in realistic GUI workflows? To address these challenges, we propose LAMO framework, which endows a lightweight MLLM with GUI-specific knowledge and task scalability, allowing multi-role orchestration to expand their capability boundary for GUI automation. LAMO combines role-oriented data synthesis with a two-stage training recipe: (i) supervised fine-tuning with Perplexity-Weighted Cross-Entropy optimization for knowledge distillation and visual perception enhancement, and (ii) reinforcement learning for role-oriented cooperative exploration. Via LAMO, we develop a task-scalable native GUI agent LAMO-3B supporting monolithic execution and MAS-style orchestration. When paired with advanced planners, as a plug-and-play policy executor, LAMO-3B can continuously benefit from planner advances, enabling a higher performance ceiling. Extensive static and online evaluations validate the effectiveness of our designs.",
+      "authors": [
+        "Ziwei Wang",
+        "Junjie Zheng",
+        "Leyang Yang",
+        "Sheng Zhou",
+        "Xiaoxuan Tang",
+        "Fang Zhouhua",
+        "Zhiwei Liu",
+        "Dajun Chen",
+        "Yong Li",
+        "Jiajun Bu"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.1122/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.1122.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.774",
+      "source": "ACL-2026-Long",
+      "title": "Anchor: Branch-Point Data Generation for GUI Agents",
+      "abstract": "End-to-end GUI agents for real desktop environments require large amounts of high-quality interaction data, yet collecting human demonstrations is expensive and existing synthetic pipelines often suffer from limited task diversity or noisy, goal-drifting trajectories. We present a trajectory expansion framework Anchor that bootstraps scalable desktop supervision from a small set of verified seed demonstrations. Starting from each seed, we identify branch points that correspond to meaningful state changes and propose new, state-grounded task variants conditioned on the current GUI context. An executing agent then follows the proposed instructions to generate new trajectories, while a verifier enforces task completion via state-aware checks and trajectory-level consistency. To improve supervision quality, we further apply task-conditioned step-level filtering to remove ungrounded actions and denoise post-branch segments to maintain coherent intent. Experiments on standard desktop benchmarks, OSWorld and WindowsAgentArena, show that models fine-tuned on our expanded corpus achieve consistent improvements over zero-shot agents and representative synthesis baselines, and generalize across applications and operating systems.",
+      "authors": [
+        "Jinbiao Wei",
+        "Yilun Zhao",
+        "Kangqi Ni",
+        "Arman Cohan"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.774/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.774.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.904",
+      "source": "ACL-2026-Long",
+      "title": "UI-Copilot: Advancing Long-Horizon GUI Automation via Tool-Integrated Policy Optimization",
+      "abstract": "MLLM-based GUI agents have demonstrated strong capabilities in complex user interface interaction tasks. However, long-horizon scenarios remain challenging, as these agents are burdened with tasks beyond their intrinsic capabilities, suffering from memory degradation, progress confusion, and math hallucination. To address these challenges, we present UI-Copilot , a collaborative framework where the GUI agent focuses on task execution while a lightweight copilot provides on-demand assistance for memory retrieval and numerical computation. We introduce memory decoupling to separate persistent observations from transient execution context, and train the policy agent to selectively invoke the copilot as Retriever or Calculator based on task demands. To enable effective tool invocation learning, we propose ̲ T ool- ̲ I ntegrated ̲ P olicy ̲ O ptimization ( TIPO ), which separately optimizes tool selection through single-turn prediction and task execution through on-policy multi-turn rollouts. Experimental results show that UI-Copilot-7B achieves state-of-the-art performance on challenging MemGUI-Bench, outperforming strong 7B-scale GUI agents such as GUI-Owl-7B and UI-TARS-1.5-7B. Moreover, UI-Copilot-7B delivers a 17.1% absolute improvement on AndroidWorld over the base Qwen model, highlighting UI-Copilot’s strong generalization to real-world GUI tasks. Code website: https://anonymous.4open.science/r/UI-Copilot-0535.",
+      "authors": [
+        "Zhengxi Lu",
+        "Fei Tang",
+        "Guangyi Liu",
+        "Jin Ma",
+        "Kaitao Song",
+        "Xu Tan",
+        "Wenqi Zhang",
+        "Weiming Lu",
+        "Jun Xiao",
+        "Yueting Zhuang",
+        "Yongliang Shen"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.904/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.904.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "aaai-2026-40981",
+      "source": "AAAI-2026-Accepted",
+      "title": "Co-EPG: A Framework for Co-Evolution of Planning and Grounding in Autonomous GUI Agents",
+      "abstract": "Graphical User Interface (GUI) task automation constitutes a critical frontier in artificial intelligence research. While effective GUI agents synergistically integrate planning and grounding capabilities, current methodologies exhibit two fundamental limitations: (1) insufficient exploitation of cross-model synergies, and (2) over-reliance on synthetic data generation without sufficient utilization. To address these challenges, we propose Co-EPG, a self-iterative training framework for Co-Evolution of Planning and Grounding. Co-EPG establishes an iterative positive feedback loop: through this loop, the planning model explores superior strategies under grounding-based reward guidance via Group Relative Policy Optimization (GRPO), generating diverse data to optimize the grounding model. Concurrently, the optimized Grounding model provides more effective rewards for subsequent GRPO training of the planning model, fostering continuous improvement. Co-EPG thus enables iterative enhancement of agent capabilities through self-play optimization and training data distillation. On the Multimodal-Mind2Web and AndroidControl benchmarks, our framework outperforms existing state-of-the-art methods after just three iterations without requiring external data. The agent consistently improves with each iteration, demonstrating robust self-enhancement capabilities. This work establishes a novel training paradigm for GUI agents, shifting from isolated optimization to an integrated, self-driven co-evolution approach.",
+      "authors": [
+        "Yuan Zhao",
+        "Hualei Zhu",
+        "Tingyu Jiang",
+        "Shen Li",
+        "Xiaohang Xu",
+        "Hao Henry Wang"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 43",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 43"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/40981",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/40981/44942",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.1670",
+      "source": "ACL-2026-Long",
+      "title": "Empowering GUI Agents via Autonomous Experience Exploration and Hindsight Experience Utilization for Task Planning",
+      "abstract": "Multimodal web agents can assist humans in operating repetitive GUI tasks, where effective task planning is essential for decomposing complex tasks into executable actions. While small open-source MLLMs are cost-efficient and privacy-preserving compared with commercial large models, they suffer from weak planning and limited cross-website generalization. To address these limitations, we introduce the planning experience exploration and utilization (PEEU) method, which autonomously explores environments to discover experiences and utilizes hindsight experience to synthesize strictly aligned, high-level training data. To quantitatively analyze the generalization behaviors driving this performance, we propose the task decomposition hierarchical analysis framework (TDHAF) to systematically study compositional generalization across three task granularities: low, middle and high levels. Our analysis reveals that mastering low-level atomic skills does not guarantee high-level planning competence, while high-level task training yields stronger OOD generalization. Experiments on real-world benchmarks demonstrate PEEU’s superior effectiveness: our 7B model achieves 30.6% accuracy, outperforming the much larger Qwen2.5-VL-32B model. These demonstrate constructing hindsight high-level tasks and leveraging experiences is crucial for OOD planning abilities of small MLLMs.",
+      "authors": [
+        "Tianyi Men",
+        "Zhuoran Jin",
+        "Pengfei Cao (鹏飞 曹)",
+        "Yubo Chen",
+        "Kang Liu",
+        "Jun Zhao"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.1670/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.1670.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.428",
+      "source": "ACL-2026-Long",
+      "title": "Experience-driven Multi-turn Reinforcement Learning for GUI Agents",
+      "abstract": "GUI agents have demonstrated remarkable progress in automating complex user interface interactions. However, training such agents for long-horizon tasks remains challenging. Single-turn reinforcement learning conditions on expert histories during training but self-generated histories during deployment, causing distribution mismatch. Online multi-turn methods eliminate this gap via environment interaction but suffer from sparse rewards and prohibitive costs. We propose ̲ E xperience-driven ̲ M ulti-turn ̲ P olicy ̲ O ptimization ( EMPO ), which leverages expert trajectories as environment experiences for on-policy multi-turn training. The agent constructs self-generated history throughout rollouts; when actions match expert experiences, the trajectory provides valid state transitions, and a Patch Module recovers mismatched steps to maintain on-policy rollouts. EMPO further incorporates discounted future rewards and dual-level advantage estimation to capture long-horizon dependencies. We also propose AndroidControl-Real , an evaluation metric strongly correlated with real-world performance (R 2 =0.934). With only 1K public trajectories as RL experiences, our method achieves substantial gains over the base model (e.g., +12.0% on AndroidWorld and +23.8% on AITW) and achieves competitive performance against strong baselines such as UI-TARS-7B and GPT-4o, demonstrating better generalization than prior single-turn RL approaches. Code available: https://anonymous.4open.science/r/UI-S1-0DAF .",
+      "authors": [
+        "Zhengxi Lu",
+        "Jiabo Ye",
+        "Fei Tang",
+        "Yongliang Shen",
+        "Haiyang Xu",
+        "Ziwei Zheng",
+        "Weiming Lu",
+        "Ming Yan",
+        "Fei Huang",
+        "Jun Xiao",
+        "Yueting Zhuang"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.428/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.428.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.337",
+      "source": "ACL-2026-Long",
+      "title": "AgencyBench: Benchmarking the Frontiers of Autonomous Agents in 1M-Token Real-World Contexts",
+      "abstract": "Large Language Models (LLMs) based autonomous agents demonstrate multifaceted capabilities to contribute substantially to economic production. However, existing benchmarks remain focused on single agentic capability, failing to capture long-horizon real-world scenarios. Moreover, the reliance on human-in-the-loop feedback for realistic tasks creates a scalability bottleneck, hindering automated rollout collection and evaluation. To bridge this gap, we introduce AgencyBench, a comprehensive benchmark derived from daily AI usage, evaluating 6 core agentic capabilities across 32 real-world scenarios, comprising 138 tasks with specific queries, deliverables, and rubrics. These scenarios require an average of 90 tool calls, 1 million tokens, and hours of execution time to resolve. To enable automated evaluation, we employ a user simulation agent to provide iterative feedback, and a Docker sandbox to conduct visual and functional rubric-based assessment. Experiments reveal that closed-source models significantly outperform open-source models (48.4% vs 32.1%). Further analysis reveals significant disparities across models in resource efficiency, feedback-driven self-correction, and specific tool-use preferences.",
+      "authors": [
+        "Keyu Li",
+        "Junhao Shi",
+        "Yang Xiao",
+        "Mohan Jiang",
+        "Jie Sun",
+        "Yunze Wu",
+        "Dayuan Fu",
+        "Shijie Xia",
+        "Xiaojie Cai",
+        "Tianze Xu",
+        "Weiye Si",
+        "Wenjie Li",
+        "Dequan Wang",
+        "Pengfei Liu"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.337/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.337.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.370",
+      "source": "ACL-2026-Long",
+      "title": "Mem2ActBench: A Benchmark for Evaluating Long-Term Memory Utilization in Task-Oriented Autonomous Agents",
+      "abstract": "Large Language Model (LLM)-based agents are increasingly deployed for complex, tool-based tasks where long-term memory is critical to driving actions. Existing benchmarks, however, primarily test an agent’s ability to passively retrieve isolated facts in response to explicit questions. They fail to evaluate the more crucial capability of actively applying memory to execute tasks. To address this gap, we introduce Mem2ActBench, a benchmark for evaluating whether agents can proactively leverage long-term memory to execute tool-based actions by selecting appropriate tools and grounding their parameters. The benchmark simulates persistent assistant usage, where users mention the same topic across long, interrupted interactions and expect previously established preferences and task states to be implicitly applied. We build the dataset with an automated pipeline that merges heterogeneous sources (ToolACE, BFCL, OASST1), resolves conflicts via consistency modeling, and synthesizes 2,029 sessions with 12 user–assistant–tool turns on average. From these memory chains, a reverse-generation method produces 400 tool-use tasks, with human evaluation confirming 91.3% are strongly memory-dependent. Experiments on seven memory frameworks show that current systems remain inadequate at actively utilizing memory for parameter grounding, highlighting the need for more effective approaches to evaluate and improve memory application in task execution. Code and data are available at https://github.com/Cantaloupe-M/Mem2ActBench.",
+      "authors": [
+        "Yiting Shen",
+        "Kun Li",
+        "Wei Zhou",
+        "Songlin Hu"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.370/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.370.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.750",
+      "source": "ACL-2026-Findings",
+      "title": "WindowsWorld: A Process-Centric Benchmark of Autonomous GUI Agents in Professional Cross-Application Environments",
+      "abstract": "While GUI agents have shown impressive capabilities in common computer-use tasks such as OSWorld, current benchmarks mainly focus on isolated and single-application tasks. This overlooks a critical real-world requirement of coordinating across multiple applications to accomplish complex profession-specific workflows. To bridge this gap, we present a computer-use benchmark in cross-application workflows, named WindowsWorld, designed to systematically assess GUI Agents on complex multi-step tasks that mirror real-world professional activities. Our methodology uses a multi-agent framework steered by 16 occupations to generate four difficulty-level tasks with intermediate inspection, which are then refined by human review and executed in a simulated environment. The resulting benchmark contains 181 tasks with an average of 5.0 sub-goals across 17 common desktop applications, of which 78% are inherently multi-application. Experimental results of leading large models and agents show that: 1) All computer-use agents perform poorly on multi-application tasks (< 21% success rate), far below the performance of simple single-app tasks; 2) They largely fail at tasks requiring conditional judgment and reasoning across ≥ 3 applications, stalling at early sub-goals; 3) Low execution efficiency, where tasks often fail despite far exceeding human step limits. Code, benchmark data, and evaluation resources are available at github.com/HITsz-TMG/WindowsWorld.",
+      "authors": [
+        "Jinchao Li",
+        "Yunxin Li",
+        "Chenrui Zhao",
+        "Zhenran Xu",
+        "Baotian Hu",
+        "Min Zhang"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.750/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.750.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.2001",
+      "source": "ACL-2026-Long",
+      "title": "C-World: A Computer Use Agent Environment Creator",
+      "abstract": "To close the gap between LLM-based agents and humans in planning and reasoning, agents need large-scale, diverse environments for continuous learning—yet building such environments is itself prohibitively expensive. We present C-World, an environment creation system that enables users to build agent environments on demand. We define a complete agent environment through four components: an Action Space of 5,571 format-unified tools across 204 common applications, a Task Distribution engine that synthesizes long-horizon workflows with wild constraints, a Transition Function implemented as a state controller that injects realistic failures and perturbations, and a Reward Signal combining verifiable metrics with LLM-based judgment. C-World operates in two modes: a realistic mode grounded in live API execution, and a synthesized mode powered by the World Engine, which approximates tool behavior without live service access, enabling scalable environment creation—including environments for domains and tools that do not yet exist in the real world. Evaluation of nine state-of-the-art LLMs reveals that planning ability is uniformly strong but execution remains the bottleneck, and that constraint following—not tool invocation—is the dominant failure mode. The World Engine achieves Spearman 𝜌 = 0.883 ranking correlation with real execution, and fine-tuning on just 1,170 C-World trajectories outperforms baselines trained on 119k samples, demonstrating C-World’s dual value as a rigorous evaluation environment and a scalable data engine. Our code and data are available at https://ziqiao-git.github.io/C-World/.",
+      "authors": [
+        "Ziqiao Xi",
+        "Shuang Liang",
+        "Qi Liu",
+        "Jiaqing Zhang",
+        "Letian Peng",
+        "Fang Nan",
+        "Meshal Nayim",
+        "Tianhui Zhang",
+        "Rishika Mundada",
+        "Lianhui Qin",
+        "Biwei Huang",
+        "Kun Zhou"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.2001/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.2001.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.637",
+      "source": "ACL-2026-Findings",
+      "title": "WebUncertainty: Dual-Level Uncertainty Driven Planning and Reasoning For Autonomous Web Agent",
+      "abstract": "Recent advancements in large language models (LLMs) have empowered autonomous web agents to execute natural language instructions directly on real-world webpages. However, existing agents often struggle with complex tasks involving dynamic interactions and long-horizon execution due to rigid planning strategies and hallucination-prone reasoning. To address these limitations, we propose WebUncertainty, a novel autonomous agent framework designed to tackle dual-level uncertainty in planning and reasoning. Specifically, we design a Task Uncertainty-Driven Adaptive Planning Mechanism that adaptively selects planning modes to navigate unknown environments. Furthermore, we introduce an Action Uncertainty-Driven Monte Carlo tree search (MCTS) Reasoning Mechanism. This mechanism incorporates the Confidence-induced Action Uncertainty (ConActU) strategy to quantify both aleatoric uncertainty (AU) and epistemic uncertainty (EU), thereby optimizing the search process and guiding robust decision-making. Experimental results on the WebArena and WebVoyager benchmarks demonstrate that WebUncertainty achieves superior performance compared to state-of-the-art baselines.",
+      "authors": [
+        "Lingfeng Zhang",
+        "Yongan Sun",
+        "Jinpeng Hu",
+        "Hui Ma",
+        "Ying Yang",
+        "Kuien Liu",
+        "Zenglin Shi",
+        "Meng Wang"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.637/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.637.pdf",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.1522",
+      "source": "ACL-2026-Findings",
+      "title": "Towards Self-Evolving Agents: Enabling Autonomy through Interactive Experience Refinement",
+      "abstract": "Large Language Models often struggle with complex, multi-step operational tasks because they remain static during inference and cannot learn from past experience. To address this, we propose MUSE, a framework that enables iterative self-improvement through a hierarchical Memory Module. MUSE organizes cross-domain insights to facilitate the orchestration of long-horizon workflows. The core of our approach is an autonomous post-execution critique mechanism: after completing each sub-task, the system analyzes its operational logs and distills raw execution data into structured, reusable knowledge. This allows the agent to evolve dynamically rather than relying on fixed parameters. Evaluated on the rigorous TAC productivity benchmark, MUSE achieves new state-of-the-art results, significantly outperforming previous methods using only the streamlined Gemini-2.5 Flash model. Our analysis demonstrates that MUSE’s performance scales with the accumulation of insights and exhibits strong cross-task transferability, marking a key step toward autonomous systems capable of lifelong learning in professional environments. Demo videos can be found in our supplementary materials.",
+      "authors": [
+        "Cheng Yang",
+        "Xuemeng Yang",
+        "Licheng Wen",
+        "Daocheng Fu",
+        "Jianbiao Mei",
+        "Rong Wu",
+        "Pinlong Cai",
+        "Yufan Shen",
+        "Nianchen Deng",
+        "Jia Xu",
+        "Botian Shi",
+        "Yu Qiao",
+        "Haifeng Li"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.1522/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.1522.pdf",
+      "tags": [
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.findings-acl.1330",
+      "source": "ACL-2026-Findings",
+      "title": "A Survey on Evaluation of LLM-based Agents",
+      "abstract": "LLM-based agents represent a paradigm shift in AI, enabling autonomous systems to plan, reason, and use tools while interacting with dynamic environments. This paper provides the first comprehensive survey of evaluation methods for these increasingly capable agents. We analyze the field of agent evaluation across five perspectives: (1) Core LLM capabilities needed for agentic workflows, like planning, and tool use; (2) Application-specific benchmarks such as web and SWE agents; (3) Evaluation of generalist agents; (4) Analysis of agent benchmarks’ core dimensions; and (5) Evaluation frameworks and tools for agent developers. Our analysis reveals current trends, including a shift toward more realistic, challenging evaluations with continuously updated benchmarks. We also identify critical gaps that future research must address—particularly in assessing cost-efficiency, safety, and robustness, and in developing fine-grained, scalable evaluation methods.",
+      "authors": [
+        "Asaf Yehudai",
+        "Lilach Eden",
+        "Alan Li",
+        "Guy Uziel",
+        "Yilun Zhao",
+        "Roy Bar-Haim",
+        "Arman Cohan",
+        "Michal Shmueli-Scheuer"
+      ],
+      "primary_category": "ACL-2026-Findings",
+      "categories": [
+        "ACL-2026-Findings"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.findings-acl.1330/",
+      "pdf_url": "https://aclanthology.org/2026.findings-acl.1330.pdf",
+      "tags": [
+        "query:mobile-agent"
+      ]
+    },
+    {
+      "id": "anthology-2026.acl-long.1021",
+      "source": "ACL-2026-Long",
+      "title": "OS-Symphony: A Holistic Framework for Robust and Generalist Computer-Using Agents",
+      "abstract": "While Vision-Language Models (VLMs) have significantly advanced Computer-Using Agents (CUAs), current agentic frameworks struggle with robustness in novel domains and long-horizon workflows due to the absence of visual-aware tutorial retrieval and the lack of granular control over historical visual context curation and pruning. To bridge these gaps, we introduce OS-Symphony, a holistic framework that comprises an Orchestrator coordinating two key innovations for robust automation: (1) a Reflection-Memory Agent that utilizes milestone-driven long-term memory to enable trajectory-level self-correction, effectively mitigating visual context loss in long-horizon tasks; (2) Versatile Tool Agents featuring a Multimodal Searcher that adopts a “SeeAct” paradigm to navigate a browser-based sandbox to synthesize live, visually aligned tutorials, thereby resolving fidelity issues in unseen scenarios. Experimental results demonstrate that OS-Symphony delivers substantial performance gains across varying model scales, establishing new state-of-the-art results on three online benchmarks, notably achieving 65.84% on OSWorld. All research assets will be made publicly available.",
+      "authors": [
+        "Bowen Yang",
+        "Kaiming Jin",
+        "Zhenyu Wu",
+        "Zhaoyang Liu",
+        "Qiushi Sun",
+        "Zehao Li",
+        "JingJing Xie",
+        "Zhoumianze Liu",
+        "Fangzhi Xu",
+        "Kanzhi Cheng",
+        "Yian Wang",
+        "Qingyun Li",
+        "Yu Qiao",
+        "Zun Wang",
+        "Zichen Ding"
+      ],
+      "primary_category": "ACL-2026-Long",
+      "categories": [
+        "ACL-2026-Long"
+      ],
+      "published": "2026-07-01T00:00:00+00:00",
+      "link": "https://aclanthology.org/2026.acl-long.1021/",
+      "pdf_url": "https://aclanthology.org/2026.acl-long.1021.pdf",
+      "tags": [
+        "query:mobile-agent"
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "type": "intent_query",
+      "tag": "mobile-agent",
+      "paper_tag": "query:mobile-agent",
+      "query_text": "Challenges in deploying agents for mobile task automation",
+      "sim_scores": {
+        "aaai-2026-40230": {
+          "score": 0.032266458495966696,
+          "rank": 1
+        },
+        "aaai-2026-40241": {
+          "score": 0.01639344262295082,
+          "rank": 2
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.016129032258064516,
+          "rank": 3
+        },
+        "aaai-2026-40187": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "anthology-2026.findings-acl.1211": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "anthology-2026.acl-long.337": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "anthology-2026.acl-long.370": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "anthology-2026.findings-acl.1122": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "anthology-2026.acl-long.1670": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "anthology-2026.findings-acl.184": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.011627906976744186,
+          "rank": 26
+        },
+        "anthology-2026.acl-long.2064": {
+          "score": 0.011494252873563218,
+          "rank": 27
+        },
+        "anthology-2026.acl-long.1422": {
+          "score": 0.010869565217391304,
+          "rank": 32
+        },
+        "anthology-2026.findings-acl.1330": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "anthology-2026.acl-long.774": {
+          "score": 0.010416666666666666,
+          "rank": 36
+        },
+        "anthology-2026.findings-acl.1680": {
+          "score": 0.010101010101010102,
+          "rank": 39
+        },
+        "anthology-2026.findings-acl.637": {
+          "score": 0.009615384615384616,
+          "rank": 44
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "aaai-2026-40241",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1491",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "aaai-2026-40230",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.681",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.278",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1487",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.668",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.428",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1422",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1439",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.431",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.316",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.184",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1211",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1122",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-40981",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1299",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1518",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1669",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1021",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-40187",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1670",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.370",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2064",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1330",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.337",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.637",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2106",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.904",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1680",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-39974",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2001",
+          "score": 0.1933160472486314,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.750",
+          "score": 0.1737891737891738,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1522",
+          "score": 0.15469146238377016,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.788",
+          "score": 0.1360089186176142,
+          "star_rating": 3
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "mobile-agent",
+      "paper_tag": "query:mobile-agent",
+      "query_text": "Evaluation of mobile agent frameworks for task execution",
+      "sim_scores": {
+        "aaai-2026-40187": {
+          "score": 0.03252247488101534,
+          "rank": 1
+        },
+        "aaai-2026-40241": {
+          "score": 0.032266458495966696,
+          "rank": 2
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.0315136476426799,
+          "rank": 3
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.031009615384615385,
+          "rank": 4
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.029910714285714284,
+          "rank": 5
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.015873015873015872,
+          "rank": 6
+        },
+        "anthology-2026.findings-acl.1211": {
+          "score": 0.015151515151515152,
+          "rank": 7
+        },
+        "anthology-2026.acl-long.2064": {
+          "score": 0.014705882352941176,
+          "rank": 9
+        },
+        "aaai-2026-40230": {
+          "score": 0.014492753623188406,
+          "rank": 10
+        },
+        "anthology-2026.findings-acl.184": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.013513513513513514,
+          "rank": 14
+        },
+        "anthology-2026.acl-long.370": {
+          "score": 0.013333333333333334,
+          "rank": 15
+        },
+        "anthology-2026.acl-long.1670": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "anthology-2026.acl-long.1422": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "anthology-2026.findings-acl.1491": {
+          "score": 0.0125,
+          "rank": 20
+        },
+        "anthology-2026.findings-acl.1680": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "anthology-2026.acl-long.337": {
+          "score": 0.011235955056179775,
+          "rank": 29
+        },
+        "anthology-2026.findings-acl.1518": {
+          "score": 0.011111111111111112,
+          "rank": 30
+        },
+        "anthology-2026.acl-long.2001": {
+          "score": 0.009708737864077669,
+          "rank": 43
+        },
+        "anthology-2026.acl-long.774": {
+          "score": 0.009523809523809525,
+          "rank": 45
+        },
+        "anthology-2026.findings-acl.637": {
+          "score": 0.009345794392523364,
+          "rank": 47
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "anthology-2026.findings-acl.668",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.681",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1299",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "aaai-2026-40241",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.184",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.278",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "aaai-2026-40187",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-40230",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1491",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1422",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.904",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1021",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1518",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.637",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.316",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2064",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.750",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1487",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.431",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1439",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-39974",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1330",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1522",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.370",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1211",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2001",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.788",
+          "score": 0.23371647509578536,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2106",
+          "score": 0.21328671328671328,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1670",
+          "score": 0.15469146238377016,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1122",
+          "score": 0.11772814998621459,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1680",
+          "score": 0.11772814998621459,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-40981",
+          "score": 0.0319204604918889,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.337",
+          "score": 0.0,
+          "star_rating": 1
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "mobile-agent",
+      "paper_tag": "query:mobile-agent",
+      "query_text": "How can AI agents execute tasks autonomously on mobile devices?",
+      "sim_scores": {
+        "aaai-2026-40241": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "aaai-2026-40187": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "aaai-2026-40230": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "anthology-2026.findings-acl.1211": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "anthology-2026.findings-acl.184": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "anthology-2026.acl-long.1422": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "anthology-2026.acl-long.337": {
+          "score": 0.013513513513513514,
+          "rank": 14
+        },
+        "anthology-2026.acl-long.2064": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "anthology-2026.acl-long.1670": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "anthology-2026.findings-acl.1491": {
+          "score": 0.0125,
+          "rank": 20
+        },
+        "anthology-2026.acl-long.1487": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "anthology-2026.acl-long.370": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "anthology-2026.findings-acl.1122": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "anthology-2026.findings-acl.1518": {
+          "score": 0.011494252873563218,
+          "rank": 27
+        },
+        "anthology-2026.acl-long.2106": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "anthology-2026.findings-acl.637": {
+          "score": 0.011111111111111112,
+          "rank": 30
+        },
+        "aaai-2026-40981": {
+          "score": 0.010869565217391304,
+          "rank": 32
+        },
+        "anthology-2026.acl-long.1669": {
+          "score": 0.010309278350515464,
+          "rank": 37
+        },
+        "anthology-2026.findings-acl.1522": {
+          "score": 0.009900990099009901,
+          "rank": 41
+        },
+        "anthology-2026.acl-long.428": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "anthology-2026.findings-acl.1330": {
+          "score": 0.009615384615384616,
+          "rank": 44
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "anthology-2026.findings-acl.184",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1487",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1491",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "aaai-2026-40187",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.668",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1422",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2106",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1299",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.316",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1330",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.370",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-40241",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.278",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1439",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.681",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1518",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.431",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.788",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.337",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1670",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-40230",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1522",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1122",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.637",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1211",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2064",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1669",
+          "score": 0.2760180995475112,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1680",
+          "score": 0.25462134764460337,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-39974",
+          "score": 0.23371647509578536,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.904",
+          "score": 0.21328671328671328,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2001",
+          "score": 0.1933160472486314,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.428",
+          "score": 0.15469146238377016,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1021",
+          "score": 0.11772814998621459,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-40981",
+          "score": 0.0483743061062648,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.750",
+          "score": 0.0319204604918889,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "mobile-agent",
+      "paper_tag": "query:mobile-agent",
+      "query_text": "What are the key techniques for building on device task execution agents?",
+      "sim_scores": {
+        "aaai-2026-40187": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "aaai-2026-40241": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "aaai-2026-40230": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "anthology-2026.acl-long.2064": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "anthology-2026.acl-long.1669": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "anthology-2026.findings-acl.184": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "anthology-2026.acl-long.774": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "anthology-2026.findings-acl.1122": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "aaai-2026-39974": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.013513513513513514,
+          "rank": 14
+        },
+        "anthology-2026.acl-long.1670": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "anthology-2026.findings-acl.1680": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "anthology-2026.findings-acl.1518": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "anthology-2026.acl-long.904": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "anthology-2026.acl-long.370": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "anthology-2026.acl-long.2106": {
+          "score": 0.011235955056179775,
+          "rank": 29
+        },
+        "anthology-2026.findings-acl.1211": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "anthology-2026.findings-acl.750": {
+          "score": 0.010869565217391304,
+          "rank": 32
+        },
+        "aaai-2026-40981": {
+          "score": 0.010416666666666666,
+          "rank": 36
+        },
+        "anthology-2026.acl-long.428": {
+          "score": 0.010309278350515464,
+          "rank": 37
+        },
+        "anthology-2026.acl-long.1021": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "anthology-2026.findings-acl.668",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.370",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1680",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1422",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1299",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "aaai-2026-40230",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1518",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1439",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.184",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.681",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-40187",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.774",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.904",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1491",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1122",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2001",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.278",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-39974",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1522",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2106",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1669",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-40241",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1487",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.428",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.637",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1021",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.1670",
+          "score": 0.2760180995475112,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.1330",
+          "score": 0.23371647509578536,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.750",
+          "score": 0.1933160472486314,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.2064",
+          "score": 0.1737891737891738,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.findings-acl.788",
+          "score": 0.1360089186176142,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.337",
+          "score": 0.1360089186176142,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "anthology-2026.acl-long.431",
+          "score": 0.09983633387888699,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "aaai-2026-40981",
+          "score": 0.0319204604918889,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "keyword",
+      "tag": "mobile-agent",
+      "paper_tag": "keyword:mobile-agent",
+      "query_text": "agent running locally on device for task completion",
+      "sim_scores": {
+        "aaai-2026-40187": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "aaai-2026-40241": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "aaai-2026-40230": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "anthology-2026.findings-acl.184": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "anthology-2026.acl-long.1669": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "anthology-2026.findings-acl.1211": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "anthology-2026.acl-long.2064": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "aaai-2026-39974": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.013333333333333334,
+          "rank": 15
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "anthology-2026.acl-long.774": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "anthology-2026.findings-acl.750": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "anthology-2026.findings-acl.1518": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "anthology-2026.acl-long.2001": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "anthology-2026.findings-acl.1491": {
+          "score": 0.010416666666666666,
+          "rank": 36
+        },
+        "anthology-2026.acl-long.337": {
+          "score": 0.009615384615384616,
+          "rank": 44
+        },
+        "anthology-2026.acl-long.370": {
+          "score": 0.009433962264150943,
+          "rank": 46
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "mobile-agent",
+      "paper_tag": "keyword:mobile-agent",
+      "query_text": "automating operations within mobile applications via agent",
+      "sim_scores": {
+        "aaai-2026-40241": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "aaai-2026-40187": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "aaai-2026-40230": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "anthology-2026.findings-acl.1211": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "anthology-2026.acl-long.2064": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "anthology-2026.acl-long.1669": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "anthology-2026.findings-acl.184": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "anthology-2026.findings-acl.1680": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "anthology-2026.findings-acl.1491": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "anthology-2026.findings-acl.1518": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "anthology-2026.acl-long.774": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "anthology-2026.findings-acl.1122": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "anthology-2026.acl-long.370": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "anthology-2026.acl-long.1422": {
+          "score": 0.009708737864077669,
+          "rank": 43
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "mobile-agent",
+      "paper_tag": "keyword:mobile-agent",
+      "query_text": "automation of tasks on smartphone using software agents",
+      "sim_scores": {
+        "aaai-2026-40187": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "aaai-2026-40241": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "aaai-2026-40230": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "anthology-2026.acl-long.1669": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "anthology-2026.findings-acl.1211": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "anthology-2026.findings-acl.184": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "anthology-2026.acl-long.2064": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "anthology-2026.findings-acl.1518": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "anthology-2026.findings-acl.1122": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "aaai-2026-39974": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "anthology-2026.acl-long.774": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "anthology-2026.acl-long.904": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "anthology-2026.findings-acl.1491": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "anthology-2026.findings-acl.1680": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "aaai-2026-40981": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "anthology-2026.acl-long.1670": {
+          "score": 0.010752688172043012,
+          "rank": 33
+        },
+        "anthology-2026.acl-long.2106": {
+          "score": 0.010416666666666666,
+          "rank": 36
+        },
+        "anthology-2026.acl-long.428": {
+          "score": 0.009615384615384616,
+          "rank": 44
+        },
+        "anthology-2026.acl-long.337": {
+          "score": 0.009523809523809525,
+          "rank": 45
+        },
+        "anthology-2026.acl-long.370": {
+          "score": 0.009259259259259259,
+          "rank": 48
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "mobile-agent",
+      "paper_tag": "keyword:mobile-agent",
+      "query_text": "framework for building agents on mobile devices",
+      "sim_scores": {
+        "aaai-2026-40241": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "anthology-2026.findings-acl.1211": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "aaai-2026-40187": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "aaai-2026-40230": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "anthology-2026.findings-acl.184": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "anthology-2026.findings-acl.1518": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.013333333333333334,
+          "rank": 15
+        },
+        "anthology-2026.findings-acl.1491": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "anthology-2026.acl-long.2064": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "anthology-2026.acl-long.1669": {
+          "score": 0.011111111111111112,
+          "rank": 30
+        },
+        "anthology-2026.acl-long.337": {
+          "score": 0.01020408163265306,
+          "rank": 38
+        },
+        "anthology-2026.findings-acl.637": {
+          "score": 0.01,
+          "rank": 40
+        },
+        "anthology-2026.acl-long.1422": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "mobile-agent",
+      "paper_tag": "keyword:mobile-agent",
+      "query_text": "mobile agent",
+      "sim_scores": {
+        "aaai-2026-40241": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "anthology-2026.findings-acl.1211": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "anthology-2026.findings-acl.1491": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "anthology-2026.acl-long.1487": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "anthology-2026.findings-acl.184": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "anthology-2026.acl-long.1422": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "aaai-2026-40230": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "anthology-2026.findings-acl.1518": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "anthology-2026.findings-acl.1439": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "anthology-2026.findings-acl.788": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.013513513513513514,
+          "rank": 14
+        },
+        "anthology-2026.acl-long.2064": {
+          "score": 0.013333333333333334,
+          "rank": 15
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "aaai-2026-40187": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "anthology-2026.acl-long.2106": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "aaai-2026-39974": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "mobile-agent",
+      "paper_tag": "keyword:mobile-agent",
+      "query_text": "mobile agent framework",
+      "sim_scores": {
+        "aaai-2026-40230": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "anthology-2026.findings-acl.1491": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "aaai-2026-40241": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "aaai-2026-40187": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "anthology-2026.findings-acl.788": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "mobile-agent",
+      "paper_tag": "keyword:mobile-agent",
+      "query_text": "mobile agent that performs tasks on behalf of user",
+      "sim_scores": {
+        "anthology-2026.findings-acl.1211": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "aaai-2026-40187": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "aaai-2026-40241": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "anthology-2026.acl-long.1669": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "aaai-2026-40230": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "anthology-2026.acl-long.278": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "anthology-2026.findings-acl.184": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "anthology-2026.acl-long.316": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "anthology-2026.acl-long.431": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "anthology-2026.findings-acl.668": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "anthology-2026.acl-long.2064": {
+          "score": 0.011235955056179775,
+          "rank": 29
+        },
+        "anthology-2026.acl-long.1487": {
+          "score": 0.011111111111111112,
+          "rank": 30
+        },
+        "anthology-2026.findings-acl.1491": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "anthology-2026.findings-acl.1518": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "anthology-2026.acl-long.1299": {
+          "score": 0.010309278350515464,
+          "rank": 37
+        },
+        "anthology-2026.acl-long.1422": {
+          "score": 0.00909090909090909,
+          "rank": 50
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "mobile-agent",
+      "paper_tag": "keyword:mobile-agent",
+      "query_text": "mobile app automation",
+      "sim_scores": {
+        "aaai-2026-40241": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "anthology-2026.findings-acl.681": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "mobile-agent",
+      "paper_tag": "keyword:mobile-agent",
+      "query_text": "on-device agent",
+      "sim_scores": {
+        "anthology-2026.findings-acl.1680": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "anthology-2026.findings-acl.1518": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "aaai-2026-40230": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "mobile-agent",
+      "paper_tag": "keyword:mobile-agent",
+      "query_text": "smartphone task automation",
+      "sim_scores": {}
+    }
+  ],
+  "global_candidate_ids": [
+    "aaai-2026-40230",
+    "aaai-2026-40241",
+    "aaai-2026-40187",
+    "anthology-2026.acl-long.1299",
+    "anthology-2026.acl-long.316",
+    "anthology-2026.findings-acl.1211",
+    "anthology-2026.findings-acl.1491",
+    "anthology-2026.findings-acl.681",
+    "anthology-2026.findings-acl.1680",
+    "anthology-2026.findings-acl.1518",
+    "aaai-2026-40874",
+    "anthology-2026.acl-long.278",
+    "anthology-2026.acl-long.431",
+    "anthology-2026.findings-acl.184",
+    "anthology-2026.findings-acl.668",
+    "anthology-2026.acl-long.2064",
+    "anthology-2026.acl-long.1669",
+    "anthology-2026.findings-acl.392",
+    "anthology-2026.acl-long.641",
+    "anthology-2026.acl-long.2037",
+    "anthology-2026.acl-long.1422",
+    "anthology-2026.acl-long.370",
+    "aaai-2026-40188",
+    "anthology-2026.findings-acl.1465",
+    "aaai-2026-37169",
+    "anthology-2026.findings-acl.2129",
+    "anthology-2026.acl-long.774",
+    "anthology-2026.acl-long.337",
+    "anthology-2026.acl-long.1197",
+    "anthology-2026.findings-acl.254",
+    "anthology-2026.acl-long.2052",
+    "anthology-2026.findings-acl.1122",
+    "anthology-2026.findings-acl.1698",
+    "anthology-2026.acl-long.1670",
+    "anthology-2026.acl-long.838",
+    "aaai-2026-40240",
+    "aaai-2026-38795",
+    "aaai-2026-40742",
+    "anthology-2026.findings-acl.359",
+    "anthology-2026.findings-acl.866",
+    "anthology-2026.acl-long.856",
+    "anthology-2026.acl-long.1313",
+    "anthology-2026.findings-acl.718",
+    "anthology-2026.acl-long.1294",
+    "aaai-2026-39974",
+    "anthology-2026.findings-acl.1787",
+    "anthology-2026.acl-long.2106",
+    "anthology-2026.findings-acl.1505",
+    "aaai-2026-38859",
+    "anthology-2026.acl-long.1464",
+    "anthology-2026.findings-acl.582",
+    "anthology-2026.acl-long.1705",
+    "anthology-2026.findings-acl.637",
+    "anthology-2026.findings-acl.1506",
+    "anthology-2026.acl-long.1487",
+    "anthology-2026.acl-short.48",
+    "anthology-2026.findings-acl.630",
+    "anthology-2026.findings-acl.2090",
+    "anthology-2026.acl-long.1432",
+    "anthology-2026.acl-long.1335",
+    "anthology-2026.findings-acl.1032",
+    "anthology-2026.acl-long.1009",
+    "aaai-2026-40981",
+    "aaai-2026-40974",
+    "anthology-2026.acl-long.581",
+    "anthology-2026.acl-long.310",
+    "anthology-2026.acl-long.428",
+    "anthology-2026.findings-acl.1142",
+    "anthology-2026.acl-long.1543",
+    "anthology-2026.findings-acl.267",
+    "anthology-2026.findings-acl.788",
+    "aaai-2026-38229",
+    "anthology-2026.acl-long.68",
+    "aaai-2026-37135",
+    "aaai-2026-40026",
+    "aaai-2026-38816",
+    "anthology-2026.acl-long.988",
+    "anthology-2026.findings-acl.159",
+    "anthology-2026.acl-long.904",
+    "anthology-2026.findings-acl.1542",
+    "anthology-2026.findings-acl.1850",
+    "anthology-2026.findings-acl.750",
+    "anthology-2026.findings-acl.1315",
+    "anthology-2026.acl-long.1354",
+    "anthology-2026.findings-acl.1437",
+    "anthology-2026.findings-acl.776",
+    "anthology-2026.findings-acl.568",
+    "anthology-2026.findings-acl.180",
+    "aaai-2026-40227",
+    "aaai-2026-40692",
+    "anthology-2026.findings-acl.581",
+    "anthology-2026.findings-acl.1150",
+    "anthology-2026.acl-long.2001",
+    "anthology-2026.findings-acl.1330",
+    "anthology-2026.findings-acl.872",
+    "anthology-2026.acl-long.1242",
+    "anthology-2026.findings-acl.1439",
+    "anthology-2026.acl-long.754",
+    "anthology-2026.acl-long.1049",
+    "anthology-2026.findings-acl.1436",
+    "aaai-2026-39434",
+    "anthology-2026.findings-acl.1676",
+    "anthology-2026.acl-long.1771",
+    "aaai-2026-37134",
+    "anthology-2026.findings-acl.2136",
+    "anthology-2026.acl-long.646",
+    "aaai-2026-36993",
+    "anthology-2026.acl-long.745",
+    "anthology-2026.acl-long.1387",
+    "aaai-2026-39633",
+    "anthology-2026.acl-long.1886",
+    "anthology-2026.findings-acl.1628",
+    "anthology-2026.findings-acl.2082",
+    "aaai-2026-40453",
+    "aaai-2026-38906",
+    "anthology-2026.findings-acl.1522",
+    "anthology-2026.acl-long.1021",
+    "anthology-2026.acl-long.281",
+    "anthology-2026.findings-acl.485",
+    "anthology-2026.findings-acl.100"
+  ],
+  "global_pool_lane_top_k": 30,
+  "global_pool_limit": 120,
+  "global_pool_guaranteed_per_lane": 2,
+  "global_pool_effective_size": 120,
+  "reranked_at": "2026-08-25T12:01:50.584704+00:00",
+  "llm_ranked": [
+    {
+      "paper_id": "anthology-2026.acl-long.1299",
+      "score": 10.0,
+      "evidence_en": "Mobile GUI agent framework with dual-level memory and knowledge evolution for autonomous task execution",
+      "evidence_cn": "面向移动GUI智能体的记忆驱动自适应框架，支持自主任务执行与知识演化",
+      "canonical_evidence": "面向移动GUI智能体的记忆驱动自适应框架，支持自主任务执行与知识演化",
+      "tldr_en": "Proposes MAGNET, a memory-driven adaptive framework for mobile GUI agents using stationary and procedural memories plus dynamic evolution to overcome UI changes and workflow reorganizations, ensuring robust autonomous task execution.",
+      "tldr_cn": "论文针对移动GUI智能体因应用频繁更新导致的界面变化和工作流重组而失效的问题，提出MAGNET自适应框架。它采用静态记忆与程序记忆分别关联视觉特征与功能语义、捕获跨工作流的稳定任务意图，并通过动态记忆演化机制持续优化记忆。该框架增强了智能体在真实移动环境中的动作定位与任务执行鲁棒性，是移动端任务执行代理的重要基础。",
+      "title_zh": "MAGNET：迈向具有记忆驱动知识演化的自适应GUI智能体",
+      "motivation_cn": "移动应用界面频繁变化导致GUI智能体无法稳定执行任务，需要自适应机制。",
+      "method_cn": "提出双级记忆机制：静态记忆关联视觉与功能语义，程序记忆捕获稳定任务意图，并动态演化记忆。",
+      "result_cn": "有效提升智能体在界面变化下的动作定位与任务执行鲁棒性。",
+      "conclusion_cn": "为移动GUI智能体提供了抗环境变化的记忆驱动框架。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "framework for building agents on mobile devices"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.668",
+      "score": 10.0,
+      "evidence_en": "Comprehensive online benchmark for mobile GUI agents with 1080 tasks across 80 Chinese apps",
+      "evidence_cn": "面向移动GUI智能体的综合在线基准，包含80个中文应用的1080个任务",
+      "canonical_evidence": "面向移动GUI智能体的综合在线基准，包含80个中文应用的1080个任务",
+      "tldr_en": "Presents MobileBench-OL, an online benchmark with 1080 tasks from 80 Chinese apps that evaluates mobile GUI agents on task execution, complex reasoning, and noise robustness, addressing gaps in realistic evaluation.",
+      "tldr_cn": "针对现有线上移动GUI智能体基准忽视推理探索能力且未考虑真实环境随机噪声的问题，提出MobileBench-OL在线基准。它包含来自80个中文应用的1080个任务，通过5个子集分别评测任务执行、复杂推理和噪声鲁棒性。该基准更贴近真实移动环境，能够全面评估移动GUI智能体的能力。它为移动智能体框架的开发与评估提供了重要测试平台。",
+      "title_zh": "MobileBench-OL：真实环境中移动GUI智能体的综合中文基准",
+      "motivation_cn": "现有移动GUI智能体基准偏离真实环境，忽略推理探索和随机噪声。",
+      "method_cn": "构建包含1080个任务、80个中文应用的在线基准，分5个子集评估执行、推理与噪声鲁棒性。",
+      "result_cn": "实现了更真实全面的移动GUI智能体能力评测，弥补已有基准不足。",
+      "conclusion_cn": "为移动智能体研究提供了贴合实际场景的评估标准。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.1518",
+      "score": 10.0,
+      "evidence_en": "Mobile GUI agent system with device-cloud collaboration for task automation",
+      "evidence_cn": "移动GUI智能体系统，通过设备-云协作实现任务自动化",
+      "canonical_evidence": "移动GUI智能体系统，通过设备-云协作实现任务自动化",
+      "tldr_en": "OpenPhone proposes a mobile GUI agent system combining on-device 3B models with cloud models to deliver cost-effective mobile task automation, addressing the performance-size tradeoff.",
+      "tldr_cn": "针对移动GUI智能体面临的设备端模型能力不足、云端模型成本高的问题，提出OpenPhone系统，采用设备-云协作策略，通过两阶段训练增强Qwen2.5-VL-3B模型。在移动端任务执行上取得了接近云端大模型的性能，同时降低了部署成本，为在真实手机上进行自主任务执行提供了实用解决方案。",
+      "title_zh": "OpenPhone：移动端智能体基础模型",
+      "motivation_cn": "设备端小型模型性能不足，而云端大模型部署昂贵，移动智能体面临性能与成本的两难。",
+      "method_cn": "提出设备-云协作架构，利用两阶段训练强化Qwen2.5-VL-3B，并结合云端模型的高能力。",
+      "result_cn": "在移动GUI任务上取得优异的执行效果，兼顾成本与性能。",
+      "conclusion_cn": "设备-云协同是构建移动智能体的有效范式，能实现部署友好且性能可靠的手机端任务自动化。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "mobile agent that performs tasks on behalf of user"
+    },
+    {
+      "paper_id": "aaai-2026-40241",
+      "score": 9.0,
+      "evidence_en": "mobile agent with RAG for long-horizon mobile automation; directly performs tasks on behalf of user",
+      "evidence_cn": "面向移动端长时程任务的移动智能体，通过上下文知识增强规划与UI操作",
+      "canonical_evidence": "面向移动端长时程任务的移动智能体，通过上下文知识增强规划与UI操作",
+      "tldr_en": "Mobile-Agent-RAG proposes a retrieval-augmented mobile agent that separates strategy-level planning knowledge from low-level UI operation knowledge, significantly boosting success rates on long-horizon cross-application mobile automation tasks.",
+      "tldr_cn": "现有移动智能体在真实长时程跨应用任务上成功率偏低，主要瓶颈是过度依赖多模态大模型内部的静态知识，导致规划时出现策略幻觉、执行时出现UI操作错误。Mobile-Agent-RAG提出按层级分离知识的思路：高层规划依赖策略性经验，低层UI操作依赖精确指令，并通过检索增强为两者提供上下文知识。实验在真实移动自动化基准上验证了该方法显著提升任务成功率，为移动端任务执行智能体提供了可行框架。",
+      "title_zh": "Mobile-Agent-RAG：上下文知识赋能的多智能体协同，推动长时程移动自动化",
+      "motivation_cn": "现有移动智能体在长时程跨应用任务上成功率低，主要因过度依赖MLLM内部静态知识。",
+      "method_cn": "提出Mobile-Agent-RAG，通过检索增强为高层规划和低层UI操作提供异质上下文知识。",
+      "result_cn": "在真实长时程移动自动化任务上显著提升成功率，减少策略幻觉和操作错误。",
+      "conclusion_cn": "验证了按层级解耦知识可有效增强移动智能体，为移动自动化提供新范式。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "mobile agent that performs tasks on behalf of user"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.1491",
+      "score": 9.0,
+      "evidence_en": "introduces a comprehensive benchmark and few-shot agent framework for mobile GUI automation; directly matches mobile agent framework and evaluation",
+      "evidence_cn": "提供移动GUI智能体的统一演示基准和少样本学习框架，直接面向手机操作自动化",
+      "canonical_evidence": "提供移动GUI智能体的统一演示基准和少样本学习框架，直接面向手机操作自动化",
+      "tldr_en": "Proposes LearnGUI, the first comprehensive benchmark for demonstration-based mobile agents with 2,252 offline and 101 online tasks, and LearnAct, a modular framework that learns from visual demonstrations to improve generalization.",
+      "tldr_cn": "移动GUI智能体在长尾场景中泛化能力不足，而少样本演示学习缺乏统一的基准和系统性框架。本文构建LearnGUI基准，包含2252个离线任务和101个在线任务，并在此基础上提出LearnAct模块化智能体框架，系统化地提取、检索并利用视觉演示知识。实验显示LearnAct在在线移动任务上显著提升少样本成功率，为移动GUI智能体演示学习树立了标准。",
+      "title_zh": "LearnAct：基于统一演示基准的少样本移动GUI智能体",
+      "motivation_cn": "移动GUI智能体泛化到长尾场景困难，缺乏统一的演示学习基准和系统性框架。",
+      "method_cn": "构建LearnGUI基准并设计LearnAct模块化智能体框架，利用视觉演示提取与检索来增强少样本学习。",
+      "result_cn": "在在线移动任务上取得显著优于基线的成功率，验证少样本演示学习有效。",
+      "conclusion_cn": "为移动GUI智能体的演示学习提供了标准化基准与高效框架，推动研究与应用。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "framework for building agents on mobile devices"
+    },
+    {
+      "paper_id": "aaai-2026-40981",
+      "score": 9.0,
+      "evidence_en": "Framework for training autonomous GUI agents with co-evolving planning and grounding; core for mobile agents",
+      "evidence_cn": "用于训练自主GUI智能体的规划与接地协同演化框架，是移动智能体的核心技术",
+      "canonical_evidence": "用于训练自主GUI智能体的规划与接地协同演化框架，是移动智能体的核心技术",
+      "tldr_en": "Proposes Co-EPG, a self-iterative training framework where planning and grounding co-evolve, using GRPO with grounding-based rewards to improve autonomous GUI agents. Directly relevant to building mobile task-execution agents.",
+      "tldr_cn": "针对现有GUI智能体忽视规划与接地能力的协同、且过度依赖合成数据的问题，提出Co-EPG自迭代训练框架。该框架通过基于接地奖励的组相对策略优化（GRPO）形成正反馈循环，让规划模型在接地模型引导下探索更优策略，并更充分利用已有数据。实验表明该方法能有效提升GUI智能体的规划与接地能力。它为移动端自主智能体的构建提供了可复用的训练范式。",
+      "title_zh": "Co-EPG：自主GUI智能体中规划与接地协同演化的框架",
+      "motivation_cn": "GUI智能体规划与接地能力缺乏协同训练，且对合成数据利用不足。",
+      "method_cn": "提出Co-EPG自迭代框架，利用GRPO与接地奖励形成规划与接地的协同演化正反馈循环。",
+      "result_cn": "显著提升GUI智能体的规划质量和动作接地准确率。",
+      "conclusion_cn": "为包括移动端在内的自主GUI智能体提供了高效的协同训练方法。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "framework for building agents on mobile devices"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.1669",
+      "score": 9.0,
+      "evidence_en": "Personalized GUI agent with AndroidIntent benchmark for proactive mobile assistance",
+      "evidence_cn": "个性化GUI智能体借助AndroidIntent基准实现主动移动辅助",
+      "canonical_evidence": "个性化GUI智能体借助AndroidIntent基准实现主动移动辅助",
+      "tldr_en": "PersonalAlign introduces a task where GUI agents leverage long-term user records to resolve vague instructions and anticipate routines, and provides the AndroidIntent benchmark to evaluate implicit intent alignment on mobile.",
+      "tldr_cn": "针对真实部署中GUI智能体需要理解用户隐式意图的问题，提出PersonalAlign任务，要求智能体利用长期用户记录解决模糊指令中的偏好遗漏，并根据用户状态预判潜在习惯以提供主动帮助。同时构建AndroidIntent基准来评测该能力，推动了移动端个性化智能体从仅执行显式指令向符合用户隐式意图的范式转变。",
+      "title_zh": "PersonalAlign：面向长期用户记录个性化GUI智能体的层次化隐式意图对齐",
+      "motivation_cn": "现有GUI智能体难以处理模糊指令，无法利用长期用户记录进行个性化服务。",
+      "method_cn": "提出层次化隐式意图对齐方法，将长期用户记录作为持久上下文进行推理。",
+      "result_cn": "在AndroidIntent基准上验证了隐式意图对齐任务的必要性及现有模型的不足。",
+      "conclusion_cn": "个性化意图对齐是移动GUI智能体实用化的关键方向。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.316",
+      "score": 9.0,
+      "evidence_en": "benchmark for evaluating mobile GUI agents with shortcut augmentation",
+      "evidence_cn": "面向移动GUI智能体的统一评测基准，聚焦快捷方式增强的混合体",
+      "canonical_evidence": "面向移动GUI智能体的统一评测基准，聚焦快捷方式增强的混合体",
+      "tldr_en": "Introduces MAS-Bench, a benchmark for evaluating GUI-shortcut hybrid mobile agents, with 139 tasks across 11 apps and a knowledge base of 88 shortcuts, testing both use and generation of shortcuts.",
+      "tldr_cn": "现有基准对GUI与快捷方式混合的移动智能体缺乏系统评测。为此提出MAS-Bench，首个专注该范式的基准，包含11个真实应用的139个复杂任务和88个预定义快捷方式知识库。它不仅评估智能体使用已有快捷方式的能力，还考察其自动发现和创建可复用低成本工作流的生成能力。该基准为混合移动智能体的发展提供了统一评测标准。",
+      "title_zh": "MAS-Bench：面向快捷方式增强的混合移动GUI智能体的统一评测基准",
+      "motivation_cn": "现有评测缺乏对GUI与快捷方式混合的移动智能体的系统评估。",
+      "method_cn": "提出MAS-Bench基准，涵盖139个跨11个应用的复杂任务和88个预定义快捷方式知识库，并评估智能体自主生成快捷方式的能力。",
+      "result_cn": "基准通过多维评估揭示了智能体在快捷方式使用与生成上的表现差异。",
+      "conclusion_cn": "为GUI-快捷方式混合移动智能体提供了统一、可扩展的评测框架。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.1422",
+      "score": 9.0,
+      "evidence_en": "systematic training for VLM-based mobile agents to execute tasks",
+      "evidence_cn": "面向VLM移动智能体的系统化训练方法，提升交互式任务执行能力",
+      "canonical_evidence": "面向VLM移动智能体的系统化训练方法，提升交互式任务执行能力",
+      "tldr_en": "Presents Mobile-R1, a systematic training recipe for VLM-based mobile agents that bridges atomic action execution and strategic task completion, overcoming convergence issues with task-level rewards.",
+      "tldr_cn": "现有VLM移动智能体训练多采用离线或在局部动作层面奖励，易陷入局部最优，难以有效探索与纠正错误。Mobile-R1提出一种系统化训练方案，采用层次化机制连接原子动作执行与策略性任务完成，解决直接使用任务级奖励导致的收敛困难。该方法提升了智能体在复杂GUI交互中的探索和纠错能力，为移动智能体训练提供了新思路。",
+      "title_zh": "Mobile-R1：通过系统化训练提升基于VLM的移动智能体交互能力",
+      "motivation_cn": "现有训练方法令移动智能体陷入局部最优，难以进行环境探索与错误纠正。",
+      "method_cn": "提出层次化训练方案，桥接原子动作执行与策略性任务完成，改进奖励设计。",
+      "result_cn": "有效缓解了稀疏奖励下的收敛难题，增强了智能体的交互能力。",
+      "conclusion_cn": "为VLM移动智能体的系统化训练提供了可行范式。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "mobile agent that performs tasks on behalf of user"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.2064",
+      "score": 9.0,
+      "evidence_en": "decision-aware benchmark for compositional mobile GUI tasks",
+      "evidence_cn": "面向组合式移动GUI任务、关注决策的评测基准",
+      "canonical_evidence": "面向组合式移动GUI任务、关注决策的评测基准",
+      "tldr_en": "Introduces DAC-Bench, a benchmark with 830 episodes and 11,345 steps across 35 apps on Android and iOS, covering sequential, conjunctive, conditional, and hierarchical task structures, plus a weighted LCS metric.",
+      "tldr_cn": "现有移动GUI基准多聚焦短线性流程和步骤级准确率，对长程规划和分支决策缺乏洞察。提出DAC-Bench，一个面向决策的组合式任务基准，包含35个安卓和iOS应用上的830个回合、11345个动作步骤，任务涵盖序列、合取、条件与层级结构。并引入加权最长公共子序列以捕捉长度敏感进展与分支决策准确率。",
+      "title_zh": "DAC-Bench：面向组合式移动GUI任务的决策感知基准",
+      "motivation_cn": "现有基准难以评估长程规划和分支决策能力。",
+      "method_cn": "构建包含830回合和多类结构任务的基准，并提出加权最长公共子序列评估指标。",
+      "result_cn": "能够更全面地量化和分析移动GUI智能体的决策性能。",
+      "conclusion_cn": "为长程、分支移动任务决策评估提供了重要工具。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution"
+    },
+    {
+      "paper_id": "aaai-2026-40230",
+      "score": 9.0,
+      "evidence_en": "device-cloud collaborative multi-agent framework for mobile automation",
+      "evidence_cn": "面向移动自动化的设备-云端协作多智能体框架",
+      "canonical_evidence": "面向移动自动化的设备-云端协作多智能体框架",
+      "tldr_en": "Presents EcoAgent, a closed-loop device-cloud collaborative multi-agent framework for mobile automation, reducing latency and preserving privacy by avoiding cloud-side screenshot verification.",
+      "tldr_cn": "现有移动多智能体系统多在云端部署，带来高时延、高成本与隐私问题。EcoAgent提出一种闭环设备-云协作多智能体框架，将云端验证改为设备侧协同，避免上传移动截图，并通过设备到云端的反馈闭环充分利用端侧资源。该框架在降低时延和成本的同时保护了用户隐私，为移动自动化提供了更高效的多智能体协作方案。",
+      "title_zh": "EcoAgent：一种高效的设备-云协作移动自动化多智能体框架",
+      "motivation_cn": "云端多智能体部署导致高时延、成本高且泄露用户隐私。",
+      "method_cn": "提出闭环设备-云协作框架，避免截图上传并引入设备反馈。",
+      "result_cn": "显著降低时延和成本，增强隐私保护。",
+      "conclusion_cn": "为移动自动化提供了一种高效且隐私友好的多智能体协作范式。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "framework for building agents on mobile devices"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.184",
+      "score": 9.0,
+      "evidence_en": "introduces a benchmark and essential-state procedural evaluation for mobile GUI agents",
+      "evidence_cn": "提出了面向移动GUI智能体的基准测试与关键状态程序化评估方法",
+      "canonical_evidence": "提出了面向移动GUI智能体的基准测试与关键状态程序化评估方法",
+      "tldr_en": "A3 is a benchmark and essential-state based procedural evaluation system for mobile GUI agents, offering 100 tasks across 20 apps to capture dynamic real-world mobile app performance.",
+      "tldr_cn": "现有移动GUI智能体评测多依赖静态帧或离线静态应用，难以反映动态真实在线应用中的表现。为此，论文提出A3（安卓Agent竞技场），采用基于关键状态的程序化评估方法，包含20个广泛使用应用中的100个任务。实验证明该评测能更有效地区分智能体在真实动态环境中的能力，为移动智能体评估提供了新基准。",
+      "title_zh": "A3：移动GUI智能体安卓Agent竞技场与关键状态程序化评估",
+      "motivation_cn": "现有移动GUI智能体评测无法覆盖动态真实在线应用，静态评估存在明显不足。",
+      "method_cn": "提出A3基准，基于关键状态的程序化评估系统，包含100个任务与20个应用。",
+      "result_cn": "在动态真实应用上实现了更准确的性能评测，能更好区分智能体能力。",
+      "conclusion_cn": "为移动GUI智能体的动态环境评估提供了标准化基准与评测范式。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.681",
+      "score": 9.0,
+      "evidence_en": "deliberative cognitive framework for mobile GUI multi-agent systems",
+      "evidence_cn": "面向移动GUI多智能体的认知框架，属于移动端智能体构建框架",
+      "canonical_evidence": "面向移动GUI多智能体的认知框架，属于移动端智能体构建框架",
+      "tldr_en": "D-Artemis is a deliberative framework for mobile GUI multi-agents inspired by Thinking-Alignment-Reflection, using app-specific tip retrieval and pre-execution alignment to reduce error and improve task automation.",
+      "tldr_cn": "移动GUI智能体自动化任务时面临数据瓶颈、错误检测延迟和指令冲突等挑战。论文提出D-Artemis深思认知框架，模拟人类思考-对齐-反思循环，利用细粒度应用技巧检索和预执行对齐机制，通过Thought-Action Consistency检查与动作修正Agent协同降低风险。该方法提升了移动GUI多智能体的可靠性与任务自动化能力。",
+      "title_zh": "D-Artemis：面向移动GUI多智能体的深思认知框架",
+      "motivation_cn": "移动GUI智能体存在数据瓶颈、错误检测延迟和指导冲突等问题，影响任务自动化效果。",
+      "method_cn": "提出D-Artemis框架，结合思考-对齐-反思循环、应用技巧检索和预执行对齐机制。",
+      "result_cn": "在移动GUI多智能体任务中降低了错误率，提高了任务完成可靠性。",
+      "conclusion_cn": "为移动GUI多智能体提供了有效的认知框架，推动移动设备任务自动化的发展。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "framework for building agents on mobile devices"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.278",
+      "score": 9.0,
+      "evidence_en": "challenging benchmark for autonomous mobile agents in realistic interactive environments",
+      "evidence_cn": "在真实交互环境中对自主移动智能体进行评测的基准，针对移动端任务执行",
+      "canonical_evidence": "在真实交互环境中对自主移动智能体进行评测的基准，针对移动端任务执行",
+      "tldr_en": "MobileWorld is a 201-task benchmark across 20 apps for autonomous mobile agents, featuring long-horizon cross-application workflows and MCP-augmented environments to address saturation in existing benchmarks.",
+      "tldr_cn": "现有AndroidWorld等移动智能体基准已趋于饱和，任务复杂度不足且缺少电商、企业通信等真实应用场景。为此，论文提出MobileWorld基准，包含20个应用中的201个任务，通过长程跨应用工作流、模糊用户指令和混合工具使用来反映真实移动使用场景。该基准显著提升了任务难度，为自主移动智能体的评测提供了更具挑战性的环境。",
+      "title_zh": "MobileWorld：在智能体-用户交互和MCP增强环境中对自主移动智能体进行基准测试",
+      "motivation_cn": "现有移动智能体基准任务过于简单且应用类型有限，无法反映真实移动使用场景。",
+      "method_cn": "构建MobileWorld基准，包含201个任务、20个应用，采用长程跨应用工作流与MCP增强环境。",
+      "result_cn": "任务步骤数接近AndroidWorld的两倍，对现有智能体构成显著挑战并降低饱和。",
+      "conclusion_cn": "为自主移动智能体提供了更贴近真实使用场景的评测基准。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution"
+    },
+    {
+      "paper_id": "aaai-2026-40187",
+      "score": 9.0,
+      "evidence_en": "state-aware multi-agent framework for mobile GUI agents using FSM",
+      "evidence_cn": "基于有限状态机的状态感知多智能体框架，用于移动GUI智能体构建",
+      "canonical_evidence": "基于有限状态机的状态感知多智能体框架，用于移动GUI智能体构建",
+      "tldr_en": "Agent-SAMA is a state-aware multi-agent framework for mobile GUI agents that models app execution as a finite state machine, enabling context understanding, error detection, and recovery in autonomous task completion.",
+      "tldr_cn": "现有移动GUI智能体仅基于当前屏幕反应式推理，缺乏应用导航流程的结构化表示，难以理解执行上下文和从错误中恢复。论文提出Agent-SAMA，将应用执行建模为有限状态机，把UI屏幕视为状态、用户动作视为迁移，并通过四个专门智能体协作构建和使用状态表示。该方法增强了移动智能体的执行上下文理解与错误恢复能力，提高了任务自动化性能。",
+      "title_zh": "Agent-SAMA：状态感知的移动助手",
+      "motivation_cn": "移动GUI智能体缺乏应用导航流程的结构化表示，导致上下文理解不足和错误恢复困难。",
+      "method_cn": "提出Agent-SAMA，用有限状态机建模应用执行，四个专门智能体协作构建并使用状态信息。",
+      "result_cn": "在移动任务上增强了执行上下文理解，提升了错误检测与恢复能力。",
+      "conclusion_cn": "为移动GUI智能体提供状态感知框架，显著改善任务的自主完成能力。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "framework for building agents on mobile devices"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.1211",
+      "score": 9.0,
+      "evidence_en": "personalized mobile agent performing tasks via two-level user habit learning",
+      "evidence_cn": "通过两级用户习惯学习执行任务的个性化移动智能体",
+      "canonical_evidence": "通过两级用户习惯学习执行任务的个性化移动智能体",
+      "tldr_en": "Me-Agent is a personalized LLM-based mobile agent that learns user habits at prompt and interaction levels to handle ambiguous and personalized instructions.",
+      "tldr_cn": "针对现有移动智能体忽视用户个性化需求、无法理解模糊指令且不会从交互历史中学习的问题，提出Me-Agent个性化移动智能体框架，通过提示级别和交互级别两级用户习惯学习策略，结合个人奖励模型，使用户智能体能够记忆用户习惯并处理个性化指令。实验表明该方法显著提升了移动任务执行中的个性化交互效果。该工作为手机端智能体从通用指令执行走向个性化自主任务完成提供了有效方案。",
+      "title_zh": "Me-Agent：基于两级用户习惯学习的个性化移动智能体",
+      "motivation_cn": "现有移动智能体缺乏个性化上下文，难以理解模糊指令并利用用户交互历史。",
+      "method_cn": "提出提示级与交互级的两级用户习惯学习策略，并用个人奖励模型增强偏好学习。",
+      "result_cn": "实验验证该方法在理解模糊指令和处理个性化指令上显著优于基线。",
+      "conclusion_cn": "两级用户习惯学习有效提升移动智能体的个性化交互与任务执行能力。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "mobile agent that performs tasks on behalf of user"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.1487",
+      "score": 9.0,
+      "evidence_en": "benchmark and agent for safe mobile interactions via proactive human inquiry",
+      "evidence_cn": "通过主动询问人类来评估和训练移动智能体的安全交互能力",
+      "canonical_evidence": "通过主动询问人类来评估和训练移动智能体的安全交互能力",
+      "tldr_en": "InquireMobile introduces InquireBench, a 5-category benchmark for safe human-agent interaction, and uses reinforcement fine-tuning to teach VLM mobile agents when to request human assistance.",
+      "tldr_cn": "针对移动视觉语言智能体在自主执行时理解或推理不足可能带来安全风险的问题，提出InquireBench基准，覆盖5大类22子类以评估智能体安全交互与主动询问能力。在此基础上，采用强化微调训练VLM移动智能体在必要时主动请求人类确认。实验表明现有智能体在该基准上近乎零分，而所提方法能有效提升其安全求助行为。该工作为移动智能体的安全部署与负责任任务执行提供了评测基准与训练范式。",
+      "title_zh": "InquireMobile：通过强化微调教会基于VLM的移动智能体请求人类帮助",
+      "motivation_cn": "移动智能体完全自主执行存在安全隐患，应学会在能力不足时主动求助。",
+      "method_cn": "构建InquireBench基准并提出基于强化微调的交互训练方法，使智能体学会主动请求人类确认。",
+      "result_cn": "大多数现有VLM智能体在基准上近乎零分，所提方法显著提升安全交互能力。",
+      "conclusion_cn": "主动询问机制与基准可提高移动智能体在真实环境中的安全性和可信度。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.1439",
+      "score": 8.0,
+      "evidence_en": "optimizes data mixing for fine-tuning multimodal LLMs used in mobile phone agents; directly supports building agents on mobile devices",
+      "evidence_cn": "针对手机智能体微调中的数据配比问题进行优化，提升多任务执行能力",
+      "canonical_evidence": "针对手机智能体微调中的数据配比问题进行优化，提升多任务执行能力",
+      "tldr_en": "Addresses multitask data mixing for multimodal LLM-based mobile phone agents, proposing a trainable data mixture optimizer that predicts optimal ratios and boosts downstream performance.",
+      "tldr_cn": "手机智能体需要同时处理多个手机任务，但多模态大模型在微调时难以确定最优数据混合比例，影响多任务效果。DaMo提出一种可训练的数据混合优化器，通过预测任意数据配比下的下游任务性能来自动搜索最佳数据混合。实验证明DaMo能显著提升多任务手机智能体的综合表现，为移动端智能体的构建提供了一种重要的数据工程工具，缓解手工调参繁琐并提升训练效率。",
+      "title_zh": "DaMo：面向手机智能体的多模态大模型微调数据混合优化器",
+      "motivation_cn": "手机智能体多任务微调时数据混合比例难以确定，限制了多任务性能。",
+      "method_cn": "提出DaMo数据混合优化器，训练网络预测不同数据配比的下游性能并选取最优配比。",
+      "result_cn": "实验证明DaMo能提升多任务手机智能体性能，超过人工数据配比。",
+      "conclusion_cn": "为手机智能体的数据驱动构建提供了自动混合优化方法，具有广泛适用性。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "framework for building agents on mobile devices"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.904",
+      "score": 8.0,
+      "evidence_en": "long-horizon GUI automation with memory decoupling and copilot assistance; directly applicable to automating mobile app operations",
+      "evidence_cn": "面向长时程GUI自动化的协作框架，方法直接适用于移动应用内的自动化操作",
+      "canonical_evidence": "面向长时程GUI自动化的协作框架，方法直接适用于移动应用内的自动化操作",
+      "tldr_en": "Presents a collaborative framework where a GUI agent delegates memory retrieval and numerical computation to a lightweight copilot, decoupling persistent and transient context to improve long-horizon task execution.",
+      "tldr_cn": "长时程GUI自动化中，智能体常因内存退化、进度混淆和算术幻觉而失败。UI-Copilot提出协作框架，让GUI智能体专注执行，同时由轻量级助手按需提供记忆检索与数值计算服务；通过记忆解耦将持久观察与瞬时执行上下文分离。实验结果表明该框架显著提升长时程GUI任务的完成率和稳定性。方法虽未限定手机端，但对移动应用内自动化操作有直接借鉴意义。",
+      "title_zh": "UI-Copilot：通过工具集成策略优化推进长时程GUI自动化",
+      "motivation_cn": "GUI智能体在长时程任务中常发生记忆退化、进度混淆和数学幻觉。",
+      "method_cn": "提出UI-Copilot协作框架，用轻量级助手处理记忆检索与数值计算，并采用记忆解耦。",
+      "result_cn": "长时程GUI任务完成率与稳定性显著提升，优于独立执行的基础智能体。",
+      "conclusion_cn": "表明记忆与计算外接可以帮助GUI智能体突破长时程瓶颈，可迁移至移动应用场景。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent"
+    },
+    {
+      "paper_id": "aaai-2026-39974",
+      "score": 8.0,
+      "evidence_en": "Benchmark for GUI agents with process-level evaluation, applicable to mobile GUI agent frameworks",
+      "evidence_cn": "面向GUI智能体的过程级基准测试，可适用于移动GUI智能体框架",
+      "canonical_evidence": "面向GUI智能体的过程级基准测试，可适用于移动GUI智能体框架",
+      "tldr_en": "Proposes ProBench, a benchmark that evaluates GUI agents by accurately capturing intermediate process information rather than only final screens, addressing a key limitation in GUI task evaluation. Directly supports mobile agent framework evaluation.",
+      "tldr_cn": "现有GUI智能体基准往往只依据最终屏幕状态判断任务是否完成，忽略了中间步骤中的关键信息。ProBench提出一种能准确捕获过程信息的基准构建方法，将多步操作中的过程信息纳入评估。这使得对GUI智能体的评测更全面、更接近真实任务执行。该基准可直接用于移动GUI智能体框架的评估，帮助识别任务执行中的局部错误。",
+      "title_zh": "ProBench：利用精确过程信息对GUI智能体进行基准测试",
+      "motivation_cn": "仅检查最终屏幕状态无法完整评估GUI智能体的多步任务执行能力。",
+      "method_cn": "提出ProBench基准，通过自动捕获中间过程信息来评估GUI智能体，而非只看最终界面。",
+      "result_cn": "实现更准确、细粒度的GUI智能体任务执行评估，弥补现有基准缺失。",
+      "conclusion_cn": "为移动端及其他设备的GUI智能体提供了更可靠的过程级评估方案。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.1680",
+      "score": 8.0,
+      "evidence_en": "lightweight retrieval method for on-device function calling agents",
+      "evidence_cn": "面向端侧函数调用智能体的轻量级动态工具依赖检索方法",
+      "canonical_evidence": "面向端侧函数调用智能体的轻量级动态工具依赖检索方法",
+      "tldr_en": "Proposes DTDR, a lightweight retrieval method that conditions on both the initial query and evolving tool-calling plan for on-device agents, improving tool selection by modeling multi-step dependencies.",
+      "tldr_cn": "现有端侧函数调用智能体的工具检索依赖静态有限输入，无法捕捉多步工具依赖和动态任务上下文，易引入无关工具。提出DTDR动态工具依赖检索方法，同时基于初始查询和不断演化的工具调用计划进行检索，并从演示中建模工具依赖。该方法在轻量级条件下实现了自适应的工具选择，提升任务效率与准确率。",
+      "title_zh": "轻量级函数调用的动态工具依赖检索",
+      "motivation_cn": "现有工具检索方法输入静态且有限，无法捕获多步工具依赖和动态任务上下文。",
+      "method_cn": "提出DTDR，一种轻量级检索方法，结合初始查询与演化中的工具调用计划，建模工具依赖关系。",
+      "result_cn": "动态检索方式减少了无关工具引入，提升了端侧智能体的效率和准确率。",
+      "conclusion_cn": "DTDR为端侧函数调用智能体提供了高效、自适应的工具选择机制。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.1122",
+      "score": 8.0,
+      "evidence_en": "multi-role orchestration for scalable lightweight GUI agents",
+      "evidence_cn": "通过多角色编排提升轻量级GUI智能体的可扩展性",
+      "canonical_evidence": "通过多角色编排提升轻量级GUI智能体的可扩展性",
+      "tldr_en": "Proposes a multi-role orchestration approach to enable lightweight MLLM-based GUI agents to tackle complex scenarios, balancing cost and scalability while reducing deployment costs on resource-constrained devices.",
+      "tldr_cn": "轻量级GUI智能体在资源受限设备上面临部署成本高和任务可扩展性差的问题，端到端学习难以适应复杂场景。论文提出多角色编排方法，协调多个轻量级模型参与真实GUI工作流，在成本与可扩展性之间取得平衡。方法使得轻量级MLLM能够在现实GUI任务中发挥作用，降低了部署门槛。",
+      "title_zh": "通过多角色编排实现可扩展的轻量级GUI智能体",
+      "motivation_cn": "轻量级GUI智能体受限于容量和任务可扩展性，难以适应复杂场景。",
+      "method_cn": "提出多角色编排机制，协同多个轻量级模型完成GUI自动化任务。",
+      "result_cn": "在降低资源消耗的同时提升了任务处理能力。",
+      "conclusion_cn": "为资源受限设备上的GUI智能体提供了一种成本-扩展性平衡方案。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.431",
+      "score": 8.0,
+      "evidence_en": "addresses safety concerns and hybrid validation for mobile GUI agents, a key deployment challenge",
+      "evidence_cn": "针对移动GUI智能体的安全风险与混合验证，属于部署中的关键挑战",
+      "canonical_evidence": "针对移动GUI智能体的安全风险与混合验证，属于部署中的关键挑战",
+      "tldr_en": "Focuses on safety of mobile GUI agents, introducing MobileRisk-Live sandbox and benchmark to detect unsafe operations in realistic workflows, addressing a critical deployment challenge.",
+      "tldr_cn": "移动GUI智能体在完成用户任务时存在系统被破坏和隐私泄露等安全隐患。现有方法缺乏对真实工作流中安全风险的检测手段。为此，论文提出OS-Sentinel，并构建动态沙盒环境MobileRisk-Live及细粒度轨迹的安全检测基准。该工作为移动智能体安全研究建立了基础，为安全部署提供了验证依据。",
+      "title_zh": "OS-Sentinel：通过混合验证在真实工作流中增强移动GUI智能体安全性",
+      "motivation_cn": "移动GUI智能体存在系统破坏与隐私泄露等安全风险，且真实工作流中的安全检测尚属空白。",
+      "method_cn": "提出OS-Sentinel混合验证方法，并构建MobileRisk-Live动态沙盒环境与安全检测基准用于识别危险操作。",
+      "result_cn": "在真实轨迹基准上验证了安全检测能力，识别出系统被破坏与隐私泄露等风险。",
+      "conclusion_cn": "为移动智能体安全研究提供基础，提升任务执行中的安全性并支持安全部署。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.2106",
+      "score": 7.0,
+      "evidence_en": "systematizes safety and security threats of Computer-Using Agents, including mobile apps; directly addresses deployment challenges for mobile task automation",
+      "evidence_cn": "系统梳理计算机使用智能体（包括移动端）面临的安全威胁，对应移动智能体部署中的挑战",
+      "canonical_evidence": "系统梳理计算机使用智能体（包括移动端）面临的安全威胁，对应移动智能体部署中的挑战",
+      "tldr_en": "A systematization of knowledge on safety and security risks of LLM-based Computer-Using Agents that navigate desktops, web pages, and mobile apps, highlighting reasoning, integration, and multimodal vulnerabilities.",
+      "tldr_cn": "计算机使用智能体能够自主操作桌面应用、网页和移动应用，但也引入了新的安全与安保风险。本综述系统化地梳理了由LLM推理漏洞、多组件集成复杂性和多模态输入带来的威胁，并对攻击面进行分类。综述提供了对该领域安全问题的全面认知，为移动端等计算机使用智能体的安全部署和后续研究奠定基础。",
+      "title_zh": "JARVIS还是奥创？计算机使用智能体的安全与安保威胁综述",
+      "motivation_cn": "计算机使用智能体操作移动应用等带来新的安全与安保风险，缺少系统梳理。",
+      "method_cn": "采用系统化方法，从推理漏洞、软件集成和多模态输入三个维度分析威胁。",
+      "result_cn": "给出威胁分类和防护研究现状，明确关键脆弱环节。",
+      "conclusion_cn": "为包括移动端在内的计算机使用智能体安全部署提供了参考框架。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.1670",
+      "score": 7.0,
+      "evidence_en": "GUI agent task planning via autonomous experience exploration and hindsight experience",
+      "evidence_cn": "GUI智能体通过自主经验探索与事后经验利用进行任务规划",
+      "canonical_evidence": "GUI智能体通过自主经验探索与事后经验利用进行任务规划",
+      "tldr_en": "PEEU enables small open-source MLLMs to autonomously explore environments and exploit hindsight experience to synthesize planning data, improving task decomposition and cross-website generalization for GUI agents.",
+      "tldr_cn": "提出PEEU方法，让小型开源多模态语言模型通过自主环境探索收集经验，并利用事后经验合成严格对齐的高层规划数据，从而提升GUI智能体在任务分解与跨站点泛化上的能力。该方法缓解了小型模型规划能力弱的问题，为移动设备上部署轻量级GUI智能体提供了可行的训练途径。",
+      "title_zh": "通过自主经验探索与事后经验利用增强GUI智能体的任务规划能力",
+      "motivation_cn": "小型开源MLLM相比商业大模型更具成本效益和隐私优势，但任务规划能力弱且跨站泛化有限。",
+      "method_cn": "提出规划经验探索与利用(PEEU)方法，自主探索环境并利用事后经验合成对齐的高层训练数据。",
+      "result_cn": "在任务规划性能与跨网站泛化能力上显著提升，并进行了定量泛化行为分析。",
+      "conclusion_cn": "为资源受限场景下构建GUI智能体提供了经验驱动的训练范式。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.428",
+      "score": 7.0,
+      "evidence_en": "Experience-driven multi-turn RL for GUI agents, transferable to mobile agent training",
+      "evidence_cn": "面向GUI智能体的经验驱动多轮强化学习，可迁移至移动端智能体训练",
+      "canonical_evidence": "面向GUI智能体的经验驱动多轮强化学习，可迁移至移动端智能体训练",
+      "tldr_en": "The paper proposes EMPO, a multi-turn RL method using expert trajectories as environment experiences for on-policy training, eliminating distribution mismatch and improving long-horizon GUI agent performance.",
+      "tldr_cn": "针对单轮强化学习训练与部署分布不一致以及在线多轮方法成本高的问题，提出经验驱动多轮策略优化（EMPO），利用专家轨迹作为环境经验进行on-policy多轮训练，智能体在rollout中构建自生成历史，并在动作匹配时获得反馈。既避免了分布偏移，又缓解了奖励稀疏和成本问题，为长程GUI智能体训练提供了高效方案。",
+      "title_zh": "面向GUI智能体的经验驱动多轮强化学习",
+      "motivation_cn": "单轮强化学习存在训练与部署历史分布不一致，多轮在线方法成本高且奖励稀疏。",
+      "method_cn": "提出利用专家轨迹作为环境经验的多轮策略优化算法EMPO。",
+      "result_cn": "在长程GUI任务上提升了策略性能，并降低了训练成本。",
+      "conclusion_cn": "为GUI智能体的长程多轮训练提供了一种实用的强化学习范式。",
+      "matched_requirement_id": "req-composite-mobile-agent",
+      "matched_query_tag": "query:mobile-agent:composite",
+      "matched_query_text": "Papers central to 手机端Agent与任务执行的检索主题, especially work that connects or combines: mobile agent that performs tasks on behalf of user; automation of tasks on smartphone using software agents; agent running locally on device for task completion; automating operations within mobile applications via agent; framework for building agents on mobile devices; How can AI agents execute tasks autonomously on mobile devices?; What are the key techniques for building on device task execution agents?; Challenges in deploying agents for mobile task automation; Evaluation of mobile agent frameworks for task execution."
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.1021",
+      "score": 6.0,
+      "evidence_en": "Holistic computer-using agent framework with visual tutorial retrieval and memory for robust automation",
+      "evidence_cn": "面向计算机使用智能体的整体框架，结合视觉教程检索与记忆机制实现鲁棒自动化",
+      "canonical_evidence": "面向计算机使用智能体的整体框架，结合视觉教程检索与记忆机制实现鲁棒自动化",
+      "tldr_en": "OS-Symphony introduces an orchestrator, reflection-memory agent, and versatile tool agents with multimodal search to improve robustness and generalization of computer-using agents in long-horizon tasks.",
+      "tldr_cn": "针对计算机使用智能体在陌生领域和长程任务中鲁棒性不足的问题，提出OS-Symphony框架，通过编排器协同反射记忆智能体与多功能工具智能体，并加入多模态教程检索与历史视觉上下文控制，实现轨迹级自我修正。实验表明该方法在跨域泛化和长程自动化中表现更优，为移动设备上的GUI智能体提供了可借鉴的整体架构。",
+      "title_zh": "OS-Symphony：鲁棒且通用的计算机使用智能体整体框架",
+      "motivation_cn": "现有计算机使用智能体在陌生领域和长程工作流中缺乏鲁棒性，视觉上下文管理不足。",
+      "method_cn": "提出包含反射记忆智能体和多模态搜索工具智能体的整体框架，采用里程碑式长期记忆。",
+      "result_cn": "在未知领域和长时期任务上提升了鲁棒性，弥补了视觉上下文丢失问题。",
+      "conclusion_cn": "为通用计算机使用智能体的鲁棒自动化提供了系统化解决方案。",
+      "matched_requirement_id": "req-composite-mobile-agent",
+      "matched_query_tag": "query:mobile-agent:composite",
+      "matched_query_text": "Papers central to 手机端Agent与任务执行的检索主题, especially work that connects or combines: mobile agent that performs tasks on behalf of user; automation of tasks on smartphone using software agents; agent running locally on device for task completion; automating operations within mobile applications via agent; framework for building agents on mobile devices; How can AI agents execute tasks autonomously on mobile devices?; What are the key techniques for building on device task execution agents?; Challenges in deploying agents for mobile task automation; Evaluation of mobile agent frameworks for task execution."
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.774",
+      "score": 6.0,
+      "evidence_en": "data generation technique for training GUI agents, transferable to mobile on-device agents",
+      "evidence_cn": "为GUI智能体提供数据生成技术，可迁移到移动端设备任务执行智能体的构建中",
+      "canonical_evidence": "为GUI智能体提供数据生成技术，可迁移到移动端设备任务执行智能体的构建中",
+      "tldr_en": "Anchor is a trajectory expansion framework that generates scalable GUI agent supervision from small seed demonstrations via branch-point detection and state-grounded task variants, reducing data collection cost.",
+      "tldr_cn": "端到端GUI智能体需要大量高质量交互数据，但人工示范昂贵且现有合成流程常产生低质量轨迹。为此，论文提出Anchor轨迹扩展框架，从少量已验证种子示范出发，通过识别分支点生成新任务变体，并由执行智能体产生轨迹、验证器确保任务完成。该方法在桌面环境验证了可扩展性，为移动GUI智能体的数据构建提供了可迁移技术。",
+      "title_zh": "Anchor：GUI智能体的分支点数据生成方法",
+      "motivation_cn": "GUI智能体训练数据获取成本高，现有合成数据方法存在任务多样性不足和轨迹质量差的问题。",
+      "method_cn": "提出Anchor框架，利用分支点检测与新任务变体生成，从少量种子示范扩展高质量轨迹。",
+      "result_cn": "在桌面GUI环境中生成了多样化且一致的高质量数据，降低了对人工示范的依赖。",
+      "conclusion_cn": "为GUI智能体提供了可扩展的轨迹数据生成方法，可服务于移动端智能体的构建。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.750",
+      "score": 6.0,
+      "evidence_en": "benchmark for autonomous GUI agents in cross-application workflows, transferable to mobile agent evaluation",
+      "evidence_cn": "面向跨应用工作流的自主GUI智能体基准，可迁移至移动智能体评测",
+      "canonical_evidence": "面向跨应用工作流的自主GUI智能体基准，可迁移至移动智能体评测",
+      "tldr_en": "WindowsWorld is a benchmark for autonomous GUI agents in professional cross-application workflows, using a multi-agent framework to generate tasks across 16 occupations and four difficulty levels.",
+      "tldr_cn": "现有GUI智能体基准大多局限于单一应用任务，忽略了跨应用专业工作流这一真实需求。论文提出WindowsWorld，面向跨应用工作流，利用16种职业驱动的多智能体框架生成四个难度级别的任务，并经人工精炼形成基准。该基准为评估GUI智能体在复杂多步专业活动中的表现提供了过程中心的方法，也可为移动跨应用智能体评测提供参考。",
+      "title_zh": "WindowsWorld：专业跨应用环境中自主GUI智能体的过程中心基准测试",
+      "motivation_cn": "现有GUI智能体评测聚焦单一应用任务，无法体现跨应用专业工作流的真实需求。",
+      "method_cn": "提出WindowsWorld基准，以16种职业驱动的多智能体框架生成四档难度的跨应用任务。",
+      "result_cn": "构建了经过人工精炼的多步骤跨应用任务集，支持对GUI智能体的系统评估。",
+      "conclusion_cn": "为跨应用专业场景的自主GUI智能体评估提供了基准，可迁移至移动端评测。",
+      "matched_requirement_id": "req-composite-mobile-agent",
+      "matched_query_tag": "query:mobile-agent:composite",
+      "matched_query_text": "Papers central to 手机端Agent与任务执行的检索主题, especially work that connects or combines: mobile agent that performs tasks on behalf of user; automation of tasks on smartphone using software agents; agent running locally on device for task completion; automating operations within mobile applications via agent; framework for building agents on mobile devices; How can AI agents execute tasks autonomously on mobile devices?; What are the key techniques for building on device task execution agents?; Challenges in deploying agents for mobile task automation; Evaluation of mobile agent frameworks for task execution."
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.788",
+      "score": 5.0,
+      "evidence_en": "adversarial attack exposing challenges in mobile agent deployment",
+      "evidence_cn": "揭示移动智能体部署中对抗鲁棒性挑战的视觉攻击研究",
+      "canonical_evidence": "揭示移动智能体部署中对抗鲁棒性挑战的视觉攻击研究",
+      "tldr_en": "Identifies Visual Dominance Hallucination in mobile agents and proposes PriceBlind, a white-box adversarial attack that uses visual cues to override price constraints, exposing security blind spots in autonomous financial transactions.",
+      "tldr_cn": "移动智能体在金融交易等场景中展现出较强操作能力，但其对抗鲁棒性堪忧。论文发现视觉主导幻觉漏洞，并提出PriceBlind隐写式白盒攻击框架，通过不可察觉的视觉对抗信号覆盖截图中的价格文本证据，迫使智能体做出非理性经济决策。该研究揭示了移动智能体在高风险任务中的安全盲区，为部署安全带来重要警示。",
+      "title_zh": "图便宜反而吃亏：通过视觉对抗扰动绕过多模态智能体的价格约束",
+      "motivation_cn": "多模态智能体在金融交易中的对抗鲁棒性存在盲区。",
+      "method_cn": "提出视觉主导幻觉概念，并设计白盒攻击框架PriceBlind，利用视觉对抗信号压制文本价格证据。",
+      "result_cn": "攻击能迫使智能体忽略价格约束，产生非理性决策。",
+      "conclusion_cn": "强调了移动智能体部署中安全对抗研究的重要性。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.1330",
+      "score": 4.0,
+      "evidence_en": "Survey on evaluation methods for LLM agents, including frameworks and benchmarks; not mobile-specific",
+      "evidence_cn": "关于LLM智能体评估方法的综述，涵盖评估框架与基准，但非移动端特定",
+      "canonical_evidence": "关于LLM智能体评估方法的综述，涵盖评估框架与基准，但非移动端特定",
+      "tldr_en": "Comprehensive survey of LLM agent evaluation across capability, application, generalist, dimension, and framework perspectives; identifies trends toward realistic and continuously updated benchmarks. Useful background for mobile agent evaluation.",
+      "tldr_cn": "该论文系统综述了基于LLM的智能体评估方法，围绕核心LLM能力、应用特定基准、通用智能体评估、基准维度分析以及评估框架与工具五个视角进行全面梳理。它指出现有评估正转向更真实、更具挑战性且持续更新的基准，并归纳了对智能体开发者有实用价值的评估工具与平台。尽管该综述并未专门聚焦移动智能体，但其提出的评估维度、框架和方法论可作为移动智能体任务执行评估的重要参考，帮助研究者设计更贴近真实移动场景的评测方案。",
+      "title_zh": "基于LLM的智能体评估综述",
+      "motivation_cn": "LLM智能体的评估方法分散且缺乏系统梳理，需从多视角总结现状与趋势。",
+      "method_cn": "从核心LLM能力、应用基准、通用智能体、基准维度与评估工具五个视角对智能体评估领域进行综述分析。",
+      "result_cn": "揭示了评估向更真实、动态更新的基准演进的趋势，并归纳了评估框架与工具。",
+      "conclusion_cn": "为智能体开发者提供评估方法的全面参考，有助于构建更可靠的评估体系。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.2001",
+      "score": 4.0,
+      "evidence_en": "Environment creator for building and training LLM agents; could support mobile agent environment generation",
+      "evidence_cn": "为LLM智能体构建训练环境的系统，可支持移动智能体环境生成",
+      "canonical_evidence": "为LLM智能体构建训练环境的系统，可支持移动智能体环境生成",
+      "tldr_en": "Presents C-World, an environment creation system that lets users build diverse agent environments on demand, with a large action space, task distribution engine, state controller, and reward signals, to support training of LLM agents.",
+      "tldr_cn": "论文提出C-World，一个能让用户按需构建智能体环境的系统。它定义了完整环境所需的四个组件：包含5571个统一格式工具的动作空间、能合成长期工作流的任务分布引擎、注入真实故障与扰动的状态控制器，以及可验证度量与LLM评判结合的奖励信号。该系统可创建多样化环境，为智能体提供大规模持续学习支撑。该环境创建能力可扩展到移动应用场景。",
+      "title_zh": "C-World：计算机使用智能体环境创建器",
+      "motivation_cn": "构建大规模多样化智能体训练环境成本过高，阻碍智能体学习与部署。",
+      "method_cn": "提出C-World环境创建系统，以动作空间、任务分布、状态控制器和奖励信号四要素按需生成环境。",
+      "result_cn": "能够低成本构建覆盖204个应用的多样化长期任务环境。",
+      "conclusion_cn": "为智能体环境构建提供通用工具，对移动智能体的训练与评估有潜在价值。",
+      "matched_requirement_id": "req-composite-mobile-agent",
+      "matched_query_tag": "query:mobile-agent:composite",
+      "matched_query_text": "Papers central to 手机端Agent与任务执行的检索主题, especially work that connects or combines: mobile agent that performs tasks on behalf of user; automation of tasks on smartphone using software agents; agent running locally on device for task completion; automating operations within mobile applications via agent; framework for building agents on mobile devices; How can AI agents execute tasks autonomously on mobile devices?; What are the key techniques for building on device task execution agents?; Challenges in deploying agents for mobile task automation; Evaluation of mobile agent frameworks for task execution."
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.337",
+      "score": 4.0,
+      "evidence_en": "Comprehensive benchmark for long-context autonomous agents, applicable to mobile agent framework evaluation",
+      "evidence_cn": "面向长上下文自主智能体的综合基准，可应用于移动智能体框架评测",
+      "canonical_evidence": "面向长上下文自主智能体的综合基准，可应用于移动智能体框架评测",
+      "tldr_en": "AgencyBench provides 138 tasks across 32 real-world scenarios to evaluate six core agentic capabilities in 1M-token contexts, addressing scalability for automated evaluation.",
+      "tldr_cn": "针对现有基准只关注单一智能体能力且依赖人工反馈导致扩展性差的问题，提出AgencyBench，基于日常AI使用构建138个任务、32个真实场景，评估六个核心智能体能力，平均需要约90次工具调用和百万词元上下文。为包括移动端在内的复杂自主智能体提供了更贴近真实的评测基准。",
+      "title_zh": "AgencyBench：百万词元真实世界上下文中自主智能体前沿能力基准测试",
+      "motivation_cn": "现基准确难以覆盖长程真实场景，且依赖人在回路反馈造成扩展瓶颈。",
+      "method_cn": "构建源自日常使用的综合基准，包含多场景、多能力任务和具体评分规则。",
+      "result_cn": "提供了包含138个任务的基准，任务平均需90次工具调用，测评了六个能力。",
+      "conclusion_cn": "为自主智能体的大规模自动化评估提供了可行范式。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution"
+    },
+    {
+      "paper_id": "anthology-2026.acl-long.370",
+      "score": 4.0,
+      "evidence_en": "Benchmark for proactive memory use in task-oriented agents, relevant to memory techniques for mobile execution",
+      "evidence_cn": "面向任务型智能体主动记忆利用的基准，与移动任务执行中的记忆技术相关",
+      "canonical_evidence": "面向任务型智能体主动记忆利用的基准，与移动任务执行中的记忆技术相关",
+      "tldr_en": "Mem2ActBench evaluates whether agents can proactively apply long-term memory to execute tool-based tasks with appropriate tool selection and grounding, simulating persistent assistant usage.",
+      "tldr_cn": "针对现有基准只测被动检索、不测主动记忆应用的问题，提出Mem2ActBench，模拟用户在同一话题上的长期中断交互，评估智能体是否能在执行工具任务时主动利用长期记忆选择合适的工具并设置参数。为移动端个性化助手等任务型智能体的记忆能力评测提供了更贴近实际使用的方式。",
+      "title_zh": "Mem2ActBench：面向任务导向自主智能体长期记忆利用评估的基准",
+      "motivation_cn": "现有记忆基准仅测试被动检索，缺乏对记忆驱动任务执行能力的评估。",
+      "method_cn": "设计模拟持续用户交互的基准，要求智能体主动利用记忆完成工具任务。",
+      "result_cn": "检验了智能体在工具选择与参数设置中利用长期记忆的能力。",
+      "conclusion_cn": "为评估任务型智能体的记忆利用提供了更实际的评测手段。",
+      "matched_requirement_id": "req-composite-mobile-agent",
+      "matched_query_tag": "query:mobile-agent:composite",
+      "matched_query_text": "Papers central to 手机端Agent与任务执行的检索主题, especially work that connects or combines: mobile agent that performs tasks on behalf of user; automation of tasks on smartphone using software agents; agent running locally on device for task completion; automating operations within mobile applications via agent; framework for building agents on mobile devices; How can AI agents execute tasks autonomously on mobile devices?; What are the key techniques for building on device task execution agents?; Challenges in deploying agents for mobile task automation; Evaluation of mobile agent frameworks for task execution."
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.1522",
+      "score": 4.0,
+      "evidence_en": "self-evolving framework for long-horizon operational tasks, not mobile-specific",
+      "evidence_cn": "面向长程操作任务的自我演化智能体框架，未针对移动设备",
+      "canonical_evidence": "面向长程操作任务的自我演化智能体框架，未针对移动设备",
+      "tldr_en": "Presents MUSE, a framework with hierarchical memory and post-execution critique for self-improving agents in long-horizon operational tasks, enabling dynamic learning without fixed parameters.",
+      "tldr_cn": "大语言模型在复杂多步操作任务中因无法从过去经验学习而表现受限。提出MUSE框架，通过层次化记忆模块组织跨领域知识，并利用执行后自动批判机制将操作日志蒸馏为结构化可复用知识，使智能体动态演化。在TAC生产力基准上验证了有效性。该框架虽非移动专用，但其经验学习机制可迁移至移动智能体。",
+      "title_zh": "迈向自我演化智能体：通过交互经验精炼实现自主性",
+      "motivation_cn": "静态智能体无法从经验中学习，难以完成复杂多步任务。",
+      "method_cn": "构建层次化记忆模块与执行后批判机制，蒸馏经验为可复用知识。",
+      "result_cn": "在TAC基准上带来性能提升，兼具自演化能力。",
+      "conclusion_cn": "为操作型智能体的持续学习提供了通用框架，可适配移动场景。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "How can AI agents execute tasks autonomously on mobile devices?"
+    },
+    {
+      "paper_id": "anthology-2026.findings-acl.637",
+      "score": 4.0,
+      "evidence_en": "uncertainty-driven planning for autonomous web agents, transferable to mobile agent planning",
+      "evidence_cn": "面向自主Web智能体的不确定性规划方法，可迁移至移动智能体任务执行",
+      "canonical_evidence": "面向自主Web智能体的不确定性规划方法，可迁移至移动智能体任务执行",
+      "tldr_en": "WebUncertainty introduces dual-level uncertainty-driven planning and reasoning for autonomous web agents, with adaptive planning modes and MCTS-based action selection for complex long-horizon tasks.",
+      "tldr_cn": "自主Web智能体在复杂动态网页中常因刚性规划策略和易幻觉推理而失败。论文提出WebUncertainty框架，采用任务不确定性驱动的自适应规划机制选择规划模式，并引入动作不确定性驱动的蒙特卡洛树搜索来改善推理。实验表明该方法在真实网页任务上提高了鲁棒性和任务完成率。虽然面向Web，其不确定性规划思想对移动智能体任务执行同样具有参考价值。",
+      "title_zh": "WebUncertainty：面向自主Web智能体的双层不确定性规划与推理",
+      "motivation_cn": "自主Web智能体在处理动态交互和长程任务时受制于刚性规划与幻觉推理。",
+      "method_cn": "提出WebUncertainty，包含任务不确定性自适应规划与动作不确定性MCTS推理机制。",
+      "result_cn": "在真实网页任务上提升了鲁棒性和任务完成率。",
+      "conclusion_cn": "为自主智能体提供双层不确定性处理框架，可借鉴到移动设备任务执行。",
+      "matched_requirement_id": "req-7",
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?"
+    }
+  ],
+  "llm_ranked_at": "2026-08-25T12:06:28.945098+00:00",
+  "display_min_score": 4.0,
+  "pruned_at": "2026-08-25T12:06:28.980057+00:00"
+}

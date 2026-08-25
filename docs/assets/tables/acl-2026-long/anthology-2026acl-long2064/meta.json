@@ -1,0 +1,96 @@
+{
+  "version": 2,
+  "extractor": "papercropper",
+  "tables": [
+    {
+      "url": "assets/tables/acl-2026-long/anthology-2026acl-long2064/table-001.webp",
+      "caption": "",
+      "page": 0,
+      "index": 1,
+      "width": 1649,
+      "height": 469,
+      "label": "Table"
+    },
+    {
+      "url": "assets/tables/acl-2026-long/anthology-2026acl-long2064/table-002.webp",
+      "caption": "",
+      "page": 0,
+      "index": 2,
+      "width": 1645,
+      "height": 745,
+      "label": "Table"
+    },
+    {
+      "url": "assets/tables/acl-2026-long/anthology-2026acl-long2064/table-003.webp",
+      "caption": "",
+      "page": 0,
+      "index": 3,
+      "width": 803,
+      "height": 294,
+      "label": "Table"
+    },
+    {
+      "url": "assets/tables/acl-2026-long/anthology-2026acl-long2064/table-004.webp",
+      "caption": "",
+      "page": 0,
+      "index": 4,
+      "width": 809,
+      "height": 493,
+      "label": "Table"
+    },
+    {
+      "url": "assets/tables/acl-2026-long/anthology-2026acl-long2064/table-005.webp",
+      "caption": "",
+      "page": 0,
+      "index": 5,
+      "width": 1393,
+      "height": 2552,
+      "label": "Table"
+    },
+    {
+      "url": "assets/tables/acl-2026-long/anthology-2026acl-long2064/table-006.webp",
+      "caption": "",
+      "page": 0,
+      "index": 6,
+      "width": 1622,
+      "height": 2320,
+      "label": "Table"
+    },
+    {
+      "url": "assets/tables/acl-2026-long/anthology-2026acl-long2064/table-007.webp",
+      "caption": "",
+      "page": 0,
+      "index": 7,
+      "width": 1621,
+      "height": 2498,
+      "label": "Table"
+    },
+    {
+      "url": "assets/tables/acl-2026-long/anthology-2026acl-long2064/table-008.webp",
+      "caption": "",
+      "page": 0,
+      "index": 8,
+      "width": 1620,
+      "height": 1256,
+      "label": "Table"
+    },
+    {
+      "url": "assets/tables/acl-2026-long/anthology-2026acl-long2064/table-009.webp",
+      "caption": "",
+      "page": 0,
+      "index": 9,
+      "width": 1490,
+      "height": 1762,
+      "label": "Table"
+    },
+    {
+      "url": "assets/tables/acl-2026-long/anthology-2026acl-long2064/table-010.webp",
+      "caption": "",
+      "page": 0,
+      "index": 10,
+      "width": 1504,
+      "height": 1824,
+      "label": "Table"
+    }
+  ]
+}

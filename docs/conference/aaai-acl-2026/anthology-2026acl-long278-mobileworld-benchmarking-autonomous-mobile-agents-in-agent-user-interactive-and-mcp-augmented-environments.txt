@@ -1,0 +1,750 @@
+Title: 2026.acl-long.278.pdf
+
+URL Source: https://aclanthology.org/2026.acl-long.278.pdf
+
+Published Time: Thu, 11 Jun 2026 01:09:33 GMT
+
+Number of Pages: 26
+
+Markdown Content:
+> Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 6142–6167 July 2-7, 2026 ©2026 Association for Computational Linguistics
+
+## MobileWorld: Benchmarking Autonomous Mobile Agents in Agent-User Interactive and MCP-Augmented Environments 
+
+Quyu Kong 1* , Xu Zhang 1* , Zhenyu Yang 2, Nolan Gao 3,Chen Liu 1, Panrong Tong 1, Chenglin Cai 1, Hanzhang Zhou 1,
+
+Jianan Zhang 1, Liangyu Chen 1, Zhidan Liu 2, Steven HOI 1, Yue Wang 1† 
+
+> 1
+
+Tongyi Lab, Alibaba Group, 2HKUST (GZ), 3University of Florida  
+
+> *Equal contribution †Correspondence: yue.w@alibaba-inc.com
+
+Abstract 
+
+Among existing online mobile-use benchmarks, AndroidWorld has emerged as the dominant benchmark due to its reproducible environment and deterministic evaluation; however, recent agents achieving over 90% success rates indi-cate its saturation and motivate the need for a more challenging benchmark. To bridge these gaps, we introduce MobileWorld, a substan-tially more challenging benchmark designed to reflect real-world usage through 201 tasks across 20 applications. MobileWorld derives its difficulty from an emphasis on long-horizon, cross-application workflows, requiring nearly twice as many completion steps on average (27.8 vs. 14.3) and featuring a significantly higher proportion of multi-app tasks (62.2% vs. 9.5%) than AndroidWorld. MobileWorld balances production-grade utility and repro-ducible evaluation using open-source alterna-tives to industry standards (e.g., Mattermost for Slack), enabling full observability through source code modification and direct database access. Beyond standard GUI manipulation, MobileWorld introduces novel task categories including agent-user interaction and Model Context Protocol (MCP)-augmented tasks for evaluating agents in user-aware, hybrid-tool scenarios. We develop a planner-executor framework with extended action spaces sup-porting user interactions and MCP calls. Re-sults show a sharp performance drop from An-droidWorld, with the best agentic framework and end-to-end model achieving 51.7% and 20.9% success rates, respectively, highlighting substantial room for future research. 
+
+1 Introduction 
+
+GUI agents on smartphones have emerged as a transformative technology, enabling users to au-tomate complex mobile tasks through natural lan-guage instructions. With the rapid advancement of Vision-Language Models (VLMs), numerous mobile agents have been developed to navigate in-terfaces automatically (Rawles et al., 2023; Deng et al., 2024; Chen et al., 2024; Yang et al., 2025; Zhou et al., 2025). Despite the existence of mul-tiple benchmarks, AndroidWorld (Rawles et al., 2024) remains the go-to benchmark for mobile GUI agent evaluation, owing to its reproducible emulator environment and deterministic evaluation. However, it is approaching saturation—state-of-the-art (SOTA) frameworks now exceed 90% suc-cess rate—limiting our ability to distinguish incre-mental improvements from genuine breakthroughs. Beyond saturation, current benchmarks exhibit several fundamental limitations: (1) Limited task complexity. Existing benchmarks omit critical application categories (e.g., e-commerce, enter-prise communication) and typically feature short-horizon, single-application tasks, whereas real-world mobile assistance demands long-horizon planning and cross-application workflows. (2) Fully-specified instructions. Benchmarks neglect realistic scenarios where users provide vague or incomplete requests, requiring agents to engage in clarification dialogues. (3) No external tool inte-gration. The Model Context Protocol (MCP) (An-thropic, 2024) has emerged as a standardized inter-face for external tools (Wang et al., 2025a). Next-generation agents must seamlessly combine GUI manipulation with tool invocations, yet no existing benchmark evaluates this hybrid paradigm. To address these limitations, we introduce Mo-bileWorld, a substantially more challenging bench-mark designed to reflect real-world mobile us-age. We compare MobileWorld with other online mobile-use benchmarks in Table 1. Detailed re-lated work can be found in Section 2. In summary, our contributions are as follows: 
+
+Increased Task Complexity. As shown in Figure 1, MobileWorld tasks require on average 27.8 completion steps—nearly twice the 14.3 steps in AndroidWorld—with 62.2% involving cross-application workflows (vs. 9.5% in AndroidWorld). 
+
+6142 SOTA Accuracy Avg. Steps 51.7 Cross-Apps Tasks (%) 90+ 14.3 27.8 9.5 62.2     
+
+> MobileWorld AndroidWorld
+> UI-Tars-1.5 GeLab-Zero 4B 20.9 UI-Venus-72B 64.2 63.9 10.9 65.9 10.4 Qwen3-VL -235B-A22B GUI-Owl-7B 63.7 9.5 66.3 4.5 -43.3 -53.0 -55.5 -54.2 -61.8
+> Harder Tasks More Steps More Cross Apps
+
+Figure 1: Compared to AndroidWorld, MobileWorld exhibits lower SOTA success rates, longer task horizons, more cross-application tasks, and sharp performance drops for recent models. 
+
+These tasks demand challenging capabilities in-cluding long-horizon multi-step planning, mem-ory retention, and precise instruction following, etc. Consequently, the top-performing framework achieves only 51.7% success rate on MobileWorld, compared to over 90% on AndroidWorld. 
+
+Agent-User Interaction Tasks. Agent-user in-teraction tasks that evaluate an agent’s ability to handle ambiguous instructions through collabora-tive dialogue. As shown in the left side of Figure 2, consider the user request: “Send an email to Kevin with the message “Hello”. However, Kevin’s email address is not present in the device’s Email or Con-tacts app. In such cases, the agent must recognize the missing information and proactively trigger an 
+
+ask_user action to obtain the details, rather than hallucinating or failing silently. Inspired by Yao et al. (2024), we employ a user agent role-played by a LLM (GPT-4.1 in the example), which holds the key information in its context, and interacts with the GUI agent. This task type tests whether agents can identify the ambiguity in the instruction and ask for clarification. 22.4% of all tasks involve agent-user interaction in MobileWorld. 
+
+MCP-Augmented Tasks. MCP-augmented tasks that require hybrid-usage of the GUI navi-gation and external tool invocations. As illustrated in the right side of Figure 2, an agent is tasked with fetching a GitHub repository’s README and sending its summarization via a team collaboration software (Mattermost). Instead of navigating the repository through a web browser via a sequence of GUI actions, the agent can invoke an MCP tool to directly retrieve the content. After obtaining the relevant information from the GitHub MCP tool, the agent continues the task through GUI interac-tions to compose and send the message. With the rapid adoption of MCP as a standardized protocol for tool integration, evaluating an agent’s strate-gic choice between GUI operations and API-based tools has become essential. MCP-augmented tasks constitute 19.9% of all tasks in MobileWorld. 
+
+Reproducible and Deterministic Evaluation. 
+
+Prior benchmarks for commercial applications (shown in Table 1) suffer from authentication barri-ers and opaque internal states that necessitate noisy “MLLM-as-a-judge” evaluations. In contrast, we replace proprietary services with self-hosted open-source alternatives (e.g., Mattermost in place of Slack), enabling direct access to internal databases. Our framework employs a multi-faceted validation suite — comprising textual response verification, backend database inspection, local storage anal-ysis, and application-specific callbacks — to en-sure absolute determinism. Furthermore, Docker-based Android Virtual Devices (AVDs) coupled with snapshot management enable a standardized and fully reproducible environment. 
+
+Comprehensive Evaluation on MobileWorld. 
+
+To address the unique requirements in our bench-mark, we propose a planner-executor framework extending the action space with ask_user and 
+
+mcp_call , enabling unified GUI manipulation, user interaction, and tool use. We evaluate 3 back-bone models with our framework and 9 end-to-end GUI agents. As shown in Table 3, our framework achieves a SOTA (51.7%) success rate on Mobile-World. Crucially, end-to-end agents exhibit ca-pability collapse on novel task types: most score below 10% on agent—user interaction tasks and near 0% on MCP tasks. These findings underscore fundamental deficiencies in current architectures regarding active user interaction and tool-use. Fi-nally, we perform rigorous error analysis to reveal five research challenges for the community. In summary, MobileWorld provides a rigorous and reproducible environment for advancing mo-bile agents in real-world scenarios that must excel 6143 Send an email to Kevin with the message "Hello"                        
+
+> I did not find Kevin in contact app, I need to ask
+> user what is the Kevin's email address .
+> Action: ask_user
+> Text: what is the Kevin's email addres?
+> I got Kevin's email address and I can open the email App to send the email...
+> Action: open_app(app_name="mail")
+> The message is composed; I need to send it by
+> tapping the Send button at the bottom-right.
+> Check README from android_world GitHub repo and send aMattermost message to Sam about running it on MacOS...
+> Among the provided tools, I should use gitHub_get_file to fetch the README.md content so I can ...
+> Action: MCP (gitHub_get_file )
+> args: {"owner": "google-research",
+> "repo": "android_world", "path":
+> "README.md" }
+> Action: click(x=899, y=809)
+
+Agent User Interaction Task Example 
+
+...... 
+
+...... 
+
+...... 
+
+...... ......         
+
+> Kevin's email address
+> is kevin_zhang@example.com
+> "name": "README.md",
+> "path": "README.md",
+> "type": "file",
+> "size": 10849,
+> "sha": "a19a6770e4b813...",
+
+MCP Tool Use Task Example               
+
+> MCP Service
+> MCPs from Tongyi Bailian Marketplace
+> System Prompt ：
+> You are acting as amobile user.
+> ...
+> The relevant information for the task is: Kevin's email address: kevin_zhang@example.com
+> ...
+> Evaluation via
+> Backend Database
+> Evaluation via
+> App Callback
+> GitHub MCP Tools ：
+> gitHub_ create_or_update_file
+> gitHub_ create_repository
+> gitHub_get_file
+> ...
+> User Agent
+> (GPT-4.1)
+> MCP Server Response
+> Simulated User Response
+> Current
+> Screen
+> Current
+> Screen
+
+Figure 2: Left : An example of an agent-user interaction task, in which the agent must proactively request clarification from a LLM-simulated user when encountering incomplete information. Task completion is verified through the application’s callback cache. Right : An example of an MCP-augmented task, where the agent is initialized with a list of GitHub MCP tools and selects the appropriate tool to retrieve README content from a GitHub repository before completing the task via GUI operations. Task completion is verified through backend database inspection. 
+
+at long-horizon reasoning , active user interac-tion , and MCP tool use . By evaluating SOTA mod-els, we identify core research challenges and offer the community a roadmap toward more realistic and autonomous mobile intelligence. 
+
+2 Related Works 
+
+The development of autonomous agents capable of controlling computers has spurred the creation of various benchmarks across different platforms. For desktop environments, benchmarks such as WindowsAgentArena (Bonatti et al., 2024), OS-World (Xie et al., 2024), and WebArena (Zhou et al., 2023) evaluate agents on operating system tasks and web browsing scenarios. In the mo-bile domain, several benchmarks have emerged to evaluate Android agents. AndroidWorld (Rawles et al., 2024) introduces a fully functional Android environment with 116 programmatic tasks across 20 real-world apps, featuring dynamic task con-struction with parameterized natural language in-structions. AndroidLab (Xu et al., 2025) pro-vides a systematic framework supporting both LLMs and multimodal models. More recently, Android Agent Arena (A3) (Chai et al., 2025) addresses some limitations by incorporating 20 widely used third-party commercial apps and 201 tasks with real-time online information retrieval. Other notable efforts include SPA-Bench (Chen et al., 2024), ProBench (Yang et al., 2025), and AndroidDaily (Yan et al., 2025a), which further ex-pand task coverage and evaluation methodologies. Beyond standard GUI operations, recent work has recognized the importance of evaluating agents on their interaction capabilities and tool usage. 
+
+τ -bench (Yao et al., 2024) introduces dynamic conversations between simulated users and agents equipped with domain-specific API tools and pol-icy guidelines. Building on this, τ 2-bench (Barres et al., 2025) models a dual-control environment where both agent and user actively modify shared world states. Meanwhile, MCP has emerged as a 6144 Table 1: Comparison of online Mobile GUI Agent Benchmarks. MobileWorld uniquely enables deterministic evaluation even for applications requiring backends (e.g., messaging) by utilizing self-hosted environments. We also introduce novel task paradigms: agent-user interaction and MCP augmentation. Backend-Req. Apps: Environment includes third-party apps requiring external backend authentication. ( ✓ = Supported, ✗ = Not Supported).                                                          
+
+> Benchmark #Apps #Tasks Agent-User Int. Tasks MCP-Aug. Tasks Backend-Req. Apps Deterministic Evaluation AndroidArena 16 221 ✗✗✓✗
+> A3 20 201 ✗✗✓✗
+> Pro-Bench 34 200 ✗✗✓✗
+> AndroidDaily 48 235 ✗✗✓✗
+> SPA-Bench 66 340 ✗✗✓✗
+> MobileAgentBench 10 100 ✗✗✗✓
+> AndroidLab 9138 ✗✗✗✓
+> AndroidWorld 20 116 ✗✗✗✓
+> MobileWorld (Ours) 20 201 ✓✓✓✓
+
+mechanism for agents to invoke external tools (Luo et al., 2025; Wang et al., 2025b) alongside GUI op-erations. OSWorld-MCP (Jia et al., 2025) presents the first benchmark assessing tool invocation, GUI operation, and decision-making in real-world envi-ronments. Similarly, MCPWorld (Yan et al., 2025b) is a benchmark for API, GUI, and hybrid agents us-ing "white-box apps" with source code availability. 
+
+3 MobileWorld 
+
+In this section, we formalize the task definition, describe the environment architecture and detail the benchmark construction methodology. 
+
+3.1 Task Definition GUI-Only Tasks We construct GUI-Only tasks following AndroidWorld (Rawles et al., 2024), which comprise Task Completion and Information Retrieval, requiring the agent to accomplish user objectives through standard mobile UI operations. Task Completion involves executing a sequence of GUI actions to drive the system into a specified target state (e.g., composing and sending an email), while Information Retrieval requires locating and gathering relevant information from internal mobile data or external sources (e.g., answering questions about today’s scheduled events). 
+
+Agent-user Interaction Tasks Previous mobile GUI agent benchmarks assume that user instruc-tions are unambiguous. However, this assumption rarely holds in real-world scenarios. To reflect this challenge, we introduce a dedicated set of tasks in which critical information is deliberately omitted from the task goal, rendering successful completion impossible without actively seeking clarification. 
+
+MCP-augmented Tasks MCP provides a more straightforward way to access a wider range of re-sources and functionalities beyond standard GUI operations (Jia et al., 2025). However, in real-world scenarios, not all applications are equipped with well-designed MCP interfaces, and the GUI re-mains the predominant mode of interaction. Given this co-existence of GUI-based interaction and MCP-enabled tool access, we specifically design a set of tasks augmented with MCP tools. These tasks require agents to integrate MCP tool invoca-tions with standard GUI operations to succeed. 
+
+3.2 Environment Development 
+
+As illustrated in Figure 3, MobileWorld comprises two main components: the host machine running GUI agents and the containerized environment. We detail the key design elements below. 
+
+Action Space MobileWorld supports a hybrid ac-tion space combining GUI operations, agent-user interaction, and MCP tool invocation (see Sec-tion A for complete specification). GUI Operations 
+
+include standard mobile manipulations: click ,
+
+double_tap , long_press , drag , input_text ,
+
+scroll , navigation commands, answer for infor-mation retrieval, wait for screen updates, and 
+
+status to signal completion. Agent-User Inter-action : The ask_user action routes clarification queries to an LLM-based user agent (e.g., GPT-4.1). MCP Tool Integration : The mcp_call action invokes external tools from curated MCP servers 1,spanning geospatial navigation, code analysis, doc-ument processing, etc. 
+
+> 1https://bailian.console.aliyun.com/?tab=app
+
+6145 Stable and Reproducible Environment Mo-bileWorld achieves stability and reproducibility through containerization and careful engineering. 
+
+Containerized Architecture. The entire evalu-ation environment is encapsulated in Docker-in-Docker containers (right side in Figure 3), includ-ing a rooted Android Virtual Device (AVD), self-hosted application backends, and an API server for orchestration. This design eliminates external dependencies and enables consistent deployment across different host systems. 
+
+Open-Source Applications. We construct sta-ble, reproducible application environments based on popular open-source projects, including Mat-termost (an open-source alternative to Slack), Mastodon (an open-source alternative to X/Twit-ter), and Mall4Uni (e-commerce platform). Self-hosting these applications provides full backend access, enabling precise control over task initial-ization states and deterministic verification of task outcomes. More details about the open-source ap-plications can be referred in Section E.2. 
+
+Snapshot-Based State Management. To ensure consistent initial conditions across evaluation runs, we employ AVD snapshots that capture the com-plete device state. Each task execution begins from a predetermined snapshot, guaranteeing re-producible starting conditions. 
+
+Task Evaluation Deterministic evaluation is es-sential for reliable benchmarking. We implement multiple complementary verification methods to assess task success: 
+
+Textual Answer Verification. For information retrieval tasks where the expected output is a spe-cific textual response, we employ pattern matching with regular expressions or exact string comparison against ground-truth answers. 
+
+Backend Database Verification. For tasks involv-ing self-hosted applications such as Mattermost or Mastodon, we directly query the backend database to verify that expected state changes have occurred. 
+
+Local Storage Inspection. Leveraging rooted emulator access, we use Android Device Bridge (ADB) to inspect application-specific local storage and verify internal state. 
+
+Application Callbacks. For tasks involving cus-tomized applications, we implement callback APIs that capture intermediate states during execution. These states are persisted and subsequently queried by the evaluator to determine task success. 
+
+3.3 Task Construction 
+
+Based on this environment, we construct 201 tasks across diverse scenarios (Table 2). The categories span GUI-only (57.7%), agent-user interaction (22.4%), and MCP-augmented tasks (19.9%). Most tasks (62.2%) require cross-app coordination. For evaluation, we employ four verification modes: database verification (47.3%), storage inspection (36.8%), textual matching (10.9%), and app call-backs (5.0%). Additionally, we integrate 5 MCP servers with 64 tools. 
+
+Task Instructions and Scenarios To ensure our benchmark reflects diverse and realistic mobile us-age scenarios, we curate tasks from a broad spec-trum of real-world domains, including e-commerce, social platform, productivity collaboration, on-device system management, and information re-trieval. All tasks are constructed based on the Mo-bileWorld initial system state, which is preloaded by contacts, SMS messages, emails, etc. The preloaded materials are either synthesized by LLM or derived from the internet. The complete APP list can be found in Section E.1. 
+
+Agent-User Interaction Task Construction To construct agent-user interaction tasks, we first ask human annotators to write a clear and achievable task goal (e.g., “Send an email to kevin_zhang@example.com with ‘Hello.”’ ), then remove critical information—such as replacing the email with just “Kevin”—making tasks ambigu-ous. To prevent unintended information leakage, annotators also verify that the device environment does not contain the omitted information (e.g., en-suring “Kevin” is not in Contacts). We deploy a LLM-simulated user agent responds to clarifica-tion requests, configured with the full task goal and the exact omitted information. In addition, the user agent is instructed not to assist beyond this scope. Full prompt for the user agent is provided in the following block.   
+
+> User Agent System Prompt # System Prompt: You are acting as a mobile phone user. An mobile GUI agent is executing a task on your phone. The task goal is: {self.goal}. You need to answer questions from the mobile GUI agent. The relevant information for the task is: {self.relevant_information}. If the question is not related to the task or no more task-related information is available, you need to refuse to answer in a polite manner. DO NOT make up any information. You can ONLY give the answer based on the relevant information and the task goal. Today is 2025-10-16, Thursday. If the question is about the date, you need to answer the correct date based on the current date.
+
+6146 MCP Servers      
+
+> Mobile Env API Server
+> ADB Controller
+> MobileWorld Docker Enviornment
+> GUI Agent
+> MCP Tools
+> Client MCP Client
+> Android Emulator
+> No
+> Host Machine
+> Yes
+> Task
+> Instruction
+> MCP Call GUI Action
+> LLM-Simulated User Agent
+> init interaction
+> 0
+> Application Callbacks
+> Task Evaluation
+> Action Exec Get Screenshot
+> persist
+> Eval Controller
+> HTTP
+> Query
+> APP Database
+> Textual Answering Verification
+> Backend Database Verification
+> Local Storage Inspection
+> Get Score
+> HTTP
+> ...
+
+Figure 3: System architecture of MobileWorld. Left : GUI agents on the host receive instructions, interact with users, and execute GUI actions or MCP tool calls. Right : a dockerized Android environment with self-hosted app backends and an evaluator supporting 4 verification modes. Table 2: Key statistics in MobileWorld. 
+
+Statistic Number 
+
+Total tasks 201 (100%) 
+
+Category Breakdown 
+
+– GUI-Only Tasks 116 (57.7%) – Agent-User Int. Tasks 45 (22.4%) – MCP-Aug. Tasks 40 (19.9%) 
+
+App Complexity 
+
+– Single App Tasks 76 (37.8%) – Two Apps Tasks 100 (49.8%) – ≥ Three Apps Tasks 25 (12.4%) 
+
+Evaluation Mode 
+
+– App Callbacks 10 (5.0%) – Textual Matching 22 (10.9%) – Storage Inspection 74 (36.8%) – DB Verification 95 (47.3%) Total MCP Servers 5Total MCP Tools 64 
+
+MCP-Augmented Task Construction Given the selected MCP servers and tools (see Section B), annotators are instructed to read each tool’s de-scription and sample output. They then create standalone tasks that can be completed using only MCP tools (e.g., “List all commits in the main branch of the mastodon/mastodon repository from the past week” via the GitHub MCP). These tasks are non-trivial or error-prone via pure-GUI op-erations. Subsequently, annotators extend these into hybrid workflows by appending one or more GUI-based actions that consume the MCP output. For example, after retrieving a commit history via GitHub MCP tool calling, the agent is instructed to compose and send an email summarizing the changes using the native Email app. 
+
+3.4 Planner-Executor Agentic Framework 
+
+To support the novel task categories of Mobile-World, we propose a planner-executor agentic framework (China Mobile Jiutian Team, 2025). The planner interprets task instructions, analyzes the current screenshot and interaction history, and selects high-level actions (e.g., click , swipe ,
+
+type , wait ). Instead of outputting pixel coordi-nates, it describes the target UI element in natural language (e.g., “the ‘Send’ button at the bottom right corner”), which is then grounded to precise co-ordinates by a dedicated grounding executor using the screenshot. This decoupling allows any general-purpose VLM to be plugged in without requiring built-in pixel-level grounding capabilities. To han-dle MobileWorld’s unique requirements, we extend the action space with ask_user , which queries an LLM-simulated user and mcp_call , which invokes external MCP tools by specifying their name and parameters. This unified loop seamlessly integrates GUI interaction, user clarification, and tool use. Further details are provided in Section D. 
+
+4 Experiments 
+
+In this section, we conduct comprehensive exper-iments to evaluate state-of-the-art models on Mo-bileWorld and analyze their capabilities across dif-ferent task categories. 
+
+4.1 Metrics 
+
+We define the following metrics to measure GUI agents on MobileWorld. 
+
+Success Rate (SR) measures the proportion of tasks successfully completed by the agent. For each task i, a binary score si ∈ { 0, 1} is assigned, where si = 1 if the task objective is fully achieved and si = 0 otherwise. The overall success rate is computed as SR = 1
+
+> N
+
+∑Ni=1 si. We also report category-specific success rates: GUI-Only SR for GUI-only tasks, Interaction SR for agent–user interaction tasks (denoted by Iinteract ), and MCP SR for MCP-augmented tasks (denoted by IMCP ). 
+
+Average Completion Steps (Ave. Steps) de-notes the average number of action steps taken across all execution trajectories. Let ti be the num-ber of steps in the trajectory for task i (including both successful and failed episodes). The aver-age completion steps is defined as: Ave. Steps =6147 1
+
+> N
+
+∑Ni=1 ti. Under comparable success rates, a lower value reflects greater execution efficiency. 
+
+Average User Queries (Ave. Queries) measures the average number of ask_user actions invoked by the agent across agent-user interaction tasks. Let ci denote the number of ask_user actions for task i ∈ I interact . This metric is defined as: Ave. Queries = 1
+
+|I interact |
+
+∑
+
+> i∈I interact
+
+ci (1) . This metric reflects how frequently agents seek user clarification, with optimal agents achiev-ing task success while minimizing unnecessary queries. 
+
+User Interaction Quality (UIQ) evaluates both the effectiveness and efficiency of the agent’s 
+
+ask_user invocations. Let Iinteract denote the set of agent-user interaction task indices, and let Itriggered 
+
+denote the set of non-interaction task indices where the agent invoked at least one ask_user action. For each task i, let ci denote the number of ask_user 
+
+actions invoked and si ∈ { 0, 1} the task success indicator. The quality score for task i ∈ I interact is computed as: 
+
+qi =
+
+{ si 
+
+> ci
+
+if ci > 0,
+
+0 if ci = 0 . (2) The overall UIQ score is then defined as: UIQ =
+
+∑ 
+
+> i∈I interact
+
+qi
+
+|I interact | + |I triggered | (3) UIQ rewards agents that successfully complete in-teraction tasks with fewer queries, while penalizing agents that fail to seek necessary clarification or unnecessarily invoke ask_user on non-interaction tasks. High UIQ indicates the agent appropriately recognizes when user clarification is needed and efficiently resolves ambiguities. 
+
+Average MCP Tool Calls (Ave. MCP Calls) 
+
+measures the average number of MCP tool invoca-tions by the agent in MCP-augmented tasks. It is defined as: Ave. MCP Calls = 1
+
+|I MCP |
+
+∑
+
+> i∈I MCP
+
+mi (4) where mi denote the number of MCP tool calls for task i ∈ I MCP . It indicates the agent’s propensity to leverage external tools, with effective agents appropriately integrating MCP tool access into their task execution workflows. 
+
+Table 3: Success rate (%) comparison of state-of-the-art mobile GUI agent models on MobileWorld under maxi-mum 50 steps. We report overall SR and breakdown by task category: GUI-Only tasks, agent-user interaction tasks, and MCP-augmented tasks. Bold indicates the best result and underline indicates the second best.                                                     
+
+> Model Overall GUI-Only User-Int. MCP
+> Claude-4.5-Sonnet 43.8 47.8 37.8 50.0 Gemini-3-Pro 46.3 55.6 24.4 48.6 GPT-5 51.7 54.0 62.2 51.6
+> GUI-Owl-7B 4.5 7.7 --GUI-Owl-32B 5.5 8.5 --UI-Venus-7B 5.5 8.5 --UI-Venus-72B 10.4 16.4 --Qwen3-VL-8B 5.5 9.4 0.0 0.0 Qwen3-VL-32B 9.0 11.9 6.7 2.7 Qwen3-VL-235A22B 9.5 12.8 4.4 5.4
+> GELab-Zero-4B 10.9 16.1 6.7 -Doubao-1.5-UI-TARS 20.9 26.3 32.4 -
+
+4.2 Experimental Setup 
+
+We evaluate a suite of state-of-the-art Large Multimodal Models (LMMs), including Qwen3-VL-235B-A22B-Instruct (Qwen Team, 2025), Qwen3-VL-32B-Instruct (Qwen Team, 2025), GUI-Owl-32B (Ye et al., 2025), UI-Venus-72B (Gu et al., 2025), Doubao-1.5-UI-TARS (Seed, 2025), GELab-Zero (Team, 2025), OpenAI GPT-5 (Ope-nAI, 2025), Claude-4.5-Sonnet (Anthropic, 2025), and Gemini-3-Pro (Comanici et al., 2025). To en-able consistent comparison of performance across models, we integrate general-purpose LMMs, such as GPT-5 and Claude-4.5-Sonnet, into the planner-executor agentic framework introduced in Sec-tion 3.4. We uniformly leverage UI-Ins-7B (Chen et al., 2025) as the grounding executor model. For end-to-end GUI agent models, inlcuding Doubao-1.5-UI-TARS, GUI-Owl, UI-Venus, GELab-Zero and Qwen3-VL, we employ their official imple-mentations and adapt them to the MobileWorld environment. The details of the experiment setup can be found in Section C. 
+
+4.3 Main Results 
+
+Table 3 presents the success rate comparison across all evaluated models under different task categories. Several key observations emerge from our results. First, MobileWorld presents a significant chal-lenge even for state-of-the-art models. The best-performing model, GPT-5 + UI-Ins-7B, achieves only 51.7% overall success rate, substantially lower than the 90%+ success rates reported on Android-World (Rawles et al., 2024). This confirms that 6148 our benchmark effectively addresses the saturation problem in existing mobile agent evaluation. Second, there exists a substantial performance gap between agentic frameworks and end-to-end GUI-specialized models. Agentic frameworks leveraging frontier LLMs (e.g., GPT-5, Claude-4.5-Sonnet and Gemini-3-Pro) consistently outperform end-to-end models by a large margin. The best agentic model achieves an overall success rate of 51.7%, compared to only 20.9% for the best end-to-end model (Doubao-1.5-UI-TARS). This gap stems from two key limitations of current end-to-end ap-proaches: (1) insufficient capability in handling the complex reasoning and cross-app coordination required by MobileWorld, and (2) a lack of support for agent-user interaction and MCP tool invocation. Third, agent-user interaction and MCP-augmented tasks prove particularly challenging and reveal critical capability gaps. On agent-user interaction tasks, Qwen3-VL and GELab-Zero achieve scores below 10%, while Doubao-1.5-UI-TARS achieves only 32.4%. This highlights the difficulties in recognizing when user clarification is needed. In contrast, GPT-5 demonstrates strong performance (62.2%) on these tasks, suggesting that advanced reasoning capabilities are essential for effective human-agent collaboration. Similarly, MCP-augmented tasks expose fundamental limi-tations in tool integration. Qwen3-VL is unable to properly utilize MCP tools when required to coordinate their invocation with GUI actions. On the other hand, among agentic frameworks, the best performance reaches only 51.6% (GPT-5). This reveals that current models struggle to effectively orchestrate between GUI actions and external tool invocations. 
+
+4.4 In-depth Analysis 
+
+Table 4 presents a comprehensive analysis of agent behavior beyond task success rates. Several no-table patterns emerge from examining execution efficiency and interaction quality. 
+
+Execution Efficiency Among all evaluated mod-els, Gemini-3-Pro + UI-Ins-7B achieves the low-est average completion steps (24.2), followed by Claude-4.5-Sonnet + UI-Ins-7B (26.6) and GPT-5 + UI-Ins-7B (27.8). Interestingly, Doubao-1.5-UI-TARS and GUI-Owl-7B also exhibit relatively low step counts (20.9 and 20.6 respectively), but this is largely attributable to their lower success rates— these models often terminate early due to failure 
+
+Table 4: Detailed metrics comparison on MobileWorld under maximum 50 steps. We report Success Rate (SR), Average Completion Steps (Steps), Average User Queries (Queries), User Interaction Quality (UIQ), and Average MCP Calls (MCP). Bold indicates the best result and underline indicates the second best.                                                                  
+
+> Model SR (%) Steps Queries UIQ MCP
+> Claude-4.5-Sonnet 43.8 26.6 0.76 0.25 1.91 Gemini-3-Pro 46.3 24.2 0.36 0.19 2.63
+> GPT-5 51.7 27.8 1.11 0.40 2.23 GUI-Owl-7B 4.5 20.6 ---GUI-Owl-32B 5.5 24.0 ---UI-Venus-7B 5.5 26.7 ---UI-Venus-72B 10.4 34.2 ---Qwen3-VL-8B 5.5 24.8 0.04 0.00 2.32 Qwen3-VL-32B 9.0 27.1 0.00 0.00 3.84 Qwen3-VL-235A22B 9.5 26.9 0.00 0.00 2.38 GELab-Zero-4B 10.9 29.9 0.37 0.02 -Doubao-1.5-UI-TARS 20.9 20.9 1.22 0.13 -
+
+rather than efficient task completion. In contrast, UI-Venus-72B requires the highest average steps (34.2) while achieving only 10.4% success rate, indicating inefficient behavior. 
+
+User Interaction Quality The Average Queries and UIQ metrics jointly reveal how models manage agent-user interaction tasks. GPT-5 demonstrates the most effective clarification behavior, with an average of 1.11 queries per interaction task — cor-responding to its highest user-interaction success rate (62.2%) and UIQ (0.40). Claude-4.5-Sonnet follows, averaging 0.76 queries and achieving a UIQ of 0.25. In contrast, Gemini-3-Pro got a lower UIQ (0.19) and asks very few queries on average (0.36), even though it performs well on GUI-only tasks (55.6%). This suggests it under-utilizes user clarification even when beneficial. No-tably, UIQ scores are consistently lower than User-Interaction SR across all models, indicating the presence of unnecessary ask_user operations that inflate query counts without contributing to task success. In particular for Doubao-1.5-UI-TARS, a User-Interaction SR of 32.4% was achieved with 1.22 average queries, but the model obtains a lower UIQ of only 0.13. This gap suggests that Doubao-1.5-UI-TARS frequently issues redundant or inef-fective clarification requests. 
+
+MCP Tool Integration For MCP-augmented tasks, Gemini-3-Pro leads in average tool invo-cations (2.63 calls per task), followed by GPT-5 (2.23) and Claude-4.5-Sonnet (1.91). This higher tool utilization correlates with stronger MCP SR 6149 0 10 20 30 40 50 Completion Steps (50 max steps) Number of Tasks  +13.5 steps 
+
+> AndroidWorld (avg=14.3) MobileWorld (avg=27.8) Figure 4: Comparison of completion steps between AndroidWorld and MobileWorld.
+
+performance, indicating that successful MCP task completion requires agents to actively and appro-priately leverage external tools. The average MCP Tool calls of Qwen3-VL (2.32 ∼ 3.84) is compara-ble to that of the aforementioned models. However, due to inaccuracies in generated tool names and arguments, a large proportion of tool invocation failed, leading to a significantly lower MCP suc-cess rate (0.0 ∼ 5.4). Other end-to-end models universally fail to invoke MCP tools, as they lack the architectural support for tool integration. These findings highlight that effective mobile agents require not only strong task completion ca-pabilities but also appropriate utilization of inter-active clarification and external tool integration, where current end-to-end approaches show signifi-cant room for improvement. 
+
+Completion Step Comparison with Android-World We compared the task completion steps with 50 max steps under the GPT-5 agentic frame-work on MobileWorld and AndroidWorld, respec-tively. As shown in Figure 4, MobileWorld exhibits a significantly higher complexity compared to An-droidWorld in terms of task length and step distri-bution. While AndroidWorld tasks are predomi-nantly completed within 15 steps (with an average of 14.3 steps), MobileWorld tasks require substan-tially more actions, with 27.8 average steps. The distribution of MobileWorld tasks is notably right-skewed, with a large proportion requiring over 20 steps, reflecting its focus on long-horizon work-flows involving GUI interactions, user clarification, and MCP tool calls. 
+
+Case Study To better understand the limitations of current GUI agents, we manually inspect failed tasks across evaluated models and categorize rep-resentative failure cases. Our case study in Sec-tion K reveals five key challenges faced by cur-rent GUI agent models. (1) Ambiguity detection. 
+
+Without the ability to query the user, agents fre-quently hallucinate missing arguments rather than requesting clarification—e.g., silently assuming an arbitrary hometown when asked to compute a driv-ing distance, which produces a plausible-looking but incorrect result. (2) Long-context management for MCP tool invocation. MCP tool responses can easily overflow the agent’s context window; a PDF-extraction tool, for instance, may return a 20k-token document that buries the few target values and causes the agent to extract the wrong numbers. 
+
+(3) Long-term memory tracking. In repetitive multi-step workflows, agents lose track of which sub-tasks have already been completed. In a bulk file-renaming task, the agent repeatedly re-processes previously renamed files, entering a destructive loop that corrupts the final file state. (4) Com-plex logic reasoning. Tasks requiring multi-step symbolic or numerical reasoning—such as identi-fying the top k most expensive items in a shopping cart and summing their prices—routinely fail due to mis-ranking, mis-reading prices, or arithmetic slips during aggregation. (5) Temporal-spatial con-text awareness. Agents rarely ground their actions in the device’s real-world time or location; when asked to “schedule a lunch tomorrow,” most models hallucinate a date instead of consulting the system clock, resulting in mis-scheduled events. More details can be found in Section L. 
+
+5 Conclusion 
+
+We introduce MobileWorld, a challenging bench-mark for evaluating mobile GUI agents that ad-dresses the saturation of existing benchmarks. MobileWorld advances mobile agent evaluation through complex workflows, agent-user interac-tion tasks that assess ambiguity recognition, and MCP-augmented tasks involving GUI operations and external tools. Built on production-grade, open-source apps in a containerized environment, it sup-ports deterministic evaluation via multiple verifi-cation methods. Experiments show SOTA agents achieve only 51.7% (agentic framework) and 20.9% (end-to-end) SR, with further drops on interaction and MCP tasks, exposing critical gaps in ambigu-ity handling, dialogue, and hybrid planning. We hope MobileWorld will serve as a rigorous testbed to drive progress toward mobile agents capable of handling real-world automation complexity. 6150 Limitations 
+
+We identify the following limitations of our work, which may not be exhaustive but represent our best effort to acknowledge potential constraints. 
+
+Simulated User Agent Agent-user interaction relies on LLM-simulated users (GPT-4.1) rather than real humans, which may not capture the full variability of human communication (e.g., impa-tience, ambiguous responses, unexpected follow-ups). However, this trade-off is necessary to ensure reproducible and scalable evaluation. 
+
+Open-Source Application Substitutes We use open-source alternatives (Mattermost for Slack, Mastodon for X/Twitter) to enable deterministic evaluation. These may differ from commercial apps in UI complexity and edge-case behaviors, but this approach is essential for full backend ac-cess and reproducibility. 
+
+Benchmark Scope Our benchmark comprises 201 tasks spanning 20 mobile applications and therefore cannot exhaustively cover the full diver-sity of real-world mobile scenarios. Certain ap-plication domains may be underrepresented, and all tasks are currently limited to English and Chi-nese. Expanding domain diversity and multilingual coverage remains an important direction for future work, though it is constrained by the high cost of expert annotation. 
+
+Emulator-Based Evaluation Experiments use Android Virtual Devices rather than physical de-vices, which may differ in rendering latency, touch response, and hardware-specific features. This trade-off enables containerized, reproducible de-ployment across diverse host systems. 
+
+Evaluation Design Binary success metrics do not capture partial completion, and temperature 0.0 may differ from real deployments. These choices prioritize determinism and fair model comparison over fine-grained assessment. 
+
+References 
+
+Anthropic. 2024. What is the model context proto-col (mcp)? https://modelcontextprotocol.io/ docs/getting-started/intro .Anthropic. 2025. Claude Sonnet 4. https://www. anthropic.com/claude/sonnet . [Accessed 31-08-2025]. Victor Barres, Honghua Dong, Soham Ray, Xujie Si, and Karthik Narasimhan. 2025. τ 2-bench: Evaluat-ing conversational agents in a dual-control environ-ment. arXiv preprint arXiv:2506.07982 .Rogerio Bonatti, Dan Zhao, Francesco Bonacci, Dil-lon Dupont, Sara Abdali, Yinheng Li, Yadong Lu, Justin Wagle, Kazuhito Koishida, Arthur Bucker, and 1 others. 2024. Windows agent arena: Evalu-ating multi-modal os agents at scale. arXiv preprint arXiv:2409.08264 .Yuxiang Chai, Hanhao Li, Jiayu Zhang, Liang Liu, Guangyi Liu, Guozhi Wang, Shuai Ren, Siyuan Huang, and Hongsheng Li. 2025. A3: Android agent arena for mobile gui agents. arXiv preprint arXiv:2501.01149 .Jingxuan Chen, Derek Yuen, Bin Xie, Yuhao Yang, Gongwei Chen, Zhihao Wu, Li Yixing, Xurui Zhou, Weiwen Liu, Shuai Wang, and 1 others. 2024. Spa-bench: A comprehensive benchmark for smartphone agent evaluation. In NeurIPS 2024 Workshop on Open-World Agents .Liangyu Chen, Hanzhang Zhou, Chenglin Cai, Jianan Zhang, Panrong Tong, Quyu Kong, Xu Zhang, Chen Liu, Yuqi Liu, Wenxuan Wang, and 1 others. 2025. Ui-ins: Enhancing gui grounding with multi-perspective instruction-as-reasoning. arXiv preprint arXiv:2510.20286 .China Mobile Jiutian Team. 2025. JT-GUIAgent: An advanced gui agent framework with planner-grounder architecture. GitHub repository. Gheorghe Comanici, Eric Bieber, Mike Schaekermann, Ice Pasupat, Noveen Sachdeva, Inderjit Dhillon, Mar-cel Blistein, Ori Ram, Dan Zhang, Evan Rosen, and 1 others. 2025. Gemini 2.5: Pushing the frontier with advanced reasoning, multimodality, long context, and next generation agentic capabilities. arXiv preprint arXiv:2507.06261 .Shihan Deng, Weikai Xu, Hongda Sun, Wei Liu, Tao Tan, Liujianfeng Liujianfeng, Ang Li, Jian Luan, Bin Wang, Rui Yan, and 1 others. 2024. Mobile-bench: An evaluation benchmark for llm-based mo-bile agents. In Proceedings of the 62nd Annual Meet-ing of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 8813–8831. Zhangxuan Gu, Zhengwen Zeng, Zhenyu Xu, Xingran Zhou, Shuheng Shen, Yunfei Liu, Beitong Zhou, Changhua Meng, Tianyu Xia, Weizhi Chen, and 1 others. 2025. Ui-venus technical report: Building high-performance ui agents with rft. arXiv preprint arXiv:2508.10833 .Hongrui Jia, Jitong Liao, Xi Zhang, Haiyang Xu, Tian-bao Xie, Chaoya Jiang, Ming Yan, Si Liu, Wei Ye, and Fei Huang. 2025. Osworld-mcp: Benchmarking mcp tool invocation in computer-use agents. arXiv preprint arXiv:2510.24563 .6151 Adam Jones and Conor Kelly. 2024. Code execution with MCP: Building more efficient agents. Anthropic Engineering Blog. Accessed: 2024-12-XX. Woosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Sheng, Lianmin Zheng, Cody Hao Yu, Joseph E. Gonzalez, Hao Zhang, and Ion Stoica. 2023. Effi-cient memory management for large language model serving with pagedattention. In Proceedings of the ACM SIGOPS 29th Symposium on Operating Systems Principles .Ziyang Luo, Zhiqi Shen, Wenzhuo Yang, Zirui Zhao, Prathyusha Jwalapuram, Amrita Saha, Doyen Sahoo, Silvio Savarese, Caiming Xiong, and Junnan Li. 2025. Mcp-universe: Benchmarking large language mod-els with real-world model context protocol servers. 
+
+Preprint , arXiv:2508.14704. OpenAI. 2025. Introducing gpt-5. Technical report, OpenAI. Qwen Team. 2025. Qwen3-vl: The multimodal large language model series. GitHub repository. Christopher Rawles, Sarah Clinckemaillie, Yifan Chang, Jonathan Waltz, Gabrielle Lau, Marybeth Fair, Alice Li, William Bishop, Wei Li, Folawiyo Campbell-Ajala, and 1 others. 2024. Androidworld: A dynamic benchmarking environment for autonomous agents. 
+
+arXiv preprint arXiv:2405.14573 .Christopher Rawles, Alice Li, Daniel Rodriguez, Ori-ana Riva, and Timothy Lillicrap. 2023. An-droidinthewild: A large-scale dataset for android device control. Advances in Neural Information Pro-cessing Systems , 36:59708–59728. ByteDance Seed. 2025. Ui-tars-1.5. https:// seed-tars.com/1.5 .GELab Team. 2025. Gelab-zero: An advanced mobile agent inference system. Haoming Wang, Haoyang Zou, Huatong Song, Jiazhan Feng, Junjie Fang, Junting Lu, Longxiang Liu, Qinyu Luo, Shihao Liang, Shijue Huang, and 1 others. 2025a. Ui-tars-2 technical report: Advancing gui agent with multi-turn reinforcement learning. arXiv preprint arXiv:2509.02544 .Wenhao Wang, Peizhi Niu, Zhao Xu, Zhaoyu Chen, Jian Du, Yaxin Du, Xianghe Pang, Keduan Huang, Yan-feng Wang, Qiang Yan, and Siheng Chen. 2025b. Mcp-flow: Facilitating llm agents to master real-world, diverse and scaling mcp tools. Preprint ,arXiv:2510.24284. Tianbao Xie, Danyang Zhang, Jixuan Chen, Xiaochuan Li, Siheng Zhao, Ruisheng Cao, Toh J Hua, Zhoujun Cheng, Dongchan Shin, Fangyu Lei, and 1 others. 2024. Osworld: Benchmarking multimodal agents for open-ended tasks in real computer environments. 
+
+Advances in Neural Information Processing Systems ,37:52040–52094. Yifan Xu, Xiao Liu, Xueqiao Sun, Siyi Cheng, Hao Yu, Hanyu Lai, Shudan Zhang, Dan Zhang, Jie Tang, and Yuxiao Dong. 2025. Androidlab: Training and sys-tematic benchmarking of android autonomous agents. In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 2144–2166. Haolong Yan, Jia Wang, Xin Huang, Yeqing Shen, Ziyang Meng, Zhimin Fan, Kaijun Tan, Jin Gao, Lieyu Shi, Mi Yang, Shiliang Yang, Zhirui Wang, Brian Li, Kang An, Chenyang Li, Lei Lei, Meng-meng Duan, Danxun Liang, Guodong Liu, and 78 others. 2025a. Step-gui technical report. Preprint ,arXiv:2512.15431. Yunhe Yan, Shihe Wang, Jiajun Du, Yexuan Yang, Yux-uan Shan, Qichen Qiu, Xianqing Jia, Xinge Wang, Xin Yuan, Xu Han, and 1 others. 2025b. Mcp-world: A unified benchmarking testbed for api, gui, and hybrid computer use agents. arXiv preprint arXiv:2506.07672 .Leyang Yang, Ziwei Wang, Xiaoxuan Tang, Sheng Zhou, Dajun Chen, Wei Jiang, and Yong Li. 2025. Probench: Benchmarking gui agents with accurate process information. arXiv preprint arXiv:2511.09157 .Shunyu Yao, Noah Shinn, Pedram Razavi, and Karthik Narasimhan. 2024. τ -bench: A benchmark for tool-agent-user interaction in real-world domains. arXiv preprint arXiv:2406.12045 .Jiabo Ye, Xi Zhang, Haiyang Xu, Haowei Liu, Jun-yang Wang, Zhaoqing Zhu, Ziwei Zheng, Feiyu Gao, Junjie Cao, Zhengxi Lu, and 1 others. 2025. Mobile-agent-v3: Foundamental agents for gui automation. 
+
+arXiv preprint arXiv:2508.15144 .Hanzhang Zhou, Xu Zhang, Panrong Tong, Jianan Zhang, Liangyu Chen, Quyu Kong, Chenglin Cai, Chen Liu, Yue Wang, Jingren Zhou, and 1 oth-ers. 2025. Mai-ui technical report: Real-world centric foundation gui agents. arXiv preprint arXiv:2512.22047 .Shuyan Zhou, Frank F Xu, Hao Zhu, Xuhui Zhou, Robert Lo, Abishek Sridhar, Xianyi Cheng, Tianyue Ou, Yonatan Bisk, Daniel Fried, and 1 others. 2023. Webarena: A realistic web environment for building autonomous agents. arXiv preprint arXiv:2307.13854 .6152 A Action Space 
+
+The action space supported by MobileWorld en-compasses standard mobile GUI operations: click ,
+
+double_tap , long_press , drag , input_text , scroll ,and navigation commands ( navigate_home , nav-igate_back ), alongside auxiliary actions: answer 
+
+for responding to queries, wait for screen updates, and status to signal task completion or infeasibility. It is further augmented with ask_user to request clarifications from a user when task instructions lack necessary context. Additionally, agents can leverage external functionalities through mcp_call .The complete actions are listed in Table 5. 
+
+B MCP Tools 
+
+Agents can invoke external tools via the mcp_call 
+
+action. We curate a collection of popular MCP servers from the Bailian platform, spanning diverse domains including geospatial navigation (Amap), code repository analysis (GitHub), document pro-cessing (Jina), financial data retrieval (StockStar), and scholarly literature fetching (arXiv). These 61 tools enable functionalities that significantly ex-ceed the capabilities of standard GUI operations, such as retrieving commit histories or querying real-time stock data. The complete tool catalog is provided in Table 6. 
+
+C Experimental Setup Details 
+
+To enable consistent comparison, we develop a planner-executor agentic framework (China Mo-bile Jiutian Team, 2025) where general-purpose LMMs (e.g., GPT-5, Claude-4.5-Sonnet) serve as the planner, and UI-Ins-7B (Chen et al., 2025) acts as the grounding executor. We extend the action space with ask_user for user clarification and mcp_call for external tool invocation (details in Section D). For end-to-end GUI agent models, including Doubao-1.5-UI-TARS, GUI-Owl, UI-Venus, GELab-Zero and Qwen3-VL, we adapt their official implementations to MobileWorld. All models are evaluated with a maximum of 50 steps using metrics defined in Section 4.1. Agentic frameworks and Qwen3-VL models are evaluated on all task categories. MCP tools are integrated into the system prompt following the tool call format for agentic frameworks, while Qwen3-VL models adopt the OSWorld-MCP format (Jia et al., 2025). Additionally, we augment the Qwen3-VL action space with ask_user action to enable evaluation on agent-user interaction tasks. Other end-to-end mod-els are evaluated only on compatible tasks: MCP-augmented tasks are excluded due to lack of tool invocation support, and agent-user interaction tasks are excluded for models without user query actions (e.g., GUI-Owl, UI-Venus). Open-source models are deployed using vLLM (Kwon et al., 2023) on a server with 8×NVIDIA H20 GPUs. Proprietary models in-cluding GPT-5, Claude-4.5-Sonnet, Gemini-3-Pro, and Doubao-1.5-UI-TARS are accessed through their official API. The temperature is set to 0.0. The user agent for agent-user interaction tasks is implemented using GPT-4.1. 
+
+D Planner-Executor Agentic Framework Details 
+
+To accommodate the unique requirements of Mo-bileWorld, we develop a planner-executor agentic framework consisting of two core components: a 
+
+planner and a grounding executor (China Mobile Jiutian Team, 2025). The planner is responsible for interpreting the task instruction, analyzing the current screenshot along with the interaction history, and deciding the next action (e.g., click , swipe , wait , or type ). When the planned action involves clicking (e.g., 
+
+click or long_press ), the planner generates a natural language description of the target UI el-ement instead of outputting coordinates directly. This description is then passed to the grounding executor, which takes the current screenshot as in-put and predicts the precise pixel coordinates to perform the click or long press. This design allows any general-purpose VLM to be integrated into our framework without requiring pixel-level grounding capabilities. To support agent-user interaction and MCP-augmented tasks, we extend the action space with two special operations: 
+
+Ask User Action When the planner issues an 
+
+ask_user action, the system forwards the query to the LLM-simulated user agent. The user agent’s textual response—along with the current screenshot—is appended to the interaction history, enabling the agent to acquire missing information through clarification dialogues. 
+
+MCP Call Action For MCP-augmented tasks, we preload the specifications of the involved MCP tools into the system prompt. When the planner 6153 Table 5: Complete action space supported by MobileWorld.                                         
+
+> Action Parameters Description
+> GUI Operations
+> click x,yTap at the specified coordinates
+> double_tap x,yDouble-tap at the specified coordinates
+> long_press x,yLong-press at the specified coordinates
+> drag start_x ,start_y ,end_x ,end_y Drag from start to end coordinates
+> input_text text Type text into the focused field
+> scroll direction Scroll in the specified direction (up/down/left/right)
+> Navigation
+> navigate_home —Return to the home screen
+> navigate_back —Navigate to the previous screen
+> keyboard_enter —Press the enter key
+> wait —Wait for screen content to update
+> Task Control
+> answer text Provide a textual response to the user (for IR tasks)
+> status goal_status Mark task as complete or infeasible
+> Extended Actions
+> ask_user text Request clarification from the user
+> mcp_call tool_name ,params Invoke an MCP tool with specified parameters
+
+triggers mcp_call , the invocation request is sent to the MCP server, which returns a structured output. This result, along with the current screenshot, is injected into the interaction history as the system’s observation for that step. This architecture enables the seamless unifica-tion of GUI manipulation, multi-turn user interac-tion, and external tool use within a single closed-loop decision process. 
+
+D.1 Planner 
+
+The planner prompt is shown in the Planner Sys-tem Prompt code block. We define an action space that aligns with the one implemented in Mobile-World. In addition, we integrate the ask_user ac-tion to enable clarification of ambiguous instruc-tions. Furthermore, when a task is tagged as MCP-augmented, we dynamically inject the specifica-tions of the relevant MCP tools into the prompt. 
+
+D.2 Grounding Executor 
+
+For the grounding executor in our agentic frame-work, we design it to take click-related instructions generated by the upstream planner and output pre-cise screen coordinates for clicking. The prompt used for this module is shown in the Grounding Executor System Prompt code block. 
+
+E APP Information 
+
+E.1 APP List 
+
+Table 7 lists the GUI applications included in Mo-bileWorld, along with the number of tasks associ-ated with each. These apps cover a broad range of everyday mobile usage scenarios, including com-munication (e.g., Mail, Messages), productivity (e.g., Calendar, DocsReader), navigation (Google Map), social interaction (Mastodon, Mattermost), and e-commerce (Taodian). To ensure reproducibil-ity and enable deterministic evaluation, we priori-tize open-source or publicly available implementa-tions that closely mimic the functionality of popu-lar commercial applications, such as Taobao (via Taodian), Gmail (via Mail), and Slack (via Mat-termost). This design choice allows us to main-tain full control over the environment while still providing realistic, real-world-aligned tasks. By using these open-source equivalents, we strike a balance between ecological validity and rigorous, verifiable assessment, enabling fair and repeatable benchmarking of mobile agents. 
+
+E.2 Open-source APP Environment Construction 
+
+To ensure reproducibility and enable deterministic evaluation, we construct self-hosted backend envi-ronments for key applications. This section details 6154 Table 6: MCP tools integrated in MobileWorld. These tools provide advanced capabilities beyond standard GUI operations, enabling agents to complete complex cross-domain tasks.             
+
+> MCP Server # Tools Description
+> Amap Maps 15 Provides comprehensive geospatial services including geocoding, reverse geocod-ing, IP location, weather queries, and multi-modal route planning (cycling, walk-ing, driving, public transit). Supports distance measurement and location-based search (keyword, nearby, and detail queries). GitHub 26 Official GitHub integration offering advanced automation and interaction capa-bilities for developers. Enables repository querying, commit history retrieval, issue tracking, and code analysis. Jina AI 3Document processing and search capabilities powered by Jina AI, supporting multi-modal content analysis and retrieval tasks. Stockstar 16 Financial intelligence service providing comprehensive data for A-share and Hong Kong stocks. Includes fundamental data, derived metrics, financial analy-sis, and business model evaluation. arXiv 4Academic paper search and retrieval from the arXiv repository, enabling agents to access and process scholarly literature.
+
+Table 7: List of MobileWorld GUI apps and number of tasks for each one.                                                 
+
+> App Description Comparable Commercial App #Tasks
+> Calendar Manage events and schedules Google Calendar 30 Camera Take photos and videos -3Chrome Web browser for internet browsing -15 Clock Alarms, timers, and world clock -7Contacts Manage contact information -11 Docreader View and read documents Adobe Reader 10 Files File manager for storage -32 Gallery View and manage photos -11 Mail Email client for messaging Gmail 61 Google Map Navigation and location services -1Mastodon Decentralized social network Twitter/X 41 Mattermost Team collaboration and messaging Slack 18 Messages SMS and chat messaging -41 Settings System configuration -7Taodian E-commerce shopping platform Taobao 16
+
+the implementation strategies for our four primary open-source applications. 
+
+Mattermost We build the Mattermost environ-ment based on the official Docker deployment repository 2, which provides a Docker Compose-based setup for the Mattermost service. Initial chat histories are manually generated following the of-ficial import guide using the Mattermost CLI tool. All backend data, including PostgreSQL database contents and file storage, are consolidated into a single directory. To ensure consistent initialization across task executions, we snapshot this directory and restore it at the beginning of each evaluation by copying the contents to the designated location before launching the Docker Compose stack. This approach guarantees that each task starts from an identical initial state. Additionally, we develop aux-
+
+> 2https://github.com/mattermost/docker
+
+iliary tools that leverage the CLI to dynamically generate new chat messages during initialization when required by specific tasks. For evaluation, we directly query the PostgreSQL database to ver-ify task outcomes, such as the presence of target messages or the creation of chat groups. 
+
+Mastodon The Mastodon environment is con-structed using the official Docker setup from the Mastodon repository 3. We manually create ini-tial posts and user accounts within the platform, then capture a snapshot of the complete backend state, including the PostgreSQL database and me-dia storage. Similar to Mattermost, we employ a snapshot-and-restore strategy: the backend data di-rectory is preserved and restored before each task execution to ensure reproducibility. Since the origi-nal Mastodon Android client enforces HTTPS con-
+
+> 3https://github.com/mastodon/mastodon
+
+6155 nections, we apply minimal modifications to the client application to enable communication with the locally hosted HTTP backend service. Task verification is performed by directly querying the PostgreSQL database to validate outcomes such as new post creation or user interactions. 
+
+Mail App We develop the Mail application based on a pure-frontend React Native Gmail clone 4. We resolve multiple compilation errors that arose with recent Android SDK versions and extend the ap-plication with critical functionalities, including at-tachment selection, email search capabilities, and email composition via the Android Share interface. To enable programmatic evaluation, we further aug-ment the app with a callback mechanism that per-sists email sending events to a local file. When an email is sent, relevant metadata (recipient, subject, body, attachments) is recorded and subsequently retrieved by the evaluation function to verify task completion. 
+
+Taodian App The Taodian e-commerce applica-tion is adapted from the Mall4Uni full-stack plat-form 5. To simplify deployment and eliminate exter-nal dependencies, we replace the original backend service with a lightweight file-based mock server. Product catalogs are manually curated from pub-licly available online sources. We enhance the user interface with improved theming and implement additional features such as SMS-based login and a refined shopping cart management interface. Simi-lar to the Mail app, we instrument the application with callback hooks at critical interaction points (e.g., checkout button clicks) to capture shopping cart contents and shipping details. This information is transmitted to a callback server and subsequently used for automated task validation. This comprehensive construction approach en-sures that all applications are fully self-contained, reproducible, and amenable to automated evalua-tion while closely approximating real-world mobile application functionality. 
+
+F Task Evaluation Mode 
+
+Table 8 lists some examples of tasks and demon-strate how conduct deterministic evaluation on them. This verification system ensures that task out-comes are evaluated deterministically, eliminating 
+
+> 4https://github.com/PrincewillIroka/gmail_ clone
+> 5https://gitee.com/gz-yami/mall4uni
+
+the evaluation noise inherent in MLLM-as-a-judge approaches used by prior work. 
+
+F.1 Detailed Evaluation Pipeline Examples 
+
+To provide a clearer understanding of each evalua-tion method, we present concrete implementation examples below. 
+
+Backend Database Verification For tasks in-volving self-hosted applications, we directly query the backend PostgreSQL database to verify ex-pected state changes. For example, in the task 
+
+“Create a channel on Mattermost called ‘reading’ for paper reading. Add everyone to the channel and greet everyone with a welcome message,” the evaluator connects to the Mattermost PostgreSQL database and executes SQL queries to check: (1) whether a channel named reading exists ( SELECT * FROM channels WHERE LOWER(name) =LOWER(’reading’) ), (2) whether all 11 expected members are present in the channel, and (3) whether the latest message in the channel matches the expected welcome greeting ( SELECT * FROM posts ORDER BY createat DESC ). The same pat-tern applies to Mastodon tasks, where we verify post creation, replies, and user interactions through the Mastodon PostgreSQL backend. 
+
+Local Storage Inspection For tasks modifying device-level settings or system app state, we lever-age ADB (Android Debug Bridge) shell commands on the rooted emulator to inspect local storage. For example, in the task “Turn on device flight mode,” 
+
+the evaluator executes adb shell settings get global airplane_mode_on and checks whether the returned value is 1. Similarly, for SMS verifi-cation tasks, we query the SMS content provider (content query –uri content://sms/sent ) to inspect sent messages; for alarm tasks, we query the alarm database to verify alarm time, repeat set-tings, and ringtone configuration. 
+
+Application Callbacks For customized applica-tions (Mail and Taodian), we instrument the app code with callback hooks that persist interaction events to local files. For example, in the Taodian e-commerce task “Help me order a temporary tat-too set on Taodian,” when the user reaches the checkout page, the app writes a JSON callback file containing the order details (product name, quan-tity, price). The evaluator reads this callback file and verifies that the product name matches the ex-pected item. For the Mail app, when an email is 6156 Table 8: The example tasks with their evaluation modes and corresponding verification logics.    
+
+> Task Eval Mode Eval Logic
+> I want to drive to Tianjin. Please check the driving distance in kilometers. Response only one integer number. No other text. Textual Answering Verification Compare the agent answer text with the ground-truth distance. Reply to the toot of gourmet user about Greek food Moussaka, and the reply content should be ‘Nice sharing, i love it’. Backend Database Verification Fetch the reply content from the Mastodon backend database and compare with the ground-truth content. Set a weekend alarm for 8:25 a.m. with the ringtone “beebeep” and vibration off. Local Storage Inspection Leverage adb command to query the local storage of Alarm app. I want to remove some electronic products in the shopping cart of the TaoDian app. Application Callbacks Implement callback APIs that capture the cart item changes in Taodiao app and persist in a local file for evaluation.
+
+sent, the app persists metadata (recipient, subject, body, attachments) to a JSON file on the device’s lo-cal storage, which the evaluator retrieves via ADB and validates against the expected content. 
+
+Textual Answer Verification For information retrieval tasks, we compare the agent’s textual re-sponse against ground-truth answers using pattern matching. For example, in the task “How many days of conference meetings did I schedule in Octo-ber?” (expected answer: 12 ), the evaluator first ap-plies noise-cleaning regular expressions to remove potential false positives from date mentions (e.g., “October 12”), time values (e.g., “12:00”), and ordi-nal patterns (e.g., “12th”). It then checks whether the expected answer 12 appears as a standalone token in the cleaned response using word-boundary matching. 
+
+G Per-Task Difficulty Analysis 
+
+To provide a more granular understanding of bench-mark difficulty, we analyze the per-task success rates across three frontier agentic models: GPT-5, Claude-4.5-Sonnet, and Gemini-3-Pro (all using UI-Ins-7B as the grounding executor). For each of the 198 evaluated tasks, we compute how many of the three models successfully complete it, yielding a four-level difficulty categorization. 
+
+Difficulty Distribution As shown in Table 9, the benchmark exhibits a roughly bimodal difficulty distribution. Approximately 31.3% of tasks (62 tasks) are unsolved by all three models, represent-ing genuinely hard challenges that exceed the ca-pabilities of current frontier models. Conversely, 29.8% of tasks (59 tasks) are solved by all three models, serving as accessible baseline tasks. The remaining 38.9% of tasks (77 tasks) show differen-tial difficulty across models, providing discrimina-tive power for model comparison. 
+
+Table 9: Difficulty distribution of MobileWorld tasks based on how many of the three agentic models (GPT-5, Claude-4.5-Sonnet, Gemini-3-Pro) successfully com-plete each task.           
+
+> Solved by # Tasks Percentage
+> 0 models (Hardest) 62 31.3% 1 model 41 20.7% 2 models 36 18.2% 3 models (Easiest) 59 29.8%
+
+Impact of Agent-User Interaction We also analyze difficulty differences between tasks re-quiring agent-user interaction and standard tasks. Among the 45 interaction tasks, GPT-5 achieves 64.4%, while Claude-4.5-Sonnet and Gemini-3-Pro achieve 40.0% and 24.4%, respectively. No-tably, Gemini-3-Pro performs comparably to the other models on non-interaction tasks (53.6%) but drops significantly on interaction tasks, suggesting that the ability to recognize ambiguity and initi-ate clarification is a distinct capability that varies substantially across models. Furthermore, we con-duct an ablation study in which agents are eval-uated on interaction tasks without access to the 
+
+ask_user action: all models achieve a 0% suc-cess rate, confirming that these tasks genuinely require agent-initiated clarification and cannot be completed through GUI manipulation alone. 
+
+H Deployment and Reproducibility Details 
+
+Simplified Deployment While MobileWorld em-ploys a Docker-in-Docker architecture to encap-sulate the Android Virtual Device and self-hosted 6157 backends, we have invested substantial effort in minimizing deployment friction. The entire eval-uation environment is consolidated into a single Docker image. We provide a command-line tool that automatically verifies whether the host hard-ware meets the system requirements (e.g., KVM support, available memory) and launches the full environment with a single command. This reduces the setup process to pulling the image and running one command, regardless of the host system con-figuration. 
+
+On-Demand Service Startup To minimize re-source consumption, backend services for indi-vidual applications (e.g., Mattermost PostgreSQL, Mastodon services) are started on demand — only when evaluating tasks targeting those specific ap-plications — rather than launching all services si-multaneously. This design significantly reduces the memory and CPU footprint during evaluation, mak-ing it feasible to run the benchmark on machines with moderate resources. 
+
+I Simulated User Agent Design 
+
+The LLM-simulated user agent is a critical com-ponent for evaluating agent-user interaction tasks. We address key design considerations below. 
+
+Run-to-Run Stability The simulated user is con-figured with a fixed system prompt and determinis-tic hidden context for each task, using a low temper-ature setting (0.0) to minimize response variability. The hidden context contains exactly the informa-tion intentionally omitted from the task instruc-tion, ensuring consistent and predictable responses across runs. 
+
+Guardrails Against Prompt Injection The sim-ulated user’s system prompt explicitly restricts it to answering only task-relevant clarification questions and prohibits disclosure of information beyond the specified hidden context. If the GUI agent asks irrelevant or off-task questions, the user agent is instructed to decline assistance, preventing infor-mation leakage that could artificially inflate task success rates. 
+
+J MCP Determinism and Reproducibility 
+
+MCP-augmented tasks that query external services (e.g., GitHub, arXiv, StockStar) introduce potential reproducibility concerns due to the dynamic nature of these resources. We address this through a task-design-level strategy. 
+
+Stable Content Selection We deliberately con-struct MCP-augmented tasks that target stable, well-established content to minimize temporal vari-ability. For example, arXiv queries reference clas-sic, widely-cited papers whose metadata is unlikely to change. GitHub queries target mature, well-maintained repositories with stable commit histo-ries and README content. This design choice en-sures that task outcomes remain consistent across evaluation runs conducted at different times. 
+
+Limitations and Future Directions We cur-rently rely on external MCP services without re-sponse caching or proxying. While these are popu-lar, well-maintained services with low risk of dis-ruption, this introduces a potential reproducibility risk if service endpoints change or become tem-porarily unavailable. We recognize that stronger determinism could be achieved by pinning spe-cific content versions (e.g., GitHub commit SHAs), caching API responses within the container, or proxying MCP servers inside the Docker environ-ment to serve pre-recorded responses. We plan to investigate these enhancements in future iterations of the benchmark. 
+
+K Research Challenge Analysis 
+
+To better understand the limitations of current GUI agents, we manually inspect failed task trajectories across evaluated models and categorize representa-tive cases. This analysis reveals several challenges that current agents must overcome to achieve reli-able real-world performance. 
+
+Challenge 1: Ambiguity Detection and User En-gagement When the model operates without the ability to query the user for clarification, it often generates plausible-sounding but factually incor-rect or unsupported responses. This hallucination arises because the model attempts to infer missing or ambiguous information on its own, rather than seeking confirmation. In the example shown in Figure 9, the task instruction is: “I want to drive to Tianjin, China from my hometown. Please check the driving distance.” The GUI agent opens Google Maps and correctly inputs the destination (Tianjin), but it hallucinates “Shanghai” as the hometown without asking the user to specify the departure city. This incorrect assumption leads to a wrong distance calculation and ultimately causes task fail-ure. Allowing interactive clarification significantly reduces these risks by grounding the model’s ac-6158 tions in verified user intent. 
+
+Challenge 2: MCP Tool Descriptions and Out-put Management External tools invoked via MCP may return excessively long outputs that over-whelm the agent’s context window. As illustrated in Figure 10, when extracting specific benchmark scores from an academic PDF to email a compari-son summary, the MCP tool returns the entire 20k-token document as raw text. This floods the context with irrelevant content, preventing the agent from locating target information and causing incorrect extractions or downstream failures. Effective MCP integration requires content-aware retrieval strate-gies and context management mechanisms (Jones and Kelly, 2024). 
+
+Challenge 3: Long-Term Memory and State Tracking The GUI agent struggles to maintain awareness of actions it has already performed with-out long-term memory tracking mechanism. As illustrated in Figure 11, the agent is instructed to rename all files in the Downloads folder with the prefix bid_ , ordering them by creation date and re-naming them uniformly as bid_index.extension .However, after successfully renaming several files, the agent forgot the processed files. In subsequent steps, it attempts to rename these renamed files again. This leads to repeated, conflicting modifi-cations and ultimately results in an incorrect final state. The absence of a reliable memory mecha-nism to track completed subtasks causes the agent to fall into a destructive loop, highlighting a critical gap in its ability to handle multi-step operations in real-world environments. 
+
+Challenge 4: Complex Logic Reasoning The GUI agent exhibits limited capability in tasks re-quiring multi-step logical reasoning and accurate numerical calculation. For instance, in the task “Find the three most expensive items in the Tao-Dian app shopping cart and calculate their total price,” the agent must first scan all items in the cart, maintain a running record of the top three highest-priced products, and then sum their prices precisely. While the model attempts this process and outputs a final number, the result is incorrect, either because it fails to correctly identify the most expensive items (e.g., due to misreading prices or overlooking items) or because it makes arithmetic errors during summation. This reflects a broader weakness in handling structured reasoning and ex-act calculation, which are essential for reliable per-formance in real-world e-commerce or financial tasks. 
+
+Challenge 5: Temporal-Spatial Context Aware-ness The model generally lacks awareness of real-world time and location unless these are explicitly stated in the prompt. In the task “I’ve received a lunch invitation via text message; please reply ‘OK’ and schedule a lunch event tomorrow” the agent is expected to determine today’s date — by observing system UI elements such as the desktop clock — and create a calendar entry for an appropriate up-coming lunchtime. Most tested agents either hallu-cinate an arbitrary date or fail to consult time. This inability to ground actions in the actual temporal context leads to incorrectly scheduled events and highlights a critical gap in the agent’s situational awareness. Reliable access to the real-time infor-mation on the device is essential for performing scheduling tasks accurately. 
+
+L Case Study 
+
+In this section, we demonstrate various types of examples to illustrate the tasks in MobileWorld. 
+
+L.1 GUI-Only Task Example: Task Completion 
+
+Figure 5 demonstrates editing a Mastodon poll by removing the “USA” option and replacing “Brazil” with “Canada”, guided by precise click and input actions. The process involves navigating to the post, accessing the edit menu, deleting the unwanted option, and typing the new one. 
+
+L.2 GUI-Only Task Example: Information Retrieval 
+
+Figure 8 presents a real-time mobile task in which the user retrieves Beijing’s highest temperature for 
+
+today using the Chrome browser. Starting from the home screen, the agent should launch Chrome, inputs the query “Beijing highest temperature to-day”, and immediately extracts the current forecast from Google’s dynamic weather widget. Both the execution and validation of the task are inherently real-time, ensuring that the final output (11°C) re-flects the actual temperature condition on the day of execution. 
+
+L.3 Agent-User Interaction Task Example 
+
+Figure 6 highlights a task involving calendar event management with an ambiguous user instruction: “My schedule on 10/20 is a bit full, please remove a 6159 few events.” The directive lacks specificity regard-ing which events to delete, making it inherently ambiguous. To resolve this uncertainty, the agent must engage in interactive clarification. In this scenario, the system identifies multiple events on October 20 and explicitly asks whether to delete only the occurrence of “Meet with Sam” or the en-tire recurring series. This interaction underscores the sensitivity and importance of user confirmation in critical operations such as event deletion, where incorrect actions could disrupt scheduling. 
+
+L.4 MCP-Augmented Task Example 
+
+The example shown in Figure 7 demonstrates how a mobile GUI agent completes a complex task with the help of MCP tool invocation: the user requests the three most recent commits from the google-research/android_world repository, formatted as “author: commit message,” and sent via email to a specified address. The agent first invokes an MCP tool to fetch the commit data, then opens the Mail app, taps “Compose”, and fills in the recipient, sub-ject, and body with the retrieved information before successfully sending the email. The example high-lights the agent’s ability to seamlessly integrate external API calls with precise UI interactions. 6160 Edit my Mastodon poll about which country has the largest area by removing the option “USA” and changing the option “Brazil” to “Canada”. 
+
+# User Instruction 
+
+Click [162, 960] Click [1019, 349] Click [648, 1073] Click [124, 748] 
+
+Click [136, 1254] Type(Canada) LongPress [136, 1254] Click [1029, 206] Finish 
+
+Click [411, 635] 
+
+…Figure 5: Task Completion Task Example 6161 My schedule on 10/20 is a bit full, please remove a few events. 
+
+# User Instruction 
+
+Click [150, 1690] Click [231, 1451] Wait AskUser Click [241, 842] Finish Click [786, 216] Click [857, 1316] 
+
+> On Oct 20 I see these events: 1) Morning run (08:00–09:00) 2) Team Standup (09:00–09:30) 3) Meet with Sam (09:00–11:00) 4) Personal Time Off (12:00–06:00). Which ones would you like me to delete? If any are part of a repeating series (e.g., Team Standup), should I delete just this occurrence or the entire series?
+
+Agent user interaction 
+
+> Please delete the event related to 'Sam'—specifically, "Meet with Sam (09:00–11:00)
+
+Figure 6: Agent-User Interaction Task Example gitHub_list_commits {"owner": "google-research”, "repo": "android_world” "perPage": 3} 
+
+MCP call 
+
+Help me check the recent 3 commits summary from the google-research/android_world repository (including author and commit message), format each line as 'author: commit message' and email to mike@gmail.com, email subject as "Recent Commits" 
+
+# User Instruction 
+
+MCP details Click [149, 1278] Click [818, 2013] Click [809, 209] Terminate 
+
+"commit”: {…… }
+
+# …
+
+MCP_call 
+
+Figure 7: MCP-Augmented Task Example 6162 Use Chrome to search for Beijing highest temperature today. ONLY give a integer number denoted Celsius degree. 
+
+# User Instruction    
+
+> Click [668, 1976] Type(Beijing…) Click [448, 355] Answer(11) Click [332, 406]
+
+Figure 8: Information Retrieval Task Example I want to drive to Tianjin, China from my hometown. Please check the driving distance. 
+
+# User Instruction      
+
+> Click [903, 1277] Click [543, 210] Type (Tianjin,Chain) Click [472, 201] Type (Shanghai,China) Finish
+
+Figure 9: Hallucination without user clarification: A representative failure case showing how the mobile GUI agent hallucinates actions when faced with ambiguous scenarios that require user clarification. 6163 Extract uitars-72B and Claude-3.7 scores from MMBench-GUI L1 in the paper at arxiv.org/pdf/2508. 15144, compare them, and email the result to my coauthor. 
+
+# User Instruction     
+
+> mcp_arxiv[parse_pape r_content: 20k tokens] Click [150, 1278] Click [312, 507] Click [899, 210] Finish
+
+# …. 
+
+> Click [894, 2012]
+
+Figure 10: Context overflow from MCP tool responses: A failure case demonstrating ineffective MCP tool integration due to context management issues, where tool responses exceed the context window capacity. 6164 Rename all files in the “Download” folder whose names start with the prefix bid_, sorted by creation date from earliest to latest, uniformly to the format 'bid_{id}.{original_extension}'. # User Instruction 
+
+> LongPress [290, 1228]
+
+Click [678, 1097] LongPress [690, 1280] Type (bid_1.txt) Click [899, 1327] Click [678, 1097] LongPress [190, 1228] Type (bid_5.txt) Click [899, 1327] 
+
+# …
+
+# …
+
+> LongPress [290, 1228]
+
+Figure 11: Lack of long-term memory: A representative case illustrating insufficient memory mechanisms for tracking multi-step operations, leading to failure in maintaining state across sequential actions. 6165 Planner System Prompt ## Role: Android Phone Operator AI 
+
+You are an AI that controls an Android phone to complete user requests. Your responsibilities: • Answer questions by retrieving information from the phone. • Perform tasks by executing precise actions. 
+
+## Action Framework. Respond with EXACT JSON format for one of these actions: 
+
+Action Description JSON Format Example 
+
+click Tap visible element (describe clearly) { "action_type": "click", "target": "blue circle button at top-right" } 
+
+double_tap Double-tap visible element (describe clearly) { "action_type": "double_tap", "target": "blue circle button at top-right" } 
+
+long_press Long-press visible element (describe clearly) { "action_type": "long_press", "target": "message from John" } 
+
+drag Drag from visible element to another visible ele-ment (describe both clearly) 
+
+> { "action_type": "drag", "target_start": "the start point", "target_end": "the end point" }
+
+input_text Type into field (includes clicking field, typing, and pressing enter) 
+
+> { "action_type":"input_text", "text":"Hello" }
+
+answer Respond to user { "action_type":"answer", "text":"It’s 25 degrees today." } 
+
+navigate_home Return to home screen { "action_type": "navigate_home" } 
+
+navigate_back Navigate back { "action_type": "navigate_back" } 
+
+scroll Scroll direction (up/down/left/right) { "action_type":"scroll", "direction":"down" } 
+
+status Mark task as complete or infeasible { "action_type":"status", "goal_status":"complete" } 
+
+wait Wait for screen to update { "action_type":"wait" } 
+
+ask_user Ask user for information { "action_type":"ask_user", "text":"what is the exact requirements?" } 
+
+keyboard_enter Press enter key { "action_type":"enter" } 
+
+## Execution Principles. 
+
+1. Communication Rule: 
+
+• ALWAYS use ’answer’ action to reply to users - never assume on-screen text is sufficient • Please follow the user instruction strictly to answer the question, e.g., only return a single number, only return True/False, only return items separated by comma. • NEVER use ’answer’ action to indicate waiting or loading - use ’wait’ action instead • Note that answer will terminate the task immediately. 2. Efficiency First: 
+
+• Choose simplest path to complete tasks • If action fails twice, try alternatives (e.g., long_press instead of click) 3. Smart Navigation: 
+
+• Gather information when needed (e.g., open Calendar to check schedule) • For scrolling: 
+
+– Scroll direction is INVERSE to swipe (scroll down to see lower content) 
+
+– If scroll fails, try opposite direction 4. Text Operations: 
+
+• You MUST first click the input box to activate it before typing the text. • For text manipulation: (a) Long-press to select (b) Use selection bar options (Copy/Paste/Select All) (c) Delete by selecting then cutting 5. Ask User: 
+
+• If you think you have no enough information to complete the task, you should use ask_user action to ask the user to get more information. 
+
+## Decision Process. 
+
+1. Analyze goal, history, and current screen 2. Determine if task is already complete (use status if true) 3. If not, choose the most appropriate action to complete the task. 4. Output in exact format below, and ensure the Action is a valid JSON string: 5. The action output format is different for GUI actions and MCP tool actions. Note only one tool call is allowed in one action. 
+
+## Expected Output Format (Thought: and Action: are required): Thought: [Analysis including reference to key steps/points when applicable] Action: [Single JSON action] 
+
+## Output Format Example 
+
+for GUI actions: 
+
+> Thought: I need to ... to complete the task. Action: { "action_type": "type", "text": "What is weather like in San Francisco today?" }
+
+for MCP tools: 6166 Thought: I need to use the provided mcp tool to get the information... Action: { "action_type": "mcp", "action_json": tool_args_obj, "action_name": "mcp_tool_name" } 
+
+## Available MCP Tools 
+
+{{ tools }} 
+
+## User Goal 
+
+{{ goal }} 
+
+Grounding Executor System Prompt 
+
+You are a GUI agent. You are given a task and your action history, with screenshots. You need to perform the next action to complete the task. ## Output Format Return a json object with function name and arguments within <tool_call></tool_call> XML tags: 
+
+<tool_call> {"name": "grounding", "arguments": <args-json-object>} </tool_call> <args-json-object> represents the following item of the action space: ## Action Space 
+
+{"action": "click", "coordinate": [x, y]} 6167

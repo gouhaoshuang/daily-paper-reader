@@ -1,0 +1,809 @@
+Title: 2026.findings-acl.1518.pdf
+
+URL Source: https://aclanthology.org/2026.findings-acl.1518.pdf
+
+Published Time: Thu, 11 Jun 2026 02:31:41 GMT
+
+Number of Pages: 19
+
+Markdown Content:
+> Findings of the Association for Computational Linguistics: ACL 2026 , pages 30362–30380 July 2-7, 2026 ©2026 Association for Computational Linguistics
+
+## OpenPhone: Mobile Agentic Foundation Models 
+
+Yangqin Jiang 
+
+University of Hong Kong Hong Kong, China 
+
+mrjiangyq99@gmail.com 
+
+Chao Huang *
+
+University of Hong Kong Hong Kong, China 
+
+chaohuang75@gmail.com 
+
+Abstract 
+
+With the advancement of multimodal large lan-guage models (MLLMs), building GUI agent systems has become an increasingly promis-ing direction—especially for mobile platforms, given their rich app ecosystems and intuitive touch interactions. Yet mobile GUI agents face a critical dilemma: truly on-device models (4B or smaller) lack sufficient performance, while capable models (starting from 7B) are either too large for mobile deployment or prohibitively costly ( e.g. , cloud-only closed-source MLLMs). To resolve this, we propose OpenPhone, a mo-bile GUI agent system that leverages device-cloud collaboration to tap the cost-efficiency of on-device models and the high capability of cloud models, while avoiding their drawbacks. Specifically, OpenPhone enhances Qwen2.5-VL-3B via two-stage SFT →GRPO training on synthetic GUI data for strong decision-making, integrates an efficient long-reasoning and mem-ory management mechanism to utilize histori-cal interactions under tight resources, and de-faults to on-device execution—only escalat-ing challenging subtasks to the cloud via real-time complexity assessment. Experiments on the online AndroidLab benchmark and diverse apps show OpenPhone matches or nears larger models, with a significant reduction in cloud costs. We have made our OpenPhone avail-able anonymously at: https://github.com/ HKUDS/OpenPhone .
+
+1 Introduction 
+
+The growing capability of multimodal large lan-guage models (MLLMs) enables AI agents to perceive and act within visual environments, particularly through Graphical User Interfaces (GUIs) (Wu et al., 2024b; Qi et al., 2024). Mobile platforms offer a promising domain for this technol-ogy for two reasons: first, their vast app ecosystems provide a realistic and diverse testbed, and second, 
+
+> *Chao Huang is the corresponding author.
+
+their touchscreen interactions are limited to an intu-itive set of primitives, resulting in a compact action space. Despite these advantages, mobile platforms introduce distinct challenges, chiefly severe compu-tational and memory limitations. In light of these factors, our goal is to develop an effective mobile GUI agent, viewing it as a practical milestone to-ward general-purpose AI. Current research falls broadly into two groups. The first involves targeted training of open-source MLLMs specifically for GUI-related tasks (Qin et al., 2025; Dai et al., 2025; Liu et al., 2024). These models are relatively compact in size and have achieved notable progress; for instance, UI-Tars-7B (Qin et al., 2025) outperforms the larger Qwen2.5-VL-32B (Bai et al., 2025b) on mobile GUI tasks. The second approach leverages general-purpose closed-source MLLMs by constructing multi-agent systems and designing well-structured execution pipelines. Thanks to the powerful mul-timodal comprehension capabilities of state-of-the-art (SOTA) closed-source MLLMs—such as GPT-5 (OpenAI, 2025), Claude-Sonnet-4 (An-thropic, 2025), and Gemini-2.5-Pro (Comanici et al., 2025)—their performance on mobile GUI tasks can even surpass that of models specifically trained for such tasks. However, there is no free lunch. Although the performance of models like UI-Tars-7B is impressive given their 7B scale, MLLMs of this size still impose a prohibitive computational burden on contemporary smartphones (Laskaridis et al., 2024). A more practical 2B–3B scale, by con-trast, typically yields MLLMs with limited capabil-ities (Lin et al., 2025). On the other hand, multi-agent systems based on advanced closed-source MLLMs are plagued by high costs. SOTA closed-source MLLMs are often expensive, and spending several to dozens of dollars to complete a single mobile task is financially impractical. In response to the aforementioned challenges, two immediate questions arise: Question 1: For 
+
+30362 Claude -Sonnet -4
+
+> UI -Tars -7B
+> Llama -3.1 -8B (ft)
+> Qwen2.5 -VL -3B
+> AutoGLM -Mobile -9B
+> Gemini -2.5 -Flash
+> GPT -5-mini
+> Gemini -2.5 -Pro
+> GLM -4.5V
+> V-Droid -8B
+> Qwen2.5 -VL -32B
+> On -Device
+> Base GUI Capability Borderline
+> Usable Mobile
+> GUI Agent
+> GPT -5-nano
+
+Figure 1: Model GUI Capability vs. Cost. Methods in the on-device (gray) region lack usable GUI capability, while basic-GUI-capability (blue) ones are too large for on-device deployment or too costly. Currently, there are no suitable approaches in the truly usable mobile GUI agent (orange) region. A promising research direction is combining gray and blue region methods, leveraging their complementary strengths to bridge the gap for practical on-device GUI agents. 
+
+task-specific GUI models, can their size be further reduced to become truly on-device models capa-ble of running on smartphones, while maintain-ing acceptable performance levels on GUI tasks? 
+
+Question 2: For proprietary general-purpose large models, which are indispensable as cloud-based models due to their powerful capabilities, can their usage costs be further reduced? To answer to the aforementioned questions, we propose a lightweight device-cloud collabora-tive mobile GUI agent framework—OpenPhone. Specifically, for Question 1 , based on a lightweight open-source MLLM ( i.e. , Qwen2.5-VL-3B), we employ a synthetic data generation pipeline and conduct two-stage training comprising supervised fine-tuning (SFT) and group relative policy opti-mization (GRPO), resulting in a compact yet power-ful on-device GUI agent that achieves performance comparable to larger-scale models. Concurrently, we design an efficient long-reasoning GUI agent paradigm, which is capable of effectively process-ing historical operation information and endowing the agent with reasoning capabilities to further en-hance its performance. For Question 2 , we observe that advanced general-purpose large models exhibit performance overkill on many simple GUI tasks—tasks that even small on-device models can handle compe-tently. Moreover, for tasks that small models can-not fully complete, they often fall short only by a narrow margin. To this end, we devise a device-cloud collaboration paradigm that leverages the cost-efficiency of on-device models while compen-sating for their performance limitations through the powerful capabilities of cloud-based models, thereby identifying a sweet spot between perfor-mance and overhead. Through the task complexity assessment and a dynamic orchestration policy, our framework enables real-time monitoring of task ex-ecution progress and dynamic switching between on-device and cloud models as needed. Our main contributions can be summarized as follows: • Light-weight reasoning GUI agent. We de-velop a lightweight on-device GUI agent by ap-plying a two-stage training methodology to a compact MLLM, equipping it with efficient long-reasoning capabilities to contextualize histori-cal interactions for effective decision-making. The resulting model achieves competitive perfor-mance with a minimal computational footprint, suitable for smartphone deployment. • Device-cloud collaborative agent system. We propose a device-cloud collaborative agent sys-tem that dynamically orchestrates tasks between on-device and cloud models via real-time com-plexity assessment. This mechanism enables seamless switching to the cloud only when nec-essary, compensating for on-device limitations, achieving an optimal balance between high per-formance and reduced operational costs. • Comprehensive Evaluation . We evaluate OpenPhone through online experiments on the Android-based AndroidLab benchmark, comple-mented by dozens of custom tasks across popular apps to assess real-world performance. Further-more, we conduct extensive ablation studies and investigate the impact of different tuning strate-gies on the lightweight MLLM’s capabilities. 
+
+2 Methodology 
+
+To effectively address mobile GUI agent tasks, we propose the OpenPhone framework, which has three key modules. Section 2.1 covers strategies to mitigate compact MLLMs’ challenges in GUI tasks—limited capacity and constrained context length. Section 2.2 details a device-cloud collab-orative agent system that dynamically schedules on-device and cloud models by task difficulty, bal-ancing cloud resource consumption with GUI task completion rate. Section 2.3 outlines ways to fully leverage limited training data to maximize small MLLMs’ performance gains on GUI tasks. 30363 OpenPhone                           
+
+> Device− Cloud Collaborative Agent
+> Use Tiktok to open the LALIGA account and find the video of
+> the Real Madrid vs. Barcelona match.
+> {Reasoning } + {History Summarization} + {Function Call}
+> +Screenshot History
+> Record
+> +Instruction
+> Let me walk through this step by step…
+> Looking at the history…
+> Now, the user must decide… Since the task is to…
+> The required action is…
+> This aligns with the task requirements…
+> Trajectory
+> step 1 step 2 step 3 step n
+> Dataset
+> action 1 action 2 action 3, …
+> LLM
+> Action
+> Reasoning
+> Reason. Reason. Reason. …
+> Data Generation Pipeline
+> Group Relative Policy Optimization
+> Let me think… <FUNCTION> Tap(2) </FUNCTION>
+> Let me think… <FUNCTION> Tap(5) </FUNCTION>
+> Edge
+> Cloud
+> Instruction : Use Setting to set current time of my
+> phone to 2024 -5-1.
+> User
+> User
+> Screen
+> +
+> Task Complexity Assessment :
+> 1. Which step to intervene. ------The 6 th Step
+> 2. Frequency of monitoring. ------Every 5 Steps
+> Tap(“Setting”)
+> Step 1
+> Swipe(“long”, “down”) Tap(“system”) Tap(“ date&time ”)
+> Step 2 Step 3 Step 4
+> Cloud
+> Dynamic Agent Orchestration :
+> Whether to switch to cloud model
+> ------Yes or No
+> Tap(“date”)
+> Step 5 Step 6
+> Start Monitoring Switch to
+> Cloud Model
+> Tap(“set time automatically”)
+> Step n
+> Finish
+> Yes Online Android Test
+> Environment
+
+Figure 2: Overall framework of the proposed OpenPhone. 
+
+2.1 Efficient Reasoning GUI Agent 
+
+The on-device GUI agent faces two key challenges. First, mobile devices’ limited computing power ne-cessitates small-sized MLLMs ( e.g. , Qwen2.5-VL-3B (Bai et al., 2025b)), which currently lack suffi-cient performance for mobile GUI tasks. To tackle this, OpenPhone enhances the GUI agent with extended chain-of-thought (CoT) reasoning (Wei et al., 2022) during testing, using test-time scal-ing laws (Snell et al., 2024) to boost its capability. Second, limited on-device resources impede long-context handling: high-resolution GUI images take up much available context length, and managing the agent’s execution history is challenging. To al-leviate this, OpenPhone uses an efficient text-based summarization scheme—compressing each step’s state into compact textual representations—to sup-port the agent’s long historical context. The output format template is presented in Figure 3, and the detailed instruction template is provided in Ap-pendix A.5.1. 
+
+2.1.1 Long-Horizon Reasoning Enhancement 
+
+Mobile GUI tasks are often difficult and complex, and humans also use step-by-step reasoning for such operations. Motivated by the success of CoT reasoning and test-time scaling laws, it is natural to apply similar long-form reasoning enhancements to GUI agents. Specifically, the GUI agent’s rea-soning—encompassing all factors for task comple-tion—follows a multi-step process: First, it ana-lyzes actionable elements on the current interface and, using historical data, assesses if prior actions met their goals. Next, it evaluates progress toward the user’s task goal and identifies necessary follow-up actions. Lastly, it selects from available func-tions and parameters to generate the final output. Notably, if historical data shows prior operations failed to yield expected results, the model proac-tively reflects and adjusts its approach—avoiding repeated errors and potential loops. 
+
+2.1.2 Efficient Memory Management 
+
+On-device GUI agents also face the challenge of efficiently managing historical contextual informa-tion. For MLLMs in particular, high-resolution images (which preserve valuable details) require a large number of tokens—making raw screenshot storage in history impractical. As a result, systems can only retain a limited number of recent images, leading to the loss of long-term historical data. To address this, OpenPhone uses a textual sum-marization approach: at each step, it distills all information relevant to future actions. As shown in the <STATE_ASSESSMENT> field of Figure 3, these summaries include the current interface state, 30364 <REASONING> 
+
+> </REASONING>
+> [Analyze current screen, history record,
+> task progress, chosen action rationale,
+> and expected outcome.]
+> <STATE_ASSESSMENT>
+> </STATE_ASSESSMENT>
+> [Current state, task progress, next
+> required action, expected outcome, and
+> potential issues.]
+> <CALLED_FUNCTION>
+> </CALLED_FUNCTION>
+> [Single function call only.]
+> <REASONING>
+> </REASONING>
+> [Analyze current screen, history record, task progress,
+> chosen action rationale, and expected outcome.]
+> <STATE_ASSESSMENT>
+> </STATE_ASSESSMENT>
+> [Current state, task progress, next required action,
+> expected outcome, and potential issues.]
+> <CALLED_FUNCTION>
+> </CALLED_FUNCTION>
+> [Single function call only.]
+
+Figure 3: Output Template. 
+
+task progress, the agent’s inferred next action, ex-pected post-action outcome, and potential issues. Much of this content comes from condensing the 
+
+<REASONING> section—critical for effective step-wise reasoning, especially reflective error correc-tion. Crucially, textual summaries use far fewer tokens than images, enabling long-term history re-tention ( e.g. , 10–20 steps) as contextual input, even in resource-constrained mobile environments. 
+
+2.1.3 Overall Process 
+
+Formally, the process is a sequential decision-making framework. At each time step t ∈ N0
+
+(with t = 0 denoting the initial step) the agent receives a task instruction τ ∈ T and observes a screen screenshot st ∈ S . The history ht belongs to H = ⋃∞ 
+
+> k=0
+
+Ak, where A0 = {ϵ} and ϵ denotes the empty sequence. The history ht is the sequence of previous state assessments ak ∈ A for k < t ;each assessment at ∈ A is a structured summary of the interface state, task progress, the next action, the expected outcome, and potential issues. When 
+
+t = 0 we have h0 = ϵ (no historical data). The reasoning function R maps the current his-tory, the current observation, and the task instruc-tion to a new assessment and a function to execute: 
+
+R : H × S × T → A × F , (1) 
+
+(at, f t) = R(ht, s t, τ ), a t ∈ A , f t ∈ F , (2) where F is the space of executable functions. The history is then updated by concatenation: 
+
+ht+1 = ht ◦ at, (3) with ◦ denoting sequence concatenation and h0 =
+
+ϵ. The process repeats for t = 0 , 1, 2, . . . until the task is completed or a predefined termination condition is met. We report the action space of OpenPhone in Appendix A.2. 
+
+Figure 4: GUI Performance: On-Device vs. Cloud. 
+
+2.2 Device-Cloud Collaborative Agent System 
+
+Despite recent advances in small-scale MLLMs, their performance remains insufficient for handling complex GUI-based tasks. As illustrated in Fig-ure 4, even the GUI model UI-Tars-7B—fine-tuned on a substantial amount of GUI task data—exhibits significantly poorer performance compared to larger cloud-based models. Furthermore, the per-formance of more deployment-viable 3B-parameter models ( e.g. , Qwen2.5-VL-3B) falls well below a practically usable threshold. This limitation necessitates the incorporation of more powerful cloud-based LLMs (such as Gemini-2.5-Pro, GPT-5, or Claude-Sonnet-4) to achieve satisfactory task completion and user experience. However, frequent invocation of cloud models leads to high operational costs. A careful analysis of on-device model failures reveals that many tasks fail only at the final step. Motivated by this observa-tion, we propose a collaborative device-cloud agent system that dynamically orchestrates between local and cloud agents based on real-time task progress. This approach significantly reduces cloud invoca-tions and associated costs while maintaining high task success rates. The system functions via an integrated workflow with two core components: a task complexity as-sessment mechanism (to decide when and how of-ten to monitor agent performance) and a dynamic orchestration policy (to trigger agent switching when needed). The entire process is summarized in Algorithm 1, which merges these two components into a unified adaptive framework. 
+
+2.2.1 Collaborative Control Framework Task Complexity Assessment . Before task execu-tion begins, OpenPhone estimates the difficulty of the task using aggregated historical performance data of the on-device model. An assessment func-tion fassess analyzes the task description and con-text to determine two key parameters: the step γ at which monitoring should begin, and the monitoring 30365 interval ω. This preemptive configuration allows the device agent to fully utilize its capability with-out premature—and costly—cloud intervention. 
+
+Dynamic Orchestration Policy . During task ex-ecution, the system monitors the agent’s behav-ior once the step counter reaches γ and at every 
+
+ω steps thereafter. A switching function Fswitch 
+
+evaluates the current GUI state and execution his-tory—including previous actions, state transitions, and task progress—against three criteria: (1) pres-ence of repetitive action patterns, (2) deviation from the expected task trajectory, or (3) inadequate action quality. If any criterion is met, the sys-tem switches the current agent from the on-device model Mdevice to the cloud model Mcloud , and no further monitoring is performed. This mechanism minimizes unnecessary cloud calls while ensuring reliability through conditional fallback to a more capable cloud model. The instruction templates for these two compo-nents are reported in Appendices A.5.2 and A.5.3. 
+
+2.2.2 Integrated Execution Flow 
+
+The overall workflow of the device-cloud collab-orative agent system is detailed in Algorithm 1. The algorithm begins by invoking Fassess to deter-mine γ and ω. The execution loop uses the current agent Mcurrent (initialized to Mdevice ) to perform the function f and update the assessment a and the history h. If the step condition is satisfied and switching has not yet occurred, Fswitch (·) is evalu-ated. Upon switching, the cloud agent takes over and continues until task completion. This approach ensures cost-efficient execution while maintaining robust performance. 
+
+2.3 Lightweight MLLM Tuning 
+
+Unlike existing GUI agent methods, we use a smaller MLLM ( i.e. , Qwen2.5-VL-3B) to mitigate mobile resource constraints and boost practical-ity. However, fine-tuning such a compact MLLM for usable GUI agent performance poses notable challenges. Small MLLMs naturally have limited capabilities; to enhance their GUI manipulation ability, we leverage the test-time scaling law—via long-chain reasoning during inference—to improve performance, as detailed in Section 2.1.1. A key challenge in GUI agent training is the scarcity of high-quality data, which depends heav-ily on expensive manual annotation. To tackle this, we design an automated synthetic data pipeline :it optimally uses limited human-annotated exam-
+
+Algorithm 1: Adaptive Device-Cloud Agent Switching Algorithm                                                                            
+
+> Input: Task τ, On-device agent Mdevice , Cloud agent
+> Mcloud
+> Output: State sequence {sn}, History {hn}
+> 1(γ, ω )← F assess (τ, Mdevice );// γ: monitoring start step, ω: monitoring frequency
+> 2t←0,Mcurrent ← M device ,Cswitched ←false,
+> Ccompleted ←false, Cterminated ←false;
+> 3while ¬Ccompleted ∧ ¬ Cterminated do
+> 4if ¬Cswitched ∧(t≥γ)∧(( t−γ)mod ω== 0) then
+> 5if Fswitch (at, f t, h t) == True then
+> 6Mcurrent ← M cloud ;
+> 7Cswitched ←true;
+> 8end
+> 9end
+> 10 at, f t← M current (ht, s t, τ );// Eq. 2
+> 11 ht+1 ←ht◦at;// Eq. 3
+> 12 t←t+ 1 ;
+> 13 update( Ccompleted ,Cterminated ); // Update
+> Ccompleted and Cterminated via environment
+> 14 end
+
+ples to generate augmented instances with explicit reasoning chains. Using this generated data, we propose a two-stage fine-tuning paradigm to elicit long-chain reasoning in small MLLMs, allow-ing them to analyze, reflect, and ultimately generate high-quality responses. 
+
+2.3.1 Synthetic Data Generation Pipeline 
+
+Human-annotated GUI trajectory datasets usually include only task instructions, screen snapshots, and ground-truth actions. Lightweight MLLMs struggle to gain long-chain reasoning and reflective capabilities from this limited supervision. Thus, high-quality data with explicit reasoning chains are essential to activate their reasoning capacity. Based on this, we design a data-generation pipeline. Specifically, we first use an advanced MLLM (e.g. , Gemini-2.5-Pro) to generate chain-of-thought reasoning using the task instruction, target func-tion, and historical interaction context. A powerful LLM ( e.g. , Qwen3-32B) then uses this MLLM-generated reasoning, along with the original task instruction, to synthesize the needed training in-stances, as specified in Figure 3. The instruction template for reasoning data generation is provided in Appendix A.5.4. 
+
+2.3.2 Two-Stage Training Protocol 
+
+Model training has two stages: supervised fine-tuning (SFT) followed by group relative policy op-timization (GRPO) (Shao et al., 2024). In the first stage, chain-of-thought annotations in synthetic 30366 training data impart basic reasoning skills and foun-dational GUI task competence to the small MLLM. This supervised grounding generates meaningful intermediate behaviors, preventing the subsequent reinforcement learning stage from facing overly sparse or uninformative rewards. The second stage is a reinforcement-style policy optimization phase: well-designed reward functions here directly boost the correctness of the model’s output actions and align its behavior with GUI task completion goals. 
+
+Reward Design. In the GRPO algorithm, the total reward Rtotal combines accuracy and format com-ponents as defined in the following equation:                         
+
+> Rtotal =Racc ·
+> 
+> 1,if fpred =fgt (operations)
+> 1,if sim (apred , a gt )≥λ(queries)
+> 0,otherwise
+> ︸︷︷ ︸
+> Accuracy Reward Raccuracy
+> +Rfmt ·k
+> 3·ψc
+> ︸︷︷ ︸
+> Format Reward Rformat
+> (4)
+
+Racc and Rf mt denote the rewards for answer accuracy and formatting correctness, respectively, during reinforcement learning. By default, both values are set to 1.(i) Accuracy Reward. Raccuracy is task-dependent: for operation tasks like "Tap(index)" ,it requires strict matching between predicted out-put fpred and ground truth fgt , while for query tasks like "Finish(answer)" , it employs embedding-based similarity between predicted answer apred 
+
+and ground truth agt , granting reward only when sim (apred , a gt ) ≥ λ, with the reward being 0 when these conditions are not satisfied. (ii) Format Reward. Rformat provides a base reward of Rfmt · k 
+
+> 3
+
+based on adherence to Figure 3’s three-block structure, where k measures the degree of conformity (full reward requires complete ad-herence with k = 3 ), and applies a multiplicative penalty ψc with coefficient ψ < 1 based on the amount of content c outside the template, a mech-anism specifically designed to mitigate irrelevant generation common in small-scale MLLM training. 
+
+GRPO Training. GRPO eliminates the need for additional value function approximation, as seen in PPO (Schulman et al., 2017), and instead utilizes the average reward from multiple sampled outputs generated in response to the same question as its baseline. Specifically, for each question q ∼ Q , a group of outputs {o1, o 2, . . . , o G } is sampled from the old policy πold . The model is optimized by maximizing the following objective:           
+
+> J(θ) = Eq∼Q
+> [
+> Eo1,...,o G∼πθ(·| q)
+> [
+> 1
+> G
+> G∑
+> i=1
+> min
+> (
+> ρi(θ)Ai,
+> clip (ρi(θ),1−ϵ, 1 + ϵ)Ai
+> )]
+> −βD KL
+> (πθ∥πref
+> )]
+> .
+> (5)
+
+In this equation, ϵ and β are hyper-parameters, and Ai is the advantage calculated based on relative rewards of the outputs inside each group only:           
+
+> Ai=ri−1
+> G
+> ∑Gj=1 rj
+> √
+> 1
+> G
+> ∑Gj=1
+> (
+> rj−1
+> G
+> ∑Gk=1 rk
+> )2.(6)
+
+GRPO’s group-relative approach to calculating advantages aligns seamlessly with the compara-tive nature of reward models—usually trained on datasets with output comparisons for the same ques-tion. Additionally, GRPO incorporates regulariza-tion by directly adding the KL divergence (between the trained and reference policies) to the loss func-tion. The KL divergence loss used here follows an unbiased estimator (Hershey and Olsen, 2007):                     
+
+> DKL
+> (πθ∥πref
+> )=Eo∼πθ(·| q)
+> [πref (o|q)
+> πθ(o|q)
+> −log πref (o|q)
+> πθ(o|q)−1
+> ](7)
+
+The complete optimization procedure for the GRPO algorithm is provided in the Appendix A.3. 
+
+3 Evaluation 
+
+3.1 Experimental Setup 
+
+In line with existing work on mobile GUI agents (Liu et al., 2024), we evaluate OpenPhone on the academic benchmark AndroidLab (Xu et al., 2024), and further collect four common AndroidLab-based mobile apps for evaluation. Benchmark details are in Appendix A.4. 
+
+Baseline Methods. Comparisons use two pri-mary model groups: (1) General-purpose vision-capable large models: closed-source ones (GPT series (Hurst et al., 2024): GPT-4o, GPT-5-nano, GPT-5-mini; Gemini family (Comanici et al., 2025): Gemini-1.5-Pro, Gemini-2.5-Pro; Claude family: Claude-3.5-Haiku, Claude-Sonnet-4) and open-source multimodal models (Qwen2.5-VL (Bai et al., 2025b,a), Llama-3.1 (Dubey et al., 2024), GLM series (Hong et al., 2025)); (2) GUI-specialized/fine-tuned models: AutoGLM, AutoGLM-Mobile (Xu et al., 2025), UI-Tars fam-ily (Qin et al., 2025), V-Droid (Dai et al., 2025), 30367 Table 1: Main Result of Online Agent Evaluation.                                                                                                            
+
+> Model Agent Mode Input Size SR General Models
+> Gemini-2.5-Pro Reason Screen -56.5 GLM-4.5-V Reason Screen -49.3 Claude-Sonnet-4 Simple Screen -40.6 Gemini-2.5-Flash Reason Screen -36.2 Qwen2.5-VL-32B Reason Screen 32B 31.2 GPT-4o Simple Screen -31.2 GPT-5-mini Reason Screen -25.4 GLM-4.1V-9B-Thinking Simple Screen 9B 24.6 Gemini-2.5-Flash Simple Screen -22.5 Claude-3.5-HaiKu Reason Screen -19.6 Gemini-1.5-Pro Simple XML -18.8 GPT-5-nano Simple Screen -18.1 GPT-5-nano Reason Screen -2.9
+> GUI Models
+> AutoGLM-Mobile -Screen + XML 9B 46.4 MobileUse -Screen 72B 44.2 UI-Genie-Agent -Screen + XML 72B 41.3 UI-Tars-1.5 -Screen -38.4 V-Droid -XML 8B 38.4 AutoGLM-2024-10 Simple Screen + XML -36.2 UI-Tars-7B -Screen 7B 32.6 Llama-3.1-8B (ft) Simple XML 8B 23.9 GLM-4-9B (ft) Simple XML 9B 21.0
+> Our Model
+> Ours w Gemini-2.5-Pro Reason Screen -47.1 Ours w Gemini-2.5-Flash Reason Screen -31.2 Ours w/o Cloud LLM Reason Screen 3B 15.2
+
+UI-Genie-Agent (Xiao et al., 2025), MobileUse (Li et al., 2025), and two lightly fine-tuned open-source variants (Llama-3.1-8B (ft), GLM-4-9B (ft)). 
+
+Evaluation Metrics. Building on Android-Lab’s rule-based task evaluation, we develop an LLM-based task assessment implementation. A task is complete only if the agent outputs finish() to con-firm; task completion is then evaluated using inter-mediate step logs, final screenshots, and outputs. 
+
+Success Rate (SR) measures the success percent-age, and Android-Lab includes 138 total tasks. 
+
+3.2 Online Agent Evaluation 
+
+Using the AndroidLab benchmark, we perform on-line GUI task evaluations in an Android environ-ment, with results in Table 1. Here, "Ours w/o 
+
+Cloud LLM " uses only the on-device small model OpenPhone, while "Ours w Cloud LLM " refers to the device–cloud collaborative framework where the on-device agent partners with a cloud LLM for task completion. In the "Agent Mode" column, "Simple" means the model directly outputs GUI actions, and "Reason" means it uses a long-horizon reasoning mode. Key findings are as follows: 
+
+(i) Small-but-Mighty . The on-device model Open-Phone delivers "small-but-mighty" performance, matching models one size larger ( e.g. , Qwen2.5-VL-7B-Instruct, GLM-4-9B(ft)) and even some older/lightweight closed-source LLMs ( e.g. , GPT-5-nano, Claude-3.5-HaiKu, Gemini-1.5-Pro). This stems from our lightweight MLLM training for on-device agents: we first inject GUI-specific knowl-edge via SFT, then align the training objective with GUI task goals using GRPO. Notably, though OpenPhone and GLM-4-9B(ft) share training data, OpenPhone —despite being much smaller—does not lag significantly. Additionally, our designed reasoning paradigm helps the small MLLM effi-ciently use historical context and tap its reasoning capabilities, boosting GUI task performance. 
+
+(ii) Favorable Performance-cost Tradeoff . When OpenPhone is deployed in a device-cloud setup with a powerful closed-source LLM ( e.g. ,Gemini-2.5), performance degradation vs. using the closed-source LLM alone is minimal. This approach leverages the on-device model effec-tively, achieving a strong performance-cost trade-off. Enabled by our collaborative control frame-work (combining pre-task complexity assessment and runtime dynamic orchestration), the system adaptively switches between on-device and cloud models based on task difficulty and runtime condi-tions—maintaining task effectiveness while cutting cloud LLM calls and overall costs. We also report OpenPhone’s performance on fre-quently used four applications ( i.e., Chrome, Tik-Tok, Reddit, and Gmail) in Appendix A.1. 
+
+3.3 Ablation Study 
+
+Table 2: Result of Ablation Study.                      
+
+> Variant Agent Mode SN SR
+> OpenPhone w/o Tuning Reason 32.2 OpenPhone w/o SFT Reason 12 8.7 OpenPhone w/o GRPO Reason 10 7.2 OpenPhone w/o Reasoning Simple 12 8.7 OpenPhone w/o History Reason 64.3
+> OpenPhone Reason 21 15.2
+
+To validate OpenPhone ’s introduced techniques, we perform comprehensive ablation studies. Ex-periments are split into two parts: ablations of on-device model training techniques and of reason-ing methods in the overall architecture. The corre-sponding results are reported in Table 2, where SN 
+
+denotes Success Number .
+
+(i) Ablation study for on-device model. As shown in Table 2, we sequentially ablate key components. Removing historical context ( OpenPhone w/o His-tory ), GRPO training ( OpenPhone w/o GRPO ), or SFT ( OpenPhone w/o SFT ) each cause signifi-cant performance drops—confirming their neces-sity. Notably, OpenPhone w/o SFT outperforms 
+
+OpenPhone w/o GRPO , showing GRPO can inde-pendently learn useful policies. This highlights 30368 an objective mismatch: while SFT optimizes next-token prediction, GUI tasks demand accurate final actions, limits optimization for the GUI objective.  
+
+> (a) Accuracy Reward. (b) Completion Length.
+> Figure 5: Impact of different GRPO training variants.
+
+We also evaluate GRPO variants (Fig. 5): Open-Phone (small batch) , trained with reduced batch sizes (24–32 vs. 150–160), and OpenPhone-Zero 
+
+(equivalent to OpenPhone without SFT), trained from scratch using only GRPO. Fig. 5(a) shows that larger batches stabilize GRPO training, while smaller batches cause oscillating rewards and lower success rates. In contrast, OpenPhone-Zero ex-hibits steadier reward growth but learns more slowly, lacking prior GUI knowledge from SFT. Additionally, Fig. 5(b) reveals that small-batch training leads to variable output lengths, especially in reasoning sections, whereas OpenPhone-Zero 
+
+struggles with consistent long-form reasoning, fur-ther slowing its learning and GUI performance. 
+
+(ii) Ablation study for reasoning methods. As shown in Table 2, OpenPhone w/o Reasoning 
+
+(trained without reasoning segments) shows a marked performance drop vs. the full model. This shows reasoning annotations are critical for smaller models to unlock their potential and gain mean-ingful capability improvements. Agent mode com-parisons in Table 1 offer further insights. Prompt-ing Gemini-2.5-Flash for explicit reasoning signifi-cantly improves its performance (SR: 22.5 → 36.2). In contrast, prompting GPT-5-nano for reasoning severely degrades its performance (SR: 18.1 →
+
+2.9). These results reveal a limitation of reasoning techniques: they depend on a model’s baseline ca-pability. For strong models like Gemini-2.5-Flash, reasoning boosts performance; for weaker ones like GPT-5-nano, however, adding reasoning require-ments raises task difficulty and impairs results. 
+
+3.4 Deep Analysis of Device-Cloud Collaboration System 
+
+To validate the device-cloud collaboration system, we conduct an in-depth study assessing multiple MLLMs as cloud models, with tasks sampled on AndroidLab. For each MLLM, we document the     
+
+> (a) %of steps in device and cloud models.
+> (b) Cloud steps wdevice-cloud collaboration.
+> Figure 6: Analysis result of device-cloud collaboration.
+> Figure 7: Result of efficiency comparison.
+
+average total steps to complete a task and the step distribution between the on-device and cloud mod-els. We also measure the average steps for tasks run solely on cloud models to quantify the on-device model’s reduction in cloud invocations. Experi-mental results are shown in Figure 6. Figure 6(a) shows the cloud still performs about 65% of steps, reflecting the on-device model’s limited capacity—due to its constrained size—requiring more frequent cloud intervention to sustain task completion rates. Figure 6(b) shows the device-cloud framework cuts cloud calls by roughly 10%. The average number of steps for collaboration here includes the additional model in-vocation overhead introduced by the collaborative framework. Notably, more capable cloud models (e.g. , GLM-4.5V) exhibit a smaller relative reduc-tion, as they handle a larger share of tasks the on-device model cannot. 
+
+3.5 Efficiency Comparison 
+
+Due to resource constraints on mobile devices, different-sized models show marked differences in on-device runtime efficiency. To quantify 30369 this, we assess the response efficiency of three LLMs—our OpenPhone (3B), Qwen2.5-VL-7B (7B), and GLM-4.1V-9B (9B)—across two com-pute setups. Served via vLLM (Kwon et al., 2023), the models are tested on either one NVIDIA RTX 3090 ( Single ) or two ( Double ), with all other set-tings fixed. Results appear in Figure 7; notably, GLM-4.1V-9B cannot run on a single RTX 3090 while maintaining required context length, so that configuration’s results are omitted. On a single RTX 3090, the 7B model’s response time is approximately 50% longer than that of our 3B OpenPhone, while the 9B model fails to run. Using two RTX 3090s, the 7B model remains about 30% slower than the 3B model, and the 9B model becomes operational but with over triple the latency of the 3B model. This confirms that model size critically impacts runtime efficiency in resource-constrained settings: our compact 3B OpenPhone maintains a clear efficiency advantage while match-ing the GUI task performance of larger models. We also observe that scaling from one to two GPUs re-duces latency by only 15.5% for the 3B model, but by 27.1% for the 7B model, as the latter operates near the capacity limit of a single card, compound-ing inefficiencies. Consequently, under the stricter computational constraints typical of real-world mo-bile devices, the efficiency gap between the 7B and 3B models is expected to widen further. 
+
+4 Related Work 
+
+4.1 GUI Agent 
+
+Autonomous agents show great promise in boost-ing human task performance. Digital environ-ments have inherently multimodal information (text, images, visual elements), adding complex-ity and challenges for language models—this has in turn spurred more research on graphical user interface (GUI) agents. Advancements in large-model technologies enable state-of-the-art gener-alist models ( e.g. , GPT-5 (OpenAI, 2025), Claude-Sonnet-4 (Anthropic, 2025), Qwen2.5-VL (Bai et al., 2025b), Qwen3-VL (Bai et al., 2025a)) to perform GUI tasks via visual understanding per specific instructions. These models drive progress in visual perception, document parsing, object lo-calization, and reasoning, laying a foundation for multifunctional GUI agents. Meanwhile, many GUI-focused systems (Lu et al., 2025; Zhou et al., 2025) have emerged from such general models (e.g. , UI-Tars (Qin et al., 2025), an end-to-end GUI agent built on Qwen-2-VL (Wang et al., 2024) with strong performance; V-Droid (Dai et al., 2025), which enhances interactive UI element identifica-tion by parsing UI state XML and using an agent to verify appropriate actions). Existing GUI agents are typically evaluated for computer and phone use. Phone use introduces extra challenges: stricter on-device compute constraints and operations more reliant on GUI capabilities than MCP (Anthropic, 2024) commands. To tackle these mobile-specific GUI challenges, we propose OpenPhone. 
+
+4.2 Multi-Agent System 
+
+As autonomous agent research advances, multi-agent systems are drawing attention, as monolithic approaches struggle with long-context, multimodal scenarios (Belcak et al., 2025). A single agent often fails to handle high-level planning, deep rea-soning, and low-level execution. Thus, many stud-ies (Fourney et al., 2024; Wu et al., 2024a; Li et al., 2023) use a coordinator-agent framework: the co-ordinator interprets user intent and gives instruc-tions, while assistant agents execute tasks, greatly improving complex assignment completion. Sys-tems such as Mobile-Agent-V3 (Ye et al., 2025), CoAct-1 (Song et al., 2025), and Agent-S2 (Agashe et al., 2024) have applied multi-agent architectures to GUI tasks, underscoring collaboration’s impor-tance in addressing complex challenges. Build-ing on multi-agent collaboration advancements, OpenPhone introduces a device-cloud collabora-tion paradigm. It leverages on-device and cloud model strengths to balance cost and performance optimally, better addressing phone-use GUI sce-nario constraints. 
+
+5 Conclusion 
+
+In this work, we propose OpenPhone —a lightweight device-cloud collaborative framework specifically designed to strike an effective balance between performance and practicality for mobile GUI agents. By engineering a compact yet ca-pable on-device agent and introducing a dynamic orchestration policy, it greatly diminishes reliance on costly cloud models, all while preserving the efficacy of task completion. Comprehensive evalua-tions demonstrate that OpenPhone delivers a favor-able trade-off between operational cost and perfor-mance, thereby rendering advanced GUI automa-tion more accessible. It marks a meaningful step towards practical and efficient mobile AI agents. 30370 6 Limitations 
+
+Due to the limitations of current small-scale base models ( e.g., 2B–3B VLMs), GUI agents trained on such models still face difficulties in indepen-dently performing complex mobile tasks. In our model, this leads to a significant dependence on cloud-based models, as discussed in Section 3.4. We anticipate that as the capabilities of underly-ing base models improve, on-device models will also progress correspondingly. Consequently, the device–cloud collaboration framework we propose will become increasingly practical and valuable. At present, we are defining a feasible future paradigm for on-device GUI agent frameworks. 
+
+References 
+
+Saaket Agashe, Jiuzhou Han, Shuyu Gan, Jiachen Yang, Ang Li, and Xin Eric Wang. 2024. Agent s: An open agentic framework that uses computers like a human. 
+
+arXiv preprint arXiv:2410.08164 .Anthropic. 2024. Introducing the model context pro-tocol. In https://www.anthropic.com/news/model-context-protocol .Anthropic. 2025. System card: Claude opus 4 and claude sonnet 4. In https://www-cdn.anthropic.com/ .Shuai Bai, Yuxuan Cai, Ruizhe Chen, Keqin Chen, Xionghui Chen, Zesen Cheng, Lianghao Deng, Wei Ding, Chang Gao, Chunjiang Ge, Wenbin Ge, Zhi-fang Guo, Qidong Huang, Jie Huang, Fei Huang, Binyuan Hui, Shutong Jiang, Zhaohai Li, Mingsheng Li, and 45 others. 2025a. Qwen3-vl technical report. 
+
+Preprint , arXiv:2511.21631. Shuai Bai, Keqin Chen, Xuejing Liu, Jialin Wang, Wen-bin Ge, Sibo Song, Kai Dang, Peng Wang, Shijie Wang, Jun Tang, and 1 others. 2025b. Qwen2. 5-vl technical report. arXiv preprint arXiv:2502.13923 .Peter Belcak, Greg Heinrich, Shizhe Diao, Yonggan Fu, Xin Dong, Saurav Muralidharan, Yingyan Celine Lin, and Pavlo Molchanov. 2025. Small language models are the future of agentic ai. arXiv preprint arXiv:2506.02153 .Gheorghe Comanici, Eric Bieber, Mike Schaekermann, Ice Pasupat, Noveen Sachdeva, Inderjit Dhillon, Mar-cel Blistein, Ori Ram, Dan Zhang, Evan Rosen, and 1 others. 2025. Gemini 2.5: Pushing the frontier with advanced reasoning, multimodality, long context, and next generation agentic capabilities. arXiv preprint arXiv:2507.06261 .Gaole Dai, Shiqi Jiang, Ting Cao, Yuanchun Li, Yuqing Yang, Rui Tan, Mo Li, and Lili Qiu. 2025. Advancing mobile gui agents: A verifier-driven approach to prac-tical deployment. arXiv preprint arXiv:2503.15937 .Abhimanyu Dubey, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, Ahmad Al-Dahle, Aiesha Letman, Akhil Mathur, Alan Schelten, Amy Yang, Angela Fan, and 1 others. 2024. The llama 3 herd of models. 
+
+arXiv e-prints , pages arXiv–2407. Adam Fourney, Gagan Bansal, Hussein Mozannar, Cheng Tan, Eduardo Salinas, Friederike Niedtner, Grace Proebsting, Griffin Bassman, Jack Gerrits, Ja-cob Alber, and 1 others. 2024. Magentic-one: A generalist multi-agent system for solving complex tasks. arXiv preprint arXiv:2411.04468 .John R Hershey and Peder A Olsen. 2007. Approximat-ing the kullback leibler divergence between gaussian mixture models. In 2007 IEEE International Con-ference on Acoustics, Speech and Signal Processing-ICASSP’07 , volume 4, pages IV–317. IEEE. Wenyi Hong, Wenmeng Yu, Xiaotao Gu, Guo Wang, Guobing Gan, Haomiao Tang, Jiale Cheng, Ji Qi, Junhui Ji, Lihang Pan, and 1 others. 2025. Glm-4.1 v-thinking: Towards versatile multimodal reasoning with scalable reinforcement learning. arXiv e-prints ,pages arXiv–2507. Aaron Hurst, Adam Lerer, Adam P Goucher, Adam Perelman, Aditya Ramesh, Aidan Clark, AJ Ostrow, Akila Welihinda, Alan Hayes, Alec Radford, and 1 others. 2024. Gpt-4o system card. arXiv preprint arXiv:2410.21276 .Woosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Sheng, Lianmin Zheng, Cody Hao Yu, Joseph Gon-zalez, Hao Zhang, and Ion Stoica. 2023. Efficient memory management for large language model serv-ing with pagedattention. In Proceedings of the 29th symposium on operating systems principles , pages 611–626. Stefanos Laskaridis, Kleomenis Katevas, Lorenzo Minto, and Hamed Haddadi. 2024. Melting point: Mobile evaluation of language transformers. In Pro-ceedings of the 30th Annual International Conference on Mobile Computing and Networking , pages 890– 907. Guohao Li, Hasan Hammoud, Hani Itani, Dmitrii Khizbullin, and Bernard Ghanem. 2023. Camel: Communicative agents for" mind" exploration of large language model society. Advances in Neural Information Processing Systems , 36:51991–52008. Ning Li, Xiangmou Qu, Jiamu Zhou, Jun Wang, Muning Wen, Kounianhua Du, Xingyu Lou, Qiuying Peng, and Weinan Zhang. 2025. Mobileuse: A gui agent with hierarchical reflection for autonomous mobile operation. arXiv preprint arXiv:2507.16853 .Kevin Qinghong Lin, Linjie Li, Difei Gao, Zhengyuan Yang, Shiwei Wu, Zechen Bai, Stan Weixian Lei, Li-juan Wang, and Mike Zheng Shou. 2025. Showui: One vision-language-action model for gui visual agent. In Proceedings of the Computer Vision and Pattern Recognition Conference , pages 19498– 19508. 30371 Xiao Liu, Bo Qin, Dongzhu Liang, Guang Dong, Hanyu Lai, Hanchen Zhang, Hanlin Zhao, Iat Long Iong, Jiadai Sun, Jiaqi Wang, and 1 others. 2024. Auto-glm: Autonomous foundation agents for guis. arXiv preprint arXiv:2411.00820 .Zhengxi Lu, Yuxiang Chai, Yaxuan Guo, Xi Yin, Liang Liu, Hao Wang, Han Xiao, Shuai Ren, Guanjing Xiong, and Hongsheng Li. 2025. Ui-r1: Enhancing efficient action prediction of gui agents by reinforce-ment learning. arXiv preprint arXiv:2503.21620 .OpenAI. 2025. Introducing gpt-5. In 
+
+https://openai.com/zh-Hant/index/introducing-gpt-5/ .Zehan Qi, Xiao Liu, Iat Long Iong, Hanyu Lai, Xue-qiao Sun, Wenyi Zhao, Yu Yang, Xinyue Yang, Ji-adai Sun, Shuntian Yao, and 1 others. 2024. We-brl: Training llm web agents via self-evolving online curriculum reinforcement learning. arXiv preprint arXiv:2411.02337 .Yujia Qin, Yining Ye, Junjie Fang, Haoming Wang, Shihao Liang, Shizuo Tian, Junda Zhang, Jiahao Li, Yunxin Li, Shijue Huang, and 1 others. 2025. Ui-tars: Pioneering automated gui interaction with native agents. arXiv preprint arXiv:2501.12326 .John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. 2017. Proxi-mal policy optimization algorithms. arXiv preprint arXiv:1707.06347 .Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei Zhang, Mingchuan Zhang, YK Li, Yang Wu, and 1 others. 2024. Deepseekmath: Pushing the limits of mathematical reasoning in open language models. arXiv preprint arXiv:2402.03300 .Charlie Snell, Jaehoon Lee, Kelvin Xu, and Aviral Ku-mar. 2024. Scaling llm test-time compute optimally can be more effective than scaling model parameters. 
+
+arXiv preprint arXiv:2408.03314 .Linxin Song, Yutong Dai, Viraj Prabhu, Jieyu Zhang, Taiwei Shi, Li Li, Junnan Li, Silvio Savarese, Zeyuan Chen, Jieyu Zhao, and 1 others. 2025. Coact-1: Computer-using agents with coding as actions. arXiv preprint arXiv:2508.03923 .Peng Wang, Shuai Bai, Sinan Tan, Shijie Wang, Zhi-hao Fan, Jinze Bai, Keqin Chen, Xuejing Liu, Jialin Wang, Wenbin Ge, and 1 others. 2024. Qwen2-vl: Enhancing vision-language model’s perception of the world at any resolution. arXiv preprint arXiv:2409.12191 .Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Fei Xia, Ed Chi, Quoc V Le, Denny Zhou, and 1 others. 2022. Chain-of-thought prompting elic-its reasoning in large language models. Advances in neural information processing systems , 35:24824– 24837. Qingyun Wu, Gagan Bansal, Jieyu Zhang, Yiran Wu, Beibin Li, Erkang Zhu, Li Jiang, Xiaoyun Zhang, Shaokun Zhang, Jiale Liu, and 1 others. 2024a. Au-togen: Enabling next-gen llm applications via multi-agent conversations. In First Conference on Lan-guage Modeling .Zhiyong Wu, Zhenyu Wu, Fangzhi Xu, Yian Wang, Qiushi Sun, Chengyou Jia, Kanzhi Cheng, Zichen Ding, Liheng Chen, Paul Pu Liang, and 1 others. 2024b. Os-atlas: A foundation action model for gen-eralist gui agents. arXiv preprint arXiv:2410.23218 .Han Xiao, Guozhi Wang, Yuxiang Chai, Zimu Lu, Weifeng Lin, Hao He, Lue Fan, Liuyang Bian, Rui Hu, Liang Liu, and 1 others. 2025. Ui-genie: A self-improving approach for iteratively boost-ing mllm-based mobile gui agents. arXiv preprint arXiv:2505.21496 .Mingzhe Xing, Rongkai Zhang, Hui Xue, Qi Chen, Fan Yang, and Zhen Xiao. 2024. Understanding the weakness of large language model agents within a complex android environment. In Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining , pages 6061–6072. Yifan Xu, Xiao Liu, Xinghan Liu, Jiaqi Fu, Hanchen Zhang, Bohao Jing, Shudan Zhang, Yuting Wang, Wenyi Zhao, and Yuxiao Dong. 2025. Mobilerl: On-line agentic reinforcement learning for mobile gui agents. Yifan Xu, Xiao Liu, Xueqiao Sun, Siyi Cheng, Hao Yu, Hanyu Lai, Shudan Zhang, Dan Zhang, Jie Tang, and Yuxiao Dong. 2024. Androidlab: Training and sys-tematic benchmarking of android autonomous agents. 
+
+arXiv preprint arXiv:2410.24024 .Jianwei Yang, Hao Zhang, Feng Li, Xueyan Zou, Chun-yuan Li, and Jianfeng Gao. 2023. Set-of-mark prompting unleashes extraordinary visual grounding in gpt-4v. arXiv preprint arXiv:2310.11441 .Jiabo Ye, Xi Zhang, Haiyang Xu, Haowei Liu, Jun-yang Wang, Zhaoqing Zhu, Ziwei Zheng, Feiyu Gao, Junjie Cao, Zhengxi Lu, and 1 others. 2025. Mobile-agent-v3: Foundamental agents for gui automation. 
+
+arXiv preprint arXiv:2508.15144 .Hanzhang Zhou, Xu Zhang, Panrong Tong, Jianan Zhang, Liangyu Chen, Quyu Kong, Chenglin Cai, Chen Liu, Yue Wang, Jingren Zhou, and 1 oth-ers. 2025. Mai-ui technical report: Real-world centric foundation gui agents. arXiv preprint arXiv:2512.22047 .30372 A Appendix / supplemental material 
+
+A.1 Performance on Frequently Used Applications. 
+
+Table 3: Result of Frequently Used Apps.                                       
+
+> Model Agent Mode Input Size SR Baseline Methods
+> GLM-4.5-V Reason Screen -60.0 Gemini-2.5-Flash Reason Screen -56.0 GPT-5-mini Reason Screen -40.0 UI-Tars-7B -Screen 7B 32.0 Claude-3.5-Haiku Reason Screen -24.0 GLM-4-9B (ft) Simple XML 9B 12.0
+> OpenPhone
+> Ours w Gemini-2.5-Flash Reason Screen -64.0 Ours w/o Cloud LLM Reason Screen 3B 20.0
+
+To evaluate the agent’s performance on daily mobile apps, we further select common apps, de-sign matching tasks, and report results in Table 3. Experiments show our device-cloud collaborative framework performs well, with no performance degradation compared to a pure cloud-based agent. Moreover, our on-device OpenPhone outperforms the larger GLM-4-9B (ft)—even though it under-performs on the original AndroidLab benchmark. We attribute this reversal to our enhanced training pipeline: unlike models fine-tuned directly on raw data, OpenPhone is further optimized via GRPO reinforcement learning and augmented with a rea-soning paradigm, which boosts the small model’s reasoning ability and generalization. We present a case of OpenPhone’s performance on TikTok in Figure 8. 
+
+A.2 Action Space 
+
+In Table 4, we present the action space from An-droidLab, which represents screen positions using bounding boxes aligned with XML data. 
+
+A.3 Algorithm for GRPO optimization 
+
+We report the whole process of GRPO optimization algorithm in Algorithm 2. 
+
+A.4 Experimental Setup AndroidLab. AndroidLab is an online GUI-task evaluation benchmark built on the Android plat-form. It comprises nine commonly used appli-cations and 138 evaluation tasks, and supports two input modes: XML mode (Xing et al., 2024) and SoM (Set-of-Mark) mode (Yang et al., 2023). XML mode is tailored to text-only models, where the LLM selects target UI elements directly from the XML representation. SoM mode is intended for multimodal models and uses the Set-of-Mark method: each clickable or focusable element is assigned a unique index, and the LLM specifies elements by their index when issuing operations. Given the growing predominance of MLLMs for GUI tasks, OpenPhone primarily adopts the SoM mode; accordingly, all experimental results re-ported are obtained using SoM mode. 
+
+Additional Frequently Used Applications. Exist-ing academic GUI benchmarks, limited by factors such as reproducibility, often neglect to test many of today’s most widely used mobile applications. To offer a more comprehensive evaluation of Open-Phone, we augmented AndroidLab with four com-monly used mobile apps, contributing a total of 25 tasks. The four apps included are Gmail, Chrome, Reddit, and TikTok. Table 5 lists four additional popular mobile apps ( Chrome , TikTok , Reddit ,and Gmail ) and their corresponding tasks; of the 25 tasks in total, only 12 are presented here. 
+
+A.5 Instruction Templates A.5.1 Instruction Template for the On-Device Model. 
+
+In this subsection, we present the input instruction template for the on-device model, which is com-posed of three main components: Available Functions , 
+
+> Required Output Format
+
+, and Guidelines .
+
+A.5.2 Instruction Template for Task Complexity Assessment. 
+
+In this subsection, we present the instruction schema used to evaluate task complexity — a key determinant of when monitoring begins and how frequently it runs in the edge–cloud collaboration system. The schema comprises the follow-ing sections: Device Agent Capability Assessment , 
+
+> Task Complexity Indicators
+
+, Monitoring Strategy , 
+
+> Task-Specific Risk Assessment
+
+, Output Format , and  
+
+> Guidelines
+
+.
+
+A.5.3 Instruction Template for Dynamic Orchestration Policy. 
+
+In this subsection, we present the instructions used for dynamically monitoring task progress to derive edge–cloud switching strategies. The instruction set primarily comprises the following components: Decision Criteria , Analysis Framework , 
+
+> Risk-Based Decision Making
+
+, Output Format , and  
+
+> Guidelines
+
+.30373 Step 1: <REASONING> The task is to search for \"iphone 17\" videos on TikTok. The current screen shows the phone's home screen with various app icons. To start, I need to open the TikTok application. The TikTok icon is clearly labeled with index 3. Tapping this icon will launch the TikTok app. </REASONING> <CALLED_FUNCTION> tap(3) </CALLED_FUNCTION> <STATE_ASSESSMENT> …</STATE_ASSESSMENT> Step 2: <REASONING> The previous action was to open the TikTok app. The current screen shows the TikTok app is open and displaying a video. This means the previous action was successful. Now I need to find the search bar. To search for \"iphone 17\", I need to find and tap a search icon or search bar. I can see a \"Search\" text labeled as 35 with a magnifying glass icon next to it. This is the obvious element to tap to initiate a search. </REASONING> <CALLED_FUNCTION> tap(35) </CALLED_FUNCTION> <STATE_ASSESSMENT> …</STATE_ASSESSMENT> Step 3: <REASONING> The current screen displays search results for \"Cropped Soccer Edits.\" The task is to search for \"iphone 17.\" To do this, I need to clear the current search query and input the new query. There's an 'X' button (index 4) next to it, which is typically used to clear the content of a text field. Tapping this 'X' button will clear the existing text, making it ready for a new input. </REASONING> <CALLED_FUNCTION> tap(4) </CALLED_FUNCTION> <STATE_ASSESSMENT> …</STATE_ASSESSMENT> Step 4: <REASONING> I am currently on the TikTok search screen. The previous search term has been cleared by tapping 'X' (or it was an automatic reaction to focusing the search bar). The keyboard is visible, indicating that the search input field is active and ready for text. My goal is to search for \"iphone 17\". Therefore, the next logical step is to use the `type()` function to input \"iphone 17\" into the currently focused search bar. </REASONING> <CALLED_FUNCTION> type(\"iphone 17\") </CALLED_FUNCTION> <STATE_ASSESSMENT> …</STATE_ASSESSMENT> Step 5: <REASONING> The previous action successfully entered \"iphone 17\" into the search bar. Now, to complete the search, I need to tap a search button. There are two visible options: a \"Search\" button (index 5) next to the input field, and a search icon on the keyboard in the bottom right corner. Either should trigger the search. Tapping the \"Search\" button (index 5) is a direct and clear way to perform the search. </REASONING> <CALLED_FUNCTION> tap(5) </CALLED_FUNCTION> <STATE_ASSESSMENT> …</STATE_ASSESSMENT> Step 6: <REASONING> The task is to search for videos about \"iphone 17\". My previous actions have led to the current screen, which clearly shows search results for \"iphone 17\". The screen displays information about \"iPhone 17\" (index 32) and several videos (e.g., index 14, 22) related to \"iphone 17\". This indicates the search operation was successful, and the results are now displayed. </REASONING> <CALLED_FUNCTION> finish(\"Successfully searched for videos about 'iphone 17' on TikTok.\") </CALLED_FUNCTION> <STATE_ASSESSMENT> …</STATE_ASSESSMENT> Figure 8: An example of a GUI agent operating on TikTok. The task instruction is search for videos of "iPhone 17" on TikTok . It illustrates the agent’s reasoning and reflection process <REASONING> and how these lead to the final 
+
+<CALLED_FUNCTION> .
+
+A.5.4 Instruction Template for Reasoning Data Generation. 
+
+In this subsection, we present the instruction template for reasoning data generation, which is composed of Reasoning Process , Input Structure ,
+
+Expected Reasoning Output , and Your Task .30374 Table 4: Action Space for Mobile GUI Interaction 
+
+Action Parameters Description 
+
+Tap index:int Tap the element with the given index number. Type input_str: str Enter text into the currently focused input field. Swipe index: int, direction: str, dist: str Swipe on the element with given index, direction and distance. Long Press index: int Long press the element with the given index number. Home() none Simulate the home button. Wait interval: int Pauses execution for the specified number of seconds (default is 5 seconds). Back() none Simulate the back button. Finish message: str (optional) End the session with an optional message. 
+
+Algorithm 2: Group Reward Policy Optimization 
+
+Input: Initial policy parameters θinit , reward function r(·), question set Q, group size G, clipping parameter ϵ, KL penalty coefficient β
+
+Output: Optimized policy parameters θ 
+
+> 1
+
+Initialize θ ← θinit  
+
+> 2
+
+πref ← πθ ; // Initialize the reference policy (fixed for KL divergence)  
+
+> 3
+
+πold ← πθ ; // Initialize the old policy (for importance sampling)  
+
+> 4
+
+for each training iteration do  
+
+> 5
+
+for each question q ∈ Q (in mini-batch) do  
+
+> 6
+
+{o1, o 2, . . . , o G} ∼ πold (· | q) // Sample outputs using the old policy  
+
+> 7
+
+{r1, r 2, . . . , r G} where ri ← r(oi, q ) 
+
+> 8
+
+μr ← 1
+
+> G
+
+∑Gi=1 ri // Compute mean reward  
+
+> 9
+
+σr ←
+
+√ 1
+
+> G
+
+∑Gi=1 (ri − μr )2 // Compute standard deviation of rewards  
+
+> 10
+
+for each output oi do  
+
+> 11
+
+Ai ← ri−μr 
+
+> σr
+
+// Compute normalized advantage  
+
+> 12
+
+ρi(θ) ← πθ (oi|q) 
+
+> πold (oi|q)
+
+// Compute probability ratio against the old policy  
+
+> 13
+
+LCLIP  
+
+> i
+
+← min ( ρi(θ)Ai, clip (ρi(θ), 1 − ϵ, 1 + ϵ)Ai) // Compute clipped objective  
+
+> 14
+
+end  
+
+> 15
+
+L ← − 1
+
+> G
+
+∑Gi=1 LCLIP  
+
+> i
+
++ βD KL (πθ ∥ πref ) // Total loss  
+
+> 16
+
+end  
+
+> 17
+
+Update parameters θ to minimize L (e.g. , using gradient descent)  
+
+> 18
+
+πold ← πθ ; // Update the old policy for next sampling  
+
+> 19
+
+end 30375 Table 5: Additional App Evaluation Tasks and Descriptions 
+
+App Task ID Task Description Evaluation Type 
+
+Chrome Browser chrome_1 Find the address and founding date of the University of *** query_detect Chrome Browser chrome_2 Set to dark mode operation Chrome Browser chrome_3 Enter bookmarks and find the website you saved in Mobile Bookmarks query_detect TikTok tiktok_1 Go to the homepage of "IShowSpeed" operation TikTok tiktok_2 Go to the homepage of "IShowSpeed" and check whether you follow this cre-ator query_detect TikTok tiktok_3 Search for videos about "iphone 17" operation Reddit reddit_1 Join the ChatGPT discussion group operation Reddit reddit_2 Check the Popular page operation Reddit reddit_3 Search for posts related to "Qwen" and limit the time to "Today" operation Gmail gmail_1 Edit an email addressed to user _test@gmail.com, with the subject "In-quire about academic collaboration op-portunities," and the content "Can I have an online meeting with you at 5pm today to discuss this?" (no need to send) operation Gmail gmail_2 Reply to an email titled "Ask about project progress" with the content "The main experimental part has been com-pleted and the ablation experiment is un-derway." (no need to send) operation Gmail gmail_3 Find the relevant email in your mailbox and answer: What is the date of the on-line meeting about TA’s task? query_detect 30376 Template : Instructions for the On-Device Model 
+
+You are an intelligent agent that performs smartphone tasks by interacting with UI elements labeled with numeric tags. 
+
+> Available Functions
+
+1. tap(index: int) - Tap UI element 2. text(input_str: str) - Insert text (tap field first) 3. long_press(index: int) - Long press UI element 4. swipe(index: int, direction: str, dist: str) - Swipe element - direction: "up", "down", "left", "right" - dist: "short", "medium", "long" 5. back() - Press back button 6. home() - Press home button 7. (interval: int) - Pause (default: 5 seconds) 8. finish(message: str) - Complete task 
+
+> Required Output Format
+
+<REASONING> 
+
+[Analyze current screen, task progress, chosen action rationale, and expected outcome] 
+
+</REASONING> <STATE_ASSESSMENT> 
+
+Current State: [Screen description] Task Progress: [Completion status] Next Required Action: [What’s needed] Expected Outcome: [Action result] Potential Issues: [Risk considerations] 
+
+</STATE_ASSESSMENT> <CALLED_FUNCTION> 
+
+[Single function call only] 
+
+</CALLED_FUNCTION> 
+
+> Guidelines
+
+- Execute one action per step - Verify elements exist before interaction - Tap input fields before using text() - Monitor progress to avoid redundant actions - Use finish() only when task complete - Choose direct, efficient paths to completion 30377 Template : Instructions for Task Complexity Assessment 
+
+You are an intelligent strategic planning agent that determines the optimal monitoring strategy for smartphone task completion. Your goal is to maximize task completion rate while minimizing cloud model usage costs. 
+
+> Your Role
+
+Given a task instruction, determine: 1. When to start monitoring device agent performance 2. How frequently to monitor device agent performance 3. Whether to use cloud model from the beginning for high-risk tasks 
+
+> Device Agent Capability Assessment
+
+Critical Failure Apps (0-15% completion): 
+
+- Bluecoins : Financial data entry, complex queries, multi-step forms - 0% success rate - Map.me : Navigation, route planning, complex UI interactions - 0% success rate - PiMusic : Complex music queries, data extraction, multi-screen navigation - 5% success rate 
+
+High Risk Apps (15-35% completion): 
+
+[...] 
+
+> Task Complexity Indicators (High Risk Factors)
+
+Immediate Cloud Usage Required: 
+
+- Financial transactions or data entry - Navigation and route planning - [...] 
+
+Early Monitoring Required (Start from Step 2-3): 
+
+- [...] 
+
+> Monitoring Strategy
+
+For Critical Failure Apps (0-15% success): 
+
+- Start monitoring: Step 1 (immediate) - Monitoring frequency: Every 2 steps - Consider: Immediate cloud usage for complex tasks 
+
+For High Risk Apps (15-35% success): 
+
+- [...] 
+
+> Task-Specific Risk Assessment
+
+Analyze the task instruction for these high-risk indicators: 1. Financial/Data Entry : "add transaction", "enter amount", "fill form" 2. Navigation : "find route", "navigate to", "get directions" 3. [...] 
+
+> Output Format:
+
+Provide your decisions in the following exact format: 
+
+<MONITORING START FROM> 
+
+{Steps Number} 
+
+</MONITORING START FROM> <MONITORING FREQUENCY> 
+
+{Steps Number} 
+
+</MONITORING FREQUENCY> 
+
+> Guidelines
+
+- Prioritize task completion over cost optimization - Use immediate cloud usage for critical failure apps with complex tasks - [...] 30378 Template : Instructions for Dynamic Orchestration Policy 
+
+You are an intelligent decision-making agent responsible for determining whether to switch from a device model to a cloud model for smartphone task completion. Your primary goal is to maximize task completion success rate. 
+
+> Your Role
+
+Analyze the current smartphone screenshot, historical operation information, and task progress to decide if the cloud model should take over from the device model.  
+
+> Decision Criteria
+
+Switch to CLOUD model when ANY of the following conditions are met: 
+
+1. Immediate Risk Indicators 
+
+- Critical App Detection: Current app is Bluecoins, Map.me, or PiMusic (0-5% success rate) - Complex Task Pattern: Task involves financial data, navigation, or multi-step forms - Early Failure Signs: Device model shows confusion in first 3 steps - Wrong App Navigation: Device model navigated to completely irrelevant app 
+
+2. Progressive Failure Patterns 
+
+- Repetitive Operations: Same action repeated 2+ times without progress - Navigation Confusion: Device model appears lost or confused about next steps - Form Completion Issues: Reached correct screen but struggling with form fields - State Misunderstanding: Device model misinterprets current app state or toggle positions 
+
+3. Task Progress Assessment 
+
+- [...] 
+
+4. Context and Timing Factors 
+
+- [...] 
+
+> Analysis Framework
+
+Immediate Assessment (First 3 Steps): 
+
+- Is the device model on the right track? - Does the current app/screen make sense for the task? - Are there any obvious confusion signs? 
+
+Progressive Assessment (Steps 4-8): 
+
+- [...] 
+
+Critical Decision Points: 
+
+- [...] 
+
+> Risk-Based Decision Making
+
+High Risk Tasks (Financial, Navigation, Complex Forms): 
+
+- Switch to CLOUD at first sign of struggle - Prioritize completion over cost - Intervene early rather than late 
+
+Medium Risk Tasks (Standard Operations): 
+
+- [...] 
+
+Low Risk Tasks (Simple Toggles, Basic Navigation): 
+
+- [...] 
+
+> Output Format
+
+After your analysis, output ONLY one of the following decisions: 
+
+CLOUD - Switch to cloud model (when intervention is needed) 
+
+DEVICE - Continue with device model (when current approach is working) 
+
+> Guidelines
+
+- Prioritize Success : Task completion is more important than cost optimization - Early Intervention : Better to switch too early than too late - Context Awareness : Consider the specific app and task complexity - [...] 
+
+Your analysis should be thorough but your final output must be exactly one word: either "CLOUD" or "DEVICE". 30379 Template : Instruction Formate for Reasoning Data Generation 
+
+You are an interface analysis assistant for smartphones. You are provided with a screenshot of a smartphone interface. The interactive elements within the UI are marked with numeric tags starting from 1. For each operable UI element, include the following details: 1. Type of action: Describe the type of interaction available (e.g., navigation, text input, toggle, etc.). 2. Text information: Any visible text associated with the UI element (e.g., labels, placeholders, or descriptions). 3. Action: Summarize what happens when the element is interacted with (e.g., "Tap to navigate to settings," "Toggle to enable/disable Wi-Fi"). 4. State: If the element has a state (e.g., switches for Bluetooth, Wi-Fi), specify whether it is currently "On" or "Off." If no state applies, write "None." 5. Array Indexes: If an element has multiple numeric tags, list all the indexes corresponding to that element. You can call the following functions to interact with those labeled elements to control the smartphone: - [Action Space...] 
+
+> Reasoning Process
+
+You will use a step-by-step reasoning process ("Chain of Thought") to determine the appropriate actions required to accomplish the task. Your reasoning should follow this structure: 1. Analyze Current State 
+
+- Determine whether the current page indicates that the task to be completed has been finished - Review the current UI elements and their positions - Identify relevant interactive elements for the task 2. History Assessment 
+
+- [e...] 
+
+3. State Assessment 
+
+- [...] 
+
+4. Plan Actions 
+
+- [...] 
+
+5. Determine Functions 
+
+- [...] 
+
+Your reasoning must explicitly connect your analysis to the function calls you’ll make, ending with the exact function call that matches the provided <CALLED_FUNCTION>. 
+
+> Input Structure
+
+You will receive the following input components: 1. Task Instruction 
+
+A description of the task to be completed. 2. Screenshot 
+
+3. History Info 
+
+Information about previous states, actions, and their intended goals. 4. Called Function 
+
+The specific function you need to justify through your reasoning. 
+
+> Expected Reasoning Output
+
+Example: “‘ 
+
+<REASONING> 
+
+- [...] 
+
+</REASONING> 
+
+“‘ 
+
+> Your Task
+
+Based on the provided task instructions, screenshots, and history information, you will: 1. Analyze the information. 2. Evaluate previous actions and their outcomes. 3. Formulate a clear reasoning process. 4. Ensure your reasoning concludes with and justifies the exact function provided in CALLED FUNCTION. Please output <REASONING>...</REASONING> part with Chain of Thought format step by step. 30380
