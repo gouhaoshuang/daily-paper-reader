@@ -1,0 +1,201 @@
+{
+  "date": "20260825",
+  "date_label": "",
+  "generated_at": "2026-08-25 21:03:47 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.17659v1",
+      "route": "202608/25/2608.17659v1-mobileworldsafety-benchmarking-gui-agent-safety-against-environmental-injection-attacks-in-android-apps",
+      "title": "MobileWorldSafety: Benchmarking GUI Agent Safety Against Environmental Injection Attacks in Android Apps",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "针对Android上GUI代理的环境注入攻击安全性的基准测试",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.15241v1",
+      "route": "202608/25/2608.15241v1-local-enabling-learning-on-device-contiguously-for-agent-llms",
+      "title": "LOCAL: Enabling Learning On-device Contiguously for Agent LLMs",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向LLM智能体的设备端持续学习运行时",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.15930v1",
+      "route": "202608/25/2608.15930v1-ui-mate-advancing-open-weight-foundation-gui-agents-with-in-context-demonstrations",
+      "title": "UI-Mate: Advancing Open-Weight Foundation GUI Agents with In-Context Demonstrations",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "通过GUI智能体自动化数字应用操作，可适用于移动端UI。",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.16381v1",
+      "route": "202608/25/2608.16381v1-astronos-a-unified-execution-model-and-runtime-for-long-horizon-agentic-systems",
+      "title": "AstronOS: A Unified Execution Model and Runtime for Long-Horizon Agentic Systems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "为长周期智能体提供统一执行模型与运行时，可支撑移动端智能体框架构建。",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.19741v1",
+      "route": "202608/25/2608.19741v1-one-success-isnt-reliability-thinkingbox-a-sandbox-and-benchmark-for-agents-in-stateful-business-workflows",
+      "title": "One Success Isn't Reliability: Thinkingbox, a Sandbox and Benchmark for Agents in Stateful Business Workflows",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向有状态工作流智能体的沙箱与基准，提供工具会话、执行轨迹和结果评估；可直接用于移动智能体框架评估",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.22510v1",
+      "route": "202608/25/2608.22510v1-clawprobench-trace-aware-evaluation-of-ai-agents-with-runtime-coverage-and-frozen-workplace-style-holdouts",
+      "title": "ClawProBench: Trace-Aware Evaluation of AI Agents with Runtime Coverage and Frozen Workplace-Style Holdouts",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向运行时原生智能体评估的轨迹感知基准，基于带工作区工具的实时运行环境；与移动智能体框架评估在概念上一致",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.17774v1",
+      "route": "202608/25/2608.17774v1-edge-native-embodied-intelligence-for-action-aware-wireless-edge-networks",
+      "title": "Edge-Native Embodied Intelligence for Action-Aware Wireless Edge Networks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "探讨端侧模型资源受限与云端延迟问题，是移动端本地智能体部署的核心挑战",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.18307v1",
+      "route": "202608/25/2608.18307v1-componentbench-diagnosing-component-level-failures-in-computer-use-agents",
+      "title": "ComponentBench: Diagnosing Component-Level Failures in Computer-Use Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "组件级UI基准与诊断流程可迁移到移动应用内的GUI自动化与智能体评估。",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.19263v1",
+      "route": "202608/25/2608.19263v1-the-evaluation-context-protocol-ecp-a-portable-contract-for-ai-agent-evaluation",
+      "title": "The Evaluation Context Protocol (ECP): A Portable Contract for AI Agent Evaluation",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "智能体评估方法可迁移至移动端智能体框架评估。",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.20614v1",
+      "route": "202608/25/2608.20614v1-evaluating-skills-not-just-agents-agentic-continuous-evaluation-of-skills",
+      "title": "Evaluating Skills, Not Just Agents: Agentic Continuous Evaluation of Skills",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向智能体技能评估的框架，可用来评测移动端智能体能力。",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.21690v1",
+      "route": "202608/25/2608.21690v1-context-as-an-environment-programmatic-context-management-for-long-horizon-agents",
+      "title": "Context as an Environment: Programmatic Context Management for Long-Horizon Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "通过可执行会话环境与持久内核进行上下文管理，是移动端任务执行智能体的一项关键技术。",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    },
+    {
+      "paper_id": "2608.22237v1",
+      "route": "202608/25/2608.22237v1-read-less-solve-more-token-efficient-sparse-reading-for-ai-agents",
+      "title": "Read Less, Solve More: Token-Efficient Sparse Reading for AI Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "稀疏阅读方法降低令牌与延迟开销，适合移动设备上任务执行智能体的高效运行。",
+      "first_seen_at": "2026-08-25 21:03:47 UTC",
+      "updated_at": "2026-08-25 21:03:47 UTC"
+    }
+  ]
+}

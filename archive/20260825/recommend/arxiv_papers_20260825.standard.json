@@ -1,0 +1,532 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-25T20:53:23.002300+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 9,
+    "quick_skim_target": 11,
+    "quick_selected": 9
+  },
+  "deep_dive": [
+    {
+      "id": "2608.17659v1",
+      "source": "arxiv",
+      "title": "MobileWorldSafety: Benchmarking GUI Agent Safety Against Environmental Injection Attacks in Android Apps",
+      "abstract": "LLM-powered GUI agents that autonomously operate smartphones are rapidly transitioning from research prototypes to early real-world deployment. However, because these agents routinely process untrusted environmental content, they are highly vulnerable to environmental injection attacks, which include indirect prompt injections and adversarial instructions. Such attacks can manipulate the behavior of agents without user awareness through diverse channels encountered in everyday mobile use. Despite these risks, existing benchmarks often fail to capture everyday user scenarios, lacking a systematic evaluation of GUI agents under environmental injection attacks on mobile devices. To address this gap, we introduce MobileWorldSafety, a benchmark of 142 risk tasks built on real Android applications. For each task, we define a programmatically verifiable risk indicator over the final system state and evaluate outcomes with a two-stage pipeline: rule-based verification handles unambiguous cases, while an LLM judge adjudicates ambiguous ones. This distinguishes safety failures from capability failures and enables objective and reproducible assessment. Evaluations on six agents, including both general agents and specialized GUI agents, demonstrate that all agents remain highly vulnerable, with attack success rates ranging from 40.4% to 66.9%. These findings indicate that current agents often fail to maintain safety alignment when adversarial content is presented as ordinary mobile context. MobileWorldSafety provides a foundation for quantifying these vulnerabilities and advancing research on robust mobile GUI agents.",
+      "authors": [
+        "Sujin Chen",
+        "Lijun Li",
+        "Tianyi Du",
+        "Jing Shao"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-08-18T11:33:22+00:00",
+      "link": "https://arxiv.org/pdf/2608.17659v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Benchmark for GUI agents on Android, evaluating safety against environmental injection attacks",
+      "llm_evidence_cn": "针对Android上GUI代理的环境注入攻击安全性的基准测试",
+      "llm_evidence": "针对Android上GUI代理的环境注入攻击安全性的基准测试",
+      "canonical_evidence": "针对Android上GUI代理的环境注入攻击安全性的基准测试",
+      "llm_tldr_en": "This paper introduces MobileWorldSafety, a benchmark for evaluating LLM-powered GUI agents on smartphones under environmental injection attacks. It fills the gap in systematic safety evaluation for everyday mobile scenarios, assessing vulnerability to indirect prompt injections and adversarial instructions.",
+      "llm_tldr_cn": "本文提出MobileWorldSafety，一个评估智能手机上大语言模型驱动的GUI代理安全性的基准。现有基准未能覆盖日常移动场景，缺乏对代理在环境注入攻击下行为的系统评估。该基准利用日常场景中的间接提示注入和对抗性指令来测试代理安全性，揭示了代理在实际部署中的安全漏洞，为移动代理的安全评估和加固提供了重要工具。",
+      "llm_tldr": "本文提出MobileWorldSafety，一个评估智能手机上大语言模型驱动的GUI代理安全性的基准。现有基准未能覆盖日常移动场景，缺乏对代理在环境注入攻击下行为的系统评估。该基准利用日常场景中的间接提示注入和对抗性指令来测试代理安全性，揭示了代理在实际部署中的安全漏洞，为移动代理的安全评估和加固提供了重要工具。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.15930v1",
+      "source": "arxiv",
+      "title": "UI-Mate: Advancing Open-Weight Foundation GUI Agents with In-Context Demonstrations",
+      "abstract": "Foundation GUI agents can automate complex digital tasks, but deployment is hindered by scarce and biased training data, ambiguous prompts, and unreliable execution. Routine workflows rely on user-specific tools and tacit conventions, so unstated instructions can produce arbitrary variations across runs. We present UI-Mate, a foundation GUI agent that integrates an environment-grounded training stack with in-context demonstration learning. UI-Mate makes three contributions: A Scalable Environment-Grounded Training Stack: A closed-loop data engine automates task generation, environment construction, rollout, filtering, capability balancing, SFT, and online RL across massively parallel environments via unified task-verifier bundles. In-Context Demonstration Learning: A mechanism that transforms multimodal demonstrations into flexible subtask-level workflows, follows relevant demonstrated steps, and re-plans from the live interface. OSWorkerBench Benchmark and Insights: A benchmark of 100 long-horizon office tasks across 41 applications that supports instruction-only and demonstration-guided evaluation. Its demonstration resources separate a 33-task self-demo setting, built from successful strong-agent rollouts of the same targets, from a 45-task variant-demo setting, built from human recordings of related but non-identical tasks. Experiments show that UI-Mate-27B sets a new open-weight state of the art on general computer-use benchmarks, scoring 77.0% on OSWorld-Verified and 66.2% on WindowsAgentArena. On OSWorkerBench, it reaches 41.0% strict success and 76.9% progress, outperforming its Qwen3.6-27B base by 17.7 and 24.5 points. On the 33-task self-demo subset, one demonstration raises strict success from 17.2% to 35.4% and progress from 67.9% to 81.1%, substantially improving long-horizon reliability. Project page: https://ui-mate.github.io.",
+      "authors": [
+        "Zihan Ding",
+        "Longxu Dou",
+        "Qi Gao",
+        "Xiangwu Guo",
+        "Shengchao Hu",
+        "Zilong Huang",
+        "Zihang Jiang",
+        "Lei Ke",
+        "Mengcheng Lan",
+        "Weixian Lei",
+        "Hanxuan Li",
+        "Honglin Li",
+        "Xiyun Li",
+        "Zaitang Li",
+        "Leowei Liang",
+        "Xin Luo",
+        "Haozhe Ma",
+        "Jiayi Mao",
+        "Zhoujie Pan",
+        "Can Qin",
+        "Tianyuan Qu",
+        "Weiqi Wang",
+        "Wenkai Wang",
+        "Yonglin Wang",
+        "Yuxin Wang",
+        "Chenxu Wu",
+        "Yingchen Yu",
+        "Chenyu Zhang",
+        "Yuhao Zheng"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CV"
+      ],
+      "published": "2026-08-16T20:59:59+00:00",
+      "link": "https://arxiv.org/pdf/2608.15930v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "GUI agent automating operations in digital applications, applicable to mobile UIs.",
+      "llm_evidence_cn": "通过GUI智能体自动化数字应用操作，可适用于移动端UI。",
+      "llm_evidence": "通过GUI智能体自动化数字应用操作，可适用于移动端UI。",
+      "canonical_evidence": "通过GUI智能体自动化数字应用操作，可适用于移动端UI。",
+      "llm_tldr_en": "UI-Mate trains foundation GUI agents with environment-grounded data engine and in-context demonstrations to reliably automate complex digital tasks.",
+      "llm_tldr_cn": "针对基础GUI智能体在部署时面临训练数据稀缺且有偏、提示含糊、执行不可靠等问题，提出UI-Mate，集成环境接地训练栈与上下文演示学习。其闭环数据引擎在并行环境中自动生成任务并完成过滤、SFT和在线强化学习，同时利用上下文演示解决未明示指令带来的运行差异。实验结果表明UI-Mate在多个数字任务上提升了执行可靠性与泛化能力。该方法可直接迁移到智能手机端UI自动化任务执行场景，为手机端Agent提供关键训练与推理技术。",
+      "llm_tldr": "针对基础GUI智能体在部署时面临训练数据稀缺且有偏、提示含糊、执行不可靠等问题，提出UI-Mate，集成环境接地训练栈与上下文演示学习。其闭环数据引擎在并行环境中自动生成任务并完成过滤、SFT和在线强化学习，同时利用上下文演示解决未明示指令带来的运行差异。实验结果表明UI-Mate在多个数字任务上提升了执行可靠性与泛化能力。该方法可直接迁移到智能手机端UI自动化任务执行场景，为手机端Agent提供关键训练与推理技术。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.15241v1",
+      "source": "arxiv",
+      "title": "LOCAL: Enabling Learning On-device Contiguously for Agent LLMs",
+      "abstract": "On-device LLM agents interact repeatedly with users on local hardware, producing private traces that are valuable for adaptation but should not be sent to a remote trainer. Ideally, such agents would learn contiguously---adapting from every interaction without pausing or suspending user-facing inference---yet existing inference runtimes assume stable weights and existing RL systems assume separated resources, so neither can support this continuity. We present LOCAL, the first single-GPU runtime that enables contiguous on-device learning for LLM agents. The key insight is that GPU scheduling, adapter version management, and KV-cache validity cannot be handled by independent subsystems: adapter updates invalidate cached KV tensors from older versions, and cache retention affects the memory available for training. LOCAL makes adapter version, task priority, and cache state visible to three cooperating components---a cooperative scheduler, a version-aware KV-cache manager, and a multi-agent model runtime---that share this state to keep scheduling, execution, and cache maintenance mutually consistent. On a single 24 GB GPU with 7B-class models, LOCAL lowers foreground queue-wait p95 by 3.1x over FIFO, lowers p95 time-to-first-token (TTFT) by 1.55x versus non-preemptible training, cuts post-publish first-hit prefill p99 by 25.6% and cross-agent TTFT p99 by 21.9%, and keeps background learning progressing under tight KV budgets.",
+      "authors": [
+        "Xinxin Liu",
+        "Jiaxin Li",
+        "Zibo Wang",
+        "Yun Ji",
+        "Zhangqi Zhu",
+        "Qing Hu",
+        "Zhibin Wang",
+        "Rong Gu",
+        "Sheng Zhong",
+        "Chen Tian"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC"
+      ],
+      "published": "2026-08-15T14:03:14+00:00",
+      "link": "https://arxiv.org/pdf/2608.15241v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "on-device learning runtime for LLM agents",
+      "llm_evidence_cn": "面向LLM智能体的设备端持续学习运行时",
+      "llm_evidence": "面向LLM智能体的设备端持续学习运行时",
+      "canonical_evidence": "面向LLM智能体的设备端持续学习运行时",
+      "llm_tldr_en": "LOCAL enables on-device LLM agents to learn contiguously from every interaction without pausing inference, addressing runtime and cache challenges.",
+      "llm_tldr_cn": "针对设备端LLM智能体既需要持续感知用户交互又无法将私有轨迹上传远程训练的问题，提出首个支持在单GPU上连续学习的运行时LOCAL，通过统一调度GPU、适配器版本和KV缓存，使智能体在不中断用户可见推理的情况下边服务边学习。实验表明该方法可在本地硬件上持续适应，为隐私保护的移动端智能体提供了关键基础设施。",
+      "llm_tldr": "针对设备端LLM智能体既需要持续感知用户交互又无法将私有轨迹上传远程训练的问题，提出首个支持在单GPU上连续学习的运行时LOCAL，通过统一调度GPU、适配器版本和KV缓存，使智能体在不中断用户可见推理的情况下边服务边学习。实验表明该方法可在本地硬件上持续适应，为隐私保护的移动端智能体提供了关键基础设施。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "agent running locally on device for task completion",
+      "matched_requirement_id": "req-3",
+      "selection_source": "carryover_cache",
+      "paper_id": "2608.15241v1"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.16381v1",
+      "source": "arxiv",
+      "title": "AstronOS: A Unified Execution Model and Runtime for Long-Horizon Agentic Systems",
+      "abstract": "Agentic systems often organize execution and state around a single conversation, model invocation, or agent instance, even when real work spans many calls and stages. We introduce a unified execution model that maintains a work item's persistent identity and versioned authoritative state across calls. Each step receives input scoped to a specific state version and new material; a result advances state only after validation and recording. We implement selected paths of this model in AstronOS using Cases, Tasks, and Scenario Packs across central and local execution. We compare five complete strategies for carrying an established software-version update plan into a fresh model session: rereading original materials, replaying full history, deterministic text summary, deterministic JSON, and the AstronOS runtime-mediated handoff. Ten controlled tasks are run under all five strategies with three repetitions, yielding 150 included executions. On the single-stage reference family, strategies perform similarly. In the primary three-stage A-C batch, AstronOS passes the frozen scorer in 14 of 15 executions, compared with 0 of 15 for rereading and 2 of 15 for full-history replay; later non-interleaved summary and JSON batches each pass 0 of 15. AstronOS has lower attempt-accounted model-token cost per passing execution, while requiring more execution-window time per attempt. These results associate the complete AstronOS condition with higher end-to-end pass rates across fresh sessions in this benchmark, at a measurable time cost.",
+      "authors": [
+        "Zhenhang Nie",
+        "Gui Zheng",
+        "Xudong Sun",
+        "Tailong Zhu",
+        "Bin Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-17T10:33:28+00:00",
+      "link": "https://arxiv.org/pdf/2608.16381v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Unified execution model and runtime for long-horizon agents supports building agent frameworks.",
+      "llm_evidence_cn": "为长周期智能体提供统一执行模型与运行时，可支撑移动端智能体框架构建。",
+      "llm_evidence": "为长周期智能体提供统一执行模型与运行时，可支撑移动端智能体框架构建。",
+      "canonical_evidence": "为长周期智能体提供统一执行模型与运行时，可支撑移动端智能体框架构建。",
+      "llm_tldr_en": "AstronOS introduces a unified execution model maintaining persistent versioned state across calls for long-horizon agents, enabling robust task execution in central and local settings.",
+      "llm_tldr_cn": "针对现有智能体在执行长期任务时状态管理分散的问题，提出统一执行模型AstronOS，为每个工作项维护持久身份和版本化状态。通过Cases、Tasks和Scenario Packs在中心与本地执行中实现该模型，并比较五种策略以将既有计划带入新会话。实验表明该模型能提升长期任务执行的连贯性与可验证性，为构建移动端等场景下的任务执行智能体提供基础运行时支持。",
+      "llm_tldr": "针对现有智能体在执行长期任务时状态管理分散的问题，提出统一执行模型AstronOS，为每个工作项维护持久身份和版本化状态。通过Cases、Tasks和Scenario Packs在中心与本地执行中实现该模型，并比较五种策略以将既有计划带入新会话。实验表明该模型能提升长期任务执行的连贯性与可验证性，为构建移动端等场景下的任务执行智能体提供基础运行时支持。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "framework for building agents on mobile devices",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.17774v1",
+      "source": "arxiv",
+      "title": "Edge-Native Embodied Intelligence for Action-Aware Wireless Edge Networks",
+      "abstract": "Embodied intelligence is shifting artificial intelligence from passive digital perception toward active physical interaction. However, foundation-model-enabled embodied agents face a fundamental tension between open-world cognition and resource-constrained deployment. On-device models are limited by computation, memory, and energy budgets, whereas cloud-centric solutions introduce latency and reliability risks over dynamic wireless links. Edge general intelligence provides a promising cognitive backbone, but existing frameworks still lack physical grounding, action awareness, and mechanisms for actively acquiring useful physical experience. To address these limitations, this article introduces edge-native embodied intelligence (ENEI), an action-aware wireless edge framework that integrates embodied agents, the 6G communication and networking fabric, and edge cognitive services into a 6G-mediated bidirectional edge-embodiment loop. Along the edge-to-embodiment axis, confidence-aware assistance and edge-driven generative adaptation enhance local autonomy under out-of-distribution (OOD) conditions. Along the embodiment-to-edge axis, value-of-experience guided active embodied federated learning enables physical actions to generate informative experience for continuous edge model evolution. The 6G fabric supports both directions through goal-oriented transmission and programmable radio-resource allocation. Two case studies on OOD drone navigation and mobility-driven federated learning illustrate the feasibility and communication efficiency of the proposed mechanisms. ENEI provides a unified perspective in which edge cognition strengthens embodied action, while embodied agency actively enriches edge cognition, laying the foundation for scalable, adaptive, and self-evolving embodied wireless systems.",
+      "authors": [
+        "Yiru Wang",
+        "Chuanao Jiang",
+        "Jiahui Cui",
+        "Zide Fan",
+        "Lei Wang",
+        "Zehui Xiong",
+        "Dong In Kim"
+      ],
+      "primary_category": "eess.SY",
+      "categories": [
+        "eess.SY",
+        "eess.SP"
+      ],
+      "published": "2026-08-18T13:39:12+00:00",
+      "link": "https://arxiv.org/pdf/2608.17774v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "addresses resource constraints of on-device foundation-model agents and latency of cloud, core to on-device mobile agents",
+      "llm_evidence_cn": "探讨端侧模型资源受限与云端延迟问题，是移动端本地智能体部署的核心挑战",
+      "llm_evidence": "探讨端侧模型资源受限与云端延迟问题，是移动端本地智能体部署的核心挑战",
+      "canonical_evidence": "探讨端侧模型资源受限与云端延迟问题，是移动端本地智能体部署的核心挑战",
+      "llm_tldr_en": "Edge-native embodied intelligence (ENEI) addresses the trade-off between on-device resource limits and cloud latency for foundation-model agents. It proposes an action-aware, physically grounded edge framework, directly relevant to challenges of deploying agents locally on mobile devices.",
+      "llm_tldr_cn": "具身智能体在开放世界认知与资源受限部署之间存在矛盾，端侧模型受算力、内存和能耗限制，云端方案则面临动态无线链路延迟与可靠性风险。为此提出边缘原生具身智能（ENEI），一种行动感知、具备物理接地机制的边缘框架。它弥补了现有框架缺乏物理接地与行动感知的不足，为端侧部署智能体提供了新思路。对移动设备本地任务执行智能体的部署挑战具有直接参考意义。",
+      "llm_tldr": "具身智能体在开放世界认知与资源受限部署之间存在矛盾，端侧模型受算力、内存和能耗限制，云端方案则面临动态无线链路延迟与可靠性风险。为此提出边缘原生具身智能（ENEI），一种行动感知、具备物理接地机制的边缘框架。它弥补了现有框架缺乏物理接地与行动感知的不足，为端侧部署智能体提供了新思路。对移动设备本地任务执行智能体的部署挑战具有直接参考意义。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.19741v1",
+      "source": "arxiv",
+      "title": "One Success Isn't Reliability: Thinkingbox, a Sandbox and Benchmark for Agents in Stateful Business Workflows",
+      "abstract": "Recent agent benchmarks increasingly ground evaluation in executable environments, from code repair to web navigation, app APIs, and function calling. Yet completing consequential work beyond code requires more than producing a plausible response or valid tool call: agents must gather missing information over multiple turns, follow domain policies, coordinate dependent tools, and realize the correct persistent state transition without collateral effects. In this paper, we introduce Thinkingbox, a sandbox for tool-agent-user interaction that provides isolated MCP-compatible tool sessions, complete execution traces, and outcome evaluation over terminal backend state. Built on this sandbox, Thinkingbox-bench contains 507 policy-conditioned workflows across numerous scenarios, including retail, hospitality, auto insurance, neobank internal IT, and consulting IT/HR support. Each attempt is evaluated by task-specific executable checks that accept valid trajectories while rejecting wrong, missing, or extra effects; designated tasks additionally check required properties of the final response. Across proprietary and open-weight models, the strongest achieves 65.36% pass@1, but only 25.25% pass^20. Moreover, many failed trials show clean termination and valid state-changing actions, showing that response or tool-call-level signals are not clear proxies for end-to-end task completion. Thinkingbox-bench reveals a large gap between occasionally finding a successful trajectory and reliably completing stateful business tasks. We release both Thinkingbox and Thinkingbox-Bench: https://github.com/microsoft/thinkingbox",
+      "authors": [
+        "Zhuochun Li",
+        "Youngmin Ko",
+        "Ali Keramati",
+        "Nicola Ferri",
+        "Susana Palmaz Lopez Pelaez",
+        "Liang-Chun Tsai",
+        "Calvin Wang",
+        "Mirco Milletari",
+        "Tuhin Kundu",
+        "Vadim Smolyakov",
+        "Kjartan Olafsson",
+        "Tommy Guy"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.DB"
+      ],
+      "published": "2026-08-20T07:37:57+00:00",
+      "link": "https://arxiv.org/pdf/2608.19741v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "sandbox and benchmark for evaluating agents in stateful workflows with tool trace and outcome evaluation; directly applicable to mobile agent framework evaluation",
+      "llm_evidence_cn": "面向有状态工作流智能体的沙箱与基准，提供工具会话、执行轨迹和结果评估；可直接用于移动智能体框架评估",
+      "llm_evidence": "面向有状态工作流智能体的沙箱与基准，提供工具会话、执行轨迹和结果评估；可直接用于移动智能体框架评估",
+      "canonical_evidence": "面向有状态工作流智能体的沙箱与基准，提供工具会话、执行轨迹和结果评估；可直接用于移动智能体框架评估",
+      "llm_tldr_en": "Introduces Thinkingbox, a sandbox/benchmark for agents in stateful workflows, with isolated tool sessions, full traces, and backend-state outcome evaluation. Focuses on reliability beyond one success. Though not mobile-specific, its stateful tool-use evaluation directly supports mobile agent framework assessment.",
+      "llm_tldr_cn": "本文提出Thinkingbox，一个面向有状态业务流程智能体的沙箱与基准，提供隔离的MCP兼容工具会话、完整执行轨迹和基于后端状态的最终结果评估。针对智能体在成功一次之外还需可靠完成持久状态转换的问题，该基准覆盖多轮信息收集、领域策略和工具协调等挑战。虽然不专门针对移动端，但其对有状态工具使用智能体的评测方法可直接用于移动智能体框架的任务执行评估。",
+      "llm_tldr": "本文提出Thinkingbox，一个面向有状态业务流程智能体的沙箱与基准，提供隔离的MCP兼容工具会话、完整执行轨迹和基于后端状态的最终结果评估。针对智能体在成功一次之外还需可靠完成持久状态转换的问题，该基准覆盖多轮信息收集、领域策略和工具协调等挑战。虽然不专门针对移动端，但其对有状态工具使用智能体的评测方法可直接用于移动智能体框架的任务执行评估。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.18307v1",
+      "source": "arxiv",
+      "title": "ComponentBench: Diagnosing Component-Level Failures in Computer-Use Agents",
+      "abstract": "Current evaluation of computer-use agents is split between long-horizon workflow benchmarks and atomic GUI-grounding tests. This leaves an under-instrumented middle layer: realistic component-centered interactions (e.g., toggle a button set) that are short enough to diagnose and rich enough to capture the burdens of modern interfaces. We present ComponentBench, a benchmark and diagnostic pipeline for component-level evaluation of computer-use agents on modern web UIs. ComponentBench is organized around a library-agnostic ontology of 97 canonical UI components instantiated as 2,910 programmatically verified tasks across widely used component libraries, paired with cleaned human reference trajectories that enable evaluation of both task success and interaction efficiency. Beyond task collection, we introduce a scalable pipeline for auditing realized structural difficulty after implementation and synthesizing structured failure analyses across tasks and component families. Evaluating seven models -- GPT-5.4, Gemini 3 Flash, GPT-5.4 mini, GPT-5 mini, Gemini 3.1 Flash-Lite, Qwen3-VL-235B, and UI-TARS-1.5-7B -- across four observation and action spaces, we show that these design choices critically impact performance. Within a single shared harness, changing only the observation and action space shifts task success by more than 30% for the same model: GPT-5 mini falls from 83.1% with accessibility-tree observations to 48.9% with coordinate-only Pixel control. Moreover, even the fastest configuration takes 3.7x as long as the matched human reference, and spatial manipulations that are trivial for humans continue to challenge current agents.",
+      "authors": [
+        "Tianchen Guan",
+        "Xinlei Lin",
+        "Royce Cheng-Yue",
+        "Xiangjun Wang",
+        "Shuyan Zhou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.HC"
+      ],
+      "published": "2026-08-18T20:38:26+00:00",
+      "link": "https://arxiv.org/pdf/2608.18307v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Component-level benchmark for computer-use agents provides transferable evaluation methods for GUI automation on mobile.",
+      "llm_evidence_cn": "组件级UI基准与诊断流程可迁移到移动应用内的GUI自动化与智能体评估。",
+      "llm_evidence": "组件级UI基准与诊断流程可迁移到移动应用内的GUI自动化与智能体评估。",
+      "canonical_evidence": "组件级UI基准与诊断流程可迁移到移动应用内的GUI自动化与智能体评估。",
+      "llm_tldr_en": "ComponentBench offers a benchmark and diagnostic pipeline for component-level evaluation of computer-use agents on web UIs, with 97 UI components and 2,910 verified tasks, useful for GUI-agent evaluation.",
+      "llm_tldr_cn": "针对计算机使用智能体评估在长任务基准与原子GUI测试之间缺乏中间层的问题，提出ComponentBench，面向现代Web UI的组件级评估与诊断。该基准包含97个规范UI组件、2910个程序化验证任务及人工参考轨迹，既能评估任务成功又能诊断组件级失败。其本体与诊断方法可迁移至移动应用场景，为移动智能体在应用内操作评估提供参考。",
+      "llm_tldr": "针对计算机使用智能体评估在长任务基准与原子GUI测试之间缺乏中间层的问题，提出ComponentBench，面向现代Web UI的组件级评估与诊断。该基准包含97个规范UI组件、2910个程序化验证任务及人工参考轨迹，既能评估任务成功又能诊断组件级失败。其本体与诊断方法可迁移至移动应用场景，为移动智能体在应用内操作评估提供参考。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.22510v1",
+      "source": "arxiv",
+      "title": "ClawProBench: Trace-Aware Evaluation of AI Agents with Runtime Coverage and Frozen Workplace-Style Holdouts",
+      "abstract": "Agent benchmarks often evaluate only final answers even when agents run on stateful runtimes. We argue this under-specifies what is being evaluated: the proper unit is a declared model-plus-runtime configuration whose failures can occur in evidence acquisition, runtime routing, safety boundaries, or repeated execution. We present ClawProBench, a trace-aware benchmark for runtime-native agent evaluation instantiated on OpenClaw, a live agent runtime with workspace tools and native surfaces for browsing, memory, messaging, scheduling, skills, and subagents. ClawProBench defines two tracks: a 102-scenario full profile with live workspace and native-runtime routing tasks, and a frozen 68-scenario holdout with closed-world JSON output contracts for robust ranking. Trials are scored from execution traces via a safety-gated formula combining correctness, process quality, and efficiency, preserving failure evidence for audit. Our anonymous artifact includes benchmark definitions, scoring code, manifests and sanitized traces. We evaluate 68 configurations on the full profile and 37 on holdout. The top safety-gated average trace score is 0.7671. Native-runtime tasks underperform workspace-live tasks (0.5238 vs. 0.6415). On holdout, pass@k-any outperforms strict three-trial pass (0.6638 vs. 0.2890), while full-profile and holdout rankings show weak alignment (Spearman 0.1300). Rankings based purely on correctness differ substantially from process-aware, safety-gated and strict-pass views. Final-answer leaderboards may hide native-surface weaknesses, one-off successes and trace-local agent failure modes.",
+      "authors": [
+        "YuanHang Xiao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-23T17:09:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.22510v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "trace-aware benchmark for runtime-native agent evaluation on a live agent runtime with workspace tools; conceptually aligned with evaluating mobile agent frameworks",
+      "llm_evidence_cn": "面向运行时原生智能体评估的轨迹感知基准，基于带工作区工具的实时运行环境；与移动智能体框架评估在概念上一致",
+      "llm_evidence": "面向运行时原生智能体评估的轨迹感知基准，基于带工作区工具的实时运行环境；与移动智能体框架评估在概念上一致",
+      "canonical_evidence": "面向运行时原生智能体评估的轨迹感知基准，基于带工作区工具的实时运行环境；与移动智能体框架评估在概念上一致",
+      "llm_tldr_en": "Presents ClawProBench, a trace-aware benchmark for runtime-native agent evaluation on OpenClaw, a live agent runtime with tools for browsing, memory, messaging, scheduling, skills, subagents. Two tracks: 102-scenario full profile, 68-scenario frozen holdout. Not mobile-specific, but runtime-centric evaluation aligns with mobile agent frameworks.",
+      "llm_tldr_cn": "本文提出ClawProBench，一个轨迹感知的运行时原生智能体评估基准，实例化于OpenClaw实时智能体运行时，该运行时提供浏览、记忆、消息、日程、技能和子智能体等工作区工具。基准包括102个场景的全量配置和68个场景的冻结保留集，强调对证据获取、运行时路由、安全边界和重复执行等失败模式的评估。虽然不专门针对手机，但其以运行时为中心的评测方式对移动智能体框架的任务执行评估具有直接参考价值。",
+      "llm_tldr": "本文提出ClawProBench，一个轨迹感知的运行时原生智能体评估基准，实例化于OpenClaw实时智能体运行时，该运行时提供浏览、记忆、消息、日程、技能和子智能体等工作区工具。基准包括102个场景的全量配置和68个场景的冻结保留集，强调对证据获取、运行时路由、安全边界和重复执行等失败模式的评估。虽然不专门针对手机，但其以运行时为中心的评测方式对移动智能体框架的任务执行评估具有直接参考价值。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.19263v1",
+      "source": "arxiv",
+      "title": "The Evaluation Context Protocol (ECP): A Portable Contract for AI Agent Evaluation",
+      "abstract": "The evolution of artificial intelligence has necessitated a fundamental shift from evaluating isolated Large Language Models (LLMs) to assessing autonomous agentic architectures. This paper explores the critical methodologies for evaluating AI agents and the essential role of advanced observability infrastructure. We analyze the architectural components of agents and identify the severe limitations of current evaluation paradigms, including benchmark exploitation, the \"confidently wrong\" phenomenon, and the discrepancy between theoretical capability and operational reliability. To begin addressing the fragmentation in current evaluation infrastructure, this paper proposes the Evaluation Context Protocol (ECP), an early-stage, vendor-neutral framework intended to act as a portable evaluation contract layer for agentic systems. In its current form ECP defines a small JSON-RPC interface over which an agent exposes its user-visible output, the tool calls it made, and evaluator-safe audit context, and against which programmatic checks can be run uniformly across frameworks and continuous integration systems. We describe an open-source reference implementation that includes adapters for LangChain, LlamaIndex, CrewAI, and PydanticAI, and we situate the design against failure modes documented in the recent literature. ECP is presented as work in progress rather than a finished standard: the evaluation surface, method set, and grader families are all expected to change as the protocol is exercised against more systems, and the empirical validation required to justify adoption is outlined as future work.",
+      "authors": [
+        "Aniket Wattamwar",
+        "Manav Anandani",
+        "Mrunal Kakirwar"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE",
+        "cs.MA"
+      ],
+      "published": "2026-08-18T07:14:36+00:00",
+      "link": "https://arxiv.org/pdf/2608.19263v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Agent evaluation methodology applicable to mobile agent frameworks.",
+      "llm_evidence_cn": "智能体评估方法可迁移至移动端智能体框架评估。",
+      "llm_evidence": "智能体评估方法可迁移至移动端智能体框架评估。",
+      "canonical_evidence": "智能体评估方法可迁移至移动端智能体框架评估。",
+      "llm_tldr_en": "Proposes ECP, a vendor-neutral portable protocol for evaluating AI agents, addressing limitations of current evaluation paradigms.",
+      "llm_tldr_cn": "针对当前AI智能体评估范式存在基准利用、自信错误等局限，提出评估上下文协议（ECP），定义可移植的智能体评估契约与可观测性基础设施。该协议旨在统一碎片化的评估基础设施，使不同模型、沙箱和评分策略下的评价更具可比性。虽然并未专门面向移动端，但其评估框架可迁移到手机端Agent任务执行能力的评测中。",
+      "llm_tldr": "针对当前AI智能体评估范式存在基准利用、自信错误等局限，提出评估上下文协议（ECP），定义可移植的智能体评估契约与可观测性基础设施。该协议旨在统一碎片化的评估基础设施，使不同模型、沙箱和评分策略下的评价更具可比性。虽然并未专门面向移动端，但其评估框架可迁移到手机端Agent任务执行能力的评测中。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.20614v1",
+      "source": "arxiv",
+      "title": "Evaluating Skills, Not Just Agents: Agentic Continuous Evaluation of Skills",
+      "abstract": "Enterprise agent programs are moving from prototypes into production, where reusable skills, tools, and workflow packages must be reviewed with evidence rather than prose. Current gates often scan these artifacts for structure, style, and security, but they do not answer the deployment question: does the capability package help a live agent complete enterprise tasks under the same model, sandbox, and grading policy?   We present ACES (Agentic Continuous Evaluation of Skills), a repository-native framework for evaluating skills and product capability packages as executable agent artifacts. ACES runs paired live trials with and without a target skill, normalizes trajectories into the Agent Trajectory Interchange Format (ATIF), grades six default runtime metrics, and reports Skill Lift: the target skill's added value for a fixed task, harness, workspace, and scorer. The same protocol supports product-owned task suites that compare baseline, skill, bundle, team-skill, and plugin targets.   On 145 real skills from internal enterprise repositories and public catalogs, scan-only gates surface useful authoring issues but measure complementary facets (structural versus LLM-judge Spearman $ρ= 0.14$). Across 947 scored paired cases from 58 of 64 production skills and four primary harnesses, mean composite Skill Lift is 0.2134 (95\\% paired-case CI [0.1967, 0.2301]); mean outcome-only lift, the average of accuracy and goal accuracy, is 0.1799. Composite lift is positive in 72.8\\% of paired cases. The largest process-metric gains appear in skill execution, behavior check, and skill efficiency---signals about discovery, routing, workflow following, and tool use that document scans cannot observe. An open-source implementation of the methodology is available in NVIDIA SkillEvaluator.",
+      "authors": [
+        "Christopher Kevin",
+        "Narendran Raghavan",
+        "Jean-Francois Puget",
+        "Roshni Malani",
+        "Meghana Puvvadi",
+        "Moshe Abramovitch",
+        "Mohit Gupta",
+        "Rama Akkiraju",
+        "Subodh Prabhu",
+        "Yogesh Dangi",
+        "Wei Luo",
+        "Seong Hee Lee"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-20T23:26:14+00:00",
+      "link": "https://arxiv.org/pdf/2608.20614v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Agent skill evaluation framework that can be used to evaluate mobile agent capabilities.",
+      "llm_evidence_cn": "面向智能体技能评估的框架，可用来评测移动端智能体能力。",
+      "llm_evidence": "面向智能体技能评估的框架，可用来评测移动端智能体能力。",
+      "canonical_evidence": "面向智能体技能评估的框架，可用来评测移动端智能体能力。",
+      "llm_tldr_en": "ACES evaluates executable agent skill packages via paired live trials, normalizing trajectories to assess whether a skill improves task completion.",
+      "llm_tldr_cn": "针对企业智能体程序从原型走向生产时，技能和工具包需要基于证据进行部署评审的问题，提出ACES（智能体技能持续评估框架）。该框架在相同模型、沙箱和评分策略下进行有无目标技能的配对实时试验，将轨迹标准化为ATIF格式并依据默认运行指标进行评测，从而回答“能力包是否帮助智能体完成任务”的部署问题。该方法可迁移到移动端Agent的能力评估，为手机端任务执行技能选择提供系统化评测工具。",
+      "llm_tldr": "针对企业智能体程序从原型走向生产时，技能和工具包需要基于证据进行部署评审的问题，提出ACES（智能体技能持续评估框架）。该框架在相同模型、沙箱和评分策略下进行有无目标技能的配对实时试验，将轨迹标准化为ATIF格式并依据默认运行指标进行评测，从而回答“能力包是否帮助智能体完成任务”的部署问题。该方法可迁移到移动端Agent的能力评估，为手机端任务执行技能选择提供系统化评测工具。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.21690v1",
+      "source": "arxiv",
+      "title": "Context as an Environment: Programmatic Context Management for Long-Horizon Agents",
+      "abstract": "LLM agents increasingly take on long-running tasks whose history grows far beyond a single model context window. Existing approaches compress earlier interactions or extract selected information into fixed memory representations, committing to what to preserve before future needs are known. We present Scroll, a context manager that treats each agent session as an executable Session Environment. The environment is backed by an append-only Event Log and a sandboxed, persistent Python kernel. The kernel maintains a typed namespace across model calls, allowing tool outputs, retrieved history, and derived state to be bound to variables rather than serialized into the prompt at each call. Model-written code searches, materializes, and transforms session state through exec; only explicitly printed projections enter the model's working view for the next call. Context management thus becomes a programming task that inherits the improving coding abilities of LLMs, while the Event Log preserves lossless historical ground truth. As the working view approaches its budget, stale spans are evicted but remain recoverable: an eviction index keeps compact landmarks tied to exact Event Log addresses, so that the agent navigates directly to evicted regions instead of searching the full log. With Qwen3.8-Max as the backbone, Scroll achieves 94.8% on LongMemEval_S; 73.1% on BEAM_10M, surpassing the best published memory system by 5.1 points; and 86.7% on LOCA_256K, exceeding the best published long-horizon agent by 37.4 points.",
+      "authors": [
+        "Yin Lin",
+        "Elaine Ang",
+        "Erkang Zhu",
+        "Bolin Ding",
+        "Jingren Zhou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-21T23:39:19+00:00",
+      "link": "https://arxiv.org/pdf/2608.21690v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Programmatic context management with persistent Python kernel enables efficient long-horizon task execution.",
+      "llm_evidence_cn": "通过可执行会话环境与持久内核进行上下文管理，是移动端任务执行智能体的一项关键技术。",
+      "llm_evidence": "通过可执行会话环境与持久内核进行上下文管理，是移动端任务执行智能体的一项关键技术。",
+      "canonical_evidence": "通过可执行会话环境与持久内核进行上下文管理，是移动端任务执行智能体的一项关键技术。",
+      "llm_tldr_en": "Scroll treats an agent session as an executable environment backed by an event log and persistent kernel, allowing programmatic context access to support long-running tasks.",
+      "llm_tldr_cn": "针对长周期智能体历史超出单次上下文窗口的问题，提出Scroll上下文管理器，将会话视为可执行环境，由追加式事件日志和持久Python内核支撑。工具输出与派生状态绑定为变量，避免每次调用序列化到提示词，使模型可编程地检索和变换上下文。该方法减少了上下文冗余并支持复杂任务执行，对移动端设备上的长周期任务智能体具有重要借鉴意义。",
+      "llm_tldr": "针对长周期智能体历史超出单次上下文窗口的问题，提出Scroll上下文管理器，将会话视为可执行环境，由追加式事件日志和持久Python内核支撑。工具输出与派生状态绑定为变量，避免每次调用序列化到提示词，使模型可编程地检索和变换上下文。该方法减少了上下文冗余并支持复杂任务执行，对移动端设备上的长周期任务智能体具有重要借鉴意义。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.22237v1",
+      "source": "arxiv",
+      "title": "Read Less, Solve More: Token-Efficient Sparse Reading for AI Agents",
+      "abstract": "Long-horizon agents increasingly rely on repeated access to external artifacts, yet current reading interfaces often expose entire objects even when only sparse evidence is needed. This over-reading increases token and latency costs and can dilute task-relevant evidence, while existing context-reduction methods mainly intervene after broad content has already entered the trajectory. We present SparseRead, a training-free, model-transparent reading layer that controls content admission before unnecessary evidence reaches the model context. SparseRead combines a regime-aware Read Gate, extensible Reader Backends, and a stateful protocol for bounded, source-anchored evidence acquisition with explicit refinement, verification, stopping, and fallback. Across six frontier models, including Claude Opus 5, and five workload scenarios, SparseRead reduces token volume by up to 92.9% and wall time by up to 89.0%, while preserving or improving task quality. Its consistent gains across three agent frameworks further demonstrate broad portability.",
+      "authors": [
+        "Zedong Liu",
+        "Jiaan Wu",
+        "Xinyang Ma",
+        "Le Xu",
+        "Kai Wang",
+        "Yuanchao Hu",
+        "Dingwen Tao",
+        "Guangming Tan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-23T06:24:26+00:00",
+      "link": "https://arxiv.org/pdf/2608.22237v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Token-efficient sparse reading method addresses resource constraints relevant for on-device agents.",
+      "llm_evidence_cn": "稀疏阅读方法降低令牌与延迟开销，适合移动设备上任务执行智能体的高效运行。",
+      "llm_evidence": "稀疏阅读方法降低令牌与延迟开销，适合移动设备上任务执行智能体的高效运行。",
+      "canonical_evidence": "稀疏阅读方法降低令牌与延迟开销，适合移动设备上任务执行智能体的高效运行。",
+      "llm_tldr_en": "SparseRead is a training-free reading layer that controls content admission before it enters the context, reducing token and latency costs for long-horizon agents while preserving evidence.",
+      "llm_tldr_cn": "针对长周期智能体重复读取外部工件时过度读取导致令牌与延迟浪费的问题，提出SparseRead，一种无需训练的稀疏阅读层。它在不必要内容进入模型上下文前进行控制，通过门控读取、可扩展读后端及有界证据获取协议，实现精炼、验证和停止机制。跨任务实验表明该方法可降低令牌和延迟开销，对资源受限的移动端智能体任务执行尤为有价值。",
+      "llm_tldr": "针对长周期智能体重复读取外部工件时过度读取导致令牌与延迟浪费的问题，提出SparseRead，一种无需训练的稀疏阅读层。它在不必要内容进入模型上下文前进行控制，通过门控读取、可扩展读后端及有界证据获取协议，实现精炼、验证和停止机制。跨任务实验表明该方法可降低令牌和延迟开销，对资源受限的移动端智能体任务执行尤为有价值。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
