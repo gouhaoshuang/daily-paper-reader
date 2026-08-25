@@ -1,0 +1,409 @@
+{
+  "date": "20260727-20260825",
+  "date_label": "2026-07-27 ~ 2026-08-25",
+  "generated_at": "2026-08-25 10:42:21 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2607.28227v1",
+      "route": "20260727-20260825/2607.28227v1-qwen-ui-agent-technical-report-toward-next-generation-real-world-centric-foundation-gui-agents",
+      "title": "Qwen-UI-Agent Technical Report: Toward Next-Generation Real-World Centric Foundation GUI Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 10.0,
+      "evidence": "覆盖移动端、电脑端与网页的基础GUI代理，并包含大规模真机移动运行环境，直接在设备上执行任务",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2607.29199v1",
+      "route": "20260727-20260825/2607.29199v1-alignment-is-local-a-paired-diagnostic-for-gui-agents-under-user-side-persuasion",
+      "title": "Alignment Is Local: A Paired Diagnostic for GUI Agents under User-Side Persuasion",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "针对GUI移动智能体的对齐诊断",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.04755v1",
+      "route": "20260727-20260825/2608.04755v1-allow-to-achieve-over-privileged-inadvertently-the-unintended-cost-of-task-completion-driven-pop-up-decisions-in-mobile-gui-agents",
+      "title": "\"Allow\" to Achieve, Over-Privileged Inadvertently: The Unintended Cost of Task-Completion-Driven Pop-up Decisions in Mobile GUI Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "移动GUI代理在任务执行中处理系统权限弹窗",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.05587v1",
+      "route": "20260727-20260825/2608.05587v1-stepreflect-structured-ui-transition-reflection-for-mobile-gui-agents",
+      "title": "StepReflect: Structured UI Transition Reflection for Mobile GUI Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "为移动GUI智能体提供结构化界面转换反思方法",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.07775v1",
+      "route": "20260727-20260825/2608.07775v1-androidreality-how-far-are-mobile-agents-from-the-real-world",
+      "title": "AndroidReality: How Far Are Mobile Agents from the Real World?",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "基于扰动的移动智能体鲁棒性评测与提升框架,面向真实部署",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.08037v1",
+      "route": "20260727-20260825/2608.08037v1-skillsmith-enhancing-locally-deployed-agents-via-automatic-skill-construction-and-evolution",
+      "title": "SkillSmith: Enhancing Locally Deployed Agents via Automatic Skill Construction and Evolution",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "本地部署代理，自动构建技能，用于设备端个人助手",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.08939v1",
+      "route": "20260727-20260825/2608.08939v1-not-an-a11y-how-android-accessibility-exposes-mobile-ai-agents-to-indirect-prompt-injection",
+      "title": "Not an A11y: How Android Accessibility Exposes Mobile AI Agents to Indirect Prompt Injection",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "安卓移动智能体通过无障碍元数据面临系统性间接提示注入风险",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.11434v1",
+      "route": "20260727-20260825/2608.11434v1-benchmarking-llm-judges-for-mobile-agent-evaluation",
+      "title": "Benchmarking LLM Judges for Mobile Agent Evaluation",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "针对移动智能体的LLM裁判评测",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.11588v1",
+      "route": "20260727-20260825/2608.11588v1-coadapt-gui-joint-workflow-context-and-policy-adaptation-for-unseen-gui-applications",
+      "title": "CoAdapt-GUI: Joint Workflow Context and Policy Adaptation for Unseen GUI Applications",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "移动GUI代理在有限交互预算下对未见应用进行测试时自适应",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.13606v2",
+      "route": "20260727-20260825/2608.13606v2-mobilemem-learning-from-a-year-of-mobile-experiences",
+      "title": "MobileMem: Learning from a Year of Mobile Experiences",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "面向移动个人助理的端侧长期记忆基准与框架",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.14132v1",
+      "route": "20260727-20260825/2608.14132v1-act2intention-a-benchmark-for-developing-active-mobile-agents-through-inferring-user-intention-from-gui-actions",
+      "title": "Act2Intention: A Benchmark For Developing Active Mobile Agents Through Inferring User Intention from GUI Actions",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "从GUI动作推断用户意图,构建主动移动智能体框架与基准",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.20797v1",
+      "route": "20260727-20260825/2608.20797v1-automated-trajectory-evaluation-for-mobile-agents-via-step-level-consequence-reasoning-and-aggregation",
+      "title": "Automated Trajectory Evaluation for Mobile Agents via Step-Level Consequence Reasoning and Aggregation",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "面向移动智能体轨迹的分步推理自动化评估",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.22847v1",
+      "route": "20260727-20260825/2608.22847v1-gsar-goal-state-anchor-rewards-for-mobile-gui-agents-with-self-evolving-data-synthesis",
+      "title": "GSAR: Goal-State-Anchor Rewards for Mobile GUI Agents with Self-Evolving Data Synthesis",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "面向移动GUI智能体的强化学习奖励框架与自进化数据合成方法",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.23035v1",
+      "route": "20260727-20260825/2608.23035v1-mobilepa-bench-benchmarking-mobile-planner-agents-on-complex-real-world-tasks",
+      "title": "MobilePA-Bench: Benchmarking Mobile Planner Agents on Complex Real-World Tasks",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "面向移动规划智能体的评估基准",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2607.26865v1",
+      "route": "20260727-20260825/2607.26865v1-think-short-defer-smart-act-and-repeat-calibrated-reasoning-and-uncertainty-aware-deferral-for-edge-llm-agents",
+      "title": "Think Short, Defer Smart, Act, and Repeat: Calibrated Reasoning and Uncertainty-Aware Deferral for Edge LLM Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向边缘LLM智能体的端侧推理与不确定性感知委派，与本地任务执行高度相关",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.00805v1",
+      "route": "20260727-20260825/2608.00805v1-agentslabench-evaluating-and-benchmarking-agentic-systems-under-resource-constraints",
+      "title": "AgentSLABench: Evaluating and Benchmarking Agentic Systems Under Resource Constraints",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "提出资源感知的代理评估框架，在预算约束下度量正确性与资源消耗，直接适用于手机端任务代理评估",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.02352v1",
+      "route": "20260727-20260825/2608.02352v1-qwen-cua-native-computer-use-for-almost-everything",
+      "title": "Qwen-CUA: Native Computer Use for (almost) Everything",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "通过截屏与UI事件执行操作的计算机使用代理，其方法可直接迁移到移动应用自动化",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.09278v1",
+      "route": "20260727-20260825/2608.09278v1-software-engineering-for-and-with-gui-agent",
+      "title": "Software Engineering for and with GUI Agent",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "综述通过GUI代理自动化应用内操作，直接适用于手机应用自动化",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2607.28573v1",
+      "route": "20260727-20260825/2607.28573v1-rethinking-inference-time-scaling-in-local-computer-use-agents-failure-modes-and-compute-tradeoffs",
+      "title": "Rethinking Inference-Time Scaling in Local Computer-Use Agents: Failure Modes and Compute Tradeoffs",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "本地计算机使用智能体的推理时缩放研究",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.02254v2",
+      "route": "20260727-20260825/2608.02254v2-homebot-a-personal-ai-agent-for-conversational-home-assistance-and-automation",
+      "title": "Homebot: A Personal AI Agent for Conversational Home Assistance and Automation",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "本地可部署的个人AI代理，支持对话式任务协助与自动化",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.03403v1",
+      "route": "20260727-20260825/2608.03403v1-towards-robust-tool-use-in-agents-via-experience-driven-adaptive-guidance",
+      "title": "Towards Robust Tool Use in Agents via Experience-Driven Adaptive Guidance",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "经验驱动的自适应引导实现智能体鲁棒工具使用",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2608.05013v1",
+      "route": "20260727-20260825/2608.05013v1-onedayagent-towards-a-long-horizon-harness-for-autonomous-agents",
+      "title": "OneDayAgent: Towards a Long-Horizon Harness for Autonomous Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "提出包含子任务分解、记忆管理和验证的长时程执行框架，是端侧任务执行代理的关键技术",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2607.25656v1",
+      "route": "20260727-20260825/2607.25656v1-orchbench-evaluating-multi-agent-orchestration-plans-in-isolation-via-deterministic-simulation",
+      "title": "OrchBench: Evaluating Multi-Agent Orchestration Plans in Isolation via Deterministic Simulation",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "通过确定性模拟评估多智能体编排计划的基准，可迁移用于评估手机端任务代理",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2607.25816v1",
+      "route": "20260727-20260825/2607.25816v1-speculate-while-you-reason-teaching-agents-to-predict-their-next-tool-call-via-joint-agent-speculator-rl",
+      "title": "Speculate While You Reason: Teaching Agents to Predict Their Next Tool Call via Joint Agent-Speculator RL",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "通过预测工具调用降低LLM智能体延迟的技术，可适用于端侧任务执行",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    },
+    {
+      "paper_id": "2607.28037v1",
+      "route": "20260727-20260825/2607.28037v1-clawtrack-towards-trace-level-evaluation-and-improvement-of-real-world-autonomous-agents",
+      "title": "ClawTrack: Towards Trace-Level Evaluation and Improvement of Real-World Autonomous Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "为真实世界自主代理提供轨迹级双重评估基准，可迁移至移动任务执行代理的评价",
+      "first_seen_at": "2026-08-25 10:42:21 UTC",
+      "updated_at": "2026-08-25 10:42:21 UTC"
+    }
+  ]
+}
