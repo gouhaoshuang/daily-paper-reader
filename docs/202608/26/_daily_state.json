@@ -1,0 +1,121 @@
+{
+  "date": "20260826",
+  "date_label": "",
+  "generated_at": "2026-08-26 22:19:14 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.24099v1",
+      "route": "202608/26/2608.24099v1-are-android-gui-agents-robust-against-runtime-anomalies-antrap-evaluating-agents-in-dynamic-adversarial-environments",
+      "title": "Are Android GUI Agents Robust Against Runtime Anomalies? AnTrap: Evaluating Agents in Dynamic Adversarial Environments",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "在运行时异常下评估Android GUI智能体，直接相关移动智能体评估与挑战",
+      "first_seen_at": "2026-08-26 22:19:14 UTC",
+      "updated_at": "2026-08-26 22:19:14 UTC"
+    },
+    {
+      "paper_id": "2608.17319v1",
+      "route": "202608/26/2608.17319v1-wuying-browser-agent-real-world-centric-fundamental-long-horizon-browser-agents",
+      "title": "Wuying-Browser-Agent: Real-World Centric Fundamental Long-Horizon Browser Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "提出面向真实世界长时程任务的智能体框架，处理错误恢复与复杂UI等部署挑战，可迁移至移动端任务自动化",
+      "first_seen_at": "2026-08-26 22:19:14 UTC",
+      "updated_at": "2026-08-26 22:19:14 UTC"
+    },
+    {
+      "paper_id": "2608.18351v1",
+      "route": "202608/26/2608.18351v1-task-conditioned-least-privilege-learning-for-executable-terminal-and-mcp-agents",
+      "title": "Task-Conditioned Least-Privilege Learning for Executable Terminal and MCP Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "针对可执行智能体的超权错误，这一挑战同样存在于移动任务自动化智能体部署中",
+      "first_seen_at": "2026-08-26 22:19:14 UTC",
+      "updated_at": "2026-08-26 22:19:14 UTC"
+    },
+    {
+      "paper_id": "2608.20319v1",
+      "route": "202608/26/2608.20319v1-inducing-task-models-from-computer-use-traces",
+      "title": "Inducing Task Models from Computer-Use Traces",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "从计算机使用轨迹中发现任务模型，可迁移至移动端任务执行学习",
+      "first_seen_at": "2026-08-26 22:19:14 UTC",
+      "updated_at": "2026-08-26 22:19:14 UTC"
+    },
+    {
+      "paper_id": "2608.22793v1",
+      "route": "202608/26/2608.22793v1-trace-a-self-evolving-skill-bank-for-consistent-limit-aware-llm-agents",
+      "title": "TRACE: A Self-Evolving Skill Bank for Consistent, Limit-Aware LLM Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向用户终端设备的LLM智能体一致性与边界感知问题，直接相关移动任务自动化挑战",
+      "first_seen_at": "2026-08-26 22:19:14 UTC",
+      "updated_at": "2026-08-26 22:19:14 UTC"
+    },
+    {
+      "paper_id": "2608.23041v1",
+      "route": "202608/26/2608.23041v1-autosaddler-automatic-harness-optimization-with-durable-updates-from-agent-execution-traces",
+      "title": "AutoSaddler: Automatic Harness Optimization with Durable Updates from Agent Execution Traces",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "自动框架优化提升LLM代理在长程任务中的可靠性，相关于移动任务自动化挑战",
+      "first_seen_at": "2026-08-26 22:19:14 UTC",
+      "updated_at": "2026-08-26 22:19:14 UTC"
+    },
+    {
+      "paper_id": "2608.23628v1",
+      "route": "202608/26/2608.23628v1-callability-is-not-operability-controlled-interface-interventions-for-llm-agents",
+      "title": "Callability Is Not Operability: Controlled Interface Interventions for LLM Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "关注LLM智能体工具可操作性与接口设计，可迁移至移动应用自动化",
+      "first_seen_at": "2026-08-26 22:19:14 UTC",
+      "updated_at": "2026-08-26 22:19:14 UTC"
+    }
+  ]
+}

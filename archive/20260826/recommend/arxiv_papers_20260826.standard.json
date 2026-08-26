@@ -1,0 +1,340 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-26T22:12:24.207124+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2608.24099v1",
+      "source": "arxiv",
+      "title": "Are Android GUI Agents Robust Against Runtime Anomalies? AnTrap: Evaluating Agents in Dynamic Adversarial Environments",
+      "abstract": "GUI agents often encounter dynamic anomalies when deployed on Android devices, from unexpected pop-ups to action misuse, yet existing benchmarks lack systematic evaluation of agent robustness against runtime anomalies. We introduce AnTrap, a comprehensive benchmark that injects dynamic perturbations into agent execution trajectories. We propose a taxonomy organizing real-world anomalies into four layers (State, Thinking, Action and Round) with ten fine-grained subcategories, and develop a construction pipeline that preserves task solvability while introducing realistic adversarial conditions. Evaluating 16 leading GUI models, we reveal universal vulnerability to dynamic anomalies, with even the strongest models suffering significant performance degradation. Furthermore, we conduct GRPO training in both original and adversarial environments to validate our benchmark, separating environment-learnable anomalies from reasoning-bottlenecked ones. Our findings show that while single-step traps at state and action layers are largely addressable through adversarial reinforcement learning, deep contextual traps, like state deadlock, expose intrinsic limitations that cannot be resolved by training in environments with traps alone.",
+      "authors": [
+        "Guo Gan",
+        "Yilun Zhao",
+        "Cong Chen",
+        "Jinbiao Wei",
+        "Tingyu Song",
+        "Zheyuan Yang",
+        "Lin Fu",
+        "Hong Zhou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-25T05:57:25+00:00",
+      "link": "https://arxiv.org/pdf/2608.24099v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Evaluates Android GUI agents under runtime anomalies, directly relevant to mobile agent evaluation and challenges",
+      "llm_evidence_cn": "在运行时异常下评估Android GUI智能体，直接相关移动智能体评估与挑战",
+      "llm_evidence": "在运行时异常下评估Android GUI智能体，直接相关移动智能体评估与挑战",
+      "canonical_evidence": "在运行时异常下评估Android GUI智能体，直接相关移动智能体评估与挑战",
+      "llm_tldr_en": "Introduces AnTrap, a benchmark injecting runtime anomalies such as pop-ups and action misuse into Android GUI agent trajectories, revealing that even strong models are universally vulnerable to dynamic anomalies.",
+      "llm_tldr_cn": "针对Android GUI智能体在真实部署中常遇到弹出窗口、动作误用等运行时异常的问题，提出AnTrap基准，将动态扰动注入执行轨迹，并建立四层十细分的异常分类体系。评估16个主流GUI模型发现，所有模型对动态异常均显示出普遍脆弱性，挑战了现有鲁棒性认知，为改进移动智能体鲁棒性提供测试方法。",
+      "llm_tldr": "针对Android GUI智能体在真实部署中常遇到弹出窗口、动作误用等运行时异常的问题，提出AnTrap基准，将动态扰动注入执行轨迹，并建立四层十细分的异常分类体系。评估16个主流GUI模型发现，所有模型对动态异常均显示出普遍脆弱性，挑战了现有鲁棒性认知，为改进移动智能体鲁棒性提供测试方法。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.17319v1",
+      "source": "arxiv",
+      "title": "Wuying-Browser-Agent: Real-World Centric Fundamental Long-Horizon Browser Agents",
+      "abstract": "Browser agents perform well on short, clean demonstrations, but real deployment is fundamentally different: agents must sustain dozens of decisions on live websites while recovering from mistakes and navigating complex UIs. We argue that closing this gap requires alignment at every level of the pipeline, including execution, supervision, optimization, and evaluation, rather than scale alone. We present Wuying-Browser-Agent, a unified framework that addresses each of these levels. A structured browser harness provides stable execution primitives and decision-oriented context management. Reflection and UI-specialized Curriculum SFT (RUIC-SFT) explicitly trains on recovery trajectories and complex-UI interactions. Divergence-Aware Online GRPO (DAO-GRPO) improves long-horizon credit assignment through potential-based reward shaping and divergence-aware step weighting. Finally, we introduce BrowserBench, a bilingual real-web benchmark of 350 tasks averaging 37.9 steps, because most existing benchmarks are too short to expose long-horizon failure modes. Wuying-Browser-Agent-27B achieves 80.6\\% on WebVoyager, 66.7\\% on Online-Mind2Web, and 65.1\\% on BrowserBench, establishing a new open-source state of the art on browser-use benchmarks. The same pipeline also transfers beyond browser use, demonstrating strong general agentic ability and reaching an average score of 73.8 on Tau2-Bench, Claw-Eval, and BFCL-v4.",
+      "authors": [
+        "AIMAE Team",
+        "Tianxiang Chen",
+        "Yan Cheng",
+        "Zhangye Han",
+        "Xiaowei Li",
+        "Chang Liu",
+        "Cheng Liu",
+        "Zhongqiang Ma",
+        "Long Peng",
+        "Xiaobing Tu",
+        "Yinggui Wang",
+        "Hongliang Wei",
+        "Chen Wu",
+        "Daiping Xin",
+        "Kunyu Zhou",
+        "Pengyang Zhou",
+        "Peiyuan Chen",
+        "Ziyuan Chen",
+        "Yutao Deng",
+        "Chunyu Dong",
+        "Xiangyu Fu",
+        "Yicheng Feng",
+        "Ruian He",
+        "Haochen Li",
+        "Miancan Liu",
+        "Zhengqin Liu",
+        "Wei Peng",
+        "Jinkui Ren",
+        "Haoyu Tan",
+        "Dong Xiao",
+        "Rongkun Xue",
+        "Shujian Yang",
+        "Xianhang Ye",
+        "Ziqi Yuan",
+        "Ziyang Yu",
+        "Linghan Zhang",
+        "Xiantao Zhang",
+        "Xuanpu Zhao",
+        "Yinan Zhao",
+        "Zhenghui Zhao",
+        "Bin Zhu",
+        "Likai Zou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-18T03:23:31+00:00",
+      "link": "https://arxiv.org/pdf/2608.17319v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Framework for long-horizon real-world agents addressing deployment challenges such as mistake recovery and complex UI, transferable to mobile task automation",
+      "llm_evidence_cn": "提出面向真实世界长时程任务的智能体框架，处理错误恢复与复杂UI等部署挑战，可迁移至移动端任务自动化",
+      "llm_evidence": "提出面向真实世界长时程任务的智能体框架，处理错误恢复与复杂UI等部署挑战，可迁移至移动端任务自动化",
+      "canonical_evidence": "提出面向真实世界长时程任务的智能体框架，处理错误恢复与复杂UI等部署挑战，可迁移至移动端任务自动化",
+      "llm_tldr_en": "Wuying-Browser-Agent presents a unified framework for long-horizon browser agents, aligning execution, supervision, optimization, and evaluation to handle real-world complexity, with structured harness and specialized training for recovery and complex UI.",
+      "llm_tldr_cn": "针对浏览器智能体在真实部署中需长时间决策、错误恢复和复杂UI交互等挑战，本文提出Wuying-Browser-Agent统一框架。该框架在执行、监督、优化和评估各层面进行对齐，采用结构化浏览器工具与对抗复杂UI的课程式SFT和在线GRPO训练，使智能体在长时程真实任务中表现稳定。其对真实世界部署问题的处理思路可推广到移动端Agent任务执行。",
+      "llm_tldr": "针对浏览器智能体在真实部署中需长时间决策、错误恢复和复杂UI交互等挑战，本文提出Wuying-Browser-Agent统一框架。该框架在执行、监督、优化和评估各层面进行对齐，采用结构化浏览器工具与对抗复杂UI的课程式SFT和在线GRPO训练，使智能体在长时程真实任务中表现稳定。其对真实世界部署问题的处理思路可推广到移动端Agent任务执行。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.18351v1",
+      "source": "arxiv",
+      "title": "Task-Conditioned Least-Privilege Learning for Executable Terminal and MCP Agents",
+      "abstract": "Tool-using large language-model agents can complete a task while exercising authority that the user did not grant or the task does not need, causing excess-authority errors. Traditional permission gating systems alone for validating agent environments are insufficient. We study whether post-training can teach a 4B-parameter model to choose task-conditioned authority in executable terminal and Model Context Protocol (MCP) environments to complement those measures. We propose a framework where each action is audited before execution and again from observed effects along six dimensions of risk. This auditing is conducted using deterministic verifiers that score completion, evidence, exact state, prohibited attempts, and safe success. In conjunction with predefined task-specific sufficient-authority envelopes, we determine task-specific excess privilege values for trajectories, which are then optimized for in post-training. We find that after training using this framework on Qwen3.5-4B over 1,500 tasks, the selected seed reaches 98.48% safe success across 2,896 evaluation episodes spanning all 500 held-out tasks, compared with 64.36% for the base policy, and reduces excess-authority error events from 4.56% to 0.79%. Furthermore, external tests show capability retention and prompt-directed improvement. A 400 task continuation study also found evidence of generalization, reducing excess-authority events by 6.99 percentage points while maintaining previous capabilities. We conclude learned restraint through least-privilege aware post-training is therefore useful as an additional control layer for tool-using agents in executable terminal and MCP environments, but it does not replace permission gates and sandboxing.",
+      "authors": [
+        "Alexander Tu",
+        "Michael Tu"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-08-18T22:07:23+00:00",
+      "link": "https://arxiv.org/pdf/2608.18351v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Addresses excess-authority errors in executable agents, a key challenge for deploying mobile task automation agents",
+      "llm_evidence_cn": "针对可执行智能体的超权错误，这一挑战同样存在于移动任务自动化智能体部署中",
+      "llm_evidence": "针对可执行智能体的超权错误，这一挑战同样存在于移动任务自动化智能体部署中",
+      "canonical_evidence": "针对可执行智能体的超权错误，这一挑战同样存在于移动任务自动化智能体部署中",
+      "llm_tldr_en": "This paper studies post-training a 4B-parameter model to choose task-conditioned least-privilege authority in terminal and MCP environments, using deterministic verifiers to audit actions, complementing permission gating for safer mobile-like agent deployment.",
+      "llm_tldr_cn": "工具使用型大语言模型智能体在执行任务时可能行使超出用户授权或任务所需的权限，造成超权错误，而传统权限门控并不足以应对。该论文研究如何通过后训练使一个4B参数模型在可执行终端和模型上下文协议（MCP）环境中，依据任务条件自主选择最小权限。其框架在执行前和观察效果后沿六个风险维度进行审计，并采用确定性验证器评估完成度、证据、状态和执行安全。实验表明这种后训练方法能有效补充权限门控，提升智能体部署的安全性和授权准确性，对移动任务自动化等场景的权限治理具有参考价值。",
+      "llm_tldr": "工具使用型大语言模型智能体在执行任务时可能行使超出用户授权或任务所需的权限，造成超权错误，而传统权限门控并不足以应对。该论文研究如何通过后训练使一个4B参数模型在可执行终端和模型上下文协议（MCP）环境中，依据任务条件自主选择最小权限。其框架在执行前和观察效果后沿六个风险维度进行审计，并采用确定性验证器评估完成度、证据、状态和执行安全。实验表明这种后训练方法能有效补充权限门控，提升智能体部署的安全性和授权准确性，对移动任务自动化等场景的权限治理具有参考价值。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.20319v1",
+      "source": "arxiv",
+      "title": "Inducing Task Models from Computer-Use Traces",
+      "abstract": "Naturalistic computer-use traces, passively recorded screenshots and mouse or keyboard actions, are a valuable resource for deriving symbolic, auditable, and reusable models of how everyday work is done. Such models matter as computer-use agents enter real work, where agents need to learn how tasks are actually performed, and organizations need to audit and reuse that knowledge. However, inducing such task models is challenging, as activity is observed only as low-level events and real-world work is multi-threaded with interleaved goals. Existing methods assume a given task or a single workflow, and produce step-level summaries rather than structured task models. We introduce Task Model Induction (TMI), which (i) discovers the latent tasks in an unconstrained trace, disentangling concurrent activity, and (ii) for each latent task, induces a task model pairing a hierarchical objective model of recursive goal decomposition with a procedure model of the control flow that organized the execution. Intrinsically, on controlled human and agent trajectories, TMI recovers interleaved tasks with 0.974 agreement against ground-truth groupings and reconstructs 74.9% of the observed execution steps, far more than the strongest workflow induction baseline. Extrinsically, skills derived from TMI's task models improve held-out task accuracy by 30.0% over the strongest baseline.",
+      "authors": [
+        "Yucheng Jiang",
+        "Zora Zhiruo Wang",
+        "Ruishi Chen",
+        "Diyi Yang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-08-20T17:57:00+00:00",
+      "link": "https://arxiv.org/pdf/2608.20319v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Discovers latent task models from computer-use traces, transferable to learning mobile task execution",
+      "llm_evidence_cn": "从计算机使用轨迹中发现任务模型，可迁移至移动端任务执行学习",
+      "llm_evidence": "从计算机使用轨迹中发现任务模型，可迁移至移动端任务执行学习",
+      "canonical_evidence": "从计算机使用轨迹中发现任务模型，可迁移至移动端任务执行学习",
+      "llm_tldr_en": "Introduces Task Model Induction (TMI), which discovers latent tasks and builds structured task models from unconstrained computer-use traces, supporting agents in learning real workflows and organizations in auditing them.",
+      "llm_tldr_cn": "针对计算机使用轨迹中任务多样、目标交错且仅含低层事件的问题，提出任务模型归纳(TMI)方法，从无约束轨迹中发现潜在任务并构建结构化任务模型。该方法不假设已知任务或单一路径，能处理多线程真实工作流，为计算机使用智能体学习实际任务提供支持。该技术亦可应用于移动设备轨迹分析，帮助构建可审计的任务执行模型。",
+      "llm_tldr": "针对计算机使用轨迹中任务多样、目标交错且仅含低层事件的问题，提出任务模型归纳(TMI)方法，从无约束轨迹中发现潜在任务并构建结构化任务模型。该方法不假设已知任务或单一路径，能处理多线程真实工作流，为计算机使用智能体学习实际任务提供支持。该技术亦可应用于移动设备轨迹分析，帮助构建可审计的任务执行模型。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.22793v1",
+      "source": "arxiv",
+      "title": "TRACE: A Self-Evolving Skill Bank for Consistent, Limit-Aware LLM Agents",
+      "abstract": "Reliable deployment of LLM agents in user-facing products depends not on raw task-solving ability but on consistency and limit-awareness: behaving the same way across repeated trials, and recognizing when a request cannot, or cannot yet, be safely fulfilled. CAR-bench exposes this reliability gap in the domain of in-car assistants: an LLM-simulated user issues incomplete or ambiguous requests, requiring the agent to resolve uncertainty through multi-turn dialogue and tool use while strictly adhering to domain policies. Even frontier models show a substantial gap between what they can solve at least once (Pass@3) and what they solve consistently across trials (Pass^k). We bridge this gap with TRACE (TRAjectory-Contrastive Evolution), which iteratively improves a skill-based agent's behavioral knowledge without modifying model weights. This knowledge is organized as a Skill Bank of modular, retrievable skills, each encoding a self-contained set of tool-use rules and behavioral guidelines. TRACE evolves this bank through an agentic self-evolution loop: after each evaluation round, it groups trajectories by the skills invoked and refines each skill by contrasting successful and failed behaviors. The updated bank then guides subsequent rounds, while during deployment the Actor performs state-conditioned skill orchestration at every turn. On GPT-5.5, TRACE improves consistency (Pass^3) by 34.6 points, from 59.9% to 94.5%, while shrinking the gap between potential and reliable performance to just 4.0 points. On the official hidden set, TRACE achieved first place using GPT-5.6-Sol, attaining a Pass^3 score of 70%-a 40% relative improvement over the baseline. These results show that TRACE converts high model potential into stable, consistent performance gain. Project homepage: https://darwin-agent.github.io/Car-bench-TRACE.",
+      "authors": [
+        "Wenhao Wu",
+        "Menghao Zhang",
+        "Xin Wang",
+        "Zhi Wang",
+        "Kun Shao",
+        "Jian Luan"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-08-24T04:36:03+00:00",
+      "link": "https://arxiv.org/pdf/2608.22793v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Addresses consistency and limit-awareness for LLM agents in user-facing devices, directly relevant to mobile task automation challenges",
+      "llm_evidence_cn": "面向用户终端设备的LLM智能体一致性与边界感知问题，直接相关移动任务自动化挑战",
+      "llm_evidence": "面向用户终端设备的LLM智能体一致性与边界感知问题，直接相关移动任务自动化挑战",
+      "canonical_evidence": "面向用户终端设备的LLM智能体一致性与边界感知问题，直接相关移动任务自动化挑战",
+      "llm_tldr_en": "TRACE bridges the reliability gap in LLM agents for user-facing devices using a self-evolving skill bank, improving consistency and limit-awareness in multi-turn dialogue and tool use. Highly relevant to mobile agents.",
+      "llm_tldr_cn": "面向用户产品的LLM智能体不仅需要任务求解能力，还需要一致性和边界感知，即在不同尝试中表现稳定，并识别无法安全完成请求。本文基于CAR-bench暴露的内置助手可靠性差距，提出TRACE技能库，通过轨迹对比进化来弥合Pass@3与Pass^k之间的差异。实验表明该方法能显著提升模型在模糊请求下的多轮对话和工具使用一致性，对移动端智能体的稳健部署具有直接借鉴意义。",
+      "llm_tldr": "面向用户产品的LLM智能体不仅需要任务求解能力，还需要一致性和边界感知，即在不同尝试中表现稳定，并识别无法安全完成请求。本文基于CAR-bench暴露的内置助手可靠性差距，提出TRACE技能库，通过轨迹对比进化来弥合Pass@3与Pass^k之间的差异。实验表明该方法能显著提升模型在模糊请求下的多轮对话和工具使用一致性，对移动端智能体的稳健部署具有直接借鉴意义。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.23041v1",
+      "source": "arxiv",
+      "title": "AutoSaddler: Automatic Harness Optimization with Durable Updates from Agent Execution Traces",
+      "abstract": "LLM agents remain unreliable on long-horizon tasks, where small local failures can compound over extended interactions and lead to overall task failure. Although external harnesses can substantially improve robustness, harness design remains a manual and expensive process that requires searching over a large space of prompts, tool configurations, and control logic. We propose AutoSaddler, an automatic harness optimization framework that formulates harness improvement as an offline learning problem and iteratively updates the harness using failure signals from mini-batches. AutoSaddler combines failure-trace diagnosis, structured patch generation that treats the harness as code, and validation-based update selection. Experiments on GAIA2, SWE-Bench Pro, and Terminal-Bench 2.0 show that AutoSaddler substantially improves agent performance over the corresponding base harnesses, achieving gains of 9.0, 9.6, and 10.0 percentage points, respectively. Ablation studies further suggest that effective harness optimization benefits from three ingredients: deep debugging rather than shallow reflection, targeted modifications rather than unconstrained editing, and generalization-aware selection rather than trajectory-specific repair. Together, these results suggest that automatic harness optimization is a promising path toward more performant and reliable agent systems.",
+      "authors": [
+        "Sungho Park",
+        "Wonjoong Kim",
+        "Rongyuan Tan",
+        "Jue Zhang",
+        "Wook-Shin Han",
+        "Pengfei Gao",
+        "Chanyoung Park",
+        "Yongqiang Yao",
+        "Rao Fu",
+        "Elsie Nallipogu",
+        "Qingwei Lin",
+        "Saravan Rajmohan",
+        "Dongmei Zhang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LG",
+        "cs.MA",
+        "cs.SE"
+      ],
+      "published": "2026-08-24T09:45:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.23041v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "automatic harness optimization improves robustness of LLM agents on long-horizon tasks, relevant to mobile task automation challenges",
+      "llm_evidence_cn": "自动框架优化提升LLM代理在长程任务中的可靠性，相关于移动任务自动化挑战",
+      "llm_evidence": "自动框架优化提升LLM代理在长程任务中的可靠性，相关于移动任务自动化挑战",
+      "canonical_evidence": "自动框架优化提升LLM代理在长程任务中的可靠性，相关于移动任务自动化挑战",
+      "llm_tldr_en": "AutoSaddler automatically optimizes LLM agent harnesses from execution traces, treating harness as code to generate validated patches, improving robustness on long-horizon tasks.",
+      "llm_tldr_cn": "LLM代理在长程任务中常因局部失败累积而不可靠，外部框架可提升鲁棒性但人工设计昂贵。AutoSaddler将框架改进视为离线学习问题，结合失败轨迹诊断、结构化补丁生成和验证，自动优化提示、工具配置和控制逻辑。实验表明该方法能显著提升代理在长程任务上的成功率。该工作为任务执行代理的可靠性提供了自动化框架优化方案。",
+      "llm_tldr": "LLM代理在长程任务中常因局部失败累积而不可靠，外部框架可提升鲁棒性但人工设计昂贵。AutoSaddler将框架改进视为离线学习问题，结合失败轨迹诊断、结构化补丁生成和验证，自动优化提示、工具配置和控制逻辑。实验表明该方法能显著提升代理在长程任务上的成功率。该工作为任务执行代理的可靠性提供了自动化框架优化方案。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.23628v1",
+      "source": "arxiv",
+      "title": "Callability Is Not Operability: Controlled Interface Interventions for LLM Agents",
+      "abstract": "A tool call can be perfectly valid yet still leave an autonomous agent unable to determine what to do next. For example, if an external effect commits but its response is lost, committed and uncommitted states may become indistinguishable to the agent even though they require different continuation actions. We study this gap between callability and operability: whether a tool interface exposes the action-relevant state and semantics needed for an agent to continue safely under operational uncertainty. We operationalize tool operability through Agent-First Tooling (AFT), a set of interface mechanisms spanning selective capability discovery, execution lifecycle and recovery, explicit external-effect semantics, machine-readable results, and postcondition verification. We introduce AFT-Bench, a controlled interface-intervention framework that holds the task, backend, initial state, injected failure, agent, and language model fixed while varying the interface exposed to the agent.",
+      "authors": [
+        "Zihao Wang"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-08-23T07:13:50+00:00",
+      "link": "https://arxiv.org/pdf/2608.23628v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Addresses tool operability and interface design for LLM agents, applicable to mobile app automation",
+      "llm_evidence_cn": "关注LLM智能体工具可操作性与接口设计，可迁移至移动应用自动化",
+      "llm_evidence": "关注LLM智能体工具可操作性与接口设计，可迁移至移动应用自动化",
+      "canonical_evidence": "关注LLM智能体工具可操作性与接口设计，可迁移至移动应用自动化",
+      "llm_tldr_en": "Explores the gap between callability and operability in tool interfaces for LLM agents, proposing Agent-First Tooling (AFT) with interface mechanisms that expose action-relevant state, improving safe and continued operation under uncertainty.",
+      "llm_tldr_cn": "该文指出工具接口即使调用合法也可能让智能体无法继续操作。为此提出面向智能体的工具设计(AFT)机制，涵盖能力发现、执行生命周期与恢复、外部效果语义等，帮助智能体在操作不确定性下安全运行。该方法可应用于移动应用内智能体操作接口的设计。",
+      "llm_tldr": "该文指出工具接口即使调用合法也可能让智能体无法继续操作。为此提出面向智能体的工具设计(AFT)机制，涵盖能力发现、执行生命周期与恢复、外部效果语义等，帮助智能体在操作不确定性下安全运行。该方法可应用于移动应用内智能体操作接口的设计。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

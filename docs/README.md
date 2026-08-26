@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-25</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-26</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 12 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 7 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>3</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>9</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>6</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-25 21:03:47 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-26 22:19:14 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日精读3篇、速读9篇，聚焦智能体GUI安全与端侧持续学习。最值得关注的是《MobileWorldSafety》以9.0分领跑，揭露安卓App环境注入攻击风险；《LOCAL》8.0分探索端侧Agent模型的连续学习方案。建议优先跟进移动端智能体安全加固，并留意长周期任务与沙箱基准的后续验证。</p>
+<p>今日共扫描7篇论文，精读1篇、速读6篇，核心聚焦AI代理在真实动态环境中的可靠性。最值得关注的是安卓GUI代理在运行时异常下的鲁棒性评估（9.0分），其次是长视界浏览器代理与终端/MCP代理的低权限学习。建议开发者优先测试代理在界面突变、卡顿等异常场景下的恢复能力。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -71,12 +71,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">3 篇</strong>
+    <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="MobileWorldSafety: Benchmarking GUI Agent Safety Against Environmental Injection Attacks in Android Apps">MobileWorldSafety: Benchmarking GUI Agent Safety Against Environmental Injection Attacks in Android Apps</span></li><li><span class="dpr-home-dashboard-paper-title" title="LOCAL: Enabling Learning On-device Contiguously for Agent LLMs">LOCAL: Enabling Learning On-device Contiguously for Agent LLMs</span></li><li><span class="dpr-home-dashboard-paper-title" title="UI-Mate: Advancing Open-Weight Foundation GUI Agents with In-Context Demonstrations">UI-Mate: Advancing Open-Weight Foundation GUI Agents with In-Context Demonstrations</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Are Android GUI Agents Robust Against Runtime Anomalies? AnTrap: Evaluating Agents in Dynamic Adversarial Environments">Are Android GUI Agents Robust Against Runtime Anomalies? AnTrap: Evaluating Agents in Dynamic Adversarial Environments</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>3</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -84,12 +84,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">9 篇</strong>
+    <strong class="dpr-home-dashboard-count">6 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="AstronOS: A Unified Execution Model and Runtime for Long-Horizon Agentic Systems">AstronOS: A Unified Execution Model and Runtime for Long-Horizon Agentic Systems</span></li><li><span class="dpr-home-dashboard-paper-title" title="One Success Isn&#x27;t Reliability: Thinkingbox, a Sandbox and Benchmark for Agents in Stateful Business Workflows">One Success Isn&#x27;t Reliability: Thinkingbox, a Sandbox and Benchmark for Agents in Stateful Business Workflows</span></li><li><span class="dpr-home-dashboard-paper-title" title="ClawProBench: Trace-Aware Evaluation of AI Agents with Runtime Coverage and Frozen Workplace-Style Holdouts">ClawProBench: Trace-Aware Evaluation of AI Agents with Runtime Coverage and Frozen Workplace-Style Holdouts</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Wuying-Browser-Agent: Real-World Centric Fundamental Long-Horizon Browser Agents">Wuying-Browser-Agent: Real-World Centric Fundamental Long-Horizon Browser Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Task-Conditioned Least-Privilege Learning for Executable Terminal and MCP Agents">Task-Conditioned Least-Privilege Learning for Executable Terminal and MCP Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Inducing Task Models from Computer-Use Traces">Inducing Task Models from Computer-Use Traces</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>9</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>6</strong></span></div>
 </section>
 </div>
 
