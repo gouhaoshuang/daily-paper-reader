@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-26</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-28</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 7 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 5 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>6</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>2</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>3</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-26 22:19:14 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-28 04:04:44 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日共扫描7篇论文，精读1篇、速读6篇，核心聚焦AI代理在真实动态环境中的可靠性。最值得关注的是安卓GUI代理在运行时异常下的鲁棒性评估（9.0分），其次是长视界浏览器代理与终端/MCP代理的低权限学习。建议开发者优先测试代理在界面突变、卡顿等异常场景下的恢复能力。</p>
+<p>今日聚焦AI智能体在GUI操作中的可信度与执行可靠性，5篇论文覆盖精读与速读。</p>
+<p>最值得关注：跨设备可信度基准与结构化状态+语义动作方案，后者有望替代传统截图点击模式。</p>
+<p>建议读者优先精读两篇高分论文，理解智能体从“截图模拟”向“结构化控制”演进的趋势。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -71,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">1 篇</strong>
+    <strong class="dpr-home-dashboard-count">2 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Are Android GUI Agents Robust Against Runtime Anomalies? AnTrap: Evaluating Agents in Dynamic Adversarial Environments">Are Android GUI Agents Robust Against Runtime Anomalies? AnTrap: Evaluating Agents in Dynamic Adversarial Environments</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="ADeptS-Bench: Measuring the Trustworthiness of Computer Use Agents Across Devices">ADeptS-Bench: Measuring the Trustworthiness of Computer Use Agents Across Devices</span></li><li><span class="dpr-home-dashboard-paper-title" title="ASIL: Replacing Screenshot-and-Click with Structured State and Semantic Actions">ASIL: Replacing Screenshot-and-Click with Structured State and Semantic Actions</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>2</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -84,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">6 篇</strong>
+    <strong class="dpr-home-dashboard-count">3 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Wuying-Browser-Agent: Real-World Centric Fundamental Long-Horizon Browser Agents">Wuying-Browser-Agent: Real-World Centric Fundamental Long-Horizon Browser Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Task-Conditioned Least-Privilege Learning for Executable Terminal and MCP Agents">Task-Conditioned Least-Privilege Learning for Executable Terminal and MCP Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Inducing Task Models from Computer-Use Traces">Inducing Task Models from Computer-Use Traces</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="LocalLSTC: A Long Short-Term Control Architecture for Locally Deployed GUI Agents">LocalLSTC: A Long Short-Term Control Architecture for Locally Deployed GUI Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Natural-Language Workflows Are Not Software Yet: Artifact-Driven Compilation for Reliable Agent Execution">Natural-Language Workflows Are Not Software Yet: Artifact-Driven Compilation for Reliable Agent Execution</span></li><li><span class="dpr-home-dashboard-paper-title" title="PeakBench: Benchmarking Resource-Aware Tool Invocation in LLM Agents">PeakBench: Benchmarking Resource-Aware Tool Invocation in LLM Agents</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>6</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>3</strong></span></div>
 </section>
 </div>
 

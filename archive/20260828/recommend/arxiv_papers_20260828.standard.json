@@ -1,0 +1,210 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-28T03:58:54.418358+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2608.26204v1",
+      "source": "arxiv",
+      "title": "ADeptS-Bench: Measuring the Trustworthiness of Computer Use Agents Across Devices",
+      "abstract": "Computer Use Agents (CUAs) are increasingly deployed to navigate mobile and desktop applications on behalf of users, yet no benchmark comprehensively evaluates whether they can safely interact with visual interfaces while handling ambiguous instructions. We introduce ADeptS-Bench, a dual-stream trustworthiness benchmark, grounded in the ADEPTS capability framework and general population user studies. The Safety stream provides paired benign/malicious tasks with threats embedded in the visual interface. The Disambiguation stream evaluates whether agents seek clarification when intent is ambiguous. Evaluating seven models reveals that no model consistently exceeds 80% task success while staying below 30% attack success; every model clicks \"Checkout\" on a $25K order without hesitation, and none detects that a \"factory reset\" button is mislabeled as \"Optimize.\" An ablation reveals three distinct safety architectures: tool-dependent (ASR +21-23pp without refusal tool), partially tool-dependent (+10-11pp), and no mechanism (unchanged). In disambiguation, all models overestimate consequence severity, mirroring the over-refusal bias observed in safety. We release all data, evaluation code, and analysis tools upon publication.",
+      "authors": [
+        "Joy Chen",
+        "Alejandro Castillejo Munoz",
+        "Pierluca D'Oro",
+        "Yuxuan Sun",
+        "Chloe Evans",
+        "Joseph Tighe"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-08-25T23:21:57+00:00",
+      "link": "https://arxiv.org/pdf/2608.26204v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "benchmark for trustworthy computer use agents operating mobile and desktop apps on behalf of users",
+      "llm_evidence_cn": "针对移动和桌面应用中代替用户操作的计算机使用代理的可信度基准",
+      "llm_evidence": "针对移动和桌面应用中代替用户操作的计算机使用代理的可信度基准",
+      "canonical_evidence": "针对移动和桌面应用中代替用户操作的计算机使用代理的可信度基准",
+      "llm_tldr_en": "ADeptS-Bench is a dual-stream benchmark for trusted computer-use agents on mobile and desktop, combining safety and intent-disambiguation streams; evaluation of seven models shows no model achieves both high success and low attack rates.",
+      "llm_tldr_cn": "计算机使用代理（CUA）在移动和桌面应用中代替用户操作，但现有基准未系统评估其在可视界面中安全交互与模糊指令消歧的能力。为此，ADeptS-Bench构建了安全流与消歧流双流基准，基于ADEPTS能力框架和用户研究设计。在七个模型上的评测结果表明，尚无模型能在保证任务成功率高于80%的同时将攻击成功率控制在30%以下，显示可信交互仍是显著瓶颈。该基准为跨设备智能体可信操作提供了标准化评测工具。",
+      "llm_tldr": "计算机使用代理（CUA）在移动和桌面应用中代替用户操作，但现有基准未系统评估其在可视界面中安全交互与模糊指令消歧的能力。为此，ADeptS-Bench构建了安全流与消歧流双流基准，基于ADEPTS能力框架和用户研究设计。在七个模型上的评测结果表明，尚无模型能在保证任务成功率高于80%的同时将攻击成功率控制在30%以下，显示可信交互仍是显著瓶颈。该基准为跨设备智能体可信操作提供了标准化评测工具。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "mobile agent that performs tasks on behalf of user",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.26991v1",
+      "source": "arxiv",
+      "title": "ASIL: Replacing Screenshot-and-Click with Structured State and Semantic Actions",
+      "abstract": "Powerful code agents can execute scripts, call tools, and manage files, yet many important applications remain accessible primarily through graphical user interfaces. We argue that screenshot-and-click is an inefficient interface for software-operating agents: screenshots are state-incomplete, and GUI actions are brittle, semantically weak, and poorly matched to long-horizon planning. We introduce ASIL (Agent-Software Interaction Layer), an agent-native interface that exposes software through structured JSON observations and code-executable semantic actions, realized through the deepest feasible access path for each application. We instantiate ASIL across 15 applications and a benchmark of 300 single-application and 80 multi-application tasks. ASIL reaches above 80 with closed models while executing fewer than five actions per task. Under a repaired runtime and a 50-step screenshot budget, the same tasks yield 6.6 and 26.6 strict success under screenshot-and-click control, rising to 15.0 and 53.3 on an easier OSWorld-comparable band. Against application-native interfaces on matched tasks, ASIL exceeds LibreOffice's UNO API by 28-38 strict points but only matches draw.io's MCP content contract. The structured modality also suits training: small-scale SFT raises Qwen3.5-2B from 58.0 to 72.1 and Qwen3.5-9B from 66.6 to 80.4, and resource-limited on-policy RL further raises them to 74.4 and 82.2.",
+      "authors": [
+        "Rui Xie",
+        "Lu Chen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-27T11:38:19+00:00",
+      "link": "https://arxiv.org/pdf/2608.26991v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "agent-native interaction layer using structured state and semantic actions, a reusable framework for building GUI-operating agents applicable to mobile",
+      "llm_evidence_cn": "提出结构化状态与语义动作的代理-软件交互层，为构建操作GUI的智能体提供可复用框架并适用于移动端",
+      "llm_evidence": "提出结构化状态与语义动作的代理-软件交互层，为构建操作GUI的智能体提供可复用框架并适用于移动端",
+      "canonical_evidence": "提出结构化状态与语义动作的代理-软件交互层，为构建操作GUI的智能体提供可复用框架并适用于移动端",
+      "llm_tldr_en": "ASIL replaces screenshot-and-click for software-operating agents with structured JSON observations and code-executable semantic actions, instantiated over 15 apps and 380 tasks to improve long-horizon planning and robustness.",
+      "llm_tldr_cn": "软件操作代理依赖截屏与点击来操作GUI，但截图状态不完整、动作语义弱，难以支撑长程规划。ASIL提出代理-软件交互层，将应用暴露为结构化JSON状态和可执行语义动作，并为每个应用选择最深的可行访问路径。在15个应用及380个任务上的实例化验证了该接口的通用性和效率，表明用结构化状态和语义动作替代截屏点击可显著提升代理的规划能力，为移动GUI代理设计提供可借鉴的交互范式。",
+      "llm_tldr": "软件操作代理依赖截屏与点击来操作GUI，但截图状态不完整、动作语义弱，难以支撑长程规划。ASIL提出代理-软件交互层，将应用暴露为结构化JSON状态和可执行语义动作，并为每个应用选择最深的可行访问路径。在15个应用及380个任务上的实例化验证了该接口的通用性和效率，表明用结构化状态和语义动作替代截屏点击可显著提升代理的规划能力，为移动GUI代理设计提供可借鉴的交互范式。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "framework for building agents on mobile devices",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.25777v1",
+      "source": "arxiv",
+      "title": "LocalLSTC: A Long Short-Term Control Architecture for Locally Deployed GUI Agents",
+      "abstract": "Modern GUI-agent frameworks achieve strong desktop task performance with frontier API models, yet persistent control information often remains implicit in growing interaction trajectories. At each step, the planner reconstructs the active task stage, accumulated evidence, and runtime feedback before deciding the next action. This dependence becomes more pronounced under weaker local reasoning backbones. Across four representative state-of-the-art frameworks, replacing GPT-5 with Qwen3.5-9B reduces average OSWorld SR-100 from 60.9\\% to 37.7\\%. Trajectory annotation further identifies at least one control failure in 91.6\\% of failed trajectories. To address this problem, we introduce LocalLSTC, a training-free architecture that organizes control by temporal scope, maintaining persistent cross-step state to guide short-term execution commitments. Long-Term Control maintains the active subgoal, subgoal-aligned evidence, and runtime feedback across interactions, while Short-Term Execution realizes bounded commitments for the current step. Long-to-Short Planning forms each commitment from persistent state, and Short-to-Long Control integrates execution outcomes back into that state for progress assessment, recovery, and termination. With Qwen3.6-27B, LocalLSTC reaches 64.7\\% SR-100 on OSWorld and 65.3\\% on WindowsAgentArena, outperforming the strongest prior local results on both benchmarks. Ablations further support contributions from mechanisms on both sides of execution. These findings identify temporal organization of control information as a distinct architectural dimension for locally deployed GUI agents.",
+      "authors": [
+        "Weiming Li",
+        "Helen Paik",
+        "Yulei Sui"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-26T13:20:27+00:00",
+      "link": "https://arxiv.org/pdf/2608.25777v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "architecture for locally deployed GUI agents",
+      "llm_evidence_cn": "面向本地部署GUI代理的控制架构",
+      "llm_evidence": "面向本地部署GUI代理的控制架构",
+      "canonical_evidence": "面向本地部署GUI代理的控制架构",
+      "llm_tldr_en": "LocalLSTC organizes persistent control information for locally deployed GUI agents, recovering performance of weaker local reasoning backbones without training, demonstrated on OSWorld desktop tasks.",
+      "llm_tldr_cn": "弱本地推理模型驱动的GUI代理常因隐式控制信息而表现不佳。LocalLSTC通过组织长期控制信息，为本地部署的GUI代理提供免训练控制架构，在OSWorld等多个框架上显著提升了弱骨干模型的成功率。该工作面向桌面GUI代理，但本地部署控制思路对移动端代理同样有重要参考价值。",
+      "llm_tldr": "弱本地推理模型驱动的GUI代理常因隐式控制信息而表现不佳。LocalLSTC通过组织长期控制信息，为本地部署的GUI代理提供免训练控制架构，在OSWorld等多个框架上显著提升了弱骨干模型的成功率。该工作面向桌面GUI代理，但本地部署控制思路对移动端代理同样有重要参考价值。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "agent running locally on device for task completion",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.21341v1",
+      "source": "arxiv",
+      "title": "Natural-Language Workflows Are Not Software Yet: Artifact-Driven Compilation for Reliable Agent Execution",
+      "abstract": "Natural-language workflows offer a software-like interface for agents: domain experts can write reusable procedures, and agents can execute them as instructions. This promise is not yet reliable. Workflow descriptions often leave data dependencies implicit, so the executor must infer which prior results a step should use; agents can also fail to follow long or branching instructions under context pressure. We propose Artic, an artifact-driven workflow compiler that transforms a natural-language workflow into an artifact-driven workflow in which each step declares the artifacts it reads and writes, constraints gate produced artifacts, and explicit control transfers route execution. This representation exposes the enforcement burden placed on agent execution, allowing the compiler to identify steps that depend on too much state or contain difficult control logic and refine them through constrained optimization. To validate the LLM-assisted transformation, Artic decomposes faithfulness checking into local obligations and uses scenario-based dry runs to test whether compiled workflow regions conform to the source workflow. We evaluate Artic on 488 problem instances from 11 real-world domain workflows; it improves task resolve rate by 28 percentage points over the original text workflow. We also show that workflows compiled by Artic are 32 and 56 percentage points more consistent in cross-model and repeated-execution setups, respectively.",
+      "authors": [
+        "Xiangzhe Xu",
+        "Hanxi Guo",
+        "Guangyu Shen",
+        "Siyuan Cheng",
+        "Xiangyu Zhang"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-08-21T17:47:47+00:00",
+      "link": "https://arxiv.org/pdf/2608.21341v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "technique for reliable agent execution of natural-language workflows",
+      "llm_evidence_cn": "面向可靠代理执行的自然语言工作流编译技术",
+      "llm_evidence": "面向可靠代理执行的自然语言工作流编译技术",
+      "canonical_evidence": "面向可靠代理执行的自然语言工作流编译技术",
+      "llm_tldr_en": "Artic compiles natural-language workflows into artifact-driven workflows where steps declare read/write artifacts, constraints, and control transfers, improving reliability of agent execution of long and branching instructions.",
+      "llm_tldr_cn": "自然语言工作流常隐含数据依赖，代理在长流程或分支指令下容易执行失误。文章提出Artic工件驱动编译方法，将自然语言工作流转换为显式声明读写工件与约束的工作流，从而提升代理执行的可靠性和可控性。该方法可迁移到移动端任务代理的执行模块，属于通用的代理可靠性技术。",
+      "llm_tldr": "自然语言工作流常隐含数据依赖，代理在长流程或分支指令下容易执行失误。文章提出Artic工件驱动编译方法，将自然语言工作流转换为显式声明读写工件与约束的工作流，从而提升代理执行的可靠性和可控性。该方法可迁移到移动端任务代理的执行模块，属于通用的代理可靠性技术。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.24509v1",
+      "source": "arxiv",
+      "title": "PeakBench: Benchmarking Resource-Aware Tool Invocation in LLM Agents",
+      "abstract": "LLM agents increasingly solve tasks by invoking multiple tools, where parallel execution is essential for low latency but difficult to manage safely. Existing agent benchmarks primarily evaluate tool selection, argument generation, and end-to-end success under mostly serial execution, largely overlooking valid parallelization and resource-constrained scheduling. This missing scheduling dimension creates a practical failure mode: serial execution is safe but slow, while resource-agnostic parallel execution is fast but prone to avoidable resource overflows. To address this gap, we introduce PeakBench, a benchmark of executable multi-tool workflows with execution-grounded dependency annotations and measured resource profiles. A central challenge in evaluating such workflows is attribution: failures and inefficiencies may arise from incorrect dependency planning, poor resource-constrained scheduling, or both. PeakBench addresses this challenge with a two-part evaluation framework that disentangles logical planning from physical scheduling, with dedicated metrics for each dimension. Using this framework, we show that strong logical planning does not reliably translate into safe or efficient execution under resource constraints. We further show that exposing resource information can reduce avoidable overflows and improve resource utilization, making PeakBench a useful testbed for diagnosing resource-aware agent behavior. Code is available at https://github.com/Czzzk/Staggering-the-Peaks.",
+      "authors": [
+        "Zhi-Kai Chen",
+        "Xu-Xiang Zhong",
+        "Song-Yan Li",
+        "De-Chuan Zhan",
+        "Han-Jia Ye"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SE"
+      ],
+      "published": "2026-08-25T12:56:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.24509v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "benchmark for resource-aware tool invocation, useful for evaluating mobile agents under resource constraints",
+      "llm_evidence_cn": "面向资源感知工具调用的基准，可用于移动智能体在资源约束下的评估",
+      "llm_evidence": "面向资源感知工具调用的基准，可用于移动智能体在资源约束下的评估",
+      "canonical_evidence": "面向资源感知工具调用的基准，可用于移动智能体在资源约束下的评估",
+      "llm_tldr_en": "PeakBench evaluates parallel tool invocation with measured resource profiles and dependency annotations, addressing a missing scheduling dimension in agent benchmarks. Directly useful for evaluating mobile agent frameworks under device resource limits.",
+      "llm_tldr_cn": "现有智能体基准主要评估工具选择和参数生成，忽视并行执行与资源受限调度。PeakBench 提供可执行的多工具工作流，并带有执行依赖和资源测量，支持对并行调用进行安全调度评估。实验显示其在揭示资源溢出等实际失败模式方面的价值。该基准为移动端智能体任务执行的资源效率评估提供了关键工具。",
+      "llm_tldr": "现有智能体基准主要评估工具选择和参数生成，忽视并行执行与资源受限调度。PeakBench 提供可执行的多工具工作流，并带有执行依赖和资源测量，支持对并行调用进行安全调度评估。实验显示其在揭示资源溢出等实际失败模式方面的价值。该基准为移动端智能体任务执行的资源效率评估提供了关键工具。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

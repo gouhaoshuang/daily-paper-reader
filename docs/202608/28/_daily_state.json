@@ -1,0 +1,89 @@
+{
+  "date": "20260828",
+  "date_label": "",
+  "generated_at": "2026-08-28 04:04:44 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.26204v1",
+      "route": "202608/28/2608.26204v1-adepts-bench-measuring-the-trustworthiness-of-computer-use-agents-across-devices",
+      "title": "ADeptS-Bench: Measuring the Trustworthiness of Computer Use Agents Across Devices",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "针对移动和桌面应用中代替用户操作的计算机使用代理的可信度基准",
+      "first_seen_at": "2026-08-28 04:04:44 UTC",
+      "updated_at": "2026-08-28 04:04:44 UTC"
+    },
+    {
+      "paper_id": "2608.26991v1",
+      "route": "202608/28/2608.26991v1-asil-replacing-screenshot-and-click-with-structured-state-and-semantic-actions",
+      "title": "ASIL: Replacing Screenshot-and-Click with Structured State and Semantic Actions",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "提出结构化状态与语义动作的代理-软件交互层，为构建操作GUI的智能体提供可复用框架并适用于移动端",
+      "first_seen_at": "2026-08-28 04:04:44 UTC",
+      "updated_at": "2026-08-28 04:04:44 UTC"
+    },
+    {
+      "paper_id": "2608.25777v1",
+      "route": "202608/28/2608.25777v1-locallstc-a-long-short-term-control-architecture-for-locally-deployed-gui-agents",
+      "title": "LocalLSTC: A Long Short-Term Control Architecture for Locally Deployed GUI Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向本地部署GUI代理的控制架构",
+      "first_seen_at": "2026-08-28 04:04:44 UTC",
+      "updated_at": "2026-08-28 04:04:44 UTC"
+    },
+    {
+      "paper_id": "2608.21341v1",
+      "route": "202608/28/2608.21341v1-natural-language-workflows-are-not-software-yet-artifact-driven-compilation-for-reliable-agent-execution",
+      "title": "Natural-Language Workflows Are Not Software Yet: Artifact-Driven Compilation for Reliable Agent Execution",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向可靠代理执行的自然语言工作流编译技术",
+      "first_seen_at": "2026-08-28 04:04:44 UTC",
+      "updated_at": "2026-08-28 04:04:44 UTC"
+    },
+    {
+      "paper_id": "2608.24509v1",
+      "route": "202608/28/2608.24509v1-peakbench-benchmarking-resource-aware-tool-invocation-in-llm-agents",
+      "title": "PeakBench: Benchmarking Resource-Aware Tool Invocation in LLM Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向资源感知工具调用的基准，可用于移动智能体在资源约束下的评估",
+      "first_seen_at": "2026-08-28 04:04:44 UTC",
+      "updated_at": "2026-08-28 04:04:44 UTC"
+    }
+  ]
+}
