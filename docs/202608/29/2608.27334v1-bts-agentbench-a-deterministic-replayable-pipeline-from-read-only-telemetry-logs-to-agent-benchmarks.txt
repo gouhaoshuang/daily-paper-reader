@@ -1,0 +1,382 @@
+Title: BTS-AgentBench: A Deterministic, Replayable Pipeline from Read-Only Telemetry Logs to Agent Benchmarks
+
+URL Source: https://arxiv.org/pdf/2608.27334v1
+
+Published Time: Fri, 28 Aug 2026 01:21:36 GMT
+
+Number of Pages: 16
+
+Markdown Content:
+# BTS-AgentBench: A Deterministic, Replayable Pipeline from Read-Only Telemetry Logs to Agent Benchmarks 
+
+Jeong-Yoon Kim Abstract 
+
+Industrial sites contain large volumes of read-only telemetry, but few benchmarks specify how to compile these records into executable multi-turn agent tasks. We present a telemetry-to-episode construction method instantiated as BTS-AgentBench. The pipeline normalizes BTS metadata and raw histories into a read-only tool store, compiles static tasks with tool-derived gold answers and evidence, and lifts retained tasks into typed, bounded operator-facing episodes. The 532-row release adds clarification, goal revision, timestamp policy, quality-gated reporting, and evidence attribu-tion while preserving the source computation and split. Coded contract preflight reports zero findings, and the construction-exclusion controller completes 0/532 rows. Two inde-pendent raw-to-episode builds match all 11 logical tool-store exports and reproduce the released 356/87/89 train/dev/test artifact ex-actly. Applying the shared construction path to XAI4HEAT produces 204 episodes; on its 41-row held-out test split, the controller completes 0 rows and the retained GPT-5.5 execution completes all 41. Code, artifacts, and replay reports are available at https://github. com/kjy7567/BTS-AgentBench .
+
+1 Introduction 
+
+Modern buildings and industrial facilities retain years of measurements from site-specific sensors and equipment. BTS covers three buildings over three years, while XAI4HEAT covers five district-heating substations over as many as five years (Prabowo et al., 2024; Cvetkovi´ c et al., 2025). These records encode the local vocabulary that op-erators use—sites, equipment, zones, point classes, and stream identifiers. An AI assistant for a facil-ity therefore needs data grounded in that facility’s names, relationships, and observations. Generic agent data does not provide this grounding, while constructing it manually does not scale: BTS alone induces about 2.19 million day-window candidates and 5.99 million pairwise candidates before reten-tion (Table 1). Task-specific model adaptation is one use for this site-grounded data: prior work on small function-calling agents relies on curated examples and fine-tuning (Erdogan et al., 2024). Converting teleme-try into grounded train/dev/test episodes therefore creates a common substrate for subsequent model adaptation and for the controlled evaluation studied here. We therefore ask how to convert an already col-lected, site-specific telemetry corpus into agent-ready data at scale. Our goal is a programmatic and replayable construction method: starting from fixed telemetry and metadata, it builds read-only tools, executable tasks, operator-facing multi-turn interac-tions, source-derived gold calls and evidence, and deterministic scoring targets. The same inputs and construction contracts must regenerate the same benchmark artifact. This makes existing telemetry usable for developing and evaluating agents that resolve local equipment and streams, request miss-ing context, carry state across revised goals, apply timestamp and data-quality policies, and cite the observations supporting their answers. Our primary source is BTS, a public multi-year building time-series dataset with standardized meta-data (Prabowo et al., 2024). We match metadata streams to raw histories, normalize point/equipmen-t/location fields, materialize aggregate and qual-ity tables, and instantiate nine families spanning point resolution, temporal aggregation, compari-son, ranking, timestamp lookup, and quality-aware reporting. These tasks are constructed in this work. Their episodes add clarification, revision, policy, commitment, and evidence turns while preserving telemetry computation, split, and programmatic scoring; controller-completable rows are repaired or removed. We additionally apply the method to XAI4HEAT in a small-scale portability study, 1arXiv:2608.27334v1 [cs.CL] 27 Aug 2026 testing whether the downstream construction and evaluation path can be reused on a related telemetry corpus after corpus-specific schema mapping. The telemetry-to-episode construction method is the primary contribution; BTS-AgentBench is its released benchmark instance. Our contributions are: • A deterministic construction pipeline from nor-malized raw telemetry to static executable tasks, phase-structured interaction contracts, operator-facing episodes, and evidence-grounded veri-fiers. • BTS-AgentBench, a 532-row artifact covering nine task families and bounded clarification, re-vision, timestamp-policy, quality, commitment, and evidence obligations. • A validation and audit framework with exact construction replay, deterministic component scoring of retained model traces, and a rule-based construction-exclusion controller. • An executed second-corpus study yielding 204 XAI4HEAT episodes through the same down-stream construction and scoring path after corpus-specific mapping. 
+
+2 Related Work 
+
+Interactive tool-use benchmarks. BTS-AgentBench is closest to benchmarks separating an agent, user surface, tools, and programmatic evaluation. API-Bank provides runnable tool-use dialogues (Li et al., 2023); ToolSandbox adds state and implicit dependencies (Lu et al., 2025); 
+
+τ -bench combines simulated users, APIs, policies, and goal scoring (Yao et al., 2025); and ACEBench adds granular multi-turn error dimensions (Chen et al., 2025). We instead start from an existing telemetry corpus and compile both executable tasks and episodes. 
+
+Operational and industrial agent benchmarks. 
+
+ITBench (Jha et al., 2025) and AssetOpsBench (Patel et al., 2026) evaluate structured operational workflows; ReAct Meets Industrial IoT (Rayfield et al., 2025) studies language-agent access to in-dustrial telemetry. BTS-AgentBench complements them by focusing on compilation of read-only telemetry into bounded, deterministically evaluated episodes. 
+
+Building telemetry data and metadata. BTS provides real building time series with standard-ized metadata (Prabowo et al., 2024), while Brick represents building sensors, equipment, and rela-tionships portably (Balaji et al., 2018). We use this substrate to derive executable telemetry-analysis tasks and agent episodes. 
+
+Benchmark construction from executable arti-facts. SUPER evaluates executable completion over research repositories rather than static text (Bogin et al., 2024). Our setting begins with teleme-try and metadata, compiles a static task with split, evidence, and answer contract, and then changes its agent-facing interface. Deterministic controllers serve as construction audits that identify vulnerable rows for repair or rejection. 
+
+3 Benchmark Formulation 
+
+Figure 1 gives an overview of BTS-AgentBench, from building telemetry to released multi-turn agent episodes. The figure also illustrates the eval-uation interface used throughout the paper: an operator-facing request, read-only tool use, a policy decision for nearest observation, and an evidence-backed answer. 
+
+3.1 Benchmark Unit 
+
+BTS-AgentBench first compiles telemetry and metadata into executable read-only tasks, then con-verts each retained task into a bounded episode. A source task r records its family, split, tools, evi-dence, and gold contract; r⋆ preserves its compu-tation and target while changing the agent-facing interface. Each episode combines a deterministic user sim-ulator, read-only tools, an agent trace, and a pro-grammatic evaluator. Success requires both the telemetry target and the interaction obligations; no mutable final database state is involved. 
+
+3.2 Static Executable Task Layer 
+
+BTS itself is a building time-series dataset rather than a pre-existing suite of the telemetry-analysis tasks evaluated here. We therefore construct a static task layer over BTS. A preprocessing pass combines processed BTS metadata with the raw BTS stream archives. It normalizes site, point, equipment, and location text, builds a point in-ventory, records candidate ambiguity, and scans each raw stream to materialize timestamp cover-age summaries. Only metadata points that can be 2Figure 1: BTS-AgentBench converts building time-series data into multi-turn LLM-agent benchmark episodes. The pipeline constructs executable read-only telemetry tasks, converts them into interaction contracts and canonical episodes, and filters them with validation and rule-based hardening. The right panel shows a nearest-look-up episode in which the agent uses read-only tools to return the nearest available timestamped value and supporting evidence. 
+
+matched to raw history are promoted to tool-ready points . From these matched points we materialize a DuckDB-backed tool store containing a raw stream index, per-stream quality statistics, daily/weekly/-monthly aggregates, calendar profiles, and stream previews. These materialized tables are the back-end for the fixed read-only tool registry used later by both the static tasks and the converted agent episodes. Family builders apply fixed eligibility predi-cates before natural-language rendering. Point-disambiguation cases require at least two same-site streams of one point class while the target metadata tuple resolves uniquely. Aggregate can-didates below the corpus 10th-percentile cover-age floor or above the site/class 99.5th-percentile absolute-mean cap are removed. Pairwise can-didates compare distinct equipment in one site/-class/window and require a positive difference at or above the corresponding median; rank candidates require at least three streams and a positive top-to-runner-up margin at or above the group median. Exact-timestamp tasks select an interior observa-tion, nearest-timestamp tasks place the request in-side a typical adjacent-observation interval, and quality tasks execute fixed weekly coverage and gap rules derived from corpus quantiles.                          
+
+> Source category Candidate space Retained tasks BTS metadata streams 19,665 –Tool-ready points 14,422 –Point lookup/disambiguation 4,263 60 Day mean lookup 2,193,431 60 Relative 24h mean lookup 2,193,431 60 Window mean lookup 315,929 53 Window pairwise compare 5,989,083 60 Window rank 1,084 60 Timestamp value lookup 2,123 60 Timestamp nearest lookup 2,123 60 Quality-aware reporting 315 59 Total retained rows –532
+
+Table 1: Source pool and retained static task set derived from BTS data before episode lifting. Candidate counts describe the telemetry search space induced by our tool-store construction and task generator, not task counts from the original BTS release. The retained tasks use a 356/87/89 train/dev/test split. 
+
+3Candidate counts in Table 1 are combinato-rial and often share streams, equipment groups, or nearby correlated windows. We therefore re-serve BTS_C for testing and retain a diversity-capped panel across point class and calendar quar-ter, adding location type for ranking and deci-sion label for quality-gate tasks. Per-family tar-gets are 40/10/10 train/dev/test, except quality gate (40/10/9) and window mean (36/7/10), where eligi-ble balanced candidates are exhausted. Every fifth deterministically ordered non-held-out candidate is assigned to development and the remainder to training. These rules were fixed before model eval-uation; model output and the descriptive difficulty proxy play no role in retention or split assignment. Each retained row records its query, canoni-cal calls, acceptable alternatives, structured gold, stream evidence, verifier, and source metadata. Al-ternatives are generated by builder rules, including location omission only when uniqueness is pre-served, equivalent period encodings, consistently reversed pairwise arguments, and exact-to-nearest fallback where allowed. Pairwise and rank ties are excluded by positive margins; stream ID is used only as a final deterministic ordering key, and near-est lookup selects the earlier observation when ab-solute offsets are equal. Gold fields are obtained from the same read-only store or referenced raw history and are independently checked before and after episode construction. A frozen 532-identity selection contract links regenerated candidates to the evaluated release without copying any conver-sation or model response. 
+
+4 From Static Tasks to Agent Episodes 
+
+4.1 Deterministic Episode Compilation 
+
+The compiler separates source computation, inter-action contract, and surface realization. A static task fixes the source operation, arguments, tool-derived result, and contributing streams. A fi-nite interaction grammar then composes typed obligations—clarification, state carryover, revi-sion, timestamp policy, quality, commitment, and evidence—without changing that source compu-tation or split. Finally, deterministic renderers lexicalize the typed fields as bounded operator turns. Family-level rules and renderers are authored once and instantiated over eligible site-specific tasks, rather than writing each conversation row by row. Every added telemetry operation is executed against the same read-only runtime to populate          
+
+> Compilation stage Deterministic rule and emitted artifact Typed static input
+> timestamp_value_lookup ;BTS_C Zone 005 air-differential-pressure stream; exact time 2022-02-03 07:03:23.640Z ; value 12 .9457 ;canonical exact lookup and stream evidence. Mode and visibility A temporal task whose visible request omits time selects clarify_time .The initial operator request excludes the timestamp; the simulator fills the typed slot with “I mean 07:03:23.64 UTC on February 3, 2022.” Added operator turns The timestamp rule emits a nearest-reading revision at 07:03; the containing-week rule requests a quality decision; terminal templates request a report/abstain commitment and the supporting stream. Re-executed targets Exact lookup yields 12 .9457 ; nearest lookup yields the same observation at a
+> 23 .64 -second offset; weekly quality yields answer with coverage 1.0and gap ratio 1.0563 ; policy yields
+> nearest_but_acceptable .Evaluation boundary Compilation emits simulator-controlled user turns and the executable contract. The evaluated agent independently produces tool calls and natural-language answers, which are checked against the phase, final, evidence, task, and protocol targets.
+
+Table 2: Deterministic compilation of 
+
+test_timestamp_value_lookup_00051 
+
+from typed telemetry fields to operator-facing turns and executable targets. 
+
+its phase gold, final target, evidence, and verifier; agent tool calls and answers are produced only dur-ing evaluation. Table 2 traces this process for one released row. Here, the public minute in the revision is derived from the exact source timestamp, the quality win-dow is the containing calendar week, and the evi-dence request retains the stream bound by the static task. Appendix A.3 gives the complete generated conversation, gold trace, retained model execution, and replay equality. 
+
+Surface realization. Mode assignment is a typed branch over the task family and its primary teleme-try call. Point-disambiguation and quality rows expose site as the missing slot; exact-timestamp and aggregate rows expose time; nearest-fallback rows retain a public timestamp but require nearest-observation handling; the remaining rows use a direct request. The compiler removes only the designated site or temporal span from the static 4query, selects a deterministic family-aware opera-tor wrapper, and fills clarification responses from typed fields. Dates, trailing-24-hour anchors, week or month starts, and fractional-second timestamps each have explicit renderers. References such as “the same signal,” “the next day,” or “the second month’s winner” are emitted from stored stream and phase bindings, so their antecedents and re-vised operations remain explicit in the contract. No language model selects the mode, paraphrases the request, or supplies a missing value during con-struction. 
+
+Obligation composition. Added turns are con-structed from tool-valid structured state rather than appended independently as text. For the row in Table 2, the timestamp rule floors the exact source time to a minute and probes candidate minutes in the fixed order 0, −1, +1 , −2, +2 , −3, +3 . It selects the first candidate with no exact observa-tion and a defined nearest observation, then stores the requested and observed timestamps, value, fall-back reason, and offset while attaching the ex-act and nearest calls. The quality rule executes 
+
+inspect_quality_window over the declared calendar window and stores its decision, coverage, and gap statistics. A fixed reporting rule then de-rives answer , abstain , or re_clarify from the latest timestamp and quality phases. Each obligation-bearing transform updates the user turn, milestone, canonical calls, phase gold, final target, evidence, and verifier together. 
+
+Simulator execution. At evaluation time, the user simulator is a finite-state process with pending clarification slots, an initial-answer flag, a revision index, and a post-answer index. Tool-call messages do not advance user state. A site or time value is released only after the agent asks a matching clari-fication question; otherwise the simulator requests the still-missing detail. After the first substantive answer, it emits the stored goal revisions in order, followed by any rationale and evidence requests, and then terminates. If the agent asks another ques-tion during a revision or evidence phase, the simu-lator restates the fixed context instead of inventing new information. Consequently, the observed con-versation depends on the agent’s behavior, while the user information state and executable targets remain identical across systems.         
+
+> Phase type Evaluated role Clarification Recover missing site or time context before querying. Initial answer Execute the source telemetry task with read-only tools. Goal revision Reuse resolved state under a revised request. Timestamp policy Decide exact, nearest, or insufficient-time reporting. Quality commitment Answer or abstain under quality evidence. Rationale follow-up Explain a quality or reportability decision. Evidence follow-up Return the stream, point, timestamp, or aggregate evidence supporting the answer.
+> Table 3: Canonical phase vocabulary used to evaluate converted agent episodes.
+
+4.2 Canonical Episode Schema 
+
+Each canonical phase contains a user turn, required state update, allowed tool-grounded behavior, and evaluator-visible target. Families instantiate only the phases required by their telemetry operation, so every turn has a checkable obligation. Point and timestamp families combine clarifica-tion, timestamp-policy, and evidence phases; aggre-gate, comparison, and ranking families add revised-window computation; and quality-gate rows add commitment and rationale phases. Each released row records the applicable ordered subset rather than forcing every family through an identical dia-logue. 
+
+4.3 Typed Contract Composition and Repair Contract representation. Each operator turn is paired with an executable obligation. The compiler represents an episode as 
+
+C = ( Q, Φ, A, E, V ), ϕi = ( fi, g i, R i), (1) where Q stores the interaction mode, missing slots, and ordered operator turns; Φ = ( ϕ1, . . . , ϕ n) is the phase sequence; fi is a phase type from Ta-ble 3; gi is its structured gold map; and Ri lists the fields required for scoring. A contains canonical and acceptable read-only tool calls, E identifies the contributing streams, and V contains milestones, tolerances, and protocol conditions. For example, a timestamp phase requires an observed timestamp and value, whereas a quality phase requires a de-cision, coverage, and gap statistic. The static task supplies the first executable phase. Authored tem-plates render Q and Φ into operator-facing turns, 5while Φ, A, E, and V retain the machine-checkable contract behind those turns. This separation per-mits programmatic generation at telemetry scale: natural-language fields are instantiated from a fi-nite typed contract, while values, times, streams, and decisions remain executable data. 
+
+Deterministic contract transformation. Typed contract composition and repair denotes an ordered family of contract transformations: some compose a new interaction obligation, while others restore alignment among a turn, its tool call, gold fields, evidence, and verifier. For a normalized read-only store D, stage k is 
+
+zk = Exec D(ak(C)) ,Tk(C; D) = 
+
+(
+
+Uk(C, z k), Pk(C) = 1 ,C, Pk(C) = 0 .
+
+(2) where Pk is a typed eligibility predicate, ak con-structs tool arguments from existing contract fields, and Uk performs the coupled update. Predicates inspect fields such as task family, phase types, avail-able stream IDs, and exact-match status; they do not classify free-form text. If a predicate holds, the stage executes the declared read-only opera-tion and atomically updates the affected operator turn, phase sequence, canonical calls, gold fields, evidence, milestones, and verifier. A surface-only stage may normalize wording but cannot change telemetry fields. The stages run in a fixed order, and a false predicate records a no-op. Static ID, split, source family, and source backlink remain fixed throughout. Each applied stage must satisfy three coupled conditions. First, source preservation keeps all un-affected static phases, stream bindings, and split fields unchanged. Second, execution grounding requires every newly introduced value, timestamp, aggregate, or quality statistic to equal zk or a declared deterministic policy function over prior phase state. Third, discourse alignment requires the rendered turn, its referenced prior state, required tool path, gold fields, evidence, and verifier to de-scribe the same operation. The coupled update Uk
+
+writes these fields together, and contract preflight independently re-executes and checks them before retention. 
+
+Executable example. For the timestamp row in Table 2, the seed contract contains one exact-timestamp phase grounded in value 12.9457 at 
+
+2022-02-03T07:03:23.640Z . Clarification composition marks time as a missing slot and ren-ders a request for it. The timestamp-revision stage constructs the public-time request at 07:03, exe-cutes an exact probe followed by the permitted nearest fallback, and appends the returned times-tamp, value, fallback status, and 23.64-second offset as a second phase. Multi-axis composi-tion executes the quality tool for the containing week and appends coverage 1.0, gap ratio 1.0563, and decision answer . Finally, the reporting rule combines the typed nearest-reading and qual-ity states to derive action answer with reason 
+
+nearest_but_acceptable . At each step, telemetry facts come from tool execution and pol-icy labels come from finite declared rules; no model generates or repairs the annotation. Appendix A.3 gives the complete raw-to-score trace. 
+
+Audit trail and replay. Every stage appends its name, status, and before/after contract summaries to an ordered history. Before episode lifting, the static audit recomputes point resolution and fam-ily outputs against the tool store and referenced raw history. After lifting, a separate contract audit checks phase/turn cardinality and required fields; renders each stored gold as an answer and sends it through the same scorer; re-executes timestamp and quality operations; recomputes derived prefer-ence and commitment fields; and checks evidence and prompt–phase alignment. A row is retained only if these checks accept the coupled contract. With the store, selected static identity, stage or-der, predicates, and templates fixed, reconstruction yields the same turns, calls, phase golds, evidence, verifier, and history; Section 6.1 reports exact equal-ity across independent builds. The retained histories expose how often each typed stage changes a contract: timestamp policy 120 rows, nearest wording 60, timestamp-value re-vision 60, clarification alignment 60, goal revision 293, alternate-point revision 60, multi-axis compo-sition 472, and terminal reporting commitment 532. Counts overlap because one episode may receive several construction stages; Table 9 in the appendix reports the complete profile. 
+
+5 Controller-Aware Acceptance 
+
+5.1 Controller Audit Suite 
+
+The controller suite audits hand-written shortcuts for state carryover, timestamp policy, aggregation/-comparison, quality decisions, and final fields. Ta-ble 4 lists its branches. The executable controller 6Audit component Shortcut tested State carryover audit Reuses resolved site, stream, and point state across turns. Timestamp-policy audit Applies exact/nearest observation and reportability rules. Aggregation audit Executes mean lookup and fixed-window aggregation patterns. Pairwise/ranking audit Applies fixed comparison or ranking procedures. Quality audit Maps coverage and gap statistics to answer-or-abstain decisions. Phase-complete audit Attempts the full clarification– revision–commitment–evidence protocol. 
+
+> Table 4: Controller audit suite used as a construction-time hardening signal.
+
+uses bounded parsers and explicit site/stream state, invokes the model-facing read-only tools, and is scored by the same evaluator; it contains no learned parser or LLM. 
+
+5.2 Acceptance Rule 
+
+Controller-aware acceptance is applied after exe-cutable consistency checks. A row is eligible for release only if it preserves the source telemetry task and split assignment, passes automatic checks over the interaction structure and verifier fields, and is not completed by the phase-complete determinis-tic controller audit. Rows that remain controller-vulnerable are repaired or removed before release. Controller non-completion is an acceptance con-dition, so 0/532 documents that the declared con-struction exclusion was applied; it is not an in-dependent estimate of task difficulty. The first blocking layer is parse/binding failure for 353 rows, phase-completion failure for 127, and required-tool process failure for 52. The controller nevertheless produces nonempty, protocol-complete traces on 179 rows, which then fail an executable phase or task contract. 
+
+6 Evaluation Setup 
+
+6.1 Artifact Validation 
+
+Before evaluating models, we validate the released artifact. Contract preflight checks phase/turn cardi-nality, final-phase linkage, required verifier fields, acceptance of rendered gold answers, runtime timestamp and quality-window agreement, derived preference and commitment targets, evidence iden-tifiers, and prompt–phase alignment. All 532 rows pass these coded checks. This result concerns the declared executable contract; it is not used as ev-idence of operator realism, corpus representative-ness, or task difficulty. Appendix 8 lists each check and its boundary. Exact replay starts from the three checksummed BTS raw archives, the retained normalized stream-to-point/equipment mapping, and a 532-entry se-lection contract. Two independent preprocessing executions match all 11 sorted logical tool-store ex-ports. Two complete episode builds from one fresh store, plus a third build from the independently re-constructed store, each reproduce all 356/87/89 re-leased rows as exact JSON-object and file matches. Equality covers turns, calls, phase and final golds, evidence, verifiers, construction history, prove-nance, row order, and serialization. The public single-command wrapper only binds and verifies the released construction stages; it adds no task-generation or scoring logic. 
+
+6.2 Agent Environment 
+
+All systems receive the same 89 rows, determin-istic user turns, tool descriptions, and read-only lookup, aggregation, timestamp, ranking, and qual-ity tools. The evaluator checks clarification, state carryover, temporal alignment, reportability, an-swer fields, and evidence/rationale follow-up in each tool-grounded trace; success requires the com-plete row contract. 
+
+6.3 Frontier Model Runs 
+
+We evaluate three contemporary frontier LLM agents: GPT-5.5 (OpenAI, 2026), Gemini 3.1 Pro (Google, 2026), and Claude Opus 4.7 (An-thropic, 2026). All runs use the same released rows, deterministic user simulator, read-only tools, one-tool-per-turn loop, stopping protocol, and scorer. Provider-compatible configurations differ in route, output cap, seed support, and family guidance; Ap-pendix 11 reports these settings. Model outputs are used only for post-release evaluation and never for row repair, filtering, or retention. We report exact row-level success rates by task family and overall. Each model is invoked once per test row; repeated-call variation is not measured. The retained 267 traces preserve the complete sys-tem, user, assistant, and tool exchange and can be rescored deterministically. 7Family Rows GPT-5.5 Gemini 3.1 Pro Claude Opus 4.7 Controller solved Point disambiguation 10 8/10 (80.0%) 5/10 (50.0%) 6/10 (60.0%) 0/10 (0.0%) Day mean lookup 10 10/10 (100.0%) 8/10 (80.0%) 7/10 (70.0%) 0/10 (0.0%) Relative 24h mean lookup 10 10/10 (100.0%) 9/10 (90.0%) 9/10 (90.0%) 0/10 (0.0%) Window mean lookup 10 9/10 (90.0%) 10/10 (100.0%) 7/10 (70.0%) 0/10 (0.0%) Window pairwise compare 10 6/10 (60.0%) 5/10 (50.0%) 5/10 (50.0%) 0/10 (0.0%) Window rank 10 8/10 (80.0%) 5/10 (50.0%) 4/10 (40.0%) 0/10 (0.0%) Timestamp value lookup 10 9/10 (90.0%) 10/10 (100.0%) 5/10 (50.0%) 0/10 (0.0%) Timestamp nearest lookup 10 10/10 (100.0%) 10/10 (100.0%) 7/10 (70.0%) 0/10 (0.0%) Quality gate 9 9/9 (100.0%) 9/9 (100.0%) 8/9 (88.9%) 0/9 (0.0%) Overall 89 79/89 (88.8%) 71/89 (79.8%) 58/89 (65.2%) 0/89 (0.0%) 
+
+Table 5: Family-wise test results on the released benchmark. The final column reports rows solved by the shipped deterministic controller after construction-time hardening. 
+
+7 Results 
+
+7.1 Release and Test Results 
+
+The released benchmark contains 532 rows over nine families and preserves the fixed 356/87/89 split. All rows pass the scoped executable-contract checks described above, and the construction-exclusion controller completes 0/532 rows (0/89 test). Table 5 reports one retained execution per model and test row: GPT-5.5 accomplishes 79/89, Gemini 3.1 Pro 71/89, and Claude Opus 4.7 58/89. The 90–100% cells are concentrated in direct lookup and aggregation families rather than across the benchmark. Interaction-sensitive families re-main lower: pairwise comparison is 6/10, 5/10, and 5/10; ranking is 8/10, 5/10, and 4/10; and point disambiguation is 8/10, 5/10, and 6/10. An accom-plished row must satisfy all applicable clarifica-tion, carried-state, revised-goal, timestamp or qual-ity policy, final commitment, evidence, and proto-col obligations; an initially correct telemetry value alone is insufficient. Family values are descriptive error localization on this fixed release, while the overall numerators and denominators summarize the retained executions. 
+
+7.2 Deterministic Diagnostic Analysis 
+
+The accomplished counts in Table 5 do not show where a trace loses credit. We therefore rescore the saved traces with the fixed evaluator. Final is the macro-average of row-level final-phase scores; Evi-dence is required-stream coverage averaged across all 89 evidence-bearing rows; Phase is each row’s fraction of passed ordered phases, macro-averaged over rows; Task is the row-level composite of core answer, grounding, temporal, and phase checks; and Protocol counts traces that finish without a missing required exchange or interaction issue. Ac-                    
+
+> Model Final Evidence Phase Task Protocol GPT-5.5 0.978 0.955 0.949 0.965 86/89 Gemini 3.1 Pro 0.921 0.955 0.939 0.957 81/89 Claude Opus 4.7 0.903 0.933 0.875 0.927 81/89
+
+Table 6: Deterministic diagnostic scores on the released test split. Final, Evidence, Phase, and Task are row-averaged component scores from the fixed evaluator; Protocol counts rows with no interaction-level issue. These component scores complement the stricter ac-complished counts in Table 5. 
+
+complished requires both the complete task con-tract and protocol completion. Table 6 is a descriptive decomposition of the retained single executions, not an estimate of repeated-call variance. It answers two trace-level questions: whether complete contract scor-ing exposes failures hidden by the final ac-tion, and which obligation fails when that ac-tion is correct. On test_window_pairwise_ compare_00044 , all three models produce the gold abstention but omit different comparison fields or cues. On test_window_rank_00009 ,GPT-5.5 and Gemini produce the gold abstention but fail evidence closure, while Opus also makes the wrong quality commitment. Appendix B.4 and Appendix B.3 reproduce these retained outputs and gold contracts. 
+
+7.3 Portability to XAI4HEAT 
+
+XAI4HEAT provides row-oriented SCADA tables and substation metadata rather than BTS’s per-stream archives and graph-derived metadata. Its corpus adapter maps seven channels to the shared site, stream, point, equipment, timestamp, and value fields. After this mapping, the implementa-tion reuses the same static-task builder, episode lift-ing, operator-facing surface construction, canonical 8phase generation, contract preflight, construction-exclusion controller, runner protocol, and deter-ministic scorer. The corpus-specific work is con-fined to source parsing, channel-to-point mapping, metadata construction, held-out-substation selec-tion, domain wording, and the supported family subset. This path produces 204 episodes over five appli-cable temporal families, split 132/31/41. On the held-out 41 rows, the controller accomplishes 0 and the retained GPT-5.5 execution accomplishes 41. These results provide executed portability evi-dence across the two evaluated telemetry corpora; Appendix D gives the source-code map, construc-tion command, converted row, gold contract, and retained trace. 
+
+8 Discussion 
+
+The main methodological result is that real teleme-try can be compiled into agent evaluation without replacing source facts with free-form annotation. Static tasks define the computation and evidence; interaction contracts define the information state and obligations; typed phases define deterministic scoring. Exact replay and row-level provenance make these boundaries inspectable, while the re-tained traces show failures in state carryover, policy, phase completion, and evidence attribution that a final-action score alone would hide. The XAI4HEAT study further separates reusable downstream construction from corpus-specific adaptation. It supports portability across the two evaluated telemetry corpora; structurally different event or state-transition logs would require addi-tional tools, task families, and evaluators. 
+
+9 Conclusion 
+
+We presented BTS-AgentBench, a benchmark con-struction method that starts from read-only build-ing telemetry logs, compiles a static executable task layer, and lifts that layer into multi-turn agent episodes. The released benchmark contains 532 rows and preserves source-task computations and targets, read-only backend behavior, and pro-grammatic evaluation while adding typed operator-facing interactions and controller-aware release hardening. More broadly, the paper treats industrial log corpora as reusable substrates for deterministic raw-to-static task compilation and multi-turn agent benchmark construction. 
+
+Limitations 
+
+BTS-AgentBench is intentionally narrow. It eval-uates read-only building-telemetry search, aggre-gation, comparison, ranking, timestamp reporta-bility, and quality-aware reporting. It does not evaluate write-side control, safety-critical actua-tion, maintenance planning, or long-horizon trou-bleshooting. The user turns are deterministic and bounded, which supports automatic evaluation and controlled trace analysis but necessarily reduces conversational diversity and linguistic messiness. The interaction surface is a controlled benchmark contract rather than a complete simulation of hu-man operators. The final 532-row release was not subjected to a systematic domain-expert audit; its reported validation concerns telemetry grounding and executable contracts. The controller-aware acceptance rule hardens the release against the shipped deterministic audit suite. The current paper studies two read-only in-dustrial telemetry corpora, BTS and XAI4HEAT. Extending the same recipe to broader tool-using domains would require additional task families, corpus-specific interaction contracts, and new con-troller audits. 
+
+Ethical Considerations 
+
+BTS-AgentBench is a read-only offline benchmark over telemetry-derived tasks. It is not intended to authorize, recommend, or evaluate physical con-trol actions in operational buildings or industrial plants. Model traces should therefore be interpreted only as benchmark behavior under a fixed evalua-tion protocol, not as evidence of deployment safety. Any release or reuse of data should follow the li-censing, anonymization, and operational-security requirements of the source dataset. 
+
+Use of Generative AI 
+
+We evaluated multiple frontier LLMs on BTS-AgentBench. For writing and research assis-tance, the author used Codex CLI with OpenAI GPT-5.5 at extra-high reasoning effort, mainly for manuscript drafting, language revision, and experi-mental code improvement. 
+
+Acknowledgments 
+
+TBA. 9References 
+
+Anthropic. 2026. Introducing claude opus 4.7. An-thropic product announcement. Bharathan Balaji, Arka Bhattacharya, Gabriel Fierro, Jingkun Gao, Joshua Gluck, Dezhi Hong, Aslak Jo-hansen, Jason Koh, Joern Ploennigs, Yuvraj Agar-wal, Mario Bergés, David Culler, Rajesh K. Gupta, Mikkel Baun Kjærgaard, Mani Srivastava, and Kamin Whitehouse. 2018. Brick: Metadata schema for portable smart building applications. Applied En-ergy , 226:1273–1292. Ben Bogin, Kejuan Yang, Shashank Gupta, Kyle Richardson, Erin Bransom, Peter Clark, Ashish Sab-harwal, and Tushar Khot. 2024. SUPER: Evaluating agents on setting up and executing tasks from re-search repositories. In Proceedings of the 2024 Con-ference on Empirical Methods in Natural Language Processing , pages 12622–12645, Miami, Florida, USA. Association for Computational Linguistics. Chen Chen, Xinlong Hao, Weiwen Liu, Xu Huang, Xingshan Zeng, Shuai Yu, Dexun Li, Yuefeng Huang, Xiangcheng Liu, Wang Xinzhi, and Wu Liu. 2025. ACEBench: A comprehensive evaluation of LLM tool usage. In Findings of the Association for Com-putational Linguistics: EMNLP 2025 , pages 12970– 12998, Suzhou, China. Association for Computa-tional Linguistics. Stevica Cvetkovi´ c, Milan Zdravkovi´ c, and Marko Ign-jatovi´ c. 2025. Exploring district heating systems: A SCADA dataset for enhanced explainability. Data in Brief , 59:111320. Lutfi Eren Erdogan, Nicholas Lee, Siddharth Jha, Se-hoon Kim, Ryan Tabrizi, Suhong Moon, Coleman Richard Charles Hooper, Gopala Anumanchipalli, Kurt Keutzer, and Amir Gholami. 2024. TinyA-gent: Function calling at the edge. In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing: System Demonstra-tions , pages 80–88. Association for Computational Linguistics. Google. 2026. Gemini 3.1 pro: Announcing our latest gemini AI model. Google AI blog. Saurabh Jha, Rohan R. Arora, Yuji Watanabe, Takumi Yanagawa, Yinfang Chen, Jackson Clark, Bhavya Bhavya, Mudit Verma, Harshit Kumar, Hirokuni Ki-tahara, Noah Zheutlin, Saki Takano, Divya Pathak, Felix George, Xinbo Wu, Bekir O. Turkkan, Ger-ard Vanloo, Michael Nidd, Ting Dai, and 21 others. 2025. Itbench: Evaluating ai agents across diverse real-world it automation tasks. In Proceedings of the 42nd International Conference on Machine Learn-ing , volume 267 of Proceedings of Machine Learning Research , pages 27134–27197. PMLR. Minghao Li, Yingxiu Zhao, Bowen Yu, Feifan Song, Hangyu Li, Haiyang Yu, Zhoujun Li, Fei Huang, and Yongbin Li. 2023. API-bank: A comprehensive benchmark for tool-augmented LLMs. In Proceed-ings of the 2023 Conference on Empirical Methods in Natural Language Processing , pages 3102–3116, Singapore. Association for Computational Linguis-tics. Jiarui Lu, Thomas Holleis, Yizhe Zhang, Bernhard Au-mayer, Feng Nan, Haoping Bai, Shuang Ma, Shen Ma, Mengyu Li, Guoli Yin, Zirui Wang, and Ruom-ing Pang. 2025. Toolsandbox: A stateful, conver-sational, interactive evaluation benchmark for LLM tool use capabilities. In Findings of the Association for Computational Linguistics: NAACL 2025 , pages 1160–1183, Albuquerque, New Mexico. Association for Computational Linguistics. OpenAI. 2026. Introducing GPT-5.5. OpenAI product announcement. Dhaval Patel, Shuxin Lin, James Rayfield, Nian-jun Zhou, Chathurangi Shyalika, Suryanarayana R. Yarrabothula, Roman Vaculin, Natalia Martinez, Fearghal O’Donncha, and Jayant Kalagnanam. 2026. Assetopsbench: A real-world evaluation benchmark for ai-driven task automation in industrial asset man-agement. arXiv preprint arXiv:2506.03828 .Arian Prabowo, Xiachong Lin, Imran Razzak, Hao Xue, Emily W. Yap, Matthew Amos, and Flora D. Salim. 2024. BTS: Building timeseries dataset: Empow-ering large-scale building analytics. In Advances in Neural Information Processing Systems, Datasets and Benchmarks Track .James T. Rayfield, Shuxin Lin, Nianjun Zhou, and Dhaval Patel. 2025. React meets industrial IoT: Lan-guage agents for data access. In Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing: Industry Track , pages 364– 382. Association for Computational Linguistics. Shunyu Yao, Noah Shinn, Pedram Razavi, and Karthik Narasimhan. 2025. τ -bench: A benchmark for tool-agent-user interaction in real-world domains. In 
+
+The Thirteenth International Conference on Learning Representations .
+
+10 Field Value Released BTS benchmark rows 532 total rows Released BTS split sizes train 356 / dev 87 / test 89 Families in the final BTS release point disambiguation, day mean, rel-ative 24h mean, window mean, win-dow pairwise compare, window rank, timestamp value, timestamp nearest, quality gate Contract preflight 0 findings under the coded executable-contract checks Construction-exclusion controller 0/532 accomplished overall; 0/89 test Exact replay 2 independent raw-to-episode builds with exact logical and release matches Replay boundary raw telemetry/metadata → tool store       
+
+> →static tasks →typed contracts →
+> operator-facing episodes →scored re-lease
+
+Table 7: Released BTS artifact snapshot used by the paper. 
+
+A Release and Rebuild Artifacts 
+
+This appendix records the complete release bound-ary using the same sequence as the main text: raw telemetry and metadata, read-only tool store, static executable tasks, typed interaction contracts, operator-facing episodes, and deterministic scoring targets. The released stage implementations pro-duce the benchmark artifact. A single-command wrapper binds their inputs, invokes them in order, and verifies output equality; it contains no con-struction or scoring logic. Exact replay starts from checksummed raw archives, the retained normal-ized metadata contract, and the fixed 532-row se-lection identities, then rebuilds the tool store, static tasks, interaction contracts, phase golds, evidence, verifiers, and released train/dev/test JSONL. 
+
+A.1 Raw-to-Static Compilation Details 
+
+The raw-to-static compiler starts from processed BTS metadata and the raw stream archives. It nor-malizes site, point, equipment, and location text; builds a point inventory; records ambiguity can-didates; and scans each matched raw stream to materialize timestamp coverage summaries. Only metadata points that can be matched to raw his-tories are promoted to tool-ready points . From those matched points, the compiler materializes the DuckDB-backed tool store used by the benchmark runtime: a raw stream index, per-stream quality statistics, daily/weekly/monthly aggregates, calen-dar profiles, and previews. Family builders enumerate static executable tasks over this store using the eligibility rules in Section 3.2. BTS_C is held out for test; non-held-out candidates are deterministically assigned to train and development under point-class and tem-poral diversity caps. The retained identity contract fixes the evaluated 532 candidates after recomputa-tion and fails if an identity is missing or duplicated. It stores no generated conversation or model out-put. 
+
+A.2 Static-to-Episode Contract Derivation 
+
+The episode builder does not invent free-form con-versations. It derives a bounded typed interac-tion contract from the retained static task. The builder first selects an interaction mode from the task family and the static-task surface, including direct-answer, clarify-time, implicit-nearest, and quality-rationale modes, plus optional site clarifi-cation. That mode determines which information is withheld initially, which clarification slots must be filled, and which post-answer turns are required later in the exchange. Each converted row therefore adds deterministic fields such as an initial user message, hidden user instruction, required clarification slots, clarification questions, clarification answers, post-answer user turns, termination reply, interaction verifier, and interaction milestones. At the same time, it car-ries forward the static row’s telemetry computation, acceptable tool-call sets, gold final answer, evi-dence bundle, verifier, difficulty proxy, and meta-data. Later typed contract composition and family-specific repair may add more explicit phase struc-ture, but every operator-facing episode continues to point back to the same static executable task. 
+
+Listing 1: Public replay with the raw archive directory as the only user-selected data path.              
+
+> make replay RAW_DIR=/absolute/path/to/ BTS_RAW_ARCHIVES #Equivalent expanded command: python scripts/replay_release.py \--raw-dir /absolute/path/to/ BTS_RAW_ARCHIVES \--work-dir ./data/local-build/release-replay \--raw-runs 2\--controller-audit
+
+The raw directory must contain Site_Aaa. zip , Site_Baa.zip , and Site_Caa.zip . It is the only input path supplied by the caller. The repository contains the checksummed normalized 11 Check Verifies Boundary Input checksum Exact raw and retained files Not upstream collection validity Selection identity Unique regenerated retained candidates Not random representa-tiveness Static/final equality Every released object and byte Not provider repeatabil-ity Contract preflight Schema, gold, evidence, verifier, runtime alignment Not every possible anno-tation error Controller audit Declared exclusion is satisfied Not independent task hardness 
+
+Table 8: Scope of the deterministic validation checks.        
+
+> Typed construction stage Rows modified Timestamp policy / nearest wording 120 / 60 Timestamp-value / alternate-point revision 60 / 60 Clarification / goal revision 60 / 293 Multi-axis composition 472 Terminal reporting commitment 532 Controller-proxy repair 0
+
+Table 9: Overlapping typed-stage applications. Counts describe contract construction, not detected errors. 
+
+catalog, source metadata, fixed 532-row selection contract, and expected release manifest. The replay creates the DuckDB tool stores and every interme-diate under the work directory; it does not consume a pre-existing local database. The recorded environment is Python 3.11.11, DuckDB 1.5.0, NumPy 1.26.4, pandas 3.0.1, PyArrow 23.0.1, and RDFLib 7.6.0. Two inde-pendently rebuilt stores match all 11 sorted logi-cal exports, and both complete builds reproduce all 356/87/89 rows as exact JSON-object and file matches. 
+
+A.3 Exact Row-Level Replay 
+
+For test_timestamp_value_lookup_ 00051 , raw member Site_Caa/2254. pickle contains 194,563 observations for stream c24589e8_a1f3_4529_b409_ 5a56761c9d20 ; the selected record is 2022-02-03T07:03:23.640Z = 12.9457 . Fresh preprocessing reconstructs the point and observation tables. The static builder emits resolve_point followed by exact 
+
+lookup_observation , with that value and stream as gold and evidence. Episode construction withholds the timestamp, supplies it through deterministic clarification, re-vises the request to nearest lookup at 07:03, checks the week beginning January 31, and requests a reporting commitment and evidence. The recom-puted phase targets are: exact value 12.9457; near-est offset 23.64 seconds; quality action answer         
+
+> Case type ID Outcome Purpose Consensus success
+> QG-00051 all three accomplished executable contract clo-sure Cross-model disagreement
+> PD-00003 GPT accomplished; others partial distinct trajectory gaps Shared hard failure
+> WR-00009 all three partial evidence linkage failure Near-success failure
+> WP-00044 all partial; action correct phase scoring beyond fi-nal action
+
+Table 10: Contrastive appendix cases selected from retained model traces. 
+
+with coverage 1.0 and gap ratio 1.0563; and fi-nal reason nearest_but_acceptable . The retained GPT-5.5 response reports the nearest-reading qualification and cites the same source stream, receiving Final, Evidence, Phase, and Task scores of 1.0 with a complete protocol. The re-leased row and both replay rows share the same ob-ject digest, and both reconstructed test files match the released 89-row file exactly. 
+
+B Contrastive Frontier-Agent Cases 
+
+We show four retained cases that expose different contract outcomes: one consensus success, one cross-model disagreement, one shared hard failure, and one near-success failure. Every output below is copied from the recorded model trace rather than reconstructed for presentation. 
+
+B.1 Case A: Consensus Success 
+
+Field Value Scenario ID test_quality_gate_00051 
+
+Family quality_gate 
+
+Outcome pattern GPT-5.5: accomplished; Gemini 3.1 Pro: accomplished; Opus 4.7: accomplished Gold final action abstain Gold final reason marginal_quality Why this case matters All three models close the full interac-tion on a family where the construction-exclusion controller completes 0/9 rows. 
+
+Listing 2: Retained outputs: QG-00051. 
+
+GPT-5.5 (accomplished) "Abstain. The May 12, 2020 week had null/unavailable quality metrics, so it should not be reported as-is." Gemini 3.1 Pro (accomplished) "I would abstain. The observed fraction and gap ratio were both null because there was no data recorded for that week." 
+
+12 Opus 4.7 (accomplished) "Abstain. The week of May 12, 2020 returned null quality metrics -- no observed data, no gap ratio -- so there is no basis to trust or report the signal for that week." 
+
+Listing 3: Gold contract: QG-00051. 
+
+Gold contract 1. clarify site 2. inspect one weekly quality window 3. revise to the previous week 4. assess whether quality improved, worsened, or stayed similar 5. commit to answer or abstain Gold final answer {"commitment_action": "abstain", " reason": "marginal_quality"} 
+
+B.2 Case B: Cross-Model Disagreement 
+
+Field Value Scenario ID test_point_disambiguation_ 00003 
+
+Family point_disambiguation 
+
+Outcome pattern GPT-5.5: accomplished; Gemini 3.1 Pro: partial; Opus 4.7: partial Gold final action abstain Gold final reason long_gap Why this case matters The same gold contract yields different trajectory failures: GPT closes the row, Gemini misses early stream grounding, and Opus under-specifies a later phase-level de-cision. 
+
+Listing 4: Retained outputs: PD-00003. 
+
+GPT-5.5 (accomplished) "Abstain. The nearest reading exists, but the week’s data quality failed the gate due to an extremely high gap ratio (‘1269.5947‘ > ‘17.0006‘)." Gemini 3.1 Pro (partially_accomplished) "You should abstain from reporting it. The data quality for that week is too poor, with a gap ratio of 1269.5947, making the reading unreliable." Main verifier issue: phase_1: missing stream_id grounding Opus 4.7 (partially_accomplished) "Abstain. The week-of-2020-11-16 quality check fails the gate (gap_ratio 1269.59 >> 17.0006 abstain threshold; observed_fraction 0.6396 below 1.0 answer threshold), so don’t report the 311311.6563 reading as-is. More time detail won’t help -- the underlying coverage in that window is too sparse." Main verifier issue: phase_4: decision field under-specified 
+
+Listing 5: Gold contract: PD-00003. 
+
+Gold contract 1. resolve the original point 2. revise to the alternate point 3. retrieve the nearest timestamped reading 4. inspect the revised week’s quality 5. commit to answer, abstain, or re-clarify Gold final answer {"commitment_action": "abstain", "reason": "long_gap"} 
+
+B.3 Case C: Shared Hard Failure 
+
+Field Value Scenario ID test_window_rank_00009 
+
+Family window_rank 
+
+Outcome pattern GPT-5.5: partial; Gemini 3.1 Pro: partial; Opus 4.7: partial Gold final action abstain Why this case matters All three models solve most of the inter-action but fail at the final evidence-linking stage or the final commitment surface, mak-ing this a clean hard case rather than a lexi-cal artifact. 
+
+Listing 6: Retained outputs: WR-00009. 
+
+GPT-5.5 (partially_accomplished) "Abstain. For ‘2 abce5c3_3329_423f_be9e_46eaaa99ea18‘, September 2022 coverage was ‘0.9958‘, below the answer threshold ‘0.9993‘." Main interaction issue: invalid_evidence_followup_answer Gemini 3.1 Pro (partially_accomplished) "I would abstain from reporting it as-is. The observed fraction was 0.9958 and the gap ratio was 4.0119, which means the data coverage does not meet the strict threshold required to answer." Main interaction issue: invalid_evidence_followup_answer Opus 4.7 (partially_accomplished) "Report it as-is. The September 2022 quality for stream ‘2abce5c3_3329_423f_be9e_46eaaa99ea18‘ (observed fraction 0.9958, gap ratio 4.0119) clears the answer thresholds, so no abstain is warranted." Main interaction issue: 
+
+13 invalid_evidence_followup_answer Main static issue: phase_4 decision mismatch 
+
+Listing 7: Gold contract: WR-00009. 
+
+Gold contract 1. rank one month 2. rank the revised month 3. compare whether the winner stayed the same 4. quality-gate the revised-month winner 5. provide evidence for the exact winner stream used in the final decision Gold final answer {"commitment_action": "abstain", " reason": "marginal_quality"} 
+
+B.4 Case D: Near-Success Failure 
+
+Field Value Scenario ID test_window_pairwise_ compare_00044 
+
+Family window_pairwise_compare 
+
+Outcome pattern GPT-5.5: partial; Gemini 3.1 Pro: partial; Opus 4.7: partial Gold final action abstain Why this case matters All three models reach the correct high-level abstention decision, but each leaves a different phase-level gap. This shows why the benchmark scores more than just the last answer string. 
+
+Listing 8: Retained outputs: WP-00044. 
+
+GPT-5.5 (partially_accomplished) "I would abstain rather than report it as-is. The last quality result had observed coverage 0.997 and gap ratio 4.0117, which misses the answer thresholds of coverage >= 1.0 and gap ratio <= 2.0178." Main static issue: missing left_mean_value / revised value fields Gemini 3.1 Pro (partially_accomplished) "I would abstain from reporting this result. The observed fraction was 0.997 and the gap ratio was 4.0117, which do not meet the strict thresholds required to answer." Main static issue: missing left/right mean-value grounding Opus 4.7 (partially_accomplished) "Abstain as-is. For the week of Dec 20, 2022, the gap ratio is 4.01, which exceeds the answer threshold of 2.02 (though it’s below the abstain threshold of 17.0). Observed fraction is 0.997, just under the 1.0 answer threshold. Since it doesn’t meet the strict answer criteria, I would abstain from reporting it as a clean basis." Main static issue: phase_2 comparative cue not fully grounded 
+
+Listing 9: Gold contract: WP-00044. 
+
+Gold contract 1. compare the original window 2. compare the revised window 3. retrieve the nearest timestamped reading for the revised winner 4. decide which quality result is the better reporting basis 5. commit to answer or abstain Gold final answer {"commitment_action": "abstain", "reason": "marginal_quality"} 
+
+C Evaluation Harness and Runner Configuration 
+
+The paper uses a single Python evaluation harness and varies only the model route, API endpoint, and a small set of corpus- or family-specific execu-tion rules. The harness loads a released canonical benchmark, runs one bounded tool-using trajectory per row, records the full message trace, and then scores the recorded trace with the deterministic verifier shipped in the artifact. 
+
+Listing 10: Abridged evaluation harness. 
+
+rows = load_jsonl(benchmark_dir / f"{ split}.jsonl") runtime = ToolStoreRuntime(tool_store_db )model = OpenAIChatToolModel( model_id=model_name, api_key_env=api_key_env, base_url=base_url, provider=provider, max_completion_tokens= max_completion_tokens, )predictions = [] 
+
+for row in rows: prediction = run_e2e_example(model, runtime, row, max_turns=max_turns) predictions.append(prediction) summary = {"counts": Counter(p["label"] for p
+
+in predictions), "mean_final_score": mean(p[" static_verification"]["final_score"] 
+
+for p in predictions), "mean_phase_score": mean(p[" static_verification"]["phase_score"] 
+
+for p in predictions), 
+
+14 "protocol_success_count": sum (1 for     
+
+> pin predictions if p["protocol_ok"]) ,}
+
+The three BTS configurations share its 89 test rows; the XAI4HEAT configuration uses its 41-row test split. All use the deterministic simula-tor, read-only tools, one-tool-per-turn loop, row-dependent minimum turn budget, stopping proto-col, and scorer. Provider-compatible prompts pre-serve the same interaction obligations but are not byte-identical. Table 11 records the differences that affect execution. 
+
+Listing 11: Public runner entry points.     
+
+> bash runners/gpt55_bts.sh bash runners/gemini31pro_bts_openrouter. sh bash runners/opus47_bts_openrouter.sh bash runners/gpt55_xai4heat.sh
+
+The scorer uses no LLM judge. Natural-language answers are normalized against declared action expressions; numeric fields use explicit toler-ances; timestamps are compared in UTC; and tool arguments and evidence streams are checked sep-arately. Final, Evidence, Phase, and Task are row-level deterministic scores, while Protocol records whether every required exchange completed with-out an interaction issue. The full message trace and run configuration are retained for every reported row. 
+
+D Portability to XAI4HEAT 
+
+XAI4HEAT differs from BTS at the source boundary. BTS combines per-stream ZIP his-tories with graph-derived point, equipment, and location metadata. XAI4HEAT provides row-oriented SCADA tables keyed by district-heating substation, a separate heating-area table, and seven channel columns. The adapter in 
+
+src/bts_agentbench/xai4heat.py 
+
+maps each substation–channel pair to common site, stream, point, equipment, timestamp, and value fields; tabular_corpus.py materializes the tool store. Downstream reuse is literal at source level. 
+
+build_xai4heat_final_canonical.py 
+
+calls the same static builder, build_bts_e2e ,
+
+build_agentic_bts_e2e , and 
+
+build_canonical_agentic_final 
+
+used for BTS. Both paths also use the same ToolStoreRuntime , contract audit, construction-exclusion controller, runner protocol, and scorer. Corpus-specific decisions are source parsing, channel-to-point mapping, metadata construction, held-out substation, domain wording, and the five families supported by the XAI4HEAT stream inventory. 
+
+Listing 12: Abridged XAI4HEAT construction with the same recipe.                           
+
+> #Reuse the same recipe on asecond telemetry corpus
+> python scripts/ build_xai4heat_final_canonical.py \--raw-dir XAI4HEAT_RAW_DIR \--tool-store-dir XAI4HEAT_LOCAL_BUILD/ tool_store \--static-dir XAI4HEAT_STATIC_SEED \--e2e-out-dir XAI4HEAT_E2E \--agentic-out-dir XAI4HEAT_AGENTIC \--canonical-seed-out-dir
+> XAI4HEAT_CANONICAL_SEED \--canonical-seed-core-out-dir
+> XAI4HEAT_CANONICAL_SEED_CORE \--final-out-dir XAI4HEAT_FINAL \--heldout-site-id XAI4HEAT_L17 \--rebuild-static
+
+D.1 Representative Converted XAI4HEAT Row       
+
+> Field Value Scenario ID test_day_mean_lookup_00002
+> Family day_mean_lookup
+> Initial user message Operator handoff: “In XAI4HEAT_L17, what was the average energy transfer mea-surement on XAI4HEAT substation L17?” Use the building tools and ask me for any missing site or time detail before query-ing. Clarification answer time_reference: I mean November 2, 2019. Goal revisions 1) Give the previous day. 2) If I only know it was around 00:04 UTC on November 1, 2019, give me the nearest available read-ing. 3) For November 1, 2019, would you answer or abstain based on data qual-ity? 4) Considering both the timestamped reading and the data-quality check we just discussed, should I report it, abstain, or ask you for a more precise timestamp be-fore reporting it? Evidence follow-up Which stream or point did you base that on? Gold final answer {"commitment_action": "re_clarify", "reason": "timestamp_too_imprecise", "clarification_request": "more_precise_timestamp" }Why this row matters The shared topology retains clarification, revision, timestamp policy, quality gating, and evidence follow-up; adapter-provided identifiers, values, and domain wording change.
+
+Listing 13: Actual GPT-5.5 output on the representative XAI4HEAT row. 
+
+15 System Route Prompt configuration Output cap Seed Shared controls GPT-5.5 (BTS) OpenAI direct Base agent prompt 512 0 where accepted Temperature 0, medium reasoning, one tool per turn, 12 base turns, 180 s timeout Gemini 3.1 Pro OpenRouter Provider guidance plus four interaction-family blocks 1536 unsupported Same simulator, tools, stopping protocol, and scorer Claude Opus 4.7 OpenRouter Four interaction-family guidance blocks 512 0 Same simulator, tools, stopping protocol, and scorer GPT-5.5 (XAI4HEAT) OpenAI direct Corpus guidance plus timestamp-family policy 512 0 where accepted Same harness and scorer on the 41-row XAI4HEAT test split 
+
+Table 11: Provider-compatible configurations for the retained single executions. 
+
+Field Value Converted XAI4HEAT rows 204 total rows Split counts train 132 / dev 31 / test 41 Families retained from the shared recipe day mean 60; relative 24h mean 60; timestamp value 35; timestamp near-est 35; window mean 14 Contract preflight 0 findings under the same coded checks Construction-exclusion controller on test 0/41 accomplished GPT-5.5 on the XAI4HEAT test split 41/41 accomplished; 41/41 strict; 41/41 protocol-complete Interpretation Executed reuse of the downstream construction and evaluation path on a second telemetry corpus 
+
+Table 12: Observed portability results for the XAI4HEAT conversion. 
+
+Phase answers P1. The average energy transfer measurement on XAI4HEAT Substation L17 for November 2, 2019 was 96.125. P2. For the previous day, November 1, 2019, the average energy transfer measurement was 235.7647. P3. There was no exact logged reading at 2019-11-01T00:04:00Z. The nearest available reading was at 2019-11-01T07:00:00+00:00, with value 496.0. P4. I would answer for November 1, 2019: observed coverage was 1.0 and gap ratio was 1.0, both within the quality thresholds. P5. Ask for a more precise timestamp before reporting it. The nearest logged reading was at 07:00 UTC, almost 7hours after the requested ~00:04 UTC, so it is too far from the requested time despite the day-level quality being acceptable. Final answer "Ask for a more precise timestamp before reporting it. The nearest logged reading was at 07:00 UTC, almost 7hours after the requested ~00:04 UTC, so it is too far from the requested time despite the day-level quality being acceptable." Evidence follow-up "I based it on stream ‘XAI4HEAT_L17__delta_e‘, the Energy_Transfer_Sensor for XAI4HEAT Substation L17." 
+
+The XAI4HEAT conversion executes the shared contract on a second telemetry schema. Its 204 rows pass the same coded preflight, its held-out test rows are not completed by the construction-exclusion controller, and its retained GPT-5.5 traces complete all 41 test contracts. 16

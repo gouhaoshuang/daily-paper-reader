@@ -1,0 +1,89 @@
+{
+  "date": "20260829",
+  "date_label": "",
+  "generated_at": "2026-08-29 02:08:52 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.26263v1",
+      "route": "202608/29/2608.26263v1-skillstate-scalable-long-horizon-agent-skills",
+      "title": "SKILL.state: Scalable Long-Horizon Agent Skills",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "运行时架构用显式可变执行状态替代追加式对话历史，解决移动端长时程智能体的上下文增长问题",
+      "first_seen_at": "2026-08-29 02:08:52 UTC",
+      "updated_at": "2026-08-29 02:08:52 UTC"
+    },
+    {
+      "paper_id": "2608.21126v1",
+      "route": "202608/29/2608.21126v1-tracegrant-a-contract-governed-security-framework-for-the-task-effect-lifecycle-of-networked-llm-agents",
+      "title": "TraceGrant: A Contract-Governed Security Framework for the Task-Effect Lifecycle of Networked LLM Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向网络化LLM智能体任务效果生命周期的安全框架，解决访问个人数据的移动端智能体部署中的关键挑战",
+      "first_seen_at": "2026-08-29 02:08:52 UTC",
+      "updated_at": "2026-08-29 02:08:52 UTC"
+    },
+    {
+      "paper_id": "2608.26546v1",
+      "route": "202608/29/2608.26546v1-dumatebench-evaluating-autonomous-agents-in-complex-real-world-workflows",
+      "title": "DuMateBench: Evaluating Autonomous Agents in Complex Real-World Workflows",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "基于真实会话的自主智能体评估基准，可迁移至移动端智能体框架在真实用户场景中的评测",
+      "first_seen_at": "2026-08-29 02:08:52 UTC",
+      "updated_at": "2026-08-29 02:08:52 UTC"
+    },
+    {
+      "paper_id": "2608.26867v1",
+      "route": "202608/29/2608.26867v1-bekchiai-measuring-observing-and-controlling-llm-agents-in-one-click",
+      "title": "BekchiAI: Measuring, Observing, and Controlling LLM Agents in One Click",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "测量和控制LLM智能体的基准与平台；直接支持移动智能体框架的评估",
+      "first_seen_at": "2026-08-29 02:08:52 UTC",
+      "updated_at": "2026-08-29 02:08:52 UTC"
+    },
+    {
+      "paper_id": "2608.27334v1",
+      "route": "202608/29/2608.27334v1-bts-agentbench-a-deterministic-replayable-pipeline-from-read-only-telemetry-logs-to-agent-benchmarks",
+      "title": "BTS-AgentBench: A Deterministic, Replayable Pipeline from Read-Only Telemetry Logs to Agent Benchmarks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "从遥测日志构建智能体基准的流水线方法，可迁移至基于设备日志的移动端智能体框架评估",
+      "first_seen_at": "2026-08-29 02:08:52 UTC",
+      "updated_at": "2026-08-29 02:08:52 UTC"
+    }
+  ]
+}

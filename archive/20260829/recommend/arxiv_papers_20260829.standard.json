@@ -1,0 +1,216 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-29T02:06:22.423849+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.26263v1",
+      "source": "arxiv",
+      "title": "SKILL.state: Scalable Long-Horizon Agent Skills",
+      "abstract": "Large Language Models (LLMs) increasingly act as autonomous agents executing complex, long-running procedural skills. Existing agent runtimes maintain execution by continually appending observations, actions, and intermediate reasoning traces to an ever-growing conversation history, causing latency degradation and context-poisoning failures over long horizons. We present SKILL.state, a runtime architecture that replaces append-only conversational history with an explicit, mutable execution state. At each execution step, the model receives only the immutable skill specification, the current structured execution state, and the latest observation. Intermediate reasoning is discarded immediately after producing a validated state update, preventing prompt growth with execution history. Across diverse datasets, models, and execution environments, SKILL.state improves task accuracy while substantially reducing cumulative token consumption. Our results demonstrate that explicit execution state is an effective and architecture-agnostic abstraction for scalable long-horizon agent skills.",
+      "authors": [
+        "Sanket Badhe",
+        "Priyanka Tiwari",
+        "Jonghyun Chung"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-08-26T18:00:06+00:00",
+      "link": "https://arxiv.org/pdf/2608.26263v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Runtime architecture using explicit mutable execution state to replace append-only history, addressing context growth for long-horizon on-device agents",
+      "llm_evidence_cn": "运行时架构用显式可变执行状态替代追加式对话历史，解决移动端长时程智能体的上下文增长问题",
+      "llm_evidence": "运行时架构用显式可变执行状态替代追加式对话历史，解决移动端长时程智能体的上下文增长问题",
+      "canonical_evidence": "运行时架构用显式可变执行状态替代追加式对话历史，解决移动端长时程智能体的上下文增长问题",
+      "llm_tldr_en": "SKILL.state replaces ever-growing conversation history with explicit mutable execution state, letting LLMs receive only skill specification, current state, and latest observation. This prevents context-poisoning and latency degradation, key for long-horizon agents on mobile.",
+      "llm_tldr_cn": "现有智能体运行时在长时程任务中不断追加对话历史，导致延迟上升和上下文中毒。SKILL.state提出一种运行时架构，用显式、可变的执行状态代替追加式历史，每一步只向模型提供技能说明、当前状态和最新观测，并及时丢弃中间推理。这种方法能显著降低提示增长，提升长时程任务的稳定性和可扩展性，对移动端智能体的持续任务执行尤为重要。",
+      "llm_tldr": "现有智能体运行时在长时程任务中不断追加对话历史，导致延迟上升和上下文中毒。SKILL.state提出一种运行时架构，用显式、可变的执行状态代替追加式历史，每一步只向模型提供技能说明、当前状态和最新观测，并及时丢弃中间推理。这种方法能显著降低提示增长，提升长时程任务的稳定性和可扩展性，对移动端智能体的持续任务执行尤为重要。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.21126v1",
+      "source": "arxiv",
+      "title": "TraceGrant: A Contract-Governed Security Framework for the Task-Effect Lifecycle of Networked LLM Agents",
+      "abstract": "Networked large language model (LLM) agents retrieve information from email, cloud storage, calendars, transaction platforms, and Web services to complete multistep tasks that produce persistent external effects. The same content needed for legitimate execution may also contain indirect prompt injections that redirect tool use, alter sensitive arguments, or disrupt task completion. Existing defenses mainly constrain untrusted content or individual tool calls, leaving user intent, runtime evidence, realized effects, and task completion insufficiently connected. We present TraceGrant, a security framework that governs the task-effect lifecycle of networked LLM agents through an explicit Contract. Before execution, TraceGrant establishes a task-effect boundary from the trusted user request. During execution, admitted evidence can instantiate only authority already established by the Contract. After execution, task completion is verified against actual tool results. Across 949 AgentDojo and 400 Agent Security Bench attack cases under fixed benchmark settings, TraceGrant recorded no attack successes while retaining utility under attack rates of 77.32% and 83.00%, respectively. We further evaluate TraceGrant through white-box defense-aware attacks, Contract quality analysis, stage ablations, targeted stress tests, and runtime overhead measurements. The results show that TraceGrant provides a unified governance layer that connects trusted user intent, runtime evidence, concrete tool execution, and verified task completion.",
+      "authors": [
+        "Bohao Liao",
+        "Jingchao Wang",
+        "Qipeng Song",
+        "Jin Cao",
+        "Jieling Wang",
+        "Boyu Deng"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR"
+      ],
+      "published": "2026-08-21T14:05:42+00:00",
+      "link": "https://arxiv.org/pdf/2608.21126v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Security framework governing task-effect lifecycle for networked LLM agents, addressing a key challenge for deploying mobile agents that access personal data",
+      "llm_evidence_cn": "面向网络化LLM智能体任务效果生命周期的安全框架，解决访问个人数据的移动端智能体部署中的关键挑战",
+      "llm_evidence": "面向网络化LLM智能体任务效果生命周期的安全框架，解决访问个人数据的移动端智能体部署中的关键挑战",
+      "canonical_evidence": "面向网络化LLM智能体任务效果生命周期的安全框架，解决访问个人数据的移动端智能体部署中的关键挑战",
+      "llm_tldr_en": "TraceGrant is a security framework that governs the task-effect lifecycle of networked LLM agents through an explicit Contract, connecting user intent, runtime evidence, realized effects, and task completion. It defends against indirect prompt injections, a critical concern for mobile agents automating tasks across apps.",
+      "llm_tldr_cn": "网络化LLM智能体在执行跨邮箱、云盘、日历等工具的多步任务时，容易遭受间接提示注入攻击，现有防御未将用户意图、运行证据与任务效果有效关联。TraceGrant提出合约治理框架，在任务执行生命周期内显式定义合约，将用户意图、运行时证据、已实现效果和任务完成情况关联起来，从而检测和抵御恶意内容对工具调用和参数的影响。该框架为移动端任务自动化中涉及敏感数据操作的安全保障提供了重要思路。",
+      "llm_tldr": "网络化LLM智能体在执行跨邮箱、云盘、日历等工具的多步任务时，容易遭受间接提示注入攻击，现有防御未将用户意图、运行证据与任务效果有效关联。TraceGrant提出合约治理框架，在任务执行生命周期内显式定义合约，将用户意图、运行时证据、已实现效果和任务完成情况关联起来，从而检测和抵御恶意内容对工具调用和参数的影响。该框架为移动端任务自动化中涉及敏感数据操作的安全保障提供了重要思路。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26546v1",
+      "source": "arxiv",
+      "title": "DuMateBench: Evaluating Autonomous Agents in Complex Real-World Workflows",
+      "abstract": "Autonomous agents are increasingly adopted to complete complex, multi-tool workflows in real-world settings. However, existing benchmarks typically separate tasks by application or capability and evaluate agents in environments that are cleaner and more stable than those encountered in practice. We introduce DuMateBench, a real-session benchmark reconstructed from anonymized and privacy-screened user sessions collected from a large-scale production agent platform. Each task preserves the relevant pre-solution interaction history, persistent configurations, and workspace state, and is then validated through human verification. The resulting benchmark comprises 200 tasks spanning 8 broad scenarios and 17 fine-grained capability categories, with most tasks requiring multiple capability coordination. We execute these tasks in isolated Docker containers injected with three forms of real-world environmental complexity: Insufficient, Unstable, and Noisy, and assess performance using a hybrid deterministic and LLM-as-Judge evaluation protocol. Experiments across five representative autonomous-agent frameworks paired with four state-of-the-art LLMs reveal substantial gaps in strict task completion. Complementary robustness, efficiency, and diagnostic analyses further show that performance under environmental perturbations is jointly shaped by the capabilities of the LLM and the surrounding agent framework. The code and data are publicly available at https://dumatebench.com/.",
+      "authors": [
+        "Zechun Niu",
+        "Yukun Zhao",
+        "Jiaxin Zhang",
+        "Xu Shen",
+        "Jinhua Si",
+        "Han Tian",
+        "Can Xu",
+        "Yunfan Song",
+        "Jiaxin Mao",
+        "Yansong Gao",
+        "Yuchen Li",
+        "Jianmin Wu",
+        "Lingyong Yan",
+        "Shuaiqiang Wang",
+        "Dawei Yin"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-08-27T02:36:23+00:00",
+      "link": "https://arxiv.org/pdf/2608.26546v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Real-session benchmark for evaluating autonomous agents in complex workflows, transferable to evaluating mobile agent frameworks on realistic user sessions",
+      "llm_evidence_cn": "基于真实会话的自主智能体评估基准，可迁移至移动端智能体框架在真实用户场景中的评测",
+      "llm_evidence": "基于真实会话的自主智能体评估基准，可迁移至移动端智能体框架在真实用户场景中的评测",
+      "canonical_evidence": "基于真实会话的自主智能体评估基准，可迁移至移动端智能体框架在真实用户场景中的评测",
+      "llm_tldr_en": "DuMateBench is a real-session benchmark reconstructed from anonymized production agent platform sessions, containing 200 tasks across 8 scenarios and 17 capability categories. It preserves interaction history and workspace state, providing a more realistic evaluation for autonomous agents in workflows, applicable to mobile task automation.",
+      "llm_tldr_cn": "现有智能体基准通常按应用或能力分开，并在比实际更干净稳定的环境中评估。DuMateBench从大型生产智能体平台的匿名用户会话中重建真实会话基准，每个任务保留解题前的交互历史、持久配置和工作区状态，并经人工验证。最终包含200个任务，覆盖8个广泛场景和17个细粒度能力类别，为评估复杂真实工作流中的自主智能体提供了更贴近实际的测试集，可用于移动端任务执行智能体的评测。",
+      "llm_tldr": "现有智能体基准通常按应用或能力分开，并在比实际更干净稳定的环境中评估。DuMateBench从大型生产智能体平台的匿名用户会话中重建真实会话基准，每个任务保留解题前的交互历史、持久配置和工作区状态，并经人工验证。最终包含200个任务，覆盖8个广泛场景和17个细粒度能力类别，为评估复杂真实工作流中的自主智能体提供了更贴近实际的测试集，可用于移动端任务执行智能体的评测。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26867v1",
+      "source": "arxiv",
+      "title": "BekchiAI: Measuring, Observing, and Controlling LLM Agents in One Click",
+      "abstract": "Large language model agents reason, call tools, and act autonomously over many steps, but their agentic skills-correctly sequencing tools, planning under dependencies, judging untrusted inputs, and grounding generated arguments-are hard to measure with accuracy-only leaderboards. We present BekchiAI, which addresses both sides: a benchmark for measuring agentic skill and a platform for observing and controlling live agents. The BekchiAI-Benchmark, a suite of 13 tool-using ReAct agents across 7 task categories (arithmetic, structured/SQL, security detection, URL grounding, planning, orchestration, and tool-policy), totalling 2,057 deterministic, committed test tasks. Every task is verifier-checkable gold answers are computed by running canonical SQL against a real database, computing the exact schedule of a directed acyclic graph (DAG), or evaluating closed-form lambdas including adversarial security samples paired with deliberately imperfect signature scanners so a score reflects the model's own judgment, not the copying of an oracle. We define a small set of behavioral metrics beyond accuracy-tool-call adherence, URL hallucination and source-match, and per-model token cost and report a four-model comparison (Qwen3.7-Max, gemma-4-31B-it, gemma4:26b, gpt-oss-120b) whose story is in the per-family spread, not the aggregate. The benchmark runs are executed using the provided evaluation scripts. BekchiAI-Platform is a complementary web-based observability and control layer for deployed agents, providing full token and latency telemetry as well as remote run termination. The benchmark, evaluation tools, and platform are publicly released.",
+      "authors": [
+        "Mesut Toruk"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-27T09:30:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.26867v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Benchmark and platform for measuring and controlling LLM agents; directly supports evaluation of mobile agent frameworks",
+      "llm_evidence_cn": "测量和控制LLM智能体的基准与平台；直接支持移动智能体框架的评估",
+      "llm_evidence": "测量和控制LLM智能体的基准与平台；直接支持移动智能体框架的评估",
+      "canonical_evidence": "测量和控制LLM智能体的基准与平台；直接支持移动智能体框架的评估",
+      "llm_tldr_en": "BekchiAI combines a benchmark of 13 ReAct agents across 7 task categories with a platform for observing and controlling live agents. It measures agentic skills beyond accuracy, making it a valuable evaluation tool for mobile agent task execution.",
+      "llm_tldr_cn": "现有排行榜仅用准确率难以衡量智能体正确序列化工具、规划、判断不可信输入等技能。BekchiAI提供了包含13个ReAct智能体、7类任务共2057个可验证测试的基准，并配套可观测和控制的平台。它可从多维度测量智能体技能，并为评估移动端任务执行智能体提供直接可用的评测方法。",
+      "llm_tldr": "现有排行榜仅用准确率难以衡量智能体正确序列化工具、规划、判断不可信输入等技能。BekchiAI提供了包含13个ReAct智能体、7类任务共2057个可验证测试的基准，并配套可观测和控制的平台。它可从多维度测量智能体技能，并为评估移动端任务执行智能体提供直接可用的评测方法。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.27334v1",
+      "source": "arxiv",
+      "title": "BTS-AgentBench: A Deterministic, Replayable Pipeline from Read-Only Telemetry Logs to Agent Benchmarks",
+      "abstract": "Industrial sites contain large volumes of read-only telemetry, but few benchmarks specify how to compile these records into executable multi-turn agent tasks. We present a telemetry-to-episode construction method instantiated as BTS-AgentBench. The pipeline normalizes BTS metadata and raw histories into a read-only tool store, compiles static tasks with tool-derived gold answers and evidence, and lifts retained tasks into typed, bounded operator-facing episodes. The 532-row release adds clarification, goal revision, timestamp policy, quality-gated reporting, and evidence attribution while preserving the source computation and split. Coded contract preflight reports zero findings, and the construction-exclusion controller completes 0/532 rows. Two independent raw-to-episode builds match all 11 logical tool-store exports and reproduce the released 356/87/89 train/dev/test artifact exactly. Applying the shared construction path to XAI4HEAT produces 204 episodes; on its 41-row held-out test split, the controller completes 0 rows and the retained GPT-5.5 execution completes all 41. Code, artifacts, and replay reports are available at https://github.com/kjy7567/BTS-AgentBench.",
+      "authors": [
+        "Jeong-Yoon Kim"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.SE"
+      ],
+      "published": "2026-08-27T16:35:52+00:00",
+      "link": "https://arxiv.org/pdf/2608.27334v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Telemetry-to-episode construction pipeline for creating agent benchmarks, transferable to evaluating mobile agent frameworks on device logs",
+      "llm_evidence_cn": "从遥测日志构建智能体基准的流水线方法，可迁移至基于设备日志的移动端智能体框架评估",
+      "llm_evidence": "从遥测日志构建智能体基准的流水线方法，可迁移至基于设备日志的移动端智能体框架评估",
+      "canonical_evidence": "从遥测日志构建智能体基准的流水线方法，可迁移至基于设备日志的移动端智能体框架评估",
+      "llm_tldr_en": "BTS-AgentBench provides a deterministic pipeline that compiles read-only telemetry logs into executable multi-turn agent benchmarks, normalizing metadata, constructing gold answers, and tracking evidence. It enables reproducible evaluation of agent frameworks on real operational data, applicable to mobile agent testing.",
+      "llm_tldr_cn": "工业现场有大量只读遥测日志，但缺乏将其转换为可执行智能体基准的方法。BTS-AgentBench提出一种确定性的遥测到回合构造流水线，将BTS元数据和原始历史标准化为只读工具存储，编译带金答案和证据的静态任务，并生成有类型的操作者回合。该流水线支持澄清、目标修订、时间戳策略等，并保证可重放性，为移动端智能体框架在真实日志上的评估提供了可借鉴的基准构建方法。",
+      "llm_tldr": "工业现场有大量只读遥测日志，但缺乏将其转换为可执行智能体基准的方法。BTS-AgentBench提出一种确定性的遥测到回合构造流水线，将BTS元数据和原始历史标准化为只读工具存储，编译带金答案和证据的静态任务，并生成有类型的操作者回合。该流水线支持澄清、目标修订、时间戳策略等，并保证可重放性，为移动端智能体框架在真实日志上的评估提供了可借鉴的基准构建方法。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
