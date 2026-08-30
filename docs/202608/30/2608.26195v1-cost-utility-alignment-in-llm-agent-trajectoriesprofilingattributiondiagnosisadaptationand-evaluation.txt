@@ -1,0 +1,419 @@
+Title: Cost-Utility Alignment in LLM Agent Trajectories:Profiling,Attribution,Diagnosis,Adaptation,and Evaluation
+
+URL Source: https://arxiv.org/pdf/2608.26195v1
+
+Published Time: Fri, 28 Aug 2026 00:07:11 GMT
+
+Number of Pages: 12
+
+Markdown Content:
+# Cost–Utility Alignment in LLM Agent Trajectories: Profiling, Attribution, Diagnosis, Adaptation, and Evaluation 
+
+## Dan Liu 
+
+202621081050@mail.bnu.edu.cn School of Artificial Intelligence, Beijing Normal University Beijing, China 
+
+## Jian Li 
+
+jli@mail.bnu.edu.cn School of Artificial Intelligence, Beijing Normal University Beijing, China 
+
+## Abstract 
+
+LLM agents execute tasks through multi-step trajectories that accu-mulate cost in tokens, latency, monetary fees, and environmental risk while producing utility only at the aggregate task level. Prior surveys address inference optimization, agent capabilities, or eval-uation in isolation, leaving practitioners without principled tools to determine whether a trajectory’s resource expenditure is justi-fied by its task contribution. We address this gap by developing a trajectory-centric cost–utility alignment framework that treats resource consumption and task contribution as dual ledgers over the same execution, organized around five analytical stages: cost profiling, utility attribution, misalignment diagnosis, targeted adap-tation, and evaluation. Utility attribution is central to this structure: rather than relying on aggregate outcomes, it organizes contri-bution methods by evidential strength, from process proxies and information dependency to counterfactual replay, supplying the causal evidence that grounds diagnosis and guides adaptation. Us-ing this framework, we analyze recent agent systems, attribution methods, and evaluation protocols covering efficiency, reliability, and economic value, as well as five forms of misalignment span-ning cognitive and context use, external interaction, recovery-loop control, resource–capability allocation, and multi-agent coordina-tion, together with their targeted adaptations. The result is a closed analytical loop connecting the cost side of agent execution to its utility side, providing a structured basis for resource-aware agent design and deployment. 
+
+## CCS Concepts 
+
+• Computing methodologies → Intelligent agents ; Natural language processing .
+
+## Keywords 
+
+LLM agents, agent trajectories, cost-utility alignment, cost profiling, utility attribution, misalignment diagnosis, targeted adaptation, agent evaluation 
+
+## 1 Introduction 
+
+LLM agents execute tasks through stateful trajectories, typed event sequences that accumulate model calls, tool invocations, environ-mental actions, and observations across turns toward a task ob-jective [62]. The trajectory, not the individual model call, is the appropriate unit of efficiency analysis, with costs compounding as context is repeatedly processed, tools are called, and failures are recovered, while utility emerges from the aggregate task out-come. Deployed across web, software-engineering, desktop, and command-line environments [25, 42, 67, 83], these agents make cost and utility trajectory-level properties. LLM agent trajectories create a deployment tension in which additional reasoning, retrieval, verification, and collaboration raise task performance alongside tokens, latency, tool fees, human su-pervision, and exposure to external side effects. Token accounting alone captures only part of this burden. Repeated context domi-nates many agent bills, long contexts and serial calls create system costs beyond nominal tokens, and inexpensive tool actions can still produce irreversible environmental loss [2, 27, 51]. Difficult tasks require extensive exploration, strict verification, or recovery from genuine faults, so interpreting cost against the utility of the same execution is essential. Existing work addresses inference optimization, agent capa-bilities, task evaluation, safety, or memory mechanisms in isola-tion, leaving resource consumption and task contribution uncon-nected [62, 75, 84]. We organize both sides under a cost–utility alignment framework, introducing utility attribution as the analyti-cal counterpart to cost profiling and connecting the two through misalignment diagnosis, targeted adaptation, and evaluation into a closed analytical loop. (1) We propose a cost–utility alignment framework built on a typed agent trajectory and a five-stage analytical loop covering cost profiling, utility attribution, misalignment diagnosis, targeted adap-tation, and evaluation. The framework treats cost and contribution as dual ledgers over the same execution and defines alignment as the absence of a feasible alternative achieving comparable utility at lower cost under matched constraints. (2) We position utility attribution as the analytical counterpart to cost profiling, organizing contribution methods by evidential strength from process proxies and information dependency to coun-terfactual replay, and connecting attribution evidence to misalign-ment diagnosis, targeted adaptation, and cost–utility evaluation. This paper develops a unified analytical framework for resource-aware LLM agents and uses it to organize recent advances in cost– utility alignment across model inference, tools, memory, environ-mental interaction, and inter-agent communication. Section 2 de-fines the framework, Sections 3–6 cover the five analytical stages, and Sections 7–8 identify challenges and conclude. 
+
+## 2 The Cost–Utility Alignment Framework 
+
+We propose a five-stage cost–utility alignment framework con-necting cost profiling, utility attribution, misalignment diagnosis, targeted adaptation, and evaluation into a closed analytical loop. The framework operates on agent trajectories 𝜏 = (𝑒 1, . . . , 𝑒 𝑛 ),typed hierarchical event sequences linked by execution order and data flow. Each event 𝑒 𝑖 carries a cost vector 𝐶 (𝑒 𝑖 ) = (𝑟 𝑖 , 𝑚 𝑖 , 𝜌 𝑖 )
+
+recording resource consumption, monetary cost, and risk as inde-pendent dimensions, with trajectory cost 𝐶 (𝜏 ) = Í𝑛 𝑖 =1 𝐶 (𝑒 𝑖 ). At 
+
+> 1arXiv:2608.26195v1 [cs.SE] 25 Aug 2026
+
+Figure 1: The cost–utility alignment framework. 
+
+the run level, a utility signal 𝑈 (𝜏 ) summarizes goal completion, partial progress, constraint satisfaction, and output quality. Local contribution Δ𝑈 (𝑒 𝑖 ) = 𝑈 (𝜏 ) − 𝑈 (𝜏 [𝑒 𝑖 →∅]) connects the two by measuring the utility change when 𝑒 𝑖 is replaced by a counterfac-tual baseline. A misalignment condition holds when a feasible 
+
+𝜏 ′ satisfies 𝑈 (𝜏 ′) ≥ 𝑈 (𝜏 ) at 𝐶 (𝜏 ′) < 𝐶 (𝜏 ), or 𝑈 (𝜏 ′) > 𝑈 (𝜏 ) at 
+
+𝐶 (𝜏 ′) ≤ 𝐶 (𝜏 ), within budget constraint 𝐶 (𝜏 ) ≤ 𝐵 .The framework connects two parallel analytical views over the same trajectory and closes them through adaptation and evalua-tion. Cost profiling builds the resource side, localizing consumption to events and actors, adding semantic labels, and characterizing workload distributions, while utility attribution builds the contri-bution side, identifying which states, actions, and members are causally responsible for task outcomes. With both ledgers in hand, misalignment diagnosis tests whether high-cost behavior has suf-ficient utility support relative to a feasible baseline, and targeted adaptation responds by changing the responsible mechanism. Cost– utility evaluation closes the loop by executing the revised system under matched conditions and returning evidence to the next cycle. Figures 1–2 and Table 1 illustrate the closed loop and taxonomy; Appendix A provides a field-level TraceCard schema and a contrast-ing event-pair instance demonstrating how attribution evidence drives misalignment diagnosis. 
+
+## 3 Cost Profiling 
+
+Cost profiling builds the resource side of the alignment framework, identifying which resources LLM agents consume, where consump-tion occurs, and how costs distribute across tasks, runs, and actions. The output is an auditable ledger that localizes the cost vector of each event, annotates behaviors semantically, and surfaces cost patterns for subsequent utility attribution. 
+
+## 3.1 Multi-Dimensional Resource Profiling 
+
+Multi-dimensional resource profiling establishes the three fields of the cost vector, covering resource consumption, monetary cost, and risk. In long-horizon agents, context processing, tool invocations, and repair cycles extend the cost boundary beyond a single model inference to a system spanning models, tools, and infrastructure. Raw token counts undercount agentic cost. In coding agents, historical context re-enters each successive request and the final answer accounts for only a small fraction of total token consump-tion [2]. Tool invocations add schema injection, transport, and result reinsertion stages that raise token and latency cost beyond call counts [1]. Long contexts with serial calls raise KV-cache occu-pancy and extend latency independently of the token bill [27]. The monetary field converts resource measurements to deployment-specific cost under fixed model versions, pricing dates, and billing rules, so the same resource usage produces different monetary cost across deployments [37]. The risk field records irreversible externalities such as incorrect writes and data deletion, which consume few tokens but cause disproportionate harm [51]. The three fields are independent, as high resource consumption does not predict monetary cost and low token use does not bound risk. 
+
+## 3.2 Hierarchical Cost Localization 
+
+Hierarchical cost localization binds resource consumption to the execution structure of an agent, assigning costs to a task, a run, an event, and an executing subject. Task-level totals conflate planning, 
+
+> 2
+
+Multi-Dimensional Resource Profiling          
+
+> AI Agent Token Consumption [2], ProMCP [1], Dynamic Rea-soning Cost [27], Budget-Aware Tool-Use [37], ToolEmu [51]
+
+Hierarchical Cost Localization Tokenomics [52], Terminal-Bench [42], ClawTrace [77] 
+
+Semantic Action Annotation SWE-agent [71], CostBench [36], AppWorld [59], Revisable by Design [78] 
+
+Workload Characterization and Cost Pattern Analysis        
+
+> TraceLab [86], AI Agent Token Consump-tion [2], Tokenomics [52], Terminal-Bench [42]
+
+Cost Profiling 
+
+Proxy-Based Attribution IPR [68], AgentPRM/InversePRM [9], iStar [38], PABU [24] 
+
+Information Dependency and Evidence Contribution TRACER [76], NeuroTaint [4], ContextCite [10] 
+
+Intervention-Based Coun-terfactual Attribution CAR [55], ErrorProbe [32], CausalFlow [3], C3 [7] 
+
+Utility Attribution 
+
+Cognitive and Con-text Misalignment            
+
+> DEPO [6], Agent-Omit [44], AgentDiet [66], Be-yond Compaction [54], PRISM [48], PEEK [19]
+
+External Interac-tion Misalignment             
+
+> Tools-and-Planning Benchmark [18], Calibrate-Then-Act [14], INTENT [35],
+> ToolTree [72], W&D [34], Budget-Aware Tool-Use [37], WebRollback [82]
+
+Recovery-Loop and Verification-Control Misalignment              
+
+> ToolMaze [85], WAREX [26], Self-Repair Study [45], Struc-tured Feedback [49], GA-Rollback [31], EET [20], VRR-Stop [64]
+
+Resource–Capability Misalignment             
+
+> Hybrid LLM [12], RouteLLM [46], BEST-Route [13], Ares [70],
+> Inference-Time Distillation [53], Hera [81], UniScale [23]
+
+Multi-Agent Coordi-nation Misalignment                 
+
+> MAST [5], MaAS [79], Nash-CredMAS [16], Shapley-Coop [22], AgentPrune [80],
+> Evolving Orchestration [11], SupervisorAgent [33], KVCOMM [74], Continuum [29]
+
+Cost–Utility Misalignment & Targeted Adaptation 
+
+Cost-Efficiency Metrics and Quality–Cost Trade-offs                    
+
+> ScienceAgentBench [8], FDABench [63], SWE-Effi [17], Agency-Bench [30], Agentless [65], Tools-and-Planning Benchmark [18], TPS-Bench [69], CostBench [36], CUJBench [41], Terminal-Bench [42]
+
+Reliability and Risk-Adjusted Cost Evaluation 𝜏 -bench [73], ReliabilityBench [21], APEX-Agents [61], WirelessBench [58], CCPO [56] 
+
+Human and Economic Value HCAST [50], PaperBench [57], GDPval [47], SWE-Lancer [43] 
+
+Benchmark Infrastructure and Evaluation Protocols                   
+
+> AgentBoard [39], WebArena [83], VisualWebArena [28],
+> WorkArena [15], OSWorld [67], SWE-bench [25], Spreadsheet-Bench [40], Terminal-Bench [42], BenchGuard [60], PaperBench [57]
+
+Cost–Utility Evaluation Cost–Utility Alignment 
+
+Figure 2: Taxonomy of methods for cost–utility alignment in LLM agents. 
+
+exploration, tool execution, repair, and verification, while finer granularity identifies where cost concentrates within a run. The executing subject field preserves invocation relationships across agents, enabling attribution in multi-agent systems. Phase-level decomposition localizes token cost to workflow stages. Tokenomics measures token cost differences across lifecycle phases in software-engineering agents [52], and Terminal-Bench binds token, latency, and command cost to task, trial, turn, and command records [42]. ClawTrace provides span-level units stable across frameworks, associating token and latency cost with model, tool, and sub-agent calls through subject and parent-child rela-tionships [77]. Across systems, framework-specific labels such as phase, subtask, and step add process semantics within a common task-run-event spine, making each cost vector entry addressable by event and subject. 
+
+## 3.3 Semantic Action Annotation 
+
+Semantic action annotation separates token cost from risk in the cost vector by classifying actions according to functional role. SWE-agent traces per-step token consumption to interface design, with action granularity reflecting interface choices as much as task con-tent [71]. CostBench finds that the same objective is reachable through different execution sequences, so token counts must be matched against the realized path to measure cost accurately [36]. Read and write operations carry identical token counts but dif-fer in risk cost. AppWorld quantifies this asymmetry at the task level, finding that write operations trigger verification, rollback, and downstream token and risk costs absent from read operations [59]. Reversibility determines risk severity, as compensable writes add token overhead for correction while irreversible writes incur ir-recoverable risk cost [78]. 
+
+> 3
+
+Table 1: Representative papers in the five-stage cost–utility alignment taxonomy. Each row provides one non-exhaustive example per subsection; an em dash denotes a dimension outside the paper’s primary focus. 
+
+Stage Subsection category Representative paper Cost type Utility signal Attribution granularity Adaptation method Evaluation metrics Stage 1 
+
+Cost Profiling Multi-Dimensional Resource Profiling ProMCP [1] Tokens, tool-protocol overhead, latency, and monetary cost — Protocol stage and tool call — Token, latency, and monetary overhead Hierarchical Cost Localization ClawTrace [77] Model, tool, and sub-agent call cost and latency — Task, run, span, and actor — Per-call cost and latency-path localization Semantic Action Annotation CostBench [36] Model-token and environment-action cost Task completion under costs and preferences Action and complete trajectory Replanning after cost or environment changes Success, action-path cost, and total cost Workload Characterization and Cost Pattern Analysis TraceLab [86] Context tokens, cached prefixes, and estimated cost — Run and trajectory component —Cost composition, growth, and cross-run variation 
+
+Stage 2 
+
+Utility Attribution Proxy-Based Attribution IPR [68] — Monte Carlo downstream return Intermediate step or action Step-level preference supervision Preference accuracy, return, and task success Information Dependency and Evidence Contribution TRACER [76] — Claim support and decision-relevant evidence Claim, tool turn, and evidence chain — Supported, redundant, and unsupported calls Intervention-Based Counterfactual Attribution CAR [55] — Factual–counterfactual utility difference, Δ𝑈 (𝑒 )
+
+Event or interacting event set —Intervention effect, confidence interval, and Shapley contribution 
+
+Stages 3–4 
+
+Diagnosis and Adaptation Cognitive and Context Misalignment Agent-Omit [44] Input tokens and context occupancy Task result retained after deletion Thought or observation at a turn Dynamic context omission Token reduction and task performance External Interaction Misalignment Budget-Aware Tool-Use [37] Tool-call budget and accumulated path cost Task progress and success under budget Tool call and exploration path Continue, switch path, or stop Success, calls, and budget utilization Recovery-Loop and Verification-Control Misalignment ToolMaze [85] Retry, repair, and verification cost Recovery success after tool faults Fault event and repair loop Fault-aware replanning, bounded retry, and validation Recovery success, retries, and repair cost Resource–Capability Misalignment Ares [70] Reasoning effort and token cost Task reward from allocated effort Individual decision step Assign low or high reasoning effort by step Task success and reasoning cost Multi-Agent Coordination Misalignment AgentPrune [80] Inter-agent messages and model-call cost Task outcome after edge removal Communication edge and agent graph One-shot topology pruning Success, communication volume, and cost reduction 
+
+Stage 5 
+
+Cost–Utility Evaluation Cost-Efficiency Metrics and Quality–Cost Trade-offs Terminal-Bench [42] Dollars, tokens, calls, commands, and runtime Executable task and command outcomes Task, trial, turn, and command — Success, dollars, tokens, calls, and runtime Reliability and Risk-Adjusted Cost Evaluation ReliabilityBench [21] Repeated-run and fault-recovery cost Success under equivalent perturbations and tool faults Configuration, perturbation, and fault level —Repeated success, robustness, and recovery cost Human and Economic Value GDPval [47] Agent cost, human time, review, and rework Expert-rated occupational deliverable quality Task and end-to-end workflow —Human time, quality, repair burden, and labor cost Benchmark Infrastructure and Evaluation Protocols BenchGuard [60] — Validity of benchmark scores and task outcomes Task, reference, environment, and grader — Consistency defects and evaluation validity 
+
+## 3.4 Workload Characterization and Cost Pattern Analysis 
+
+Workload characterization describes how agent cost distributes across task sets and complete trajectories, spanning composition, temporal evolution, and variation across runs. An agent accumu-lates cost across retrieval, tool invocation, context expansion, and repair as execution responds to intermediate state. TraceLab shows that context grows continuously as tool re-sults, inputs, and model outputs accumulate, with cached prefixes accounting for approximately 59.5% of total estimated cost [86]. Across repeated runs of the same task, model sampling, exploration paths, and repair processes generate occasional high-cost branches, producing substantial token variation [2]. At the phase level, Tokenomics finds that code review accounts for a major token share through repeated full-code transmis-sion [52], while Terminal-Bench shows that more tokens or longer trajectories do not yield monotonic success improvements [42]. These patterns locate where cost concentrates or fluctuates, but task contribution must be established from progress signals and counterfactual outcomes. 
+
+## 4 Utility Attribution 
+
+Within the alignment framework, utility attribution constructs the contribution ledger by determining which events, information, and actions in a trajectory causally change the utility signal. Existing methods form an evidence chain of increasing causal strength, from proxy signals through information dependency to counterfactual intervention, as illustrated in Figure 3. 
+
+## 4.1 Proxy-Based Attribution 
+
+Proxy-based attribution derives step-level contribution candidates from intermediate trajectory observations including state changes, subgoal completion, programmatic checks, and rollout returns, us-ing proxy utility signals to provide broad trajectory coverage with-out step-level human annotation. IPR samples alternative actions at intermediate trajectory points and estimates downstream return as a goal-completion proxy with Monte Carlo rollouts, generating step-level preference pairs that dif-ferentiate supervision across failed and successful trajectories [68]. AgentPRM trains a process reward model to predict each inter-mediate decision’s relationship to long-term return as the utility 
+
+4signal, and its InversePRM variant learns the same utility signal from expert-agent transition comparisons, extending the approach to settings without large-scale rollouts [9]. iStar and PABU extract step-level signals from existing trajec-tories without additional environment interaction. iStar recovers action-level goal-completion proxy scores from log-probability ra-tios between a trained policy and a reference, providing credit assignment without step annotation [38]. PABU estimates step-level partial progress as the utility signal and uses it to compress relevant actions and observations into a compact belief state, jointly supporting local step evaluation and context efficiency [24]. Proxy signals correlate local states with future outcomes but do not estab-lish causal contribution, which requires determining whether the associated evidence actually entered later decisions. Layer 2: Information Dependency Attribution        
+
+> Traces Information Propagation Paths to Decisions: SOURCE → TRANSFORMATION → DECISION
+> Layer 1: Proxy Signal
+> Derives Process Scores from Observable Signals (State changes, Subgoal completion, Rollout return, Programmatic results) and Assigns to Trajectory Steps Trajectory Pipeline
+> IPR AgentPRM InversePRM iStar
+> PABU
+> Process Scores Assigned
+> Key methods
+> NeuroTaint ContextCite TRACER
+> Focus: Association between Events & Task
+> Progress | High Trajectory Coverage Large-Scale Focus: Identify Evidence Affecting Models' Decision
+> Source Tracking, Flow Analysis, Dependency Detection
+> Model Decision Making Knowledge Bases Memory Modules Data pipelines
+> Information Sources Baseline Trajectory Intervened Trajectory Utility Score
+> ×
+> Intervention Point New Score Intervention Point
+> Layer 3: Counterfactual Intervention Attribution
+> Key methods
+> CAR ErrorProbe C3
+> Δ
+> CausalFlow
+> Measures Causal Contribution via Utility Change after Deleting, Replacing, or Neutralizing Target Events, then Re-executing Trajectory from that State Focus: Direct, Actionable Causal Evidence
+> Requirements: Reliable State Recovery, Reasonable Counterfactual Baseline, Extra Replay Costs
+> Evidential Strength Increasing (Correlation to Causality) | Computational Cost, Replay Demand, State Control Increasing
+
+Figure 3: Three-layer utility attribution progressing from proxy signals to information dependencies and counterfac-tual interventions. 
+
+## 4.2 Information Dependency and Evidence Contribution 
+
+Information-contribution analysis attributes output quality and con-straint satisfaction to specific retrieved content, tool observations, program outputs, and memory, organizing evidence by provenance, information flow, and decision dependency. TRACER attributes output quality to tool turns by linking answer claims to supporting calls with typed relationships encoding quota-tion, compression, and inference, separating evidence-bearing calls from redundant ones [76]. NeuroTaint extends attribution to con-straint satisfaction, following untrusted sources through reasoning transformation and persistent memory to high-privilege sinks, cap-turing influence that persists when original wording is rewritten [4]. ContextCite tests context-unit dependency by ablating random sub-sets and fitting a sparse linear surrogate, with combination ablation revealing redundancy or synergy that single-unit tests miss [10]. Together they establish information provenance, propagation, and generation dependency, stopping short of whether dependency changes task outcomes. 
+
+## 4.3 Intervention-Based Counterfactual Attribution 
+
+Intervention-based counterfactual attribution tests the causal role of individual events by deleting, replacing, or neutralizing them, re-executing the trajectory from that point, and computing Δ𝑈 (𝑒 𝑖 ) =
+
+𝑈 (𝜏 ) − 𝑈 (𝜏 [𝑒 𝑖 →∅]) between factual and counterfactual conditions. The methods estimate Δ𝑈 (𝑒 𝑖 ) across single-agent traces, failure-repair scenarios, and cooperative multi-agent systems. CAR represents actions, observations, and policy as a causal execution process, intervenes on a target node, and re-executes the suffix to measure goal-completion utility, using Shapley-value de-composition to detect redundancy and synergy among events [55]. ErrorProbe localizes failure by tracing dependencies backward from an observable symptom and verifying candidate steps through tool or environment execution against the goal-completion signal [32]. CausalFlow pursues the same goal through step-level direct inter-vention, replacing a candidate step with a feasible alternative and checking whether the goal-completion outcome flips from failure to success [3]. C3 extends counterfactual attribution to cooperative multi-agent systems by fixing the interaction history before a target decision, sampling alternative messages or actions for one agent, and evaluat-ing downstream goal-completion effects under matched context [7]. State recoverability bounds comparison precision, as hidden state, irreversible operations, or changing external services require envi-ronment snapshots and random seeds beyond what text history can reconstruct. Together they provide the closest approximation to local marginal contribution through executable outcome evidence. 
+
+## 5 Cost–Utility Misalignment Diagnosis and Targeted Adaptation 
+
+With 𝐶 (𝑒 𝑖 ) from Section 3 and 𝑈 (𝜏 ) from Section 4, this chapter diagnoses where 𝐶 (𝜏 ) lacks sufficient 𝑈 (𝜏 ) support and presents targeted adaptations for five forms of misalignment spanning cogni-tive and context use, external interaction and exploration, recovery-loop and verification control, resource and capability allocation, and multi-agent coordination. 
+
+## 5.1 Cognitive and Context Misalignment 
+
+Cognitive and context misalignment arises when token cost and context occupancy grow without changing task-relevant beliefs, action choices, or environmental state. Generation verbosity, un-necessary retention, and redundant retrieval each present a feasible lower-cost alternative that achieves equal utility. Generation verbosity mismatch occurs when additional tokens produce the same decision. DEPO trains the policy to reach the same decision with less output, reducing token cost per step and total steps to completion, and finds that local verbosity also extends interaction and compounds downstream action cost [6]. In retention misalignment, completed plans, early observations, and duplicated tool outputs persist beyond their utility contribution. Agent-Omit identifies this by removing a thought or observation and comparing task results and token use, then trains the agent to apply omission dynamically [44]. AgentDiet detects useless, re-dundant, and expired segments across software-agent trajectories and removes them at inference time, reducing input tokens while preserving task performance [66]. Naive omission creates a secondary mismatch when it removes content that future steps depend on, reducing current token cost while degrading downstream utility. Beyond Compaction organizes the trace into typed, dependent episodes and evicts by recoverability, prioritizing persisted environment actions and bulk tool output 
+
+5while retaining the objective, active exploration, and referenced nodes, stabilizing the active token count near a fixed ceiling [54]. PRISM addresses retrieval-reuse mismatch by jointly optimiz-ing retrieval accuracy and context cost through intent-aware graph search and evidence-bundle selection [48]. PEEK resolves context-budget mismatch by maintaining a fixed-budget context map through structured updating and eviction, improving the cost-quality Pareto frontier [19]. 
+
+## 5.2 External Interaction Misalignment 
+
+External interaction and exploration misalignment centers on whether an agent should access the environment, which tool it should call, and how deeply or broadly it should search. An interaction is misaligned when a no-call, better-tool, or earlier-stop alternative preserves utility without those added costs. Controlled comparisons reveal a call-task mismatch in which structured knowledge tools reduce error on fact-retrieval but add monetary and latency cost without utility gain on open-ended gen-eration, resolved by gating retrieval and planning to tasks requiring structured evidence or multi-hop composition [18]. Calibrate-Then-Act resolves unnecessary-call mismatch by modeling tool use as a costly partially observable process and gating each call on whether expected information gain would change the chosen action [14]. INTENT identifies selection mismatch by showing that a cheap but unreliable tool can generate retries and rework exceeding the cost of one expensive stable call, and addresses it through a language world model that anticipates future tool sequences and estimates risk-adjusted cost for each candidate [35]. Search structure governs how rollout budget distributes across branches and depth beyond the individual call. ToolTree resolves unproductive-branch mismatch by identifying failing sequences through combined pre-execution scoring and post-execution feed-back, then applying bidirectional pruning to concentrate budget on calls that survive both screens [72]. W&D resolves width-depth allocation mismatch, finding that starting with broader parallel calls and narrowing as evidence accumulates outperforms fixed and LLM-controlled scheduling [34]. Budget exposure and path correction address the accumulated cost of search. Budget-Aware Tool-Use resolves budget-visibility mismatch by showing that increased call limits without budget tracking fail to improve utility, adapting through a Budget Tracker and BATS policy that selects among continuation, path switching, and stopping [37]. WebRollback resolves wrong-path continuation mismatch by letting the agent critique its position and restore an earlier state, stopping cost accumulation and reassigning the remaining budget [82]. 
+
+## 5.3 Recovery-Loop and Verification-Control Misalignment 
+
+Recovery-loop and verification-control misalignment addresses whether verification, retry, repair, and rollback restore task state af-ter an error, and when the loop should stop. Recovery cost spans ver-ifier calls, error localization, repair generation, and re-verification. Repeated identical failures, patches that leave the failing condition unchanged, and additional rounds without higher success each signal a mismatch, and the objective is to restore correct state at minimum total recovery cost. ToolMaze and WAREX show through fault injection that a fixed recovery strategy creates a fault-type mismatch, misallocating cost across permanent failures, transient faults, and semantic corrup-tion, each requiring path switching, limited retry, and observation validation respectively [26, 85]. Repair spending creates an opportunity-cost mismatch when the same budget applied to independent resampling yields higher utility, making equal-budget resampling the appropriate recovery baseline [45]. Structured feedback including admissible alterna-tives resolves feedback-quality mismatch, raising repair success substantially over raw error output [49]. Undetected errors that propagate through the trajectory create an error-propagation mismatch, compounding repair cost while degrading task state. GA-Rollback addresses this by placing an auxiliary reviewer before history accumulation and rolling back to a pre-error state within reversibility bounds [31]. Continued repair past the point of utility gain creates an over-repair mismatch. EET uses historical repair data to terminate patch generation when marginal gain falls below threshold, and VRR-Stop models repair success probability alongside verifier error rates to select among continued repair, acceptance, and stopping [20, 64]. 
+
+## 5.4 Resource–Capability Misalignment 
+
+Resource–capability misalignment identifies which model, reason-ing intensity, and execution location should perform a step judged worth doing. Excess capacity wastes token and monetary cost on easy steps, while insufficient capability induces rework whose com-pounded trajectory cost exceeds the per-call savings. Call-level overprovision mismatch arises when a strong-model inference is assigned to a query where a cheaper model matches utility. Hybrid LLM and RouteLLM identify this through quality-gap prediction and win-probability learning, routing to the cheaper model when the gap is negligible [12, 46]. BEST-Route resolves sample-count mismatch by identifying when several cheap samples collectively match a single expensive call and when the strong model is required regardless [13]. Ares addresses step-level effort mismatch by training a policy that assigns low effort to routine navigation and high effort to replanning and recovery, concentrating reasoning cost where it changes outcomes [70]. Inference-Time Distillation resolves effort-concentration mismatch at uncertain states by retrieving teacher traces for a cheaper student and falling back to the teacher when student samples disagree [53]. Hera identifies placement mismatch by learning step-level device-or-cloud assignments from long-term task reward and future cloud use, keeping simple steps local and routing only piv-otal states to the cloud [81]. UniScale resolves joint-configuration mismatch by adapting model size, reasoning effort, sampling, search width, and verification jointly online to task distribution, model availability, and quality targets [23]. 
+
+> 6
+
+## 5.5 Multi-Agent Coordination Misalignment 
+
+Multi-agent coordination misalignment examines whether the ar-rangement of roles, communication topology, and supervision tim-ing can be reduced without losing utility. Coordination cost spans model calls across agents, shared context, inter-agent messaging, waiting latency, and supervision overhead, accumulating without task progress when roles are redundant, edges carry no decision-relevant information, or supervision fires on already-correct steps. MAST identifies membership mismatch through failure-trace patterns, and MaAS resolves it by making architecture a task-dependent supernet choice that pays full-team cost only when the task requires it [5, 79]. Nash-CredMAS resolves contribution-threshold membership mismatch by selecting participants whose ex-pected marginal contribution covers their coordination cost, adapt-ing through context-dependent value estimation under a communi-cation budget [16]. Shapley-Coop extends membership mismatch resolution to incentive-allocation, linking each member’s estimated utility contribution to admission, resource, and cost-sharing deci-sions under self-interested participation [22]. AgentPrune identifies topology mismatch when edge density and message similarity reveal removable edges, and prunes them to reduce inter-agent messaging cost without degrading task out-comes [80]. Evolving Orchestration resolves supervision-timing mismatch by invoking each role only during phases where its contribution changes the outcome [11]. SupervisorAgent resolves unnecessary-intervention mismatch through an LLM-free filter that restricts intervention to high-risk or uncertain steps [33]. For communication judged necessary, repeated encoding of un-changed content across agents and turns wastes compute without utility gain. KVCOMM resolves spatial re-encoding mismatch by aligning and reusing KV cache across agent contexts so that shared content is encoded once [74]. Continuum resolves temporal re-encoding mismatch by managing cache validity across tool waits and session gaps, preventing re-encoding when cached representa-tions remain valid [29]. 
+
+## 6 Cost–Utility Evaluation 
+
+Cost–utility evaluation closes the alignment loop, testing whether adaptations preserve the utility signal and reduce cost vectors un-der matched budget constraints. Local compression, routing, or pruning reduces one cost dimension but may raise total expendi-ture or degrade quality elsewhere. The evaluation takes the agent configuration as its object across complete runs, retaining multi-dimensional cost and utility and reporting raw measures before aggregation to avoid masking cost transfer. The four subsections in-crease the evidential requirement progressively, with components, questions, and evidence summarized in Table 2. 
+
+## 6.1 Cost-Efficiency Metrics and Quality–Cost Trade-offs 
+
+The benchmarks in this subsection examine quality–cost trade-offs under standard conditions, holding task set, model versions, tool permissions, run limits, and prices fixed. Execution cost and action cost are treated as separate dimensions since they differ in unit, location, and bearer, with efficiency ratios summarizing utility per 
+
+Table 2: Evaluation components, central questions, and evi-dence in cost–utility evaluation.     
+
+> Evaluation component Central question Key evidence
+> Quality–cost trade-offs Is utility preserved per unit cost? Task success, tokens, calls, latency, monetary cost, and Pareto frontier Reliability and risk Does performance persist under stress? Pass@ 𝑘 , Pass 𝑘 , recovery cost, failure severity, and tail risk Human and economic value Does deployment reduce total workflow cost? Time saved, output quality, review and rework cost, and net value Evaluation infrastructure Are comparisons reproducible and auditable? Complete logs, resettable environments, executable scoring, cost logging, and benchmark audits
+
+unit resource and budget curves tracing how utility changes across budgets to identify the Pareto frontier. ScienceAgentBench tracks executable program quality, task suc-cess, and API cost, and FDABench extends the same structure to heterogeneous-data analysis with external-model calls and la-tency [8, 63]. SWE-Effi and AgencyBench apply the same approach to software engineering and long-horizon tasks, finding that a simpler model–scaffold pairing can match more elaborate configu-rations at lower cost [17, 30]. Agentless shows that a controlled localization-patching-testing workflow matches more elaborate agents at lower cost [65]. Con-trolled comparisons find that planning and tool benefits are task-conditional [18]. TPS-Bench finds that improved scheduling simul-taneously raises completion rate while reducing tokens, rounds, and time [69]. CostBench adds environment-action costs and dynamic replan-ning, finding that action-path expense can substantially exceed the model bill [36]. CUJBench finds that more tools and evidence can enlarge the search space and lower accuracy, so the quality–cost curve may decline at high budgets [41]. Terminal-Bench integrates all dimensions by jointly logging task outcome, dollars, tokens, calls, and runtime across realistic terminal tasks [42]. 
+
+## 6.2 Reliability and Risk-Adjusted Cost Evaluation 
+
+Reliability benchmarks evaluate agent behavior under stressed conditions, measuring performance across repeated runs, task-equivalent perturbations, and injected faults. Pass@ 𝑘 and Pass 𝑘 
+
+distinguish occasional from sustained success across repeat count, perturbation strength, and fault intensity. Risk-adjusted cost in-corporates failure severity, recovery expenditure, and catastrophic constraint violation into deployment cost. 
+
+𝜏 -bench uses Pass 𝑘 to distinguish occasional from sustained suc-cess in tool–agent–user interaction [73]. ReliabilityBench extends this to equivalent task perturbations and production-like tool faults, finding that neither larger models nor more complex architectures guarantee greater reliability under stress [21]. APEX-Agents tracks repeated runs with progress, step, tool-call, and token logging, showing that failed or timed-out trajectories can 
+
+> 7
+
+cost as much as successful ones [61]. WirelessBench adds engineer-ing tolerances and catastrophic-error detection, separating small numerical deviations from critical constraint violations [58]. CCPO minimizes expected deployment cost under a joint reliability thresh-old and catastrophic-failure bound, allowing configurations to be rejected for instability or tail failure severity even when standard performance targets are met [56]. 
+
+## 6.3 Human and Economic Value 
+
+Skilled-human task time, professional output quality, and work-flow labor cost form an evidence chain from time saved and expert quality through review and rework burden to risk-adjusted net economic value. A cheaper per-run configuration can increase to-tal workflow expenditure when rework rises, making deployment value dependent on the full chain. HCAST calibrates the span of agent autonomy against skilled-human completion time across diverse task domains, establish-ing human baseline time as the measure of task scale and poten-tial value [50]. PaperBench evaluates professional artifact quality through author-informed rubrics for research replication and vali-dates its automatic judge against independent experts [57]. GDPval combines occupational tasks, expert deliverables, and re-view and repair workflows, finding that per-run cost and reliability interact to determine total labor cost [47]. SWE-Lancer anchors task value to freelance market payments, finding that full deployment cost requires combining success rates, acceptance criteria, repair cost, and failure risk [43]. 
+
+## 6.4 Benchmark Infrastructure and Evaluation Protocols 
+
+Credible efficiency, reliability, and economic evaluation depends on the measurement infrastructure supporting it. Observable envi-ronments, reproducible initialization, cost-complete run logs, and audited benchmarks and graders form the foundation, spanning fine-grained progress observation, resettable virtual environments, command-level cost traces, and task-level consistency audits. AgentBoard provides fine-grained progress rates for long-horizon tasks, distinguishing near completion, early failure, and execution without progress when overall success rates are sparse [39]. WebArena, VisualWebArena, and WorkArena extend the environment layer to interactive web and knowledge-work set-tings with observable state and verifiable task outcomes [15, 28, 83]. OSWorld adds virtual-machine initialization and executable state checks, giving configurations and repeated runs a common recov-erable starting point for counterfactual replay, perturbation, and fault injection [67]. SWE-bench and SpreadsheetBench illustrate executable grading for repository patches and spreadsheet outcomes [25, 40]. Terminal-Bench extends this to cost logging, combining command-level traces, tokens, calls, runtime, and executable tests in a single run record [42]. BenchGuard audits consistency among task descriptions, refer-ence implementations, execution environments, and scoring logic, finding that apparently inefficient agent runs may reflect defective tasks [60]. PaperBench’s JudgeEval compares automatic and hu-man judgments, finding that reliable scoring requires more than a detailed rubric [57]. 
+
+## 7 Open Challenges 
+
+The five-stage framework reveals four gaps current methods leave unresolved. Attribution requires counterfactual replay that open environments prevent, and no system closes the adaptation loop using attribution evidence while accounting for the cost of obtain-ing it. Evaluation results do not reproduce across infrastructure snapshots, and existing protocols miss human review overhead and cost transfers outside agent-visible token budgets. 
+
+Scalable Causal Attribution in Open Environments. Coun-terfactual attribution requires replaying execution from a known state, yet open environments prevent this because external writes are irreversible and hidden state cannot be reconstructed from text logs [7]. Multi-agent systems compound the difficulty, as replacing one agent’s message changes the information available to all oth-ers and single-step deletion methods cannot express joint failures where two steps cause an outcome only together [55]. 
+
+Closed-Loop Adaptation under Attribution Cost. Context compression, model routing, tool pruning, and verification control are studied independently [24, 33, 70, 80], yet in a complete agent they interact, as routing to a weaker model can trigger rework whose compounded cost exceeds the per-call savings [12, 46]. UniS-cale jointly adapts configuration controls, but no current system drives adaptation with cost and contribution attribution evidence while enforcing task-level reliability and risk constraints [23]. Diag-nostic overhead compounds this problem, since Shapley attribution is exponential in the worst case and a controller must determine whether the expected gain justifies the evidence cost [3, 55]. 
+
+Reliability under Nonstationary Infrastructure. Model snap-shots retire, prices and cache rules update, tools modify schemas, and websites update content, preventing benchmark runs from re-producing later [21]. ReliabilityBench finds performance degrades under infrastructure perturbation and BenchGuard finds that ap-parently inefficient runs may reflect defective tasks [21, 60], yet few leaderboards preserve the environment images, model metadata, and replayable logs needed to separate these sources. Production-scale confidence intervals on rare failure modes require 10,000 or more episodes, far exceeding standard benchmark counts and leaving tail-risk claims unsupported [21]. 
+
+Human Value, Cost Transfer, and Accountability. Technical evaluations measure resource consumption and task success, but one-shot non-interactive tasks omit human review effort, correction overhead, and failure loss [47, 50]. GDPval and SWE-Lancer connect agent evaluation to occupational deliverables and market payment rates [43, 47], but no study jointly observes agent cost, reliability, and human workflow effort under matched conditions, and existing protocols do not track whether cost optimizations transfer expenses to reviewers. 
+
+## 8 Conclusion 
+
+We frame LLM agent efficiency as a cost–utility alignment problem: whether an agent’s resource consumption is justified by its contribu-tion to task outcomes. We develop a five-stage framework spanning 
+
+> 8
+
+cost profiling, utility attribution, misalignment diagnosis, targeted adaptation, and evaluation, and analyze representative methods at each stage from profiling infrastructure through causal attribution to deployment evaluation. Four open challenges remain: scalable attribution in open environments, closed-loop adaptation under attribution cost, reproducible evaluation under infrastructure drift, and human-centered accounting of labor and cost transfers. Clos-ing them requires methods that connect observable cost records to causal contribution evidence, which current efficiency research does not yet do reliably. 
+
+## References 
+
+[1] Sumera Anjum, Weijian Zheng, Rajkumar Kettimuthu, Heng Fan, and Yunhe Feng. 2026. ProMCP: Profiling Token Flows and Latency Costs in Model Context Protocol–Based LLM Agents. In Findings of the Association for Computational Linguistics: ACL 2026 . Association for Computational Linguistics, Stroudsburg, PA, USA, 39476–39487. doi:10.18653/v1/2026.findings-acl.1967 [2] Longju Bai, Zhemin Huang, Xingyao Wang, Jiao Sun, Rada Mihalcea, Erik Bryn-jolfsson, Alex Pentland, and Jiaxin Pei. 2026. How Do AI Agents Spend Your Money? Analyzing and Predicting Token Consumption in Agentic Coding Tasks .arXiv:2604.22750 [cs.CL] https://arxiv.org/abs/2604.22750 [3] Akash Bonagiri, Devang Borkar, Gerard Janno Anderias, Setareh Rafatirad, and Houman Homayoun. 2026. CausalFlow: Causal Attribution and Counterfactual Repair for LLM Agent Failures . arXiv:2605.25338 [cs.LG] https://arxiv.org/abs/ 2605.25338 [4] Yuandao Cai, Wensheng Tang, Cheng Wen, and Shengchao Qin. 2026. 
+
+Ghost in the Agent: Redefining Information Flow Tracking for LLM Agents .arXiv:2604.23374 [cs.CR] https://arxiv.org/abs/2604.23374 [5] Mert Cemri, Melissa Z. Pan, Shuyi Yang, Lakshya A. Agrawal, Bhavya Chopra, Rishabh Tiwari, Kurt Keutzer, Aditya Parameswaran, Dan Klein, Kannan Ram-chandran, Matei Zaharia, Joseph E. Gonzalez, and Ion Stoica. 2025. Why Do Multi-Agent LLM Systems Fail? arXiv:2503.13657 [cs.AI] https://arxiv.org/abs/ 2503.13657 [6] Sirui Chen, Mengshi Zhao, Lei Xu, Yuying Zhao, Beier Zhu, Hanwang Zhang, Shengjie Zhao, and Chaochao Lu. 2026. DEPO: Dual-Efficiency Preference Op-timization for LLM Agents. Proceedings of the AAAI Conference on Artificial Intelligence 40, 36 (2026), 30279–30287. doi:10.1609/aaai.v40i36.40279 [7] Yanjun Chen, Yirong Sun, Hanlin Wang, Jinghan Wang, Xinming Zhang, Xiaoyu Shen, Wenjie Li, and Wei Zhang. 2026. Exact Is Easier: Credit Assignment for Cooperative LLM Agents . arXiv:2603.06859 [cs.LG] https://arxiv.org/abs/2603. 06859 [8] Ziru Chen, Shijie Chen, Yuting Ning, Qianheng Zhang, Boshi Wang, Botao Yu, Yifei Li, Zeyi Liao, Chen Wei, Zitong Lu, Vishal Dey, Mingyi Xue, Frazier N. Baker, Benjamin Burns, Daniel Adu-Ampratwum, Xuhui Huang, Xia Ning, Song Gao, Yu Su, and Huan Sun. 2024. ScienceAgentBench: Toward Rigorous Assessment of Language Agents for Data-Driven Scientific Discovery . arXiv:2410.05080 [cs.CL] https://arxiv.org/abs/2410.05080 [9] Sanjiban Choudhury. 2025. Process Reward Models for LLM Agents: Practical Framework and Directions . arXiv:2502.10325 [cs.LG] https://arxiv.org/abs/2502. 10325 [10] Benjamin Cohen-Wang, Harshay Shah, Kristian Georgiev, and Aleksander Madry. 2024. ContextCite: Attributing Model Generation to Context .arXiv:2409.00729 [cs.LG] https://arxiv.org/abs/2409.00729 [11] Yufan Dang, Chen Qian, Xueheng Luo, Jingru Fan, Zihao Xie, Ruijie Shi, Weize Chen, Cheng Yang, Xiaoyin Che, Ye Tian, Xuantang Xiong, Lei Han, Zhiyuan Liu, and Maosong Sun. 2025. Multi-Agent Collaboration via Evolving Orchestration .arXiv:2505.19591 [cs.AI] https://arxiv.org/abs/2505.19591 [12] Dujian Ding, Ankur Mallick, Chi Wang, Robert Sim, Subhabrata Mukherjee, Victor Rühle, Laks V. S. Lakshmanan, and Ahmed Hassan Awadallah. 2024. Hybrid LLM: Cost-Efficient and Quality-Aware Query Routing . arXiv:2404.14618 [cs.CL] https://arxiv.org/abs/2404.14618 [13] Dujian Ding, Ankur Mallick, Shaokun Zhang, Chi Wang, Daniel Madrigal, Mirian Del Carmen Hipolito Garcia, Menglin Xia, Laks V. S. Lakshmanan, Qingyun Wu, and Victor Rühle. 2025. BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute . arXiv:2506.22716 [cs.CL] https://arxiv.org/abs/2506.22716 [14] Wenxuan Ding, Nicholas Tomlin, and Greg Durrett. 2026. Calibrate-Then-Act: Cost-Aware Exploration in LLM Agents . arXiv:2602.16699 [cs.CL] https://arxiv. org/abs/2602.16699 [15] Alexandre Drouin, Maxime Gasse, Massimo Caccia, Issam H. Laradji, Manuel Del Verme, Tom Marty, Léo Boisvert, Megh Thakkar, Quentin Cappart, David Vazquez, Nicolas Chapados, and Alexandre Lacoste. 2024. WorkArena: How Capable Are Web Agents at Solving Common Knowledge Work Tasks? arXiv:2403.07718 [cs.LG] https://arxiv.org/abs/2403.07718 [16] Yijia Fan, Mingyu Liu, Jing Yang, Jian Wang, Keze Wang, and Jusheng Zhang. 2026. Nash-Pruned CredMAS: Dynamic Panel Pruning for VLM-MAS Using Nash-Based Selection and Doubly-Robust Credits. In Findings of the Association for Computational Linguistics: ACL 2026 . Association for Computational Linguistics, Stroudsburg, PA, USA, 39640–39650. doi:10.18653/v1/2026.findings-acl.1975 [17] Zhiyu Fan, Kirill Vasilevski, Dayi Lin, Boyuan Chen, Yihao Chen, Zhiqing Zhong, Jie M. Zhang, Pinjia He, and Ahmed E. Hassan. 2025. SWE-Effi: Re-Evaluating Software AI Agent System Effectiveness Under Resource Constraints .arXiv:2509.09853 [cs.SE] https://arxiv.org/abs/2509.09853 [18] Subha Ghoshal and Ali Al-Bustami. 2026. When Do Tools and Planning Help Large Language Models Think? A Cost- and Latency-Aware Benchmark .arXiv:2601.02663 [cs.AI] https://arxiv.org/abs/2601.02663 [19] Zhuohan Gu, Qizheng Zhang, Omar Khattab, and Samuel Madden. 2026. 
+
+PEEK: Context Map as an Orientation Cache for Long-Context LLM Agents .arXiv:2605.19932 [cs.AI] https://arxiv.org/abs/2605.19932 [20] Yaoqi Guo, Ying Xiao, Jie M. Zhang, Mark Harman, Yiling Lou, Yang Liu, and Zhenpeng Chen. 2026. EET: Experience-Driven Early Termination for Cost-Efficient Software Engineering Agents . arXiv:2601.05777 [cs.SE] https://arxiv.org/abs/2601. 05777 [21] Aayush Gupta. 2026. ReliabilityBench: Evaluating LLM Agent Reliability Under Production-Like Stress Conditions . arXiv:2601.06112 [cs.AI] https://arxiv.org/abs/ 2601.06112 [22] Yun Hua, Haosheng Chen, Shiqin Wang, Wenhao Li, Xiangfeng Wang, and Jun Luo. 2025. Shapley-Coop: Credit Assignment for Emergent Cooperation in Self-Interested LLM Agents . arXiv:2506.07388 [cs.MA] https://arxiv.org/abs/2506.07388 [23] Kaiyu Huang, Xingyu Wang, Mingze Kong, Zhubo Shi, Yuqian Hou, Hong Xu, Zhongxiang Dai, Minchen Yu, and Qingjiang Shi. 2026. UniScale: Adaptive Unified Inference Scaling via Online Joint Optimization of Model Routing and Test-Time Scaling . arXiv:2605.30898 [cs.AI] https://arxiv.org/abs/2605.30898 [24] Haitao Jiang, Lin Ge, Hengrui Cai, and Rui Song. 2026. PABU: Progress-Aware Belief Update for Efficient LLM Agents . arXiv:2602.09138 [cs.AI] https://arxiv.org/ abs/2602.09138 [25] Carlos E. Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir Press, and Karthik Narasimhan. 2023. SWE-bench: Can Language Models Resolve Real-World GitHub Issues? arXiv:2310.06770 [cs.CL] https://arxiv.org/abs/2310.06770 [26] Su Kara, Fazle Faisal, and Suman Nath. 2025. WAREX: Web Agent Reliability Evaluation on Existing Benchmarks . arXiv:2510.03285 [cs.AI] https://arxiv.org/ abs/2510.03285 [27] Jiin Kim, Byeongjun Shin, Jinha Chung, and Minsoo Rhu. 2025. The Cost of Dynamic Reasoning: Demystifying AI Agents and Test-Time Scaling from an AI Infrastructure Perspective . arXiv:2506.04301 [cs.LG] https://arxiv.org/abs/2506. 04301 [28] Jing Yu Koh, Robert Lo, Lawrence Jang, Vikram Duvvur, Ming Lim, Po-Yu Huang, Graham Neubig, Shuyan Zhou, Russ Salakhutdinov, and Daniel Fried. 2024. Visu-alWebArena: Evaluating Multimodal Agents on Realistic Visual Web Tasks. In Pro-ceedings of the 62nd Annual Meeting of the Association for Computational Linguis-tics (Volume 1: Long Papers) (Bangkok, Thailand). Association for Computational Linguistics, Stroudsburg, PA, USA, 881–905. doi:10.18653/v1/2024.acl-long.50 [29] Hanchen Li, Runyuan He, Qiuyang Mang, Qizheng Zhang, Huanzhi Mao, Xiaokun Chen, Hangrui Zhou, Alvin Cheung, Joseph Gonzalez, and Ion Stoica. 2025. 
+
+Continuum: Efficient and Robust Multi-Turn LLM Agent Scheduling with KV Cache Time-to-Live . arXiv:2511.02230 [cs.OS] https://arxiv.org/abs/2511.02230 [30] Keyu Li, Junhao Shi, Yang Xiao, Mohan Jiang, Jie Sun, Yunze Wu, Dayuan Fu, Shijie Xia, Xiaojie Cai, Tianze Xu, Weiye Si, Wenjie Li, Dequan Wang, and Pengfei Liu. 2026. AgencyBench: Benchmarking the Frontiers of Autonomous Agents in 1M-Token Real-World Contexts. In Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) .Association for Computational Linguistics, Stroudsburg, PA, USA, 7422–7440. doi:10.18653/v1/2026.acl-long.337 [31] Xingzuo Li, Kehai Chen, Yunfei Long, Xuefeng Bai, Yong Xu, and Min Zhang. 2025. Generator-Assistant Stepwise Rollback Framework for Large Language Model Agent . arXiv:2503.02519 [cs.CL] https://arxiv.org/abs/2503.02519 [32] Xianyou Li, Weiran Yan, Yichao Wu, Penghao Liang, Mengwei Yuan, Jianan Liu, and Jing Yang. 2026. Early Diagnosis of Wasted Computation in Multi-Agent LLM Systems via Failure-Aware Observability . arXiv:2606.01365 [cs.AI] https: //arxiv.org/abs/2606.01365 [33] Fulin Lin, Shaowen Chen, Ruishan Fang, Hongwei Wang, and Tao Lin. 2026. Stop Wasting Your Tokens: Towards Efficient Runtime Multi-Agent Systems. arXiv:2510.26585 [cs.MA] https://arxiv.org/abs/2510.26585 [34] Xiaoqiang Lin, Jun Hao Liew, Silvio Savarese, and Junnan Li. 2026. W&D: Scaling Parallel Tool Calling for Efficient Deep Research Agents . arXiv:2602.07359 [cs.AI] https://arxiv.org/abs/2602.07359 [35] Hanbing Liu, Chunhao Tian, Nan An, Ziyuan Wang, Pinyan Lu, Changyuan Yu, and Qi Qi. 2026. Budget-Constrained Agentic Large Language Models: Intention-Based Planning for Costly Tool Use . arXiv:2602.11541 [cs.AI] https://arxiv.org/ abs/2602.11541 [36] Jiayu Liu, Cheng Qian, Zhaochen Su, Qing Zong, Shijue Huang, Bingxiang He, and Yi R. Fung. 2026. CostBench: Evaluating Multi-Turn Cost-Optimal Planning and 
+
+> 9
+
+Adaptation in Dynamic Environments for LLM Tool-Use Agents. In Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) . Association for Computational Linguistics, Stroudsburg, PA, USA, 12826–12858. doi:10.18653/v1/2026.acl-long.584 [37] Tengxiao Liu, Zifeng Wang, Jin Miao, I-Hung Hsu, Jun Yan, Jiefeng Chen, Rujun Han, Fangyuan Xu, Yanfei Chen, Ke Jiang, Samira Daruki, Yi Liang, William Yang Wang, Tomas Pfister, and Chen-Yu Lee. 2025. Budget-Aware Tool-Use Enables Effective Agent Scaling . arXiv:2511.17006 [cs.AI] https://arxiv.org/abs/2511.17006 [38] Xiaoqian Liu, Ke Wang, Yuchuan Wu, Fei Huang, Yongbin Li, Junge Zhang, and Jianbin Jiao. 2025. Agentic Reinforcement Learning with Implicit Step Rewards .arXiv:2509.19199 [cs.CL] https://arxiv.org/abs/2509.19199 [39] Chang Ma, Junlei Zhang, Zhihao Zhu, Cheng Yang, Yujiu Yang, Yaohui Jin, Zhenzhong Lan, Lingpeng Kong, and Junxian He. 2024. AgentBoard: An Analytical Evaluation Board of Multi-turn LLM Agents . arXiv:2401.13178 [cs.CL] https: //arxiv.org/abs/2401.13178 [40] Zeyao Ma, Bohan Zhang, Jing Zhang, Jifan Yu, Xiaokang Zhang, Xiaohan Zhang, Sijia Luo, Xi Wang, and Jie Tang. 2024. SpreadsheetBench: Towards Challenging Real World Spreadsheet Manipulation . arXiv:2406.14991 [cs.CL] https://arxiv.org/ abs/2406.14991 [41] Haoming Meng. 2026. CUJBench: Benchmarking LLM-Agent on Cross-Modal Failure Diagnosis from Browser to Backend . arXiv:2604.23455 [cs.SE] https://arxiv. org/abs/2604.23455 [42] Mike A. Merrill, Alexander G. Shaw, Nicholas Carlini, Boxuan Li, Harsh Raj, Ivan Bercovich, Lin Shi, Jeong Yeon Shin, Thomas Walshe, E. Kelly Buchanan, Junhong Shen, Guanghao Ye, Haowei Lin, Jason Poulos, Maoyu Wang, Mari-anna Nezhurina, Jenia Jitsev, Di Lu, Orfeas Menis Mastromichalakis, Zhiwei Xu, Zizhao Chen, Yue Liu, Robert Zhang, Leon Liangyu Chen, Anurag Kashyap, Jan-Lucas Uslu, Jeffrey Li, Jianbo Wu, Minghao Yan, Song Bian, Vedang Sharma, Ke Sun, Steven Dillmann, Akshay Anand, Andrew Lanpouthakoun, Bardia Koopah, Changran Hu, Etash Guha, Gabriel H. S. Dreiman, Jiacheng Zhu, Karl Krauth, Li Zhong, Niklas Muennighoff, Robert Amanfu, Shangyin Tan, Shreyas Pimpal-gaonkar, Tushar Aggarwal, Xiangning Lin, Xin Lan, Xuandong Zhao, Yiqing Liang, Yuanli Wang, Zilong Wang, Changzhi Zhou, David Heineman, Hange Liu, Harsh Trivedi, John Yang, Junhong Lin, Manish Shetty, Michael Yang, Nabil Omi, Negin Raoof, Shanda Li, Terry Yue Zhuo, Wuwei Lin, Yiwei Dai, Yuxin Wang, Wenhao Chai, Shang Zhou, Dariush Wahdany, Ziyu She, Jiaming Hu, Zhikang Dong, Yuxuan Zhu, Sasha Cui, Ahson Saiyed, Arinbjörn Kolbeinsson, Jesse Hu, Christopher Michael Rytting, Ryan Marten, Yixin Wang, Alex Dimakis, Andy Konwinski, and Ludwig Schmidt. 2026. Terminal-Bench: Benchmarking Agents on Hard, Realistic Tasks in Command Line Interfaces . arXiv:2601.11868 [cs.SE] https://arxiv.org/abs/2601.11868 [43] Samuel Miserendino, Michele Wang, Tejal Patwardhan, and Johannes Heidecke. 2025. SWE-Lancer: Can Frontier LLMs Earn $1 Million from Real-World Freelance Software Engineering? arXiv:2502.12115 [cs.SE] https://arxiv.org/abs/2502.12115 [44] Yansong Ning, Jun Fang, Naiqiang Tan, and Hao Liu. 2026. Agent-Omit: Adaptive Context Omission for Efficient LLM Agents . arXiv:2602.04284 [cs.AI] https://arxiv. org/abs/2602.04284 [45] Theo X. Olausson, Jeevana Priya Inala, Chenglong Wang, Jianfeng Gao, and Armando Solar-Lezama. 2023. Is Self-Repair a Silver Bullet for Code Generation? 
+
+arXiv:2306.09896 [cs.SE] https://arxiv.org/abs/2306.09896 [46] Isaac Ong, Amjad Almahairi, Vincent Wu, Wei-Lin Chiang, Tianhao Wu, Joseph E. Gonzalez, M. Waleed Kadous, and Ion Stoica. 2024. RouteLLM: Learning to Route LLMs with Preference Data . arXiv:2406.18665 [cs.CL] https://arxiv.org/abs/2406. 18665 [47] Tejal Patwardhan, Rachel Dias, Elizabeth Proehl, Grace Kim, Michele Wang, Olivia Watkins, Simón Posada Fishman, Marwan Aljubeh, Phoebe Thacker, Laurance Fauconnet, Natalie S. Kim, Patrick Chao, Samuel Miserendino, Gildas Chabot, David Li, Michael Sharman, Alexandra Barr, Amelia Glaese, and Jerry Tworek. 2025. GDPval: Evaluating AI Model Performance on Real-World Economically Valuable Tasks . arXiv:2510.04374 [cs.LG] https://arxiv.org/abs/2510.04374 [48] Jingyi Peng, Zhongwei Wan, Weiting Liu, and Qiuzhuang Sun. 2026. PRISM: Pareto-Efficient Retrieval over Intent-Aware Structured Memory for Long-Horizon Agents . arXiv:2605.12260 [cs.CL] https://arxiv.org/abs/2605.12260 [49] Jaideep Ray and Ankit Goyal. 2026. Structured Feedback Improves Repair in an LLM Agent Loop . arXiv:2607.14167 [cs.AI] https://arxiv.org/abs/2607.14167 [50] David Rein, Joel Becker, Amy Deng, Seraphina Nix, Chris Canal, Daniel O’Connel, Pip Arnott, Ryan Bloom, Thomas Broadley, Katharyn Garcia, Brian Goodrich, Max Hasin, Sami Jawhar, Megan Kinniment, Thomas Kwa, Aron Lajko, Nate Rush, Lucas Jun Koba Sato, Sydney Von Arx, Ben West, Lawrence Chan, and Elizabeth Barnes. 2025. HCAST: Human-Calibrated Autonomy Software Tasks .arXiv:2503.17354 [cs.AI] https://arxiv.org/abs/2503.17354 [51] Yangjun Ruan, Honghua Dong, Andrew Wang, Silviu Pitis, Yongchao Zhou, Jimmy Ba, Yann Dubois, Chris Maddison, and Tatsunori Hashimoto. 2024. Identifying the Risks of LM Agents with an LM-Emulated Sandbox. In International Conference on Learning Representations , B. Kim, Y. Yue, S. Chaudhuri, K. Fragkiadaki, M. Khan, and Y. Sun (Eds.), Vol. 2024. 27031–27098. https://proceedings.iclr.cc/paper_files/paper/2024/file/ 7274ed909a312d4d869cc328ad1c5f04-Paper-Conference.pdf [52] Mohamad Salim, Jasmine Latendresse, SayedHassan Khatoonabadi, and Emad Shihab. 2026. Tokenomics: Quantifying Where Tokens Are Used in Agentic Software Engineering . arXiv:2601.14470 [cs.SE] https://arxiv.org/abs/2601.14470 [53] Vishnu Sarukkai, Asanshay Gupta, James Hong, Michaël Gharbi, and Kayvon Fatahalian. 2025. Inference-Time Distillation: Cost-Efficient Agents Without Fine-Tuning or Manual Prompt Engineering . arXiv:2512.02543 [cs.LG] https://arxiv. org/abs/2512.02543 [54] Andrew Semenov and Svyatoslav Dorofeev. 2026. Beyond Compaction: Structured Context Eviction for Long-Horizon Agents . arXiv:2606.11213 [cs.CL] https://arxiv. org/abs/2606.11213 [55] Jaineet Shah. 2026. Causal Agent Replay: Counterfactual Attribution for LLM-Agent Failures . arXiv:2606.08275 [cs.LG] https://arxiv.org/abs/2606.08275 [56] Wenwen Si, Sooyong Jang, Insup Lee, and Osbert Bastani. 2026. Conformal Constrained Policy Optimization for Cost-Effective LLM Agents. Proceedings of the AAAI Conference on Artificial Intelligence 40, 30 (2026), 25446–25453. doi:10. 1609/aaai.v40i30.39739 [57] Giulio Starace, Oliver Jaffe, Dane Sherburn, James Aung, Jun Shern Chan, Leon Maksin, Rachel Dias, Evan Mays, Benjamin Kinsella, Wyatt Thompson, Johannes Heidecke, Amelia Glaese, and Tejal Patwardhan. 2025. PaperBench: Evaluating AI’s Ability to Replicate AI Research . arXiv:2504.01848 [cs.AI] https://arxiv.org/ abs/2504.01848 [58] Jingwen Tong, Fang Liu, Linkai Xv, Shiliang Lu, Kangqi Li, Yiqian Zhang, Yijie Song, Zeyang Xue, and Jun Zhang. 2026. WirelessBench: A Tolerance-Aware LLM Agent Benchmark for Wireless Network Intelligence . arXiv:2603.21251 [cs.NI] https://arxiv.org/abs/2603.21251 [59] Harsh Trivedi, Tushar Khot, Mareike Hartmann, Ruskin Manku, Vinty Dong, Edward Li, Shashank Gupta, Ashish Sabharwal, and Niranjan Balasubramanian. 2024. AppWorld: A Controllable World of Apps and People for Benchmarking Interactive Coding Agents. In Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) (Bangkok, Thailand). Association for Computational Linguistics, Stroudsburg, PA, USA, 16022–16076. doi:10.18653/v1/2024.acl-long.850 [60] Xinming Tu, Tianze Wang, Yingzhou Lu, Kexin Huang, Yuanhao Qu, and Sara Mostafavi. 2026. BenchGuard: Who Guards the Benchmarks? Automated Auditing of LLM Agent Benchmarks . arXiv:2604.24955 [cs.AI] https://arxiv.org/abs/2604. 24955 [61] Bertie Vidgen, Austin Mann, Abby Fennelly, John Wright Stanly, Lucas Rothman, Marco Burstein, Julien Benchek, David Ostrofsky, Anirudh Ravichandran, Debnil Sur, Neel Venugopal, Alannah Hsia, Isaac Robinson, Calix Huang, Olivia Varones, Daniyal Khan, Michael Haines, Austin Bridges, Jesse Boyle, Koby Twist, Zach Richards, Chirag Mahapatra, Brendan Foody, and Osvald Nitski. 2026. APEX-Agents . arXiv:2601.14242 [cs.CL] https://arxiv.org/abs/2601.14242 [62] Lei Wang, Chen Ma, Xueyang Feng, Zeyu Zhang, Hao Yang, Jingsen Zhang, Zhiyuan Chen, Jiakai Tang, Xu Chen, Yankai Lin, Wayne Xin Zhao, Zhewei Wei, and Ji-Rong Wen. 2024. A Survey on Large Language Model based Autonomous Agents. Frontiers of Computer Science 18, 6, Article 186345 (2024), 26 pages. doi:10.1007/s11704-024-40231-1 [63] Ziting Wang, Shize Zhang, Haitao Yuan, Jinwei Zhu, Wei Dong, and Gao Cong. 2025. FDABench: A Benchmark for Data Agents on Analytical Queries over Hetero-geneous Data . arXiv:2509.02473 [cs.DB] https://arxiv.org/abs/2509.02473 [64] Yitao Wu, Si Shen, Rui Yang, Hong Peng, and Bin Hu. 2026. Verify, Repair, Repeat, or Stop? Robust Stopping for Noisy Verify-Repair Loops in LLM Agents .arXiv:2607.17641 [cs.AI] https://arxiv.org/abs/2607.17641 [65] Chunqiu Steven Xia, Yinlin Deng, Soren Dunn, and Lingming Zhang. 2024. Agentless: Demystifying LLM-based Software Engineering Agents .arXiv:2407.01489 [cs.SE] https://arxiv.org/abs/2407.01489 [66] Yuan-An Xiao, Pengfei Gao, Chao Peng, and Yingfei Xiong. 2026. Reducing Cost of LLM Agents with Trajectory Reduction. Proceedings of the ACM on Software Engineering 3, FSE (2026), 1241–1263. doi:10.1145/3797084 [67] Tianbao Xie, Danyang Zhang, Jixuan Chen, Xiaochuan Li, Siheng Zhao, Ruisheng Cao, Toh Jing Hua, Zhoujun Cheng, Dongchan Shin, Fangyu Lei, Yitao Liu, Yiheng Xu, Shuyan Zhou, Silvio Savarese, Caiming Xiong, Victor Zhong, and Tao Yu. 2024. OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments. In Advances in Neural Information Processing Systems , Vol. 37. Curran Associates, Inc., Red Hook, NY, USA, 52040–52094. doi:10.52202/079017-1650 [68] Weimin Xiong, Yifan Song, Xiutian Zhao, Wenhao Wu, Xun Wang, Ke Wang, Cheng Li, Wei Peng, and Sujian Li. 2024. Watch Every Step! LLM Agent Learning via Iterative Step-level Process Refinement. In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing . Association for Computa-tional Linguistics, Stroudsburg, PA, USA, 1556–1572. doi:10.18653/v1/2024.emnlp-main.93 [69] Hanwen Xu, Xuyao Huang, Yuzhe Liu, Kai Yu, and Zhijie Deng. 2025. TPS-Bench: Evaluating AI Agents’ Tool Planning and Scheduling Abilities in Compounding Tasks . arXiv:2511.01527 [cs.AI] https://arxiv.org/abs/2511.01527 [70] Jingbo Yang, Bairu Hou, Wei Wei, Yujia Bao, and Shiyu Chang. 2026. Ares: Adaptive Reasoning Effort Selection for Efficient LLM Agents . arXiv:2603.07915 [cs.AI] https://arxiv.org/abs/2603.07915 
+
+> 10
+
+[71] John Yang, Carlos E. Jimenez, Alexander Wettig, Kilian Lieret, Shunyu Yao, Karthik Narasimhan, and Ofir Press. 2024. SWE-agent: Agent-Computer In-terfaces Enable Automated Software Engineering. In Advances in Neural Infor-mation Processing Systems , Vol. 37. Curran Associates, Inc., Red Hook, NY, USA, 50528–50652. doi:10.52202/079017-1601 [72] Shuo Yang, Soyeon Caren Han, Yihao Ding, Shuhe Wang, and Eduard Hovy. 2026. ToolTree: Efficient LLM Agent Tool Planning via Dual-Feedback Monte Carlo Tree Search and Bidirectional Pruning . arXiv:2603.12740 [cs.AI] https: //arxiv.org/abs/2603.12740 [73] Shunyu Yao, Noah Shinn, Pedram Razavi, and Karthik Narasimhan. 2024. 𝜏 -bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains .arXiv:2406.12045 [cs.AI] https://arxiv.org/abs/2406.12045 [74] Hancheng Ye, Zhengqi Gao, Mingyuan Ma, Qinsi Wang, Yuzhe Fu, Ming-Yu Chung, Yueqian Lin, Zhijian Liu, Jianyi Zhang, Danyang Zhuo, and Yiran Chen. 2025. KVCOMM: Online Cross-context KV-cache Communication for Efficient LLM-based Multi-agent Systems . arXiv:2510.12872 [cs.DC] https://arxiv.org/abs/2510. 12872 [75] Asaf Yehudai, Lilach Eden, Alan Li, Guy Uziel, Yilun Zhao, Roy Bar-Haim, Arman Cohan, and Michal Shmueli-Scheuer. 2025. Survey on Evaluation of LLM-based Agents . arXiv:2503.16416 [cs.AI] https://arxiv.org/abs/2503.16416 [76] Bihui Yu, Caijun Jia, Jing Chi, Xiaohan Liu, Yining Wang, He Bai, Yuchen Liu, Jingxuan Wei, and Junnan Zhu. 2026. TRACER: Verifiable Generative Provenance for Multimodal Tool-Using Agents . arXiv:2605.09934 [cs.CL] https://arxiv.org/ abs/2605.09934 [77] Boqin Yuan, Yue Su, Renchu Song, Sen Yang, and Jing Qin. 2026. ClawTrace: Cost-Aware Tracing for LLM Agent Skill Distillation . arXiv:2604.23853 [cs.AI] https://arxiv.org/abs/2604.23853 [78] Zhiyuan Zhai, Ming Li, and Xin Wang. 2026. Revisable by Design: A Theory of Streaming LLM Agent Execution . arXiv:2604.23283 [cs.LG] https://arxiv.org/abs/ 2604.23283 [79] Guibin Zhang, Luyang Niu, Junfeng Fang, Kun Wang, Lei Bai, and Xi-ang Wang. 2025. Multi-agent Architecture Search via Agentic Supernet .arXiv:2502.04180 [cs.AI] https://arxiv.org/abs/2502.04180 [80] Guibin Zhang, Yanwei Yue, Zhixun Li, Sukwon Yun, Guancheng Wan, Kun Wang, Dawei Cheng, Jeffrey Xu Yu, and Tianlong Chen. 2024. Cut the Crap: An Economical Communication Pipeline for LLM-based Multi-Agent Systems .arXiv:2410.02506 [cs.AI] https://arxiv.org/abs/2410.02506 [81] Yuxin Zhang, Mengxue Hu, Zheng Lin, Xiaoyi Fan, Fan Xie, Zihan Fang, Jing Yang, Wenjun Zhu, Zhiwen Chen, Chengfei Lv, and Zhe Chen. 2026. Hera: Learning Long-Horizon Coordination for Device-Cloud Collaborative LLM Agents .arXiv:2605.24598 [cs.AI] https://arxiv.org/abs/2605.24598 [82] Zhisong Zhang, Tianqing Fang, Kaixin Ma, Wenhao Yu, Hongming Zhang, Haitao Mi, and Dong Yu. 2025. WebRollback: Enhancing Web Agents with Explicit Rollback Mechanisms . arXiv:2504.11788 [cs.CL] https://arxiv.org/abs/2504.11788 [83] Shuyan Zhou, Frank F. Xu, Hao Zhu, Xuhui Zhou, Robert Lo, Abishek Sridhar, Xianyi Cheng, Tianyue Ou, Yonatan Bisk, Daniel Fried, Uri Alon, and Graham Neubig. 2023. WebArena: A Realistic Web Environment for Building Autonomous Agents . arXiv:2307.13854 [cs.AI] https://arxiv.org/abs/2307.13854 [84] Zixuan Zhou, Xuefei Ning, Ke Hong, Tianyu Fu, Jiaming Xu, Shiyao Li, Yuming Lou, Luning Wang, Zhihang Yuan, Xiuhong Li, Shengen Yan, Guohao Dai, Xiao-Ping Zhang, Yuhan Dong, and Yu Wang. 2024. A Survey on Efficient Inference for Large Language Models . arXiv:2404.14294 [cs.CL] https://arxiv.org/abs/2404. 14294 [85] Dongsheng Zhu, Xuchen Ma, Yucheng Shen, Xiang Li, Yukun Zhao, Shuaiqiang Wang, Lingyong Yan, and Dawei Yin. 2026. When Tools Fail: Benchmarking Dy-namic Replanning and Anomaly Recovery in LLM Agents . arXiv:2606.05806 [cs.AI] https://arxiv.org/abs/2606.05806 [86] Kan Zhu, Mathew Jacob, Chenxi Ma, Yi Pan, Stephanie Wang, Arvind Krishna-murthy, and Baris Kasikci. 2026. TraceLab: Characterizing Coding Agent Workloads for LLM Serving . arXiv:2606.30560 [cs.LG] https://arxiv.org/abs/2606.30560 
+
+## A TraceCard Schema and Worked Example 
+
+This appendix provides a concrete schema for trajectory-level cost– utility profiling and demonstrates its application through an end-to-end example covering all five framework stages. 
+
+## A.1 TraceCard Schema 
+
+Each event 𝑒 𝑖 in a trajectory 𝜏 carries a TraceCard recording iden-tity, cost profile, attribution evidence, misalignment diagnosis, and adaptation outcome. Table 3 defines the complete field structure. A complete TrajectoryRecord aggregates events[] , total_cost ,task-level utility 𝑈 (𝜏 ), budget constraint, and aligned boolean indicating whether a lower-cost alternative was feasible. 
+
+## A.2 Illustrative TraceCard Instances 
+
+Table 4 shows two contrasting TraceCard instances from a hypo-thetical coding-agent trajectory: a high-verbosity reasoning step (𝑒 think ) and the downstream corrective write step ( 𝑒 write ). Values are schematic and chosen to illustrate the contrast between misaligned and aligned events across all five field groups. The contrast illustrates how attribution evidence drives selective diagnosis. 𝑒 think carries large output tokens but dep_flag = false 
+
+and Δ𝑈 ≈ 0: counterfactual replay confirms that removing it leaves task outcome unchanged, satisfying the misalignment condition (a feasible lower-cost alternative exists). The diagnosis triggers Agent-Omit [44], which removes the redundant step while preserving dependency-linked content. 𝑒 write , by contrast, has dep_flag =true and Δ𝑈 ≈ 1: it is causally necessary for task success, so no misalignment is diagnosed and no adaptation is applied. The TraceCard schema makes this asymmetry explicit in a single record, supporting systematic traversal of a full trajectory at Stage 3 and targeted intervention at Stage 4. 
+
+> 11
+
+Table 3: TraceCard schema: field structure per trajectory event. 
+
+Field group Fields Type / Domain Purpose and notes Identity event_id string Unique identifier within trajectory 
+
+event_type enum {think, call, write, observe, communicate} — typed action category 
+
+actor string Executing agent or sub-agent identifier 
+
+turn int Sequential position in trajectory 
+
+Cost Vector 
+
+(Stage 1) tokens_in int Input tokens at this event 
+
+tokens_out int Output tokens generated 
+
+latency_ms int Wall-clock latency in milliseconds 
+
+cost_usd float Monetary cost under deployment pricing 
+
+risk enum {none, low, medium, high, irreversible} — side-effect severity 
+
+reversibility enum {reversible, compensable, irreversible} — recovery feasibility 
+
+Attribution 
+
+(Stage 2) proxy_score float ∈ [ 0, 1] Process-based contribution proxy (§4.1) 
+
+dep_flag bool Information dependency detected (§4.2) 
+
+delta_U float | null Counterfactual utility contribution Δ𝑈 (𝑒 𝑖 ) (§4.3); null when replay unavailable 
+
+method enum {proxy, dependency, counterfactual} — evidential strength 
+
+Misalignment 
+
+(Stage 3) mismatch_type enum {none, cognitive, external, recovery, capability, coordination} (§5) 
+
+severity enum {low, medium, high} — relative cost excess 
+
+baseline_cost_usd float Feasible alternative cost for comparison 
+
+Adaptation 
+
+(Stage 4) adaptation_method string | null Applied intervention (e.g., Agent-Omit, DEPO, ToolTree); null if none 
+
+cost_after_usd float | null Post-adaptation cost; null before intervention 
+
+Table 4: Two contrasting TraceCard instances (illustrative). Bolded cells mark the attribution fields that drive misalignment diagnosis. 
+
+Field 𝑒 think 𝑒 write 
+
+verbose reasoning step corrective write step Identity 
+
+event_type think write 
+
+actor planner executor 
+
+turn early late 
+
+Cost Vector (Stage 1) 
+
+tokens_in large (accumulated context) large (accumulated context) 
+
+tokens_out large (verbose generation) small (targeted patch) 
+
+risk none medium (file write) 
+
+reversibility reversible compensable 
+
+Attribution (Stage 2) 
+
+proxy_score low high 
+
+dep_flag false true 
+
+delta_U ≈ 0 (counterfactual replay) ≈ 1 (counterfactual replay) 
+
+method counterfactual counterfactual 
+
+Misalignment (Stage 3) 
+
+mismatch_type cognitive (§5.1) none 
+
+severity medium —
+
+baseline_cost low (direct write feasible) —
+
+Adaptation (Stage 4) 
+
+adaptation_method Agent-Omit [44] null 
+
+cost_after low null

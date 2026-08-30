@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-29</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-30</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 7 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 5 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
-    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>2 次</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>7</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>5</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-29 21:45:13 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-30 21:38:13 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,9 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日速读7篇论文，聚焦智能体技能与评估，无精读。</p>
-<p>值得关注《SKILL.state》与《DuMateBench》，均获7.0分，分别涉及可扩展长时程技能与真实工作流评估。</p>
-<p>建议优先浏览这两篇，后续可深入精读以掌握核心方法。</p>
+<p>今日共速读5篇论文，重点聚焦智能体技能扩展与高效推理，但无精读深度分析。</p>
+<p>最值得关注的是《SKILL.state》提出的长时程智能体技能扩展方法（7.0分），以及小型推理模型在函数调用中的指令遵循特性（6.0分）。</p>
+<p>建议普通读者优先浏览这两篇的摘要与结论，后续可针对智能体技能调度或模型指令遵循机制做精读。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -86,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">7 篇</strong>
+    <strong class="dpr-home-dashboard-count">5 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="SKILL.state: Scalable Long-Horizon Agent Skills">SKILL.state: Scalable Long-Horizon Agent Skills</span></li><li><span class="dpr-home-dashboard-paper-title" title="DuMateBench: Evaluating Autonomous Agents in Complex Real-World Workflows">DuMateBench: Evaluating Autonomous Agents in Complex Real-World Workflows</span></li><li><span class="dpr-home-dashboard-paper-title" title="IAPO: Influence-Aware Policy Optimization for Credit Assignment in Multi-Turn Service Agents">IAPO: Influence-Aware Policy Optimization for Credit Assignment in Multi-Turn Service Agents</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="SKILL.state: Scalable Long-Horizon Agent Skills">SKILL.state: Scalable Long-Horizon Agent Skills</span></li><li><span class="dpr-home-dashboard-paper-title" title="Small Reasoning Models are Instruction Followers in Function Calling">Small Reasoning Models are Instruction Followers in Function Calling</span></li><li><span class="dpr-home-dashboard-paper-title" title="Cost-Utility Alignment in LLM Agent Trajectories:Profiling,Attribution,Diagnosis,Adaptation,and Evaluation">Cost-Utility Alignment in LLM Agent Trajectories:Profiling,Attribution,Diagnosis,Adaptation,and Evaluation</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>7</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>5</strong></span></div>
 </section>
 </div>
 

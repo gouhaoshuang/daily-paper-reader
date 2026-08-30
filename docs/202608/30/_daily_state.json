@@ -1,0 +1,89 @@
+{
+  "date": "20260830",
+  "date_label": "",
+  "generated_at": "2026-08-30 21:38:13 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.26263v1",
+      "route": "202608/30/2608.26263v1-skillstate-scalable-long-horizon-agent-skills",
+      "title": "SKILL.state: Scalable Long-Horizon Agent Skills",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "通过可变执行状态和丢弃中间推理来支撑长程任务执行，是构建任务执行Agent的关键技术",
+      "first_seen_at": "2026-08-30 21:38:13 UTC",
+      "updated_at": "2026-08-30 21:38:13 UTC"
+    },
+    {
+      "paper_id": "2608.22472v1",
+      "route": "202608/30/2608.22472v1-small-reasoning-models-are-instruction-followers-in-function-calling",
+      "title": "Small Reasoning Models are Instruction Followers in Function Calling",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "函数调用框架提升工具调用准确率，可应用于移动端应用自动化",
+      "first_seen_at": "2026-08-30 21:38:13 UTC",
+      "updated_at": "2026-08-30 21:38:13 UTC"
+    },
+    {
+      "paper_id": "2608.26195v1",
+      "route": "202608/30/2608.26195v1-cost-utility-alignment-in-llm-agent-trajectoriesprofilingattributiondiagnosisadaptationand-evaluation",
+      "title": "Cost-Utility Alignment in LLM Agent Trajectories:Profiling,Attribution,Diagnosis,Adaptation,and Evaluation",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "提出轨迹级成本-效用对齐的评测框架，可用于移动Agent任务执行框架的评价",
+      "first_seen_at": "2026-08-30 21:38:13 UTC",
+      "updated_at": "2026-08-30 21:38:13 UTC"
+    },
+    {
+      "paper_id": "2608.27334v1",
+      "route": "202608/30/2608.27334v1-bts-agentbench-a-deterministic-replayable-pipeline-from-read-only-telemetry-logs-to-agent-benchmarks",
+      "title": "BTS-AgentBench: A Deterministic, Replayable Pipeline from Read-Only Telemetry Logs to Agent Benchmarks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "提出从只读遥测日志构建可执行多轮智能体基准的流水线，可迁移用于移动Agent评测。",
+      "first_seen_at": "2026-08-30 21:38:13 UTC",
+      "updated_at": "2026-08-30 21:38:13 UTC"
+    },
+    {
+      "paper_id": "2608.27454v1",
+      "route": "202608/30/2608.27454v1-wikiskill-compiling-agent-experience-into-persistent-knowledge-for-skill-evolution",
+      "title": "WikiSkill: Compiling Agent Experience into Persistent Knowledge for Skill Evolution",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "持久知识库与技能演化方法为构建可适应的任务执行Agent提供了可复用技术",
+      "first_seen_at": "2026-08-30 21:38:13 UTC",
+      "updated_at": "2026-08-30 21:38:13 UTC"
+    }
+  ]
+}

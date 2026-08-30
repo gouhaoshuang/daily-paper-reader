@@ -1,0 +1,207 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-30T21:36:21.023910+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.26263v1",
+      "source": "arxiv",
+      "title": "SKILL.state: Scalable Long-Horizon Agent Skills",
+      "abstract": "Large Language Models (LLMs) increasingly act as autonomous agents executing complex, long-running procedural skills. Existing agent runtimes maintain execution by continually appending observations, actions, and intermediate reasoning traces to an ever-growing conversation history, causing latency degradation and context-poisoning failures over long horizons. We present SKILL.state, a runtime architecture that replaces append-only conversational history with an explicit, mutable execution state. At each execution step, the model receives only the immutable skill specification, the current structured execution state, and the latest observation. Intermediate reasoning is discarded immediately after producing a validated state update, preventing prompt growth with execution history. Across diverse datasets, models, and execution environments, SKILL.state improves task accuracy while substantially reducing cumulative token consumption. Our results demonstrate that explicit execution state is an effective and architecture-agnostic abstraction for scalable long-horizon agent skills.",
+      "authors": [
+        "Sanket Badhe",
+        "Priyanka Tiwari",
+        "Jonghyun Chung"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-08-26T18:00:06+00:00",
+      "link": "https://arxiv.org/pdf/2608.26263v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Runtime architecture with mutable execution state and discarded intermediate reasoning addresses long-horizon task execution key technique",
+      "llm_evidence_cn": "通过可变执行状态和丢弃中间推理来支撑长程任务执行，是构建任务执行Agent的关键技术",
+      "llm_evidence": "通过可变执行状态和丢弃中间推理来支撑长程任务执行，是构建任务执行Agent的关键技术",
+      "canonical_evidence": "通过可变执行状态和丢弃中间推理来支撑长程任务执行，是构建任务执行Agent的关键技术",
+      "llm_tldr_en": "SKILL.state prevents prompt growth and context poisoning in long-horizon agents by maintaining explicit mutable execution state, discarding intermediate reasoning after validated updates",
+      "llm_tldr_cn": "现有Agent运行时不断追加对话历史，导致长程任务中延迟升高和上下文污染。SKILL.state提出了以显式、可变执行状态为核心的运行时架构，每一步只给模型不变的技能规格、当前状态和最新观测，并立即丢弃中间推理。该设计避免提示词无限增长，使长时间运行的技能更稳定，为资源受限的本地设备Agent提供重要的状态管理技术。",
+      "llm_tldr": "现有Agent运行时不断追加对话历史，导致长程任务中延迟升高和上下文污染。SKILL.state提出了以显式、可变执行状态为核心的运行时架构，每一步只给模型不变的技能规格、当前状态和最新观测，并立即丢弃中间推理。该设计避免提示词无限增长，使长时间运行的技能更稳定，为资源受限的本地设备Agent提供重要的状态管理技术。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.22472v1",
+      "source": "arxiv",
+      "title": "Small Reasoning Models are Instruction Followers in Function Calling",
+      "abstract": "Function calling represents the core capability of agentic large language models (LLMs). Existing research has focused on enhancing LLMs function-calling accuracy through fine-tuning, reinforcement learning (RL), and multi-agent frameworks, particularly for native function-calling LLMs. This work demonstrates that LLMs achieve superior accuracy in function calling in instruction-following contexts (i.e., standard user-assistant interactions) rather than a tool calling context. We introduce Instruction-Followed Function Calling (IFFC), a novel framework that decouples function-calling logic from the primary LLM and delegates it to a dedicated smaller model operating within the instruction-following paradigm. Our method consistently outperforms both native function calling (NFC) and prompt-based function calling (PFC) baselines, with particularly strong gains on reasoning-oriented LLMs. Furthermore, we demonstrate that IFFC maintains robust performance under aggressive quantization, enabling efficient on-device deployment without significant accuracy degradation. This work establishes a new paradigm for reliable, resource-efficient function calling in edge-computing scenarios.",
+      "authors": [
+        "Yalda Taheri",
+        "Mohammad Hassan Heydari",
+        "Erfan Naaman",
+        "Afsaneh Fatemi"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-08-23T15:51:26+00:00",
+      "link": "https://arxiv.org/pdf/2608.22472v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "function calling framework improves tool invocation accuracy; applicable to mobile app automation",
+      "llm_evidence_cn": "函数调用框架提升工具调用准确率，可应用于移动端应用自动化",
+      "llm_evidence": "函数调用框架提升工具调用准确率，可应用于移动端应用自动化",
+      "canonical_evidence": "函数调用框架提升工具调用准确率，可应用于移动端应用自动化",
+      "llm_tldr_en": "Shows LLMs achieve superior function calling in instruction-following contexts and introduces IFFC, which delegates function-calling logic to a dedicated smaller model, improving agent task execution.",
+      "llm_tldr_cn": "现有研究通过微调、强化学习和多智能体框架提升大模型函数调用准确性。该论文发现指令跟随上下文中的函数调用比工具调用上下文更准确，并提出IFFC框架，将函数调用逻辑从主模型解耦，交给专用小模型执行。实验证明该方法一致优于原生函数调用模型。这为移动端智能体通过函数调用自动化应用操作提供了关键技术支持。",
+      "llm_tldr": "现有研究通过微调、强化学习和多智能体框架提升大模型函数调用准确性。该论文发现指令跟随上下文中的函数调用比工具调用上下文更准确，并提出IFFC框架，将函数调用逻辑从主模型解耦，交给专用小模型执行。实验证明该方法一致优于原生函数调用模型。这为移动端智能体通过函数调用自动化应用操作提供了关键技术支持。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26195v1",
+      "source": "arxiv",
+      "title": "Cost-Utility Alignment in LLM Agent Trajectories:Profiling,Attribution,Diagnosis,Adaptation,and Evaluation",
+      "abstract": "LLM agents execute tasks through multi-step trajectories that accumulate cost in tokens, latency, monetary fees, and environmental risk while producing utility only at the aggregate task level. Prior surveys address inference optimization, agent capabilities, or evaluation in isolation, leaving practitioners without principled tools to determine whether a trajectory's resource expenditure is justified by its task contribution. We address this gap by developing a trajectory-centric cost-utility alignment framework that treats resource consumption and task contribution as dual ledgers over the same execution, organized around five analytical stages: cost profiling, utility attribution, misalignment diagnosis, targeted adaptation, and evaluation. Utility attribution is central to this structure: rather than relying on aggregate outcomes, it organizes contribution methods by evidential strength, from process proxies and information dependency to counterfactual replay, supplying the causal evidence that grounds diagnosis and guides adaptation. Using this framework, we analyze recent agent systems, attribution methods, and evaluation protocols covering efficiency, reliability, and economic value, as well as five forms of misalignment spanning cognitive and context use, external interaction, recovery-loop control, resource-capability allocation, and multi-agent coordination, together with their targeted adaptations. The result is a closed analytical loop connecting the cost side of agent execution to its utility side, providing a structured basis for resource-aware agent design and deployment.",
+      "authors": [
+        "Dan Liu",
+        "Jian Li"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-08-25T06:31:00+00:00",
+      "link": "https://arxiv.org/pdf/2608.26195v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Provides trajectory-centric cost-utility alignment framework for evaluating agent execution, relevant to evaluating mobile agent frameworks",
+      "llm_evidence_cn": "提出轨迹级成本-效用对齐的评测框架，可用于移动Agent任务执行框架的评价",
+      "llm_evidence": "提出轨迹级成本-效用对齐的评测框架，可用于移动Agent任务执行框架的评价",
+      "canonical_evidence": "提出轨迹级成本-效用对齐的评测框架，可用于移动Agent任务执行框架的评价",
+      "llm_tldr_en": "This paper develops a trajectory-centric cost-utility alignment framework with five analytical stages for diagnosing whether agent resource expenditure is justified by task contribution, supporting evaluation",
+      "llm_tldr_cn": "现有研究分别关注推理优化、Agent能力或评测，缺乏判断轨迹资源开销是否合理的原则性工具。该工作提出以轨迹为中心的成本-效用对齐框架，把资源消耗与任务贡献视为同一执行过程的两本账，涵盖成本画像、效用归因、失准诊断、定向适应与评测五个阶段。该框架为评估移动Agent框架在执行任务时的效率与价值提供了可借鉴的方法论。",
+      "llm_tldr": "现有研究分别关注推理优化、Agent能力或评测，缺乏判断轨迹资源开销是否合理的原则性工具。该工作提出以轨迹为中心的成本-效用对齐框架，把资源消耗与任务贡献视为同一执行过程的两本账，涵盖成本画像、效用归因、失准诊断、定向适应与评测五个阶段。该框架为评估移动Agent框架在执行任务时的效率与价值提供了可借鉴的方法论。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.27334v1",
+      "source": "arxiv",
+      "title": "BTS-AgentBench: A Deterministic, Replayable Pipeline from Read-Only Telemetry Logs to Agent Benchmarks",
+      "abstract": "Industrial sites contain large volumes of read-only telemetry, but few benchmarks specify how to compile these records into executable multi-turn agent tasks. We present a telemetry-to-episode construction method instantiated as BTS-AgentBench. The pipeline normalizes BTS metadata and raw histories into a read-only tool store, compiles static tasks with tool-derived gold answers and evidence, and lifts retained tasks into typed, bounded operator-facing episodes. The 532-row release adds clarification, goal revision, timestamp policy, quality-gated reporting, and evidence attribution while preserving the source computation and split. Coded contract preflight reports zero findings, and the construction-exclusion controller completes 0/532 rows. Two independent raw-to-episode builds match all 11 logical tool-store exports and reproduce the released 356/87/89 train/dev/test artifact exactly. Applying the shared construction path to XAI4HEAT produces 204 episodes; on its 41-row held-out test split, the controller completes 0 rows and the retained GPT-5.5 execution completes all 41. Code, artifacts, and replay reports are available at https://github.com/kjy7567/BTS-AgentBench.",
+      "authors": [
+        "Jeong-Yoon Kim"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.SE"
+      ],
+      "published": "2026-08-27T16:35:52+00:00",
+      "link": "https://arxiv.org/pdf/2608.27334v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Provides a pipeline to compile read-only telemetry logs into executable multi-turn agent benchmarks, transferable to mobile agent evaluation from device logs.",
+      "llm_evidence_cn": "提出从只读遥测日志构建可执行多轮智能体基准的流水线，可迁移用于移动Agent评测。",
+      "llm_evidence": "提出从只读遥测日志构建可执行多轮智能体基准的流水线，可迁移用于移动Agent评测。",
+      "canonical_evidence": "提出从只读遥测日志构建可执行多轮智能体基准的流水线，可迁移用于移动Agent评测。",
+      "llm_tldr_en": "BTS-AgentBench presents a deterministic, replayable pipeline from read-only telemetry logs to agent benchmarks, enabling reproducible evaluation of multi-turn agents.",
+      "llm_tldr_cn": "现有方法难以将海量只读遥测日志转化为可执行的智能体评测任务。BTS-AgentBench提出一套从归一化工具库到带证据静态任务再到有界多轮回合的确定性流水线，并以532行数据实例化。该工作为从移动设备日志构建Agent基准提供了可复用的技术路径，有助于移动智能体任务执行能力的系统评估。",
+      "llm_tldr": "现有方法难以将海量只读遥测日志转化为可执行的智能体评测任务。BTS-AgentBench提出一套从归一化工具库到带证据静态任务再到有界多轮回合的确定性流水线，并以532行数据实例化。该工作为从移动设备日志构建Agent基准提供了可复用的技术路径，有助于移动智能体任务执行能力的系统评估。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.27454v1",
+      "source": "arxiv",
+      "title": "WikiSkill: Compiling Agent Experience into Persistent Knowledge for Skill Evolution",
+      "abstract": "Agent skills package specialized knowledge and workflows into reusable resources that extend AI agent capabilities. Recent work automatically discovers such skills from agent experience, which enables agents to progressively adapt through interaction. However, the insights that guide skill development typically remain scattered across optimization histories, limiting their systematic reuse across iterations. We introduce WikiSkill, a framework that co-evolves agent skills with a persistent knowledge base (wiki). At a high level, WikiSkill separates raw execution experience, accumulated knowledge, and executable skills, while continuously consolidating experience into the wiki, which subsequent skill updates can build on. Across diverse benchmarks and models, WikiSkill consistently outperforms state-of-the-art skill-evolution methods and improves over no-skill baselines in most model-benchmark settings. We find that skill evolution complements model scaling: larger models generally benefit more from evolved skills, while smaller models with skills can outperform substantially larger models without them. We also find that evolved skills transfer effectively across models and model families, and skills evolved by other models can outperform self-evolved skills. Finally, our ablation studies confirm that persistent knowledge accumulation in the wiki is critical for effective skill evolution. These results demonstrate the benefits of systematically accumulating and refining agent experience for developing reusable and transferable skills.",
+      "authors": [
+        "Liyan Tang",
+        "Cyrus Rashtchian",
+        "Chun-Sung Ferng",
+        "Andrew Tomkins",
+        "Da-Cheng Juan",
+        "Tu Vu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-08-27T17:59:11+00:00",
+      "link": "https://arxiv.org/pdf/2608.27454v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Persistent knowledge base and skill evolution method provides reusable techniques for building adaptive task execution agents",
+      "llm_evidence_cn": "持久知识库与技能演化方法为构建可适应的任务执行Agent提供了可复用技术",
+      "llm_evidence": "持久知识库与技能演化方法为构建可适应的任务执行Agent提供了可复用技术",
+      "canonical_evidence": "持久知识库与技能演化方法为构建可适应的任务执行Agent提供了可复用技术",
+      "llm_tldr_en": "WikiSkill co-evolves agent skills with a persistent wiki knowledge base, consolidating raw experience into reusable knowledge to support continuous skill updates across tasks",
+      "llm_tldr_cn": "Agent技能自动化发现虽然能让智能体逐步适应，但指导技能开发的经验通常分散在优化历史中。WikiSkill将原始执行经验、累积知识与可执行技能分离，并持续把经验归纳到持久知识库（wiki）中，供后续技能更新使用。实验证明这种协同演化能够提升多样任务上的技能复用和演化效率，为设备端任务的长期自主改进提供了可行的知识管理框架。",
+      "llm_tldr": "Agent技能自动化发现虽然能让智能体逐步适应，但指导技能开发的经验通常分散在优化历史中。WikiSkill将原始执行经验、累积知识与可执行技能分离，并持续把经验归纳到持久知识库（wiki）中，供后续技能更新使用。实验证明这种协同演化能够提升多样任务上的技能复用和演化效率，为设备端任务的长期自主改进提供了可行的知识管理框架。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
