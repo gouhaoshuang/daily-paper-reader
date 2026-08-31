@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-30</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-31</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 5 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 7 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>5</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>6</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-30 21:38:13 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-31 23:47:33 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,9 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日共速读5篇论文，重点聚焦智能体技能扩展与高效推理，但无精读深度分析。</p>
-<p>最值得关注的是《SKILL.state》提出的长时程智能体技能扩展方法（7.0分），以及小型推理模型在函数调用中的指令遵循特性（6.0分）。</p>
-<p>建议普通读者优先浏览这两篇的摘要与结论，后续可针对智能体技能调度或模型指令遵循机制做精读。</p>
+<p>今日聚焦LLM智能体前沿，精读1篇高分论文并速读3篇，覆盖推理、可观测性与自改进。</p>
+<p>最值得看的是《WM-R1》（9.0/10）：用强化学习让GUI智能体学会借助世界模型进行推理，突破长程任务瓶颈。</p>
+<p>下一步建议普通读者优先精读该文，同时关注多智能体系统的故障注入与在线自改进技术。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -73,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">0 篇</strong>
+    <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="WM-R1: Training GUI Agents to Reason and leverage World Models with Reinforcement Learning">WM-R1: Training GUI Agents to Reason and leverage World Models with Reinforcement Learning</span></li></ul>
   </div>
-
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -86,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">5 篇</strong>
+    <strong class="dpr-home-dashboard-count">6 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="SKILL.state: Scalable Long-Horizon Agent Skills">SKILL.state: Scalable Long-Horizon Agent Skills</span></li><li><span class="dpr-home-dashboard-paper-title" title="Small Reasoning Models are Instruction Followers in Function Calling">Small Reasoning Models are Instruction Followers in Function Calling</span></li><li><span class="dpr-home-dashboard-paper-title" title="Cost-Utility Alignment in LLM Agent Trajectories:Profiling,Attribution,Diagnosis,Adaptation,and Evaluation">Cost-Utility Alignment in LLM Agent Trajectories:Profiling,Attribution,Diagnosis,Adaptation,and Evaluation</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Observability and Fault Injection for LLM-Based Multi-Agent Systems in Software Engineering">Observability and Fault Injection for LLM-Based Multi-Agent Systems in Software Engineering</span></li><li><span class="dpr-home-dashboard-paper-title" title="PILOT in the Loop: Live Self-Improvement for Long-Horizon Agents">PILOT in the Loop: Live Self-Improvement for Long-Horizon Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="BekchiAI: Measuring, Observing, and Controlling LLM Agents in One Click">BekchiAI: Measuring, Observing, and Controlling LLM Agents in One Click</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>5</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>6</strong></span></div>
 </section>
 </div>
 

@@ -1,0 +1,121 @@
+{
+  "date": "20260831",
+  "date_label": "",
+  "generated_at": "2026-08-31 23:47:33 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.27508v1",
+      "route": "202608/31/2608.27508v1-wm-r1-training-gui-agents-to-reason-and-leverage-world-models-with-reinforcement-learning",
+      "title": "WM-R1: Training GUI Agents to Reason and leverage World Models with Reinforcement Learning",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "使用世界模型训练移动GUI智能体在Android环境中自动执行任务。",
+      "first_seen_at": "2026-08-31 23:47:33 UTC",
+      "updated_at": "2026-08-31 23:47:33 UTC"
+    },
+    {
+      "paper_id": "2608.24271v1",
+      "route": "202608/31/2608.24271v1-observability-and-fault-injection-for-llm-based-multi-agent-systems-in-software-engineering",
+      "title": "Observability and Fault Injection for LLM-Based Multi-Agent Systems in Software Engineering",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "多智能体系统的可观测性与故障注入工具，适用于移动智能体部署评估",
+      "first_seen_at": "2026-08-31 23:47:33 UTC",
+      "updated_at": "2026-08-31 23:47:33 UTC"
+    },
+    {
+      "paper_id": "2608.26530v1",
+      "route": "202608/31/2608.26530v1-pilot-in-the-loop-live-self-improvement-for-long-horizon-agents",
+      "title": "PILOT in the Loop: Live Self-Improvement for Long-Horizon Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向长程代理的实时自我改进的监督-工作器框架，可作为移动代理的通用技术",
+      "first_seen_at": "2026-08-31 23:47:33 UTC",
+      "updated_at": "2026-08-31 23:47:33 UTC"
+    },
+    {
+      "paper_id": "2608.26867v1",
+      "route": "202608/31/2608.26867v1-bekchiai-measuring-observing-and-controlling-llm-agents-in-one-click",
+      "title": "BekchiAI: Measuring, Observing, and Controlling LLM Agents in One Click",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用于测量智能体技能并控制运行时智能体的平台，可支持移动智能体框架评估",
+      "first_seen_at": "2026-08-31 23:47:33 UTC",
+      "updated_at": "2026-08-31 23:47:33 UTC"
+    },
+    {
+      "paper_id": "2608.27886v1",
+      "route": "202608/31/2608.27886v1-resource-constraints-and-performance-in-agentic-ai-systems",
+      "title": "Resource Constraints and Performance in Agentic AI Systems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "实证对比资源约束下的智能体系统性能，直接关系端侧部署挑战",
+      "first_seen_at": "2026-08-31 23:47:33 UTC",
+      "updated_at": "2026-08-31 23:47:33 UTC"
+    },
+    {
+      "paper_id": "2608.28378v1",
+      "route": "202608/31/2608.28378v1-personaforge-realistic-multi-turn-user-simulation-for-agentic-systems",
+      "title": "PersonaForge: Realistic Multi-Turn User Simulation for Agentic Systems",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "多轮人机交互用户模拟框架，可用于移动智能体框架评估",
+      "first_seen_at": "2026-08-31 23:47:33 UTC",
+      "updated_at": "2026-08-31 23:47:33 UTC"
+    },
+    {
+      "paper_id": "2608.28476v1",
+      "route": "202608/31/2608.28476v1-contextpilot-teaching-agents-for-proactive-context-management-via-fine-grained-rl",
+      "title": "ContextPilot: Teaching Agents for Proactive Context Management via Fine-grained RL",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向长程智能体的主动上下文管理方法，是端侧任务执行智能体的关键技术之一",
+      "first_seen_at": "2026-08-31 23:47:33 UTC",
+      "updated_at": "2026-08-31 23:47:33 UTC"
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-31T23:42:31.769989+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2608.27508v1",
+      "source": "arxiv",
+      "title": "WM-R1: Training GUI Agents to Reason and leverage World Models with Reinforcement Learning",
+      "abstract": "GUI agents trained with reinforcement learning (RL) have showcased strong environment learning capabilities on mobile platforms. However, RL typically demands extensive real-environment interactions, leading to high resource costs and instability, especially in GUI scenarios. To address these, we propose WM-R1, the first reinforcement learning framework that trains mobile GUI agents with world models instead of real environments. Specifically, world models serve as the source of state transitions during all rollouts, replacing the real Android environment within the training loop. WM-R1 also embeds world models directly into the thinking process, enabling agents to reason about the consequences of candidate actions before committing to the final action. Crucially, WM-R1 eliminates the need for real-environment interaction, supports massively parallelized and step-level granularized trajectory generation grounded in world models, and introduces a multi-dimensional rule-based reward that jointly optimizes task success, trajectory efficiency, and world model utilization. For efficient training, we curate a high-quality dataset of 2000 challenging tasks. Experiments on Android mobile benchmarks demonstrate that WM-R1-trained agents significantly outperform GRPO-only baselines and inference-time simulation methods. Code is available at https://github.com/genalyu/WM-R1 .",
+      "authors": [
+        "Yu Han",
+        "Tianwen Qian"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-27T07:09:28+00:00",
+      "link": "https://arxiv.org/pdf/2608.27508v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Trains mobile GUI agents with world models for Android task automation.",
+      "llm_evidence_cn": "使用世界模型训练移动GUI智能体在Android环境中自动执行任务。",
+      "llm_evidence": "使用世界模型训练移动GUI智能体在Android环境中自动执行任务。",
+      "canonical_evidence": "使用世界模型训练移动GUI智能体在Android环境中自动执行任务。",
+      "llm_tldr_en": "WM-R1 presents the first RL framework that trains mobile GUI agents with world models, replacing real Android environment rollouts and embedding world models into the agent's reasoning to reduce cost and improve sample efficiency for on-device task execution.",
+      "llm_tldr_cn": "针对移动GUI智能体强化学习需要大量真实环境交互、成本高且不稳定的问题，WM-R1提出首个用世界模型替代真实Android环境的强化学习训练框架。它在所有rollout中使用世界模型提供状态转移，并将世界模型嵌入智能体思考过程，使其在行动前推演候选动作的后果。实验表明该方法在降低训练成本的同时提升了智能体的任务执行表现，为移动端自主任务执行智能体的训练提供了新思路。",
+      "llm_tldr": "针对移动GUI智能体强化学习需要大量真实环境交互、成本高且不稳定的问题，WM-R1提出首个用世界模型替代真实Android环境的强化学习训练框架。它在所有rollout中使用世界模型提供状态转移，并将世界模型嵌入智能体思考过程，使其在行动前推演候选动作的后果。实验表明该方法在降低训练成本的同时提升了智能体的任务执行表现，为移动端自主任务执行智能体的训练提供了新思路。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.24271v1",
+      "source": "arxiv",
+      "title": "Observability and Fault Injection for LLM-Based Multi-Agent Systems in Software Engineering",
+      "abstract": "Large Language Model-based multi-agent systems are increasingly explored for software engineering tasks, but they remain difficult to inspect, debug, and evaluate under controlled failures. We present llmmas-otel, a lightweight and framework-agnostic tool that combines OpenTelemetry-based distributed tracing with fault injection for LLM-based multi-agent systems in software engineering workflows. The tool instruments agent executions with trace-aligned telemetry across workflow phases, agent steps, inter-agent communication, tool calls, and LLM invocations, and supports targeted fault injection at selected interaction points. This makes it possible to compare baseline and faulty executions in a reproducible way and inspect the effects through aligned traces and run artifacts. We describe the motivation, architecture, implementation, current capabilities, and initial validation of the tool on a minimal demo workflow and a real LLM-based multi-agent system for software development.",
+      "authors": [
+        "Zahra Seyedghorban",
+        "Egor Klimov",
+        "Arie van Deursen",
+        "Annibale Panichella",
+        "Burcu Kulahcioglu Ozkan"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-08-25T08:59:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.24271v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Observability and fault injection tool for multi-agent systems, applicable to evaluating mobile agent deployments",
+      "llm_evidence_cn": "多智能体系统的可观测性与故障注入工具，适用于移动智能体部署评估",
+      "llm_evidence": "多智能体系统的可观测性与故障注入工具，适用于移动智能体部署评估",
+      "canonical_evidence": "多智能体系统的可观测性与故障注入工具，适用于移动智能体部署评估",
+      "llm_tldr_en": "llmmas-otel combines OpenTelemetry tracing with fault injection for LLM multi-agent systems, enabling reproducible comparison of baseline and faulty executions in software engineering workflows.",
+      "llm_tldr_cn": "基于LLM的多智能体系统在软件工程中难以检查和调试。llmmas-otel采用OpenTelemetry分布式追踪，记录智能体步骤、工具调用与LLM调用，并支持在指定交互点注入故障，便于对比正常与异常执行。该工具框架无关且轻量，可帮助开发者在复杂多智能体系统中定位问题。此类可观测性方法对移动端智能体的部署与调试同样重要。",
+      "llm_tldr": "基于LLM的多智能体系统在软件工程中难以检查和调试。llmmas-otel采用OpenTelemetry分布式追踪，记录智能体步骤、工具调用与LLM调用，并支持在指定交互点注入故障，便于对比正常与异常执行。该工具框架无关且轻量，可帮助开发者在复杂多智能体系统中定位问题。此类可观测性方法对移动端智能体的部署与调试同样重要。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26530v1",
+      "source": "arxiv",
+      "title": "PILOT in the Loop: Live Self-Improvement for Long-Horizon Agents",
+      "abstract": "Long-horizon agent runs generate experience that can improve both the current run and future work. Most self-improvement methods process this experience only after execution ends, so they cannot redirect the active run or immediately apply and validate lessons learned from it. We argue that self-improvement should instead be live, using emerging experience both to redirect the active run and to update the persistent harness. Existing agent architectures do not fully support this goal. Single-agent self-correction combines task execution and trajectory assessment within one context, while subagent delegation separates execution but typically cannot redirect an active subagent. We present PILOT, a supervisor-worker harness for live self-improvement through two coupled mechanisms: (1) live steering lets a separate supervisor redirect or abort the active worker during execution; and (2) live self-evolution distils procedures and failure modes revealed during execution into reusable skills and memory. Across two frozen backbones and three benchmarks, PILOT ranks first in five of six configurations. On Terminal-Bench 2.0, PILOT outperforms counterpart harnesses by up to 9.8 percentage points. In the self-improvement setting, PILOT gains 14.6 points with GLM-5.1 and 12.4 points with Kimi-K2.6. Mean output tokens fall by 42.9% and 47.4%, while successful evaluations per million output tokens rise by 110.3% and 134.0%, respectively.",
+      "authors": [
+        "Yang Xiao",
+        "Yusong Sun",
+        "Haoyi Wu",
+        "Wenyang Hui",
+        "Wen Da",
+        "Zhaokai Luo",
+        "Mu Chuan",
+        "Yao Hu",
+        "Wenjie Li",
+        "Chengyue Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-27T02:06:22+00:00",
+      "link": "https://arxiv.org/pdf/2608.26530v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Supervisor-worker harness for live self-improvement in long-horizon agents",
+      "llm_evidence_cn": "面向长程代理的实时自我改进的监督-工作器框架，可作为移动代理的通用技术",
+      "llm_evidence": "面向长程代理的实时自我改进的监督-工作器框架，可作为移动代理的通用技术",
+      "canonical_evidence": "面向长程代理的实时自我改进的监督-工作器框架，可作为移动代理的通用技术",
+      "llm_tldr_en": "Presents PILOT, a supervisor-worker harness enabling live self-improvement for long-horizon agents, redirecting active runs and updating persistent harness using emerging experience.",
+      "llm_tldr_cn": "现有自改进方法多在执行结束后才从经验中学习，无法及时纠正当前运行。本文提出PILOT监督-工作者框架，利用运行中涌现的经验同时调整当前轨迹并更新持久化机制。该框架解决了单代理自纠正与子代理委派无法实时干预的问题，为长程任务的在线学习提供了可行方案。虽然未专门面向移动端，其在线自改进机制可迁移到手机端代理的持续优化。",
+      "llm_tldr": "现有自改进方法多在执行结束后才从经验中学习，无法及时纠正当前运行。本文提出PILOT监督-工作者框架，利用运行中涌现的经验同时调整当前轨迹并更新持久化机制。该框架解决了单代理自纠正与子代理委派无法实时干预的问题，为长程任务的在线学习提供了可行方案。虽然未专门面向移动端，其在线自改进机制可迁移到手机端代理的持续优化。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "framework for building agents on mobile devices",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26867v1",
+      "source": "arxiv",
+      "title": "BekchiAI: Measuring, Observing, and Controlling LLM Agents in One Click",
+      "abstract": "Large language model agents reason, call tools, and act autonomously over many steps, but their agentic skills-correctly sequencing tools, planning under dependencies, judging untrusted inputs, and grounding generated arguments-are hard to measure with accuracy-only leaderboards. We present BekchiAI, which addresses both sides: a benchmark for measuring agentic skill and a platform for observing and controlling live agents. The BekchiAI-Benchmark, a suite of 13 tool-using ReAct agents across 7 task categories (arithmetic, structured/SQL, security detection, URL grounding, planning, orchestration, and tool-policy), totalling 2,057 deterministic, committed test tasks. Every task is verifier-checkable gold answers are computed by running canonical SQL against a real database, computing the exact schedule of a directed acyclic graph (DAG), or evaluating closed-form lambdas including adversarial security samples paired with deliberately imperfect signature scanners so a score reflects the model's own judgment, not the copying of an oracle. We define a small set of behavioral metrics beyond accuracy-tool-call adherence, URL hallucination and source-match, and per-model token cost and report a four-model comparison (Qwen3.7-Max, gemma-4-31B-it, gemma4:26b, gpt-oss-120b) whose story is in the per-family spread, not the aggregate. The benchmark runs are executed using the provided evaluation scripts. BekchiAI-Platform is a complementary web-based observability and control layer for deployed agents, providing full token and latency telemetry as well as remote run termination. The benchmark, evaluation tools, and platform are publicly released.",
+      "authors": [
+        "Mesut Toruk"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-27T09:30:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.26867v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Benchmark and platform for measuring agentic skills and controlling live agents, supports evaluation of mobile agent frameworks",
+      "llm_evidence_cn": "用于测量智能体技能并控制运行时智能体的平台，可支持移动智能体框架评估",
+      "llm_evidence": "用于测量智能体技能并控制运行时智能体的平台，可支持移动智能体框架评估",
+      "canonical_evidence": "用于测量智能体技能并控制运行时智能体的平台，可支持移动智能体框架评估",
+      "llm_tldr_en": "BekchiAI provides a benchmark of 2057 verifiable tasks across 13 ReAct agents and a live control platform, measuring agentic skills beyond accuracy, such as planning and tool use.",
+      "llm_tldr_cn": "现行排行榜仅凭准确率难以衡量智能体的工具使用、规划等技能。BekchiAI构建了13个ReAct智能体、2057个可验证任务的基准，覆盖算术、SQL、安全检测等7类任务，并提供在线观测与控制平台。其任务答案由规范执行计算得到，可进行确定性评测。该平台为移动智能体框架的技能评估与实时调试提供了一套完整工具。",
+      "llm_tldr": "现行排行榜仅凭准确率难以衡量智能体的工具使用、规划等技能。BekchiAI构建了13个ReAct智能体、2057个可验证任务的基准，覆盖算术、SQL、安全检测等7类任务，并提供在线观测与控制平台。其任务答案由规范执行计算得到，可进行确定性评测。该平台为移动智能体框架的技能评估与实时调试提供了一套完整工具。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.27886v1",
+      "source": "arxiv",
+      "title": "Resource Constraints and Performance in Agentic AI Systems",
+      "abstract": "Progress toward more autonomous AI increasingly depends on agentic systems that combine a language model with tools, memory, state management, and multi-step execution. These mechanisms shape both task capability and operational burden. We compare OpenClaw and NanoBot as complete agentic systems using a paired primary benchmark and a more detailed instrumented subset of paired prompts. In the primary benchmark, the rate of full task completion was 31% for OpenClaw and 25% for NanoBot, a six-percentage-point difference with a 95% task-bootstrap interval from -3 to 15 percentage points, providing no statistically established full-completion advantage for either system. In the instrumented layer, both systems achieved 26% full completion, while NanoBot reached at least partial completion on 43% of prompts compared with 26% for OpenClaw. OpenClaw took longer on 83% of prompts and had a higher recorded peak-memory value on every prompt, with geometric mean ratios of 2.98 for wall time and 19.44 for peak memory. Among the ten detailed-layer prompts on which at least one system achieved partial or full completion, NanoBot weakly dominated on eight; across all 23 prompts, however, ten of its eighteen dominance cases were cheaper joint failures. Outcome labels differ across the two evidence layers, showing why agent-system evaluation should connect capability and resource measurements to attempt-level execution and scoring provenance. These findings show that progress toward more autonomous AI should be evaluated through verified task completion, observed resource use and records linking each result to the execution that produced it.",
+      "authors": [
+        "Amaz Salman",
+        "Malka Halgamuge",
+        "Teo Susnjak"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-28T03:49:45+00:00",
+      "link": "https://arxiv.org/pdf/2608.27886v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "empirical comparison of agentic systems under resource constraints, directly relevant to on-device deployment",
+      "llm_evidence_cn": "实证对比资源约束下的智能体系统性能，直接关系端侧部署挑战",
+      "llm_evidence": "实证对比资源约束下的智能体系统性能，直接关系端侧部署挑战",
+      "canonical_evidence": "实证对比资源约束下的智能体系统性能，直接关系端侧部署挑战",
+      "llm_tldr_en": "This paper compares OpenClaw and NanoBot as complete agentic systems under resource constraints, finding no statistically established full-completion advantage, highlighting trade-offs between capability and resource burden.",
+      "llm_tldr_cn": "自主AI系统愈发依赖语言模型与工具、记忆、状态管理和多步执行，这些机制提高能力也增加资源负担。该文用成对基准和细粒度子集对OpenClaw与NanoBot两个完整智能体系统进行对比，结果显示全任务完成率差异不显著，统计上无法确认任一系统在完整完成上更优。该研究刻画了资源约束与智能体性能的关系，对移动端本地任务执行智能体的部署与选型有直接参考意义。",
+      "llm_tldr": "自主AI系统愈发依赖语言模型与工具、记忆、状态管理和多步执行，这些机制提高能力也增加资源负担。该文用成对基准和细粒度子集对OpenClaw与NanoBot两个完整智能体系统进行对比，结果显示全任务完成率差异不显著，统计上无法确认任一系统在完整完成上更优。该研究刻画了资源约束与智能体性能的关系，对移动端本地任务执行智能体的部署与选型有直接参考意义。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.28378v1",
+      "source": "arxiv",
+      "title": "PersonaForge: Realistic Multi-Turn User Simulation for Agentic Systems",
+      "abstract": "Large language models are increasingly used as agentic workflow executors, yet existing training data and benchmarks largely assume informationally complete, single-turn queries. Our analysis of 16K real-world sessions shows that 75.9% of interactions are multi-turn, revealing a substantial gap between how users interact with agents and how such systems are trained and evaluated. We introduce \\textbf{PersonaForge}, a user simulation framework for synthesizing realistic multi-turn user--agent interactions. PersonaForge combines a four-dimensional persona space, SOUL-driven behavioral control calibrated to real-user statistics, and Reverse Deep Construction grounded in authentic seed queries. Using PersonaForge, we construct a 6.3K-record training dataset and \\textbf{PersonaForge-Bench}, a manually annotated 138-task benchmark spanning over 20 professional domains with four-dimensional scoring. Experiments on Qwen3.5-27B show that PersonaForge training improves the composite score by +4.1%, with gains across all four dimensions and the largest improvements in Task Completion (+6.0%) and Response Quality (+6.8%). Further analyses show that PersonaForge-trained agents use fewer turns and tool calls, suggesting improved interaction efficiency, while ablations confirm the contribution of SOUL components and adaptive simulation. Together, PersonaForge and PersonaForge-Bench establish a foundation for training and evaluating agents under realistic multi-turn user interaction.",
+      "authors": [
+        "Hanglong Lv",
+        "Dawei Zhu",
+        "Lei Li",
+        "Bowen Ye",
+        "Huaqiu Liu",
+        "Yifan Song",
+        "Bofei Gao",
+        "Weimin Xiong",
+        "Jinhao Dong",
+        "Chenhong He",
+        "Lingpeng Kong",
+        "Qi Liu",
+        "Tong Yang",
+        "Fuli Luo"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-08-28T14:33:19+00:00",
+      "link": "https://arxiv.org/pdf/2608.28378v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "User simulation framework for multi-turn agentic interactions, useful for evaluating mobile agent frameworks",
+      "llm_evidence_cn": "多轮人机交互用户模拟框架，可用于移动智能体框架评估",
+      "llm_evidence": "多轮人机交互用户模拟框架，可用于移动智能体框架评估",
+      "canonical_evidence": "多轮人机交互用户模拟框架，可用于移动智能体框架评估",
+      "llm_tldr_en": "PersonaForge synthesizes realistic multi-turn user-agent interactions using persona space and behavioral control, addressing the gap in training/evaluating agents on multi-turn dialogue.",
+      "llm_tldr_cn": "现有智能体训练与基准多假设信息充分的单轮查询，而真实交互中75.9%为多轮。PersonaForge结合四维人格空间、SOUL行为控制和反向深度构建，生成真实多样的多轮用户-智能体交互数据。基于6.3万条记录构建训练数据集，可显著提升智能体在多轮场景中的表现。该方法为移动智能体的人类交互评估提供了可复用的数据生成工具。",
+      "llm_tldr": "现有智能体训练与基准多假设信息充分的单轮查询，而真实交互中75.9%为多轮。PersonaForge结合四维人格空间、SOUL行为控制和反向深度构建，生成真实多样的多轮用户-智能体交互数据。基于6.3万条记录构建训练数据集，可显著提升智能体在多轮场景中的表现。该方法为移动智能体的人类交互评估提供了可复用的数据生成工具。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.28476v1",
+      "source": "arxiv",
+      "title": "ContextPilot: Teaching Agents for Proactive Context Management via Fine-grained RL",
+      "abstract": "Long-horizon agentic tasks require large language models (LLMs) to iteratively retrieve, integrate, and maintain dispersed information across multi-turn interactions, but preserving all interaction histories leads to a continuously growing working context. Recent proactive context management methods allow models to edit their own working context with specialized tools, yet they still face three key limitations: (1) a limited toolset restricted to search, deletion, and summarization, with no support for global planning, long-term memory, and adaptive compression; (2) inefficient exploration that treats context management actions uniformly despite their heterogeneous impacts on final outcomes; and (3) coarse-grained credit assignment that assigns the final trajectory-level reward to all intermediate context editing actions during RL. To bridge these gaps, we introduce ContextPilot, a proactive context management framework for long-horizon agentic reasoning. Our approach systematically augments the toolset with planning, long-term memory, and soft context offloading tools. We further propose an RL method tailored for context management, which uses context and entropy variation to identify critical editing decisions for branch sampling and estimates action-level advantages from all branched trajectories that pass through the corresponding context editing action. Experiments on long-context QA and deep search tasks show that ContextPilot achieves stronger performance with a more compact working context, consistently outperforming existing baselines across various base models and benchmarks. Code is available at https://github.com/Tencent/ContextPilot.",
+      "authors": [
+        "Zhuoshi Pan",
+        "Qizhi Pei",
+        "Junru Lu",
+        "Honglin Lin",
+        "H. Vicky Zhao",
+        "Di Yin",
+        "Xing Sun"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-08-28T16:01:08+00:00",
+      "link": "https://arxiv.org/pdf/2608.28476v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "proactive context management method for long-horizon agents, a key technique for on-device task execution agents",
+      "llm_evidence_cn": "面向长程智能体的主动上下文管理方法，是端侧任务执行智能体的关键技术之一",
+      "llm_evidence": "面向长程智能体的主动上下文管理方法，是端侧任务执行智能体的关键技术之一",
+      "canonical_evidence": "面向长程智能体的主动上下文管理方法，是端侧任务执行智能体的关键技术之一",
+      "llm_tldr_en": "ContextPilot teaches agents proactive context management via fine-grained RL, overcoming limited toolset, inefficient exploration and coarse credit assignment. It improves long-horizon task performance and applies to resource-constrained agents such as mobile ones.",
+      "llm_tldr_cn": "长程智能体任务中，保留全部交互历史会使工作上下文持续膨胀，而现有上下文管理工具仅限搜索、删除和摘要，缺乏全局规划、长期记忆与自适应压缩，且探索与信用分配粗糙。针对这些问题，本文提出ContextPilot，利用细粒度强化学习训练智能体主动编辑工作上下文，扩展工具集并优化探索与信用分配。实验表明该方法能有效提升长程任务表现。该技术可作为移动端等资源受限场景下智能体任务执行的关键上下文管理能力。",
+      "llm_tldr": "长程智能体任务中，保留全部交互历史会使工作上下文持续膨胀，而现有上下文管理工具仅限搜索、删除和摘要，缺乏全局规划、长期记忆与自适应压缩，且探索与信用分配粗糙。针对这些问题，本文提出ContextPilot，利用细粒度强化学习训练智能体主动编辑工作上下文，扩展工具集并优化探索与信用分配。实验表明该方法能有效提升长程任务表现。该技术可作为移动端等资源受限场景下智能体任务执行的关键上下文管理能力。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
