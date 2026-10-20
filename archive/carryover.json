@@ -1,12 +1,101 @@
 {
-  "generated_at": "2026-10-09T00:02:59.207391+00:00",
-  "updated_date": "20261008",
+  "generated_at": "2026-10-20T13:37:20.522835+00:00",
+  "updated_date": "20260921-20261020",
   "carryover_days": 9,
   "tag_states": {
     "mobile-agent": {
-      "updated_date": "20261008",
+      "updated_date": "20260921-20261020",
       "carryover_days": 9,
-      "items": []
+      "items": [
+        {
+          "id": "2610.22672v1",
+          "source": "arxiv",
+          "title": "Not All Graphs Are Maps: A Task-Agnostic Exploration Framework for Mobile GUI Navigation",
+          "abstract": "Modern mobile GUI agents can perceive visible screens and execute local actions, but they still lack persistent app-specific navigation knowledge: where functions live, which pages contain them, and which screens are equivalent across repeated visits. We introduce TAG-Nav, a Task-Agnostic Graph Navigation framework that wraps existing GUI-agent backbones with reusable destination memory. Offline exploration is distilled into compact records of app functions, target pages, and waypoint routes before any evaluated instruction is seen. When a future task's destination is covered, TAG-Nav retrieves the destination and provides route guidance without task-specific demonstrations. This separates mobile GUI destination navigation from full task completion: many tasks share the prefix of reaching the right page, while final actions may enter content, send data, make purchases, delete information, or change sensitive settings. To evaluate route finding without downstream execution confounds, we introduce DestBench, a navigation-only protocol that asks whether an agent reaches the correct pre-action destination screen. DestBench enables a controlled graph-memory study comparing no-memory agents with random, automated BFS, and clean graph memory. Graph-derived memory improves strict navigation success rate of UI-TARS-1.5-7B from 52.4% without graph memory to 58.3% with automated BFS memory, and improves Qwen-VL-Max success rate from 59.5% to 71.4% on the same conditions. Together, TAG-Nav and DestBench show that destination coverage and route cleanliness strongly shape graph-memory value, making graph quality a measured variable rather than an assumed benefit of exploration.",
+          "authors": [
+            "Adamo Orsini",
+            "Seyed Mehdi Ayyoubzadeh",
+            "Sadman Rakib Pinon",
+            "Hannuo Zhang",
+            "Koosha Gholipour Baradari",
+            "Yuanhao Yu",
+            "Xinxin Zuo",
+            "Yang Wang"
+          ],
+          "primary_category": "cs.AI",
+          "categories": [
+            "cs.AI",
+            "cs.CL"
+          ],
+          "published": "2026-10-15T21:40:34+00:00",
+          "link": "https://arxiv.org/pdf/2610.22672v1",
+          "tags": [
+            "keyword:mobile-agent",
+            "query:mobile-agent"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "task-agnostic navigation framework wrapping mobile GUI agent backbones",
+          "llm_evidence_cn": "为移动GUI智能体骨干提供任务无关导航框架",
+          "llm_evidence": "为移动GUI智能体骨干提供任务无关导航框架",
+          "canonical_evidence": "为移动GUI智能体骨干提供任务无关导航框架",
+          "llm_tldr_en": "TAG-Nav wraps mobile GUI agent backbones with reusable destination memory distilled from offline exploration, enabling route guidance to known app pages without task-specific demonstrations.",
+          "llm_tldr_cn": "现有移动GUI智能体虽能感知屏幕并执行局部动作，却缺乏持久化的应用导航知识，重复访问同一应用时仍要重新摸索功能位置与页面关系。TAG-Nav提出任务无关的图导航框架，在评测指令出现前通过离线探索蒸馏出应用功能、目标页面与路径点的紧凑记忆。当新任务目标被覆盖时，框架直接检索目的地并给出路线引导，无需任务专属演示。该工作把移动GUI的目的地导航与完整任务执行解耦，为可复用的智能体导航记忆提供了新思路。",
+          "llm_tldr": "现有移动GUI智能体虽能感知屏幕并执行局部动作，却缺乏持久化的应用导航知识，重复访问同一应用时仍要重新摸索功能位置与页面关系。TAG-Nav提出任务无关的图导航框架，在评测指令出现前通过离线探索蒸馏出应用功能、目标页面与路径点的紧凑记忆。当新任务目标被覆盖时，框架直接检索目的地并给出路线引导，无需任务专属演示。该工作把移动GUI的目的地导航与完整任务执行解耦，为可复用的智能体导航记忆提供了新思路。",
+          "llm_tags": [
+            "query:mobile-agent"
+          ],
+          "matched_query_tag": "query:mobile-agent",
+          "matched_query_text": "framework for building agents on mobile devices",
+          "matched_requirement_id": "req-5",
+          "selection_source": "carryover_cache",
+          "paper_id": "2610.22672v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2610.23307v1",
+          "source": "arxiv",
+          "title": "MobileInject: Evaluating Reasoning-to-Action Security of MLLM-Based Mobile Agents under Cross-Modal Consistency Injection",
+          "abstract": "Multimodal large language model (MLLM)-based mobile agents are rapidly evolving from conversational assistants into autonomous systems that perceive, reason over, and act on smartphone environments. This capability also exposes a new security risk: adversaries can embed malicious objectives in cross-application mobile content and steer agent behavior through indirect multimodal injection. Although prompt injection has been studied in desktop and web settings, its cross-modal properties in mobile ecosystems remain poorly understood, and existing security analyses are still limited. To close this gap, we introduce MobileInject, the first benchmark for evaluating mobile agents against multimodal injection attacks and reasoning-to-action security risks. MobileInject provides a high-fidelity interactive mobile evaluation framework covering 11 scenarios, 9 security-risk categories, and 108 executable risk instances. It further introduces Cross-Modal Consistency Injection to exploit corroboration across modalities, two enhanced attack methods, Multi-Role Collaborative Deception and Reasoning-Camouflage Injection, to intensify trust manipulation and reasoning hijacking, and a Reasoning Security Diagnosis Framework for fine-grained failure analysis. Systematic experiments show that mobile agents are broadly vulnerable to multimodal injection, and that many failures stem from reasoning hijacking at early stages. These findings establish MobileInject as a systematic cross-modal benchmark for studying and improving the security of mobile agents. Code release details are provided in the Appendix Open Science section.",
+          "authors": [
+            "Songping Wang",
+            "Peiyang Li",
+            "Yi Huang",
+            "Fengting Li",
+            "Xuhao Ran",
+            "Yueming Lyu",
+            "Chao Feng",
+            "Caifeng Shan"
+          ],
+          "primary_category": "cs.CR",
+          "categories": [
+            "cs.CR",
+            "cs.AI"
+          ],
+          "published": "2026-10-16T11:10:30+00:00",
+          "link": "https://arxiv.org/pdf/2610.23307v1",
+          "tags": [
+            "keyword:mobile-agent",
+            "query:mobile-agent"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "benchmark evaluating MLLM-based mobile agents that act on smartphone environments",
+          "llm_evidence_cn": "评估在手机环境中执行任务的MLLM移动智能体基准",
+          "llm_evidence": "评估在手机环境中执行任务的MLLM移动智能体基准",
+          "canonical_evidence": "评估在手机环境中执行任务的MLLM移动智能体基准",
+          "llm_tldr_en": "MLLM-based mobile agents now perceive and act on smartphones, exposing them to cross-modal indirect injection. MobileInject is the first benchmark evaluating such agents against multimodal injection, showing how malicious cross-app content can steer reasoning-to-action.",
+          "llm_tldr_cn": "移动端多模态大模型智能体正从对话助手演化为可感知并操作手机环境的自主系统，随之出现跨应用内容注入的安全隐患。作者提出MobileInject，首个面向移动智能体多模态注入的评测基准，通过跨模态一致性注入检验其从推理到行动的过程。实验表明恶意跨应用内容可诱导智能体偏离原目标并执行攻击者意图，现有安全分析难以覆盖此类风险。该工作为端侧任务执行智能体的安全评估与加固提供了系统化手段。",
+          "llm_tldr": "移动端多模态大模型智能体正从对话助手演化为可感知并操作手机环境的自主系统，随之出现跨应用内容注入的安全隐患。作者提出MobileInject，首个面向移动智能体多模态注入的评测基准，通过跨模态一致性注入检验其从推理到行动的过程。实验表明恶意跨应用内容可诱导智能体偏离原目标并执行攻击者意图，现有安全分析难以覆盖此类风险。该工作为端侧任务执行智能体的安全评估与加固提供了系统化手段。",
+          "llm_tags": [
+            "query:mobile-agent"
+          ],
+          "matched_query_tag": "query:mobile-agent",
+          "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+          "matched_requirement_id": "req-9",
+          "selection_source": "carryover_cache",
+          "paper_id": "2610.23307v1",
+          "carry_days": 1
+        }
+      ]
     }
   }
 }

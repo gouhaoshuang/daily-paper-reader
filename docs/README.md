@@ -41,17 +41,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-10-08</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-21 ~ 2026-10-20</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 0 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 23 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>0</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>12</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>11</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-10-09 00:02:59 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-10-20 13:58:38 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +62,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日无新推荐，系统未产出可展示论文。</p>
+<p>本期盘点 23 篇移动智能体论文：精读 12 篇、速读 11 篇，并从中筛出 5 篇 8 分以上的重点，主题集中在真实移动规划与 GUI 执行两条主线。</p>
+<p>最值得看的是两篇 9 分工作：《Qwen-Planner-Agent》提出闭环 AI-for-AI 框架，把移动规划智能体做成可自迭代系统；《Jev-Mobile》则把 Jev 定位为 GUI 执行器，补齐从“想”到“点”的落地环节。</p>
+<p>普通读者可先读这两篇精读建立整体认识，再借《Same Tasks, Different Apps》理解泛化失败原因，并对照《DeltaReplay》的记忆复用思路，判断自家产品该优先补规划还是补执行。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -71,12 +73,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">0 篇</strong>
+    <strong class="dpr-home-dashboard-count">12 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Qwen-Planner-Agent: A Closed-Loop AI-for-AI Framework for Real-World Mobile Planner Agents">Qwen-Planner-Agent: A Closed-Loop AI-for-AI Framework for Real-World Mobile Planner Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Jev-Mobile: Jev as an Executor for Mobile GUI Agents">Jev-Mobile: Jev as an Executor for Mobile GUI Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="From Tapping to Hopping: Augmenting Mobile GUI Agents with App-Native Deeplinks">From Tapping to Hopping: Augmenting Mobile GUI Agents with App-Native Deeplinks</span></li></ul>
   </div>
-
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>12</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -84,12 +86,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">0 篇</strong>
+    <strong class="dpr-home-dashboard-count">11 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Same Tasks, Different Apps: Why Mobile GUI Agents Fail to Generalize?">Same Tasks, Different Apps: Why Mobile GUI Agents Fail to Generalize?</span></li><li><span class="dpr-home-dashboard-paper-title" title="Richard: Voice-First Mobile Interaction for Persistent Tasks">Richard: Voice-First Mobile Interaction for Persistent Tasks</span></li><li><span class="dpr-home-dashboard-paper-title" title="DeltaReplay: Task-Relative Memory Reuse for Mobile GUI Agents">DeltaReplay: Task-Relative Memory Reuse for Mobile GUI Agents</span></li></ul>
   </div>
-
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>11</strong></span></div>
 </section>
 </div>
 

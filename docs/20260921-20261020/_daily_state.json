@@ -1,0 +1,377 @@
+{
+  "date": "20260921-20261020",
+  "date_label": "2026-09-21 ~ 2026-10-20",
+  "generated_at": "2026-10-20 13:58:38 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.29892v1",
+      "route": "20260921-20261020/2609.29892v1-qwen-planner-agent-a-closed-loop-ai-for-ai-framework-for-real-world-mobile-planner-agents",
+      "title": "Qwen-Planner-Agent: A Closed-Loop AI-for-AI Framework for Real-World Mobile Planner Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "面向真实移动规划智能体构建的闭环框架",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2609.30186v1",
+      "route": "20260921-20261020/2609.30186v1-jev-mobile-jev-as-an-executor-for-mobile-gui-agents",
+      "title": "Jev-Mobile: Jev as an Executor for Mobile GUI Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "为移动GUI智能体设计轻量类型化执行器完成设备端任务",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2609.30887v1",
+      "route": "20260921-20261020/2609.30887v1-from-tapping-to-hopping-augmenting-mobile-gui-agents-with-app-native-deeplinks",
+      "title": "From Tapping to Hopping: Augmenting Mobile GUI Agents with App-Native Deeplinks",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "deeplink与GUI动作混合提升移动智能体任务成功率",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2609.32166v1",
+      "route": "20260921-20261020/2609.32166v1-pastforward-faster-on-device-gui-agents-via-computational-experience-reuse",
+      "title": "PastForward: Faster On-Device GUI Agents via Computational Experience Reuse",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "在边缘设备本地运行GUI智能体，细粒度复用计算经验以完成任务",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2609.35671v2",
+      "route": "20260921-20261020/2609.35671v2-phonecli-from-app-interfaces-to-callable-commands-for-mobile-agents",
+      "title": "PhoneCLI: From App Interfaces to Callable Commands for Mobile Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "将应用界面导航编译为移动智能体可调用命令",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2609.38652v1",
+      "route": "20260921-20261020/2609.38652v1-agbench-agentic-ai-benchmarks-for-personal-ai-devices",
+      "title": "AgBench: Agentic AI Benchmarks for Personal AI Devices",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "评测个人设备上本地与云端智能体执行的基准",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.06898v1",
+      "route": "20260921-20261020/2610.06898v1-dibench-benchmarking-decision-integrity-of-gui-based-mobile-agents-under-deceptive-injections",
+      "title": "DIBench: Benchmarking Decision Integrity of GUI-based Mobile Agents Under Deceptive Injections",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "面向GUI移动智能体决策完整性的评测基准",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.07972v1",
+      "route": "20260921-20261020/2610.07972v1-can-agents-work-for-everyone-cross-user-reliability-for-mobile-gui-agents-in-personalized-user-interfaces",
+      "title": "Can Agents Work for Everyone? Cross-User Reliability for Mobile GUI Agents in Personalized User Interfaces",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "移动GUI智能体的跨用户可靠性",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.14157v1",
+      "route": "20260921-20261020/2610.14157v1-openmobile-2-building-versatile-mobile-agents-with-scalable-environments-and-app-native-tools",
+      "title": "OpenMobile-2: Building Versatile Mobile Agents with Scalable Environments and App-Native Tools",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "构建通用移动智能体的开放训练环境与配方",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.17436v1",
+      "route": "20260921-20261020/2610.17436v1-schemaweaver-accelerating-on-device-mobile-agentic-ai-via-schema-guided-parallel-llm-decoding",
+      "title": "SchemaWeaver: Accelerating On-Device Mobile Agentic AI via Schema-Guided Parallel LLM Decoding",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "端侧移动智能体AI的模式引导并行解码",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.19900v1",
+      "route": "20260921-20261020/2610.19900v1-how-gui-agents-fail-gracebench-for-execution-stability-diagnosis",
+      "title": "How GUI Agents Fail: GraceBench for Execution Stability Diagnosis",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "移动GUI智能体执行稳定性诊断基准",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.26660v1",
+      "route": "20260921-20261020/2610.26660v1-tandem-serving-hybrid-linear-attention-gui-agents-on-mobile-npus",
+      "title": "Tandem: Serving Hybrid Linear-Attention GUI Agents on Mobile NPUs",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "在移动NPU上本地服务手机GUI智能体并降低延迟",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2609.34139v1",
+      "route": "20260921-20261020/2609.34139v1-same-tasks-different-apps-why-mobile-gui-agents-fail-to-generalize",
+      "title": "Same Tasks, Different Apps: Why Mobile GUI Agents Fail to Generalize?",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "评测移动GUI智能体跨应用任务执行的基准",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2609.39976v1",
+      "route": "20260921-20261020/2609.39976v1-richard-voice-first-mobile-interaction-for-persistent-tasks",
+      "title": "Richard: Voice-First Mobile Interaction for Persistent Tasks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "语音优先的移动系统，将持久任务委托给智能体代为执行",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.11707v1",
+      "route": "20260921-20261020/2610.11707v1-deltareplay-task-relative-memory-reuse-for-mobile-gui-agents",
+      "title": "DeltaReplay: Task-Relative Memory Reuse for Mobile GUI Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "步骤级记忆复用，帮助移动GUI智能体在应用界面上完成任务",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.20100v1",
+      "route": "20260921-20261020/2610.20100v1-task-state-governance-a-virtual-machine-for-verifiable-and-recoverable-gui-agent-execution",
+      "title": "Task-State Governance: A Virtual Machine for Verifiable and Recoverable GUI Agent Execution",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "GUI智能体在真实应用中可验证可恢复的操作执行",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.20939v1",
+      "route": "20260921-20261020/2610.20939v1-mai-gym-an-open-all-in-one-platform-for-gui-agent-evaluation-and-rl-training-across-mobile-and-computer-environments",
+      "title": "MAI-Gym: An Open All-in-One Platform for GUI Agent Evaluation and RL Training across Mobile and Computer Environments",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "统一移动等环境下GUI智能体评测与强化学习训练的平台",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2609.30691v1",
+      "route": "20260921-20261020/2609.30691v1-adf-ea-a-unified-execution-assurance-system-for-agent-device-foundation",
+      "title": "ADF-EA: A Unified Execution Assurance System for Agent Device Foundation",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "通过能力契约衔接智能体规划与设备执行的执行保障架构",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.05709v1",
+      "route": "20260921-20261020/2610.05709v1-nexus-an-execution-fabric-for-ai-agents-across-cloud-edge-and-devices",
+      "title": "Nexus: An Execution Fabric for AI Agents Across Cloud, Edge, and Devices",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "覆盖手机等设备的云边执行平台，含权限控制与持久任务生命周期",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.14855v1",
+      "route": "20260921-20261020/2610.14855v1-peam-on-device-communication-agent-for-personalized-efficient-and-autonomous-mobile-network-configuration",
+      "title": "PEAM: On-device Communication Agent for Personalized, Efficient and Autonomous Mobile Network Configuration",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "在智能手机端本地自主生成并执行配置规则的端侧LLM通信智能体",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2609.34586v1",
+      "route": "20260921-20261020/2609.34586v1-agentware-automating-the-lifecycle-of-agentic-applications-across-the-edge-to-cloud-continuum",
+      "title": "AgentWare: Automating the Lifecycle of Agentic Applications across the Edge-to-Cloud Continuum",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向边缘到云（含端侧）智能体应用的部署、可观测与评估全生命周期自动化框架",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2609.37025v1",
+      "route": "20260921-20261020/2609.37025v1-anyact-universal-action-for-self-evolving-agents",
+      "title": "AnyAct: Universal Action for Self-Evolving Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "统一GUI操作与API以支持跨应用任务的通用动作层",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    },
+    {
+      "paper_id": "2610.10071v1",
+      "route": "20260921-20261020/2610.10071v1-hgpan-on-device-personalized-agent-memory-via-hybrid-graph-storage",
+      "title": "HGP:An on-device personalized agent memory via hybrid graph storage",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "端侧个性化智能体记忆框架，支撑设备本地可靠决策",
+      "first_seen_at": "2026-10-20 13:58:38 UTC",
+      "updated_at": "2026-10-20 13:58:38 UTC"
+    }
+  ]
+}
