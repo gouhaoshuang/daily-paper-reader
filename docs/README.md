@@ -4,17 +4,24 @@
     <a class="dpr-home-notice-tutorial" href="#/tutorial/README">使用教程 <span aria-hidden="true">›</span></a>
   </div>
   <div class="dpr-home-notice-entry">
-    <time class="dpr-home-notice-date" datetime="2026-07-20">07.20</time>
+    <time class="dpr-home-notice-date" datetime="2026-10-05">10.05</time>
     <div>
-      <strong class="dpr-home-notice-entry-title">反馈功能上线</strong>
-      <span class="dpr-home-notice-entry-summary">新增反馈功能，欢迎大家踊跃反馈各种建议，我们会第一时间查看并协调处理。</span>
+      <strong class="dpr-home-notice-entry-title">medRxiv 自动更新已恢复</strong>
+      <span class="dpr-home-notice-entry-summary">修复超长摘要导致的向量生成失败，维护任务现会限制单条 embedding 文本长度并分片写入。受影响范围已重新同步，公开读取、关键词检索与语义检索均已验证。</span>
     </div>
   </div>
   <div class="dpr-home-notice-entry">
-    <time class="dpr-home-notice-date" datetime="2026-07-19">07.19</time>
+    <time class="dpr-home-notice-date" datetime="2026-09-16">09.16</time>
     <div>
-      <strong class="dpr-home-notice-entry-title">首页新增社区统计</strong>
-      <span class="dpr-home-notice-entry-summary">现在可以看到今天看论文的人数和项目加入人数。</span>
+      <strong class="dpr-home-notice-entry-title">日报跨日重复推荐已修复</strong>
+      <span class="dpr-home-notice-entry-summary">历史推荐现按原始召回标签与 arXiv 论文标识去重，暂停词条不再参与评分；同一专题次日不会重复推荐相同论文。已有历史页面保留，不自动删除。</span>
+    </div>
+  </div>
+  <div class="dpr-home-notice-entry">
+    <time class="dpr-home-notice-date" datetime="2026-09-09">09.09</time>
+    <div>
+      <strong class="dpr-home-notice-entry-title">90天/365天 arXiv 专题回溯</strong>
+      <span class="dpr-home-notice-entry-summary">支持分片召回、断点评审与分页查看，核心论文与待复核结果分开展示。DeepSeek 费用按实际用量计算，不下载全量 PDF。</span>
     </div>
   </div>
   <div class="dpr-home-site-stats" data-dpr-site-stats hidden aria-live="polite">
@@ -41,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-21 ~ 2026-10-20</span>
+      <span class="dpr-home-dashboard-kicker">2026-10-20 ~ 2026-10-29</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 23 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 13 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>12</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>11</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>6</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>7</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-10-20 13:58:38 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-10-29 13:14:30 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,9 +69,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>本期盘点 23 篇移动智能体论文：精读 12 篇、速读 11 篇，并从中筛出 5 篇 8 分以上的重点，主题集中在真实移动规划与 GUI 执行两条主线。</p>
-<p>最值得看的是两篇 9 分工作：《Qwen-Planner-Agent》提出闭环 AI-for-AI 框架，把移动规划智能体做成可自迭代系统；《Jev-Mobile》则把 Jev 定位为 GUI 执行器，补齐从“想”到“点”的落地环节。</p>
-<p>普通读者可先读这两篇精读建立整体认识，再借《Same Tasks, Different Apps》理解泛化失败原因，并对照《DeltaReplay》的记忆复用思路，判断自家产品该优先补规划还是补执行。</p>
+<p>10月20日至29日共筛选13篇GUI智能体论文，精读6篇、速读7篇，聚焦个性化失效诊断与记忆图设计。最值得看的是两篇9分精读，分别拆解移动端GUI智能体的个性化失效原因和子目标感知记忆图；对验证环节中“答案正确但流程卡死”的现象，也可参考8分的SolveBind研究。普通读者建议优先读这两篇精读，再按需补读速读中的验证与探索方向。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -73,12 +78,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">12 篇</strong>
+    <strong class="dpr-home-dashboard-count">6 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Qwen-Planner-Agent: A Closed-Loop AI-for-AI Framework for Real-World Mobile Planner Agents">Qwen-Planner-Agent: A Closed-Loop AI-for-AI Framework for Real-World Mobile Planner Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Jev-Mobile: Jev as an Executor for Mobile GUI Agents">Jev-Mobile: Jev as an Executor for Mobile GUI Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="From Tapping to Hopping: Augmenting Mobile GUI Agents with App-Native Deeplinks">From Tapping to Hopping: Augmenting Mobile GUI Agents with App-Native Deeplinks</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Diagnosing Personalization Failures in Mobile GUI Agents">Diagnosing Personalization Failures in Mobile GUI Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Subgoal-aware Memory Graph for GUI Agent">Subgoal-aware Memory Graph for GUI Agent</span></li><li><span class="dpr-home-dashboard-paper-title" title="Reuse, Rewrite, or Reject: Evidence-Constrained Trace Reuse for Repeated Mobile GUI Control">Reuse, Rewrite, or Reject: Evidence-Constrained Trace Reuse for Repeated Mobile GUI Control</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>12</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>6</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -86,12 +91,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">11 篇</strong>
+    <strong class="dpr-home-dashboard-count">7 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Same Tasks, Different Apps: Why Mobile GUI Agents Fail to Generalize?">Same Tasks, Different Apps: Why Mobile GUI Agents Fail to Generalize?</span></li><li><span class="dpr-home-dashboard-paper-title" title="Richard: Voice-First Mobile Interaction for Persistent Tasks">Richard: Voice-First Mobile Interaction for Persistent Tasks</span></li><li><span class="dpr-home-dashboard-paper-title" title="DeltaReplay: Task-Relative Memory Reuse for Mobile GUI Agents">DeltaReplay: Task-Relative Memory Reuse for Mobile GUI Agents</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Correct Answers, Closed Gates: SolveBind for GUI Agents at the Verification Barrier">Correct Answers, Closed Gates: SolveBind for GUI Agents at the Verification Barrier</span></li><li><span class="dpr-home-dashboard-paper-title" title="Chart the Invisible: Interactive Perception for Hidden-Target Exploration in GUI Agents">Chart the Invisible: Interactive Perception for Hidden-Target Exploration in GUI Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Babysitting AI Agents: A User-Centered Taxonomy and Study of Agentic Delegation Failures">Babysitting AI Agents: A User-Centered Taxonomy and Study of Agentic Delegation Failures</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>11</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>7</strong></span></div>
 </section>
 </div>
 

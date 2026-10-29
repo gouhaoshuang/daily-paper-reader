@@ -1,0 +1,217 @@
+{
+  "date": "20261020-20261029",
+  "date_label": "2026-10-20 ~ 2026-10-29",
+  "generated_at": "2026-10-29 13:14:30 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2610.30573v1",
+      "route": "20261020-20261029/2610.30573v1-diagnosing-personalization-failures-in-mobile-gui-agents",
+      "title": "Diagnosing Personalization Failures in Mobile GUI Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "诊断式基准评估十一种移动GUI智能体的个性化失败",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.31307v1",
+      "route": "20261020-20261029/2610.31307v1-subgoal-aware-memory-graph-for-gui-agent",
+      "title": "Subgoal-aware Memory Graph for GUI Agent",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "GUI智能体通过子目标感知记忆在移动界面上自动完成复杂用户任务。",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.31712v1",
+      "route": "20261020-20261029/2610.31712v1-reuse-rewrite-or-reject-evidence-constrained-trace-reuse-for-repeated-mobile-gui-control",
+      "title": "Reuse, Rewrite, or Reject: Evidence-Constrained Trace Reuse for Repeated Mobile GUI Control",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "移动GUI智能体复用执行轨迹完成重复任务控制",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.34384v1",
+      "route": "20261020-20261029/2610.34384v1-androidflux-evaluating-and-reward-modeling-failure-recovery-capabilities-in-mobile-use-multimodal-agents",
+      "title": "AndroidFlux: Evaluating and Reward Modeling Failure Recovery Capabilities in Mobile Use Multimodal Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "评估安卓移动多模态智能体故障恢复能力的基准",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.34735v1",
+      "route": "20261020-20261029/2610.34735v1-iprefbench-a-user-centric-benchmark-for-personalized-mobile-use-agents",
+      "title": "iPrefBench: A User-Centric Benchmark for Personalized Mobile Use Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "在iOS中代表用户行事的个性化手机使用智能体",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.36877v1",
+      "route": "20261020-20261029/2610.36877v1-gui-jepa-candidate-conditioned-jepa-latents-as-a-fast-action-policy-for-mobile-gui-agents",
+      "title": "GUI-JEPA: Candidate-Conditioned JEPA Latents as a Fast Action Policy for Mobile GUI Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "无解码器动作策略实现移动GUI智能体的高效端上执行",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.32223v1",
+      "route": "20261020-20261029/2610.32223v1-correct-answers-closed-gates-solvebind-for-gui-agents-at-the-verification-barrier",
+      "title": "Correct Answers, Closed Gates: SolveBind for GUI Agents at the Verification Barrier",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "在应用与网站中跨越验证码屏障实现操作自动化的GUI智能体框架",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.35237v1",
+      "route": "20261020-20261029/2610.35237v1-chart-the-invisible-interactive-perception-for-hidden-target-exploration-in-gui-agents",
+      "title": "Chart the Invisible: Interactive Perception for Hidden-Target Exploration in GUI Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "移动设备上的GUI代理通过滑动探索隐藏目标以执行任务",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.34748v1",
+      "route": "20261020-20261029/2610.34748v1-babysitting-ai-agents-a-user-centered-taxonomy-and-study-of-agentic-delegation-failures",
+      "title": "Babysitting AI Agents: A User-Centered Taxonomy and Study of Agentic Delegation Failures",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "用户委托智能体代为执行任务时的失败分类体系",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.27977v1",
+      "route": "20261020-20261029/2610.27977v1-liveuibench-evaluating-agent-as-app-workflows",
+      "title": "LiveUIBench: Evaluating Agent as App Workflows",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "智能体编排界面与服务动作完成用户任务",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.32417v1",
+      "route": "20261020-20261029/2610.32417v1-measuring-the-energy-cost-of-completing-tasks-with-quantized-language-model-agents",
+      "title": "Measuring the Energy Cost of Completing Tasks with Quantized Language-Model Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "本地部署智能体完成任务的能耗权衡",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.33178v1",
+      "route": "20261020-20261029/2610.33178v1-aos-bench-can-llm-agents-manage-dynamic-workloads",
+      "title": "AOS-Bench: Can LLM Agents Manage Dynamic Workloads?",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "基准评估LLM智能体在CPU与内存限制下管理并发任务",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    },
+    {
+      "paper_id": "2610.33907v1",
+      "route": "20261020-20261029/2610.33907v1-os-wizard-scaling-computer-using-agents-to-specialized-software-via-knowledge-guided-exploration",
+      "title": "OS-Wizard: Scaling Computer-Using Agents to Specialized Software via Knowledge-Guided Exploration",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "GUI-代码智能体自动化专用桌面应用操作，可迁移到移动应用自动化。",
+      "first_seen_at": "2026-10-29 13:14:30 UTC",
+      "updated_at": "2026-10-29 13:14:30 UTC"
+    }
+  ]
+}

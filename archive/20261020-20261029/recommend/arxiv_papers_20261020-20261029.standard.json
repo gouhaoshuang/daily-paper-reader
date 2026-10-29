@@ -1,0 +1,547 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-10-29T13:10:33.451259+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 8,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [
+    {
+      "id": "2610.30573v1",
+      "source": "arxiv",
+      "title": "Diagnosing Personalization Failures in Mobile GUI Agents",
+      "abstract": "Unlike conventional GUI agents, personalized GUI agents require user preferences to guide sequential execution over changing GUI states. This raises two challenges: determining HOW each preference should alter execution strategy and WHEN it should take effect along the interaction trajectory. Existing benchmarks primarily evaluate overall task success, offering limited insight into these questions. We introduce PrefDiag-Bench with two components: (1) a categorization of preferences into five types, characterizing HOW they affect execution; and (2) a stage-wise diagnostic framework with 1,664 probes, tracing WHEN preferences should take effect and where failures occur. We evaluate eleven GUI agent systems, including end-to-end agents and agentic workflows, under two forms of user context: explicit user profiles and behavioral memory logs. Although existing agents achieve relatively high completion rates on non-personalized tasks, performance is substantially lower on preference-personalized tasks. Even the best-performing model, Seed-2.0-Pro, achieves only 47.17% on Process preferences under explicit user profiles. Agents struggle particularly with Ranking and Process preferences. Further analysis reveals two key capability bottlenecks: selecting relevant evidence from user history and recognizing when preferences should take effect during execution. Controlled interventions that explicitly provide relevant evidence improve end-to-end task success by up to 7.06%. PrefDiag-Bench offers a more systematic evaluation of GUI agents' personalization capabilities beyond overall task success. Code and data are available at https://github.com/Zhixin-L/PrefDiag-Bench.",
+      "authors": [
+        "Zhixin Lin",
+        "Dongliang Xu",
+        "Jungang Li",
+        "Shidong Pan",
+        "Jun Feng",
+        "Yanbin Sun",
+        "Jing Li",
+        "Liang Liu",
+        "Yue Yao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-10-22T01:04:24+00:00",
+      "link": "https://arxiv.org/pdf/2610.30573v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "diagnostic benchmark evaluating eleven mobile GUI agent systems for personalization failures",
+      "llm_evidence_cn": "诊断式基准评估十一种移动GUI智能体的个性化失败",
+      "llm_evidence": "诊断式基准评估十一种移动GUI智能体的个性化失败",
+      "canonical_evidence": "诊断式基准评估十一种移动GUI智能体的个性化失败",
+      "llm_tldr_en": "PrefDiag-Bench diagnoses how and when user preferences should shape mobile GUI agent execution, evaluating eleven agent systems with 1,664 stage-wise probes.",
+      "llm_tldr_cn": "个性化GUI智能体需要依据用户偏好引导跨变化的GUI状态进行顺序执行，但现有基准只评估整体任务成功率，难以判断偏好如何改变执行策略以及何时生效。作者提出PrefDiag-Bench，将偏好分为五类并构建含1664个探针的分阶段诊断框架，追踪偏好的作用时机与失败位置。实验评估了十一种GUI智能体系统，涵盖端到端智能体与智能体工作流。该基准为移动GUI智能体的个性化能力提供了细粒度诊断工具。",
+      "llm_tldr": "个性化GUI智能体需要依据用户偏好引导跨变化的GUI状态进行顺序执行，但现有基准只评估整体任务成功率，难以判断偏好如何改变执行策略以及何时生效。作者提出PrefDiag-Bench，将偏好分为五类并构建含1664个探针的分阶段诊断框架，追踪偏好的作用时机与失败位置。实验评估了十一种GUI智能体系统，涵盖端到端智能体与智能体工作流。该基准为移动GUI智能体的个性化能力提供了细粒度诊断工具。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2610.31307v1",
+      "source": "arxiv",
+      "title": "Subgoal-aware Memory Graph for GUI Agent",
+      "abstract": "GUI agents aim to automate complex user tasks by interacting with mobile interfaces, but ef- fective decision-making in long-horizon set- tings requires reusing prior experience rather than relying solely on the environment ob- servations. Existing memory-based methods typically store experience either at the single- action level or as entire trajectories. Single- step actions are often too fine-grained to carry meaningful semantics, since the success of an individual action does not necessarily imply progress towards the overall goal. In contrast, whole trajectories are often too coarse-grained and difficult to reuse across different tasks. We propose a subgoal-aware memory graph that distils past trajectories into structured, reusable evidence at the level of subgoals. We define a subgoal as consecutive actions shar- ing a single intent, the granularity at which progress toward the task becomes meaning- ful. To reduce redundancy and support cross- task reuse, we organise subgoal experiences as nodes in a graph, where related memories can be merged, extended, and retrieved based on the environment observation. On SPA-Bench, our method improves success rate by 11.11% over the baseline.",
+      "authors": [
+        "Dezhao Luo",
+        "Daniel Beechey",
+        "Derek Yuen",
+        "Weilin Luo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-10-22T14:06:00+00:00",
+      "link": "https://arxiv.org/pdf/2610.31307v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "GUI agent automates complex user tasks on mobile interfaces via subgoal-aware memory.",
+      "llm_evidence_cn": "GUI智能体通过子目标感知记忆在移动界面上自动完成复杂用户任务。",
+      "llm_evidence": "GUI智能体通过子目标感知记忆在移动界面上自动完成复杂用户任务。",
+      "canonical_evidence": "GUI智能体通过子目标感知记忆在移动界面上自动完成复杂用户任务。",
+      "llm_tldr_en": "Subgoal-aware memory graph distills past GUI trajectories into reusable subgoal-level evidence, improving long-horizon mobile task automation beyond action-level or trajectory-level memory.",
+      "llm_tldr_cn": "针对GUI智能体在移动界面上自动化复杂用户任务时，长时程决策仅依赖环境观测、难以复用历史经验的问题，本文提出子目标感知记忆图。该方法将过去轨迹蒸馏为子目标级别的结构化可复用证据，避免单步动作语义不足和整条轨迹难以迁移的缺陷。实验表明该记忆机制能提升长时程GUI任务中的决策与任务完成表现。该工作为移动端GUI智能体的经验复用与自主任务执行提供了新方法。",
+      "llm_tldr": "针对GUI智能体在移动界面上自动化复杂用户任务时，长时程决策仅依赖环境观测、难以复用历史经验的问题，本文提出子目标感知记忆图。该方法将过去轨迹蒸馏为子目标级别的结构化可复用证据，避免单步动作语义不足和整条轨迹难以迁移的缺陷。实验表明该记忆机制能提升长时程GUI任务中的决策与任务完成表现。该工作为移动端GUI智能体的经验复用与自主任务执行提供了新方法。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "mobile agent that performs tasks on behalf of user",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2610.31712v1",
+      "source": "arxiv",
+      "title": "Reuse, Rewrite, or Reject: Evidence-Constrained Trace Reuse for Repeated Mobile GUI Control",
+      "abstract": "Mobile GUI agents frequently perform repetitive tasks with similar interaction procedures. Reusing previous executions can reduce redundant LLM inference and execution overhead, but variations in user instructions and execution environments may invalidate previously successful actions. We systematically characterize these variations into six representative categories and observe that such changes do not necessarily invalidate entire procedures: individual transitions can remain reusable when validated against the current task context and interface state. Based on this insight, we propose graph-text templates for selective execution-trace reuse. The graph captures UI states and action transitions, while the text encodes task intent, procedural structure, and typed slots for variable content. A record-template-replay framework constructs templates from verified executions and leverages the current instruction and live UI state to reuse, adapt, or discard individual transitions. Given an execution trace, our framework reduces LLM inference token consumption by approximately 80% on average across five base agents on AndroidWorld, with most agents achieving at least 1.5-fold execution speedup over LLM-only execution. In real-device evaluations on Android and HarmonyOS, our framework achieves action reuse ratios of 70.7-79.8% while maintaining over 2-fold execution speedup in most evaluated configurations.",
+      "authors": [
+        "Bingyu Bai",
+        "Cheng Zhang",
+        "Erhu Feng"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-10-22T03:09:20+00:00",
+      "link": "https://arxiv.org/pdf/2610.31712v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "mobile GUI agents reuse execution traces for repeated task control",
+      "llm_evidence_cn": "移动GUI智能体复用执行轨迹完成重复任务控制",
+      "llm_evidence": "移动GUI智能体复用执行轨迹完成重复任务控制",
+      "canonical_evidence": "移动GUI智能体复用执行轨迹完成重复任务控制",
+      "llm_tldr_en": "Addresses repeated mobile GUI tasks by reusing validated execution traces; graph-text templates selectively reuse transitions under changing instructions and UI states, reducing LLM inference and execution overhead.",
+      "llm_tldr_cn": "针对移动GUI智能体在重复任务中重复调用大模型、执行开销高的问题，论文系统分析了用户指令与环境变化对历史执行轨迹的影响，提出图-文模板来选择性复用经过当前任务上下文和界面状态验证的动作转移。实验表明该方法能在变化场景下保留可复用片段，减少冗余推理与执行成本，为移动端GUI任务自动化提供了高效轨迹复用机制。",
+      "llm_tldr": "针对移动GUI智能体在重复任务中重复调用大模型、执行开销高的问题，论文系统分析了用户指令与环境变化对历史执行轨迹的影响，提出图-文模板来选择性复用经过当前任务上下文和界面状态验证的动作转移。实验表明该方法能在变化场景下保留可复用片段，减少冗余推理与执行成本，为移动端GUI任务自动化提供了高效轨迹复用机制。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "mobile agent that performs tasks on behalf of user",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2610.34384v1",
+      "source": "arxiv",
+      "title": "AndroidFlux: Evaluating and Reward Modeling Failure Recovery Capabilities in Mobile Use Multimodal Agents",
+      "abstract": "Mobile-use multimodal agents are typically evaluated by task success from a clean initial state, which does not isolate their ability to recover from intermediate errors. Because mobile environments change dynamically, a general mobile-use agent must complete tasks robustly even from unexpected states and in unseen environments. This requires knowing when and where an agent makes errors, and whether it can recover from errors and subsequent states. To evaluate this capability, we introduce AndroidFlux, a failure-recovery benchmark built on AndroidWorld. AndroidFlux restores recorded trajectories to controlled checkpoints before, at, and after the first recoverable error, so that different agents continue from the same device state and history. On these checkpoints, a complementary reward-modeling benchmark evaluates recovery-action preferences using downstream rollout outcomes. We further release an offline reinforcement learning (RL) dataset that improves both error recovery and overall task success. Our evaluations show that recovery performance only partially correlates with clean-start success, and that explicit reasoning helps only models trained with GUI-domain specific RL.",
+      "authors": [
+        "Gyubeum Lim",
+        "Yemo Koo",
+        "Ghunwoo Jang",
+        "Zsolt Kira"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL",
+        "cs.CV"
+      ],
+      "published": "2026-10-25T15:39:24+00:00",
+      "link": "https://arxiv.org/pdf/2610.34384v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "benchmark evaluating mobile-use multimodal agents failure recovery on Android",
+      "llm_evidence_cn": "评估安卓移动多模态智能体故障恢复能力的基准",
+      "llm_evidence": "评估安卓移动多模态智能体故障恢复能力的基准",
+      "canonical_evidence": "评估安卓移动多模态智能体故障恢复能力的基准",
+      "llm_tldr_en": "AndroidFlux is a failure-recovery benchmark on AndroidWorld that restores recorded trajectories to controlled checkpoints so mobile-use multimodal agents can be evaluated and reward-modeled on error detection and recovery.",
+      "llm_tldr_cn": "现有移动端多模态智能体多从干净初始状态评估任务成功率，无法单独衡量其从中间错误中恢复的能力。为此作者提出AndroidFlux，基于AndroidWorld构建失败恢复基准，将记录轨迹恢复到首次可恢复错误前后的受控检查点，让不同智能体从相同状态继续执行。实验揭示了各智能体在错误检测与恢复上的差异，为移动端智能体鲁棒性评估与奖励建模提供了新工具。",
+      "llm_tldr": "现有移动端多模态智能体多从干净初始状态评估任务成功率，无法单独衡量其从中间错误中恢复的能力。为此作者提出AndroidFlux，基于AndroidWorld构建失败恢复基准，将记录轨迹恢复到首次可恢复错误前后的受控检查点，让不同智能体从相同状态继续执行。实验揭示了各智能体在错误检测与恢复上的差异，为移动端智能体鲁棒性评估与奖励建模提供了新工具。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2610.34735v1",
+      "source": "arxiv",
+      "title": "iPrefBench: A User-Centric Benchmark for Personalized Mobile Use Agents",
+      "abstract": "An agent that truly knows and acts on behalf of its user has been a long-standing promise of AI assistants. Computer-use agents bring this promise within reach by capably executing fully specified tasks across apps. However, real-world user requests are often underspecified. To act correctly for the particular user, an agent must infer some missing information from the user's activity history and ask for other information that only the user can provide, without making unsupported assumptions or burdening the user with unnecessary questions. We present iPrefBench, a benchmark for evaluating the infer and ask capabilities of personal mobile-use agents in an executable iOS environment with an interactive simulated user. Grounded in a coherent persona with 3,051 past activity events, iPrefBench comprises 130 underspecified user tasks across 26 apps. Each omitted user-dependent requirement is, by construction, either history-inferable or ask-only. iPrefBench evaluates personalized mobile agents on both whether agents complete tasks correctly for the user (i.e., personalized task completion) and whether they seek user input when necessary (i.e., user-agent interaction). Evaluation of 7 frontier agents reveals a substantial gap between execution and personalization. Agents achieve high action completion scores (up to 91.6%) but low full task success (up to 47.7%) because personalization lags behind. They especially struggle with ask-only information, failing to request enough necessary information. Our findings highlight a challenge for personalized agents in knowing what to infer and when to ask. We hope that iPrefBench can serve as a valuable testbed for building agents that know their user and work with them.",
+      "authors": [
+        "Yuting Ning",
+        "Ruijia Cheng",
+        "Sushobhan Ghosh",
+        "Peitong Duan",
+        "HungShi Lin",
+        "Abhishek Sundararajan",
+        "Shreyash Pandey",
+        "Huan Sun",
+        "Jeffrey Nichols",
+        "Eldon Schoop"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-10-26T02:35:41+00:00",
+      "link": "https://arxiv.org/pdf/2610.34735v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "personal mobile-use agents acting on behalf of user in iOS",
+      "llm_evidence_cn": "在iOS中代表用户行事的个性化手机使用智能体",
+      "llm_evidence": "在iOS中代表用户行事的个性化手机使用智能体",
+      "canonical_evidence": "在iOS中代表用户行事的个性化手机使用智能体",
+      "llm_tldr_en": "iPrefBench benchmarks personal mobile-use agents that must infer underspecified user intent from activity history and ask only necessary questions, evaluated in an executable iOS environment with a simulated user.",
+      "llm_tldr_cn": "真正替用户行事的手机助手面临现实请求往往信息不全的问题，智能体需从用户历史推断缺失信息，并只向用户询问必须由本人提供的内容。作者提出iPrefBench基准，在可执行的iOS环境与交互式模拟用户下评测个性化手机使用智能体的推断与询问能力。该基准以连贯用户画像为依据，推动手机端智能体更贴合个体需求地自主完成任务。",
+      "llm_tldr": "真正替用户行事的手机助手面临现实请求往往信息不全的问题，智能体需从用户历史推断缺失信息，并只向用户询问必须由本人提供的内容。作者提出iPrefBench基准，在可执行的iOS环境与交互式模拟用户下评测个性化手机使用智能体的推断与询问能力。该基准以连贯用户画像为依据，推动手机端智能体更贴合个体需求地自主完成任务。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "mobile agent that performs tasks on behalf of user",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2610.36877v1",
+      "source": "arxiv",
+      "title": "GUI-JEPA: Candidate-Conditioned JEPA Latents as a Fast Action Policy for Mobile GUI Agents",
+      "abstract": "Mobile GUI agents are typically fine-tuned 7B-scale vision-language models (VLMs) that generate each action as text. However, these VLMs decode every action token by token, and even agents that score candidate actions keep a large language model or VLM in the loop, making them slow and memory-hungry. To address these issues, we propose GUI-JEPA, to our knowledge the first decoder-free GUI agent policy built on a Joint-Embedding Predictive Architecture (JEPA), which selects actions in the latent space of a JEPA encoder pretrained on unlabelled GUI screenshots. Its action- and region-conditioned latent predictor turns the screen latent into one latent per candidate action, letting lightweight heads score all candidates against the instruction in a single batched pass, without decoding a token. We further show that the scorer relies on this latent pathway and that the predictor is trained for the decision itself: a randomly initialised predictor does just as well as one pretrained on screen dynamics. On AndroidControl, GUI-JEPA is 2.8-4.0x faster on the same GPU than a Qwen2.5-VL-7B agent we fine-tune with the same inputs, while reaching 86-92% of its in-distribution accuracy with 6% of its parameters. Code is available at https://github.com/bcwang-sjtu/GUI-JEPA",
+      "authors": [
+        "Bingchao Wang",
+        "Yongcheng Jing",
+        "Shunyu Liu",
+        "Chengyu Wang",
+        "Jun Huang",
+        "Jie Yang",
+        "Wei Liu",
+        "Dacheng Tao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.CV"
+      ],
+      "published": "2026-10-27T09:17:51+00:00",
+      "link": "https://arxiv.org/pdf/2610.36877v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "decoder-free action policy enabling fast on-device mobile GUI agent execution",
+      "llm_evidence_cn": "无解码器动作策略实现移动GUI智能体的高效端上执行",
+      "llm_evidence": "无解码器动作策略实现移动GUI智能体的高效端上执行",
+      "canonical_evidence": "无解码器动作策略实现移动GUI智能体的高效端上执行",
+      "llm_tldr_en": "GUI-JEPA replaces token-by-token VLM decoding with a JEPA latent action policy that scores candidate actions directly, making mobile GUI agents fast and light.",
+      "llm_tldr_cn": "移动GUI智能体通常依赖7B级视觉语言模型逐token生成动作文本，推理慢且内存占用高。作者提出GUI-JEPA，这是首个基于联合嵌入预测架构的无解码器GUI智能体策略，在预训练于无标注GUI截图的潜空间中直接选择动作，并用动作与区域条件化的潜变量预测器为每个候选动作打分。轻量头部可对所有候选动作排序，显著降低推理开销。该工作为在移动设备上高效部署GUI智能体提供了新范式。",
+      "llm_tldr": "移动GUI智能体通常依赖7B级视觉语言模型逐token生成动作文本，推理慢且内存占用高。作者提出GUI-JEPA，这是首个基于联合嵌入预测架构的无解码器GUI智能体策略，在预训练于无标注GUI截图的潜空间中直接选择动作，并用动作与区域条件化的潜变量预测器为每个候选动作打分。轻量头部可对所有候选动作排序，显著降低推理开销。该工作为在移动设备上高效部署GUI智能体提供了新范式。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2610.32223v1",
+      "source": "arxiv",
+      "title": "Correct Answers, Closed Gates: SolveBind for GUI Agents at the Verification Barrier",
+      "abstract": "Websites and applications deploy CAPTCHAs and anti-automation mechanisms that use behavioral signals such as interaction trajectories and timing, not outcomes alone, to distinguish humans from automated agents. We call these protected GUI environments, where correctly solving a verification task is insufficient for end-to-end task completion. Agents must turn solver outputs into accepted interactions and adapt execution to runtime feedback under time constraints. We introduce SolveBind, a GUI-agent framework combining hierarchical solving with runtime supervision. A hierarchical solving tree decomposes verification into interdependent Perceive, Ground, Solve, Act, and Verify capabilities. A runtime supervisor grounds action commitments in tool-derived evidence, revises them as evidence arrives, and mediates execution under explicit recovery budgets. Across nine CAPTCHA task families and nine backbone models, SolveBind achieves the highest success rate on eight backbones, outperforming the strongest baseline by 13.3-34.5 percentage points. It achieves the highest success rate on all six AndroidWorld backbones. In a paired GPT-5.5 analysis, MobileAgent produces correct answers but fails dynamic verification on 13 of 90 tasks; SolveBind succeeds on seven of these tasks. With automatic submission, removing binding reduces success from 82.22% to 71.56% and increases latency and token usage. Recovery caps reduce execution cost with a small observed success trade-off: removing them raises success from 82.22% to 83.56%, while increasing latency and token usage to 3.7x and 2.4x their full-supervision values, respectively. These results support evidence-grounded execution control while identifying a success-cost trade-off in recovery and failure boundaries of heuristic submission rules.",
+      "authors": [
+        "Xinhao Song",
+        "Haoxuan Peng",
+        "Su Su",
+        "Hongliang Wu",
+        "Sirui Song",
+        "Gongshen Liu",
+        "Linfeng Zhang",
+        "Dongrui Liu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-10-23T06:27:37+00:00",
+      "link": "https://arxiv.org/pdf/2610.32223v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "GUI agent framework for automating operations through CAPTCHA verification in apps and websites",
+      "llm_evidence_cn": "在应用与网站中跨越验证码屏障实现操作自动化的GUI智能体框架",
+      "llm_evidence": "在应用与网站中跨越验证码屏障实现操作自动化的GUI智能体框架",
+      "canonical_evidence": "在应用与网站中跨越验证码屏障实现操作自动化的GUI智能体框架",
+      "llm_tldr_en": "SolveBind combines hierarchical solving with runtime supervision so GUI agents can turn CAPTCHA solver outputs into accepted interactions in protected environments.",
+      "llm_tldr_cn": "网站与应用通过CAPTCHA等反自动化机制，依据交互轨迹与时序等行为信号区分人类与智能体，使正确解题也不足以完成任务。作者提出SolveBind框架，用分层求解树将验证任务分解为感知、定位、求解、动作与校验等能力，并引入运行时监督把求解结果转化为被接受的真实交互。该框架能在受保护的GUI环境中结合运行时反馈自适应执行。该工作为GUI智能体跨越验证屏障、完成端到端应用操作提供了可行方案。",
+      "llm_tldr": "网站与应用通过CAPTCHA等反自动化机制，依据交互轨迹与时序等行为信号区分人类与智能体，使正确解题也不足以完成任务。作者提出SolveBind框架，用分层求解树将验证任务分解为感知、定位、求解、动作与校验等能力，并引入运行时监督把求解结果转化为被接受的真实交互。该框架能在受保护的GUI环境中结合运行时反馈自适应执行。该工作为GUI智能体跨越验证屏障、完成端到端应用操作提供了可行方案。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2610.34748v1",
+      "source": "arxiv",
+      "title": "Babysitting AI Agents: A User-Centered Taxonomy and Study of Agentic Delegation Failures",
+      "abstract": "Users are increasingly delegating tasks to AI agents, allowing agents to perform long-running, multi-step workflows on their behalf. However, agents may perform these tasks in ways that depart from users' expectations for how they should be carried out, leading to what we call agentic delegation failures. We leverage a large corpus of 163,487 Reddit posts, describing AI agent use, to develop MANDATE: a taxonomy of 23 failure categories organized into seven groups. A follow-up study with 73 AI agent users examined the relationship between prevalence and perceptions of severity and noticeability, finding that failures rated as more severe are considered harder to notice, and that prior experience with a failure is associated with greater noticeability. Finally, we assess the maturity of research on each failure and identify commonly encountered failures that have received little attention (e.g., agents running without making progress). Our findings inform opportunities to make delegation easier for users to oversee and better studied by the research community.",
+      "authors": [
+        "Shravika Mittal",
+        "Sunnie S. Y. Kim",
+        "Scott Counts",
+        "Jennifer Neville",
+        "Debarati Das",
+        "Philippe Laban"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI"
+      ],
+      "published": "2026-10-26T02:49:17+00:00",
+      "link": "https://arxiv.org/pdf/2610.34748v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "taxonomy of failures when users delegate tasks to agents acting on their behalf",
+      "llm_evidence_cn": "用户委托智能体代为执行任务时的失败分类体系",
+      "llm_evidence": "用户委托智能体代为执行任务时的失败分类体系",
+      "canonical_evidence": "用户委托智能体代为执行任务时的失败分类体系",
+      "llm_tldr_en": "MANDATE derives a 23-category taxonomy of agentic delegation failures from 163,487 Reddit posts and a 73-user study, showing severe failures are hardest to notice.",
+      "llm_tldr_cn": "用户越来越多地把长时多步任务委托给AI智能体，但智能体的执行方式常偏离用户预期，形成委托失败。作者基于16万余条Reddit帖子构建MANDATE分类体系，归纳出七组二十三类失败，并对73名用户开展研究。研究发现越严重的失败越难被察觉，且用户过往经历会影响其感知。该工作为用户侧智能体委托设计与风险提示提供了系统化依据。",
+      "llm_tldr": "用户越来越多地把长时多步任务委托给AI智能体，但智能体的执行方式常偏离用户预期，形成委托失败。作者基于16万余条Reddit帖子构建MANDATE分类体系，归纳出七组二十三类失败，并对73名用户开展研究。研究发现越严重的失败越难被察觉，且用户过往经历会影响其感知。该工作为用户侧智能体委托设计与风险提示提供了系统化依据。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "mobile agent that performs tasks on behalf of user",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2610.27977v1",
+      "source": "arxiv",
+      "title": "LiveUIBench: Evaluating Agent as App Workflows",
+      "abstract": "Applications provide convenient features for users to complete daily tasks. However, different users may have different or even conflicting requirements for the same application, while the requirements of the same user may change over time. Personalizing applications produced by agent-to-app or UI-to-code approaches can require changes to the generated implementation. We propose Agent as App, a task in which users express their requirements in natural language and an agent creates a personalized application while continuing to supply its behavior during use. We implement LiveUIAgent, which generates a task-specific orchestration connecting the user interface, saved information, and service actions. A shared agent runtime renders and updates the interface while carrying out the requested operations. Revising the orchestration and interface while reusing that runtime provides a lightweight basis for personalization as requirements evolve. We introduce LiveUIBench, a benchmark with diverse requirements and ordered interactions across personal services. The empirical findings show that the evaluated models struggle to complete these workflows reliably. Applications can satisfy many local checks while leaving the overall task unfinished, and greater partial coverage can coincide with fewer completed workflows.",
+      "authors": [
+        "Tong Zhang",
+        "Yuxuan Cheng",
+        "Ruimin Zhang",
+        "Yun Peng",
+        "Tao Xie"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-10-20T10:20:00+00:00",
+      "link": "https://arxiv.org/pdf/2610.27977v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "agent orchestrates UI and service actions to complete user tasks",
+      "llm_evidence_cn": "智能体编排界面与服务动作完成用户任务",
+      "llm_evidence": "智能体编排界面与服务动作完成用户任务",
+      "canonical_evidence": "智能体编排界面与服务动作完成用户任务",
+      "llm_tldr_en": "Introduces Agent as App and LiveUIBench, where a shared agent runtime orchestrates UI, saved information and service actions to fulfill user requirements in personalized applications.",
+      "llm_tldr_cn": "现有应用难以适配用户多变甚至冲突的需求，而agent-to-app或UI-to-code生成的实现需反复修改。作者提出智能体即应用任务并实现LiveUIAgent，由共享智能体运行时生成并更新界面、编排服务动作以完成用户任务。LiveUIBench据此评估工作流。该工作为界面级任务自动化提供框架与基准，与移动应用内操作自动化高度相关。",
+      "llm_tldr": "现有应用难以适配用户多变甚至冲突的需求，而agent-to-app或UI-to-code生成的实现需反复修改。作者提出智能体即应用任务并实现LiveUIAgent，由共享智能体运行时生成并更新界面、编排服务动作以完成用户任务。LiveUIBench据此评估工作流。该工作为界面级任务自动化提供框架与基准，与移动应用内操作自动化高度相关。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2610.35237v1",
+      "source": "arxiv",
+      "title": "Chart the Invisible: Interactive Perception for Hidden-Target Exploration in GUI Agents",
+      "abstract": "Despite rapid progress in command-line interface (CLI) tasks, recent LLM-based agents still struggle with reliable task execution through graphical user interfaces (GUIs). A key challenge is the limited content visible within a bounded viewport, especially on mobile devices, where many task-relevant targets remain hidden and can only be revealed through swipe interactions. Therefore, although most GUI agents support swipe as an action primitive, the lack of target visibility makes it difficult for them to decide when, where, and how to swipe to reveal the hidden content. Our quantitative study further shows that GUI agents incorrectly choose a click action in 47.8% of cases that require swipe exploration. To bridge this gap, this paper proposes equipping GUI agents with scrollable-region perception to support hidden-area exploration before action selection. To this end, we trained the first multimodal model for scrollable-region perception on a manually collected dataset of 667 UI screens, called Hagasu. By correctly identifying 78.5% of scrollable regions, experiments across nine GUI agents show that integrating Hagasu improves the mean end-to-end completion rate from 64.8% to 82.7% on explore-dependent tasks. To facilitate follow-up research, we release the swipe dataset and the source code of Hagasu.",
+      "authors": [
+        "Yongxiang Hu",
+        "Ruiyang Liu",
+        "Qining He",
+        "Xuan Wang",
+        "Yangfan Zhou"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE"
+      ],
+      "published": "2026-10-26T11:22:27+00:00",
+      "link": "https://arxiv.org/pdf/2610.35237v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "GUI agents on mobile devices exploring hidden targets via swipe to execute tasks",
+      "llm_evidence_cn": "移动设备上的GUI代理通过滑动探索隐藏目标以执行任务",
+      "llm_evidence": "移动设备上的GUI代理通过滑动探索隐藏目标以执行任务",
+      "canonical_evidence": "移动设备上的GUI代理通过滑动探索隐藏目标以执行任务",
+      "llm_tldr_en": "Addresses GUI agents failing on mobile bounded viewports where targets are hidden; proposes interactive perception to decide when, where, and how to swipe, reducing wrong click choices.",
+      "llm_tldr_cn": "针对LLM代理在图形界面任务执行中、尤其在移动设备受限视口下难以发现隐藏目标的问题，本文提出交互式感知方法。研究显示代理在需要滑动探索时有47.8%的情况错误选择点击。方法帮助代理决定何时、何处以及如何滑动以揭示隐藏内容。该工作直接提升了移动端GUI代理的任务执行可靠性，对移动任务自动化意义重大。",
+      "llm_tldr": "针对LLM代理在图形界面任务执行中、尤其在移动设备受限视口下难以发现隐藏目标的问题，本文提出交互式感知方法。研究显示代理在需要滑动探索时有47.8%的情况错误选择点击。方法帮助代理决定何时、何处以及如何滑动以揭示隐藏内容。该工作直接提升了移动端GUI代理的任务执行可靠性，对移动任务自动化意义重大。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2610.32417v1",
+      "source": "arxiv",
+      "title": "Measuring the Energy Cost of Completing Tasks with Quantized Language-Model Agents",
+      "abstract": "Quantization reduces the memory and energy needed to serve large language models (LLMs) and AI agents for coding and data analysis can now run on locally hosted LLMs. In practice, this benefit is commonly benchmarked per output token. Yet an agent calls its model repeatedly, runs tools, and revises its work, and quantization can change both how much the agent generates and whether it succeeds. Existing energy studies either compare quantized models on single requests or measure agents at one fixed precision, overlooking how a change in precision plays out across a complete agent task.   To address this gap, this paper presents the first characterization of the task-level energy trade-offs of model quantization in locally hosted agents. We develop 29 agent tasks with automatic pass/fail checks in six families, ranging from single-answer SQL analytics to multi-step repository bug fixing, and measure CPU and GPU energy per output token and per completed task for 4-bit and 8-bit versions of two open-weight models on bare-metal NVIDIA A100 nodes with llama.cpp.   Our findings reveal that 4-bit precision generally saves energy per token, though whether it saves energy per completed task is task dependent and changes with the model and the execution budget (i.e., limits on turns, tokens, and time). We trace this discrepancy to the extra tokens needed to complete a task in full, which translates into using up to 3.5 times as much energy per completed task. These findings offer actionable guidance for developers and operators choosing model precision for agents, showing how tokens per completed task, set against the per-token saving, reveal whether lower precision completes the work with less energy.",
+      "authors": [
+        "Stephen Abkin",
+        "Aldric Yang",
+        "Alex Flesher",
+        "Nitheesh Kodarapu",
+        "Deepak Panigrahy",
+        "Aakash Tyagi",
+        "David Kebo Houngninou"
+      ],
+      "primary_category": "cs.PF",
+      "categories": [
+        "cs.PF"
+      ],
+      "published": "2026-10-23T09:48:03+00:00",
+      "link": "https://arxiv.org/pdf/2610.32417v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "task-level energy of agents running on locally hosted models for task completion",
+      "llm_evidence_cn": "本地部署智能体完成任务的能耗权衡",
+      "llm_evidence": "本地部署智能体完成任务的能耗权衡",
+      "canonical_evidence": "本地部署智能体完成任务的能耗权衡",
+      "llm_tldr_en": "The first task-level study of quantization energy trade-offs in locally hosted LLM agents shows precision changes both generation volume and task success.",
+      "llm_tldr_cn": "量化能降低大模型的内存与能耗，使智能体可在本地运行，但现有能耗评估多按输出token计量或只测单一精度，忽略了精度变化对完整智能体任务的影响。作者首次刻画本地部署智能体在任务层面的量化能耗权衡，跨多种精度测量智能体完成编码与数据分析任务时的能耗与成功率。结果显示量化会同时改变智能体的生成量和任务成败。该研究为本地运行的任务执行智能体提供了任务级能效评估视角。",
+      "llm_tldr": "量化能降低大模型的内存与能耗，使智能体可在本地运行，但现有能耗评估多按输出token计量或只测单一精度，忽略了精度变化对完整智能体任务的影响。作者首次刻画本地部署智能体在任务层面的量化能耗权衡，跨多种精度测量智能体完成编码与数据分析任务时的能耗与成功率。结果显示量化会同时改变智能体的生成量和任务成败。该研究为本地运行的任务执行智能体提供了任务级能效评估视角。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "agent running locally on device for task completion",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2610.33178v1",
+      "source": "arxiv",
+      "title": "AOS-Bench: Can LLM Agents Manage Dynamic Workloads?",
+      "abstract": "Coding agents are moving from handling one request at a time to serving as persistent assistants to which users hand a stream of work: a build, a data-processing job and a bug fix may all be pending on the same machine at once. Such an agent must decide when to take on new tasks, how to delegate and overlap them, and how to stay within the machine's CPU and memory. Existing benchmarks cannot measure this, because they evaluate each task in isolation. We introduce \\benchname{}, which evaluates an agent system as a workload manager: verified tasks arrive over time and must be delivered under shared CPU and memory limits, and the same tasks run one at a time serve as a per-system reference.   Across five model--harness pairs, isolated task success does not carry over evenly. On heavy workloads every system loses 13 to 23 points. On medium workloads, systems span 11 points in isolated success but 26 points in stream success, and two systems 0.6 points apart in isolation deliver 54\\% and 68\\% of the same tasks. Execution-policy interventions trace much of this gap to task intake: serial dispatch leaves 73\\% of heavy-workload tasks unclaimed. Yet more elaborate management does not necessarily help. A fixed concurrency of two comes within four points of the best agent-managed policy on both medium and heavy workloads, and under every policy median CPU use stays below 30\\% of the provisioned cores while tasks wait. These results identify workload management as a distinct capability for agents, and \\benchname{} as a way to measure it.",
+      "authors": [
+        "Erle Zhu",
+        "Genrui Zhang",
+        "Keyang Hu",
+        "Mingyu Su",
+        "Hongning Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-10-23T18:20:48+00:00",
+      "link": "https://arxiv.org/pdf/2610.33178v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "benchmark evaluates LLM agents managing concurrent tasks under CPU and memory limits",
+      "llm_evidence_cn": "基准评估LLM智能体在CPU与内存限制下管理并发任务",
+      "llm_evidence": "基准评估LLM智能体在CPU与内存限制下管理并发任务",
+      "canonical_evidence": "基准评估LLM智能体在CPU与内存限制下管理并发任务",
+      "llm_tldr_en": "Introduces a benchmark for LLM agents as workload managers, where tasks arrive over time under shared CPU and memory limits; isolated task success does not transfer evenly to concurrent workload management.",
+      "llm_tldr_cn": "现有基准通常孤立评估单个任务，无法衡量智能体作为持续助手管理动态工作负载的能力。论文提出AOS-Bench，让经过验证的任务随时间到达，智能体需在共享CPU与内存限制下决定接单、委派与重叠执行。对五组模型-框架组合的评估显示，单任务成功率并不能均匀迁移到并发工作负载管理，说明资源约束下的任务调度需要单独评测，为端侧智能体部署评估提供了新基准。",
+      "llm_tldr": "现有基准通常孤立评估单个任务，无法衡量智能体作为持续助手管理动态工作负载的能力。论文提出AOS-Bench，让经过验证的任务随时间到达，智能体需在共享CPU与内存限制下决定接单、委派与重叠执行。对五组模型-框架组合的评估显示，单任务成功率并不能均匀迁移到并发工作负载管理，说明资源约束下的任务调度需要单独评测，为端侧智能体部署评估提供了新基准。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Evaluation of mobile agent frameworks for task execution",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2610.33907v1",
+      "source": "arxiv",
+      "title": "OS-Wizard: Scaling Computer-Using Agents to Specialized Software via Knowledge-Guided Exploration",
+      "abstract": "Computer-using agents are increasingly capable of performing complex tasks in the digital world. However, high-quality interaction trajectories remain scarce for specialized desktop applications, where limited application knowledge, cumbersome GUI workflows, and incomplete exploration hinder automated collection. We introduce OS-Wizard, an automated trajectory collection framework. It combines tutorial-guided exploration with a hybrid GUI--Code action space, providing application-specific knowledge and simplifying GUI workflows through direct execution of application-native commands. The framework also checkpoints and revisits pivotal states during tree exploration to explore alternative workflows, complementing linear rollouts for broader coverage. We collect 10.9K trajectories comprising 54.9K state--action samples. Fine-tuning open-source base models on this corpus yields a best-performing model that improves performance on a benchmark of specialized desktop workflows by 58.2 percentage points to 64.1\\%, surpassing reported human performance of 59.8\\% and establishing a new state of the art. The fine-tuned model also improves performance on general desktop workflows using GUI actions only, suggesting that the collected supervision benefits general desktop tasks as well. Comparative experiments and ablations demonstrate the efficiency of trajectory collection and the importance of code actions.",
+      "authors": [
+        "Zhoumianze Liu",
+        "Zichen Ding",
+        "Bowen Yang",
+        "Zehao Li",
+        "Zhenyu Wu",
+        "Yibo Zhao",
+        "Kanzhi Chen",
+        "Yian Wang",
+        "Yanan Sun",
+        "Qiushi Sun",
+        "Yu Qiao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-10-24T20:39:23+00:00",
+      "link": "https://arxiv.org/pdf/2610.33907v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "GUI-code agent automates operations in specialized desktop applications, transferable to mobile app automation.",
+      "llm_evidence_cn": "GUI-代码智能体自动化专用桌面应用操作，可迁移到移动应用自动化。",
+      "llm_evidence": "GUI-代码智能体自动化专用桌面应用操作，可迁移到移动应用自动化。",
+      "canonical_evidence": "GUI-代码智能体自动化专用桌面应用操作，可迁移到移动应用自动化。",
+      "llm_tldr_en": "OS-Wizard collects high-quality interaction trajectories for specialized desktop software by combining tutorial-guided exploration, a hybrid GUI-code action space, and checkpoint-based state revisiting.",
+      "llm_tldr_cn": "针对专用桌面应用高质量交互轨迹稀缺、应用知识有限和GUI工作流繁琐的问题，本文提出OS-Wizard自动轨迹收集框架。该方法结合教程引导探索与GUI-代码混合动作空间，并检查点回访关键状态以探索替代流程。该框架能够为专用软件扩展计算机使用智能体的轨迹收集与任务执行能力。OS-Wizard为桌面GUI智能体提供可扩展的数据收集方法，对移动应用自动化具有方法借鉴意义。",
+      "llm_tldr": "针对专用桌面应用高质量交互轨迹稀缺、应用知识有限和GUI工作流繁琐的问题，本文提出OS-Wizard自动轨迹收集框架。该方法结合教程引导探索与GUI-代码混合动作空间，并检查点回访关键状态以探索替代流程。该框架能够为专用软件扩展计算机使用智能体的轨迹收集与任务执行能力。OS-Wizard为桌面GUI智能体提供可扩展的数据收集方法，对移动应用自动化具有方法借鉴意义。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
