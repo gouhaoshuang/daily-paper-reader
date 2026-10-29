@@ -1,0 +1,1157 @@
+LeafSkill: Efficient Leaf-Level Action Grounding for Recursive LLM Agents
+Shen Liu1, Ze Zhou2, Zhenguo Xu3, Shaopu Wang4, Yike Gao4, Chunlei Wang4∗
+1 North China Institute of Computer System Engineering, Beijing, China
+2 Beijing University of Aeronautics and Astronautics, Beijing, China
+3 University of Science and Technology of China, Hefei, China
+4 China Information Security Research Institute Co., Ltd., Beijing, China
+liushen24@mails.ucas.edu.cn, 22374238@buaa.edu.cn, xzg@mail.ustc.edu.cn,
+wangshaopu18@mails.ucas.ac.cn, yikegao@mail.ustc.edu.cn, wangchl@cecr.ac.cn
+Abstract
+Recursive large language model (LLM) agents often invoke a
+large host model after decomposition has reduced the problem
+to grounding a leaf task into one executable action. Our traces
+show that this last-mile grounding consumes 22.9–44.5%
+of host-model tokens. We introduce LeafSkill, an external
+action-grounding layer that reuses local task–action experience
+without taking over recursive planning. LeafSkill separates
+recall from execution: semantic retrieval proposes task–action
+templates, deterministic binding instantiates currently admissi-
+ble actions, and a lightweight controller selects a candidate or
+abstains. The controller cannot generate free-form commands,
+and abstention returns control to the host. With the same
+ReCAP planner and Qwen3.5-27B host, LeafSkill reduces
+host tokens on jointly solved tasks by 23.1% on Robotouille
+and 41.3% on ALFWorld, each averaged over all nine cross-
+run pairings of three independent repeats; an independent
+Robotouille set yields a 14.4% reduction. Mean observed suc-
+cess is numerically higher for LeafSkill in both environments.
+A disjoint growth study expands the library from 446 to 588
+skills without selector retraining or test trajectories; on tasks
+solved by all systems, host-token savings deepen from 18.3%
+to 25.6%. Ablations show that retrieval supplies paraphrase
+coverage, binding enforces executability, and learned selection
+controls when reuse is appropriate. Leaf-level action grounding
+therefore reduces expensive host inference while preserving
+recursive planning and recovery.
+1
+Introduction
+Recursive LLM agents tackle long-horizon tasks by decom-
+posing goals into progressively smaller task nodes (Yao et al.
+2023b,a; Hu et al. 2025; Zhang et al. 2025). Yet decompo-
+sition does not eliminate expensive host-model inference.
+Even after a leaf task has become explicit, the agent may
+still invoke the same large model merely to translate that
+task into one action accepted by the current environment. For
+example, once the planner has produced “pick up onion1 from
+board1,” the remaining decision is no longer how to solve the
+overall goal, but how to ground this local instruction into an
+executable command.
+We call this operation leaf-level action grounding: mapping
+an already specified task node to one currently admissible
+environment action, without altering decomposition, parent
+∗Corresponding author.
+Benchmark
+Host-token split
+Grounding
+Robotouille Sync
+22.9%
+Robotouille Async
+23.7%
+ALFWorld
+44.5%
+other host work
+strict leaf/action grounding
+Figure 1: Host-token composition of ReCAP trajectories used
+for skill-library construction in Robotouille and ALFWorld.
+plans, or completion state. Although local, this operation
+recurs throughout a trajectory. A conservative audit of the
+source corpora used for library construction shows that strict
+leaf grounding consumes 22.9% and 23.7% of host-model
+tokens in two Robotouille splits, and 44.5% in ALFWorld
+(Figure 1). Leaf grounding is therefore a narrow but substantial
+target for reducing host inference. We study this opportunity
+using ReCAP as the recursive host, while leaving its planning,
+recovery, and completion mechanisms unchanged.
+Reusing these decisions is not equivalent to exact-string
+caching. Semantically equivalent tasks may be expressed by
+different phrases, while similar phrases may encode different
+intents. Retrieved arguments may be absent from the current
+state, and the same task may ground to different actions
+under different observations. Effective reuse must therefore
+solve four distinct problems: semantic recall, state-dependent
+instantiation, candidate disambiguation, and safe abstention.
+We introduce LeafSkill, an external action-grounding layer
+for recursive LLM agents. Its frozen library stores canonical-
+task/action-template pairs, each of which we call a skill;
+multiple skills may share one canonical task key. Given a leaf
+task, semantic retrieval recalls related templates, deterministic
+binding instantiates them with entities from the current state
+and removes inadmissible actions, and a lightweight controller
+selects among the remaining request-local candidates or
+abstains. The controller cannot generate free-form commands,
+and abstention returns control to the host without changing
+agent state. LeafSkill thus delegates only the final choice
+within a finite, state-bound action set, while recursive planning,
+recovery, and goal completion remain entirely host-owned.
+This boundary distinguishes LeafSkill from systems that
+arXiv:2610.32412v1  [cs.AI]  23 Oct 2026
+
+
+return retrieved text for host reinterpretation or route an entire
+prompt to another model.
+With the same ReCAP planner and Qwen3.5-27B host,
+LeafSkill reduces host-model tokens on jointly solved tasks
+by 23.1% on Robotouille and 41.3% on ALFWorld, each
+averaged over all nine cross-run pairings of three independent
+repeats. The nine pairing-specific reductions span 16.8–29.7%
+and 36.7–45.2%, respectively. An independent Robotouille
+evaluation yields a further 14.4% reduction, while mean ob-
+served success is numerically higher for LeafSkill in both
+environments. A disjoint growth study expands the library
+from 446 to 588 skills without selector retraining or test
+trajectories; on tasks solved by all systems, host-token sav-
+ings deepen from 18.3% to 25.6%. Ablations further show
+that retrieval supplies paraphrase coverage, binding enforces
+executability, and learned selection controls when reuse is
+appropriate.
+Our contributions are:
+• Problem formulation and measurement. We formulate
+leaf-level action grounding as a distinct delegation bound-
+ary in recursive LLM agents and show that it accounts for
+22.9–44.5% of host-model tokens in our source traces.
+• Constrained grounding architecture. We develop a
+retrieve–bind–select layer that converts reusable task–
+action experience into state-bound admissible candi-
+dates, while preserving host-owned planning and recovery
+through explicit abstention.
+• Cross-environment
+efficiency
+evidence.
+Across
+Robotouille and ALFWorld, we demonstrate substantial
+host-token reductions on jointly solved tasks, identify the
+complementary roles of retrieval, binding, and selection,
+and show that post-training library growth can further
+increase savings without selector retraining.
+2
+Related Work
+Recursive agent backbones.
+ReAct interleaves reasoning
+with interaction (Yao et al. 2023b), while Tree of Thoughts
+searches over intermediate reasoning states (Yao et al. 2023a).
+HiAgent manages long-horizon context through hierarchical
+working memory (Hu et al. 2025), and ReCAP represents
+goals, subtasks, and feedback in a recursive task tree (Zhang
+et al. 2025). These approaches primarily improve planning,
+context management, and recovery. LeafSkill is complemen-
+tary: it operates only after an environment adapter exposes
+an eligible leaf task, without taking over decomposition or
+tree-state control. We instantiate this boundary with ReCAP
+as the recursive host.
+Experience and skill reuse.
+Agents reuse prior experience
+as verbal feedback or distilled lessons (Shinn et al. 2023;
+Zhao et al. 2024), executable programs or workflows (Wang
+et al. 2024, 2025), and retrieved demonstrations (Kim et al.
+2024). RAG externalizes evidence from parametric genera-
+tion (Lewis et al. 2020). Agent-oriented work includes Ex-
+pRAG, which retrieves trajectories into an action-generating
+context (Ferraz et al. 2026), and SkillRet, which benchmarks
+skill retrieval (Cho, Kang, and Kim 2026). Recent systems
+further structure experience as dependency-aware skill doc-
+uments or executable multi-step graphs: Graph of Skills
+System
+Reused unit
+Delegated decision
+ExpRAG
+Retrieved trajectories
+Policy conditions action generation
+on retrieved experience
+GoS
+Skill documents and graph
+neighbors
+Host interprets a dependency-aware
+skill bundle
+GraSP
+Typed skill DAG
+Graph executor composes and re-
+pairs multiple nodes
+LeafSkill
+State-bound action candi-
+dates
+Local selector chooses an admissi-
+ble action or abstains
+Table 1: Reuse granularity and delegated decisions in repre-
+sentative experience-reuse systems. LeafSkill delegates only
+a request-local choice over admissible actions.
+retrieves skill bundles and graph neighbors (Liu et al. 2026),
+whereas GraSP compiles typed skill DAGs with node-level
+execution and repair (Xia et al. 2026).
+LeafSkill differs in both reuse granularity and delegated
+authority (Table 1). It retrieves task–action templates, binds
+them to the current state, and permits the local controller to
+choose only among the resulting admissible actions or abstain.
+Candidate identities are request-local rather than members of
+a fixed global output vocabulary, so compatible skills can be
+added without changing the selector’s output space.
+Constrained action grounding.
+Affordance-aware meth-
+ods combine language-model proposals with external fea-
+sibility signals (Ahn et al. 2022). SCLPlan uses PDDL-
+defined symbolic oversight to constrain goal and plan con-
+struction (Byrd et al. 2025), while CRANE constrains
+language-model generation through grammar-constrained
+decoding (Banerjee et al. 2025). LeafSkill targets a narrower
+boundary: retrieval proposes reusable templates, determinis-
+tic binding converts them into currently admissible actions,
+and the learned controller selects only within that finite set or
+abstains. It therefore constrains one leaf-level action without
+modifying the host planner or its decoding process.
+Cost-aware model routing.
+Cost-aware systems select or
+sequence models for a complete request (Chen, Zaharia, and
+Zou 2024; Ong et al. 2025). LeafSkill does not route the
+recursive prompt: the host first determines the leaf task, and
+the local controller chooses only among state-bound actions
+before control returns to the same host.
+3
+Method
+Overview
+LeafSkill has an offline construction stage and an online
+grounding stage. Offline, host trajectories are converted into
+canonical task–action templates and selector supervision.
+Online, LeafSkill is invoked only at adapter-eligible leaf
+tasks: it retrieves related templates, binds them to the current
+admissible action set, and either selects one action or abstains.
+Figure 2 summarizes both stages.
+
+
+Recursive LLM Agent
+High-level Planning
+Recursive
+Root Goal
+Planner
+Subtask
+Subtask
+Leaf Task
+Leaf Task
+Repeated Grounding Baseline
+Leaf Task 1
+Leaf Task 2
+Leaf Task 3
+27B
+Host LLM
+invoked every time
+Repeated prompt + observation
++ valid-action schema
+High token and invocation cost
+LeafSkill: Efficient Leaf-Level Action Grounding
+Semantic Retrieval
+Valid-Action Binding
+Lightweight Selection
+1
+2
+3
+External Skill
+Library
+Current objects
+Frozen local
+“grab the onion”
+1.7B
+controller
+query embedding
+onion1
+board1
+Task–Action
+Allowed actions
+abstain
+Templates
+reuse
+top-k semantic matches
+pick_up(·, ·)
+USE_SKILL
+FALLBACK
+addable after training
+paraphrase tolerant
+candidate P2
+when unsure
+executable candidates
+cross-task reuse
+Planner-Agnostic Local Interface
+Controller reads only
+Current leaf task
+local intent
+No root goal or recursive history
+Observation
+current state
+Valid actions
+hard constraint
+Request-local candidates
+re-indexed skill IDs
+Frozen Controller
+Constrained Decision
+Executable Action
+reads new skills
+select or abstain
+or unchanged leaf task
+Retrieval broadens recall; the environment interface enforces executability.
+baseline / fallback: host-model grounding
+Execution & Feedback
+Environment Interface
+Execute legal action
+strict string interface
+updated state
+Safe Fallback
+No candidate, invalid binding,
+format error, or low confidence
+return leaf task to host planner
+Expected Effect
+Fewer 27B calls
+Lower token use
+Preserve the recursive planning logic
+Figure 2: Overview of LeafSkill. At an eligible leaf task, retrieval recalls templates, binding instantiates admissible actions, and
+the local selector executes a candidate or abstains to the unchanged host. Source trajectories construct the frozen library and
+selector supervision offline.
+Leaf-Level Delegation Boundary
+Definition (leaf-level grounding). Leaf-level grounding maps an
+already specified task node to one action in the environment’s
+current admissible set, without modifying task decomposition, a
+parent’s plan, or task-completion state.
+Let the eligible task node, local observation, and admissible
+action set at time t be τt, ot, and At. With host planner P
+and external library L, define
+gt = Gθ(τt, ot, At; L) ∈At ∪{⊥},
+Πt =
+gt,
+gt ∈At,
+P(τt, ot, At),
+gt = ⊥.
+(1)
+Here ⊥is a state-preserving abstention: no delegated action
+is executed, and the same node returns to the host. The
+environment adapter determines where delegation may be
+attempted; the selector determines whether a bound candidate
+should execute.
+Design principles.
+Narrow delegation keeps decomposi-
+tion, recovery, and completion with the host. Retrieval for
+recall proposes semantically related experience but cannot
+authorize execution. Binding for admissibility instantiates
+current entities and removes commands outside At. Selec-
+tion with abstention resolves the remaining ambiguity while
+preserving the host path when local evidence is insufficient.
+Retrieve–Bind–Select
+Each skill s ∈L is a canonical-task/action-template pair
+with observed surface forms and provenance. Multiple skills
+may share one canonical task key, preserving state-dependent
+one-to-many actions. For an eligible request, retrieval and
+binding construct
+Rt = TopK(τt, L; k, γ),
+Ct = {(s, a) | s ∈Rt, a ∈At,
+a ∈Instantiate(s, τt, ot)}.
+(2)
+Semantic retrieval.
+The retriever ranks canonical task keys
+against τt and returns the top-k keys above similarity threshold
+γ. All templates associated with those keys proceed to binding.
+Retrieval is recall oriented: it may propose multiple related
+intents, but a retrieved template alone cannot execute.
+State-bound binding.
+The binder instantiates typed tem-
+plate slots with entities from the current request and retains
+only concrete commands that exactly match an action in At.
+It merges duplicate skill–action pairs, producing the finite
+candidate set Ct.
+Local selection and abstention.
+Candidates receive
+request-local identifiers and are shuffled before presenta-
+tion to the selector. The selector chooses one identifier or
+⊥; it cannot generate a free-form command. The selected
+identifier is resolved through the request-local mapping and
+checked against At again before execution. The selector is
+not a policy over the full admissible set: retrieval and binding
+define its request-local support, and an empty support returns
+control to the host. Algorithm 1 gives the complete online
+procedure.
+Environment Adapters and State-Bound Binding
+Eligibility is structural, not a function of retrieval similarity,
+library support, or controller confidence. Robotouille exposes
+atomic leaves directly. ALFWorld has no equivalent flag, so
+its adapter admits only non-root nodes on the downward
+execution path and excludes the root, upward-return, and
+revisit phases. For example, check fridge 1 is eligible
+
+
+Algorithm 1 Selective leaf-level grounding
+Require: node τt, observation ot, admissible set At, library L
+1: if ¬Eligible(τt, ot) then return ⊥
+2: R ←TopK(τt, L, k, γ)
+3: C ←∅
+4: for all s ∈R, a ∈Instantiate(s, τt, ot) do
+5:
+if a ∈At then
+6:
+C ←Merge(C, (s, a))
+7:
+end if
+8: end for
+9: if C = ∅then return ⊥
+10: ( eC, π) ←LocalizeAndShuffle(C)
+11: j ←Select(τt, ot, At, eC)
+12: if j = ⊥then return ⊥
+13: a ←Resolve(j, π)
+14: if a = ⊥or a /∈At then return ⊥
+15: return a
+Environment
+Adapter boundary
+Binding example
+Robotouille
+Native atomic-leaf flag
+pick up [food] from
+[board] →pick up onion1
+from board1
+ALFWorld
+Non-root downward phase;
+exclude root, upward re-
+turn, and revisit
+check fridge 1 →go to
+fridge 1
+Table 2: Environment-specific eligibility and state-bound
+action instantiation.
+while the planner descends toward an unresolved child, but
+not when the node is revisited during recovery. Table 2
+summarizes the two adapters.
+Canonicalization and binding.
+Canonicalization low-
+ercases
+text,
+joins
+spaced
+object
+identifiers
+(e.g.,
+fridge 1→fridge1), tokenizes alphanumeric fields,
+and replaces instance suffixes with typed placeholders
+(onion1→onion#). It normalizes entity indices but leaves
+paraphrase matching to retrieval. For each retrieved skill,
+the binder compares its canonical action with canonicalized
+strings in At and requires every concrete object identifier
+mentioned by τt to occur in the action. It therefore enumer-
+ates current interface strings rather than asking a model to
+synthesize slot values.
+Selector and Deterministic Guards
+The selector receives only the task node, local observation,
+admissible actions, and localized candidate descriptions. It
+does not receive the root goal, ancestor path, remaining plan,
+persistent skill identifiers, or historical support statistics. All
+candidates surviving binding are visible, and request-local
+identifiers are randomized so that the selector must read
+candidate content rather than memorize a global label.
+Empty retrieval, empty binding, explicit abstention, an
+unknown identifier, or a failed final admissibility check returns
+⊥. A skill associated with a failed local execution may be
+masked for the rest of that episode, but the mask resets between
+episodes and never changes the library. Table 3 summarizes
+the deterministic return paths.
+Stage
+Guard
+Outcome
+Retrieval
+No result above γ
+Return ⊥
+Binding
+Missing entity, malformed com-
+mand, or a /∈At
+Remove candidate; return ⊥
+if empty
+Select/resolve
+Abstention, unknown ID, or stale
+mapping
+Return ⊥
+Final check
+Resolved action not in At
+Return ⊥
+Table 3: Deterministic guards ensure that LeafSkill returns a
+currently admissible action or leaves execution to the host.
+Library and Supervision Construction
+A library record is extracted when the host proposes a
+task node and subsequently executes an environment ac-
+tion. Canonicalization converts the pair into a task key and
+an action template. This is local attribution, not a claim that
+the action belongs to a globally optimal trajectory.
+Skill libraries.
+Robotouille uses 200 group-A source trees;
+199 yield at least one pair, for 11,483 task–action instances.
+Canonicalization produces 413 task keys and 446 skills. After
+controller training, the growth condition unions this library
+with pairs from 200 group-B ReCAP trees and deduplicates
+canonical task–action templates. The expanded library con-
+tains 527 keys and 588 skills, adding 114 keys and 142
+skills without controller updates. Group C is never used
+for construction, model selection, or adaptation. ALFWorld
+uses successful valid_seen source episodes, retaining
+1,091 logged instances (1,089 unique executable contexts)
+and producing 226 task keys and 228 skills.
+Lightweight Selector Adaptation
+SFT adapts only the Qwen3-1.7B local selector; it does not
+update the recursive planner or the Qwen3.5-27B host, and it
+does not teach free-form environment-action generation. For
+a deployment-shaped input xi = (τi, oi, Vi, eCi), the label yi
+is the request-local identifier whose bound action equals the
+action in the source trace, or ⊥if that action is absent. The
+selector is trained with
+Lsel = −
+X
+i
+log pθ(yi | xi).
+(3)
+Thus, adaptation supervises both which retrieved candidate
+to use and when to preserve the host fallback. Candidate
+identifiers are re-localized and shuffled for every example,
+preventing a persistent skill ID from becoming the prediction
+target.
+Training
+data
+and
+routes.
+Training
+reproduces
+deployment-time retrieval and binding. Mixed-rank examples
+move the correct action away from rank one and introduce
+intent-conflicting distractors. Of 413 Robotouille keys, 289
+may appear in the 3,177-decision training set and 124 are
+reserved for the post-training adoption diagnostic. ALFWorld
+adaptation uses the 1,089 unique executable contexts
+from valid_seen. The default ALFWorld route starts
+from the Robotouille-adapted selector and then performs
+target-domain adaptation; the transfer-only and target-only
+
+
+controls omit the second and first stage, respectively. Neither
+Robotouille Group C nor ALFWorld valid_unseen
+enters optimization. We train one epoch of rank-16 LoRA (Hu
+et al. 2022) at each stage and freeze the resulting selector for
+evaluation.
+Compatible post-training additions.
+New skills are com-
+patible when they share the existing action grammar and typed
+slots, use the same retriever, bind to an exact member of At,
+and follow the selector’s request-local description schema.
+Request-local identifiers remove a fixed label vocabulary but
+do not supply new binders or action semantics. The growth
+experiments therefore test read-time incorporation within one
+interface and template family.
+Implementation Details
+The retriever is BGE-small-en-v1.5 (Xiao et al. 2023), and
+the selector is Qwen3-1.7B (Yang et al. 2025). Libraries and
+selector parameters are frozen during evaluation, with no
+online memory updates.
+4
+Experiments
+We organize the evaluation around three questions. RQ1:
+How much host-model inference does LeafSkill save on
+tasks solved by both systems? RQ2: What distinct roles do
+retrieval, binding, and learned selection play? RQ3: Can a
+frozen selector exploit compatible skills added after training?
+Experimental Setup
+Environments and splits.
+Robotouille contains syn-
+chronous cooking tasks and asynchronous tasks with wait-
+ing and parallel dependencies (Gonzalez-Pumariega et al.
+2025). ALFWorld provides household tasks with standard
+valid_seen and valid_unseen splits (Shridhar et al.
+2021). Table 4 separates construction, analysis, and final
+evaluation data. Robotouille repeats over Group B estimate
+rollout variability on the same 200 tasks and are not pooled as
+600 independent instances. In the growth study only, B-group
+ReCAP traces are added after selector training; Group C
+remains evaluation only.
+Environment
+Split
+Size
+Role
+Robotouille
+A
+200
+Library and selector construction
+B
+200
+Repeats, ablations, and growth source
+C
+200
+Independent evaluation
+ALFWorld
+valid_seen
+140
+Library and optional adaptation
+valid_unseen
+134
+Final evaluation
+Table 4: Data partitions. Evaluation data never enter library
+construction or controller adaptation.
+Systems and controller routes.
+Every system retains the
+ReCAP recursive planner and Qwen3.5-27B host (Qwen
+Team 2026). We select ReCAP as the host because its pub-
+lished Robotouille pass@1 exceeds CoT, ReAct, and ADaPT
+under the original GPT-4o protocol (Zhang et al. 2025); all
+comparisons here use our shared Qwen3.5-27B setup. Unless
+stated otherwise, Robotouille uses the Group-A library and
+Metric
+n
+Reduction
+95% CI
+Tokens
+106
+14.4%
+[3.0, 24.5]
+Calls
+106
+14.1%
+[3.6, 23.3]
+Table 5: Independent Robotouille-C paired-success host-cost
+reduction.
+Robotouille-trained selector, while ALFWorld uses the same
+228-skill library with Robotouille initialization followed by
+valid_seen adaptation. The controller analysis below sep-
+arates this default from bare, transfer-only, and target-only
+routes.
+Metrics.
+Success is computed over every scheduled episode,
+with terminated episodes counted as failures. Success differ-
+ences use two-sided exact McNemar tests on all task pairs.
+Host efficiency is computed on tasks solved by both systems
+in a run pairing because failed long-horizon trajectories have
+heterogeneous stopping behavior, so their token counts con-
+flate grounding cost with failure timing. We report reductions
+in Qwen3.5-27B prompt-plus-completion tokens and calls,
+termed paired-success host cost; reporting full-set success
+alongside this metric prevents apparent savings from arising
+mechanically from earlier or more frequent failures. When
+both systems have three repeats, the reported reduction is
+the arithmetic mean of the nine cross-run pairings; tasks are
+intersected and the cost ratio is computed separately within
+each cell before averaging. A single-run ablation is paired
+with all three ReCAP repeats and reported as the mean of
+those three reductions. Group-C cost intervals use task-level
+bootstrap 95% CIs.
+Controls and training.
+End-to-end methods share task
+identifiers, model services, context limits, decoding settings,
+and termination rules. Retrieval uses k = 5 and similarity
+threshold γ = 0.70 throughout, with no test-set hyperpa-
+rameter search. ALFWorld uses ten round-robin shards and
+a 49-action limit; every run records all 134 unseen games.
+Controller tokens are reported separately because the 1.7B
+and 27B tokenizers differ. Only LoRA parameters of the
+1.7B selector are updated; the host, planner, retriever, and
+binder remain frozen. Each main-system SFT stage uses one
+epoch of rank-16 LoRA, batch size 1, gradient accumulation
+16, learning rate 2 × 10−5, and maximum length 1,536 on
+one A800 80GB GPU; the context-augmented input-scope
+diagnostic uses maximum length 1,792.
+End-to-End Host Efficiency (RQ1)
+Robotouille.
+Across all nine cross-run pairings of the three
+Group-B repeats, LeafSkill reduces host tokens by 23.09%
+on average (range 16.85–29.68%, n = 87–93 per pairing)
+and host calls by 22.54% on average (Figure 4). On the
+independently seeded Group C, the frozen Group-A library
+reduces tokens by 14.4% (95% CI [3.0, 24.5]) and calls by
+14.1% (95% CI [3.6, 23.3]; Table 5). Observed success is 6.0–
+9.0 points higher on B and 8.0 points higher on C (137/200
+versus 121/200, p = .0259; Table 6).
+
+
+(a) Bare 1.7B (34.40%)
+Controller repeat
+R1
+R2
+R3
+ReCAP repeat
+R1
+36.7%
+33.4%
+33.0%
+R2
+33.5%
+31.1%
+32.8%
+R3
+39.3%
+35.4%
+34.4%
+(b) Robotouille-only SFT (30.99%)
+Controller repeat
+R1
+R2
+R3
+ReCAP repeat
+R1
+32.5%
+33.2%
+31.8%
+R2
+27.5%
+26.5%
+25.2%
+R3
+34.0%
+34.8%
+33.5%
+(c) ALFWorld-only SFT (43.43%)
+Controller repeat
+R1
+R2
+R3
+ReCAP repeat
+R1
+42.4%
+43.8%
+44.4%
+R2
+39.0%
+40.7%
+45.7%
+R3
+44.1%
+45.1%
+45.7%
+(d) Sequential SFT (41.32%)
+Controller repeat
+R1
+R2
+R3
+ReCAP repeat
+R1
+41.6%
+44.2%
+41.7%
+R2
+37.6%
+39.8%
+36.7%
+R3
+42.9%
+45.2%
+42.1%
+Figure 3: ALFWorld cross-run paired-success host-token reduction for four controller routes. Each 3×3 panel crosses ReCAP
+repeats (rows) with controller repeats (columns), and its title gives the nine-cell mean ¯∆9. Jointly solved counts span 106–109,
+112–116, 107–111, and 114–117 in panels (a)–(d).
+Robotouille Group B (mean 23.09%)
+Method repeat
+R1
+R2
+R3
+ReCAP repeat
+R1
+24.9%
+n=91
+23.8%
+n=87
+22.9%
+n=93
+R2
+29.7%
+n=91
+19.0%
+n=93
+19.4%
+n=92
+R3
+28.0%
+n=87
+23.2%
+n=92
+16.8%
+n=89
+Figure 4: Robotouille cross-run paired-success host-token
+reduction. Rows index ReCAP repeats and columns index
+LeafSkill repeats; each cell reports its pairing-specific reduc-
+tion and jointly solved count n. The title reports the arithmetic
+mean over all nine cross-run pairings, ¯∆9.
+Evaluation
+Run
+ReCAP LeafSkill
+p
+∆
+Robotouille B
+R1
+55.5
+61.5
+.126 +6.0
+R2
+56.5
+65.5
+.025 +9.0
+R3
+53.0
+59.5
+.079 +6.5
+Mean
+–
+–
+– +7.2
+Robotouille C
+R1
+60.5
+68.5 .0259 +8.0
+ALFWorld unseen R1
+90.3
+90.3
+1.00
+0.0
+R2
+89.6
+92.5
+.344 +2.9
+R3
+89.6
+92.5
+.424 +2.9
+Mean
+–
+–
+– +2.0
+Table 6: End-to-end success on all scheduled tasks. ∆is
+the percentage-point difference; p is the two-sided exact
+McNemar result for each run.
+ALFWorld.
+Across the nine valid_unseen baseline–
+method pairings, the default sequential selector reduces host
+tokens by 41.32% on average (range 36.73–45.21%, n = 114–
+117) and host calls by 41.75% on average. Over all scheduled
+games, mean success is 91.8% for LeafSkill and 89.8% for
+ReCAP (Table 6).
+Controller overhead.
+Table 7 reports auxiliary inference
+over all scheduled episodes. Instrumented runs use 6,900–
+9,952 controller tokens per episode (714–1,034 per call).
+Because the controller and host differ in tokenizer and scale,
+we report them separately rather than sum raw tokens.
+Cross-run robustness.
+Crossing every ReCAP repeat with
+every method repeat yields positive host-token reductions in
+Evaluation
+Ep.
+Calls
+Ctrl. tok.
+Tok./ep.
+Robotouille B R1
+200
+1,485
+–
+–
+Robotouille B R2–R3
+400
+3,849
+3.98M
+9,952
+Robotouille C
+200
+1,355
+1.38M
+6,900
+ALFWorld unseen R1–R3
+402
+4,636
+3.31M
+8,236
+Table 7: Measured Qwen3-1.7B controller overhead over all
+scheduled episodes. Tokens include prompts and completions;
+Robotouille-B R1 predates token instrumentation.
+Reuse path
+R/B/S
+Success (p2) Tok. red.
+ReCAP R2
+–/–/Host
+113/200 (–)
+–
+RawPair-Exact
+Ex./Raw/Dir.
+121/200 (.3581)
+0.20
+RawPair-BGE
+Sem./Raw/Dir. 127/200 (.0541)
+8.08
+Canonical-Exact
+Ex./St./SFT
+134/200 (.0075)
+29.60
+BGE Top-1
+Sem./St./Dir.
+124/200 (.2000)
+13.08
+BGE Top-5 + Base Sem./St./Base
+113/200 (1.000)
+27.01
+Table 8: End-to-end ablations on Robotouille B. Token re-
+ductions average three comparisons with ReCAP R1–R3
+(n = 83–97); success and p2 compare with R2. R/B/S de-
+notes retrieval/binding/selector.
+all nine Robotouille comparisons and, for every controller
+route, all nine ALFWorld comparisons (Figures 3 and 4).
+Reporting ¯∆9 uses every observed repeat pairing and avoids
+privileging an arbitrary same-index alignment.
+Component Contributions (RQ2)
+Controlled diagnostic protocol.
+Lexical rewrites change
+only the action predicate (e.g., Place→Set); syntactic
+rewrites also reorder the command. Coverage requires the
+bound set to retain the source action. Mixed-rank instances
+add up to four admissible but intent-inconsistent distrac-
+tors and place the source action last. All-negative instances
+bypass object-coverage binding and contain only admissi-
+ble but leaf-inconsistent candidates; the correct output is
+FALLBACK_RECAP (⊥). This is an OOD stress test, not an
+online condition. The input-scope diagnostic compares two
+separately trained selectors constructed from the same 3,177
+examples and canonical-task split. Both are evaluated on the
+same 193 mixed-rank cases. The context-augmented selec-
+tor additionally receives the true recursion depth, root goal,
+parent task, ancestor chain, and remaining siblings. Table 9
+
+
+Diagnostic
+n Comparison
+Result (%)
+Lexical rewrite coverage
+200 Exact / Top-1 / Top-5 0.0 / 79.5 / 96.0
+Syntactic rewrite coverage 200 Exact / Top-1 / Top-5 0.0 / 70.5 / 97.0
+Mixed-rank selection
+193 Base / SFT
+81.9 / 93.3
+All-negative fallback
+200 SFT
+7.5
+Input-scope mixed-rank
+193 Local / + planner
+93.3 / 90.7
+Table 9: Controlled diagnostics: binding coverage (top two
+rows) and controller accuracy (bottom three).
+Library
+Keys
+Skills
+Success
+Tok. red.
+Call red.
+A
+413
+446
+137/200
+18.35%
+17.70%
+A+B
+527
+588
+131/200
+25.64%
+24.22%
+Table 10: Frozen-selector growth on Robotouille C. Cost
+columns use the same 88 tasks solved by ReCAP and both
+library variants.
+reports all sample sizes.
+Retrieval and binding.
+Exact reuse of raw task–action
+pairs changes paired host tokens by only 0.20% on average.
+Semantic retrieval over the same raw pairs yields an 8.08%
+reduction, while state-bound templates with direct Top-1
+execution raise the reduction to 13.08% (Table 8). Canonical-
+Exact with the SFT selector reaches 67.0% success and
+29.60% mean token reduction on the original benchmark
+wording. Its coverage falls from 99.5% on original reference
+actions to 0% under both controlled rewrites; semantic Top-5
+retains 96.0% lexical and 97.0% syntactic coverage (Table 9).
+Semantic retrieval therefore supplies the paraphrase coverage
+used by the default system.
+Selection and abstention.
+On the 100 tasks solved by both
+BGE Top-1 and LeafSkill R2, Top-5 selection provides a
+further 14.9% host-token reduction. SFT raises mixed-rank
+accuracy from 81.9% to 93.3%. End to end, Base reaches
+113/200 success and 27.01% mean token reduction; SFT
+averages 62.17% success and 23.09% reduction, and is 9.0
+points more successful in the direct R2 comparison (p =
+.0198). Thus, the selector calibrates when and which bound
+candidate to execute. In the all-negative OOD diagnostic, SFT
+returns FALLBACK_RECAP in only 7.5% of cases. Because
+binding is bypassed, this measures controller-only fallback
+rather than online abstention and motivates deterministic
+binding before selection. Adding true planner context yields
+90.7% mixed-rank accuracy versus 93.3% with the local
+interface.
+Post-Training Library Growth (RQ3)
+After selector training, adding Group-B traces expands the
+library from 413 keys/446 skills to 527/588 without using
+Group C or updating controller parameters. On the fixed set
+of 88 tasks solved by all three systems, the expanded library
+increases the host-token reduction over ReCAP from 18.35%
+to 25.64% and the call reduction from 17.70% to 24.22%
+(Table 10). Comparing the two libraries directly on their
+105 common successes, A+B reduces host tokens by 11.41%
+Controller
+Training route
+Succ. (%)
+Use (%)
+ReCAP
+no controller
+89.80
+–
+Bare 1.7B
+none
+84.33
+79.41
+Robot.-only
+Robot. SFT
+91.29
+70.99
+ALF-only
+ALF seen SFT
+86.07
+98.02
+Sequential
+Robot. →ALF seen
+91.79
+98.81
+Table 11: ALFWorld success and skill use, averaged over
+three valid_unseen runs. All routes use the same 228-
+skill ALFWorld library; cross-run token results appear in
+Figure 3.
+(95% CI [2.29, 19.49]) and calls by 10.36% relative to A.
+Group-C success is 131/200 with A+B and 137/200 with A
+(p = .5118). In the controlled selector diagnostic, inserting
+124 held-out compatible keys yields 97.3% adoption and
+98.9% retention. Together, these results show that a frozen
+selector can use compatible additions at read time.
+Controller Transfer and Adaptation
+Figure 3 compares all four routes. Robotouille-only SFT
+transfers with 91.29% mean success; ALFWorld-only SFT
+maximizes use (98.02%) and token reduction (43.43%). Se-
+quential SFT achieves the highest success (91.79%) with
+98.81% use and 41.32% token reduction, and is therefore the
+default.
+5
+Discussion and Conclusion
+Efficiency and growth.
+LeafSkill replaces repeated 27B
+leaf-grounding calls with a finite local choice while leaving
+planning and recovery to the host. Retrieval supplies para-
+phrase coverage, binding enforces admissibility, and selection
+resolves candidates. Request-local identifiers also support
+compatible additions: expanding the library from 446 to 588
+skills deepens fixed-set host-token savings from 18.3% to
+25.6% without retraining.
+Scope.
+LeafSkill assumes recurring parameterizable leaves,
+a discrete admissible-action interface, and an environment
+adapter. New action grammars require corresponding adapters
+and binders, while open-ended or continuous actions may
+need richer executable-action interfaces. The present evidence
+covers one planner, one host, two environments, and one
+selector family.
+Overall, LeafSkill shows that recurring leaf grounding can
+be separated from recursive reasoning without replacing the
+host planner. Across Robotouille and ALFWorld, its retrieve–
+bind–select layer reduces Qwen3.5-27B host tokens by 14.4–
+41.3%, while compatible library growth increases savings
+without selector retraining. These results support state-bound
+action reuse as a practical complement to recursive LLM
+planning rather than a replacement for it.
+References
+Ahn, M.; Brohan, A.; Brown, N.; Chebotar, Y.; Cortes, O.;
+David, B.; Finn, C.; Fu, C.; Gopalakrishnan, K.; Hausman, K.;
+et al. 2022. Do As I Can, Not As I Say: Grounding Language
+in Robotic Affordances. In Conference on Robot Learning.
+
+
+Banerjee, D.; Suresh, T.; Ugare, S.; Misailovic, S.; and Singh,
+G. 2025. CRANE: Reasoning with Constrained LLM Gener-
+ation. arXiv preprint arXiv:2502.09061.
+Byrd, G.; Rivera, C.; Kemp, B.; Booker, M.; Schmidt, A.;
+de Melo, C. M.; Seenivasan, L.; and Unberath, M. 2025.
+Constrained Natural Language Action Planning for Resilient
+Embodied Systems. arXiv preprint arXiv:2510.06357.
+Chen, L.; Zaharia, M.; and Zou, J. 2024. FrugalGPT: How
+to Use Large Language Models While Reducing Cost and
+Improving Performance. Transactions on Machine Learning
+Research.
+Cho, H.; Kang, R.; and Kim, Y. 2026. SkillRet: A Large-Scale
+Benchmark for Skill Retrieval in LLM Agents. arXiv preprint
+arXiv:2605.05726.
+Ferraz, T. P.; Deffayet, R.; Nikoulina, V.; Déjean, H.; and Clin-
+chant, S. 2026. Retrieval-Augmented LLM Agents: Learning
+to Learn from Experience. arXiv preprint arXiv:2603.18272.
+Gonzalez-Pumariega, G.; Leong, S. Y.; Sunkara, N.; and
+Choudhury, S. 2025. Robotouille: An Asynchronous Planning
+Benchmark for LLM Agents. In International Conference on
+Learning Representations.
+Hu, E. J.; Shen, Y.; Wallis, P.; Allen-Zhu, Z.; Li, Y.; Wang, S.;
+Wang, L.; and Chen, W. 2022. LoRA: Low-Rank Adaptation
+of Large Language Models. In International Conference on
+Learning Representations.
+Hu, M.; Chen, T.; Chen, Q.; Mu, Y.; Shao, W.; and Luo, P.
+2025. HiAgent: Hierarchical Working Memory Management
+for Solving Long-Horizon Agent Tasks with Large Language
+Model. In Proceedings of the 63rd Annual Meeting of the
+Association for Computational Linguistics, 32779–32798.
+Kim, M.; Bursztyn, V.; Koh, E.; Guo, S.; and Hwang, S.-w.
+2024. RaDA: Retrieval-Augmented Web Agent Planning with
+LLMs. In Findings of the Association for Computational
+Linguistics: ACL 2024, 13511–13525.
+Lewis, P.; Perez, E.; Piktus, A.; Petroni, F.; Karpukhin, V.;
+Goyal, N.; Küttler, H.; Lewis, M.; Yih, W.-t.; Rocktäschel,
+T.; Riedel, S.; and Kiela, D. 2020. Retrieval-Augmented
+Generation for Knowledge-Intensive NLP Tasks. In Advances
+in Neural Information Processing Systems, volume 33.
+Liu, D.; Li, Z.; Du, H.; Wu, X.; Gui, S.; Kuang, Y.; and
+Sun, L. 2026. Graph of Skills: Dependency-Aware Struc-
+tural Retrieval for Massive Agent Skills. arXiv preprint
+arXiv:2604.05333.
+Ong, I.; Almahairi, A.; Wu, V.; Chiang, W.-L.; Wu, T.; Gon-
+zalez, J. E.; Kadous, M. W.; and Stoica, I. 2025. RouteLLM:
+Learning to Route LLMs with Preference Data. In Interna-
+tional Conference on Learning Representations.
+Qwen Team. 2026. Qwen3.5-27B Model Card. Hugging
+Face model repository.
+Shinn, N.; Cassano, F.; Gopinath, A.; Narasimhan, K.; and
+Yao, S. 2023.
+Reflexion: Language Agents with Verbal
+Reinforcement Learning. In Advances in Neural Information
+Processing Systems, volume 36.
+Shridhar, M.; Yuan, X.; Côté, M.-A.; Bisk, Y.; Trischler,
+A.; and Hausknecht, M. 2021. ALFWorld: Aligning Text
+and Embodied Environments for Interactive Learning. In
+International Conference on Learning Representations.
+Wang, G.; Xie, Y.; Jiang, Y.; Mandlekar, A.; Xiao, C.; Zhu, Y.;
+Fan, L.; and Anandkumar, A. 2024. Voyager: An Open-Ended
+Embodied Agent with Large Language Models. Transactions
+on Machine Learning Research.
+Wang, Z. Z.; Mao, J.; Fried, D.; and Neubig, G. 2025. Agent
+Workflow Memory. In Proceedings of the 42nd International
+Conference on Machine Learning, volume 267 of Proceedings
+of Machine Learning Research, 63897–63911. PMLR.
+Xia, T.; Hu, L.; Sun, Y.; Xu, M.; Xu, L.; Wang, S.; Xu, W.; and
+Jiang, J. 2026. GraSP: Graph-Structured Skill Compositions
+for LLM Agents. arXiv preprint arXiv:2604.17870.
+Xiao, S.; Liu, Z.; Zhang, P.; Muennighoff, N.; Lian, D.;
+and Nie, J.-Y. 2023. C-Pack: Packed Resources for General
+Chinese Embeddings. arXiv preprint arXiv:2309.07597.
+Yang, A.; Li, A.; Yang, B.; Zhang, B.; Hui, B.; Zheng, B.;
+Yu, B.; Gao, C.; et al. 2025. Qwen3 Technical Report. arXiv
+preprint arXiv:2505.09388.
+Yao, S.; Yu, D.; Zhao, J.; Shafran, I.; Griffiths, T. L.; Cao,
+Y.; and Narasimhan, K. 2023a. Tree of Thoughts: Deliberate
+Problem Solving with Large Language Models. In Advances
+in Neural Information Processing Systems, volume 36.
+Yao, S.; Zhao, J.; Yu, D.; Du, N.; Shafran, I.; Narasimhan,
+K.; and Cao, Y. 2023b. ReAct: Synergizing Reasoning and
+Acting in Language Models. In International Conference on
+Learning Representations.
+Zhang, Z.; Chen, T.; Xu, W.; Pentland, A.; and Pei, J. 2025.
+ReCAP: Recursive Context-Aware Reasoning and Planning
+for Large Language Model Agents. In Advances in Neural
+Information Processing Systems, volume 38.
+Zhao, A.; Huang, D.; Xu, Q.; Lin, M.; Liu, Y.-J.; and Huang,
+G. 2024. ExpeL: LLM Agents Are Experiential Learners. In
+Proceedings of the AAAI Conference on Artificial Intelligence,
+volume 38, 19632–19642.

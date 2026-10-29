@@ -1,0 +1,1467 @@
+Workflow-Aware Communication and Computation
+Scheduling for Mobile Edge AI Agents
+Xingqiu He, Chaoqun You, Feng Wang, Zihan Chen, Shuai Wang, Jihong Park
+Abstract—AI agents are increasingly deployed in mobile edge
+environments to autonomously handle diverse tasks through
+multi-step workflows. Unlike conventional dependency-aware
+tasks with predefined dependency structures, agent workflows are
+dynamically generated based on intermediate execution results.
+To minimize the weighted sum of job completion latencies, this
+paper models partially revealed agent workflows using dynamic
+workflow graphs and formulates an online scheduling problem
+that jointly optimizes computation placement, wireless resource
+block allocation, and edge computing resource allocation. To
+address the uncertainty of future workflow evolution, we first
+transform the weighted completion time objective into an equiv-
+alent per-slot holding cost and characterize the optimal policy
+through a Bellman equation. We then construct a tractable look-
+ahead cost-to-go surrogate based on the revealed workflow and
+the estimated remaining latencies of active jobs. The proposed
+scheduling algorithm leverages the surrogate to determine com-
+putation placement and uses the resulting operation criticality to
+allocate wireless and edge computing resources online. Simula-
+tion results show that the proposed algorithm outperforms the
+benchmark schemes across diverse scenarios.
+Index Terms—Agent workflow, scheduling algorithm, edge
+computing
+I. INTRODUCTION
+Recent advances in large language models (LLMs) have
+enabled AI agents to reason, take actions, and invoke exter-
+nal tools [1]–[4]. Such agents are increasingly deployed in
+interactive and mobile environments [5]–[7] to support appli-
+cations requiring both environmental awareness and intelligent
+decision-making. Unlike a single model query, an agent job is
+typically executed through a multi-step workflow consisting of
+operations such as sensing, preprocessing, data transmission,
+model inference, and tool invocation [8]. These communi-
+cation and computation operations often exhibit dependency
+constraints, where an operation becomes ready only after all
+its predecessors are completed.
+Different from conventional dependency-aware tasks with
+known dependency structures, an agent workflow is dynami-
+cally generated based on intermediate execution results. Con-
+sequently, an online scheduler can only observe the revealed
+portion of the workflow and must allocate resources before
+future operations become available. Moreover, executing the
+entire workflow locally is often infeasible due to the lim-
+ited computational capability of mobile devices. Although
+edge and cloud computing provide more powerful computa-
+tional resources, offloading operations introduces additional
+transmission delays and resource contention. Therefore, the
+job completion latency is jointly determined by computation
+placement and the allocation of shared communication and
+computing resources [9], [10].
+To improve user experience, it is essential to optimize
+resource allocation to minimize the completion latency of
+agent jobs. However, designing an online scheduling algorithm
+for such workflows faces the following three challenges. First,
+the scheduler must evaluate the long-term impact of each
+decision based on an incomplete workflow, without knowing
+future operations and their dependencies. Second, communi-
+cation and computation are tightly coupled through workflow
+dependencies: wireless transmission determines when down-
+stream computation operations become ready, while compu-
+tation placement determines both their processing rates and
+the additional data transmissions required along the workflow.
+Third, concurrent jobs compete for shared wireless and edge
+computing resources, whose availability varies over time due
+to channel fluctuations and background traffic. These factors
+make computation placement, wireless resource allocation, and
+edge computing allocation highly coupled.
+In this paper, we investigate joint communication and
+computation scheduling for dynamically revealed mobile edge
+agent workflows. We model each partially revealed workflow
+as a dynamic workflow graph and formulate an online schedul-
+ing problem that minimizes the weighted sum of job comple-
+tion latencies. To characterize how current decisions affect this
+objective, we first transform the weighted completion-latency
+objective into an equivalent per-slot holding cost and derive
+the corresponding Bellman equation. Since the exact cost-to-
+go cannot be evaluated due to unknown future workflow and
+resource states, we construct a tractable surrogate based on
+the revealed workflow and the estimated remaining latency
+of each active job. The proposed surrogate assigns smaller
+weights to holding costs predicted to occur farther in the
+future and incorporates a correction term to capture the state
+transitions caused by operation completion. Based on the
+resulting operation criticality, the proposed scheduler jointly
+determines computation placement and resource allocation for
+communication and computation operations in each slot.
+The main contributions are summarized as follows.
+• We introduce a dynamic workflow graph to model agent
+workflows whose operations and dependencies are grad-
+ually revealed during execution. Based on this model, we
+formulate an online scheduling problem that jointly op-
+timizes computation placement, wireless RB allocation,
+and edge computing resource allocation to minimize the
+weighted sum of job completion latencies.
+arXiv:2610.29337v1  [cs.NI]  21 Oct 2026
+
+
+• We transform the weighted completion time objective
+into an equivalent holding-cost objective and construct
+a look-ahead cost-to-go surrogate based on the revealed
+workflow. By combining the workload gradient of the
+surrogate with a completion correction term, we develop
+an online scheduler that accounts for both downstream
+workflow dependencies and state transitions induced by
+operation completion.
+• We develop an event-driven simulator with multiple
+workflow structures and time-varying communication and
+computing resources. Numerical results demonstrate that
+the proposed algorithm outperforms three benchmarks
+across diverse scenarios.
+II. RELATED WORK
+Dependency-Aware Task Scheduling. Scheduling tasks
+with precedence dependencies has been extensively studied in
+heterogeneous and edge computing. HEFT assigns the opera-
+tions of a known DAG to heterogeneous processors according
+to their upward ranks [11]. PEFT further uses an optimistic
+cost table to incorporate downstream execution costs into
+task ranking and processor selection [12]. In edge computing
+networks, computation offloading further couples task exe-
+cution with wireless and computing resource allocation [9].
+Dependency-aware studies optimize offloading and scheduling
+across device, edge, and cloud resources [13], [14]. Recent
+online approaches further update task priorities as multiple
+applications arrive and resource conditions change [15]. These
+methods account for resource heterogeneity and workflow
+dependencies, and some adapt their decisions online. However,
+the complete set of operations and dependencies of each
+admitted application is available before scheduling begins.
+Resource Scheduling for Edge AI. Resource scheduling
+for edge AI has mainly focused on accelerating DNN infer-
+ence under limited communication and computing resources.
+Neurosurgeon [16], JointDNN [17], and Edge AI [10] partition
+a DNN between mobile devices and infrastructure resources
+according to computation and communication conditions.
+DADS further adapts DNN partitioning between edge and
+cloud resources to changing network conditions [18]. Beyond
+device–server partitioning, CoEdge distributes inference work-
+loads across heterogeneous edge devices according to their
+computing capabilities and network conditions [19]. Jellyfish
+jointly selects data and DNN adaptations and batches infer-
+ence requests under dynamic wireless latency [20], whereas
+Ekya allocates edge GPU resources between inference and
+model retraining [21]. These studies provide effective resource
+scheduling mechanisms for AI inference, but their operation
+graphs are determined by fixed DNN architectures or prede-
+fined service pipelines. Autellix instead targets dynamically
+generated LLM-agent programs and introduces ATLAS, which
+prioritizes programs based on their attained service [22].
+In contrast, agent workflows may interleave communication,
+heterogeneous computation, and tool invocation operations
+that are gradually revealed during execution.
+Central Scheduler
+Dynamic Agent Workflow
+Communication
+Computation
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11A
+11B
+Wireless Devices
+UL/DL RBs
+BS + Edge Server
+Backhaul
+Remote Cloud
+Future 
+Operations
+Fig. 1. Illustrative example of the considered system.
+III. SYSTEM MODEL AND PROBLEM FORMULATION
+In this section, we first introduce the dynamic agent work-
+flow model and the wireless edge resource model, then for-
+mulate the online workflow-aware scheduling problem.
+A. Dynamic Agent Workflow Model
+As shown in Fig. 1, we consider a single-cell wireless edge
+system consisting of a finite set D of wireless devices, a base
+station (BS) co-located with an edge server, and a remote cloud
+accessible through backhaul. The devices in D may include
+mobile terminals, cameras, sensors, or other wireless endpoints
+involved in agent execution. Multiple agents are deployed
+across different devices to support diverse applications, and
+each agent initiates a job when it needs to handle a task.
+The time horizon is divided into equal-length slots, and
+t ∈{0, 1, 2, . . .} denotes the slot index. We consider a finite
+set J of jobs that arrive over time. For each job j, let aj and
+ωj denote its arrival slot and priority weight, respectively.
+We assume a central scheduler at the BS to orchestrate agent
+job execution. During each slot, newly generated workflow op-
+erations and their dependencies are reported to the scheduler.
+The scheduler also obtains wireless channel information from
+the BS, monitors the available edge computing capacity, and
+tracks the execution state of the workflow. Based on this in-
+formation, the scheduler jointly optimizes the communication
+and computation resources allocated to the agents.
+1) Dynamic workflow graph: At the beginning of slot t, the
+revealed portion of job j is represented by a dynamic workflow
+graph (DWG) Gj(t) =
+ Vj(t), Ej(t)
+
+, where Vj(t) is the set
+of operations and Ej(t) represents the precedence constraints
+among them. We assume that Gj(t) is a directed acyclic graph
+(DAG) for all j and t. The operation set is partitioned into
+disjoint computation and communication sets, i.e., Vj(t) =
+V c
+j (t) ˙∪V m
+j (t).
+The workflow evolves as the agent generates new steps.
+Let ∆Vj(t) and ∆Ej(t) denote the operations and precedence
+edges newly revealed during slot t. Then,
+Gj(t + 1) =
+
+Vj(t) ∪∆Vj(t), Ej(t) ∪∆Ej(t)
+
+.
+To preserve causal consistency during workflow revelation, the
+precedence constraints of a newly revealed operation must be
+revealed with the operation itself:
+
+
+Property 1 (Causal Workflow Revelation). For every job j
+and slot t, we have
+∆Vj(t) ∩Vj(t) = ∅,
+∆Ej(t) ⊆
+ Vj(t) ∪∆Vj(t)
+
+× ∆Vj(t),
+(v, u) ∈∆Ej(t) ⇒v ∈∆Vj(t) or v is a leaf node of Gj(t).
+The first condition ensures that each operation is revealed
+only once. The second condition requires every newly revealed
+edge to terminate at a newly revealed operation. Therefore,
+all incoming edges of an operation are revealed together with
+the operation, and its predecessor set remains fixed thereafter.
+The third condition requires every newly revealed edge to
+originate either from a newly revealed operation or from a leaf
+node of the current revealed graph, which also implies that all
+immediate successors of an operation are revealed together.
+For any operation v of job j, let av denote its revelation slot,
+Sv and Fv denote its start and finish slots, respectively. An
+operation v is ready if it has been revealed and all of its
+predecessors have finished. The corresponding ready slot is
+Av ≜min {t ≥av : t ≥Fu, ∀u such that (u, v) ∈Ej(av)} .
+To meet the precedence constraint, a feasible schedule must
+satisfy
+Sv ≥Av,
+∀v ∈Vj(t), ∀j ∈J , ∀t.
+(1)
+A job is completed when the agent planner terminates the
+workflow and all operations required for delivering the final
+response have completed. Let Fj denote the corresponding
+completion slot. The end-to-end latency of job j, measured
+in slots, is Cj = Fj −aj. The set of active jobs in slot t is
+defined as J (t) ≜{j ∈J : aj ≤t < Fj}.
+2) Computation operations: A computation operation vc ∈
+V c
+j (t) represents an agent execution step, such as preprocess-
+ing, model inference, aggregation, or tool execution. Let P
+denote the set of operation types. Each computation operation
+vc is associated with a type pvc
+∈P and an operation
+descriptor ξvc, which contains features relevant to its resource
+demand. For example, ξvc may include the model identifier,
+input token length, image resolution, or tool category.
+For each operation type p ∈P, the scheduler maintains
+a workload estimator fp based on historical data. The initial
+workload of vc is estimated as xc,0
+vc = fpvc (ξvc), measured in
+floating-point operations (FLOPs). Let Lvc ⊆{edge, cloud}∪
+D denote the feasible execution locations of operation vc.
+Note that Lvc may be a singleton when the corresponding
+operation can only be executed at a fixed location, such as
+tool invocation or LLM inference in the cloud. The operation
+placement lvc ∈Lvc is selected once at the ready slot Avc and
+remains unchanged thereafter.
+3) Communication operations: A communication operation
+vm ∈V m
+j (t) represents the transfer of data required by the
+workflow. Such an operation is introduced when an inter-
+mediate result, sensing input, tool request, or final response
+must be transmitted among devices and the edge server. For
+brevity, this paper defines communication operations only for
+wireless transmission, whereas wired transmission to the cloud
+is not represented as a communication operation and is instead
+modeled separately in Section III-B.
+For each communication operation vm, let xm,0
+vm > 0 denote
+its initial workload, i.e., the amount of data (measured in
+bits) to be transmitted. The workload of some communication
+operations may not be available upon revelation. For example,
+if an operation transmits the output of a tool invocation, the
+data size may remain unknown until the preceding operation is
+completed. In such cases, we estimate the transmission work-
+load using the same approach as for computation operations
+and replace the estimate with the actual value once the work-
+load becomes available. In addition, we use evm ∈D to denote
+the associated wireless endpoint, and hvm ∈H ≜{UL, DL}
+to indicate whether the operation corresponds to uplink or
+downlink transmission.
+B. Wireless Edge Resource Model
+1) Communication model: For each direction h ∈H, let
+Nh(t) denote the number of available wireless resource blocks
+(RBs) in slot t. For each revealed communication operation
+vm, let nvm(t) ∈Z≥0 denote the number of RBs allocated
+to it in slot t. The RB allocation must satisfy the capacity
+constraint
+X
+j∈J (t)
+X
+vm∈V m
+j (t): hvm=h
+nvm(t) ≤Nh(t),
+∀h ∈H, ∀t. (2)
+For the associated endpoint evm and direction hvm, we can
+obtain the spectral efficiency from channel quality indica-
+tor (CQI) feedback and the selected modulation and coding
+scheme (MCS). Based on this spectral efficiency, we can
+calculate the amount of data that one RB can transmit for
+vm during slot t, denoted by rvm(t).
+Let xm
+vm(t) denote the remaining workload of communica-
+tion operation vm at slot t. When vm is ready, it is initialized
+as xm
+vm(Avm) = xm,0
+vm and evolves as
+xm
+vm(t + 1) =
+
+xm
+vm(t) −nvm(t)rvm(t)
++ ,
+t ≥Avm,
+where [x]+ ≜max{x, 0}. Consequently, the start and finish
+slots of vm can be expressed as
+Svm = min{t ≥Avm : nvm(t) > 0},
+and
+Fvm = min{t ≥Svm : xm
+vm(t) = 0}.
+2) Computation model: For an edge-executed computation
+operation vc, let qvc(t) ≥0 denote its allocated computing
+capacity in slot t, i.e., the amount of workload that it can
+process during that slot. Similar to the communication model,
+the allocation of edge computing resources must satisfy
+X
+j∈J (t)
+X
+vc∈V c
+j (t): lvc=edge
+qvc(t) ≤Qe(t),
+∀t,
+(3)
+where Qe(t) is the total workload that the edge server can
+process in slot t. Let xc
+vc(t) denote the remaining workload of
+vc at the beginning of slot t. When an edge-placed operation
+vc becomes ready, its remaining workload is initialized as
+xc
+vc(Avc) = xc,0
+vc and evolves as
+xc
+vc(t + 1) =
+
+xc
+vc(t) −qvc(t)
++ ,
+t ≥Avc.
+
+
+As a result, for an edge-executed computation operation, the
+start and finish slots are
+Svc = min{t ≥Avc : qvc(t) > 0},
+and
+Fvc = min{t ≥Svc : xc
+vc(t) = 0}.
+For a cloud-executed computation operation, the backhaul
+transmission and cloud computing capacities are beyond the
+control of the BS-side scheduler and are estimated from
+historical data. Specifically, the transmission delay incurred
+by cloud execution is modeled as
+τ cloud
+vc
+= 2τ fix + sin
+vc
+RUL + sout
+vc
+RDL ,
+where sin
+vc and sout
+vc
+are the input and output data sizes for
+cloud execution, RUL and RDL denote the profiled amounts
+of uplink and downlink data transmitted per slot, and τ fix is
+the fixed one-way propagation and processing delay. Let ¯qvc
+be the profiled cloud computing capacity for operation vc, then
+the duration of a cloud-executed computation operation is
+T cloud
+vc
+=
+
+τ cloud
+vc
++ xc,0
+vc
+¯qvc
+
+.
+If vc is placed at the cloud, it is submitted immediately when
+ready. Hence, its start and finish slots are
+Svc = Avc,
+Fvc = Svc + T cloud
+vc
+.
+Some computation operations (e.g., tool invocations) are
+executed at wireless devices. For such an operation vc, the
+feasible location set is a singleton Lvc = {evc}, where evc ∈D
+is the device that provides the corresponding service. Let T dev
+vc
+denote the profiled execution time (measured in slots) of the
+service. Then the start and finish slots of vc are
+Svc = Avc,
+Fvc = Svc + T dev
+vc .
+C. Online Workflow-Aware Scheduling Problem
+To facilitate the execution of agent jobs, the scheduler
+observes the current information state at the beginning of each
+slot t, denoted by
+I(t) = {Gj(t), Oj(t), ωj, Nh(t), Qe(t)}j∈J (t),h∈H
+where Oj(t) denotes the operation states of job j, including
+whether each revealed operation is blocked, ready, or finished,
+as well as its remaining workloads xc
+vc(t) and xm
+vm(t) for
+computation and communication operations, respectively, and
+per-RB transmission capacity rvm(t) for communication op-
+erations, and placement decision if already made. Let a(t)
+collect all placement and resource allocation decisions made
+in slot t, and define the information history available to the
+scheduler as
+Ht ≜
+ I(0), a(0), . . . , I(t −1), a(t −1), I(t)
+
+.
+A causal scheduling policy π = {πt}t≥0 maps this history to
+πt(Ht) = a(t) =
+ {lvc}vc∈U(t), {qvc(t)}, {nvm(t)}
+
+,
+where U(t) denotes the set of computation operations that
+first become ready in slot t. Note that decisions in slot t can
+depend only on Ht. Let Π denote the set of causal policies
+that satisfy all feasibility constraints and complete every job
+almost surely with finite expected weighted latency. Then the
+online workflow-aware scheduling problem is formulated as
+min
+π∈Π
+Eπ
+
+X
+j∈J
+ωjCj
+
+
+(4a)
+s.t.
+(1), (2), (3)
+(4b)
+lvc ∈Lvc,
+∀vc ∈U(t), ∀t
+(4c)
+qvc(t) ≥0,
+∀vc ∈V c
+j (t), ∀j, t
+nvm(t) ∈Z≥0,
+∀vm ∈V m
+j (t), ∀j, t
+(4d)
+where the expectation is taken over workflow evolution, wire-
+less channel variations, and fluctuations in resource avail-
+ability. Constraint (4b) collects the precedence, wireless RB
+allocation, and edge computing capacity constraints introduced
+above. Constraints (4c)-(4d) specify the feasible domains of
+the control variables.
+This problem is challenging for three reasons. First, the
+workflow is dynamically generated, and the scheduler must
+make decisions without knowing the complete dependency
+graph. Second, communication and computation are tightly
+coupled through workflow dependencies: wireless transmis-
+sions determine when downstream computation operations
+become ready, while computation placement determines their
+processing and transmission delays. Third, wireless channel
+states and edge computing availability vary over time, lim-
+iting the effectiveness of static scheduling. These challenges
+motivate an online scheduler that accounts for workflow de-
+pendencies and resource dynamics jointly.
+IV. ALGORITHM DESIGN
+The main difficulty in solving (4) is that the completion
+time of a job depends on future workflow operations, resource
+availability, and channel conditions, which are unknown when
+the current scheduling decision is made. To address this issue,
+we first transform the weighted completion time objective into
+an equivalent per-slot holding-cost objective. Based on this
+reformulation, the optimal online policy can be characterized
+by a Bellman equation. However, directly solving the Bellman
+equation is computationally impractical because the future
+workflow and resource states are unknown. We therefore
+construct a tractable cost-to-go surrogate based on the revealed
+workflow and the estimated remaining latency of each active
+job. We use this surrogate to compare computation-placement
+actions and derive the criticality of each ready operation for
+shared wireless and edge-computing resource allocation.
+A. Objective Reformulation
+The objective in (4a) is determined by the completion
+slot Fj of each job. However, when the scheduler makes
+a decision in slot t, the value of Fj is unknown, as it
+depends on unrevealed workflow operations, future resource
+availability, channel conditions, and subsequent scheduling
+decisions. Therefore, the original completion time objective
+is difficult to optimize directly in an online setting.
+
+
+To address this issue, we transform the job completion
+latency into a per-slot holding cost. For job j, its latency can
+be expressed as
+Cj = Fj −aj =
+∞
+X
+t=0
+1{aj ≤t < Fj}.
+(5)
+Multiplying (5) by ωj, summing over all jobs, and exchanging
+the order of summation yield
+X
+j∈J
+ωjCj =
+∞
+X
+t=0
+X
+j∈J (t)
+ωj.
+(6)
+Equation (6) shows that the weighted completion time ob-
+jective is equivalent to the cumulative holding cost of all
+active jobs. Accordingly, we define the holding cost in slot
+t as c(t) ≜P
+j∈J (t) ωj. Given the history Ht, the optimal
+expected remaining cost is defined as
+J∗(Ht) ≜min
+π∈Π Eπ
+" ∞
+X
+τ=t
+c(τ)
+ Ht
+#
+.
+The quantity J∗(Ht) is referred to as the optimal cost-to-go
+and satisfies the following Bellman equation:
+J∗(Ht) = c(t) +
+min
+a(t)∈A(I(t)) E[J∗(Ht+1) | Ht, a(t)] ,
+(7)
+where A(I(t)) denotes the set of feasible scheduling decisions
+satisfying constraints (4b)-(4d) in slot t.
+Theoretically, the optimal scheduling decisions can be ob-
+tained by directly solving the Bellman equation (7). However,
+this is computationally impractical because the next state de-
+pends on unrevealed workflow operations and future resource
+states. In the following subsection, we construct a tractable
+cost-to-go surrogate bJ(Ht) based on the revealed workflow
+and the estimated remaining latencies of active jobs.
+B. Cost-to-Go Surrogate
+In this subsection, we first convert the remaining commu-
+nication and computation workloads into estimated durations,
+so that heterogeneous operation types can be compared under
+a unified metric. After that, we can further estimate the re-
+maining latencies of workflow branches and active jobs based
+on the revealed DWG. These estimates are finally aggregated
+into the look-ahead cost-to-go surrogate bJ(Ht).
+1) Converting Workload to Estimated Duration: In the
+DWG, communication and computation operations are charac-
+terized by different workload units: communication workloads
+are measured in bits, whereas computation workloads are
+measured in FLOPs. These heterogeneous quantities cannot
+be directly compared or accumulated along a workflow path.
+We therefore convert both types of workloads into estimated
+durations.
+For an active job j, let eVj(t) denote the set of revealed
+but unfinished operations. For each v ∈
+eVj(t), let bdv(t)
+denote its estimated remaining duration, measured in slots.
+Let µm
+vm(t) and µc
+vc(t) denote the reference communication
+and computation service rates, respectively, estimated from
+historical data and the current system state. In our implemen-
+tation, the reference service rate is obtained by evenly dividing
+the currently available resources among ready operations and
+smoothing the resulting per-operation rate over time. Then we
+have bdvm(t) = xm
+vm(t)/µm
+vm(t) for communication operations
+and bdvc(t) = xc
+vc(t)/µc
+vc(t) for computation operations. It is
+worth noting that bdv(t) is not intended to predict the exact
+completion time of operation v, since future resource sharing
+and channel conditions remain unknown. Instead, its purpose
+is to express all operations in the same time unit so that their
+workflow branches can be compared.
+2) Remaining Latency of Branches: The duration of an
+operation alone does not fully characterize its scheduling
+criticality. For example, a short operation may be followed
+by a long sequence of successors, whereas a longer operation
+on a short parallel branch may have little impact on the overall
+job completion time. We therefore estimate the remaining la-
+tency of each workflow branch by accumulating the estimated
+durations along the revealed DWG.
+For each v ∈eVj(t), let bLv(t) denote the estimated remain-
+ing branch latency starting from operation v, including its own
+duration. Let Sv(t) denote the set of revealed but unfinished
+immediate successors of v. If Sv(t) = ∅, v is a current leaf
+operation. Its completion may reveal additional downstream
+operations, whose estimated latency is denoted by bLtail
+v
+(t)
+and is obtained from the observed history. By Property 1, an
+operation with revealed successors cannot acquire additional
+successors later. Therefore, tail-latency prediction is required
+only for current leaf operations. We set bLtail
+v
+(t) = 0 when
+the agent declares that the branch has terminated or when tail
+prediction is disabled.
+For a non-leaf operation, the downstream latency is de-
+termined by the longest successor branch, expressed as
+max{bLu(t) : u ∈Sv(t)}. However, using the ordinary max-
+imum introduces two issues. First, the max operator is non-
+differentiable, which complicates the definition of operation
+criticality described later. Second, it assigns all criticality to the
+currently longest successor and ignores branches with similar
+remaining latencies, which may become the new bottleneck
+after a small amount of workload progress. To overcome this
+problem, we instead use the following smooth approximation
+smaxκ({zi}) ≜1
+κ log
+ X
+i
+eκzi
+!
+,
+where κ is a tunable parameter. A larger κ makes smaxκ closer
+to the ordinary maximum, whereas a smaller κ distributes the
+branch sensitivity more evenly across different successors.
+Combining the leaf and non-leaf cases, the estimated re-
+maining branch latency is given by
+bLv(t) = bdv(t) +
+(
+smaxκ
+ {bLu(t)}u∈Sv(t)
+
+,
+Sv(t)̸ = ∅,
+bLtail
+v
+(t),
+Sv(t) = ∅.
+(8)
+3) Look-Ahead Cost-to-Go Surrogate: While bLv(t) char-
+acterizes the estimated remaining latency of an individual
+branch, the scheduling objective depends on the end-to-end
+latency of each job. We therefore aggregate the branch-level
+estimates over the ready operations of job j and define its
+
+
+estimated remaining latency as
+bTj(t) = smaxκ
+ {bLv(t) : v ∈Rj(t)}
+
+,
+(9)
+where Rj(t) ⊆eVj(t) denotes the set of ready operations.
+Since an unfinished job j incurs a holding cost of ωj in
+each slot, its remaining holding cost can be directly estimated
+as ωj⌈bTj(t)⌉. However, this estimate treats jobs independently
+and thus cannot capture the coupling among job completion
+times induced by resource sharing and waiting. For example,
+consider two equal-weight jobs with estimated remaining
+latencies of one and twenty slots, respectively. Serving the
+first job completes it and reduces the next-slot holding cost
+from 2ω to ω, whereas serving the second job leaves both jobs
+active and keeps the next-slot holding cost at 2ω. Neverthe-
+less, the linear surrogate evaluates the two processing orders
+equivalently, as the total estimated remaining latency is twenty
+slots in both cases.
+The preceding example shows that the linear surrogate
+depends only on the total estimated remaining latency and
+cannot distinguish between completing a nearly finished job
+and making the same amount of progress on a long job. To
+reflect this difference, we assign decreasing weights to holding
+costs incurred farther in the estimated future. Specifically, for
+an offset τ ≥0, we define hζ(τ) ≜
+ζ
+ζ+τ , where ζ > 0 is a
+tunable parameter. Applying this weight to the future holding
+costs of all active jobs yields the discrete look-ahead cost-to-
+go surrogate
+bJ′(Ht) ≜
+X
+j∈J (t)
+ωj
+⌈b
+Tj(t)⌉−1
+X
+τ=0
+hζ(τ).
+(10)
+To preserve differentiability, we replace the discrete sum with
+the following continuous relaxation:
+⌈T ⌉−1
+X
+τ=0
+ζ
+ζ + τ ≈gζ(T) ≜
+Z T
+0
+ζ
+ζ + τ dτ = ζ log
+
+1 + T
+ζ
+
+.
+The resulting continuous look-ahead cost-to-go surrogate is1
+bJ(Ht) ≜
+X
+j∈J (t)
+ωjgζ
+
+bTj(t)
+
+.
+(11)
+C. Operation Criticality
+This subsection derives the operation criticality used to
+allocate shared wireless and edge-computing resources. We
+first characterize the marginal cost reduction obtained by
+processing an additional unit of workload before any ready
+operation completes. We then incorporate the additional cost
+reduction associated with operation completion.
+1) Marginal Cost Reduction: Having constructed the look-
+ahead cost-to-go surrogate bJ(Ht), we next quantify the cost re-
+duction produced by processing an additional unit of workload.
+If no ready operation completes, processing operation v only
+reduces its remaining workload. The resulting reduction in the
+surrogate cost can therefore be characterized by its derivative
+with respect to xv(t).
+1This formulation accounts solely for currently active jobs and omits future
+arrivals, as only active jobs have observable workflow states and remaining
+workloads at slot t.
+For a ready operation v ∈Rj(t), let φjv(t) denote its
+coefficient in the smoothed maximum in (9), given by
+φjv(t) ≜
+eκbLv(t)
+P
+u∈Rj(t) eκbLu(t) .
+Applying the chain rule to the cost-to-go surrogate, the
+smoothed maximum, and the workload-to-duration conversion
+gives the marginal cost reductions for communication and
+computation operations:
+βvm(t) ≜∂bJ(Ht)
+∂xm
+vm(t) =
+ωjζ
+ζ + bTj(t)
+× φjvm(t)
+µm
+vm(t) ,
+βvc(t) ≜∂bJ(Ht)
+∂xcvc(t) =
+ωjζ
+ζ + bTj(t)
+× φjvc(t)
+µc
+vc(t) .
+(12)
+For convenience, we use βv(t) to uniformly represent βvm(t)
+and βvc(t). By definition, βv(t) gives the reduction in sur-
+rogate cost obtained by processing one additional unit of
+workload of operation v. The first term in the right-hand side
+of (12) is larger for jobs with higher weights and shorter
+estimated remaining latencies. The second term is large when
+branch v is more likely to determine the job latency, while the
+second term converts one unit of workload into its estimated
+processing duration under the reference service rate. However,
+βv(t) is derived under the assumption that operation v remains
+unfinished. Hence, it does not capture the discrete change in
+the revealed workflow when v completes. The next subsection
+accounts for this additional cost reduction.
+2) Cost
+Reduction
+from
+Operation
+Completion:
+The
+marginal cost reduction βv(t) only describes the effect of
+processing an unfinished operation. Completing operation v
+may additionally make its revealed successors ready and
+change the reference service rates of other ready operations. To
+capture this additional reduction, we construct a hypothetical
+state
+b
+Hv,+
+t
+for each ready communication or computation
+operation v with xv(t) > 0, in which v has just completed. We
+first mark v as finished and set its remaining workload to zero.
+We then add each revealed successor whose predecessors have
+all finished to the set of ready operations. If v is a revealed
+leaf and workflow termination has not been declared, we retain
+its predicted continuation bLtail
+v
+(t) as a virtual downstream
+operation. Finally, we recompute the reference communication
+and edge service rates for the resulting active operations.
+Let bJv,+(Ht) denote the cost-to-go surrogate in this hypo-
+thetical state. The reduction caused by completing v is defined
+as
+bJv,+(Ht) ≜bJ( b
+Hv,+
+t
+),
+(13)
+Dv(t) ≜
+h
+bJ(Ht) −bJv,+(Ht)
+i+
+.
+To compare this finite reduction with βv(t), which is defined
+per unit of workload, we distribute Dv(t) over the remaining
+workload of v. Hence, we have
+β+
+v (t) ≜Dv(t)
+xv(t) ,
+xv(t) > 0.
+(14)
+Unlike βv(t), β+
+v (t) captures the cost reduction caused by the
+workflow changes at completion.
+
+
+We define the operation criticality as the larger of the con-
+tinuous marginal cost reduction and the average cost reduction
+at completion:
+eβv(t) ≜max
+
+βv(t), β+
+v (t)
+	
+.
+(15)
+To illustrate the cost reduction from completing an operation,
+consider an isolated job with one ready terminal operation
+and estimated duration bdv(t) = xv(t)/µv(t). Completing the
+operation leaves no remaining cost, and the concavity of gζ
+gives gζ(bdv) ≥g′
+ζ(bdv)bdv. Hence,
+eβv(t) = ωjgζ(bdv(t))/xv(t).
+Because gζ(d)/d decreases with d, completing a shorter
+weighted operation gives a larger average cost reduction. For
+a general workflow, Dv(t) is computed from the hypothetical
+post-completion state, which includes newly ready revealed
+successors and, when applicable, the predicted continuation of
+the workflow. The following subsections use the full cost-to-
+go surrogate for computation placement and eβv(t) for shared-
+resource allocation.
+D. Computation Placement
+The execution location of a computation operation affects
+not only its own completion time but also the completion times
+of other active operations. In particular, placing an operation
+at the edge may increase the workload of the shared edge
+server and delay other edge-executed operations. Therefore,
+computation placement is determined by its effect on the cost-
+to-go surrogate of all active jobs, rather than by the execution
+time of the current operation alone.
+For each newly ready computation operation vc ∈U(t),
+the scheduler evaluates every feasible location l ∈Lvc. The
+estimated duration of executing vc at location l is
+bdvc(t; l) =
+
+
+
+
+
+xc,0
+vc /µc
+vc(t; l),
+l = edge,
+T cloud
+vc
+,
+l = cloud,
+T dev
+vc ,
+l ∈D.
+,
+Here, µc
+vc(t; l) denotes the reference service rate of vc when it
+is placed at location l. If l = edge, the scheduler updates the
+reference service rates of all edge-executed operations to ac-
+count for the resulting change in edge workload. It then prop-
+agates the updated durations backward through the revealed
+DWG to obtain the candidate branch latencies bLu(t; lvc = l)
+and the corresponding job latencies
+bTj(t; lvc = l) = smaxκ
+ {bLu(t; lvc = l) : u ∈Rj(t)}
+
+.
+The resulting cost-to-go surrogate under location l is
+bJ(Ht; lvc = l) ≜
+X
+j∈J (t)
+ωjgζ
+
+bTj(t; lvc = l)
+
+.
+(16)
+The scheduler selects the feasible location with the smallest
+surrogate cost:
+l∗
+vc ∈arg min
+l∈Lvc
+bJ(Ht; lvc = l).
+(17)
+When only a few computation operations become ready simul-
+taneously, the scheduler evaluates all feasible joint placement
+combinations and selects the one with the smallest surrogate
+cost. When exhaustive evaluation is prohibitively expensive,
+it instead processes the operations sequentially in descending
+order of their job weights. After selecting the location of each
+operation, the scheduler updates the candidate edge workload
+and the associated reference service rates before evaluating the
+next operation.
+E. Resource Allocation
+After the computation locations have been selected, the
+scheduler allocates wireless RBs and edge computing capacity
+in the current slot. The selected locations determine the active
+edge workload and the corresponding reference service rates.
+Specifically, the communication and computation operations
+eligible for resource allocation in slot t are
+Rm
+h (t) ≜
+[
+j∈J (t)
+
+vm ∈Rj(t) ∩V m
+j (t) :
+xm
+vm(t) > 0, hvm = h
+	
+,
+Rc
+e(t) ≜
+[
+j∈J (t)
+
+vc ∈Rj(t) ∩V c
+j (t) :
+xc
+vc(t) > 0, lvc = edge
+	
+.
+The set Rm
+h (t) contains the ready communication operations
+in direction h, whereas Rc
+e(t) contains the ready computation
+operations placed at the edge. For a given allocation, their
+completed workloads in slot t are
+ym
+vm(t) ≜min{xm
+vm(t), nvm(t)rvm(t)},
+yc
+vc(t) ≜min{xc
+vc(t), qvc(t)}.
+Recall that eβv(t) is the estimated cost reduction per unit of
+completed workload. Then the optimal resource allocation can
+be obtained by solving
+max
+{nvm(t),qvc(t)}
+X
+h∈H
+X
+vm∈Rm
+h (t)
+eβvm(t)ym
+vm(t)
++
+X
+vc∈Rce(t)
+eβvc(t)yc
+vc(t)
+s.t.
+X
+vm∈Rm
+h (t)
+nvm(t) ≤Nh(t),
+∀h,
+X
+vc∈Rce(t)
+qvc(t) ≤Qe(t),
+nvm(t) ∈Z≥0,
+qvc(t) ≥0.
+(18)
+The objective and constraints in (18) are separable and piece-
+wise linear. Therefore, the resource allocation for communica-
+tion and computation operations can be solved independently.
+For RB allocation, suppose that vm has already received k−1
+RBs in slot t. Assigning one additional RB to vm yields the
+marginal surrogate-cost reduction
+eβvm(t) min
+
+rvm(t), [xm
+vm(t) −(k −1)rvm(t)]+	
+.
+(19)
+This quantity is nonincreasing in k. Hence, the radio subprob-
+lem is solved by repeatedly assigning one RB to the operation
+with the largest positive marginal reduction.
+For edge computing resource allocation, the objective is
+linear in qvc(t). Consequently, we can sort the ready edge-
+executed operations in descending order of eβvc(t) and itera-
+
+
+Algorithm 1 Online Scheduling Procedure
+1: for each slot t = 0, 1, . . . do
+2:
+Observe I(t) and append it to Ht.
+3:
+Update the unfinished revealed graph of every active
+job and identify U(t).
+4:
+Estimate the reference per-slot service rates and bLtail
+v
+(t)
+from the observed history.
+5:
+Evaluate the candidate bJ(Ht; lvc = l) surrogate costs,
+select the locations of operations in U(t) using (17),
+and update the estimated edge workload.
+6:
+Compute bdv(t), bLv(t), bTj(t), bJ(Ht), and βv(t) using
+(8)–(12).
+7:
+For each ready shared-resource operation v, construct
+b
+Hv,+
+t
+and compute Dv(t), β+
+v (t), and eβv(t) using (13)–
+(15).
+8:
+for each direction h ∈H do
+9:
+Allocate up to Nh(t) RBs one at a time using (19).
+10:
+end for
+11:
+Allocate edge computing resources in descending order
+of eβvc(t) using (20).
+12:
+Execute the selected actions and record a(t).
+13: end for
+tively allocate the remaining edge capacity. Thus, we have
+qvc(t) = min
+
+xc
+vc(t), Qrem
+e
+(t)
+	
+,
+(20)
+where Qrem
+e
+(t) is the amount of remaining edge computing
+capacity before serving vc.
+Algorithm 1 summarizes the proposed scheduler. Let
+M(t) ≜P
+j∈J (t)(|eVj(t)| + |Ej(t)|) denote the size of the ac-
+tive revealed graphs, and let K(t) denote the number of ready
+operations that can receive shared communication or edge
+resources. Computing the branch latencies and marginal cost
+reductions requires one graph traversal and takes O(M(t))
+time. A direct implementation then recomputes the surrogate
+for each hypothetical completion, which takes O(K(t)M(t))
+time to compute all values of Dv(t). This cost can be reduced
+by caching unaffected branch latencies and updating only the
+completed operation’s job and the operations whose reference
+service rates change.
+For resource allocation, the implementation of RB alloca-
+tion takes O(P
+h∈H(|Rm
+h (t)| + Nh(t)) log |Rm
+h (t)|) time, and
+sorting the ready edge operations takes O(|Rc
+e(t)| log |Rc
+e(t)|)
+time. Finally, let P(t) = Q
+v∈U(t) |Lv| denote the num-
+ber of joint placement combinations. Exhaustive placement
+takes O(P(t)M(t)) time when P(t) is below the con-
+figured threshold. Otherwise, the sequential fallback takes
+O(P
+v∈U(t) |Lv|M(t)) time. The placement step can also
+reuse branch-latency calculations that remain unchanged
+across candidate locations.
+V. PERFORMANCE EVALUATION
+A. Simulation Setup
+In this section, we evaluate the proposed scheduling algo-
+rithm against three benchmarks under various settings. Each
+job is represented by a hidden DAG, while the scheduler
+only observes the operations revealed through corresponding
+reveal events. A default workflow contains 12–40 operations,
+with a depth of 4–12 and a maximum fan-out of four, and
+selects communication endpoints from a pool of 20 devices.
+Jobs arrive according to a Poisson process, and their weights
+are sampled from {1, 2, 4} with probabilities {0.6, 0.3, 0.1}.
+Communication payloads and computation workloads follow
+bounded log-normal distributions.
+Each slot lasts 10 ms. The number of RBs available for
+agent traffic in each direction is independently and uniformly
+sampled from [5, 20]. The uplink and downlink transmission
+rates are 100 and 200 kbit per RB-slot, respectively. For each
+device and transmission direction, the achievable rate is scaled
+by an independent log-normal channel factor with a coefficient
+of variation of 0.1. The edge server provides 3–6 GFLOP per
+slot, while the cloud execution is assumed to be contention-
+free, providing 12 GFLOP per slot, with a one-way delay of
+20 ms and 100/200-Mbps uplink/downlink backhaul.
+The tail-latency predictor is trained using 1,000 indepen-
+dently generated workflows. It estimates the remaining latency
+using the median latency indexed by task family, operation
+type, and operation identifier, with the global training-set mean
+used as a fallback. The reference communication and compu-
+tation rates are updated using exponential moving averages
+with a coefficient of 0.2, and the look-ahead parameter is set
+to ζ = 25. The default arrival rate is set to 4 jobs/s, and each
+experiment contains 300 jobs. To mitigate randomness, each
+data point is averaged over 10 independent random seeds.
+We compare the proposed scheduler with WSRPT [23],
+weighted ATLAS (W-ATLAS) adapted from the attained-
+service policy in Autellix [22], and myopic equal-share
+scheduling. For each revealed operation, W-ATLAS assigns
+a priority proportional to the job weight divided by one plus
+the completed attained service along its revealed predecessor
+path. It adopts the same myopic placement rule as WSRPT.
+B. Numerical Results
+Fig. 2 demonstrates the end-to-end scheduling performance
+under different traffic intensities. As the job arrival rate in-
+creases from 1 to 6 jobs/s, the weighted mean completion
+latency of Proposed increases from 3.08 to 9.23 s, whereas
+that of WSRPT increases from 3.08 to 12.44 s. At 6 jobs/s,
+Proposed reduces the latency by 25.58%, 80.79%, and 52.86%
+relative to WSRPT, W-ATLAS, and Myopic, respectively. The
+widening performance gap under heavier traffic is consistent
+with the behavior of the baselines, which distribute service
+across active workflows without explicitly considering future
+impacts. Specifically, W-ATLAS may consistently favor newly
+arrived operations, while Myopic equal sharing ignores job
+weights and downstream workflow dependencies.
+Fig. 3 examines whether the benefit of joint scheduling
+persists as the system shifts between communication- and
+computation-limited regimes. WSRPT is the strongest non-
+Proposed baseline in every cell of the 5 × 5 grid. With
+five available RBs, the improvement of Proposed increases
+from 4.13% at 0.5× edge capacity to 6.27% at 2× edge
+capacity, whereas with twenty RBs it is only 0.25%–1.56%.
+
+
+1
+2
+3
+4
+5
+6
+2
+5
+10
+20
+50
+Job arrival rate (jobs/s)
+Weighted completion latency (s)
+Proposed
+W-ATLAS
+WSRPT
+Myopic
+Fig. 2. Weighted mean completion latency versus
+job arrival rate.
++4.1% +3.0% +1.4% -0.2% +0.6%
++4.6% +3.5% +1.2% +0.6% +0.2%
++5.2% +4.1% +2.4% +0.7% +0.7%
++5.8% +5.2% +3.4% +2.6% +1.1%
++6.3% +5.4% +3.8% +2.4% +1.6%
+5
+8
+12
+16
+20
+0.5
+0.75
+1
+1.5
+2
+Available RBs per direction
+Edge-capacity multiplier
+-6.3
+0
++6.3
+Proposed improvement (%)
+Fig. 3. Improvement over benchmarks under dif-
+ferent resource levels.
+1-2
+3-4
+5-8
+9-12
+13-16 17-24 25-32 33-48
+0.01
+0.1
+1
+10
+Active revealed operations
+Mean scheduling runtime (ms)
+Proposed
+W-ATLAS
+WSRPT
+Myopic
+Fig. 4.
+Mean scheduling runtime versus active
+revealed operations.
+2
+4
+6
+8
+10
+Participating devices per workflow
+100%
+125%
+150%
+200%
+250%
+300%
+400%
+500%
+Relative weighted latency
+Proposed
+WSRPT
+W-ATLAS
+Myopic
+Fig. 5.
+Performance under different numbers of
+participating devices.
+10
+15
+20
+25
+30
+Operations per workflow
+100%
+125%
+150%
+200%
+250%
+300%
+400%
+500%
+600%
+Relative weighted latency
+Proposed
+WSRPT
+W-ATLAS
+Myopic
+Fig. 6.
+Performance under different numbers of
+operations.
+Weighted avg.
+p50
+p95
+p99
+1
+2
+5
+10
+20
+50
+100
+Completion time statistic
+Completion time (s)
+Proposed
+W-ATLAS
+WSRPT
+Myopic
+Fig. 7. Weighted completion time statistics.
+These results show that the gain is broadly consistent across
+the tested regimes but is largest when communication is the
+dominant bottleneck.
+Fig. 4 quantifies the online scheduling overhead as the num-
+ber of active revealed operations increases. The plot contains
+eight bins from 1–2 through 33–48 operations, with at least
+1,000 scheduler calls per algorithm in every retained bin. For
+Proposed, the mean runtime increases from 0.057 ms in the
+smallest bin to 1.594 ms in the largest. At 33–48 operations,
+the corresponding means are 0.482 ms for WSRPT, 0.647 ms
+for W-ATLAS, and 0.211 ms for Myopic. The higher overhead
+of Proposed is consistent with its repeated evaluation of branch
+latencies and surrogate costs after each virtual completion.
+Nevertheless, its maximum runtime remains acceptable, and
+the runtime of all algorithms can be further reduced through
+implementations in more efficient programming languages and
+on more powerful hardware platforms.
+Fig. 5 and Fig. 6 illustrate the scheduling performance
+under different numbers of participating devices and work-
+flow sizes, respectively. As the number of devices increases,
+the weighted mean completion latency of WSRPT remains
+between 109.08% and 115.15% relative to the proposed sched-
+uler across the evaluated range. The latency ratio of W-ATLAS
+decreases from 503.38% with two devices to 226.10% with
+ten devices, while that of Myopic decreases from 144.66% to
+121.69%. Thus, the proposed scheduler consistently achieves
+the lowest latency across all device scales. As the workflow
+size increases, the latency ratios of all baselines decrease:
+WSRPT decreases from 125.25% to 113.48%, W-ATLAS from
+725.37% to 542.81%, and Myopic from 220.76% to 163.69%,
+relative to the proposed scheduler. These results show that
+Proposed maintains the lowest latency as either the number
+of participating devices or the workflow size increases, with
+WSRPT remaining the closest benchmark.
+Fig. 7 presents the statistics of weighted completion latency.
+The weighted mean latency of Proposed is 4.50 s, compared
+with 4.81 s for WSRPT, 22.24 s for W-ATLAS, and 7.30 s for
+Myopic. Although WSRPT achieves a slightly lower weighted
+median latency than Proposed (3.54 versus 3.65 s), Proposed
+reduces the weighted p95 latency from 12.22 to 10.28 s
+and the weighted p99 latency from 32.61 to 26.23 s. This
+indicates that the advantage of Proposed over WSRPT mainly
+appears in the upper tail of the latency distribution rather than
+around the median. Myopic exhibits higher weighted mean,
+median, and p95 latencies than Proposed, but achieves a lower
+weighted p99 latency of 15.15 s. Therefore, a lower weighted
+mean latency does not necessarily imply consistent superiority
+across all tail quantiles.
+VI. CONCLUSION
+This paper studied the joint scheduling of communication
+and computation for mobile edge AI agents whose workflows
+are revealed online. By reformulating weighted completion
+time as a per-slot holding cost, we developed a workflow-
+aware scheduler that uses a look-ahead surrogate with com-
+pletion correction to jointly determine computation placement
+and wireless and edge resource allocation. Simulation results
+show that the proposed algorithm achieves the most significant
+reduction in weighted mean completion latency under heavy
+traffic and strong radio contention, while incurring limited
+runtime overhead.
+
+
+REFERENCES
+[1] L. Wang, C. Ma, X. Feng, Z. Zhang, H. Yang, J. Zhang, Z. Chen, J. Tang,
+X. Chen, Y. Lin, W. X. Zhao, Z. Wei, and J. Wen, “A survey on large
+language model based autonomous agents,” Front. Comput. Sci., vol. 18,
+p. 186345, 2024.
+[2] S. Yao, J. Zhao, D. Yu, N. Du, I. Shafran, K. Narasimhan, and Y. Cao,
+“ReAct: Synergizing reasoning and acting in language models,” in Proc.
+Int. Conf. Learn. Represent. (ICLR), 2023.
+[3] T. Schick, J. Dwivedi-Yu, R. Dess`ı, R. Raileanu, M. Lomeli, E. Hambro,
+L. Zettlemoyer, N. Cancedda, and T. Scialom, “Toolformer: Language
+models can teach themselves to use tools,” in Adv. Neural Inf. Process.
+Syst. (NeurIPS), vol. 36, 2023.
+[4] Y. Qin, S. Liang, Y. Ye, K. Zhu, L. Yan, Y. Lu, Y. Lin, X. Cong, X. Tang,
+B. Qian, S. Zhao, L. Hong, R. Tian, R. Xie, J. Zhou, M. Gerstein, D. Li,
+Z. Liu, and M. Sun, “ToolLLM: Facilitating large language models to
+master 16000+ real-world APIs,” in Proc. Int. Conf. Learn. Represent.
+(ICLR), 2024.
+[5] X. Liu, H. Yu, H. Zhang, Y. Xu, X. Lei, H. Lai, Y. Gu, H. Ding,
+K. Men, K. Yang, S. Zhang, X. Deng, A. Zeng, Z. Du, C. Zhang,
+S. Shen, T. Zhang, Y. Su, H. Sun, M. Huang, Y. Dong, and J. Tang,
+“AgentBench: Evaluating LLMs as agents,” in Proc. Int. Conf. Learn.
+Represent. (ICLR), 2024.
+[6] J. Wang, H. Xu, H. Jia, X. Zhang, M. Yan, W. Shen, J. Zhang, F. Huang,
+and J. Sang, “Mobile-Agent-v2: Mobile device operation assistant with
+effective navigation via multi-agent collaboration,” in Adv. Neural Inf.
+Process. Syst. (NeurIPS), vol. 37, 2024.
+[7] C. Rawles, S. Clinckemaillie, Y. Chang, J. Waltz, G. Lau, M. Fair,
+A. Li, W. E. Bishop, W. Li, F. Campbell-Ajala, D. K. Toyama, R. J.
+Berry, D. Tyamagundlu, T. P. Lillicrap, and O. Riva, “AndroidWorld: A
+dynamic benchmarking environment for autonomous agents,” in Proc.
+Int. Conf. Learn. Represent. (ICLR), 2025.
+[8] Y. Shen, K. Song, X. Tan, D. Li, W. Lu, and Y. Zhuang, “HuggingGPT:
+Solving AI tasks with ChatGPT and its friends in hugging face,” in Adv.
+Neural Inf. Process. Syst. (NeurIPS), vol. 36, 2023.
+[9] Y. Mao, C. You, J. Zhang, K. Huang, and K. B. Letaief, “A survey
+on mobile edge computing: The communication perspective,” IEEE
+Commun. Surveys Tuts., vol. 19, no. 4, pp. 2322–2358, 2017.
+[10] E. Li, L. Zeng, Z. Zhou, and X. Chen, “Edge AI: On-demand acceler-
+ating deep neural network inference via edge computing,” IEEE Trans.
+Wireless Commun., vol. 19, no. 1, pp. 447–457, Jan. 2020.
+[11] H. Topcuoglu, S. Hariri, and M.-Y. Wu, “Performance-effective and low-
+complexity task scheduling for heterogeneous computing,” IEEE Trans.
+Parallel Distrib. Syst., vol. 13, no. 3, pp. 260–274, Mar. 2002.
+[12] H. Arabnejad and J. G. Barbosa, “List scheduling algorithm for het-
+erogeneous systems by an optimistic cost table,” IEEE Trans. Parallel
+Distrib. Syst., vol. 25, no. 3, pp. 682–694, Mar. 2014.
+[13] L. Chen, J. Wu, J. Zhang, H.-N. Dai, X. Long, and M. Yao,
+“Dependency-aware computation offloading for mobile edge computing
+with edge-cloud cooperation,” IEEE Trans. Cloud Comput., vol. 10,
+no. 4, pp. 2451–2468, 2022.
+[14] S. Liu, Y. Yu, X. Lian, Y. Feng, C. She, P. L. Yeoh, L. Guo, B. Vucetic,
+and Y. Li, “Dependent task scheduling and offloading for minimizing
+deadline violation ratio in mobile edge computing networks,” IEEE J.
+Sel. Areas Commun., vol. 41, no. 2, pp. 538–554, Feb. 2023.
+[15] H. Liu, G. Zheng, Z. Liu, S. Tian, and Y. Li, “Dependency-aware
+dynamic priority scheduling for online multi-DAG task offloading in
+mobile edge computing,” IEEE Internet Things J., vol. 13, no. 3, pp.
+5053–5068, 2026.
+[16] Y. Kang, J. Hauswald, C. Gao, A. Rovinski, T. N. Mudge, J. Mars,
+and L. Tang, “Neurosurgeon: Collaborative intelligence between the
+cloud and mobile edge,” in Proc. ACM Int. Conf. Architectural Support
+Program. Lang. Oper. Syst. (ASPLOS), 2017, pp. 615–629.
+[17] A. E. Eshratifar, M. S. Abrishami, and M. Pedram, “JointDNN: An
+efficient training and inference engine for intelligent mobile cloud
+computing services,” IEEE Trans. Mobile Comput., vol. 20, no. 2, pp.
+565–576, Feb. 2021.
+[18] C. Hu, W. Bao, D. Wang, and F. Liu, “Dynamic adaptive DNN surgery
+for inference acceleration on the edge,” in Proc. IEEE INFOCOM, 2019,
+pp. 1423–1431.
+[19] L. Zeng, X. Chen, Z. Zhou, L. Yang, and J. Zhang, “CoEdge: Co-
+operative DNN inference with adaptive workload partitioning over
+heterogeneous edge devices,” IEEE/ACM Trans. Netw., vol. 29, no. 2,
+pp. 595–608, Apr. 2021.
+[20] V. Nigade, P. Bauszat, H. E. Bal, and L. Wang, “Jellyfish: Timely
+inference serving for dynamic edge networks,” in Proc. IEEE Real-Time
+Syst. Symp. (RTSS), 2022, pp. 277–290.
+[21] R. Bhardwaj, Z. Xia, G. Ananthanarayanan, J. Jiang, Y. Shu, N. Kar-
+ianakis, K. Hsieh, P. Bahl, and I. Stoica, “Ekya: Continuous learning
+of video analytics models on edge compute servers,” in Proc. USENIX
+Symp. Netw. Syst. Design Implement. (NSDI), 2022, pp. 119–135.
+[22] M. Luo, X. Shi, C. Cai, T. Zhang, J. Wong, Y. Wang, C. Wang,
+Y. Huang, Z. Chen, J. E. Gonzalez, and I. Stoica, “Autellix: An efficient
+serving engine for LLM agents as general programs,” arXiv preprint
+arXiv:2502.13965, 2025.
+[23] S.
+Jamalabadi
+and
+U.
+Schwiegelshohn,
+“WSRPT
+is
+1.2259-
+competitive for weighted completion time scheduling,” arXiv preprint
+arXiv:2307.07739, 2023.

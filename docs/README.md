@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-10-20 ~ 2026-10-29</span>
+      <span class="dpr-home-dashboard-kicker">2026-10-29</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 13 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 5 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>6</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>7</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>4</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-10-29 13:14:30 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-10-29 23:45:28 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,7 +69,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>10月20日至29日共筛选13篇GUI智能体论文，精读6篇、速读7篇，聚焦个性化失效诊断与记忆图设计。最值得看的是两篇9分精读，分别拆解移动端GUI智能体的个性化失效原因和子目标感知记忆图；对验证环节中“答案正确但流程卡死”的现象，也可参考8分的SolveBind研究。普通读者建议优先读这两篇精读，再按需补读速读中的验证与探索方向。</p>
+<p>今日筛选 5 篇 AI 智能体论文，精读 1 篇、速读 4 篇，聚焦 GUI 与 Web 智能体的能力提升和高效执行。最值得看的是 8.0 分的《From Interaction to Capability》：它把任务推进同时当作状态与监督信号来训练 GUI 智能体；另有三篇 6.0 分工作从技能中心、叶级动作定位和边缘调度切入。普通读者可先读精读这篇，再按兴趣浏览速读中的技能化与效率方向。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -78,12 +78,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">6 篇</strong>
+    <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Diagnosing Personalization Failures in Mobile GUI Agents">Diagnosing Personalization Failures in Mobile GUI Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Subgoal-aware Memory Graph for GUI Agent">Subgoal-aware Memory Graph for GUI Agent</span></li><li><span class="dpr-home-dashboard-paper-title" title="Reuse, Rewrite, or Reject: Evidence-Constrained Trace Reuse for Repeated Mobile GUI Control">Reuse, Rewrite, or Reject: Evidence-Constrained Trace Reuse for Repeated Mobile GUI Control</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="From Interaction to Capability: Task Advancement as State and Supervision for GUI Agents">From Interaction to Capability: Task Advancement as State and Supervision for GUI Agents</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>6</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -91,12 +91,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">7 篇</strong>
+    <strong class="dpr-home-dashboard-count">4 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Correct Answers, Closed Gates: SolveBind for GUI Agents at the Verification Barrier">Correct Answers, Closed Gates: SolveBind for GUI Agents at the Verification Barrier</span></li><li><span class="dpr-home-dashboard-paper-title" title="Chart the Invisible: Interactive Perception for Hidden-Target Exploration in GUI Agents">Chart the Invisible: Interactive Perception for Hidden-Target Exploration in GUI Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Babysitting AI Agents: A User-Centered Taxonomy and Study of Agentic Delegation Failures">Babysitting AI Agents: A User-Centered Taxonomy and Study of Agentic Delegation Failures</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Workflow-Aware Communication and Computation Scheduling for Mobile Edge AI Agents">Workflow-Aware Communication and Computation Scheduling for Mobile Edge AI Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="LeafSkill: Efficient Leaf-Level Action Grounding for Recursive LLM Agents">LeafSkill: Efficient Leaf-Level Action Grounding for Recursive LLM Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Back to Basics: A Skill-Centric Approach to Generalist Web Agents">Back to Basics: A Skill-Centric Approach to Generalist Web Agents</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>7</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>4</strong></span></div>
 </section>
 </div>
 

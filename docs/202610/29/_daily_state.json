@@ -1,0 +1,89 @@
+{
+  "date": "20261029",
+  "date_label": "",
+  "generated_at": "2026-10-29 23:45:28 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2610.37482v1",
+      "route": "202610/29/2610.37482v1-from-interaction-to-capability-task-advancement-as-state-and-supervision-for-gui-agents",
+      "title": "From Interaction to Capability: Task Advancement as State and Supervision for GUI Agents",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "GUI智能体通过可复用操作完成跨应用任务",
+      "first_seen_at": "2026-10-29 23:45:28 UTC",
+      "updated_at": "2026-10-29 23:45:28 UTC"
+    },
+    {
+      "paper_id": "2610.29337v1",
+      "route": "202610/29/2610.29337v1-workflow-aware-communication-and-computation-scheduling-for-mobile-edge-ai-agents",
+      "title": "Workflow-Aware Communication and Computation Scheduling for Mobile Edge AI Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "移动边缘环境中的AI智能体通过多步工作流自主处理任务",
+      "first_seen_at": "2026-10-29 23:45:28 UTC",
+      "updated_at": "2026-10-29 23:45:28 UTC"
+    },
+    {
+      "paper_id": "2610.32412v1",
+      "route": "202610/29/2610.32412v1-leafskill-efficient-leaf-level-action-grounding-for-recursive-llm-agents",
+      "title": "LeafSkill: Efficient Leaf-Level Action Grounding for Recursive LLM Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "可复用的原子动作落地技术，支撑智能体执行任务",
+      "first_seen_at": "2026-10-29 23:45:28 UTC",
+      "updated_at": "2026-10-29 23:45:28 UTC"
+    },
+    {
+      "paper_id": "2610.35823v1",
+      "route": "202610/29/2610.35823v1-back-to-basics-a-skill-centric-approach-to-generalist-web-agents",
+      "title": "Back to Basics: A Skill-Centric Approach to Generalist Web Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "技能中心网页智能体基准标注拖拽与手势等交互原语，可迁移至应用界面自动化",
+      "first_seen_at": "2026-10-29 23:45:28 UTC",
+      "updated_at": "2026-10-29 23:45:28 UTC"
+    },
+    {
+      "paper_id": "2610.35845v1",
+      "route": "202610/29/2610.35845v1-work-agents-systems-capabilities-and-optimization",
+      "title": "Work Agents: Systems, Capabilities, and Optimization",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "从系统层面分析智能体跨应用与工具执行委托任务",
+      "first_seen_at": "2026-10-29 23:45:28 UTC",
+      "updated_at": "2026-10-29 23:45:28 UTC"
+    }
+  ]
+}

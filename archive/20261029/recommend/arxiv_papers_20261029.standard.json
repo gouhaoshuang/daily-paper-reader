@@ -1,0 +1,223 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-10-29T23:42:29.190469+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2610.37482v1",
+      "source": "arxiv",
+      "title": "From Interaction to Capability: Task Advancement as State and Supervision for GUI Agents",
+      "abstract": "GUI memory should preserve the results of past actions and learn reusable operations. This is difficult in long-horizon workflows, where agents must use information across applications and useful operations are interleaved with failed attempts. We introduce Task Advancement Memory (TAM), which defines task advancement as verified task progress, and supports ongoing task execution and learns reusable operations. During execution, Task Advancement State represents how verified task progress changes the remaining goals, allowing the agent to build on earlier achievements across applications. After each task, advancement supervision identifies and abstracts the interactions that produced a verified local result. The learned operations preserve the relation between required inputs, expected outcomes, and verification conditions. This retains locally successful operations from both successful and failed tasks. On MobileWorld GUI-only tasks, Advancement State alone raises success from 12.0% to 28.2%. Full TAM achieves a 17.6% relative gain in task success over the strongest evaluated baseline and reduces lifecycle tokens per solved task by 38.7%. On SPA-Bench, TAM achieves state-of-the-art task success in the single-app English Level 3 setting.",
+      "authors": [
+        "Ziyang Chen",
+        "Qian Li",
+        "Chengwei Qin"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-10-27T16:09:25+00:00",
+      "link": "https://arxiv.org/pdf/2610.37482v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "GUI agents completing cross-application tasks via learned reusable operations",
+      "llm_evidence_cn": "GUI智能体通过可复用操作完成跨应用任务",
+      "llm_evidence": "GUI智能体通过可复用操作完成跨应用任务",
+      "canonical_evidence": "GUI智能体通过可复用操作完成跨应用任务",
+      "llm_tldr_en": "The paper introduces Task Advancement Memory for GUI agents, defining verified task progress as state and deriving supervision that abstracts reusable operations from successful interactions in long-horizon workflows.",
+      "llm_tldr_cn": "GUI智能体在长程工作流中需跨应用使用信息，且有效操作常与失败尝试交织，现有记忆难以保留成果并学习可复用操作。作者提出任务推进记忆TAM，将任务推进定义为可验证的进展，执行中用推进状态刻画已达成进展如何改变剩余目标，任务后再从产生验证结果的交互中抽象出可复用操作。该方法支持智能体在后续任务中复用所学操作。它为GUI智能体持续执行跨应用任务提供了状态与监督机制。",
+      "llm_tldr": "GUI智能体在长程工作流中需跨应用使用信息，且有效操作常与失败尝试交织，现有记忆难以保留成果并学习可复用操作。作者提出任务推进记忆TAM，将任务推进定义为可验证的进展，执行中用推进状态刻画已达成进展如何改变剩余目标，任务后再从产生验证结果的交互中抽象出可复用操作。该方法支持智能体在后续任务中复用所学操作。它为GUI智能体持续执行跨应用任务提供了状态与监督机制。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2610.29337v1",
+      "source": "arxiv",
+      "title": "Workflow-Aware Communication and Computation Scheduling for Mobile Edge AI Agents",
+      "abstract": "AI agents are increasingly deployed in mobile edge environments to autonomously handle diverse tasks through multi-step workflows. Unlike conventional dependency-aware tasks with predefined dependency structures, agent workflows are dynamically generated based on intermediate execution results. To minimize the weighted sum of job completion latencies, this paper models partially revealed agent workflows using dynamic workflow graphs and formulates an online scheduling problem that jointly optimizes computation placement, wireless resource block allocation, and edge computing resource allocation. To address the uncertainty of future workflow evolution, we first transform the weighted completion time objective into an equivalent per-slot holding cost and characterize the optimal policy through a Bellman equation. We then construct a tractable look-ahead cost-to-go surrogate based on the revealed workflow and the estimated remaining latencies of active jobs. The proposed scheduling algorithm leverages the surrogate to determine computation placement and uses the resulting operation criticality to allocate wireless and edge computing resources online. Simulation results show that the proposed algorithm outperforms the benchmark schemes across diverse scenarios.",
+      "authors": [
+        "Xingqiu He",
+        "Chaoqun You",
+        "Feng Wang",
+        "Zihan Chen",
+        "Shuai Wang",
+        "Jihong Park"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-10-21T07:34:58+00:00",
+      "link": "https://arxiv.org/pdf/2610.29337v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "AI agents in mobile edge environments autonomously handle tasks via multi-step workflows",
+      "llm_evidence_cn": "移动边缘环境中的AI智能体通过多步工作流自主处理任务",
+      "llm_evidence": "移动边缘环境中的AI智能体通过多步工作流自主处理任务",
+      "canonical_evidence": "移动边缘环境中的AI智能体通过多步工作流自主处理任务",
+      "llm_tldr_en": "Mobile edge AI agents execute dynamically generated multi-step workflows, creating scheduling uncertainty. The paper models partially revealed workflows as dynamic graphs and formulates online scheduling jointly optimizing computation placement, wireless and edge resources to minimize completion latency.",
+      "llm_tldr_cn": "现有移动边缘环境中的AI智能体需通过多步工作流自主处理任务，但工作流依赖关系动态生成，给计算与通信调度带来不确定性。本文用动态工作流图建模部分可见的智能体工作流，并构建在线调度问题，联合优化计算放置、无线资源块分配与边缘计算资源分配。为应对未来工作流演化的不确定性，作者将加权完成时间目标转化为逐时隙的等效形式。该研究为移动智能体任务执行的低延迟调度提供了方法支撑。",
+      "llm_tldr": "现有移动边缘环境中的AI智能体需通过多步工作流自主处理任务，但工作流依赖关系动态生成，给计算与通信调度带来不确定性。本文用动态工作流图建模部分可见的智能体工作流，并构建在线调度问题，联合优化计算放置、无线资源块分配与边缘计算资源分配。为应对未来工作流演化的不确定性，作者将加权完成时间目标转化为逐时隙的等效形式。该研究为移动智能体任务执行的低延迟调度提供了方法支撑。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "How can AI agents execute tasks autonomously on mobile devices?",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2610.32412v1",
+      "source": "arxiv",
+      "title": "LeafSkill: Efficient Leaf-Level Action Grounding for Recursive LLM Agents",
+      "abstract": "Recursive large language model (LLM) agents solve long-horizon tasks through decomposition, execution, and environmental feedback. Yet after producing an atomic subtask, they often invoke the same large model again to translate a familiar instruction into an executable action. We observe that high-level planning is task-specific, whereas leaf-level action grounding recurs across tasks and can be checked against environment-admitted actions. We introduce LeafSkill, an external reuse layer that retrieves semantically related grounding experience, binds action templates to current objects and admissible actions, and uses a lightweight 1.7B selector to choose a bound action or defer the unchanged subtask to the original agent. Skills remain outside the model parameters, allowing a frozen selector to use post-training additions. Under lexical and syntactic paraphrases, exact matching retrieves none of the reference actions, while semantic retrieval preserves 96.0% and 97.0% candidate coverage; the frozen selector adopts 97.34% of unseen skill types. On an independent confirmation set of 200 Robotouille tasks, LeafSkill completes 137 tasks versus 121 for ReCAP (68.5% vs. 60.5%, exact McNemar p=.0259). On the 106 tasks completed by both, it reduces Qwen3.5-27B tokens by 14.42% and calls by 14.08%. A separate held-out repeat yields a consistent 9.0-point success gain and 18.98% token reduction. Reusable leaf grounding can thus improve task completion while reducing host-model inference without replacing high-level planning.",
+      "authors": [
+        "Shen Liu",
+        "Ze Zhou",
+        "Zhenguo Xu",
+        "Shaopu Wang",
+        "Yike Gao",
+        "Chunlei Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-10-23T09:38:15+00:00",
+      "link": "https://arxiv.org/pdf/2610.32412v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "reusable leaf-level action grounding technique for agents executing tasks",
+      "llm_evidence_cn": "可复用的原子动作落地技术，支撑智能体执行任务",
+      "llm_evidence": "可复用的原子动作落地技术，支撑智能体执行任务",
+      "canonical_evidence": "可复用的原子动作落地技术，支撑智能体执行任务",
+      "llm_tldr_en": "LeafSkill adds an external reuse layer that retrieves grounding experience and binds action templates to current objects and admissible actions, using a 1.7B selector to avoid re-invoking large models for atomic actions.",
+      "llm_tldr_cn": "递归LLM智能体在长程任务中产生原子子任务后，往往再次调用大模型把熟悉指令翻译为动作，造成浪费。作者观察到高层规划因任务而异，而原子动作落地可跨任务复用并对照环境允许动作校验。据此提出LeafSkill外部复用层，检索语义相近的落地经验，将动作模板绑定到当前对象与可执行动作，并用1.7B小模型选择动作或回退。该技术降低了执行开销，可迁移到设备端任务执行智能体。",
+      "llm_tldr": "递归LLM智能体在长程任务中产生原子子任务后，往往再次调用大模型把熟悉指令翻译为动作，造成浪费。作者观察到高层规划因任务而异，而原子动作落地可跨任务复用并对照环境允许动作校验。据此提出LeafSkill外部复用层，检索语义相近的落地经验，将动作模板绑定到当前对象与可执行动作，并用1.7B小模型选择动作或回退。该技术降低了执行开销，可迁移到设备端任务执行智能体。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "What are the key techniques for building on device task execution agents?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2610.35823v1",
+      "source": "arxiv",
+      "title": "Back to Basics: A Skill-Centric Approach to Generalist Web Agents",
+      "abstract": "Browser agents do not just need more practice. They need to practice the right things. We introduce MiniWeb, a realistic miniature of the web comprising 65 interconnected websites across 15 domains, where agents navigate, search, and transact as people do. Its 369 human-annotated tasks cover everyday workflows and label 37 reusable interaction primitives grouped into 7 skill families, allowing us to diagnose which skills fail rather than only whether a task succeeds. Benchmarking ten open-weight agents, we find that drag & gesture is consistently the weakest family, with no agent solving more than 24% of its instances. To address this gap, we introduce MiniWebGen, a framework that autonomously generates verified, skill-centric training data from MiniWeb. Fine-tuning Qwen3.5-4B on just 3.1K verified trajectories improves single-primitive success by 24.9pp across 13 unseen websites, with gains across every skill family. However, these trajectories teach short-horizon interactions, which do not directly translate to full-task success. We build on this result with MiniWebAgent, which pairs the trained executor with a planner that decomposes full tasks into the skill-level steps it learned to perform. This approach improves task success by 19.4pp points on unseen MiniWeb sites and transfers to external benchmarks, with gains of 9.3pp on WebArena-Lite, 16.1pp on Online-Mind2Web, and 20.0pp on WebVoyager, without training on their trajectories. We provide a simple recipe for compact browser agents: practice reusable skills directly, then compose them to solve unfamiliar tasks.",
+      "authors": [
+        "Minh Pham-Dinh",
+        "Md Farhan Ishmam",
+        "Hernan Yupanqui",
+        "Reaz Hassan Joarder",
+        "Kenneth Marino"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-10-26T17:47:07+00:00",
+      "link": "https://arxiv.org/pdf/2610.35823v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Skill-centric web agent benchmark labels interaction primitives such as drag and gesture, transferable to app UI automation",
+      "llm_evidence_cn": "技能中心网页智能体基准标注拖拽与手势等交互原语，可迁移至应用界面自动化",
+      "llm_evidence": "技能中心网页智能体基准标注拖拽与手势等交互原语，可迁移至应用界面自动化",
+      "canonical_evidence": "技能中心网页智能体基准标注拖拽与手势等交互原语，可迁移至应用界面自动化",
+      "llm_tldr_en": "MiniWeb is a realistic miniature web benchmark with 369 tasks and 37 interaction primitives, showing drag-and-gesture skills are weakest; MiniWebGen generates skill-centric training data, relevant to UI automation agents.",
+      "llm_tldr_cn": "针对浏览器智能体训练缺乏对失败技能细粒度诊断的问题，本文提出MiniWeb迷你网页基准。它包含65个互联网站和369个人工标注任务，并将交互原语归为7类技能族，用于诊断智能体具体哪类操作失败。评估十个开源权重智能体发现拖拽与手势是最弱技能族，无智能体解决超过24%的该类实例；作者进一步提出MiniWebGen自动生成技能中心训练数据。该工作对界面操作自动化评估有借鉴意义，但场景是网页而非手机应用。",
+      "llm_tldr": "针对浏览器智能体训练缺乏对失败技能细粒度诊断的问题，本文提出MiniWeb迷你网页基准。它包含65个互联网站和369个人工标注任务，并将交互原语归为7类技能族，用于诊断智能体具体哪类操作失败。评估十个开源权重智能体发现拖拽与手势是最弱技能族，无智能体解决超过24%的该类实例；作者进一步提出MiniWebGen自动生成技能中心训练数据。该工作对界面操作自动化评估有借鉴意义，但场景是网页而非手机应用。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "automating operations within mobile applications via agent",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2610.35845v1",
+      "source": "arxiv",
+      "title": "Work Agents: Systems, Capabilities, and Optimization",
+      "abstract": "As foundation models evolve from information generation to digital work execution, agents are increasingly capable of completing complex tasks across tools, applications, and workflows. However, existing research lacks a unified perspective on how agents reliably accomplish delegated work. To address this gap, we present a work-centric, system-level perspective that views work agents as systems combining foundation models and runtime harnesses to execute tasks in stateful workspaces and deliver verifiable outcomes. We introduce two complementary dimensions, work persistence and work openness, to characterize working conditions, and classify digital work into five forms according to task scope and organization. Building on this framework, we identify five core capability families required for reliable work execution and examine approaches to model optimization, harness optimization, and their joint optimization. We further analyze existing evaluation methods and metrics from the perspective of work outcomes. Finally, we discuss future research directions, including sustained work delegation, adaptation to open environments, and the interaction between work execution and capability improvement. This paper provides a unified framework for understanding, optimizing, and evaluating work agents, supporting the development of systems capable of delivering reliable, verifiable, and practically valuable work outcomes.",
+      "authors": [
+        "Zishan Xu",
+        "Enjun Du",
+        "Mingqi Gao",
+        "Cheng Yang",
+        "Junhao Shen",
+        "Zirong Chen",
+        "Zhiyuan Yao",
+        "Yifu Guo",
+        "Yuquan Lu",
+        "Jinyang Huang",
+        "Zhengxi Lu",
+        "Siyi Liu",
+        "Ziyu Zheng",
+        "Yongqi Zhang",
+        "Difan Zou",
+        "Weiwen Liu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-10-26T17:56:21+00:00",
+      "link": "https://arxiv.org/pdf/2610.35845v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "system-level view of agents executing delegated tasks across apps and tools",
+      "llm_evidence_cn": "从系统层面分析智能体跨应用与工具执行委托任务",
+      "llm_evidence": "从系统层面分析智能体跨应用与工具执行委托任务",
+      "canonical_evidence": "从系统层面分析智能体跨应用与工具执行委托任务",
+      "llm_tldr_en": "The paper proposes a work-centric, system-level framework viewing work agents as foundation models plus runtime harnesses executing tasks in stateful workspaces, with dimensions of work persistence and openness.",
+      "llm_tldr_cn": "基础模型正从信息生成转向数字工作执行，但现有研究缺乏对智能体如何可靠完成委托工作的统一视角。作者提出以工作为中心的系统级框架，把工作智能体视为基础模型与运行时装置的组合，在有状态工作空间中执行任务并交付可验证结果。框架用工作持久性与开放性两个维度刻画工作条件，并按任务范围将数字工作分为五类。该视角为设计与优化跨应用执行任务的智能体提供了概念基础。",
+      "llm_tldr": "基础模型正从信息生成转向数字工作执行，但现有研究缺乏对智能体如何可靠完成委托工作的统一视角。作者提出以工作为中心的系统级框架，把工作智能体视为基础模型与运行时装置的组合，在有状态工作空间中执行任务并交付可验证结果。框架用工作持久性与开放性两个维度刻画工作条件，并按任务范围将数字工作分为五类。该视角为设计与优化跨应用执行任务的智能体提供了概念基础。",
+      "llm_tags": [
+        "query:mobile-agent:composite"
+      ],
+      "matched_query_tag": "query:mobile-agent:composite",
+      "matched_query_text": "Papers central to 手机端Agent与任务执行的检索主题, especially work that connects or combines: mobile agent that performs tasks on behalf of user; automation of tasks on smartphone using software agents; agent running locally on device for task completion; automating operations within mobile applications via agent; framework for building agents on mobile devices; How can AI agents execute tasks autonomously on mobile devices?; What are the key techniques for building on device task execution agents?; Challenges in deploying agents for mobile task automation; Evaluation of mobile agent frameworks for task execution.",
+      "matched_requirement_id": "req-composite-mobile-agent",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
