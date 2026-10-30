@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-10-29</span>
+      <span class="dpr-home-dashboard-kicker">2026-10-30</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 5 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 3 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>4</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>2</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-10-29 23:45:28 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-10-30 22:55:48 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,7 +69,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日筛选 5 篇 AI 智能体论文，精读 1 篇、速读 4 篇，聚焦 GUI 与 Web 智能体的能力提升和高效执行。最值得看的是 8.0 分的《From Interaction to Capability》：它把任务推进同时当作状态与监督信号来训练 GUI 智能体；另有三篇 6.0 分工作从技能中心、叶级动作定位和边缘调度切入。普通读者可先读精读这篇，再按兴趣浏览速读中的技能化与效率方向。</p>
+<p>今日精选 3 篇 AI Agent 论文，精读聚焦 iOS 实机上的在线稠密强化学习 UI 导航。最值得看的是 9.0 分的《Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live IOS Apps》：它把规划与 grounding 结合，在真实 iOS 应用上做在线稠密 RL 导航；另有 VeriCUA 用“验证即探索”提升计算机使用代理可靠性。普通读者可先读精读篇的实机导航思路，再速览 VeriCUA 的验证机制。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -81,7 +81,7 @@
     <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="From Interaction to Capability: Task Advancement as State and Supervision for GUI Agents">From Interaction to Capability: Task Advancement as State and Supervision for GUI Agents</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live IOS Apps">Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live IOS Apps</span></li></ul>
   </div>
   <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>1</strong></span></div>
 </section>
@@ -91,12 +91,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">4 篇</strong>
+    <strong class="dpr-home-dashboard-count">2 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Workflow-Aware Communication and Computation Scheduling for Mobile Edge AI Agents">Workflow-Aware Communication and Computation Scheduling for Mobile Edge AI Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="LeafSkill: Efficient Leaf-Level Action Grounding for Recursive LLM Agents">LeafSkill: Efficient Leaf-Level Action Grounding for Recursive LLM Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Back to Basics: A Skill-Centric Approach to Generalist Web Agents">Back to Basics: A Skill-Centric Approach to Generalist Web Agents</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="VeriCUA: Verification as Agentic Exploration for Computer-Using Agents">VeriCUA: Verification as Agentic Exploration for Computer-Using Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Permission to Retry: A Study of Authorization and Recovery in AI Agent Workflows">Permission to Retry: A Study of Authorization and Recovery in AI Agent Workflows</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>4</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>2</strong></span></div>
 </section>
 </div>
 

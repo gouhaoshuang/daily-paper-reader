@@ -1,0 +1,54 @@
+{
+  "label": "2026-10-30",
+  "date": "2026-10-30",
+  "generated_at": "2026-10-30T22:55:49",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202610/30/2610.39264v1-online-dense-reinforcement-learning-with-planning-grounding-agent-for-ui-navigation-on-live-ios-apps",
+      "section": "deep",
+      "title_en": "Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live IOS Apps",
+      "authors": "Peitong Duan, Khashayar Gatmiry, Jeffrey Nichols, Samy Bengio, Emmanuel Abbe",
+      "date": "2026-10-29",
+      "pdf": "https://arxiv.org/pdf/2610.39264v1",
+      "score": "9.0",
+      "evidence": "在真实iOS应用上训练替用户完成任务的UI导航智能体",
+      "tldr": "前沿视觉语言模型做UI导航推理成本过高，难以日常使用；而经SFT或离线RL训练的小模型易死记静态轨迹，执行脆弱、出错难恢复。本文提出在线强化学习框架，直接在真实iOS应用上训练，将智能体解耦为规划模块与UI定位模型，用LLM-as-a-Judge给出步级稠密奖励与终局奖励，以PPO步级优势估计优化，并提出GiGPPO邻域条件价值估计稳定critic。8B智能体在分布外Android环境泛化上较SFT基线近七倍提升，真实iOS任务超过Gemini-3.5-Flash。",
+      "tags": "query:mobile-agent",
+      "abstract_en": "While frontier vision-language models demonstrate strong capabilities in user interface (UI) navigation, their high inference costs prohibit everyday use. Conversely, smaller models trained via supervised fine-tuning (SFT) or offline reinforcement learning often memorize static trajectories, leading to brittle execution and an inability to recover from errors. To address these limitations, we propose a novel online reinforcement learning framework that trains UI navigation agents directly on live iOS applications. Our framework decouples the agent into two specialized components: a Planning agent and a UI Grounding model. We rely on an LLM-as-a-Judge to provide comprehensive reward signals, combining dense, step-level feedback to evaluate intermediate progress with a terminal reward for overall task completion. To effectively leverage this dual reward structure, we optimize the agent using Proximal Policy Optimization (PPO) with step-level advantage estimation. Furthermore, we introduce GiGPPO, a novel neighbor-conditioned value estimation method that improves critic stability by leveraging reward signals from visually similar states across concurrent trajectories. To support this online training paradigm at scale, we introduce an efficient infrastructure that orchestrates hundreds of concurrent virtual iOS devices. Evaluations on rigorous benchmarks, including UINavBench, iOSWorld, and AndroidWorld, demonstrate that our online RL trained agents substantially outperform both SFT and terminal-only RL baselines while accelerating training convergence. Notably, our 8B RL agents achieve nearly a sevenfold improvement over the SFT baseline in out-of-distribution generalization to Android environments, while outperforming Gemini-3.5-Flash and tying with Gemini-3.1-Pro on real iOS applications.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202610/30/2610.40578v1-vericua-verification-as-agentic-exploration-for-computer-using-agents",
+      "section": "quick",
+      "title_en": "VeriCUA: Verification as Agentic Exploration for Computer-Using Agents",
+      "authors": "Qiushi Sun, Da Yu, Alexander Knop, Amer Sinha, Lingpeng Kong, Ben Kao, Ravi Kumar, Pritish Kamath",
+      "date": "2026-10-29",
+      "pdf": "https://arxiv.org/pdf/2610.40578v1",
+      "score": "7.0",
+      "evidence": "面向含移动端在内的计算机使用智能体的平台无关验证框架",
+      "tldr": "构建跨桌面、移动端与网页的计算机使用智能体，需要可靠的任务完成验证来支撑数据筛选、评测与强化学习。现有 VLM 评判受限于所给观测，生成程序则依赖可访问状态，二者都只看到部分环境视图。VeriCUA 把验证重构为智能体探索：先构建任务评分细则，再按未满足要求选择 GUI 或代码检查，并按显式证据规则合并结论。实验显示其与参考标签一致性优于基线，离线难例提升最大，在线更能拒绝虚假完成声明。",
+      "tags": "query:mobile-agent",
+      "abstract_en": "Building and scaling computer-using agents (CUAs) across desktop, mobile, and web environments requires reliable task-completion verification for data curation, evaluation, and reinforcement learning. Typical automated approaches prompt vision-language models (VLMs) to judge trajectories or generate programs to inspect application state. However, both rely on partial views of complex digital environments. VLM judges are restricted to supplied observations, while generated programs depend on accessible state. These views can omit decisive evidence or leave completion judgments unsupported. Tailoring separate verifiers to different platforms and access settings adds further engineering cost. We present VeriCUA, a platform-agnostic framework for verification through agentic exploration. It treats verification as dynamic evidence gathering and assessment within a shared procedure for online and offline settings across platforms and observation modalities. After inspecting the available context to construct a task rubric, the verifier selects GUI or code checks for unresolved requirements and combines their findings under explicit evidence rules. Experiments show improved agreement with reference labels over the compared baselines across these settings, with the largest offline gains on hard cases and stronger rejection of false completion claims online. Further analyses connect these gains to complementary evidence and test-time exploration.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202610/30/2610.31916v1-permission-to-retry-a-study-of-authorization-and-recovery-in-ai-agent-workflows",
+      "section": "quick",
+      "title_en": "Permission to Retry: A Study of Authorization and Recovery in AI Agent Workflows",
+      "authors": "Deekshith Marla, Kushagra Bhatnagar",
+      "date": "2026-10-22",
+      "pdf": "https://arxiv.org/pdf/2610.31916v1",
+      "score": "6.0",
+      "evidence": "工具型智能体执行可靠性与恢复，可迁移至移动任务自动化部署",
+      "tldr": "工具型 AI 智能体在执行中可能因权限变化而需要恢复一个具有外部副作用的动作，但外部结果未知。研究把检查点状态、派发许可、外部效果证据与对账许可拆为独立义务，在 LangGraph 与 Temporal 上执行 336 条历史，并由隐藏的供应商效果账本评分。168 个配对主机单元的结果完全一致，保留账本对账在 42 条历史上全部通过，缓存重试、重试前复验、稳定键重试分别通过 30、36、31 条。结果分离出当前权限、供应商契约与保留观测在恢复中的作用。",
+      "tags": "query:mobile-agent",
+      "abstract_en": "A durable agent can resume a consequential action while its authority changes and the action's external outcome remains uncertain. We study execution-time reliability of tool-using AI agents, isolating recovery decisions from language-model behavior. Checkpoint state, permission to dispatch, evidence of an external effect and permission to reconcile are distinct obligations. We present a finite conformance study that checks these obligations through histories scored against a provider effect ledger hidden from the recovering application. A prospectively frozen campaign executes 336 histories on native LangGraph and Temporal hosts, crossing 14 schedules, three provider contracts and four matched application policies. All 168 paired host cells have identical checked outcomes. Per host, retained-ledger reconciliation passes all 42 histories: 21 checked completions, 15 denials and six unknown outcomes with reservations retained. Cached retry, revalidation before retry and stable-key retry pass 30, 36 and 31 histories respectively. A separate 16-case component study of InfinityOS, an enterprise AI platform developed by Arya.ai, exercises exported authority, worker, recovery and settlement code over repository fakes. The results isolate the roles of current authority, provider contracts and retained observations in recovery, with safety, completion and unresolved obligations reported separately for the declared application profile.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

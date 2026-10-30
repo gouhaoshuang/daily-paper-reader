@@ -1,0 +1,57 @@
+{
+  "date": "20261030",
+  "date_label": "",
+  "generated_at": "2026-10-30 22:55:48 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2610.39264v1",
+      "route": "202610/30/2610.39264v1-online-dense-reinforcement-learning-with-planning-grounding-agent-for-ui-navigation-on-live-ios-apps",
+      "title": "Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live IOS Apps",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "在真实iOS应用上训练替用户完成任务的UI导航智能体",
+      "first_seen_at": "2026-10-30 22:55:48 UTC",
+      "updated_at": "2026-10-30 22:55:48 UTC"
+    },
+    {
+      "paper_id": "2610.40578v1",
+      "route": "202610/30/2610.40578v1-vericua-verification-as-agentic-exploration-for-computer-using-agents",
+      "title": "VeriCUA: Verification as Agentic Exploration for Computer-Using Agents",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向含移动端在内的计算机使用智能体的平台无关验证框架",
+      "first_seen_at": "2026-10-30 22:55:48 UTC",
+      "updated_at": "2026-10-30 22:55:48 UTC"
+    },
+    {
+      "paper_id": "2610.31916v1",
+      "route": "202610/30/2610.31916v1-permission-to-retry-a-study-of-authorization-and-recovery-in-ai-agent-workflows",
+      "title": "Permission to Retry: A Study of Authorization and Recovery in AI Agent Workflows",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "mobile-agent"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "工具型智能体执行可靠性与恢复，可迁移至移动任务自动化部署",
+      "first_seen_at": "2026-10-30 22:55:48 UTC",
+      "updated_at": "2026-10-30 22:55:48 UTC"
+    }
+  ]
+}
