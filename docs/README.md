@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-10-30</span>
+      <span class="dpr-home-dashboard-kicker">2026-10-31</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 3 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 1 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>2</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>1</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-10-30 22:55:48 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-10-31 22:00:17 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,7 +69,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日精选 3 篇 AI Agent 论文，精读聚焦 iOS 实机上的在线稠密强化学习 UI 导航。最值得看的是 9.0 分的《Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live IOS Apps》：它把规划与 grounding 结合，在真实 iOS 应用上做在线稠密 RL 导航；另有 VeriCUA 用“验证即探索”提升计算机使用代理可靠性。普通读者可先读精读篇的实机导航思路，再速览 VeriCUA 的验证机制。</p>
+<p>今日仅速读 1 篇：《Think Before You Act: Decision Gate for LLM Agents》，精读 0 篇。</p>
+<p>该文 6.0/10，核心方向是为 LLM Agent 加入“先判断再行动”的决策门控，以减少不必要的执行。</p>
+<p>普通读者可先了解其门控触发条件与误判代价，再决定是否深入原文。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -78,12 +80,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">1 篇</strong>
+    <strong class="dpr-home-dashboard-count">0 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live IOS Apps">Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live IOS Apps</span></li></ul>
+<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>1</strong></span></div>
+
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -91,12 +93,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">2 篇</strong>
+    <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="VeriCUA: Verification as Agentic Exploration for Computer-Using Agents">VeriCUA: Verification as Agentic Exploration for Computer-Using Agents</span></li><li><span class="dpr-home-dashboard-paper-title" title="Permission to Retry: A Study of Authorization and Recovery in AI Agent Workflows">Permission to Retry: A Study of Authorization and Recovery in AI Agent Workflows</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Think Before You Act: Decision Gate for LLM Agents">Think Before You Act: Decision Gate for LLM Agents</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>2</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">mobile-agent <strong>1</strong></span></div>
 </section>
 </div>
 

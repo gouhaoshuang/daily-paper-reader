@@ -1,0 +1,59 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-10-31T21:59:54.191054+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2610.38620v1",
+      "source": "arxiv",
+      "title": "Think Before You Act: Decision Gate for LLM Agents",
+      "abstract": "LLM agents increasingly perform consequential actions through external tools, yet their proposed actions are often executed without independent verification of policy compliance or task completion. We introduce JevAct, a runtime verification framework that intercepts selected agent actions before execution and enables feedback-driven correction. JevAct compiles domain policies into executable state checks and structured questions evaluated by a prefill-only decision model, which produces probability-based judgments without relying on LLM generation. By combining deterministic verification of tool-state facts with probabilistic assessment of conversational context, the framework identifies potentially invalid actions and premature task termination, providing targeted feedback for bounded revision. JevAct operates independently of the underlying agent model and requires no modifications to its parameters or tools. We evaluate JevAct across eleven LLM agents on $τ^2$-bench Airline and Telecom tasks and BFCL. Results show improvements in agent reliability across multiple models and benchmarks, with particularly consistent gains on Telecom and BFCL, while performance on Airline is more mixed. Overall, these findings suggest that combining structured decision models with executable verification can improve the reliability of tool-using LLM agents.",
+      "authors": [
+        "Iftach Shoham",
+        "Yuval David",
+        "Offer Akrabi",
+        "Erez Bilgory",
+        "Ido Levy",
+        "Sami Marreed",
+        "Sergey Zeltyn",
+        "Segev Shlomov"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-10-28T10:40:52+00:00",
+      "link": "https://arxiv.org/pdf/2610.38620v1",
+      "tags": [
+        "keyword:mobile-agent",
+        "query:mobile-agent"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Runtime verification gate intercepting agent actions before execution",
+      "llm_evidence_cn": "在执行前拦截智能体动作的运行时验证闸门",
+      "llm_evidence": "在执行前拦截智能体动作的运行时验证闸门",
+      "canonical_evidence": "在执行前拦截智能体动作的运行时验证闸门",
+      "llm_tldr_en": "JevAct is a runtime verification framework that intercepts LLM agent actions before execution, combining deterministic tool-state checks with a prefill-only decision model to catch policy violations and premature termination.",
+      "llm_tldr_cn": "LLM智能体通过外部工具执行高风险动作时，往往缺乏对策略合规与任务完成的独立校验。作者提出JevAct运行时验证框架，在执行前拦截选定动作，将领域策略编译为可执行状态检查与结构化问题，由仅预填的决策模型给出概率判断。该方法能识别无效动作与过早终止并给出定向反馈，为智能体部署中的安全执行提供保障。",
+      "llm_tldr": "LLM智能体通过外部工具执行高风险动作时，往往缺乏对策略合规与任务完成的独立校验。作者提出JevAct运行时验证框架，在执行前拦截选定动作，将领域策略编译为可执行状态检查与结构化问题，由仅预填的决策模型给出概率判断。该方法能识别无效动作与过早终止并给出定向反馈，为智能体部署中的安全执行提供保障。",
+      "llm_tags": [
+        "query:mobile-agent"
+      ],
+      "matched_query_tag": "query:mobile-agent",
+      "matched_query_text": "Challenges in deploying agents for mobile task automation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
